@@ -1,1 +1,1 @@
-from . import eventhandler, graphics, sprite
+from . import eventhandler, graphics

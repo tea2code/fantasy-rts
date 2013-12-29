@@ -1,6 +1,6 @@
 import pygame
 
-from . import sprite
+from . import spriteloader
 from data import point
 from data import tile
 
@@ -10,16 +10,21 @@ class PygameGraphics:
     Member:
     clock -- The pygame clock.
     screen -- The pygame surface which acts as the game screen.
+    _sprite_loader -- The sprite loader (ui.spriteloader).
+    _view_offset_point -- The cached view offset point (point.Point).
     """
 
     def __init__(self, data):
-        size = (data.graphics.view_x * data.graphics.tile,
-                data.graphics.view_y * data.graphics.tile)
+        graphics = data.graphics
+
+        size = (graphics.view_x * graphics.tile, graphics.view_y * graphics.tile)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
-        self.sprite_img = pygame.image.load(data.graphics.sprite).convert_alpha()
+        self._sprite_loader = spriteloader.PygameSpriteLoader()
+        self.sprite_img = self._sprite_loader.load(graphics.sprite)
 
-        self.__show_title(data.graphics.window_title)
+        self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
+        self.__show_title(graphics.window_title)
         self.__draw_background(data)
 
     def tick(self, run_time, delta_time, data):
@@ -29,6 +34,10 @@ class PygameGraphics:
 
         # Update screen.
         self.__update_screen(data)
+
+    def __calc_view_offset(self, view_offset_x, view_offset_y):
+        """ Calculate view offset point. """
+        self._view_offset_point = point.Point(view_offset_x, view_offset_y)
 
     def __draw_background(self, data):
         for x in range(data.graphics.view_x):
@@ -40,15 +49,9 @@ class PygameGraphics:
     def __draw_pos(self, pos, data):
         x, y = self.__pos_to_screen(pos, data.graphics.tile)
         rect = (x, y, data.graphics.tile, data.graphics.tile)
-        pos = pos + point.Point(data.graphics.view_offset_x, data.graphics.view_offset_y)
+        pos = pos + self._view_offset_point
         level_tile = data.game.level[pos] if pos in data.game.level else data.game.level.default_tile
-        if level_tile is tile.WALL:
-            tile_sprite = sprite.WALL
-        elif level_tile is tile.PLAIN:
-            tile_sprite = sprite.PLAIN
-        else:
-            # Unknown tile type.
-            tile_sprite = sprite.UNKNOWN
+        tile_sprite = self._sprite_loader.sprite_by_tile(level_tile)
         self.screen.blit(self.sprite_img, (x, y), tile_sprite)
         return rect
 
@@ -61,9 +64,12 @@ class PygameGraphics:
         pygame.display.set_caption(text)
 
     def __update_screen(self, data):
-        if data.graphics.view_updated:
+        graphics = data.graphics
+
+        if graphics.view_updated:
+            self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
             self.__draw_background(data)
 
-        if data.graphics.view_updated:
+        if graphics.view_updated:
             pygame.display.flip()
-            data.graphics.view_updated = False
+            graphics.view_updated = False
