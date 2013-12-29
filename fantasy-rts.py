@@ -2,8 +2,8 @@ from data import data
 from data import game as gamestate
 from data import graphics as graphicsstate
 from data import level
+from data import point
 from data import tile
-from gamemath.vector import Vector2
 from general import mainloop
 from ui import eventhandler, graphics
 
@@ -34,6 +34,7 @@ class MainLoopImp(mainloop.MainLoop):
 
         graphics_data = graphicsstate.Graphics()
         graphics_data.fps = self.FPS
+        graphics_data.sprite = 'sprite.png'
         graphics_data.tile = 16
         graphics_data.view_x = 40
         graphics_data.view_y = 30
@@ -62,13 +63,22 @@ class MainLoopImp(mainloop.MainLoop):
             module.tick(run_time, delta_time, self.data)
 
     def __demo_level(self, size):
+        size_half = int(size / 2)
+        size_quarter = int(size / 4)
+        offset = 5
         lvl = level.Level()
         for x in range(size):
-            lvl[Vector2(x, 0)] = tile.WALL
-            lvl[Vector2(x, size - 1)] = tile.WALL
+            lvl[point.Point(x, 0)] = tile.WALL
+            lvl[point.Point(x, size - 1)] = tile.WALL
         for y in range(size):
-            lvl[Vector2(0, y)] = tile.WALL
-            lvl[Vector2(size - 1, y)] = tile.WALL
+            lvl[point.Point(0, y)] = tile.WALL
+            lvl[point.Point(size - 1, y)] = tile.WALL
+        for x in range(size_quarter, size_half + size_quarter):
+            lvl[point.Point(x, size_quarter - offset)] = tile.WALL
+            lvl[point.Point(x, size_half + size_quarter + offset)] = tile.WALL
+        for y in range(size_quarter, size_half + size_quarter):
+            lvl[point.Point(size_quarter - offset, y)] = tile.WALL
+            lvl[point.Point(size_half + size_quarter + offset, y)] = tile.WALL
         return lvl
 
 if __name__ == '__main__':

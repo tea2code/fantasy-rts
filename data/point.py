@@ -6,11 +6,14 @@ class Point:
     Member:
     x -- The x component (float).
     y -- The y component (float).
+    _hash -- Cache for hash value (int).
     _x -- The real x component (float).
     _y -- The real y component (float).
     _xi -- The rounded x component (int).
     _yi -- The rounded y component (int).
     """
+
+    __slots__ = ('_hash', '_x', '_y', '_xi', '_yi')
 
     def __init__(self, x=0.0, y=0.0):
         self.x = x
@@ -24,6 +27,7 @@ class Point:
     def x(self, value):
         self._x = value
         self._xi = gamemath.int_round(value)
+        self._hash = None
 
     @property
     def y(self):
@@ -33,6 +37,7 @@ class Point:
     def y(self, value):
         self._y = value
         self._yi = gamemath.int_round(value)
+        self._hash = None
 
     def clone(self):
         """ Creates a copy of this point with same x and y.
@@ -154,8 +159,13 @@ class Point:
         True
         >>> hash(v1) == hash(v3)
         False
+        >>> v3.y = 21.45
+        >>> hash(v1) == hash(v3)
+        True
         """
-        return hash(self.int_tuple())
+        if self._hash is None:
+            self._hash = hash(self.int_tuple())
+        return self._hash
 
     def __mul__(self, scalar):
         """ Scalar multiplication using the * operator. Returns the resulting point.

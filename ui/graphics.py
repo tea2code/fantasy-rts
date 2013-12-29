@@ -1,5 +1,7 @@
 import pygame
 
+from . import sprite
+from data import point
 from data import tile
 
 class PygameGraphics:
@@ -15,8 +17,10 @@ class PygameGraphics:
                 data.graphics.view_y * data.graphics.tile)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
+        self.sprite_img = pygame.image.load(data.graphics.sprite).convert_alpha()
 
         self.__show_title(data.graphics.window_title)
+        self.__draw_background(data)
 
     def tick(self, run_time, delta_time, data):
         # Show title and update clock.
@@ -29,27 +33,27 @@ class PygameGraphics:
     def __draw_background(self, data):
         for x in range(data.graphics.view_x):
             for y in range(data.graphics.view_y):
-                pos = Point2(x, y)
+                pos = point.Point(x, y)
                 self.__draw_pos(pos, data)
         pygame.display.flip()
 
     def __draw_pos(self, pos, data):
-        x, y = self.__pos_to_screen(pos, data)
-        rect = (x, y, data.tile, data.tile)
-        pos = pos + Point2(data.view_offset_x, data.view_offset_y)
-        tile = data.map[pos] if pos in data.map else data.map.default_tile
-        if tile is tile.WALL:
-            sprite = Sprite.WALL
-        elif tile is tile.PLAIN:
-            sprite = Sprite.PLAIN
+        x, y = self.__pos_to_screen(pos, data.graphics.tile)
+        rect = (x, y, data.graphics.tile, data.graphics.tile)
+        pos = pos + point.Point(data.graphics.view_offset_x, data.graphics.view_offset_y)
+        level_tile = data.game.level[pos] if pos in data.game.level else data.game.level.default_tile
+        if level_tile is tile.WALL:
+            tile_sprite = sprite.WALL
+        elif level_tile is tile.PLAIN:
+            tile_sprite = sprite.PLAIN
         else:
             # Unknown tile type.
-            sprite = Sprite.UNKNOWN
-        self.screen.blit(self.sprite_img, (x, y), sprite)
+            tile_sprite = sprite.UNKNOWN
+        self.screen.blit(self.sprite_img, (x, y), tile_sprite)
         return rect
 
-    def __pos_to_screen(self, pos, data):
-        return int(pos.x * data.game.tile), int(pos.y * data.tile)
+    def __pos_to_screen(self, pos, tile):
+        return int(pos.x * tile), int(pos.y * tile)
 
     def __show_title(self, window_title):
         fps = self.clock.get_fps()
@@ -57,4 +61,9 @@ class PygameGraphics:
         pygame.display.set_caption(text)
 
     def __update_screen(self, data):
-        pass
+        if data.graphics.view_updated:
+            self.__draw_background(data)
+
+        if data.graphics.view_updated:
+            pygame.display.flip()
+            data.graphics.view_updated = False
