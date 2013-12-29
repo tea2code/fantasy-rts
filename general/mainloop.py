@@ -3,7 +3,7 @@ import time
 from abc import ABCMeta, abstractmethod
 
 class MainLoop(metaclass=ABCMeta):
-    """ Abstract class implementing a main loop based on a semi-fixed timestep.
+    """ Abstract class implementing a main loop based on a semi-fixed time step.
     See http://gafferongames.com/game-physics/fix-your-timestep/ for more
     information.
 

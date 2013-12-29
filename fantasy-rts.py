@@ -1,6 +1,9 @@
 from data import data
 from data import game as gamestate
 from data import graphics as graphicsstate
+from data import level
+from data import tile
+from gamemath.vector import Vector2
 from general import mainloop
 from ui import eventhandler, graphics
 
@@ -23,13 +26,15 @@ class MainLoopImp(mainloop.MainLoop):
         super().__init__(1.0 / self.FPS, self.MAX_FRAME_TIME)
 
         # Data.
+        size = 100
         game_data = gamestate.Game()
-        game_data.tile = 16
-        game_data.tile_x = 100
-        game_data.tile_y = 100
+        game_data.level = self.__demo_level(size)
+        game_data.tile_x = size
+        game_data.tile_y = size
 
         graphics_data = graphicsstate.Graphics()
         graphics_data.fps = self.FPS
+        graphics_data.tile = 16
         graphics_data.view_x = 40
         graphics_data.view_y = 30
         graphics_data.window_title = 'Fantasy-RTS (FPS: {0:.0f})'
@@ -55,6 +60,16 @@ class MainLoopImp(mainloop.MainLoop):
     def update(self, run_time, delta_time):
         for module in self.state_modules:
             module.tick(run_time, delta_time, self.data)
+
+    def __demo_level(self, size):
+        lvl = level.Level()
+        for x in range(size):
+            lvl[Vector2(x, 0)] = tile.WALL
+            lvl[Vector2(x, size - 1)] = tile.WALL
+        for y in range(size):
+            lvl[Vector2(0, y)] = tile.WALL
+            lvl[Vector2(size - 1, y)] = tile.WALL
+        return lvl
 
 if __name__ == '__main__':
     app = MainLoopImp()

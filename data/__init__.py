@@ -1,1 +1,1 @@
-__author__ = 'Rei Ayanami'
+from . import data, game, graphics, level, tile
