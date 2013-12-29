@@ -35,5 +35,7 @@ nosetests.xml
 .project
 .pydevproject
 
-# IDE
+# Custom
 .idea
+show_profile.bat
+profile.*

@@ -1,3 +1,6 @@
+from data import data
+from data import game as gamestate
+from data import graphics as graphicsstate
 from general import mainloop
 from ui import eventhandler, graphics
 
@@ -8,23 +11,50 @@ class MainLoopImp(mainloop.MainLoop):
     MAX_FRAME_TIME -- Maximum time a frame may take (float).
 
     Member:
-    event_handler -- The event handler.
-    graphics -- The graphic renderer.
+    data -- The data module (data.Data).
+    render_modules -- Modules regarding rendering the state (list).
+    state_modules -- Modules regarding updating the state (list).
     """
+
     FPS = 100
     MAX_FRAME_TIME = 0.25
 
     def __init__(self):
         super().__init__(1.0 / self.FPS, self.MAX_FRAME_TIME)
 
-        self.event_handler = eventhandler.PygameEventHandler()
-        self.graphics = graphics.PygameGraphics()
+        # Data.
+        game_data = gamestate.Game()
+        game_data.tile = 16
+        game_data.tile_x = 100
+        game_data.tile_y = 100
+
+        graphics_data = graphicsstate.Graphics()
+        graphics_data.fps = self.FPS
+        graphics_data.view_x = 40
+        graphics_data.view_y = 30
+        graphics_data.window_title = 'Fantasy-RTS (FPS: {0:.0f})'
+
+        self.data = data.Data()
+        self.data.game = game_data
+        self.data.graphics = graphics_data
+
+        # State modules.
+        self.state_modules = [
+            eventhandler.PygameEventHandler()
+        ]
+
+        # Render modules.
+        self.render_modules = [
+            graphics.PygameGraphics(self.data)
+        ]
 
     def render(self, run_time, delta_time):
-        self.graphics.tick(run_time, delta_time)
+        for module in self.render_modules:
+            module.tick(run_time, delta_time, self.data)
 
     def update(self, run_time, delta_time):
-        self.event_handler.tick(run_time, delta_time)
+        for module in self.state_modules:
+            module.tick(run_time, delta_time, self.data)
 
 if __name__ == '__main__':
     app = MainLoopImp()
