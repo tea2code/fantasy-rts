@@ -23,6 +23,10 @@ class Point:
     def x(self):
         return self._x
 
+    @property
+    def int_x(self):
+        return self._xi
+
     @x.setter
     def x(self, value):
         self._x = value
@@ -32,6 +36,10 @@ class Point:
     @property
     def y(self):
         return self._y
+
+    @property
+    def int_y(self):
+        return self._yi
 
     @y.setter
     def y(self, value):

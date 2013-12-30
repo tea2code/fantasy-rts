@@ -17,3 +17,7 @@ Following features are planned for the near future.
 - Collect wood and build walls.
 - Direct control of creatures.
 - Continuous extended demo game for profiling.
+
+## Attribution
+
+- Sprites by [Sharm](http://opengameart.org/content/16x16-overworld-tiles)

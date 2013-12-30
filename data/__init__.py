@@ -1,1 +1,1 @@
-from . import data, game, graphics, level, point, tile
+from . import data, direction, game, graphics, level, point, tile
