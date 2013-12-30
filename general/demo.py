@@ -1,14 +1,21 @@
-from data import creature
+import time
+
 from data import level
 from data import point
 from data import tile
+from general import factory
 
 class Demo:
     """ Creates a repeatable demo game.
 
+    Constants:
+    TIME_BURNER -- If not None the application will sleep every frame for the given time (float/None).
+
     Member:
     data -- The data object (data.data).
     """
+
+    TIME_BURNER = None
 
     def __init__(self, data):
         self.data = data
@@ -39,7 +46,8 @@ class Demo:
         num_y = num_x
         for x in range(1, num_x):
             for y in range(1, num_y):
-                c = creature.Creature()
-                c.pos = point.Point(x, y)
-                self.data.game.creatures.append(c)
-                self.data.dirty_pos.add(c.pos)
+                factory.new_creature(self.data, x, y, 0)
+
+    def tick(self, run_time, delta_time, data):
+        if self.TIME_BURNER:
+            time.sleep(self.TIME_BURNER)

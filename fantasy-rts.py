@@ -1,3 +1,4 @@
+from ai import director
 from data import data
 from data import game as gamestate
 from data import graphics as graphicsstate
@@ -19,7 +20,7 @@ class MainLoopImp(mainloop.MainLoop):
     state_modules -- Modules regarding updating the state (list).
     """
 
-    FPS = 100
+    FPS = 1000
     LEVEL_SIZE = 100
     MAX_FRAME_TIME = 0.25
 
@@ -33,6 +34,7 @@ class MainLoopImp(mainloop.MainLoop):
 
         graphics_data = graphicsstate.Graphics()
         graphics_data.fps = self.FPS
+        graphics_data.scroll_width = 8
         graphics_data.sprite = 'sprite.png'
         graphics_data.tile = 16
         graphics_data.view_x = 40
@@ -48,7 +50,9 @@ class MainLoopImp(mainloop.MainLoop):
 
         # State modules.
         self.state_modules = [
-            eventhandler.PygameEventHandler()
+            demo_loader,
+            eventhandler.PygameEventHandler(),
+            director.Director()
         ]
 
         # Render modules.
