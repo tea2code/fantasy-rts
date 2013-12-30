@@ -16,7 +16,6 @@ Following features are planned for the near future.
 - Mouse and Keyboard commands.
 - Collect wood and build walls.
 - Direct control of creatures.
-- Continuous extended demo game for profiling.
 
 ## Attribution
 
