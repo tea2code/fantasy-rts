@@ -10,6 +10,7 @@ class Game:
     tasks -- The task list (data.tasklist).
     tile_x -- The size of the map in x direction (int).
     tile_y -- The size of the map in y direction (int).
+    world -- Non-dynamic world objects (list).
     """
 
     def __init__(self):
@@ -18,3 +19,4 @@ class Game:
         self.tasks = tasks.TaskList()
         self.tile_x = 100
         self.tile_y = 100
+        self.world = []

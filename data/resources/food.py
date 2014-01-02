@@ -1,5 +1,5 @@
 class Food:
-    """ Represents a food resource.
+    """ Represents a food resources.
 
     Member:
     nutrition -- The nutritional value of this food (float).

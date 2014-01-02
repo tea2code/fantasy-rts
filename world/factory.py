@@ -2,7 +2,9 @@ import random
 
 from data import point
 from data import tasks
+from data.resources import food
 from data.world import creature
+from data.world import shrub
 
 
 def new_creature(data, x, y, run_time):
@@ -18,6 +20,21 @@ def new_creature(data, x, y, run_time):
     new_task(data, c, tasks.TaskType.NEW_TASK_OR_IDLE, due_time)
 
     return c
+
+def new_shrub(data, x, y):
+    """ Add a new shrub object to given position. May contain food. Returns the
+    shrub. """
+    # Create food.
+    nutrition = random.random()
+    f = food.Food(nutrition)
+
+    # Create shrub.
+    s = shrub.Shrub(food)
+    s.pos = point.Point(x, y)
+    data.game.world.append(s)
+    data.dirty_pos.add(s.pos)
+
+    return s
 
 def new_task(data, creature, type, time):
     """ Adds a new task for given creature. Returns the task. """

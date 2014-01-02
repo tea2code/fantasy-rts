@@ -4,7 +4,7 @@ class Shrub:
     """ A shrub which may contain food.
 
     Member:
-    food -- The food resource (data.resource.food).
+    food -- The food resources (data.resources.food).
     pos -- The position of the shrub (data.point).
     """
 
