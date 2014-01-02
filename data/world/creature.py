@@ -1,4 +1,4 @@
-from . import direction, point
+from .. import direction, point
 
 class Creature:
     """ Basic creature.

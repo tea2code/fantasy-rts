@@ -3,7 +3,8 @@ import time
 from data import level
 from data import point
 from data import tile
-from general import factory
+from world import factory
+
 
 class Demo:
     """ Creates a repeatable demo game.
