@@ -10,6 +10,7 @@ class PygameSpriteLoader:
     Member:
     _dir_sprite -- Mapping of direction to sprite (dict).
     _tile_sprite -- Mapping of tile to sprite (dict).
+    _world_sprite -- Mapping of world object to sprite (dict).
     """
 
     def __init__(self):
@@ -23,6 +24,9 @@ class PygameSpriteLoader:
             tile.PLAIN: sprite.PLAIN,
             tile.WALL: sprite.WALL
         }
+        self._world_sprite = {
+            'Shrub': sprite.SHRUB
+        }
 
     def load(self, sprite_path):
         """ Load the sprite image. """
@@ -35,3 +39,8 @@ class PygameSpriteLoader:
     def sprite_by_tile(self, tile):
         """ Returns the sprite for the given tile. """
         return self._tile_sprite[tile] if tile in self._tile_sprite else sprite.UNKNOWN
+
+    def world_sprite_by_obj(self, obj):
+        """ Returns the world sprite for the given world object. """
+        name = obj.__class__.__name__
+        return self._world_sprite[name] if name in self._world_sprite else sprite.UNKNOWN

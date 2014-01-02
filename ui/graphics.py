@@ -72,6 +72,7 @@ class PygameGraphics:
         dirty_rects = []
         dirty_pos = []
 
+        # First render tile.
         if graphics.view_updated:
             self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
             self.__draw_background(data)
@@ -82,6 +83,16 @@ class PygameGraphics:
                     dirty_rects.append(rect)
                     dirty_pos.append(pos)
 
+        # Render world objects.
+        for obj in game.world:
+            if not graphics.view_updated and obj.pos not in dirty_pos:
+                continue
+            pos = obj.pos - self._view_offset_point
+            xy = self.__pos_to_screen(pos, graphics.tile)
+            sprite = self._sprite_loader.world_sprite_by_obj(obj)
+            self.screen.blit(self.sprite_img, xy, sprite)
+
+        # At last render creatures.
         for creature in game.creatures:
             if not graphics.view_updated and creature.pos not in dirty_pos:
                 continue

@@ -29,7 +29,7 @@ def new_shrub(data, x, y):
     f = food.Food(nutrition)
 
     # Create shrub.
-    s = shrub.Shrub(food)
+    s = shrub.Shrub(f)
     s.pos = point.Point(x, y)
     data.game.world.append(s)
     data.dirty_pos.add(s.pos)

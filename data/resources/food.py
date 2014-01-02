@@ -7,3 +7,6 @@ class Food:
 
     def __init__(self, nutrition):
         self.nutrition = nutrition
+
+    def __str__(self):
+        return 'Food({0:.2f})'.format(self.nutrition)

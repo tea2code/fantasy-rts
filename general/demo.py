@@ -3,6 +3,7 @@ import time
 from data import level
 from data import point
 from data import tile
+from gamemath import comparison
 from world import factory
 
 
@@ -50,5 +51,11 @@ class Demo:
                 factory.new_creature(self.data, x, y, 0)
 
     def tick(self, run_time, delta_time, data):
+        if len(data.game.world) < 10 and run_time % 1 <= delta_time:
+            # Create new shrub.
+            pos = data.game.free_rand_pos()
+            s = factory.new_shrub(data, pos.x, pos.y)
+
+        # Burn additional time.
         if self.TIME_BURNER:
             time.sleep(self.TIME_BURNER)
