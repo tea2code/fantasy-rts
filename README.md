@@ -8,7 +8,7 @@ Current Version: __1__
 
 - Version 1: Basic framework with simple demo level.
 - Version 2: Basic creature with simple behaviour related to food.
-- Version 3: Read all ingame configuration from files.
+- Version 3: Read all ingame configuration from files. Ingame resource system.
 
 ## Coming Soon
 
