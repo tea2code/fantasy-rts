@@ -1,9 +1,9 @@
+import random
 import time
 
 from data import level
 from data import point
 from data import tile
-from gamemath import comparison
 from world import factory
 
 
@@ -49,6 +49,7 @@ class Demo:
         for x in range(1, num_x):
             for y in range(1, num_y):
                 factory.new_creature(self.data, x, y, 0)
+        random.shuffle(self.data.game.creatures)
 
     def tick(self, run_time, delta_time, data):
         if len(data.game.world) < 10 and run_time % 1 <= delta_time:
