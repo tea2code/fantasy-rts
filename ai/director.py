@@ -11,4 +11,4 @@ class Director:
         for task in data.game.tasks.take(run_time):
             if task.type == tasks.TaskType.NEW_TASK_OR_IDLE:
                 time = run_time + random.random()
-                factory.new_task(data, task.appointee, tasks.TaskType.NEW_TASK_OR_IDLE, time)
+                data.game.tasks.insert(time, task)

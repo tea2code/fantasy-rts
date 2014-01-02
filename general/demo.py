@@ -42,7 +42,7 @@ class Demo:
         self.data.game.level = lvl
 
         # Add creatures.
-        num_x = 10
+        num_x = 20
         num_y = num_x
         for x in range(1, num_x):
             for y in range(1, num_y):

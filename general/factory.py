@@ -1,8 +1,9 @@
 import random
 
-from data import creature
 from data import point
 from data import tasks
+from data.world import creature
+
 
 def new_creature(data, x, y, run_time):
     """ Adds a new creature at given position. Returns the creature. """
