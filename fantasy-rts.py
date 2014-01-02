@@ -20,7 +20,7 @@ class MainLoopImp(mainloop.MainLoop):
     state_modules -- Modules regarding updating the state (list).
     """
 
-    FPS = 1000
+    FPS = 100
     LEVEL_SIZE = 100
     MAX_FRAME_TIME = 0.25
 
