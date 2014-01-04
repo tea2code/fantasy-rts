@@ -1,7 +1,11 @@
+import config
+
 from ai import director
+from data import configuration
 from data import data
 from data import game as gamestate
 from data import graphics as graphicsstate
+from data.config import style
 from general import cleaner
 from general import demo
 from general import mainloop
@@ -10,6 +14,7 @@ from ui import eventhandler, graphics
 class MainLoopImp(mainloop.MainLoop):
     """
     Constants:
+    CONFIG_DIR -- Directory of the configuration (string).
     FPS -- Frames per second (int).
     LEVEL_SIZE -- Size of a level (int).
     MAX_FRAME_TIME -- Maximum time a frame may take (float).
@@ -20,6 +25,7 @@ class MainLoopImp(mainloop.MainLoop):
     state_modules -- Modules regarding updating the state (list).
     """
 
+    CONFIG_DIR = 'mod/'
     FPS = 100
     LEVEL_SIZE = 100
     MAX_FRAME_TIME = 0.25
@@ -42,9 +48,15 @@ class MainLoopImp(mainloop.MainLoop):
         graphics_data.window_title = 'Fantasy-RTS (FPS: {0:.0f})'
 
         self.data = data.Data()
+        self.data.config = configuration.Configuration()
+        self.data.config.style = style.Style()
         self.data.game = game_data
         self.data.graphics = graphics_data
 
+        # Load configuration.
+        config.load_config(self.data, self.CONFIG_DIR)
+
+        # Demo mode.
         demo_loader = demo.Demo(self.data)
         demo_loader.load(self.LEVEL_SIZE)
 

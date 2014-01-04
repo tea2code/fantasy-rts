@@ -3,92 +3,76 @@ style:
     
     images:
         namespace: image
-        
         image:
-            name: vanilla
-            path: vanilla-style/sprite.png
+            - name: vanilla
+              path: vanilla-style/sprite.png
     
     sprites:
         namespace: sprite
         image: style.image.vanilla
         width: 16
         height: 16
-        
-        sprite: 
-            name: unknown
-            x: 18
-            y: 1
-        
-        sprite: 
-            name: plain
-            x: 18
-            y: 18
-        
-        sprite: 
-            name: wall
-            x: 18
-            y: 35
-            
         sprite:
-            name: shrub
-            x: 18
-            y: 69
+            - name: unknown
+              x: 18
+              y: 1
             
-        sprite:
-            name: creature-top
-            x: 35
-            y: 52
+            - name: plain
+              x: 18
+              y: 18
             
-        sprite:
-            name: creature-right
-            x: 18
-            y: 52
-            
-        sprite:
-            name: creature-left
-            x: 35
-            y: 52
-            
-        sprite:
-            name: creature-down
-            x: 18
-            y: 52
+            - name: wall
+              x: 18
+              y: 35
+                
+            - name: shrub
+              x: 18
+              y: 69
+                
+            - name: creature-top
+              x: 35
+              y: 52
+                
+            - name: creature-right
+              x: 18
+              y: 52
+                
+            - name: creature-left
+              x: 35
+              y: 52
+                
+            - name: creature-down
+              x: 18
+              y: 52
         
     mappings:
         namespace: mapping
         default: style.sprite.unknown
-        
         mapping:
-            name: plain
-            map: tile.plain
-            to: style.sprite.plain
-        
-        mapping:
-            name: wall
-            map: tile.wall
-            to: style.sprite.wall
+            - name: plain
+              map: tile.plain
+              to: style.sprite.plain
             
-        mapping:
-            name: shrub
-            map: entity.shrub
-            to: style.sprite.shrub
-            
-        mapping:
-            name: creature-top
-            map: entity.creature-top
-            to: style.sprite.creature-top
-            
-        mapping:
-            name: creature-right
-            map: entity.creature-right
-            to: style.sprite.creature-right
-            
-        mapping:
-            name: creature-left
-            map: entity.creature-left
-            to: style.sprite.creature-left
-            
-        mapping:
-            name: creature-down
-            map: entity.creature-down
-            to: style.sprite.creature-down
+            - name: wall
+              map: tile.wall
+              to: style.sprite.wall
+                
+            - name: shrub
+              map: entity.shrub
+              to: style.sprite.shrub
+                
+            - name: creature-top
+              map: entity.creature-top
+              to: style.sprite.creature-top
+                
+            - name: creature-right
+              map: entity.creature-right
+              to: style.sprite.creature-right
+                
+            - name: creature-left
+              map: entity.creature-left
+              to: style.sprite.creature-left
+                
+            - name: creature-down
+              map: entity.creature-down
+              to: style.sprite.creature-down
