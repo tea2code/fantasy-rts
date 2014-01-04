@@ -47,9 +47,12 @@ class MainLoopImp(mainloop.MainLoop):
         graphics_data.view_y = 30
         graphics_data.window_title = 'Fantasy-RTS (FPS: {0:.0f})'
 
+        config_data = configuration.Configuration()
+        config_data.config_dir = self.CONFIG_DIR
+        config_data.style = style.Style()
+
         self.data = data.Data()
-        self.data.config = configuration.Configuration()
-        self.data.config.style = style.Style()
+        self.data.config = config_data
         self.data.game = game_data
         self.data.graphics = graphics_data
 

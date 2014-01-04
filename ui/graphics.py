@@ -20,8 +20,7 @@ class PygameGraphics:
         size = (graphics.view_x * graphics.tile, graphics.view_y * graphics.tile)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
-        self._sprite_loader = spriteloader.PygameSpriteLoader()
-        self.sprite_img = self._sprite_loader.load(graphics.sprite)
+        self._sprite_loader = spriteloader.PygameSpriteLoader(data)
 
         self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
         self.__show_title(graphics.window_title)
@@ -53,8 +52,8 @@ class PygameGraphics:
         if move_point:
             pos += self._view_offset_point
         level_tile = game.level[pos] if pos in game.level else game.level.default_tile
-        tile_sprite = self._sprite_loader.sprite_by_tile(level_tile)
-        self.screen.blit(self.sprite_img, (x, y), tile_sprite)
+        sprite_img, tile_sprite = self._sprite_loader.sprite_by_tile(level_tile)
+        self.screen.blit(sprite_img, (x, y), tile_sprite)
         return x, y, graphics.tile, graphics.tile
 
     def __pos_to_screen(self, pos, tile):
@@ -89,8 +88,8 @@ class PygameGraphics:
                 continue
             pos = obj.pos - self._view_offset_point
             xy = self.__pos_to_screen(pos, graphics.tile)
-            sprite = self._sprite_loader.world_sprite_by_obj(obj)
-            self.screen.blit(self.sprite_img, xy, sprite)
+            sprite_img, sprite = self._sprite_loader.world_sprite_by_obj(obj)
+            self.screen.blit(sprite_img, xy, sprite)
 
         # At last render creatures.
         for creature in game.creatures:
@@ -99,8 +98,8 @@ class PygameGraphics:
             pos = creature.pos - self._view_offset_point
             xy = self.__pos_to_screen(pos, graphics.tile)
             dir = creature.direction if creature.direction != direction.STOP else creature.last_direction
-            sprite = self._sprite_loader.creature_sprite_by_dir(dir)
-            self.screen.blit(self.sprite_img, xy, sprite)
+            sprite_img, sprite = self._sprite_loader.creature_sprite_by_dir(dir)
+            self.screen.blit(sprite_img, xy, sprite)
 
         if graphics.view_updated:
             pygame.display.flip()
