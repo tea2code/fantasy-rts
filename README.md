@@ -34,7 +34,7 @@ The variable *namespace* describes a namespace path of a certain entity. For eve
 
 Example:
 
-```YAML
+```yaml
 style:
     namespace: style
     
@@ -57,7 +57,7 @@ This describes a sprite entity with the *name* "unknown" in the *namespace* "spr
 
 #### Style Reference:
 
-```YAML
+```yaml
 style:
     namespace: <string>
 
