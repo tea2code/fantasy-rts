@@ -34,17 +34,15 @@ The variable *namespace* describes a namespace path of a certain entity. For eve
 
 Example:
 
-```yaml
-style:
-    namespace: style
+    style:
+        namespace: style
+        
+        sprites:
+            namespace: sprite
     
-    sprites:
-        namespace: sprite
-
-        sprite:
-            name: unknown
-            ...
-```
+            sprite:
+                name: unknown
+                ...
 
 This describes a sprite entity with the *name* "unknown" in the *namespace* "sprite" which is in the *namespace* "style". This means the full id of this sprite entity is "style.sprite.unknown". 
 
@@ -57,40 +55,38 @@ This describes a sprite entity with the *name* "unknown" in the *namespace* "spr
 
 #### Style Reference:
 
-```yaml
-style:
-    namespace: <string>
-
-    images:
+    style:
         namespace: <string>
-        
-        image:
-            name: <string>
-            path: <string>
-
-    sprites:
-        namespace: <string>
-        image: <id, optional>
-        width: <int, optional>
-        height: <int, optional>
-
-        sprite:
-            name: <string>
+    
+        images:
+            namespace: <string>
+            
+            image:
+                name: <string>
+                path: <string>
+    
+        sprites:
+            namespace: <string>
             image: <id, optional>
-            x: <int>
-            y: <int>
             width: <int, optional>
             height: <int, optional>
-
-    mappings:
-        namespace: <string>
-        default: <id>
-
-        mapping:
-            name: <string>
-            map: <id>
-            to: <id>
-```
+    
+            sprite:
+                name: <string>
+                image: <id, optional>
+                x: <int>
+                y: <int>
+                width: <int, optional>
+                height: <int, optional>
+    
+        mappings:
+            namespace: <string>
+            default: <id>
+    
+            mapping:
+                name: <string>
+                map: <id>
+                to: <id>
 
 Both "sprites" and "sprite" can have the attributes "image", "width" and "height". One must always have them. If they are set on "sprites" they serve as default values for all "sprite" entities. Set on "sprite" they are individual for this entity and will override any values from "sprites".
 
