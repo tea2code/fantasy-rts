@@ -91,3 +91,5 @@ This describes a sprite entity with the *name* "unknown" in the *namespace* "spr
 Both "sprites" and "sprite" can have the attributes "image", "width" and "height". One must always have them. If they are set on "sprites" they serve as default values for all "sprite" entities. Set on "sprite" they are individual for this entity and will override any values from "sprites".
 
 The attribute "default" is the id of a sprite which will be used if no mapping is found.
+
+The types "sprite", "image" and "mapping" can/should/will exist multiple times. Each representing a single entity.
