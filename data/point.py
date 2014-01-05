@@ -204,3 +204,8 @@ class Point:
         2
         """
         return Point(self._x - other._x, self._y - other._y)
+
+if __name__ == '__main__':
+    print('Executing doctest.')
+    import doctest
+    doctest.testmod()
