@@ -5,14 +5,10 @@ class YamlGameReader(basereader.BaseYamlReader):
     """ Yaml reader for game types.
 
     Constants:
-    VALUE_NAME
-    VALUE_NAMESPACE
     VALUE_SIZE_X
     VALUE_SIZE_Y
     """
 
-    VALUE_NAME = 'name'
-    VALUE_NAMESPACE = 'namespace'
     VALUE_SIZE_X = 'size_x'
     VALUE_SIZE_Y = 'size_y'
 

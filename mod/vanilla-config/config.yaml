@@ -1,7 +1,4 @@
 config:
-    namespace: config
-    name: global
-    
     fps: 100
     max_frame_time: 0.25
     scroll_width_x: 20

@@ -2,7 +2,8 @@ class Graphics:
     """ The graphics state.
 
     Member:
-    tile -- The size of a tile (int).
+    tile_x -- The size of a tile in x direction (int).
+    tile_y -- The size of a tile in y direction (int).
     view_x -- Size of the view port in x direction (int).
     view_y -- Size of the view port in y direction (int).
     view_offset_x -- Offset of the view port in x direction (int).
@@ -12,7 +13,8 @@ class Graphics:
     """
 
     def __init__(self):
-        self.tile = 16
+        self.tile_x = 16
+        self.tile_y = 16
         self.view_x = 40
         self.view_y = 30
         self.view_offset_x = 0

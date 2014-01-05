@@ -61,6 +61,9 @@ The ID is used to link different data and check if a value already exists and sh
 
     style:
         namespace: <string>
+
+        tile_x: <int>
+        tile_y: <int>
     
         images: <optional>
             namespace: <string>
@@ -98,20 +101,12 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
 #### Game Reference:
 
     game:
-        namespace: <string>
-        name: <string>
-
         size_x: <int>
         size_y: <int>
-
-In this case "namespace" and "name" are at the same level defined because currently exists no substructure.
 
 #### Config Reference:
 
     config:
-        namespace: <string>
-        name: <string>
-
         fps: <int>
         max_frame_time: <float>
         scroll_width_x: <int>
@@ -119,5 +114,3 @@ In this case "namespace" and "name" are at the same level defined because curren
         view_x: <int>
         view_y: <int>
         window_title: <string>
-
-In this case "namespace" and "name" are at the same level defined because currently exists no substructure.

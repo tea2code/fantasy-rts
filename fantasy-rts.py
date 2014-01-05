@@ -27,9 +27,7 @@ class MainLoopImp(mainloop.MainLoop):
     def __init__(self):
         # Data.
         game_data = gamestate.Game()
-
         graphics_data = graphicsstate.Graphics()
-        graphics_data.tile = 16
 
         config_data = configuration.Configuration()
         config_data.config_dir = self.CONFIG_DIR

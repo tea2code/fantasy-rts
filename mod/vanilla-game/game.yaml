@@ -1,6 +1,3 @@
 game:
-    namespace: game
-    name: global
-    
     size_x: 100
     size_y: 100

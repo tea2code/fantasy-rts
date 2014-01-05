@@ -26,14 +26,17 @@ class YamlParser:
                 if key == self.NAME_STYLE:
                     # Parse.
                     parser = stylereader.YamlStyleReader()
-                    value = parser.parse(root[key])
+                    value_graphics, value_style = parser.parse(root[key])
 
                     # Update.
-                    if value.default_mapping:
-                        data.config.style.default_mapping = value.default_mapping
-                    data.config.style.images.update(value.images)
-                    data.config.style.mappings.update(value.mappings)
-                    data.config.style.sprites.update(value.sprites)
+                    data.graphics.tile_x = value_graphic.tile_x
+                    data.graphics.tile_y = value_graphic.tile_y
+
+                    if value_style.default_mapping:
+                        data.config.style.default_mapping = value_style.default_mapping
+                    data.config.style.images.update(value_style.images)
+                    data.config.style.mappings.update(value_style.mappings)
+                    data.config.style.sprites.update(value_style.sprites)
 
                 elif key == self.NAME_GAME:
                     # Parse.

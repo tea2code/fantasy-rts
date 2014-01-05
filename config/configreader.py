@@ -8,8 +8,6 @@ class YamlConfigReader(basereader.BaseYamlReader):
     Constants:
     VALUE_FPS
     VALUE_MAX_FRAME_TIME
-    VALUE_NAME
-    VALUE_NAMESPACE
     VALUE_SCROLL_WIDTH_X
     VALUE_SCROLL_WIDTH_Y
     VALUE_VIEW_X
@@ -19,8 +17,6 @@ class YamlConfigReader(basereader.BaseYamlReader):
 
     VALUE_FPS = 'fps'
     VALUE_MAX_FRAME_TIME = 'max_frame_time'
-    VALUE_NAME = 'name'
-    VALUE_NAMESPACE = 'namespace'
     VALUE_SCROLL_WIDTH_X = 'scroll_width_x'
     VALUE_SCROLL_WIDTH_Y = 'scroll_width_y'
     VALUE_VIEW_X = 'view_x'

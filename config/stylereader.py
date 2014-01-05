@@ -1,4 +1,5 @@
 from . import basereader
+from data import graphics
 from data.config import sprite as sprite_class
 from data.config import style
 
@@ -18,6 +19,8 @@ class YamlStyleReader(basereader.BaseYamlReader):
     VALUE_PATH
     VALUE_SPRITE
     VALUE_SPRITES
+    VALUE_TILE_X
+    VALUE_TILE_Y
     VALUE_TO
     VALUE_WIDTH
     VALUE_X
@@ -36,24 +39,31 @@ class YamlStyleReader(basereader.BaseYamlReader):
     VALUE_PATH = 'path'
     VALUE_SPRITE = 'sprite'
     VALUE_SPRITES = 'sprites'
+    VALUE_TILE_X = 'tile_x'
+    VALUE_TILE_Y = 'tile_y'
     VALUE_TO = 'to'
     VALUE_WIDTH = 'width'
     VALUE_X = 'x'
     VALUE_Y = 'y'
 
     def parse(self, root):
-        """ Parse the style structure. Returns a config style object. """
+        """ Parse the style structure. Returns a graphics and a config
+        style object. """
 
         namespace = self.read_req_string(root, self.VALUE_NAMESPACE)
 
-        result = style.Style()
+        result_graphics = graphics.Graphics()
+        result_graphics.tile_x = self.read_req_int(root, self.VALUE_TILE_X)
+        result_graphics.tile_y = self.read_req_int(root, self.VALUE_TILE_Y)
+
+        result_style = style.Style()
         if self.has(root, self.VALUE_IMAGES):
-            result.images = self.__images(namespace, root)
+            result_style.images = self.__images(namespace, root)
         if self.has(root, self.VALUE_MAPPINGS):
-            result.default_mapping, result.mappings = self.__mappings(namespace, root)
+            result_style.default_mapping, result_style.mappings = self.__mappings(namespace, root)
         if self.has(root, self.VALUE_SPRITES):
-            result.sprites = self.__sprites(namespace, root)
-        return result
+            result_style.sprites = self.__sprites(namespace, root)
+        return result_graphics, result_style
 
     def __images(self, namespace, root):
         """ Parse images. """

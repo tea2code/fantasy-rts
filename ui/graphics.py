@@ -17,7 +17,7 @@ class PygameGraphics:
     def __init__(self, data):
         graphics = data.graphics
 
-        size = (graphics.view_x * graphics.tile, graphics.view_y * graphics.tile)
+        size = (graphics.view_x * graphics.tile_x, graphics.view_y * graphics.tile_y)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
         self._sprite_loader = spriteloader.PygameSpriteLoader(data)
@@ -48,16 +48,16 @@ class PygameGraphics:
     def __draw_pos(self, pos, data, move_point=True):
         game = data.game
         graphics = data.graphics
-        x, y = self.__pos_to_screen(pos, graphics.tile)
+        x, y = self.__pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
         if move_point:
             pos += self._view_offset_point
         level_tile = game.level[pos] if pos in game.level else game.level.default_tile
         sprite_img, tile_sprite = self._sprite_loader.sprite_by_tile(level_tile)
         self.screen.blit(sprite_img, (x, y), tile_sprite)
-        return x, y, graphics.tile, graphics.tile
+        return x, y, graphics.tile_x, graphics.tile_y
 
-    def __pos_to_screen(self, pos, tile):
-        return int(pos.x * tile), int(pos.y * tile)
+    def __pos_to_screen(self, pos, tile_x, tile_y):
+        return int(pos.x * tile_x), int(pos.y * tile_y)
 
     def __show_title(self, window_title):
         fps = self.clock.get_fps()
@@ -87,7 +87,7 @@ class PygameGraphics:
             if not graphics.view_updated and obj.pos not in dirty_pos:
                 continue
             pos = obj.pos - self._view_offset_point
-            xy = self.__pos_to_screen(pos, graphics.tile)
+            xy = self.__pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
             sprite_img, sprite = self._sprite_loader.world_sprite_by_obj(obj)
             self.screen.blit(sprite_img, xy, sprite)
 
@@ -96,7 +96,7 @@ class PygameGraphics:
             if not graphics.view_updated and creature.pos not in dirty_pos:
                 continue
             pos = creature.pos - self._view_offset_point
-            xy = self.__pos_to_screen(pos, graphics.tile)
+            xy = self.__pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
             dir = creature.direction if creature.direction != direction.STOP else creature.last_direction
             sprite_img, sprite = self._sprite_loader.creature_sprite_by_dir(dir)
             self.screen.blit(sprite_img, xy, sprite)
