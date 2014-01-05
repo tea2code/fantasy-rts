@@ -17,7 +17,7 @@ class YamlGameReader(basereader.BaseYamlReader):
     VALUE_SIZE_Y = 'size_y'
 
     def parse(self, root):
-        """ Parse the game structure. Returns a config game object. """
+        """ Parse the game structure. Returns a game object. """
 
         result = game.Game()
         result.size_x = self.read_req_int(root, self.VALUE_SIZE_X)

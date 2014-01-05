@@ -13,6 +13,7 @@ class BaseYamlReader:
 
     def __init__(self):
         self.error_bool = 'Value "{0}" must be boolean.'
+        self.error_float = 'Value "{0}" must be floating point.'
         self.error_int = 'Value "{0}" must be integer.'
         self.error_missing = 'Missing value "{0}".'
         self.namespace_separator = '.'
@@ -34,6 +35,10 @@ class BaseYamlReader:
         """ Read a boolean value. """
         return self.__generic_read(root, name, default, bool, self.error_bool)
 
+    def read_float(self, root, name, default):
+        """ Read a floating point value. """
+        return self.__generic_read(root, name, default, float, self.error_float)
+
     def read_int(self, root, name, default):
         """ Read an integer value. """
         return self.__generic_read(root, name, default, int, self.error_int)
@@ -52,6 +57,10 @@ class BaseYamlReader:
     def read_req_boolean(self, root, name):
         """ Read a required boolean value. """
         return self.__generic_req_read(root, name, bool, self.error_bool)
+
+    def read_req_float(self, root, name):
+        """ Read a required floating point value. """
+        return self.__generic_req_read(root, name, float, self.error_float)
 
     def read_req_int(self, root, name):
         """ Read an required integer value. """

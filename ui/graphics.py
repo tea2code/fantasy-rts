@@ -28,12 +28,12 @@ class PygameGraphics:
         pygame.display.flip()
 
     def tick(self, run_time, delta_time, data):
-        # Show title and update clock.
-        self.__show_title(data.graphics.window_title)
-        self.clock.tick(data.graphics.fps) # Prevent unnecessary cpu load.
-
         # Update screen.
         self.__update_screen(data)
+
+        # Show title and update clock.
+        self.__show_title(data.graphics.window_title)
+        self.clock.tick(data.config.fps) # Prevent unnecessary cpu load.
 
     def __calc_view_offset(self, view_offset_x, view_offset_y):
         """ Calculate view offset point. """

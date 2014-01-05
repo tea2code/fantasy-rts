@@ -1,0 +1,11 @@
+config:
+    namespace: config
+    name: global
+    
+    fps: 100
+    max_frame_time: 0.25
+    scroll_width_x: 20
+    scroll_width_y: 15
+    view_x: 40
+    view_y: 30
+    window_title: "Fantasy-RTS (FPS: {0:.0f})"

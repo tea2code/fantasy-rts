@@ -2,8 +2,6 @@ class Graphics:
     """ The graphics state.
 
     Member:
-    fps -- The should be frame rate (int).
-    scroll_width -- Number of tiles scrolling changes the view port (int).
     tile -- The size of a tile (int).
     view_x -- Size of the view port in x direction (int).
     view_y -- Size of the view port in y direction (int).
@@ -14,8 +12,6 @@ class Graphics:
     """
 
     def __init__(self):
-        self.fps = 0
-        self.scroll_width = 3
         self.tile = 16
         self.view_x = 40
         self.view_y = 30

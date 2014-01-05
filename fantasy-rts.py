@@ -15,8 +15,6 @@ class MainLoopImp(mainloop.MainLoop):
     """
     Constants:
     CONFIG_DIR -- Directory of the configuration (string).
-    FPS -- Frames per second (int).
-    MAX_FRAME_TIME -- Maximum time a frame may take (float).
 
     Member:
     data -- The data module (data.Data).
@@ -25,22 +23,13 @@ class MainLoopImp(mainloop.MainLoop):
     """
 
     CONFIG_DIR = 'mod/'
-    FPS = 100
-    MAX_FRAME_TIME = 0.25
 
     def __init__(self):
-        super().__init__(1.0 / self.FPS, self.MAX_FRAME_TIME)
-
         # Data.
         game_data = gamestate.Game()
 
         graphics_data = graphicsstate.Graphics()
-        graphics_data.fps = self.FPS
-        graphics_data.scroll_width = 8
         graphics_data.tile = 16
-        graphics_data.view_x = 40
-        graphics_data.view_y = 30
-        graphics_data.window_title = 'Fantasy-RTS (FPS: {0:.0f})'
 
         config_data = configuration.Configuration()
         config_data.config_dir = self.CONFIG_DIR
@@ -70,6 +59,9 @@ class MainLoopImp(mainloop.MainLoop):
             graphics.PygameGraphics(self.data),
             cleaner.Cleaner()
         ]
+
+        # Initialize main loop.
+        super().__init__(1.0 / config_data.fps, config_data.max_frame_time)
 
     def render(self, run_time, delta_time):
         for module in self.render_modules:

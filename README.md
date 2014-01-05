@@ -55,6 +55,7 @@ The ID is used to link different data and check if a value already exists and sh
 - *int*: An integer value.
 - *optional*: This value is optional. If not set a value is always necessary.
 - *id*: A namespace id of a entity. See **ID, Namespace, Names** for more information.
+- *float*: A floating point value.
 
 #### Style Reference:
 
@@ -102,5 +103,21 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
 
         size_x: <int>
         size_y: <int>
+
+In this case "namespace" and "name" are at the same level defined because currently exists no substructure.
+
+#### Config Reference:
+
+    config:
+        namespace: <string>
+        name: <string>
+
+        fps: <int>
+        max_frame_time: <float>
+        scroll_width_x: <int>
+        scroll_width_y: <int>
+        view_x: <int>
+        view_y: <int>
+        window_title: <string>
 
 In this case "namespace" and "name" are at the same level defined because currently exists no substructure.
