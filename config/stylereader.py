@@ -42,7 +42,7 @@ class YamlStyleReader(basereader.BaseYamlReader):
     VALUE_Y = 'y'
 
     def parse(self, root):
-        """ Parse the style object. Returns a config style object. """
+        """ Parse the style structure. Returns a config style object. """
 
         namespace = self.read_req_string(root, self.VALUE_NAMESPACE)
 

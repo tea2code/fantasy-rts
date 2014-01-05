@@ -16,7 +16,6 @@ class MainLoopImp(mainloop.MainLoop):
     Constants:
     CONFIG_DIR -- Directory of the configuration (string).
     FPS -- Frames per second (int).
-    LEVEL_SIZE -- Size of a level (int).
     MAX_FRAME_TIME -- Maximum time a frame may take (float).
 
     Member:
@@ -27,7 +26,6 @@ class MainLoopImp(mainloop.MainLoop):
 
     CONFIG_DIR = 'mod/'
     FPS = 100
-    LEVEL_SIZE = 100
     MAX_FRAME_TIME = 0.25
 
     def __init__(self):
@@ -35,8 +33,6 @@ class MainLoopImp(mainloop.MainLoop):
 
         # Data.
         game_data = gamestate.Game()
-        game_data.tile_x = self.LEVEL_SIZE
-        game_data.tile_y = self.LEVEL_SIZE
 
         graphics_data = graphicsstate.Graphics()
         graphics_data.fps = self.FPS
@@ -60,7 +56,7 @@ class MainLoopImp(mainloop.MainLoop):
 
         # Demo mode.
         demo_loader = demo.Demo(self.data)
-        demo_loader.load(self.LEVEL_SIZE)
+        demo_loader.load(game_data.size_x, game_data.size_y)
 
         # State modules.
         self.state_modules = [

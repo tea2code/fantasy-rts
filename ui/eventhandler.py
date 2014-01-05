@@ -19,11 +19,11 @@ class PygameEventHandler:
                                       0)
         elif event.key == pygame.K_DOWN:
             graph.view_offset_y = min(graph.view_offset_y + graph.scroll_width,
-                                      game.tile_y - graph.view_y)
+                                      game.size_y - graph.view_y)
         elif event.key == pygame.K_LEFT:
             graph.view_offset_x = max(graph.view_offset_x - graph.scroll_width,
                                       0)
         elif event.key == pygame.K_RIGHT:
             graph.view_offset_x = min(graph.view_offset_x + graph.scroll_width,
-                                      game.tile_x - graph.view_x)
+                                      game.size_x - graph.view_x)
         graph.view_updated = True

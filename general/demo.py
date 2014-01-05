@@ -22,25 +22,27 @@ class Demo:
     def __init__(self, data):
         self.data = data
 
-    def load(self, size):
+    def load(self, size_x, size_y):
         """ Loads the game into the data object. """
         # Create level map.
-        size_half = int(size / 2)
-        size_quarter = int(size / 4)
+        size_x_half = int(size_x / 2)
+        size_x_quarter = int(size_x / 4)
+        size_y_half = int(size_y / 2)
+        size_y_quarter = int(size_y / 4)
         offset = 5
         lvl = level.Level()
-        for x in range(size):
+        for x in range(size_x):
             lvl[point.Point(x, 0)] = tile.WALL
-            lvl[point.Point(x, size - 1)] = tile.WALL
-        for y in range(size):
+            lvl[point.Point(x, size_x - 1)] = tile.WALL
+        for y in range(size_y):
             lvl[point.Point(0, y)] = tile.WALL
-            lvl[point.Point(size - 1, y)] = tile.WALL
-        for x in range(size_quarter, size_half + size_quarter):
-            lvl[point.Point(x, size_quarter - offset)] = tile.WALL
-            lvl[point.Point(x, size_half + size_quarter + offset)] = tile.WALL
-        for y in range(size_quarter, size_half + size_quarter):
-            lvl[point.Point(size_quarter - offset, y)] = tile.WALL
-            lvl[point.Point(size_half + size_quarter + offset, y)] = tile.WALL
+            lvl[point.Point(size_y - 1, y)] = tile.WALL
+        for x in range(size_x_quarter, size_x_half + size_x_quarter):
+            lvl[point.Point(x, size_x_quarter - offset)] = tile.WALL
+            lvl[point.Point(x, size_x_half + size_x_quarter + offset)] = tile.WALL
+        for y in range(size_y_quarter, size_y_half + size_y_quarter):
+            lvl[point.Point(size_y_quarter - offset, y)] = tile.WALL
+            lvl[point.Point(size_y_half + size_y_quarter + offset, y)] = tile.WALL
         self.data.game.level = lvl
 
         # Add creatures.

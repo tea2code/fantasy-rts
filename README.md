@@ -45,6 +45,8 @@ Example:
 
 This describes a sprite entity with the *name* "unknown" in the *namespace* "sprite" which itself is in the *namespace* "style". This means the full id of this sprite entity is "style.sprite.unknown". 
 
+The ID is used to link different data and check if a value already exists and should be overriden. For implementation reasons this may not always be the case. But that can change any time. This means always define namespace and name as specified in the following references.
+
 ### Modifications
 
 - *string*: A text value.
@@ -89,3 +91,14 @@ Both "sprites" and "sprite" can have the attributes "image", "width" and "height
 The attribute "default" is the id of a sprite which will be used if no mapping is found.
 
 The types "sprite", "image" and "mapping" can/should/will exist multiple times. Each representing a single entity.
+
+#### Game Reference:
+
+    game:
+        namespace: <string>
+        name: <string>
+
+        size_x: <int>
+        size_y: <int>
+
+In this case "namespace" and "name" are at the same level defined because currently exists no substructure.

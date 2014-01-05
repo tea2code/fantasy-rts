@@ -1,14 +1,17 @@
 import yaml
 
+from . import gamereader
 from . import stylereader
 
 class YamlParser:
     """ Parses configuration files in yaml format.
 
     Constants:
+    NAME_GAME
     NAME_STYLE
     """
 
+    NAME_GAME = 'game'
     NAME_STYLE = 'style'
 
     def parse(self, data, files):
@@ -28,3 +31,12 @@ class YamlParser:
                     data.config.style.images.update(value.images)
                     data.config.style.mappings.update(value.mappings)
                     data.config.style.sprites.update(value.sprites)
+
+                elif key == self.NAME_GAME:
+                    # Parse.
+                    parser = gamereader.YamlGameReader()
+                    value = parser.parse(root[key])
+
+                    # Update.
+                    data.game.size_x = value.size_x
+                    data.game.size_y = value.size_y

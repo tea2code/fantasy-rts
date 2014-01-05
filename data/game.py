@@ -11,9 +11,9 @@ class Game:
     Member:
     creature -- List of creatures (list).
     level -- The game level (data.level).
+    size_x -- The size of the map in x direction (int).
+    size_y -- The size of the map in y direction (int).
     tasks -- The task list (data.tasks).
-    tile_x -- The size of the map in x direction (int).
-    tile_y -- The size of the map in y direction (int).
     world -- Non-dynamic world objects (list).
     """
 
@@ -21,8 +21,8 @@ class Game:
         self.creatures = []
         self.level = level.Level()
         self.tasks = tasks.TaskList()
-        self.tile_x = 100
-        self.tile_y = 100
+        self.size_x = 100
+        self.size_y = 100
         self.world = []
 
     def free_rand_pos(self):
@@ -32,6 +32,6 @@ class Game:
         return pos
 
     def rand_pos(self):
-        x = random.randint(0, self.tile_x - 1)
-        y = random.randint(0, self.tile_y - 1)
+        x = random.randint(0, self.size_x - 1)
+        y = random.randint(0, self.size_y - 1)
         return point.Point(x, y)
