@@ -41,7 +41,6 @@ class MainLoopImp(mainloop.MainLoop):
         graphics_data = graphicsstate.Graphics()
         graphics_data.fps = self.FPS
         graphics_data.scroll_width = 8
-        graphics_data.sprite = 'sprite.png'
         graphics_data.tile = 16
         graphics_data.view_x = 40
         graphics_data.view_y = 30
