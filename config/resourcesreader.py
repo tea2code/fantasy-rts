@@ -4,7 +4,7 @@ from data.config import resources
 from data.config import resourcetype
 
 class YamlResourcesReader(basereader.BaseYamlReader):
-    """ Yaml reader for style types.
+    """ Yaml reader for resource types.
 
     Constants:
     VALUE_NAME

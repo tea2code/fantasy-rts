@@ -1,0 +1,9 @@
+entity:
+    namespace: entity
+    
+    statics:
+        namespace: static
+        static:
+            - name: berry-shrub
+              resource: resource.resource.berry
+              resource_chance: 0.8

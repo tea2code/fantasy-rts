@@ -1,3 +1,4 @@
+from .config import entity
 from .config import resources
 from .config import style
 
@@ -6,6 +7,7 @@ class Configuration:
 
     Member:
     config_dir -- The config directory (string).
+    entity -- The entity config (data.config.entity).
     fps -- The should be frame rate (int).
     max_frame_time -- Maximum time a frame may take (float).
     resources -- The resources config (data.config.resources).
@@ -16,6 +18,7 @@ class Configuration:
 
     def __init__(self):
         self.config_dir = ''
+        self.entity = entity.Entity()
         self.fps = 100
         self.max_frame_time = 0.25
         self.resources = resources.Resources()

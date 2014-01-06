@@ -134,3 +134,17 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
                   type_name: <string>
 
 The types "resource" and "type" can/should/will exist multiple times. Each representing a single entity.
+
+#### Entity Reference:
+
+    entity:
+        namespace: <string>
+        
+        statics:
+            namespace: <string>
+            static:
+                - name: <string>
+                  resource: <string, optional>
+                  resource_chance: <float, optional>
+            
+The type "static" can/should/will exist multiple times. Each representing a single entity.

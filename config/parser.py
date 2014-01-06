@@ -1,6 +1,7 @@
 import yaml
 
 from . import configreader
+from . import entityreader
 from . import gamereader
 from . import resourcesreader
 from . import stylereader
@@ -10,12 +11,14 @@ class YamlParser:
 
     Constants:
     NAME_CONFIG
+    NAME_ENTITY
     NAME_GAME
     NAME_RESOURCES
     NAME_STYLE
     """
 
     NAME_CONFIG = 'config'
+    NAME_ENTITY = 'entity'
     NAME_GAME = 'game'
     NAME_RESOURCES = 'resources'
     NAME_STYLE = 'style'
@@ -73,3 +76,11 @@ class YamlParser:
                     # Update.
                     data.config.resources.resources.update(value.resources)
                     data.config.resources.types.update(value.types)
+
+                elif key == self.NAME_ENTITY:
+                    # Parse.
+                    parser = entityreader.YamlEntityReader()
+                    value = parser.parse(root[key])
+
+                    # Update.
+                    data.config.entity.statics.update(value.statics)
