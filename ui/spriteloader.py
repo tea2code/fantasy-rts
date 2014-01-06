@@ -34,10 +34,6 @@ class PygameSpriteLoader:
             id = 'tile.wall'
         return self.get_sprite(id)
 
-    def world_sprite_by_obj(self, obj):
-        """ Only for compatibility. Remove later. """
-        return self.get_sprite('entity.shrub')
-
     def creature_sprite_by_dir(self, dir):
         """ Only for compatibility. Remove later. """
         if dir is direction.UP:

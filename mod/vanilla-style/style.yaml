@@ -60,7 +60,7 @@ style:
               to: style.sprite.wall
                 
             - name: shrub
-              map: entity.shrub
+              map: entity.static.berry-shrub
               to: style.sprite.shrub
                 
             - name: creature-top

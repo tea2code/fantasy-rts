@@ -135,7 +135,7 @@ class PygameGraphics:
                 continue
             pos = obj.pos - self._view_offset_point
             xy = self.pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
-            sprite_img, sprite = self._sprite_loader.world_sprite_by_obj(obj)
+            sprite_img, sprite = self._sprite_loader.get_sprite(obj.id)
             self.screen.blit(sprite_img, xy, sprite)
 
         # At last render creatures.
