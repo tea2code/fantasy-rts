@@ -57,7 +57,7 @@ class Demo:
         if len(data.game.world) < 10 and run_time % 1 <= delta_time:
             # Create new shrub.
             pos = data.game.free_rand_pos()
-            s = factory.new_shrub(data, pos.x, pos.y)
+            s = factory.new_world_entity(data, 'entity.static.berry-shrub', pos=pos)
 
         # Burn additional time.
         if self.TIME_BURNER:
