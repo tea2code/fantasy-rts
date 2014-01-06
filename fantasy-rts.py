@@ -26,24 +26,15 @@ class MainLoopImp(mainloop.MainLoop):
 
     def __init__(self):
         # Data.
-        game_data = gamestate.Game()
-        graphics_data = graphicsstate.Graphics()
-
-        config_data = configuration.Configuration()
-        config_data.config_dir = self.CONFIG_DIR
-        config_data.style = style.Style()
-
         self.data = data.Data()
-        self.data.config = config_data
-        self.data.game = game_data
-        self.data.graphics = graphics_data
+        self.data.config.config_dir = self.CONFIG_DIR
 
         # Load configuration.
         config.load_config(self.data, self.CONFIG_DIR)
 
         # Demo mode.
         demo_loader = demo.Demo(self.data)
-        demo_loader.load(game_data.size_x, game_data.size_y)
+        demo_loader.load(self.data.game.size_x, self.data.game.size_y)
 
         # State modules.
         self.state_modules = [
@@ -59,7 +50,7 @@ class MainLoopImp(mainloop.MainLoop):
         ]
 
         # Initialize main loop.
-        super().__init__(1.0 / config_data.fps, config_data.max_frame_time)
+        super().__init__(1.0 / self.data.config.fps, self.data.config.max_frame_time)
 
     def render(self, run_time, delta_time):
         for module in self.render_modules:

@@ -1,3 +1,7 @@
+from . import configuration
+from . import game
+from . import graphics
+
 class Data:
     """ The main data object.
 
@@ -9,7 +13,7 @@ class Data:
     """
 
     def __init__(self):
-        self.config = None
+        self.config = configuration.Configuration()
         self.dirty_pos = set()
-        self.game = None
-        self.graphics = None
+        self.game = game.Game()
+        self.graphics = graphics.Graphics()

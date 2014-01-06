@@ -2,6 +2,7 @@ import yaml
 
 from . import configreader
 from . import gamereader
+from . import resourcesreader
 from . import stylereader
 
 class YamlParser:
@@ -10,11 +11,13 @@ class YamlParser:
     Constants:
     NAME_CONFIG
     NAME_GAME
+    NAME_RESOURCES
     NAME_STYLE
     """
 
     NAME_CONFIG = 'config'
     NAME_GAME = 'game'
+    NAME_RESOURCES = 'resources'
     NAME_STYLE = 'style'
 
     def parse(self, data, files):
@@ -61,3 +64,12 @@ class YamlParser:
                     data.graphics.view_x = value_graphic.view_x
                     data.graphics.view_y = value_graphic.view_y
                     data.graphics.window_title = value_graphic.window_title
+
+                elif key == self.NAME_RESOURCES:
+                    # Parse.
+                    parser = resourcesreader.YamlResourcesReader()
+                    value = parser.parse(root[key])
+
+                    # Update.
+                    data.config.resources.resources.update(value.resources)
+                    data.config.resources.types.update(value.types)

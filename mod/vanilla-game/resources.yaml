@@ -1,0 +1,15 @@
+resources:
+    namespace: resource
+    
+    resources:
+        namespace: resource
+        resource:
+            - name: berry
+              type: resource.type.food
+              value: 1.0
+        
+    types:
+        namespace: type
+        type:
+            - name: food
+              type_name: food

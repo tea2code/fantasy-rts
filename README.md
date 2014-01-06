@@ -114,3 +114,23 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
         view_x: <int>
         view_y: <int>
         window_title: <string>
+
+#### Resources Reference:
+
+    resources:
+        namespace: <string>
+        
+        resources:
+            namespace: <string>
+            resource:
+                - name: <string>
+                  type: <string>
+                  value: <float>
+            
+        types:
+            namespace: <string>
+            type:
+                - name: <string>
+                  type_name: <string>
+
+The types "resource" and "type" can/should/will exist multiple times. Each representing a single entity.
