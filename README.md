@@ -12,6 +12,7 @@ Current Version: **4**
 - Version 4: Ingame resource system.
 - Version 5: Data structure for maps, resources, entities...
 - Version 6: Task system. Collect and use food.
+- Version 7: Support für multiple sprites per entity and unregular sized sprites.
 
 ## Coming Soon
 
