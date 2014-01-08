@@ -10,7 +10,8 @@ Current Version: **4**
 - Version 2: Basic creature with simple behaviour related to food.
 - Version 3: Read all ingame configuration from files. 
 - Version 4: Ingame resource system.
-- Version 5: Task system. Collect and use food.
+- Version 5: Data structure for maps, resources, entities...
+- Version 6: Task system. Collect and use food.
 
 ## Coming Soon
 
