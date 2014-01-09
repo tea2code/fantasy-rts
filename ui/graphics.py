@@ -41,7 +41,7 @@ class PygameGraphics:
         >>> PygameGraphics.pos_to_screen(p, 16, 18)
         (16, 36)
         """
-        return int(pos.x * tile_x), int(pos.y * tile_y)
+        return pos.int_x * tile_x, pos.int_y * tile_y
 
     def tick(self, run_time, delta_time, data):
         # Update screen.

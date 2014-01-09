@@ -50,7 +50,7 @@ class AStar:
         >>> level = {wall: tile.WALL}
         >>> a_star = AStar()
         >>> path = a_star.shortest_path(level, start, goal)
-        >>> path = [x.int_tuple() for x in path]
+        >>> path = [x.int_tuple2() for x in path]
         >>> print(path)
         [(0, 1), (0, 1), (1, 0)]
         """
