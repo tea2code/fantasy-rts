@@ -1,9 +1,7 @@
 import random
 
-from data import point
 from data import tasks
-from data import worldentity
-from data.world import creature
+from data.world import creature, point, worldentity
 
 
 def new_creature(data, x, y, run_time):

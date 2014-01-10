@@ -1,4 +1,4 @@
-from . import point
+from data.world import point
 
 UP = point.Point(0, -1)
 DOWN = point.Point(0, 1)

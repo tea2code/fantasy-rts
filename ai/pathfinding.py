@@ -1,4 +1,6 @@
-from data import direction, point, tile
+from data import direction, tile
+from data.world import point
+
 
 def distance(pos1, pos2):
     """ Calculates the Manhattan distance between two points.

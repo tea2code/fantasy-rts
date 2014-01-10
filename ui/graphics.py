@@ -2,7 +2,8 @@ import pygame
 
 from . import spriteloader
 from data import direction
-from data import point
+from data.world import point
+
 
 class PygameGraphics:
     """ Graphical representation of state using pygame.
@@ -33,7 +34,7 @@ class PygameGraphics:
         returns the left upper corner.
 
         Test:
-        >>> from data import point
+        >>> from data.world import point
         >>> p = point.Point(0, 0)
         >>> PygameGraphics.pos_to_screen(p, 16, 18)
         (0, 0)
@@ -56,13 +57,13 @@ class PygameGraphics:
         """ Checks if a position is visible on screen.
 
         Test:
+        >>> from data.world import point
         >>> from data import graphics
         >>> g = graphics.Graphics()
         >>> g.view_offset_x = 1
         >>> g.view_offset_y = 2
         >>> g.view_x = 5
         >>> g.view_y = 10
-        >>> from data import point
         >>> p = point.Point(0, 0)
         >>> PygameGraphics.visible(p, g)
         False

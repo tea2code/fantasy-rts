@@ -1,9 +1,10 @@
 import random
 
 from . import level
-from . import point
 from . import tasks
 from . import tile
+from data.world import point
+
 
 class Game:
     """ The game state.

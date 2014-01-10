@@ -1,8 +1,7 @@
 from ai import pathfinding
 from config import basereader
 from data import game
-from data import point
-from data.world import block
+from data.world import block, point
 from ui import graphics
 
 if __name__ == '__main__':
