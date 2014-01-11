@@ -148,5 +148,10 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
                 - name: <string>
                   resource: <string, optional>
                   resource_chance: <float, optional>
+
+        tiles:
+            namespace: <string>
+            tile:
+                - name: <string>
             
-The type "static" can/should/will exist multiple times. Each representing a single entity.
+The types "static" and "tile" can/should/will exist multiple times. Each representing a single entity.

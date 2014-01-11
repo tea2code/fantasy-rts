@@ -19,7 +19,7 @@ style:
               x: 18
               y: 1
             
-            - name: plain
+            - name: grass
               x: 18
               y: 18
             
@@ -51,12 +51,12 @@ style:
         namespace: mapping
         default: style.sprite.unknown
         mapping:
-            - name: plain
-              map: tile.plain
-              to: style.sprite.plain
+            - name: grass
+              map: entity.tile.grass
+              to: style.sprite.grass
             
             - name: wall
-              map: tile.wall
+              map: entity.tile.wall
               to: style.sprite.wall
                 
             - name: shrub

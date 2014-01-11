@@ -7,3 +7,9 @@ entity:
             - name: berry-shrub
               resource: resource.resource.berry
               resource_chance: 0.8
+              
+    tiles:
+        namespace: tile
+        tile:
+            - name: grass
+            - name: wall

@@ -29,9 +29,9 @@ class PygameSpriteLoader:
     def sprite_by_tile(self, t):
         """ Only for compatibility. Remove later. """
         if t is tile.PLAIN:
-            id = 'tile.plain'
+            id = 'entity.tile.grass'
         else:
-            id = 'tile.wall'
+            id = 'entity.tile.wall'
         return self.get_sprite(id)
 
     def creature_sprite_by_dir(self, dir):
