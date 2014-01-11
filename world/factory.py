@@ -1,7 +1,7 @@
 import random
 
 from data import tasks
-from data.world import creature, point, worldentity
+from data.world import creature, point, entity
 
 
 def new_creature(data, x, y, run_time):
@@ -28,8 +28,8 @@ def new_world_entity(data, id, x=None, y=None, pos=None):
     """ Add a new world entity object to given position. Returns the entity. """
     if pos is None:
         pos = point.Point(x, y)
-    entity = worldentity.WorldEntity(id)
-    entity.pos = pos
-    data.game.world.append(entity)
-    data.dirty_pos.add(entity.pos)
-    return entity
+    e = entity.Entity(id)
+    e.pos = pos
+    data.game.world.append(e)
+    data.dirty_pos.add(e.pos)
+    return e
