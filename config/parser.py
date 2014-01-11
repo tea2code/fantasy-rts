@@ -84,3 +84,4 @@ class YamlParser:
 
                     # Update.
                     data.config.entity.statics.update(value.statics)
+                    data.config.entity.tiles.update(value.tiles)
