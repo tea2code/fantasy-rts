@@ -1,15 +1,25 @@
 entity:
     namespace: entity
     
+    attributes:
+        namespace: attribute
+        attribute-category:
+            - namespace: blocking
+              attribute:
+                - name: wall
+    
     dynamics:
         namespace: dynamic
         dynamic:
             - name: creature
+              blocked: [entity.attribute.blocking.wall]
     
     statics:
         namespace: static
         static:
             - name: berry-shrub
+              blocked: [entity.attribute.blocking.wall]
+              blocking: []
               resource: resource.resource.berry
               resource_chance: 0.8
               
@@ -17,4 +27,6 @@ entity:
         namespace: tile
         tile:
             - name: grass
+              blocking: []
             - name: wall
+              blocking: [entity.attribute.blocking.wall]

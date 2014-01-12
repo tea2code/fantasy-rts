@@ -129,6 +129,31 @@ class Block():
         """
         self._tiles.append(tile)
 
+    def is_blocking(self, blocked):
+        """ Checks if one of the entities would block.
+
+        Test:
+        >>> from data.world import tile
+        >>> from data.world import dynamicentity
+        >>> t = tile.Tile('tile')
+        >>> t.blocking = ['block']
+        >>> b = Block()
+        >>> b.insert_tile(t)
+        >>> b.is_blocking(['block'])
+        True
+        >>> b.is_blocking(['non-block'])
+        False
+        """
+        def is_blocking_list(entity_list, blocked):
+            for entity in entity_list:
+                if any(i in blocked for i in entity.blocking):
+                    return True
+            return False
+
+        # Statics may block more often so check first.
+        return is_blocking_list(self._statics, blocked) or \
+               is_blocking_list(self._tiles, blocked)
+
     def remove_dynamic(self, entity):
         """ Removes a dynamic entity.
 

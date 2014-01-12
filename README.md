@@ -58,6 +58,7 @@ The ID is used to link different data and check if a value already exists and sh
 - *optional*: This value is optional. If not set a value is always necessary.
 - *id*: A namespace id of a entity. See **ID, Namespace, Names** for more information.
 - *float*: A floating point value.
+- []: List of values.
 
 #### Style Reference:
 
@@ -142,15 +143,25 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
     entity:
         namespace: <string>
         
+        attributes:
+        namespace: <string>
+            attribute-category:
+                - namespace: <string>
+                    attribute:
+                        - name: <string>
+
         dynamics:
             namespace: <string>
             dynamic:
                 - name: <string>
+                  blocked: [<string>]
 
         statics:
             namespace: <string>
             static:
                 - name: <string>
+                  blocked: [<string>]
+                  blocking: [<string>]
                   resource: <string, optional>
                   resource_chance: <float, optional>
 
@@ -158,5 +169,6 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
             namespace: <string>
             tile:
                 - name: <string>
+                  blocking: [<string>]
             
-The types "static" and "tile" can/should/will exist multiple times. Each representing a single entity.
+The types "attribute", "dynamic", "static" and "tile" can/should/will exist multiple times. Each representing a single entity.

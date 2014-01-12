@@ -83,6 +83,7 @@ class YamlParser:
                     value = parser.parse(root[key])
 
                     # Update.
+                    data.config.entity.attributes.update(value.attributes)
                     data.config.entity.dynamics.update(value.dynamics)
                     data.config.entity.statics.update(value.statics)
                     data.config.entity.tiles.update(value.tiles)

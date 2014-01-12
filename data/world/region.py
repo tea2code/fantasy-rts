@@ -1,4 +1,6 @@
-from . import dynamicentity, staticentity
+import random
+
+from . import dynamicentity, point, staticentity
 
 class Region:
     """ Represents a region in the world. A region is a map the player is
@@ -7,14 +9,54 @@ class Region:
 
     Member:
     region_generator -- The region generator behind the region (world.regiongenerator).
+    size_x -- The size of the map in x direction (int).
+    size_y -- The size of the map in y direction (int).
     _entity_pos -- Maps entities to their exact positions (dict).
     _pos_block -- Maps positions to the block on this position (dict).
     """
 
-    def __init__(self, region_generator):
+    def __init__(self, region_generator, size_x, size_y):
         self.region_generator = region_generator
+        self.size_x = size_x
+        self.size_y = size_y
         self._entity_pos = {}
         self._pos_block = {}
+
+    def free_random_pos(self, blocked, z_level=None):
+        """ Finds a random position which is free according to the given
+        blocked list. If z-level is set the position is on this level else it
+        can be everywhere.
+
+        Test:
+        >>> from data.world import tile
+        >>> t1 = tile.Tile('id')
+        >>> t1.blocking = ['block']
+        >>> t2 = tile.Tile('id')
+        >>> t2.blocking = ['block']
+        >>> from data.world import point
+        >>> p1 = point.Point(0, 0)
+        >>> p2 = point.Point(0, 1)
+        >>> p3 = point.Point(1, 0)
+        >>> p4 = point.Point(1, 1)
+        >>> from test import regiongenerator
+        >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
+        >>> r = Region(rg, 2, 2)
+        >>> r.set_pos(t1, p2)
+        >>> r.set_pos(t2, p3)
+        >>> fp = r.free_random_pos(['block'], 0)
+        >>> fp == p1 or fp == p4
+        True
+        >>> fp = r.free_random_pos(['block'], 0)
+        >>> fp == p1 or fp == p4
+        True
+        >>> fp = r.free_random_pos(['block'], 0)
+        >>> fp == p1 or fp == p4
+        True
+        """
+        pos = self.random_pos(z_level)
+        while self.get_block(pos).is_blocking(blocked):
+            pos = self.random_pos(z_level)
+        return pos
 
     def get_block(self, pos):
         """ Returns the block at the given position.
@@ -26,7 +68,7 @@ class Region:
         >>> p = point.Point()
         >>> from test import regiongenerator
         >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
-        >>> r = Region(rg)
+        >>> r = Region(rg, 2, 2)
         >>> b = r.get_block(p)
         >>> b.get_tiles()[0].id
         'entity.tile.grass'
@@ -45,7 +87,7 @@ class Region:
         >>> p = point.Point()
         >>> from test import regiongenerator
         >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
-        >>> r = Region(rg)
+        >>> r = Region(rg, 2, 2)
         >>> r.get_pos(e) # doctest: +ELLIPSIS
         Traceback (most recent call last):
         ...
@@ -55,6 +97,30 @@ class Region:
         True
         """
         return self._entity_pos[entity]
+
+    def random_pos(self, z_level=None):
+        """ Returns a random position on the map. If z-level is set the position
+        is on this level else it can be everywhere.
+
+        Test:
+        >>> from test import regiongenerator
+        >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
+        >>> r = Region(rg, 2, 2)
+        >>> p = r.random_pos(0)
+        >>> 0 <= p.x < 2 and 0 <= p.y < 2
+        True
+        >>> 0 <= p.x < 2 and 0 <= p.y < 2
+        True
+        >>> 0 <= p.x < 2 and 0 <= p.y < 2
+        True
+        >>> 0 <= p.x < 2 and 0 <= p.y < 2
+        True
+        """
+        x = random.randint(0, self.size_x - 1)
+        y = random.randint(0, self.size_y - 1)
+        if z_level is None:
+            z_level = 0 # TODO Select random z-level.
+        return point.Point(x, y, z_level)
 
     def remove_entity(self, entity):
         """ Removes an entity.
@@ -66,7 +132,7 @@ class Region:
         >>> p = point.Point()
         >>> from test import regiongenerator
         >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
-        >>> r = Region(rg)
+        >>> r = Region(rg, 2, 2)
         >>> r.set_pos(e, p)
         >>> r.get_pos(e) is p
         True
