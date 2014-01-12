@@ -239,7 +239,7 @@ class Point:
         return Point(self._x * scalar, self._y * scalar, self._z * scalar)
 
     def __str__(self):
-        template = 'Point({:.2f}, {:.2f})'
+        template = 'Point({:.2f}, {:.2f}, {:.2f})'
         return template.format(self._x, self._y, self._z)
 
     def __sub__(self, other):

@@ -22,6 +22,30 @@ class Region:
         self._entity_pos = {}
         self._pos_block = {}
 
+    def free_neighbors(self, pos, blocked):
+        """ Returns free neighbors of given position.
+
+        >>> from data.world import tile
+        >>> t = tile.Tile('id')
+        >>> t.blocking = ['block']
+        >>> from data.world import point
+        >>> p = point.Point(1, 0)
+        >>> from test import regiongenerator
+        >>> rg = regiongenerator.AllGrassRegionGenerator(2, 2)
+        >>> r = Region(rg, 2, 2)
+        >>> r.set_pos(t, p)
+        >>> r.free_neighbors(point.Point(0, 0), ['block']) == [point.Point(0, 1)]
+        True
+        >>> r.free_neighbors(point.Point(0, 1), ['block']) == [point.Point(0, 0), point.Point(1, 1)]
+        True
+        """
+        neighbors = self.neighbors(pos)
+        result = []
+        for neighbor in neighbors:
+            if not self.get_block(neighbor).is_blocking(blocked):
+                result.append(neighbor)
+        return result
+
     def free_random_pos(self, blocked, z_level=None):
         """ Finds a random position which is free according to the given
         blocked list. If z-level is set the position is on this level else it
@@ -97,6 +121,38 @@ class Region:
         True
         """
         return self._entity_pos[entity]
+
+    def neighbors(self, pos):
+        """ Returns a list of all neighbors for the given position.
+
+        Test:
+        >>> from data.world import point
+        >>> from test import regiongenerator
+        >>> rg = regiongenerator.AllGrassRegionGenerator(3, 3)
+        >>> r = Region(rg, 3, 3)
+        >>> r.neighbors(point.Point(0, 0)) == [point.Point(1, 0), point.Point(0, 1)]
+        True
+        >>> r.neighbors(point.Point(1, 1)) == [point.Point(1, 0), point.Point(0, 1), point.Point(2, 1), point.Point(1, 2)]
+        True
+        >>> r.neighbors(point.Point(2, 2)) == [point.Point(2, 1), point.Point(1, 2)]
+        True
+        """
+        result = []
+        # TODO Up
+        # TODO Down
+        # Top
+        if pos.y - 1 >= 0:
+            result.append(point.Point(pos.x, pos.y - 1))
+        # Left
+        if pos.x - 1 >= 0:
+            result.append(point.Point(pos.x - 1, pos.y))
+        # Right
+        if pos.x + 1 < self.size_x:
+            result.append(point.Point(pos.x + 1, pos.y))
+        # Bottom
+        if pos.y + 1 < self.size_y:
+            result.append(point.Point(pos.x, pos.y + 1))
+        return result
 
     def random_pos(self, z_level=None):
         """ Returns a random position on the map. If z-level is set the position
