@@ -91,20 +91,28 @@ class PygameGraphics:
         self._view_offset_point = point.Point(view_offset_x, view_offset_y)
 
     def __draw_background(self, data):
-        for x in range(data.graphics.view_x):
-            for y in range(data.graphics.view_y):
+        graphics = data.graphics
+        for x in range(graphics.view_offset_x, graphics.view_offset_x + graphics.view_x):
+            for y in range(graphics.view_offset_y, graphics.view_offset_y + graphics.view_y):
                 pos = point.Point(x, y)
                 self.__draw_pos(pos, data)
 
-    def __draw_pos(self, pos, data, move_point=True):
+    def __draw_entities(self, entities, x, y):
+        for entity in entities:
+            sprite_img, tile_sprite = self._sprite_loader.get_sprite(entity)
+            self.screen.blit(sprite_img, (x, y), tile_sprite)
+
+    def __draw_pos(self, pos, data):
         game = data.game
         graphics = data.graphics
-        x, y = self.pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
-        if move_point:
-            pos += self._view_offset_point
-        level_tile = game.level[pos] if pos in game.level else game.level.default_tile
-        sprite_img, tile_sprite = self._sprite_loader.sprite_by_tile(level_tile)
-        self.screen.blit(sprite_img, (x, y), tile_sprite)
+
+        block = game.region.get_block(pos)
+        x, y = self.pos_to_screen(pos -  self._view_offset_point, graphics.tile_x, graphics.tile_y)
+
+        self.__draw_entities(block.get_tiles(), x, y)
+        self.__draw_entities(block.get_statics(), x, y)
+        self.__draw_entities(block.get_dynamics(), x, y)
+
         return x, y, graphics.tile_x, graphics.tile_y
 
     def __show_title(self, window_title):
@@ -113,11 +121,9 @@ class PygameGraphics:
         pygame.display.set_caption(text)
 
     def __update_screen(self, data):
-        game = data.game
         graphics = data.graphics
 
         dirty_rects = []
-        dirty_pos = []
 
         # First render tile.
         if graphics.view_updated:
@@ -126,28 +132,8 @@ class PygameGraphics:
         else:
             for pos in data.dirty_pos:
                 if self.visible(pos, graphics):
-                    rect = self.__draw_pos(pos, data, False)
+                    rect = self.__draw_pos(pos, data)
                     dirty_rects.append(rect)
-                    dirty_pos.append(pos)
-
-        # Render world objects.
-        for obj in game.world:
-            if not graphics.view_updated and obj.pos not in dirty_pos:
-                continue
-            pos = obj.pos - self._view_offset_point
-            xy = self.pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
-            sprite_img, sprite = self._sprite_loader.get_sprite(obj.id)
-            self.screen.blit(sprite_img, xy, sprite)
-
-        # At last render creatures.
-        for creature in game.creatures:
-            if not graphics.view_updated and creature.pos not in dirty_pos:
-                continue
-            pos = creature.pos - self._view_offset_point
-            xy = self.pos_to_screen(pos, graphics.tile_x, graphics.tile_y)
-            dir = creature.direction if creature.direction != direction.STOP else creature.last_direction
-            sprite_img, sprite = self._sprite_loader.creature_sprite_by_dir(dir)
-            self.screen.blit(sprite_img, xy, sprite)
 
         if graphics.view_updated:
             pygame.display.flip()

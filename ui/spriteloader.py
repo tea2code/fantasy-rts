@@ -1,7 +1,7 @@
 import pygame
 
 from data import direction
-from data import tile
+from data.attributes import movable
 
 class PygameSpriteLoader:
     """ Gives access to sprite handling.
@@ -18,30 +18,20 @@ class PygameSpriteLoader:
             dir = data.config.config_dir + self._style.images[id]
             self._sprite_images[id] = pygame.image.load(dir).convert_alpha()
 
-    def get_sprite(self, id):
+    def get_sprite(self, entity):
         """ Returns the sprite image and the sprite coordinates for the given
-        entity id. """
+        entity. """
+        id = entity.id
+        if isinstance(entity, movable.Walking):
+            if entity.direction is direction.UP:
+                id += '-up'
+            elif entity.direction is direction.DOWN:
+                id += '-down'
+            elif entity.direction is direction.LEFT:
+                id += '-left'
+            else:
+                id += '-right'
         sprite_id = self._style.mappings[id] if id in self._style.mappings else self._style.default_mapping
         sprite = self._style.sprites[sprite_id]
         image = self._sprite_images[sprite.image]
         return image, (sprite.x, sprite.y, sprite.width, sprite.height)
-
-    def sprite_by_tile(self, t):
-        """ Only for compatibility. Remove later. """
-        if t is tile.PLAIN:
-            id = 'entity.tile.grass'
-        else:
-            id = 'entity.tile.wall'
-        return self.get_sprite(id)
-
-    def creature_sprite_by_dir(self, dir):
-        """ Only for compatibility. Remove later. """
-        if dir is direction.UP:
-            id = 'entity.creature-up'
-        elif dir is direction.LEFT:
-            id = 'entity.creature-left'
-        elif dir is direction.DOWN:
-            id = 'entity.creature-down'
-        else:
-            id = 'entity.creature-right'
-        return self.get_sprite(id)

@@ -1,4 +1,5 @@
 from data.world import block, point, tile
+from general import factory
 from world import regiongenerator
 
 class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
@@ -20,8 +21,9 @@ class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
     def new_block(self, pos):
         return self._map[pos]
 
-    def __grass_block(self):
-        t = tile.Tile('entity.tile.grass')
+    def __grass_block(self, ):
+        id = 'entity.tile.grass'
+        t = tile.Tile(id)
         b = block.Block()
         b.insert_tile(t)
         return b

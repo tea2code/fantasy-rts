@@ -6,9 +6,7 @@ class Entity:
 
     Member:
     id -- The static entity id of the configuration (string).
-    pos -- The position (data.point).
     """
 
     def __init__(self, id):
         self.id = id
-        self.pos = point.Point()

@@ -7,12 +7,16 @@ entity:
             - namespace: blocking
               attribute:
                 - name: wall
+            - namespace: movable
+              attribute:
+                - name: walk
     
     dynamics:
         namespace: dynamic
         dynamic:
             - name: creature
               blocked: [entity.attribute.blocking.wall]
+              speed: 4.0
     
     statics:
         namespace: static

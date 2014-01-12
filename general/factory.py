@@ -1,16 +1,19 @@
 import random
 
 from data import tasks
-from data.world import creature, point, entity
+from data.world import creature, point, staticentity, tile
 
+
+# TODO Refactor everything.
 
 def new_creature(data, x, y, run_time):
     """ Adds a new creature at given position. Returns the creature. """
     # Create creature.
-    c = creature.Creature()
-    c.pos = point.Point(x, y)
-    data.game.creatures.append(c)
-    data.dirty_pos.add(c.pos)
+    c = creature.Creature('entity.dynamic.creature')
+    c.blocked = data.config.entity.dynamics[c.id].blocked
+    pos = point.Point(x, y)
+    data.game.region.set_pos(c, pos)
+    data.dirty_pos.add(pos)
 
     # Give creature first job -> Idle.
     due_time = run_time + random.random()
@@ -24,12 +27,23 @@ def new_task(data, creature, type, time):
     data.game.tasks.insert(time, task)
     return task
 
-def new_world_entity(data, id, x=None, y=None, pos=None):
+def new_static_entity(data, id, x=None, y=None, pos=None):
     """ Add a new world entity object to given position. Returns the entity. """
     if pos is None:
         pos = point.Point(x, y)
-    e = entity.Entity(id)
-    e.pos = pos
-    data.game.world.append(e)
-    data.dirty_pos.add(e.pos)
+    e = staticentity.StaticEntity(id)
+    e.blocked = data.config.entity.statics[id].blocked
+    e.blocking = data.config.entity.statics[id].blocking
+    data.game.region.set_pos(e, pos)
+    data.dirty_pos.add(pos)
     return e
+
+def new_tile(data, id, x=None, y=None, pos=None):
+    """ Add a new tile object to given position. Returns the tile. """
+    if pos is None:
+        pos = point.Point(x, y)
+    t = tile.Tile(id)
+    t.blocking = data.config.entity.tiles[id].blocking
+    data.game.region.set_pos(t, pos)
+    data.dirty_pos.add(pos)
+    return t

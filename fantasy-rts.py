@@ -30,7 +30,7 @@ class MainLoopImp(mainloop.MainLoop):
 
         # Demo mode.
         demo_loader = demo.Demo(self.data)
-        demo_loader.load(self.data.game.size_x, self.data.game.size_y)
+        demo_loader.load()
 
         # State modules.
         self.state_modules = [

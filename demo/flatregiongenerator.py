@@ -1,4 +1,5 @@
 from data.world import block, point, tile
+from general import factory
 from world import regiongenerator
 
 class FlatRegionGenerator(regiongenerator.RegionGenerator):
@@ -24,23 +25,23 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         # Initialize everything with grass.
         for x in range(size_x):
             for y in range(size_y):
-                self._map[point.Point(x, y)] = self.__grass_block()
+                self._map[point.Point(x, y)] = self.__grass_block(data)
 
         # Border.
         for x in range(size_x):
-            self._map[point.Point(x, 0)] = self.__wall_block()
-            self._map[point.Point(x, size_x - 1)] = self.__wall_block()
+            self._map[point.Point(x, 0)] = self.__wall_block(data)
+            self._map[point.Point(x, size_x - 1)] = self.__wall_block(data)
         for y in range(size_y):
-            self._map[point.Point(0, y)] = self.__wall_block()
-            self._map[point.Point(size_y - 1, y)] = self.__wall_block()
+            self._map[point.Point(0, y)] = self.__wall_block(data)
+            self._map[point.Point(size_y - 1, y)] = self.__wall_block(data)
 
         # Open rectangle.
         for x in range(size_x_quarter, size_x_half + size_x_quarter):
-            self._map[point.Point(x, size_x_quarter - offset)] = self.__wall_block()
-            self._map[point.Point(x, size_x_half + size_x_quarter + offset)] = self.__wall_block()
+            self._map[point.Point(x, size_x_quarter - offset)] = self.__wall_block(data)
+            self._map[point.Point(x, size_x_half + size_x_quarter + offset)] = self.__wall_block(data)
         for y in range(size_y_quarter, size_y_half + size_y_quarter):
-            self._map[point.Point(size_y_quarter - offset, y)] = self.__wall_block()
-            self._map[point.Point(size_y_half + size_y_quarter + offset, y)] = self.__wall_block()
+            self._map[point.Point(size_y_quarter - offset, y)] = self.__wall_block(data)
+            self._map[point.Point(size_y_half + size_y_quarter + offset, y)] = self.__wall_block(data)
 
     def all_blocks(self, z_level):
         return self._map
@@ -48,14 +49,18 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
     def new_block(self, pos):
         return self._map[pos]
 
-    def __grass_block(self):
-        t = tile.Tile('entity.tile.grass')
+    def __grass_block(self, data):
+        id = 'entity.tile.grass'
+        t = tile.Tile(id)
+        t.blocking = data.config.entity.tiles[id].blocking
         b = block.Block()
         b.insert_tile(t)
         return b
 
-    def __wall_block(self):
-        t = tile.Tile('entity.tile.wall')
+    def __wall_block(self, data):
+        id = 'entity.tile.wall'
+        t = tile.Tile(id)
+        t.blocking = data.config.entity.tiles[id].blocking
         b = block.Block()
         b.insert_tile(t)
         return b

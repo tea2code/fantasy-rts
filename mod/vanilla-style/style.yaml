@@ -31,7 +31,7 @@ style:
               x: 18
               y: 69
                 
-            - name: creature-top
+            - name: creature-up
               x: 35
               y: 52
                 
@@ -63,18 +63,18 @@ style:
               map: entity.static.berry-shrub
               to: style.sprite.shrub
                 
-            - name: creature-top
-              map: entity.creature-top
-              to: style.sprite.creature-top
+            - name: creature-up
+              map: entity.dynamic.creature-up
+              to: style.sprite.creature-up
                 
             - name: creature-right
-              map: entity.creature-right
+              map: entity.dynamic.creature-right
               to: style.sprite.creature-right
                 
             - name: creature-left
-              map: entity.creature-left
+              map: entity.dynamic.creature-left
               to: style.sprite.creature-left
                 
             - name: creature-down
-              map: entity.creature-down
+              map: entity.dynamic.creature-down
               to: style.sprite.creature-down

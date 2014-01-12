@@ -13,6 +13,7 @@ Current Version: **4**
 - Version 5: Data structure for maps, resources, entities...
 - Version 6: Task system. Collect and use food.
 - Version 7: Support für multiple sprites per entity and unregular sized sprites.
+- Version ?: More generic configuration.
 
 ## Coming Soon
 
@@ -155,6 +156,7 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
             dynamic:
                 - name: <string>
                   blocked: [<string>]
+                  speed: <float>
 
         statics:
             namespace: <string>
