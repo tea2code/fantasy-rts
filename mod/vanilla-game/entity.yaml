@@ -1,6 +1,11 @@
 entity:
     namespace: entity
     
+    dynamics:
+        namespace: dynamic
+        dynamic:
+            - name: creature
+    
     statics:
         namespace: static
         static:

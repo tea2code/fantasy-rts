@@ -142,6 +142,11 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
     entity:
         namespace: <string>
         
+        dynamics:
+            namespace: <string>
+            dynamic:
+                - name: <string>
+
         statics:
             namespace: <string>
             static:

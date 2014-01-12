@@ -6,7 +6,7 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
     flat map for z-level 0.
 
     Member:
-    _map -- The pregenerated map for z-level 0.
+    _map -- The pregenerated map for z-level 0 (dict).
     """
 
     def __init__(self, data):

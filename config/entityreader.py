@@ -1,4 +1,5 @@
 from . import basereader
+from data.config import dynamicentity
 from data.config import entity
 from data.config import staticentity
 from data.config import tileentity
@@ -7,6 +8,8 @@ class YamlEntityReader(basereader.BaseYamlReader):
     """ Yaml reader for entity types.
 
     Constants:
+    VALUE_DYNAMIC
+    VALUE_DYNAMICS
     VALUE_NAME
     VALUE_NAMESPACE
     VALUE_RESOURCE
@@ -17,6 +20,8 @@ class YamlEntityReader(basereader.BaseYamlReader):
     VALUE_TILES
     """
 
+    VALUE_DYNAMIC = 'dynamic'
+    VALUE_DYNAMICS = 'dynamics'
     VALUE_NAME = 'name'
     VALUE_NAMESPACE = 'namespace'
     VALUE_RESOURCE = 'resource'
@@ -33,10 +38,24 @@ class YamlEntityReader(basereader.BaseYamlReader):
         namespace = self.read_req_string(root, self.VALUE_NAMESPACE)
 
         result = entity.Entity()
+        if self.has(root, self.VALUE_DYNAMICS):
+            result.dynamics = self.__dynamics(namespace, root)
         if self.has(root, self.VALUE_STATICS):
             result.statics = self.__statics(namespace, root)
         if self.has(root, self.VALUE_TILES):
             result.tiles = self.__tiles(namespace, root)
+        return result
+
+    def __dynamics(self, namespace, root):
+        """ Parse dynamics. """
+        dynamics = self.read_req_object(root, self.VALUE_DYNAMICS)
+        namespace_list = [namespace, self.read_req_string(dynamics, self.VALUE_NAMESPACE)]
+
+        result = {}
+        for dynamic in self.read_object(dynamics, self.VALUE_DYNAMIC, []):
+            name = self.read_req_string(dynamic, self.VALUE_NAME)
+            id = self.namespace_to_id(namespace_list, name)
+            result[id] = dynamicentity.DynamicEntity()
         return result
 
     def __statics(self, namespace, root):
