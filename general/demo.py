@@ -4,7 +4,7 @@ import time
 from data import level
 from data import tile
 from data.world import point
-from world import factory
+from general import factory
 
 
 class Demo:
