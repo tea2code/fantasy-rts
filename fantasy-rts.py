@@ -1,13 +1,9 @@
 import config
 
 from ai import director
-from data import configuration
 from data import data
-from data import game as gamestate
-from data import graphics as graphicsstate
-from data.config import style
+from demo import demo
 from general import cleaner
-from general import demo
 from general import mainloop
 from ui import eventhandler, graphics
 
