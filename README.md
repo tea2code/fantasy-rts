@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **4**
+Current Version: **5**
 
 - Version 1: Basic framework with simple demo level.
 - Version 2: Basic creature with simple behaviour related to food.
