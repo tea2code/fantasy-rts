@@ -14,8 +14,9 @@ entity:
     dynamics:
         namespace: dynamic
         dynamic:
-            - name: creature
+            - name: dwarf
               blocked: [entity.attribute.blocking.wall]
+              move_type: entity.attribute.movable.walk
               speed: 4.0
     
     statics:

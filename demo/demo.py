@@ -1,9 +1,7 @@
-import random
 import time
 
 from . import flatregiongenerator
-from data.world import region
-from general import factory
+from data.world import Factory, region
 
 
 class Demo:
@@ -34,14 +32,14 @@ class Demo:
         num_y = num_x
         for x in range(1, num_x):
             for y in range(1, num_y):
-                factory.new_creature(self.data, x, y, 0)
+                Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, x, y)
 
     def tick(self, run_time, delta_time, data):
         if self._static_entity_count < 10 and run_time % 1 <= delta_time:
             # Create new shrub.
             id = 'entity.static.berry-shrub'
             pos = data.game.region.free_random_pos(data.config.entity.statics[id].blocked, 0)
-            s = factory.new_static_entity(data, id, pos=pos)
+            Factory.new_add_static_entity('entity.static.berry-shrub', self.data, pos=pos)
 
         # Burn additional time.
         if self.TIME_BURNER:

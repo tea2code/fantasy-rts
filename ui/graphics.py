@@ -1,7 +1,6 @@
 import pygame
 
 from . import spriteloader
-from data import direction
 from data.world import point
 
 

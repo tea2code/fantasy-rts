@@ -16,6 +16,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
     VALUE_BLOCKING
     VALUE_DYNAMIC
     VALUE_DYNAMICS
+    VALUE_MOVE_TYPE
     VALUE_NAME
     VALUE_NAMESPACE
     VALUE_RESOURCE
@@ -33,6 +34,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
     VALUE_BLOCKING = 'blocking'
     VALUE_DYNAMIC = 'dynamic'
     VALUE_DYNAMICS = 'dynamics'
+    VALUE_MOVE_TYPE = 'move_type'
     VALUE_NAME = 'name'
     VALUE_NAMESPACE = 'namespace'
     VALUE_RESOURCE = 'resource'
@@ -83,7 +85,8 @@ class YamlEntityReader(basereader.BaseYamlReader):
             name = self.read_req_string(dynamic, self.VALUE_NAME)
             id = self.namespace_to_id(namespace_list, name)
             d = dynamicentity.DynamicEntity()
-            d.blocked = self.read_object(dynamic, self.VALUE_BLOCKED, [])
+            d.blocked = self.read_req_object(dynamic, self.VALUE_BLOCKED)
+            d.move_type = self.read_req_string(dynamic, self.VALUE_MOVE_TYPE)
             result[id] = d
         return result
 
@@ -99,8 +102,8 @@ class YamlEntityReader(basereader.BaseYamlReader):
             resource = self.read_string(static, self.VALUE_RESOURCE, None)
             chance = self.read_float(static, self.VALUE_RESOURCE_CHANCE, 0.0)
             s = staticentity.StaticEntity(resource, chance)
-            s.blocked = self.read_object(static, self.VALUE_BLOCKED, [])
-            s.blocking = self.read_object(static, self.VALUE_BLOCKING, [])
+            s.blocked = self.read_req_object(static, self.VALUE_BLOCKED)
+            s.blocking = self.read_req_object(static, self.VALUE_BLOCKING)
             result[id] = s
         return result
 
@@ -114,6 +117,6 @@ class YamlEntityReader(basereader.BaseYamlReader):
             name = self.read_req_string(tile, self.VALUE_NAME)
             id = self.namespace_to_id(namespace_list, name)
             t = tileentity.TileEntity()
-            t.blocking = self.read_object(tile, self.VALUE_BLOCKING, [])
+            t.blocking = self.read_req_object(tile, self.VALUE_BLOCKING)
             result[id] = t
         return result

@@ -155,22 +155,23 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
             namespace: <string>
             dynamic:
                 - name: <string>
-                  blocked: [<string>]
+                  blocked: [<id>]
+                  move_type: <id>
                   speed: <float>
 
         statics:
             namespace: <string>
             static:
                 - name: <string>
-                  blocked: [<string>]
-                  blocking: [<string>]
-                  resource: <string, optional>
+                  blocked: [<id>]
+                  blocking: [<id>]
+                  resource: <id, optional>
                   resource_chance: <float, optional>
 
         tiles:
             namespace: <string>
             tile:
                 - name: <string>
-                  blocking: [<string>]
+                  blocking: [<id>]
             
 The types "attribute", "dynamic", "static" and "tile" can/should/will exist multiple times. Each representing a single entity.

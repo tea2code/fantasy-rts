@@ -1,5 +1,4 @@
 from data.world import block, point, tile
-from general import factory
 from world import regiongenerator
 
 class AllGrassRegionGenerator(regiongenerator.RegionGenerator):

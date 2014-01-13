@@ -31,19 +31,19 @@ style:
               x: 18
               y: 69
                 
-            - name: creature-up
+            - name: dwarf-up
               x: 35
               y: 52
                 
-            - name: creature-right
+            - name: dwarf-right
               x: 18
               y: 52
                 
-            - name: creature-left
+            - name: dwarf-left
               x: 35
               y: 52
                 
-            - name: creature-down
+            - name: dwarf-down
               x: 18
               y: 52
         
@@ -63,18 +63,18 @@ style:
               map: entity.static.berry-shrub
               to: style.sprite.shrub
                 
-            - name: creature-up
-              map: entity.dynamic.creature-up
-              to: style.sprite.creature-up
+            - name: dwarf-up
+              map: entity.dynamic.dwarf-up
+              to: style.sprite.dwarf-up
                 
-            - name: creature-right
-              map: entity.dynamic.creature-right
-              to: style.sprite.creature-right
+            - name: dwarf-right
+              map: entity.dynamic.dwarf-right
+              to: style.sprite.dwarf-right
                 
-            - name: creature-left
-              map: entity.dynamic.creature-left
-              to: style.sprite.creature-left
+            - name: dwarf-left
+              map: entity.dynamic.dwarf-left
+              to: style.sprite.dwarf-left
                 
-            - name: creature-down
-              map: entity.dynamic.creature-down
-              to: style.sprite.creature-down
+            - name: dwarf-down
+              map: entity.dynamic.dwarf-down
+              to: style.sprite.dwarf-down

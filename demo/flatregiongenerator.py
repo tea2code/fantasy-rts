@@ -1,5 +1,4 @@
-from data.world import block, point, tile
-from general import factory
+from data.world import block, Factory, point, tile
 from world import regiongenerator
 
 class FlatRegionGenerator(regiongenerator.RegionGenerator):
@@ -50,17 +49,13 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         return self._map[pos]
 
     def __grass_block(self, data):
-        id = 'entity.tile.grass'
-        t = tile.Tile(id)
-        t.blocking = data.config.entity.tiles[id].blocking
+        t = Factory.new_tile('entity.tile.grass', data)
         b = block.Block()
         b.insert_tile(t)
         return b
 
     def __wall_block(self, data):
-        id = 'entity.tile.wall'
-        t = tile.Tile(id)
-        t.blocking = data.config.entity.tiles[id].blocking
+        t = Factory.new_tile('entity.tile.wall', data)
         b = block.Block()
         b.insert_tile(t)
         return b
