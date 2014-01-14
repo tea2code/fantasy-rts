@@ -1,5 +1,6 @@
 #from ai import pathfinding
 from config import basereader
+from data.task import tasklist
 from data.world import block, point, region
 from ui import graphics
 
@@ -11,3 +12,4 @@ if __name__ == '__main__':
     doctest.testmod(region)
     doctest.testmod(graphics)
     doctest.testmod(block)
+    doctest.testmod(tasklist)

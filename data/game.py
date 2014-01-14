@@ -1,4 +1,4 @@
-from . import tasks
+from .task import tasklist
 
 
 class Game:
@@ -17,4 +17,4 @@ class Game:
         self.region = None
         self.size_x = 100
         self.size_y = 100
-        self.tasks = tasks.TaskList()
+        self.tasks = tasklist.TaskList()
