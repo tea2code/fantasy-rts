@@ -1,24 +1,29 @@
 from . import dynamicentity, point, staticentity, tile
+from ..task import Factory as TaskFactory
 
 class Factory:
     """ Factory class to create world entities. """
 
     @staticmethod
-    def new_dynamic_entity(id, data):
+    def new_dynamic_entity(id, data, run_time):
         """ Creates and returns a new dynamic entity. """
+        # Entity.
         config = data.config.entity.dynamics[id]
         entity = dynamicentity.DynamicEntity(id)
         entity.blocked = config.blocked
         entity.move_type = config.move_type
+
+        # Initial task.
+        TaskFactory.new_add_idle_task(entity, run_time, data)
         return entity
 
     @staticmethod
-    def new_add_dynamic_entity(id, data, x=None, y=None, pos=None):
+    def new_add_dynamic_entity(id, data, run_time, x=None, y=None, pos=None):
         """ Creates a new dynamic entity, adds it to the region at given
         position and returns it. """
         if pos is None:
             pos = point.Point(x, y)
-        entity = Factory.new_dynamic_entity(id, data)
+        entity = Factory.new_dynamic_entity(id, data, run_time)
         data.game.region.set_pos(entity, pos)
         data.dirty_pos.add(pos)
         return entity

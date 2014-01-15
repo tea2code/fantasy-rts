@@ -2,10 +2,12 @@ class BaseTask:
     """ Base class for all tasks.
 
     Member:
+    entity -- The entity which executes this task (data.world.entity).
     _sub_tasks -- List of sub tasks (list).
     """
 
-    def __init__(self):
+    def __init__(self, entity):
+        self.entity = entity
         self._sub_tasks = []
 
     def execute_next(self, data):

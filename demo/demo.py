@@ -28,11 +28,12 @@ class Demo:
         self.data.game.region = region.Region(region_generator, self.data.game.size_x, self.data.game.size_y)
 
         # Add creatures.
+        run_time = 0
         num_x = 20
         num_y = num_x
         for x in range(1, num_x):
             for y in range(1, num_y):
-                Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, x, y)
+                Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y)
 
     def tick(self, run_time, delta_time, data):
         if self._static_entity_count < 10 and run_time % 1 <= delta_time:
