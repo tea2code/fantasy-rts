@@ -3,7 +3,7 @@ import math
 from gamemath import comparison, gamemath
 
 class Point:
-    """ A float based 2D point which uses integer for comparison and hashing.
+    """ A float based 3D point which uses integer for comparison and hashing.
 
     Member:
     x -- The x component (float).

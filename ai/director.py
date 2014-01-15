@@ -16,4 +16,3 @@ class Director:
     def __new_task(self, entity, run_time, data):
         """ Get the next task for the given entity. """
         Factory.new_add_idle_task(entity, run_time, data)
-        print('New idle task for {0} at {1:.2f}.'.format(entity, run_time))
