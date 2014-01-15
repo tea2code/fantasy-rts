@@ -1,3 +1,5 @@
+import heapq
+
 class EuclideanDistance:
     """ Calculates the euclidean distance of two points. """
 
@@ -35,16 +37,19 @@ class ManhattanDistance:
                abs(pos1.int_z - pos2.int_z)
 
 class Node:
-    def __init__(self, pos, score):
+    def __init__(self, pos):
         self.pos = pos
         self.parent = None
-        self.score = score
+        self.score = 0
 
     def __eq__(self, other):
         return self.pos == other.pos
 
     def __hash__(self):
         return self.pos.__hash__()
+
+    def __lt__(self, other):
+        return True
 
 class AStar:
     """ Path finding using A*.
@@ -90,32 +95,35 @@ class AStar:
         return [node.pos for node in path][1:]
 
     def __find_path(self, start, goal, blocked, region):
-        current = Node(start, self.__distance(start, goal))
-        end = Node(goal, 0)
+        current = Node(start)
+        current.score = self.__distance(start, goal)
+        end = Node(goal)
 
-        open = set()
-        closed = set()
+        openSet = set()
+        openHeap = []
+        closedSet = set()
 
-        open.add(current)
-        while open:
-            current = min(open, key=lambda x: x.score)
+        openSet.add(current)
+        openHeap.append((0, current))
+        while openSet:
+            current = heapq.heappop(openHeap)[1]
             if current == end:
                 return self.__retrace_path(current)
 
-            open.remove(current)
-            closed.add(current)
+            openSet.remove(current)
+            closedSet.add(current)
 
             neighbor_pos = region.free_neighbors(current.pos, blocked)
-            neighbors = []
-            for pos in neighbor_pos:
-                node = Node(pos, self.__distance(pos, goal))
-                neighbors.append(node)
+            neighbors = [Node(pos) for pos in neighbor_pos]
 
             for neighbor in neighbors:
-                if neighbor not in closed:
-                    if neighbor not in open:
-                        open.add(neighbor)
+                if neighbor not in closedSet:
+                    neighbor.score = self.__distance(neighbor.pos, goal)
+                    if neighbor not in openSet:
+                        openSet.add(neighbor)
+                        heapq.heappush(openHeap, (neighbor.score, neighbor))
                     neighbor.parent = current
+
         return []
 
     def __distance(self, start, goal):
