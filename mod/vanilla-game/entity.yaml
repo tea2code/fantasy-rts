@@ -17,7 +17,7 @@ entity:
             - name: dwarf
               blocked: [entity.attribute.blocking.wall]
               move_type: entity.attribute.movable.walk
-              speed: 4.0
+              speed: 10.0
     
     statics:
         namespace: static

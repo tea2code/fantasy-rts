@@ -1,6 +1,7 @@
 import time
 
 from . import flatregiongenerator
+from data.task import Factory as TaskFactory
 from data.world import Factory, region
 
 
@@ -29,11 +30,13 @@ class Demo:
 
         # Add creatures.
         run_time = 0
-        num_x = 20
+        num_x = 10
         num_y = num_x
         for x in range(1, num_x):
             for y in range(1, num_y):
-                Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y)
+                entity = Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y, init_task=False)
+                free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
+                TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
     def tick(self, run_time, delta_time, data):
         if self._static_entity_count < 10 and run_time % 1 <= delta_time:

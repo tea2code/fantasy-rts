@@ -21,6 +21,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
     VALUE_NAMESPACE
     VALUE_RESOURCE
     VALUE_RESOURCE_CHANCE
+    VALUE_SPEED
     VALUE_STATIC
     VALUE_STATICS
     VALUE_TILE
@@ -39,6 +40,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
     VALUE_NAMESPACE = 'namespace'
     VALUE_RESOURCE = 'resource'
     VALUE_RESOURCE_CHANCE = 'resource_chance'
+    VALUE_SPEED = 'speed'
     VALUE_STATIC = 'static'
     VALUE_STATICS = 'statics'
     VALUE_TILE = 'tile'
@@ -87,6 +89,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
             d = dynamicentity.DynamicEntity()
             d.blocked = self.read_req_object(dynamic, self.VALUE_BLOCKED)
             d.move_type = self.read_req_string(dynamic, self.VALUE_MOVE_TYPE)
+            d.speed = self.read_req_float(dynamic, self.VALUE_SPEED)
             result[id] = d
         return result
 

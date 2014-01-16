@@ -7,3 +7,5 @@ class DynamicEntity():
 
     def __init__(self):
         self.blocked = []
+        self.move_type = ''
+        self.speed = 0.0

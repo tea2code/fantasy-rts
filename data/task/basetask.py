@@ -19,3 +19,7 @@ class BaseTask:
         """ Returns the execution time in seconds of the current step. After
         this time the next step can be executed. """
         return 0.0
+
+    def __lt__(self, other):
+        """ No real implementation necessary. Only for heapq. """
+        return True
