@@ -1,3 +1,4 @@
+import sys
 import time
 
 from . import flatregiongenerator
@@ -16,6 +17,7 @@ class Demo:
     _static_entity_count -- Number of static entities (int).
     """
 
+    RUN_TIME = 10 * 60
     TIME_BURNER = None
 
     def __init__(self, data):
@@ -31,12 +33,12 @@ class Demo:
         # Add creatures.
         run_time = 0
         num_x = 10
-        num_y = num_x
+        num_y = 20
         for x in range(1, num_x):
             for y in range(1, num_y):
-                entity = Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y, init_task=False)
-                free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
-                TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
+                entity = Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y)
+                #free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
+                #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
     def tick(self, run_time, delta_time, data):
         if self._static_entity_count < 10 and run_time % 1 <= delta_time:
@@ -48,3 +50,8 @@ class Demo:
         # Burn additional time.
         if self.TIME_BURNER:
             time.sleep(self.TIME_BURNER)
+
+        # Stop game?
+        if self.RUN_TIME and run_time >= self.RUN_TIME:
+            print('Run Time = {0:.2f}; FPS = {1:.2f}'.format(run_time, sum(data.fps) / len(data.fps)))
+            sys.exit()

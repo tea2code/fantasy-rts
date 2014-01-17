@@ -7,12 +7,18 @@ from data.world import point
 class PygameGraphics:
     """ Graphical representation of state using pygame.
 
+    Constants:
+    MAX_FPS -- Maximum number of fps in list (int).
+
     Member:
     clock -- The pygame clock.
     screen -- The pygame surface which acts as the game screen.
+    _fps -- List of last frames per second results (list).
     _sprite_loader -- The sprite loader (ui.spriteloader).
     _view_offset_point -- The cached view offset point (point.Point).
     """
+
+    MAX_FPS = 100
 
     def __init__(self, data):
         graphics = data.graphics
@@ -20,10 +26,11 @@ class PygameGraphics:
         size = (graphics.view_x * graphics.tile_x, graphics.view_y * graphics.tile_y)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
+        self._fps = []
         self._sprite_loader = spriteloader.PygameSpriteLoader(data)
 
         self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
-        self.__show_title(graphics.window_title)
+        self.__show_title(data)
         self.__draw_background(data)
         pygame.display.flip()
 
@@ -48,7 +55,7 @@ class PygameGraphics:
         self.__update_screen(data)
 
         # Show title and update clock.
-        self.__show_title(data.graphics.window_title)
+        self.__show_title(data)
         self.clock.tick(data.config.fps) # Prevent unnecessary cpu load.
 
     @staticmethod
@@ -114,9 +121,13 @@ class PygameGraphics:
 
         return x, y, graphics.tile_x, graphics.tile_y
 
-    def __show_title(self, window_title):
+    def __show_title(self, data):
         fps = self.clock.get_fps()
-        text = window_title.format(fps)
+        data.fps.append(fps)
+        self._fps.append(fps)
+        while len(self._fps) > self.MAX_FPS:
+            self._fps.pop(0)
+        text = data.graphics.window_title.format(sum(self._fps) / len(self._fps))
         pygame.display.set_caption(text)
 
     def __update_screen(self, data):

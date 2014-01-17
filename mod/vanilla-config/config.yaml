@@ -1,6 +1,6 @@
 config:
     fps: 100
-    max_frame_time: 0.25
+    max_frame_time: 0.1
     scroll_width_x: 20
     scroll_width_y: 15
     view_x: 40
