@@ -2,12 +2,14 @@ class Block():
     """ A block in the world at a certain position.
 
     Member:
+    _blocked -- Cache for is blocking test (dict).
     _dynamics -- List of dynamic entities in the block (list).
     _statics -- List of static entities in the block (list).
     _tiles -- List of tiles in the block (list).
     """
 
     def __init__(self):
+        self._blocked = {}
         self._dynamics = []
         self._statics = []
         self._tiles = []
@@ -114,6 +116,7 @@ class Block():
         >>> b.has_static('test')
         True
         """
+        self._blocked = {}
         self._statics.append(entity)
 
     def insert_tile(self, tile):
@@ -127,6 +130,7 @@ class Block():
         >>> b.has_tile('test')
         True
         """
+        self._blocked = {}
         self._tiles.append(tile)
 
     def is_blocking(self, blocked):
@@ -144,15 +148,13 @@ class Block():
         >>> b.is_blocking(['non-block'])
         False
         """
-        def is_blocking_list(entity_list, blocked):
-            for entity in entity_list:
-                if any(i in blocked for i in entity.blocking):
-                    return True
-            return False
-
         # Statics may block more often so check first.
-        return is_blocking_list(self._statics, blocked) or \
-               is_blocking_list(self._tiles, blocked)
+        key = tuple(blocked)
+        if key not in self._blocked:
+            result = self.__is_blocking_list(self._statics, blocked) or \
+                     self.__is_blocking_list(self._tiles, blocked)
+            self._blocked[key] = result
+        return self._blocked[key]
 
     def remove_dynamic(self, entity):
         """ Removes a dynamic entity.
@@ -184,6 +186,7 @@ class Block():
         >>> b.has_static('test')
         False
         """
+        self._blocked = {}
         self._statics.remove(entity)
 
     def remove_tile(self, tile):
@@ -200,7 +203,15 @@ class Block():
         >>> b.has_tile('test')
         False
         """
+        self._blocked = {}
         self._tiles.remove(tile)
+
+    def __is_blocking_list(self, entity_list, blocked):
+        """ Execute blocking test on given list. """
+        for entity in entity_list:
+            if any(i in blocked for i in entity.blocking):
+                return True
+        return False
 
 if __name__ == '__main__':
     print('Executing doctest.')

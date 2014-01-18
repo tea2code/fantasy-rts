@@ -1,4 +1,5 @@
-from data.world import block, point, tile
+from data.world import block, tile
+from data.world.point import Factory as PointFactory
 from world import regiongenerator
 
 class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
@@ -12,7 +13,7 @@ class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
         self._map = {}
         for x in range(size_x):
             for y in range(size_y):
-                self._map[point.Point(x, y)] = self.__grass_block()
+                self._map[PointFactory.new_point(x, y, 0)] = self.__grass_block()
 
     def all_blocks(self, z_level):
         return self._map

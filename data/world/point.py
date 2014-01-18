@@ -1,71 +1,64 @@
 import math
 
-from gamemath import comparison, gamemath
+class Factory:
+    """ A factory for points. Allows to use Point as a Flyweight pattern.
+
+    Constant:
+    FAST_EQ -- Indicates if the resulting Point should be with using fast
+               equality allowing it to use the Flyweight pattern.
+    _POINTS -- Maps already created points (dict).
+    """
+
+    FAST_EQ = True
+    _POINTS = {}
+
+    @staticmethod
+    def new_point(x=0, y=0, z=0):
+        """ Create new point. """
+        if Factory.FAST_EQ:
+            key = (x, y, z)
+            if key not in Factory._POINTS:
+                Factory._POINTS[key] = Point(x, y, z, True)
+            return Factory._POINTS[key]
+        else:
+            return Point(x, y, z, False)
 
 class Point:
-    """ A float based 3D point which uses integer for comparison and hashing.
+    """ A int based immutable 3D point.
 
     Member:
     x -- The x component (float).
     y -- The y component (float).
     z -- The z component (float).
+    _fast_eq -- Indicates if a fast equality check by id can be made (bool).
     _hash -- Cache for hash value (int).
-    _x -- The real x component (float).
-    _y -- The real y component (float).
-    _z -- The real z component (float).
-    _xi -- The rounded x component (int).
-    _yi -- The rounded y component (int).
-    _zi -- The rounded z component (int).
+    _length -- Cache for length value (float).
+    _x -- The real x component (int).
+    _y -- The real y component (int).
+    _z -- The real z component (int).
     """
 
-    __slots__ = ('_hash', '_x', '_y', '_z', '_xi', '_yi', '_zi')
+    __slots__ = ('_fast_eq', '_hash', '_length', '_x', '_y', '_z')
 
-    def __init__(self, x=0.0, y=0.0, z=0.0):
-        self.x = x
-        self.y = y
-        self.z = z
+    def __init__(self, x=0, y=0, z=0, fast_eq=False):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._hash = None
+        self._fast_eq = fast_eq
+        self._length = None
 
     @property
     def x(self):
         return self._x
 
     @property
-    def int_x(self):
-        return self._xi
-
-    @x.setter
-    def x(self, value):
-        self._x = value
-        self._xi = gamemath.int_round(value)
-        self._hash = None
-
-    @property
     def y(self):
         return self._y
 
     @property
-    def int_y(self):
-        return self._yi
-
-    @y.setter
-    def y(self, value):
-        self._y = value
-        self._yi = gamemath.int_round(value)
-        self._hash = None
-
-    @property
     def z(self):
         return self._z
-
-    @property
-    def int_z(self):
-        return self._zi
-
-    @z.setter
-    def z(self, value):
-        self._z = value
-        self._zi = gamemath.int_round(value)
-        self._hash = None
 
     def clone(self):
         """ Creates a copy of this point with same x and y.
@@ -79,22 +72,6 @@ class Point:
         True
         """
         return self.__copy__()
-
-    def exact_eq(self, other):
-        """ Does an exact value comparison.
-
-        Test:
-        >>> v1 = Point(1.0001, 21.0001, 1.0001)
-        >>> v2 = Point(1.0001, 21.0001, 1.0001)
-        >>> v3 = Point(1.0001, 21.000100001, 1.0001)
-        >>> v1.exact_eq(v2)
-        True
-        >>> v1.exact_eq(v3)
-        False
-        """
-        return comparison.float_equal(self._x, other._x) and \
-               comparison.float_equal(self._y, other._y) and \
-               comparison.float_equal(self._z, other._z)
 
     def length(self):
         """ Calculates the length of a point.
@@ -115,15 +92,17 @@ class Point:
         >>> print('{0:.3f}'.format(Point(1, 2, 3).length()))
         3.742
         """
-        return math.sqrt((self._x * self._x) + (self._y * self._y) + (self._z * self._z))
+        if self._length is None:
+            self._length = math.sqrt((self._x * self._x) + (self._y * self._y) + (self._z * self._z))
+        return self._length
 
     def tuple2(self):
         """ Returns a tuple representation of this point containing only x and y.
 
         Test:
-        >>> v = Point(1.1, 2.5, 3.0)
+        >>> v = Point(1, 2, 3)
         >>> v.tuple2()
-        (1.1, 2.5)
+        (1, 2)
         """
         return self._x, self._y
 
@@ -131,32 +110,11 @@ class Point:
         """ Returns a tuple representation of this point.
 
         Test:
-        >>> v = Point(1.1, 2.5, 3.0)
+        >>> v = Point(1, 2, 3)
         >>> v.tuple3()
-        (1.1, 2.5, 3.0)
+        (1, 2, 3)
         """
         return self._x, self._y, self._z
-
-    def int_tuple2(self):
-        """ Returns a tuple representation of this point containing only x and
-        y rounded to next integer.
-
-        Test:
-        >>> v = Point(1.1, 2.5, 3.0)
-        >>> v.int_tuple2()
-        (1, 3)
-        """
-        return self._xi, self._yi
-
-    def int_tuple3(self):
-        """ Returns a tuple representation of this point rounded to next integer.
-
-        Test:
-        >>> v = Point(1.1, 2.5, 3.0)
-        >>> v.int_tuple3()
-        (1, 3, 3)
-        """
-        return self._xi, self._yi, self._zi
 
     def __add__(self, other):
         """ Add two points using + operator. Returns the resulting point.
@@ -165,14 +123,16 @@ class Point:
         >>> v1 = Point(1, 2, 1)
         >>> v2 = Point(3, 4, 1)
         >>> v3 = v1 + v2
-        >>> v3.x
-        4
-        >>> v3.y
-        6
-        >>> v3.z
-        2
+        >>> v3.tuple3()
+        (4, 6, 2)
         """
-        return Point(self._x + other._x, self._y + other._y, self._z + other._z)
+        x = self._x + other._x
+        y = self._y + other._y
+        z = self._z + other._z
+        if self._fast_eq:
+            return Factory.new_point(x, y, z)
+        else:
+            return Point(x, y, z)
 
     def __copy__(self):
         """ Used when copy.copy() is called on a point.
@@ -186,41 +146,51 @@ class Point:
         >>> v == c
         True
         """
-        return Point(self._x, self._y, self._z)
+        if self._fast_eq:
+            return self
+        else:
+            return Point(self._x, self._y, self._z)
 
     def __eq__(self, other):
         """ Equality using the == operator.
 
         Test:
-        >>> v1 = Point(1.0001, 21.45, 1.0001)
-        >>> v2 = Point(1.0001, 21.45, 1.0001)
-        >>> v3 = Point(1.0001, 21.5, 1.0001)
+        >>> v1 = Point(1, 21, 1)
+        >>> v2 = Point(1, 21, 1)
+        >>> v3 = Point(1, 22, 1)
+        >>> v1 == v2
+        True
+        >>> v1 == v3
+        False
+        >>> v1 = Point(1, 21, 1, True)
+        >>> v2 = v1
+        >>> v3 = Point(1, 22, 1, True)
         >>> v1 == v2
         True
         >>> v1 == v3
         False
         """
-        return self._xi == other._xi and  \
-               self._yi == other._yi and \
-               self._zi == other._zi
+        if self._fast_eq and other._fast_eq:
+            return id(self) == id(other)
+        else:
+            return self._x == other._x and  \
+                   self._y == other._y and \
+                   self._z == other._z
 
     def __hash__(self):
         """ Calculates hash of point.
 
         Test:
-        >>> v1 = Point(1.0001, 21.45, 1.0001)
-        >>> v2 = Point(1.0001, 21.45, 1.0001)
-        >>> v3 = Point(1.0001, 21.5, 1.0001)
+        >>> v1 = Point(1, 21, 1)
+        >>> v2 = Point(1, 21, 1)
+        >>> v3 = Point(1, 22, 1)
         >>> hash(v1) == hash(v2)
         True
         >>> hash(v1) == hash(v3)
         False
-        >>> v3.y = 21.45
-        >>> hash(v1) == hash(v3)
-        True
         """
         if self._hash is None:
-            self._hash = hash(self.int_tuple3())
+            self._hash = hash(self.tuple3())
         return self._hash
 
     def __mul__(self, scalar):
@@ -229,17 +199,19 @@ class Point:
         Test:
         >>> v1 = Point(1, 2, 3)
         >>> v2 = v1 * 5
-        >>> v2.x
-        5
-        >>> v2.y
-        10
-        >>> v2.z
-        15
+        >>> v2.tuple3()
+        (5, 10, 15)
         """
-        return Point(self._x * scalar, self._y * scalar, self._z * scalar)
+        x = self._x * scalar
+        y = self._y * scalar
+        z = self._z * scalar
+        if self._fast_eq:
+            return Factory.new_point(x, y, z)
+        else:
+            return Point(x, y, z)
 
     def __str__(self):
-        template = 'Point({:.2f}, {:.2f}, {:.2f})'
+        template = 'Point({}, {}, {})'
         return template.format(self._x, self._y, self._z)
 
     def __sub__(self, other):
@@ -249,14 +221,16 @@ class Point:
         >>> v1 = Point(1, 4, 3)
         >>> v2 = Point(3, 2, 2)
         >>> v3 = v1 - v2
-        >>> v3.x
-        -2
-        >>> v3.y
-        2
-        >>> v3.z
-        1
+        >>> v3.tuple3()
+        (-2, 2, 1)
         """
-        return Point(self._x - other._x, self._y - other._y, self._z - other._z)
+        x = self._x - other._x
+        y = self._y - other._y
+        z = self._z - other._z
+        if self._fast_eq:
+            return Factory.new_point(x, y, z)
+        else:
+            return Point(x, y, z)
 
 if __name__ == '__main__':
     print('Executing doctest.')

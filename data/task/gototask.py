@@ -15,7 +15,7 @@ class GoToTask(basetask.BaseTask):
         # Find path to target.
         region = data.game.region
         start = region.get_pos(entity)
-        distance = pathfinding.ManhattanDistance()
+        distance = pathfinding.EuclideanDistance()
         algorithm = pathfinding.AStar(distance)
         self.path = algorithm.shortest_path(start, goal, entity.blocked, region)
         if not self.path:

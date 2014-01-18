@@ -1,6 +1,7 @@
 import random
 
-from . import dynamicentity, point, staticentity
+from . import dynamicentity, staticentity
+from .point import Factory as PointFactory
 
 class Region:
     """ Represents a region in the world. A region is a map the player is
@@ -142,16 +143,16 @@ class Region:
         # TODO Down
         # Top
         if pos.y - 1 >= 0:
-            result.append(point.Point(pos.x, pos.y - 1))
+            result.append(PointFactory.new_point(pos.x, pos.y - 1))
         # Left
         if pos.x - 1 >= 0:
-            result.append(point.Point(pos.x - 1, pos.y))
+            result.append(PointFactory.new_point(pos.x - 1, pos.y))
         # Right
         if pos.x + 1 < self.size_x:
-            result.append(point.Point(pos.x + 1, pos.y))
+            result.append(PointFactory.new_point(pos.x + 1, pos.y))
         # Bottom
         if pos.y + 1 < self.size_y:
-            result.append(point.Point(pos.x, pos.y + 1))
+            result.append(PointFactory.new_point(pos.x, pos.y + 1))
         return result
 
     def random_pos(self, z_level=None):
@@ -176,7 +177,7 @@ class Region:
         y = random.randint(0, self.size_y - 1)
         if z_level is None:
             z_level = 0 # TODO Select random z-level.
-        return point.Point(x, y, z_level)
+        return PointFactory.new_point(x, y, z_level)
 
     def remove_entity(self, entity):
         """ Removes an entity.

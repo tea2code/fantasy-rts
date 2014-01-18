@@ -1,7 +1,7 @@
 import pygame
 
 from . import spriteloader
-from data.world import point
+from data.world.point import Factory as PointFactory
 
 
 class PygameGraphics:
@@ -48,7 +48,7 @@ class PygameGraphics:
         >>> PygameGraphics.pos_to_screen(p, 16, 18)
         (16, 36)
         """
-        return pos.int_x * tile_x, pos.int_y * tile_y
+        return pos.x * tile_x, pos.y * tile_y
 
     def tick(self, run_time, delta_time, data):
         # Update screen.
@@ -89,18 +89,18 @@ class PygameGraphics:
         >>> PygameGraphics.visible(p, g)
         False
         """
-        return graphics.view_offset_x <= pos.int_x < graphics.view_offset_x + graphics.view_x and \
-               graphics.view_offset_y <= pos.int_y < graphics.view_offset_y + graphics.view_y
+        return graphics.view_offset_x <= pos.x < graphics.view_offset_x + graphics.view_x and \
+               graphics.view_offset_y <= pos.y < graphics.view_offset_y + graphics.view_y
 
     def __calc_view_offset(self, view_offset_x, view_offset_y):
         """ Calculate view offset point. """
-        self._view_offset_point = point.Point(view_offset_x, view_offset_y)
+        self._view_offset_point = PointFactory.new_point(view_offset_x, view_offset_y)
 
     def __draw_background(self, data):
         graphics = data.graphics
         for x in range(graphics.view_offset_x, graphics.view_offset_x + graphics.view_x):
             for y in range(graphics.view_offset_y, graphics.view_offset_y + graphics.view_y):
-                pos = point.Point(x, y)
+                pos = PointFactory.new_point(x, y)
                 self.__draw_pos(pos, data)
 
     def __draw_entities(self, entities, x, y):

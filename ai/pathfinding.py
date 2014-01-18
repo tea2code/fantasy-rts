@@ -32,9 +32,9 @@ class ManhattanDistance:
         >>> '{0:.2f}'.format(d)
         '8.00'
         """
-        return abs(pos1.int_x - pos2.int_x) + \
-               abs(pos1.int_y - pos2.int_y) + \
-               abs(pos1.int_z - pos2.int_z)
+        return abs(pos1.x - pos2.x) + \
+               abs(pos1.y - pos2.y) + \
+               abs(pos1.z - pos2.z)
 
 class Node:
     def __init__(self, pos):
@@ -55,11 +55,11 @@ class AStar:
     """ Path finding using A*.
 
     Member:
-    distance -- Object which calculates the distance of two points.
+    heuristic -- Heuristic which calculates the distance of two points.
     """
 
-    def __init__(self, distance):
-        self.distance = distance
+    def __init__(self, heuristic):
+        self.heuristic = heuristic
 
     def shortest_path(self, start, goal, blocked, region):
         """ Calculates the shortest path using the A* algorithm.
@@ -87,7 +87,7 @@ class AStar:
         >>> md = ManhattanDistance()
         >>> a_star = AStar(md)
         >>> path = a_star.shortest_path(start, goal, ['block'], r)
-        >>> path = [x.int_tuple2() for x in path]
+        >>> path = [x.tuple2() for x in path]
         >>> print(path)
         [(0, 1), (0, 2), (1, 2)]
         """
@@ -128,7 +128,7 @@ class AStar:
 
     def __distance(self, start, goal):
         """ Calculates the distance of the two points. """
-        return self.distance.distance(start, goal)
+        return self.heuristic.distance(start, goal)
 
     def __retrace_path(self, node):
         """ Retrace the path of the given node. """

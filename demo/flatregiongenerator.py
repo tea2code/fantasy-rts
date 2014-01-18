@@ -1,4 +1,5 @@
-from data.world import block, Factory, point, tile
+from data.world import block, Factory
+from data.world.point import  Factory as PointFactory
 from world import regiongenerator
 
 class FlatRegionGenerator(regiongenerator.RegionGenerator):
@@ -24,23 +25,23 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         # Initialize everything with grass.
         for x in range(size_x):
             for y in range(size_y):
-                self._map[point.Point(x, y)] = self.__grass_block(data)
+                self._map[PointFactory.new_point(x, y)] = self.__grass_block(data)
 
         # Border.
         for x in range(size_x):
-            self._map[point.Point(x, 0)] = self.__wall_block(data)
-            self._map[point.Point(x, size_x - 1)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(x, 0)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(x, size_x - 1)] = self.__wall_block(data)
         for y in range(size_y):
-            self._map[point.Point(0, y)] = self.__wall_block(data)
-            self._map[point.Point(size_y - 1, y)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(0, y)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(size_y - 1, y)] = self.__wall_block(data)
 
         # Open rectangle.
         for x in range(size_x_quarter, size_x_half + size_x_quarter):
-            self._map[point.Point(x, size_x_quarter - offset)] = self.__wall_block(data)
-            self._map[point.Point(x, size_x_half + size_x_quarter + offset)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(x, size_x_quarter - offset)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(x, size_x_half + size_x_quarter + offset)] = self.__wall_block(data)
         for y in range(size_y_quarter, size_y_half + size_y_quarter):
-            self._map[point.Point(size_y_quarter - offset, y)] = self.__wall_block(data)
-            self._map[point.Point(size_y_half + size_y_quarter + offset, y)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(size_y_quarter - offset, y)] = self.__wall_block(data)
+            self._map[PointFactory.new_point(size_y_half + size_y_quarter + offset, y)] = self.__wall_block(data)
 
     def all_blocks(self, z_level):
         return self._map
