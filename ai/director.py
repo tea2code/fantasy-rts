@@ -16,8 +16,8 @@ class Director:
 
     def __new_task(self, entity, run_time, data):
         """ Get the next task for the given entity. """
-        #if random.random() <= 0.9:
-        #    Factory.new_add_idle_task(entity, run_time, data)
-        #else:
-        free_pos = data.game.region.free_random_pos(entity.blocked, 0)
-        Factory.new_add_goto_task(entity, run_time, free_pos, data)
+        if random.random() <= 0.9:
+            Factory.new_add_idle_task(entity, run_time, data)
+        else:
+            free_pos = data.game.region.free_random_pos(entity.blocked, 0)
+            Factory.new_add_goto_task(entity, run_time, free_pos, data)

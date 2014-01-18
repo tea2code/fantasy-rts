@@ -1,8 +1,8 @@
+import random
 import sys
 import time
 
 from . import flatregiongenerator
-from data.task import Factory as TaskFactory
 from data.world import Factory, region
 
 
@@ -14,7 +14,6 @@ class Demo:
 
     Member:
     data -- The data object (data.data).
-    _static_entity_count -- Number of static entities (int).
     """
 
     RUN_TIME = 10 * 60
@@ -22,7 +21,6 @@ class Demo:
 
     def __init__(self, data):
         self.data = data
-        self._static_entity_count = 0
 
     def load(self):
         """ Loads the game into the data object. """
@@ -41,7 +39,7 @@ class Demo:
                 #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
     def tick(self, run_time, delta_time, data):
-        if self._static_entity_count < 10 and run_time % 1 <= delta_time:
+        if random.random() <= 0.01:
             # Create new shrub.
             id = 'entity.static.berry-shrub'
             pos = data.game.region.free_random_pos(data.config.entity.statics[id].blocked, 0)
