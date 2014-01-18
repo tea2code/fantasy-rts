@@ -11,9 +11,9 @@ Current Version: **5**
 - Version 3: Read all ingame configuration from files. 
 - Version 4: Ingame resource system.
 - Version 5: Data structure for maps, resources, entities...
-- Version 6: Task system. Collect and use food.
-- Version 7: Support für multiple sprites per entity and unregular sized sprites.
-- Version ?: More generic configuration.
+- Version 6: Task system. Fast pathfinding.
+- Version 7: More generic configuration.
+- Version 8: Support für multiple sprites per entity and unregular sized sprites.
 
 ## Coming Soon
 
