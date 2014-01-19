@@ -62,7 +62,8 @@ class AStar:
         self.heuristic = heuristic
 
     def shortest_path(self, start, goal, blocked, region):
-        """ Calculates the shortest path using the A* algorithm.
+        """ Calculates the shortest path using the A* algorithm. Returns None
+        if no path was found.
 
         Test:
         s = start
@@ -92,7 +93,10 @@ class AStar:
         [(0, 1), (0, 2), (1, 2)]
         """
         path = self.__find_path(start, goal, blocked, region)
-        return [node.pos for node in path][1:]
+        if path:
+            return [node.pos for node in path][1:]
+        else:
+            return path
 
     def __find_path(self, start, goal, blocked, region):
         current = Node(start)
@@ -124,7 +128,7 @@ class AStar:
                         heapq.heappush(openHeap, (neighbor.score, neighbor))
                     neighbor.parent = current
 
-        return []
+        return None
 
     def __distance(self, start, goal):
         """ Calculates the distance of the two points. """

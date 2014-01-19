@@ -1,6 +1,7 @@
 import pygame
 
 from . import spriteloader
+from collections import deque
 from data.world.point import Factory as PointFactory
 
 
@@ -13,7 +14,7 @@ class PygameGraphics:
     Member:
     clock -- The pygame clock.
     screen -- The pygame surface which acts as the game screen.
-    _fps -- List of last frames per second results (list).
+    _fps -- List of last frames per second results (deque).
     _sprite_loader -- The sprite loader (ui.spriteloader).
     _view_offset_point -- The cached view offset point (point.Point).
     """
@@ -26,7 +27,7 @@ class PygameGraphics:
         size = (graphics.view_x * graphics.tile_x, graphics.view_y * graphics.tile_y)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
-        self._fps = []
+        self._fps = deque(maxlen=self.MAX_FPS)
         self._sprite_loader = spriteloader.PygameSpriteLoader(data)
 
         self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
@@ -125,8 +126,8 @@ class PygameGraphics:
         fps = self.clock.get_fps()
         data.fps.append(fps)
         self._fps.append(fps)
-        while len(self._fps) > self.MAX_FPS:
-            self._fps.pop(0)
+        if len(self._fps) > self.MAX_FPS:
+            print('Deque to long.')
         text = data.graphics.window_title.format(sum(self._fps) / len(self._fps))
         pygame.display.set_caption(text)
 
