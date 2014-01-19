@@ -6,20 +6,22 @@ class Factory:
     Constant:
     FAST_EQ -- Indicates if the resulting Point should be with using fast
                equality allowing it to use the Flyweight pattern.
-    _POINTS -- Maps already created points (dict).
+
+    Member:
+    _points -- Maps already created points (dict).
     """
 
     FAST_EQ = True
-    _POINTS = {}
+    _points = {}
 
     @staticmethod
     def new_point(x=0, y=0, z=0):
         """ Create new point. """
         if Factory.FAST_EQ:
             key = (x, y, z)
-            if key not in Factory._POINTS:
-                Factory._POINTS[key] = Point(x, y, z, True)
-            return Factory._POINTS[key]
+            if key not in Factory._points:
+                Factory._points[key] = Point(x, y, z, True)
+            return Factory._points[key]
         else:
             return Point(x, y, z, False)
 
