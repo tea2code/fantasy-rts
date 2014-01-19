@@ -20,8 +20,8 @@ Current Version: **5**
 Following features are planned for the near future.
 
 - Sidebar with info about selected entity, commands and some kind of global info.
-- Basic animation.
 - Mouse and Keyboard commands.
+- Collect food.
 - Collect wood and build walls.
 - Direct control of creatures.
 

@@ -18,7 +18,7 @@ class PygameGraphics:
     _view_offset_point -- The cached view offset point (point.Point).
     """
 
-    MAX_FPS = 100
+    MAX_FPS = 1000
 
     def __init__(self, data):
         graphics = data.graphics
