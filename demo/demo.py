@@ -2,7 +2,7 @@ import random
 import sys
 import time
 
-from . import flatregiongenerator
+from . import flatregiongenerator, mazeregiongenerator
 from data.world import Factory, region
 
 
@@ -25,6 +25,7 @@ class Demo:
     def load(self):
         """ Loads the game into the data object. """
         # Create level map.
+        #region_generator = mazeregiongenerator.MazeRegionGenerator(self.data)
         region_generator = flatregiongenerator.FlatRegionGenerator(self.data)
         self.data.game.region = region.Region(region_generator, self.data.game.size_x, self.data.game.size_y)
 
@@ -32,8 +33,8 @@ class Demo:
         run_time = 0
         num_x = 10
         num_y = 20
-        for x in range(1, num_x):
-            for y in range(1, num_y):
+        for x in range(1, num_x + 1):
+            for y in range(1, num_y + 1):
                 entity = Factory.new_add_dynamic_entity('entity.dynamic.dwarf', self.data, run_time, x, y, z=0)
                 #free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
                 #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)

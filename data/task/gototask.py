@@ -18,8 +18,6 @@ class GoToTask(basetask.BaseTask):
         distance = pathfinding.EuclideanDistance()
         algorithm = pathfinding.AStar(distance)
         self.path = algorithm.shortest_path(start, goal, entity.blocked, region)
-        if not self.path:
-            print('No path found from {0} to {1}.'.format(start, goal))
 
         # Calculate time for one step.
         self.time_per_step = 1.0 / entity.speed
