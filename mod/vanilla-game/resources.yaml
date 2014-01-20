@@ -12,4 +12,3 @@ resources:
         namespace: type
         type:
             - name: food
-              type_name: food

@@ -1,0 +1,5 @@
+load:
+
+    - vanilla-config
+    - vanilla-game
+    - vanilla-style
