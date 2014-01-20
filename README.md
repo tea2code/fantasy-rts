@@ -45,7 +45,7 @@ Example:
         sprites:
             namespace: sprite
             sprite:
-                - name: unknown
+                - name: dwarf
                   ...
 
 This describes a sprite entity with the *name* "unknown" in the *namespace* "sprite" which itself is in the *namespace* "style". This means the full id of this sprite entity is "style.sprite.unknown". 
@@ -64,37 +64,37 @@ The ID is used to link different data and check if a value already exists and sh
 #### Style Reference:
 
     style:
-        namespace: <string>
+        namespace: <string, "Namespace part.">
 
-        tile_x: <int>
-        tile_y: <int>
+        tile_x: <int, "The base size in x direction of one tile.">
+        tile_y: <int, "The base size in y direction of one tile.">
     
-        images: <optional>
-            namespace: <string>
+        images:
+            namespace: <string, "Namespace part.">
             image:
-                - name: <string>
-                  path: <string>
+                - name: <string, "Namespace end part.">
+                  path: <string, "Path to the image.">
     
-        sprites: <optional>
-            namespace: <string>
-            image: <id, optional>
-            width: <int, optional>
-            height: <int, optional>
+        sprites: 
+            namespace: <string, "Namespace part.">
+            image: <id, optional, "Id of the image.">
+            width: <int, optional, "Width of the sprite.">
+            height: <int, optional, "Height of the sprite.">
             sprite: 
-                - name: <string>
-                  image: <id, optional>
-                  x: <int>
-                  y: <int>
-                  width: <int, optional>
-                  height: <int, optional>
+                - name: <string, "Namespace end part.">
+                  image: <id, optional, "Id of the image.">
+                  x: <int, "X-coordinate of the sprite.">
+                  y: <int, "Y-coordinate of the sprite.">
+                  width: <int, optional, "Width of the sprite.">
+                  height: <int, optional, "Height of the sprite.">
     
-        mappings: <optional>
-            namespace: <string>
-            default: <id>
+        mappings:
+            namespace: <string, "Namespace part.">
+            default: <id, "Default mapping.">
             mapping:
-                - name: <string>
-                  map: <id>
-                  to: <id>
+                - name: <string, "Namespace end part.">
+                  map: <id, "Map this id to...">
+                  to: <id, "...this sprite.">
 
 Both "sprites" and "sprite" can have the attributes "image", "width" and "height". One must always have them. If they are set on "sprites" they serve as default values for all "sprite" entities. Set on "sprite" they are individual for this entity and will override any values from "sprites".
 
@@ -105,73 +105,77 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
 #### Game Reference:
 
     game:
-        size_x: <int>
-        size_y: <int>
+        size_x: <int, "Size of game region in x direction.">
+        size_y: <int, "Size of game region in y direction.">
 
 #### Config Reference:
 
     config:
-        fps: <int>
-        max_frame_time: <float>
-        scroll_width_x: <int>
-        scroll_width_y: <int>
-        view_x: <int>
-        view_y: <int>
-        window_title: <string>
+        fps: <int, "Upper frames per second limit.">
+        max_frame_time: <float, "Maximum time between renders. The maximum time updating the state may take.">
+        scroll_width_x: <int, "Number of coordinates to scroll in x direction.">
+        scroll_width_y: <int, "Number of coordinates to scroll in y direction.">
+        view_x: <int, "Size of viewport in x direction.">
+        view_y: <int, "Size of viewport in y direction.">
+        window_title: <string, "The window title. Currently it's possible to show the current fps in it.">
 
 #### Resources Reference:
 
     resources:
-        namespace: <string>
+        namespace: <string, "Namespace part.">
         
         resources:
-            namespace: <string>
+            namespace: <string, "Namespace part.">
             resource:
-                - name: <string>
-                  type: <string>
-                  value: <float>
+                - name: <string, "Namespace end part.">
+                  type: <id, "The resource type.">
+                  value: <float, "The value of this resource aka units.">
             
         types:
-            namespace: <string>
+            namespace: <string, "Namespace part.">
             type:
-                - name: <string>
-                  type_name: <string>
+                - name: <string, "Namespace end part.">
 
 The types "resource" and "type" can/should/will exist multiple times. Each representing a single entity.
 
 #### Entity Reference:
 
     entity:
-        namespace: <string>
+        namespace: <string, "Namespace part.">
         
         attributes:
-        namespace: <string>
-            attribute-category:
-                - namespace: <string>
+        namespace: <string, "Namespace part.">
+            category:
+                - namespace: <string, "Namespace part.">
                     attribute:
-                        - name: <string>
+                        - name: <string, "Namespace end part.">
 
         dynamics:
-            namespace: <string>
+            namespace: <string, "Namespace part.">
             dynamic:
-                - name: <string>
-                  blocked: [<id>]
-                  move_type: <id>
-                  speed: <float>
+                - name: <string, "Namespace end part.">
+                  blocked: 
+                    - type: <id, "Blocked type. Must match attribute.">
+                  moving:
+                    - type: <id, "Moving type. Must match attribute.">
+                      speed: <float, "Speed of this type of moving.">
 
         statics:
-            namespace: <string>
+            namespace: <string, "Namespace part.">
             static:
-                - name: <string>
-                  blocked: [<id>]
-                  blocking: [<id>]
+                - name: <string, "Namespace end part.">
+                  blocked: 
+                    - type: <id, "Blocked type. Must match attribute.">
+                  blocking: 
+                    - type: <id, "Blocking type. Must match attribute.">
                   resource: <id, optional>
                   resource_chance: <float, optional>
 
         tiles:
-            namespace: <string>
+            namespace: <string, "Namespace part.">
             tile:
-                - name: <string>
-                  blocking: [<id>]
+                - name: <string, "Namespace end part.">
+                  blocking: 
+                    - type: <id, "Blocking type. Must match attribute.">
             
-The types "attribute", "dynamic", "static" and "tile" can/should/will exist multiple times. Each representing a single entity.
+The types "attribute", "dynamic", "static", "tile", "blocked", "blocking" and "moving" can/should/will exist multiple times. Each representing a single entity.

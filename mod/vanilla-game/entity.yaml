@@ -7,7 +7,7 @@ entity:
             - namespace: blocking
               attribute:
                 - name: wall
-            - namespace: movable
+            - namespace: moving
               attribute:
                 - name: walk
     
@@ -16,9 +16,9 @@ entity:
         dynamic:
             - name: dwarf
               blocked: 
-                - id: entity.attribute.blocking.wall
-              move_type: 
-                - id: entity.attribute.movable.walk
+                - type: entity.attribute.blocking.wall
+              moving: 
+                - type: entity.attribute.moving.walk
                   speed: 10.0
     
     statics:
@@ -26,7 +26,7 @@ entity:
         static:
             - name: berry-shrub
               blocked: 
-                - id: entity.attribute.blocking.wall
+                - type: entity.attribute.blocking.wall
               blocking:
               resource: resource.resource.berry
               resource_chance: 0.8
@@ -38,4 +38,4 @@ entity:
               blocking: 
             - name: wall
               blocking: 
-                - id: entity.attribute.blocking.wall
+                - type: entity.attribute.blocking.wall
