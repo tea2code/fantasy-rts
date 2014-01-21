@@ -1,7 +1,8 @@
 import pygame
 
 from data import direction
-from data.attributes import movable
+from data.world.entity import movable
+
 
 class PygameSpriteLoader:
     """ Gives access to sprite handling.

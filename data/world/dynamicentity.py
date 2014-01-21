@@ -1,5 +1,5 @@
-from . import entity
-from ..attributes import blocking, movable
+from data.world.entity import blocking, entity, movable
+
 
 class DynamicEntity(entity.Entity, blocking.Blocked, movable.Walking):
     """ A dynamic entity. For example a horse."""

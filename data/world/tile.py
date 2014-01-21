@@ -1,5 +1,5 @@
-from . import entity
-from ..attributes import blocking
+from data.world.entity import blocking, entity
+
 
 class Tile(entity.Entity, blocking.Blocking):
     """ A tile. """

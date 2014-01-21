@@ -169,8 +169,9 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
                     - type: <id, "Blocked type. Must match attribute.">
                   blocking: 
                     - type: <id, "Blocking type. Must match attribute.">
-                  resource: <id, optional>
-                  resource_chance: <float, optional>
+                  resource: 
+                    - type: <id, optional, "Resource type.">
+                      chance: <float, optional, "Chance that this resource appears.">
 
         tiles:
             namespace: <string, "Namespace part.">

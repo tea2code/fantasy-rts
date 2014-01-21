@@ -1,4 +1,4 @@
-from .. import direction
+from ... import direction
 
 class Walking:
     """ Defines the walking attribute.

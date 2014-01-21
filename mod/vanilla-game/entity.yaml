@@ -28,8 +28,9 @@ entity:
               blocked: 
                 - type: entity.attribute.blocking.wall
               blocking:
-              resource: resource.resource.berry
-              resource_chance: 0.8
+              resource: 
+                - type: resource.resource.berry
+                  chance: 0.8
               
     tiles:
         namespace: tile

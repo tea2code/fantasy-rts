@@ -1,5 +1,5 @@
-from . import entity
-from ..attributes import blocking
+from data.world.entity import blocking, entity
+
 
 class StaticEntity(entity.Entity, blocking.Blocking, blocking.Blocked):
     """ A static entity. For example a tree."""

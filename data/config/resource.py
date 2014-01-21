@@ -1,4 +1,4 @@
-class Resource():
+class Resource:
     """ A config resource.
 
     Member:
@@ -9,3 +9,24 @@ class Resource():
     def __init__(self, value, type):
         self.value = value
         self.type = type
+
+class Resources:
+    """ Config resources.
+
+    Member:
+    resources -- Resource id to resource mapping (dict).
+    types -- Type id to type mapping (dict).
+    """
+
+    def __init__(self):
+        self.resources = {}
+        self.types = {}
+
+class ResourceType:
+    """ A config resource type.
+
+    Member:
+    """
+
+    def __init__(self):
+        pass
