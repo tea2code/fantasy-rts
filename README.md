@@ -14,6 +14,7 @@ Current Version: **6**
 - Version 6: Task system. Fast pathfinding.
 - Version 7: More generic configuration.
 - Version 8: Support für multiple sprites per entity and unregular sized sprites.
+- Version 9: Refactoring. Working shrubs. Better GotoTask.
 
 ## Coming Soon
 
