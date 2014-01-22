@@ -53,6 +53,15 @@ This describes a sprite entity with the *name* "unknown" in the *namespace* "spr
 
 The ID is used to link different data and check if a value already exists and should be overriden. For implementation reasons this may not always be the case. But that can change any time. This means always define namespace and name as specified in the following references.
 
+### Load Order File
+
+In the mod directory is a file "mod.yaml". It describes which configuration files should be loaded and in which order. It can load complete directories (loading all files in it) or single files. Example:
+
+    load:
+        - game/
+        - config/default.yaml
+        - style
+
 ### Modifications
 
 - *string*: A text value.
