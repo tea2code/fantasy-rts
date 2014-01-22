@@ -87,7 +87,7 @@ class Region:
         """ Returns the block at the given position.
 
         Test:
-        >>> from data.world import entity
+        >>> from data.world.entity import entity
         >>> e = entity.Entity('id')
         >>> from data.world import point
         >>> p = point.Point()
@@ -106,7 +106,7 @@ class Region:
         """ Returns the exact position of the given entity.
 
         Test:
-        >>> from data.world import entity
+        >>> from data.world.entity import entity
         >>> e = entity.Entity('id')
         >>> from data.world import point
         >>> p = point.Point()
@@ -183,7 +183,7 @@ class Region:
         """ Removes an entity.
 
         Test:
-        >>> from data.world import entity
+        >>> from data.world.entity import entity
         >>> e = entity.Entity('id')
         >>> from data.world import point
         >>> p = point.Point()
