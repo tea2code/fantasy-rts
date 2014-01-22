@@ -1,7 +1,6 @@
 from . import basereader
 from data.config import resource as resource_config
-from data.config import resources
-from data.config import resourcetype
+from data.config import resource
 
 class YamlResourcesReader(basereader.BaseYamlReader):
     """ Yaml reader for resource types.
@@ -32,7 +31,7 @@ class YamlResourcesReader(basereader.BaseYamlReader):
 
         namespace = self.read_req_string(root, self.VALUE_NAMESPACE)
 
-        result = resources.Resources()
+        result = resource.Resources()
         if self.has(root, self.VALUE_RESOURCES):
             result.resources = self.__resources(namespace, root)
         if self.has(root, self.VALUE_TYPES):
@@ -63,5 +62,5 @@ class YamlResourcesReader(basereader.BaseYamlReader):
             name = self.read_req_string(type, self.VALUE_NAME)
             id = self.namespace_to_id(namespace_list, name)
             type_name = self.read_req_string(type, self.VALUE_TYPE_NAME)
-            result[id] = resourcetype.ResourceType(type_name)
+            result[id] = resource.ResourceType(type_name)
         return result

@@ -1,6 +1,5 @@
 from . import basereader
 from data import graphics
-from data.config import sprite as sprite_class
 from data.config import style
 
 class YamlStyleReader(basereader.BaseYamlReader):
@@ -108,6 +107,6 @@ class YamlStyleReader(basereader.BaseYamlReader):
             height = self.read_int(sprite, self.VALUE_HEIGHT, default_height)
             x = self.read_req_int(sprite, self.VALUE_X)
             y = self.read_req_int(sprite, self.VALUE_Y)
-            sprite_obj = sprite_class.Sprite(image, x, y, width, height)
+            sprite_obj = style.Sprite(image, x, y, width, height)
             result[id] = sprite_obj
         return result

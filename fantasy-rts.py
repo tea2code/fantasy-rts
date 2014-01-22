@@ -11,6 +11,7 @@ class MainLoopImp(mainloop.MainLoop):
     """
     Constants:
     CONFIG_DIR -- Directory of the configuration (string).
+    CONFIG_LOAD_FILE -- File with load order of config (string).
 
     Member:
     data -- The data module (data.Data).
@@ -19,6 +20,7 @@ class MainLoopImp(mainloop.MainLoop):
     """
 
     CONFIG_DIR = 'mod/'
+    CONFIG_LOAD_FILE = 'mod.yaml'
 
     def __init__(self):
         # Data.
@@ -26,7 +28,7 @@ class MainLoopImp(mainloop.MainLoop):
         self.data.config.config_dir = self.CONFIG_DIR
 
         # Load configuration.
-        config.load_config(self.data, self.CONFIG_DIR)
+        config.load_config(self.data, self.CONFIG_DIR, self.CONFIG_LOAD_FILE)
 
         # Demo mode.
         demo_loader = demo.Demo(self.data)

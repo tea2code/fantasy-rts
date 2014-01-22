@@ -1,5 +1,5 @@
 from .config import entity
-from .config import resources
+from .config import resource
 from .config import style
 
 class Configuration:
@@ -21,7 +21,7 @@ class Configuration:
         self.entity = entity.Entity()
         self.fps = 100
         self.max_frame_time = 0.25
-        self.resources = resources.Resources()
+        self.resources = resource.Resources()
         self.scroll_width_x = 3
         self.scroll_width_y = 3
         self.style = style.Style()

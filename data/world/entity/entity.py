@@ -1,5 +1,3 @@
-from . import point
-
 class Entity:
     """ A world entity is a static element of the world. For example a simple
     tile of the ground, a dirt wall or a tree.

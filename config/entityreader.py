@@ -1,9 +1,5 @@
 from . import basereader
-from data.config import attribute as attributeentity
-from data.config import dynamicentity
 from data.config import entity
-from data.config import staticentity
-from data.config import tileentity
 
 class YamlEntityReader(basereader.BaseYamlReader):
     """ Yaml reader for entity types.
@@ -74,7 +70,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
             for attribute in self.read_object(category, self.VALUE_ATTRIBUTE, []):
                 name = self.read_req_string(attribute, self.VALUE_NAME)
                 id = self.namespace_to_id(namespace_list, name)
-                result[id] = attributeentity.Attribute()
+                result[id] = entity.Attribute()
         return result
 
     def __dynamics(self, namespace, root):
@@ -86,7 +82,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
         for dynamic in self.read_object(dynamics, self.VALUE_DYNAMIC, []):
             name = self.read_req_string(dynamic, self.VALUE_NAME)
             id = self.namespace_to_id(namespace_list, name)
-            d = dynamicentity.DynamicEntity()
+            d = entity.DynamicEntity()
             d.blocked = self.read_req_object(dynamic, self.VALUE_BLOCKED)
             d.move_type = self.read_req_string(dynamic, self.VALUE_MOVE_TYPE)
             d.speed = self.read_req_float(dynamic, self.VALUE_SPEED)
@@ -104,7 +100,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
             id = self.namespace_to_id(namespace_list, name)
             resource = self.read_string(static, self.VALUE_RESOURCE, None)
             chance = self.read_float(static, self.VALUE_RESOURCE_CHANCE, 0.0)
-            s = staticentity.StaticEntity(resource, chance)
+            s = entity.StaticEntity(resource, chance)
             s.blocked = self.read_req_object(static, self.VALUE_BLOCKED)
             s.blocking = self.read_req_object(static, self.VALUE_BLOCKING)
             result[id] = s
@@ -119,7 +115,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
         for tile in self.read_object(tiles, self.VALUE_TILE, []):
             name = self.read_req_string(tile, self.VALUE_NAME)
             id = self.namespace_to_id(namespace_list, name)
-            t = tileentity.TileEntity()
+            t = entity.TileEntity()
             t.blocking = self.read_req_object(tile, self.VALUE_BLOCKING)
             result[id] = t
         return result
