@@ -13,7 +13,6 @@ class Game:
     """
 
     def __init__(self):
-        self.creatures = []
         self.region = None
         self.size_x = 100
         self.size_y = 100
