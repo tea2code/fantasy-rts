@@ -1,6 +1,5 @@
 import pygame
 
-from data import direction
 from data.world.entity import movable
 
 
@@ -24,14 +23,14 @@ class PygameSpriteLoader:
         entity. """
         id = entity.id
         if isinstance(entity, movable.Walking):
-            if entity.direction is direction.UP:
-                id += '-up'
-            elif entity.direction is direction.DOWN:
-                id += '-down'
-            elif entity.direction is direction.LEFT:
-                id += '-left'
+            if entity.direction is movable.Direction.NORTH:
+                id += '-north'
+            elif entity.direction is movable.Direction.SOUTH:
+                id += '-south'
+            elif entity.direction is movable.Direction.WEST:
+                id += '-west'
             else:
-                id += '-right'
+                id += '-east'
         sprite_id = self._style.mappings[id] if id in self._style.mappings else self._style.default_mapping
         sprite = self._style.sprites[sprite_id]
         image = self._sprite_images[sprite.image]
