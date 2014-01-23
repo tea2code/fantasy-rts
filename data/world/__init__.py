@@ -25,9 +25,8 @@ class Factory:
         # Entity.
         config = data.config.entity.dynamics[id]
         entity = dynamicentity.DynamicEntity(id)
-        entity.blocked = config.blocked
-        entity.move_type = config.move_type
-        entity.speed = config.speed
+        entity.blocked = [b.type for b in config.blocked]
+        entity.moving = config.moving
 
         # Initial task.
         if init_task:
@@ -61,8 +60,8 @@ class Factory:
         """ Creates and returns a new static entity. """
         config = data.config.entity.statics[id]
         entity = staticentity.StaticEntity(id)
-        entity.blocked = config.blocked
-        entity.blocking = config.blocking
+        entity.blocked = [b.type for b in config.blocked]
+        entity.blocking = [b.type for b in config.blocking]
         return entity
 
     @staticmethod
@@ -90,7 +89,7 @@ class Factory:
     def __new_tile(id, data):
         config = data.config.entity.tiles[id]
         entity = tile.Tile(id)
-        entity.blocking = config.blocking
+        entity.blocking = [b.type for b in config.blocking]
         return entity
 
     @staticmethod

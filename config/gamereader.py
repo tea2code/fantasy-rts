@@ -5,17 +5,15 @@ class YamlGameReader(basereader.BaseYamlReader):
     """ Yaml reader for game types.
 
     Constants:
-    VALUE_SIZE_X
-    VALUE_SIZE_Y
+    SIZE_X
+    SIZE_Y
     """
 
-    VALUE_SIZE_X = 'size_x'
-    VALUE_SIZE_Y = 'size_y'
+    SIZE_X = 'size_x'
+    SIZE_Y = 'size_y'
 
-    def parse(self, root):
-        """ Parse the game structure. Returns a game object. """
-
-        result = game.Game()
-        result.size_x = self.read_req_int(root, self.VALUE_SIZE_X)
-        result.size_y = self.read_req_int(root, self.VALUE_SIZE_Y)
-        return result
+    def parse(self, root, data):
+        """ Parse the game structure. Writes the parsed information into the
+        data object. """
+        data.game.size_x = self.read_req_int(root, self.SIZE_X)
+        data.game.size_y = self.read_req_int(root, self.SIZE_Y)

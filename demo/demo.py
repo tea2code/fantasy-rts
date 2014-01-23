@@ -41,12 +41,6 @@ class Demo:
                 #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
     def tick(self, run_time, delta_time, data):
-        if random.random() <= 0.01:
-            # Create new shrub.
-            id = ID.ENTITY_STATIC_BERRY_SHRUB
-            pos = data.game.region.free_random_pos(data.config.entity.statics[id].blocked, 0)
-            Factory.new_add_static_entity(id, self.data, pos=pos)
-
         # Burn additional time.
         if self.TIME_BURNER:
             time.sleep(self.TIME_BURNER)
