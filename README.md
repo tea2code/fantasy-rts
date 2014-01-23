@@ -76,8 +76,8 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
     style:
         namespace: <string, "Namespace part.">
 
-        tile_x: <int, "The base size in x direction of one tile.">
-        tile_y: <int, "The base size in y direction of one tile.">
+        tile_x: <int, optional, "The base size in x direction of one tile.">
+        tile_y: <int, optional, "The base size in y direction of one tile.">
     
         images:
             namespace: <string, "Namespace part.">
@@ -115,19 +115,20 @@ The types "sprite", "image" and "mapping" can/should/will exist multiple times. 
 #### Game Reference:
 
     game:
-        size_x: <int, "Size of game region in x direction.">
-        size_y: <int, "Size of game region in y direction.">
+        size_x: <int, optional, "Size of game region in x direction.">
+        size_y: <int, optional, "Size of game region in y direction.">
 
 #### Config Reference:
 
     config:
-        fps: <int, "Upper frames per second limit.">
-        max_frame_time: <float, "Maximum time between renders. The maximum time updating the state may take.">
-        scroll_width_x: <int, "Number of coordinates to scroll in x direction.">
-        scroll_width_y: <int, "Number of coordinates to scroll in y direction.">
-        view_x: <int, "Size of viewport in x direction.">
-        view_y: <int, "Size of viewport in y direction.">
-        window_title: <string, "The window title. Currently it's possible to show the current fps in it.">
+        fps: <int, optional, "Upper frames per second limit.">
+        max_frame_time: <float, optional, "Maximum time between renders. The maximum time updating the state may take.">
+        num_fps_avg: <int, optional, "Number of frames to keep for calculation fps.">
+        scroll_width_x: <int, optional, "Number of coordinates to scroll in x direction.">
+        scroll_width_y: <int, optional, "Number of coordinates to scroll in y direction.">
+        view_x: <int, optional, "Size of viewport in x direction.">
+        view_y: <int, optional, "Size of viewport in y direction.">
+        window_title: <string, optional, "The window title. Currently it's possible to show the current fps in it.">
 
 #### Resources Reference:
 

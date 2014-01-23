@@ -50,8 +50,8 @@ class YamlStyleReader(basereader.BaseYamlReader):
         data object. """
         namespace = self.read_req_string(root, self.NAMESPACE)
 
-        data.graphics.tile_x = self.read_req_int(root, self.TILE_X)
-        data.graphics.tile_y = self.read_req_int(root, self.TILE_Y)
+        data.graphics.tile_x = self.read_int(root, self.TILE_X, data.graphics.tile_x)
+        data.graphics.tile_y = self.read_int(root, self.TILE_Y, data.graphics.tile_y)
 
         if self.has(root, self.IMAGES):
             self.__images(namespace, root, data)

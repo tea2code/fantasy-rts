@@ -10,6 +10,7 @@ class Configuration:
     entity -- The entity config (data.config.entity).
     fps -- The should be frame rate (int).
     max_frame_time -- Maximum time a frame may take (float).
+    num_fps_avg -- Number of frames to keep for calculation fps (int).
     resources -- The resources config (data.config.resources).
     scroll_width_x -- Number of tiles scrolling changes the view port in x direction (int).
     scroll_width_y -- Number of tiles scrolling changes the view port in y direction (int).
@@ -21,6 +22,7 @@ class Configuration:
         self.entity = entity.Entity()
         self.fps = 100
         self.max_frame_time = 0.25
+        self.num_fps_avg = 1000
         self.resources = resource.Resources()
         self.scroll_width_x = 3
         self.scroll_width_y = 3

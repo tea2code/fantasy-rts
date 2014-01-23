@@ -8,9 +8,6 @@ from data.world.point import Factory as PointFactory
 class PygameGraphics:
     """ Graphical representation of state using pygame.
 
-    Constants:
-    MAX_FPS -- Maximum number of fps in list (int).
-
     Member:
     clock -- The pygame clock.
     screen -- The pygame surface which acts as the game screen.
@@ -19,15 +16,13 @@ class PygameGraphics:
     _view_offset_point -- The cached view offset point (point.Point).
     """
 
-    MAX_FPS = 1000
-
     def __init__(self, data):
         graphics = data.graphics
 
         size = (graphics.view_x * graphics.tile_x, graphics.view_y * graphics.tile_y)
         self.screen = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
-        self._fps = deque(maxlen=self.MAX_FPS)
+        self._fps = deque(maxlen=data.config.num_fps_avg)
         self._sprite_loader = spriteloader.PygameSpriteLoader(data)
 
         self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
@@ -126,8 +121,6 @@ class PygameGraphics:
         fps = self.clock.get_fps()
         data.fps.append(fps)
         self._fps.append(fps)
-        if len(self._fps) > self.MAX_FPS:
-            print('Deque to long.')
         text = data.graphics.window_title.format(sum(self._fps) / len(self._fps))
         pygame.display.set_caption(text)
 

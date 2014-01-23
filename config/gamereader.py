@@ -15,5 +15,5 @@ class YamlGameReader(basereader.BaseYamlReader):
     def parse(self, root, data):
         """ Parse the game structure. Writes the parsed information into the
         data object. """
-        data.game.size_x = self.read_req_int(root, self.SIZE_X)
-        data.game.size_y = self.read_req_int(root, self.SIZE_Y)
+        data.game.size_x = self.read_int(root, self.SIZE_X, data.game.size_x)
+        data.game.size_y = self.read_int(root, self.SIZE_Y, data.game.size_y)
