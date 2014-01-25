@@ -11,41 +11,41 @@ style:
     
     sprites:
         namespace: sprite
-        image: style.image.vanilla
+        image: style.image.vanilla-new
         width: 16
         height: 16
         sprite:
             - name: unknown
-              x: 18
-              y: 1
+              x: 0
+              y: 16
             
             - name: grass
-              x: 18
-              y: 18
+              x: 0
+              y: 32
             
             - name: wall
-              x: 18
-              y: 35
+              x: 0
+              y: 48
                 
             - name: shrub
-              x: 18
-              y: 69
+              x: 0
+              y: 16
                 
             - name: dwarf-north
-              x: 35
-              y: 52
+              x: 16
+              y: 64
                 
             - name: dwarf-east
-              x: 18
-              y: 52
+              x: 48
+              y: 64
                 
             - name: dwarf-west
-              x: 35
-              y: 52
+              x: 32
+              y: 64
                 
             - name: dwarf-south
-              x: 18
-              y: 52
+              x: 0
+              y: 64
         
     mappings:
         namespace: mapping

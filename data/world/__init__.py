@@ -26,7 +26,8 @@ class Factory:
         config = data.config.entity.dynamics[id]
         entity = dynamicentity.DynamicEntity(id)
         entity.blocked = [b.type for b in config.blocked]
-        entity.moving = config.moving
+        entity.move_type = config.moving[0].type
+        entity.speed = config.moving[0].speed
 
         # Initial task.
         if init_task:

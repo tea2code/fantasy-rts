@@ -20,7 +20,7 @@ class GoToTask(basetask.BaseTask):
         self.path = algorithm.shortest_path(start, goal, entity.blocked, region)
 
         # Calculate time for one step.
-        self.time_per_step = 1.0 / entity.moving[0].speed
+        self.time_per_step = 1.0 / entity.speed
 
     def execute_next(self, data):
         if not self.path:
