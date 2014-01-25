@@ -1,5 +1,4 @@
 from . import basereader
-from data import graphics
 from data.config import style
 
 class YamlStyleReader(basereader.BaseYamlReader):
@@ -69,7 +68,9 @@ class YamlStyleReader(basereader.BaseYamlReader):
             name = self.read_req_string(image, self.NAME)
             id = self.namespace_to_id(namespace_list, name)
             path = self.read_req_string(image, self.PATH)
-            data.config.style.images[id] = path
+            image_obj = style.Image()
+            image_obj.path = path
+            data.config.style.images[id] = image_obj
 
     def __mappings(self, namespace, root, data):
         """ Parse mappings. """

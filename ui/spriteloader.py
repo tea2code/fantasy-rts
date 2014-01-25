@@ -15,7 +15,7 @@ class PygameSpriteLoader:
         self._style = data.config.style
         self._sprite_images = {}
         for id in self._style.images:
-            dir = data.config.config_dir + self._style.images[id]
+            dir = data.config.config_dir + self._style.images[id].path
             self._sprite_images[id] = pygame.image.load(dir).convert_alpha()
 
     def get_sprite(self, entity):
