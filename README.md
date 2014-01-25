@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **6**
+Current Version: **7**
 
 - Version 1: Basic framework with simple demo level.
 - Version 2: Basic creature with simple behaviour related to food.
@@ -28,7 +28,7 @@ Following features are planned for the near future.
 
 ## Attribution
 
-- Test sprites by [Sharm](http://opengameart.org/content/16x16-overworld-tiles)
+- Test sprites by [Sharm](http://opengameart.org/content/16x16-overworld-tiles) (No longer used).
 
 ## Manual
 
