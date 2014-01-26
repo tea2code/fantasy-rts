@@ -23,16 +23,7 @@ class PygameSpriteLoader:
         """ Returns the sprite image and the sprite coordinates for the given
         entity. """
         # Get id.
-        id = entity.id
-        if isinstance(entity, movable.Walking):
-            if entity.direction is movable.Direction.NORTH:
-                id += '-north'
-            elif entity.direction is movable.Direction.EAST:
-                id += '-east'
-            elif entity.direction is movable.Direction.WEST:
-                id += '-west'
-            else:
-                id += '-south'
+        id = entity.state_id()
 
         # Select sprite.
         sprite_id = self._style.mappings[id] if id in self._style.mappings else self._style.default_mapping

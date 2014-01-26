@@ -109,7 +109,7 @@ class PygameGraphics:
         graphics = data.graphics
 
         block = game.region.get_block(pos)
-        x, y = self.pos_to_screen(pos -  self._view_offset_point, graphics.tile_x, graphics.tile_y)
+        x, y = self.pos_to_screen(pos - self._view_offset_point, graphics.tile_x, graphics.tile_y)
 
         self.__draw_entities(block.get_tiles(), x, y, graphics.tile_x, graphics.tile_y)
         self.__draw_entities(block.get_statics(), x, y, graphics.tile_x, graphics.tile_y)

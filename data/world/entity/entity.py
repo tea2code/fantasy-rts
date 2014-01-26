@@ -10,3 +10,7 @@ class Entity:
     def __init__(self, id):
         self.id = id
         self.sprite_num = None
+
+    def state_id(self):
+        """ Returns the id adapted to the current internal state. """
+        return self.id
