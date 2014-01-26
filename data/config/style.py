@@ -12,19 +12,17 @@ class Sprite:
     """ A config sprite.
 
     Member:
-    height -- The height (int).
     image -- The image id (string).
-    width -- The width (int).
     x -- The x coordinate (int).
     y -- The y coordinate (int).
+    chance -- The chance that this image appears. Only necessary for multiples (float).
     """
 
-    def __init__(self, image, x, y, width, height):
+    def __init__(self, image, x, y):
         self.image = image
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
+        self.chance = 1.0
 
 class Style:
     """ A style config.
@@ -33,7 +31,7 @@ class Style:
     default_mapping -- The default sprite id to use (string).
     images -- Image id to image mapping (dict).
     mappings -- Object id to sprite id mapping (dict).
-    sprites -- Sprite id to sprite mapping (dict).
+    sprites -- Sprite id to sprite or list of sprites mapping (dict).
     """
 
     def __init__(self):

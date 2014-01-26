@@ -5,13 +5,14 @@ class YamlStyleReader(basereader.BaseYamlReader):
     """ Yaml reader for style types.
 
     Constants:
+    CHANCE
     DEFAULT
-    HEIGHT
     IMAGE
     IMAGES
     MAP
     MAPPING
     MAPPINGS
+    MULTIPLE
     NAME
     NAMESPACE
     PATH
@@ -20,18 +21,18 @@ class YamlStyleReader(basereader.BaseYamlReader):
     TILE_X
     TILE_Y
     TO
-    WIDTH
     X
     Y
     """
 
+    CHANCE = 'chance'
     DEFAULT = 'default'
-    HEIGHT = 'height'
     IMAGE = 'image'
     IMAGES = 'images'
     MAP = 'map'
     MAPPING = 'mapping'
     MAPPINGS = 'mappings'
+    MULTIPLE = 'multiple'
     NAME = 'name'
     NAMESPACE = 'namespace'
     PATH = 'path'
@@ -40,7 +41,6 @@ class YamlStyleReader(basereader.BaseYamlReader):
     TILE_X = 'tile_x'
     TILE_Y = 'tile_y'
     TO = 'to'
-    WIDTH = 'width'
     X = 'x'
     Y = 'y'
 
@@ -88,16 +88,21 @@ class YamlStyleReader(basereader.BaseYamlReader):
         namespace_list = [namespace, self.read_req_string(sprites, self.NAMESPACE)]
 
         default_image = self.read_string(sprites, self.IMAGE, None)
-        default_width = self.read_int(sprites, self.WIDTH, None)
-        default_height = self.read_int(sprites, self.HEIGHT, None)
 
         for sprite in self.read_object(sprites, self.SPRITE, []):
             name = self.read_req_string(sprite, self.NAME)
             id = self.namespace_to_id(namespace_list, name)
             image = self.read_string(sprite, self.IMAGE, default_image)
-            width = self.read_int(sprite, self.WIDTH, default_width)
-            height = self.read_int(sprite, self.HEIGHT, default_height)
-            x = self.read_req_int(sprite, self.X)
-            y = self.read_req_int(sprite, self.Y)
-            sprite_obj = style.Sprite(image, x, y, width, height)
+            if self.has(sprite, self.MULTIPLE):
+                sprite_obj = []
+                for multiple in self.read_object(sprite, self.MULTIPLE, []):
+                    x = self.read_req_int(multiple, self.X)
+                    y = self.read_req_int(multiple, self.Y)
+                    multiple_obj = style.Sprite(image, x, y)
+                    multiple_obj.chance = self.read_req_float(multiple, self.CHANCE)
+                    sprite_obj.append(multiple_obj)
+            else:
+                x = self.read_req_int(sprite, self.X)
+                y = self.read_req_int(sprite, self.Y)
+                sprite_obj = style.Sprite(image, x, y)
             data.config.style.sprites[id] = sprite_obj

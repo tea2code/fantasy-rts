@@ -11,17 +11,26 @@ style:
     
     sprites:
         namespace: sprite
-        image: style.image.vanilla-new
-        width: 16
-        height: 16
+        image: style.image.vanilla
         sprite:
             - name: unknown
               x: 0
               y: 16
             
             - name: grass
-              x: 0
-              y: 32
+              multiple:
+                 - x: 0
+                   y: 32
+                   chance: 0.25
+                 - x: 16
+                   y: 32
+                   chance: 0.25
+                 - x: 32
+                   y: 32
+                   chance: 0.25
+                 - x: 48
+                   y: 32
+                   chance: 0.25
             
             - name: wall
               x: 0
@@ -34,7 +43,6 @@ style:
             - name: tree
               x: 0
               y: 80
-              height: 32
                 
             - name: dwarf-north
               x: 16
@@ -67,6 +75,10 @@ style:
             - name: shrub
               map: entity.static.berry-shrub
               to: style.sprite.shrub
+              
+            - name: tree
+              map: entity.static.tree
+              to: style.sprite.tree
                 
             - name: dwarf-north
               map: entity.dynamic.dwarf-north

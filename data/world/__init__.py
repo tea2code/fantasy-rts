@@ -15,7 +15,7 @@ class Factory:
     """
 
     CACHE_STATICS = False # TODO Currently not working. Entities disappear.
-    CACHE_TILES = True
+    CACHE_TILES = False
     _statics = {}
     _tiles = {}
 

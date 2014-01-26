@@ -4,7 +4,9 @@ class Entity:
 
     Member:
     id -- The static entity id of the configuration (string).
+    sprite_num -- The sprite number used (int).
     """
 
     def __init__(self, id):
         self.id = id
+        self.sprite_num = None

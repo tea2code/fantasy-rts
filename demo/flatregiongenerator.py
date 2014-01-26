@@ -1,3 +1,5 @@
+import random
+
 from data.config import ID
 from data.world import block, Factory
 from data.world.point import  Factory as PointFactory
@@ -43,6 +45,17 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         for y in range(size_y_quarter, size_y_half + size_y_quarter):
             self._map[PointFactory.new_point(size_y_quarter - offset, y)] = self.__wall_block(data)
             self._map[PointFactory.new_point(size_y_half + size_y_quarter + offset, y)] = self.__wall_block(data)
+
+        # Add trees.
+        for x in range(size_x):
+            for y in range(size_y):
+                if random.random() > 0.05:
+                    continue
+                point = PointFactory.new_point(x, y)
+                b = self._map[point]
+                e = Factory.new_static_entity(ID.ENTITY_STATIC_TREE, data)
+                if not b.is_blocking(e.blocked):
+                    b.insert_static(e)
 
     def all_blocks(self, z_level):
         return self._map

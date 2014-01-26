@@ -31,6 +31,11 @@ entity:
               resource: 
                 - type: resource.resource.berry
                   chance: 0.8
+            - name: tree
+              blocked:
+              - type: entity.attribute.blocking.wall
+              blocking:
+              resource:
               
     tiles:
         namespace: tile

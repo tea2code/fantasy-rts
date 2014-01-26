@@ -1,3 +1,5 @@
+from gamemath import comparison
+
 class ValidatorError(Exception):
     """ Thrown if a data violation is found. """
 
@@ -78,12 +80,17 @@ class Validator:
 
         # Sprites
         for key, value in style.sprites.items():
-            if value.image not in style.images:
-                raise ValidatorError('Sprite "{0}" has unknown image "{1}".'.format(key, value.image))
-            if value.x < 0 or value.y < 0:
-                raise ValidatorError('Coordinates of sprite "{0}" may not be negative.'.format(key))
-            if value.width <= 0 or value.height <= 0:
-                raise ValidatorError('Width and height of sprite "{0}" must be bigger than 0.'.format(key))
+            if not isinstance(value, list):
+                value = [value]
+            chance_sum = 0.0
+            for v in value:
+                if v.image not in style.images:
+                    raise ValidatorError('Sprite "{0}" has unknown image "{1}".'.format(key, v.image))
+                if v.x < 0 or v.y < 0:
+                    raise ValidatorError('Coordinates of sprite "{0}" may not be negative.'.format(key))
+                chance_sum += v.chance
+            if not comparison.float_equal(chance_sum, 1.0):
+                raise ValidatorError('Sprite "{0}" sum of chances must be 1.0.'.format(key))
 
         # Mappings
         for map, to in style.mappings.items():

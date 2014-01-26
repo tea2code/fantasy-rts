@@ -87,16 +87,18 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
     
         sprites: 
             namespace: <string, "Namespace part.">
-            image: <id, optional, "Id of the image.">
-            width: <int, optional, "Width of the sprite.">
-            height: <int, optional, "Height of the sprite.">
+            image: <id, optional, "Default id of the image.">
             sprite: 
                 - name: <string, "Namespace end part.">
                   image: <id, optional, "Id of the image.">
-                  x: <int, "X-coordinate of the sprite.">
+                  x: <int,  "X-coordinate of the sprite.">
                   y: <int, "Y-coordinate of the sprite.">
-                  width: <int, optional, "Width of the sprite.">
-                  height: <int, optional, "Height of the sprite.">
+                - name: <string, "Namespace end part.">
+                  image: <id, optional, "Id of the image.">
+                  multiple: 
+                    - x: <int,  "X-coordinate of the sprite.">
+                      y: <int, "Y-coordinate of the sprite.">
+                      chance: <float, "The chance that this sprite is selected.">
     
         mappings:
             namespace: <string, "Namespace part.">
@@ -110,7 +112,9 @@ Both "sprites" and "sprite" can have the attributes "image", "width" and "height
 
 The attribute "default" is the id of a sprite which will be used if no mapping is found.
 
-The types "sprite", "image" and "mapping" can/should/will exist multiple times. Each representing a single entity.
+The types "sprite", "multiple", "image" and "mapping" can/should/will exist multiple times. Each representing a single entity.
+
+Sprites can be defined in two ways. First you can directly declare the coordinates of it and create a single sprite. Or you can use "multiple" and define a list of coordinates of sprites of the same type. They will selected by chance based on the "chance" value. The "chance" value must add up to one.
 
 #### Game Reference:
 

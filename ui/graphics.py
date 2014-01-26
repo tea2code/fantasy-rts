@@ -99,10 +99,10 @@ class PygameGraphics:
                 pos = PointFactory.new_point(x, y)
                 self.__draw_pos(pos, data)
 
-    def __draw_entities(self, entities, x, y):
+    def __draw_entities(self, entities, x, y, tile_x, tile_y):
         for entity in entities:
-            sprite_img, tile_sprite = self._sprite_loader.get_sprite(entity)
-            self.screen.blit(sprite_img, (x, y), tile_sprite)
+            sprite_img, sprite_x, sprite_y = self._sprite_loader.get_sprite(entity)
+            self.screen.blit(sprite_img, (x, y), (sprite_x, sprite_y, tile_x, tile_y))
 
     def __draw_pos(self, pos, data):
         game = data.game
@@ -111,9 +111,9 @@ class PygameGraphics:
         block = game.region.get_block(pos)
         x, y = self.pos_to_screen(pos -  self._view_offset_point, graphics.tile_x, graphics.tile_y)
 
-        self.__draw_entities(block.get_tiles(), x, y)
-        self.__draw_entities(block.get_statics(), x, y)
-        self.__draw_entities(block.get_dynamics(), x, y)
+        self.__draw_entities(block.get_tiles(), x, y, graphics.tile_x, graphics.tile_y)
+        self.__draw_entities(block.get_statics(), x, y, graphics.tile_x, graphics.tile_y)
+        self.__draw_entities(block.get_dynamics(), x, y, graphics.tile_x, graphics.tile_y)
 
         return x, y, graphics.tile_x, graphics.tile_y
 
