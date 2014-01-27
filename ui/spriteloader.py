@@ -1,3 +1,4 @@
+import logging
 import pygame
 import random
 
@@ -8,11 +9,13 @@ class PygameSpriteLoader:
     """ Gives access to sprite handling.
 
     Member:
+    _logger -- The logger.
     _sprite_images -- Mapping of image sprites to ids (dict).
     _style -- The style object (data.config.style).
     """
 
     def __init__(self, data):
+        self._logger = logging.getLogger(__name__)
         self._style = data.config.style
         self._sprite_images = {}
         for id in self._style.images:
@@ -26,7 +29,11 @@ class PygameSpriteLoader:
         id = entity.state_id()
 
         # Select sprite.
-        sprite_id = self._style.mappings[id] if id in self._style.mappings else self._style.default_mapping
+        if id in self._style.mappings:
+            sprite_id = self._style.mappings[id]
+        else:
+            sprite_id = self._style.default_mapping
+            self._logger.warning('Used default mapping for id "{0}".'.format(id))
         sprite = self._style.sprites[sprite_id]
 
         # In case of multiple sprites select sprite num.

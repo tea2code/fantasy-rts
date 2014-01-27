@@ -1,3 +1,4 @@
+import logging
 import os
 import yaml
 
@@ -5,17 +6,23 @@ from . import basereader, parser, validator as config_validator
 
 def load_config(data, dir, load_file):
     """ Load the config dir. """
-    # Read load file.
-    reader = YamlLoadFileReader()
-    yaml_files = reader.read(dir, load_file)
+    logger = logging.getLogger(__name__)
 
-    # Parse files.
-    yaml_parser = parser.YamlParser()
-    yaml_parser.parse(data, yaml_files)
+    try:
+        # Read load file.
+        reader = YamlLoadFileReader()
+        yaml_files = reader.read(dir, load_file)
 
-    # Validate configuration.
-    validator = config_validator.Validator()
-    validator.validate(data)
+        # Parse files.
+        yaml_parser = parser.YamlParser()
+        yaml_parser.parse(data, yaml_files)
+
+        # Validate configuration.
+        validator = config_validator.Validator()
+        validator.validate(data)
+    except Exception as ex:
+        logger.error(ex.args[0])
+        raise
 
 class YamlLoadFileReader(basereader.BaseYamlReader):
     """ Reads the load file in yaml format.

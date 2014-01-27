@@ -209,7 +209,7 @@ class Block():
     def __is_blocking_list(self, entity_list, blocked):
         """ Execute blocking test on given list. """
         for entity in entity_list:
-            if any(i in blocked for i in entity.blocking):
+            if any(b in blocked for b in entity.blocking):
                 return True
         return False
 

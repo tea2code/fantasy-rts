@@ -39,3 +39,4 @@ nosetests.xml
 .idea
 show_profile.bat
 profile.*
+*.log

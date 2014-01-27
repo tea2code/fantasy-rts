@@ -1,3 +1,4 @@
+import logging
 import sys
 import time
 
@@ -46,5 +47,6 @@ class Demo:
 
         # Stop game?
         if self.RUN_TIME and run_time >= self.RUN_TIME:
-            print('Run Time = {0:.2f}; FPS = {1:.2f}'.format(run_time, sum(data.fps) / len(data.fps)))
+            logger = logging.getLogger(__name__)
+            logger.info('Run Time = {0:.2f}s; FPS = {1:.2f}'.format(run_time, sum(data.fps) / len(data.fps)))
             sys.exit()

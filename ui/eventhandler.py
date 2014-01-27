@@ -1,3 +1,4 @@
+import logging
 import pygame
 import sys
 
@@ -7,6 +8,8 @@ class PygameEventHandler:
     def tick(self, run_time, delta_time, data):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                logger = logging.getLogger(__name__)
+                logger.info('Run Time = {0:.2f}; FPS = {1:.2f}s'.format(run_time, sum(data.fps) / len(data.fps)))
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self.__keydown(event, data)

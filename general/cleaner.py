@@ -1,4 +1,4 @@
-class Cleaner:
+class RenderCleaner:
     """ Resets frame specific variables. """
 
     def tick(self, run_time, delta_time, data):

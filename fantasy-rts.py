@@ -1,4 +1,6 @@
 import config
+import logging, logging.config
+import yaml
 
 from ai import director
 from data import data
@@ -44,7 +46,7 @@ class MainLoopImp(mainloop.MainLoop):
         # Render modules.
         self.render_modules = [
             graphics.PygameGraphics(self.data),
-            cleaner.Cleaner()
+            cleaner.RenderCleaner()
         ]
 
         # Initialize main loop.
@@ -59,5 +61,14 @@ class MainLoopImp(mainloop.MainLoop):
             module.tick(run_time, delta_time, self.data)
 
 if __name__ == '__main__':
+    # Initialize logging.
+    log_file = 'log/config.yaml'
+    with open(log_file, 'r') as file:
+        logging_config = yaml.safe_load(file)
+    logging.config.dictConfig(logging_config)
+    logger = logging.getLogger(__name__)
+    logger.info('Starting game')
+
+    # Start app.
     app = MainLoopImp()
     app.start()
