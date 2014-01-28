@@ -82,15 +82,11 @@ class Validator:
         for key, value in style.sprites.items():
             if not isinstance(value, list):
                 value = [value]
-            chance_sum = 0.0
             for v in value:
                 if v.image not in style.images:
                     raise ValidatorError('Sprite "{0}" has unknown image "{1}".'.format(key, v.image))
                 if v.x < 0 or v.y < 0:
                     raise ValidatorError('Coordinates of sprite "{0}" may not be negative.'.format(key))
-                chance_sum += v.chance
-            if not comparison.float_equal(chance_sum, 1.0):
-                raise ValidatorError('Sprite "{0}" sum of chances must be 1.0.'.format(key))
 
         # Mappings
         for map, to in style.mappings.items():

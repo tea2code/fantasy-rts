@@ -114,7 +114,7 @@ The attribute "default" is the id of a sprite which will be used if no mapping i
 
 The types "sprite", "multiple", "image" and "mapping" can/should/will exist multiple times. Each representing a single entity.
 
-Sprites can be defined in two ways. First you can directly declare the coordinates of it and create a single sprite. Or you can use "multiple" and define a list of coordinates of sprites of the same type. They will selected by chance based on the "chance" value. The "chance" value must add up to one.
+Sprites can be defined in two ways. First you can directly declare the coordinates of it and create a single sprite. Or you can use "multiple" and define a list of coordinates of sprites of the same type. They will selected by chance based on the "chance" value. 
 
 #### Game Reference:
 

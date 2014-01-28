@@ -39,7 +39,8 @@ class PygameSpriteLoader:
         # In case of multiple sprites select sprite num.
         if isinstance(sprite, list):
             if entity.sprite_num is None:
-                dice = random.random()
+                upper = sum([x.chance for x in sprite])
+                dice = random.uniform(0.0, upper)
                 chance_from = 0.0
                 for sprite_num, sub_sprite in enumerate(sprite):
                     if chance_from <= dice <= chance_from + sub_sprite.chance:
