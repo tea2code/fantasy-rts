@@ -1,6 +1,6 @@
 import pygame
 
-from . import spriteloader
+from . import helper, spriteloader
 from collections import deque
 from data.world.point import Factory as PointFactory
 
@@ -30,22 +30,6 @@ class PygameGraphics:
         self.__draw_background(data)
         pygame.display.flip()
 
-    @staticmethod
-    def pos_to_screen(pos, tile_x, tile_y):
-        """ Convert world coordinates to tile position on screen. This
-        returns the left upper corner.
-
-        Test:
-        >>> from data.world import point
-        >>> p = point.Point(0, 0)
-        >>> PygameGraphics.pos_to_screen(p, 16, 18)
-        (0, 0)
-        >>> p = point.Point(1, 2)
-        >>> PygameGraphics.pos_to_screen(p, 16, 18)
-        (16, 36)
-        """
-        return pos.x * tile_x, pos.y * tile_y
-
     def tick(self, run_time, delta_time, data):
         # Update screen.
         self.__update_screen(data)
@@ -53,40 +37,6 @@ class PygameGraphics:
         # Show title and update clock.
         self.__show_title(data)
         self.clock.tick(data.config.fps) # Prevent unnecessary cpu load.
-
-    @staticmethod
-    def visible(pos, graphics):
-        """ Checks if a position is visible on screen.
-
-        Test:
-        >>> from data.world import point
-        >>> from data import graphics
-        >>> g = graphics.Graphics()
-        >>> g.view_offset_x = 1
-        >>> g.view_offset_y = 2
-        >>> g.view_x = 5
-        >>> g.view_y = 10
-        >>> p = point.Point(0, 0)
-        >>> PygameGraphics.visible(p, g)
-        False
-        >>> p = point.Point(1, 1)
-        >>> PygameGraphics.visible(p, g)
-        False
-        >>> p = point.Point(1, 2)
-        >>> PygameGraphics.visible(p, g)
-        True
-        >>> p = point.Point(3, 7)
-        >>> PygameGraphics.visible(p, g)
-        True
-        >>> p = point.Point(6, 7)
-        >>> PygameGraphics.visible(p, g)
-        False
-        >>> p = point.Point(3, 12)
-        >>> PygameGraphics.visible(p, g)
-        False
-        """
-        return graphics.view_offset_x <= pos.x < graphics.view_offset_x + graphics.view_x and \
-               graphics.view_offset_y <= pos.y < graphics.view_offset_y + graphics.view_y
 
     def __calc_view_offset(self, view_offset_x, view_offset_y):
         """ Calculate view offset point. """
@@ -109,7 +59,7 @@ class PygameGraphics:
         graphics = data.graphics
 
         block = game.region.get_block(pos)
-        x, y = self.pos_to_screen(pos - self._view_offset_point, graphics.tile_x, graphics.tile_y)
+        x, y = helper.pos_to_screen(pos - self._view_offset_point, graphics.tile_x, graphics.tile_y)
 
         self.__draw_entities(block.get_tiles(), x, y, graphics.tile_x, graphics.tile_y)
         self.__draw_entities(block.get_statics(), x, y, graphics.tile_x, graphics.tile_y)
@@ -135,7 +85,7 @@ class PygameGraphics:
             self.__draw_background(data)
         else:
             for pos in data.dirty_pos:
-                if self.visible(pos, graphics):
+                if helper.is_visible(pos, graphics):
                     rect = self.__draw_pos(pos, data)
                     dirty_rects.append(rect)
 
@@ -143,8 +93,3 @@ class PygameGraphics:
             pygame.display.flip()
         else:
             pygame.display.update(dirty_rects)
-
-if __name__ == '__main__':
-    print('Executing doctest.')
-    import doctest
-    doctest.testmod()
