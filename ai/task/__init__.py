@@ -1,5 +1,5 @@
+from ai.task import gototask, idletask
 
-from . import gototask, idletask
 
 class Factory:
     """ Factory class to create tasks. """

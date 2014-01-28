@@ -1,7 +1,8 @@
 import logging
 
-from . import basetask
 from ai import pathfinding
+from ai.task import basetask
+
 
 class GoToTask(basetask.BaseTask):
     """ Task which navigates a movable entity to a target.

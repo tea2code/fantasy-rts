@@ -1,6 +1,6 @@
 from . import dynamicentity, staticentity, tile
 from .point import Factory as PointFactory
-from ..task import Factory as TaskFactory
+from ai.task import Factory as TaskFactory
 
 class Factory:
     """ Factory class to create world entities."""

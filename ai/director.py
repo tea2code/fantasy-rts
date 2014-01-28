@@ -1,6 +1,6 @@
 import random
 
-from data.task import Factory
+from ai.task import Factory
 
 class Director:
     """ The AI director manages all behaviour. """

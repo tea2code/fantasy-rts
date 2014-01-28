@@ -1,4 +1,4 @@
-from .task import tasklist
+from ai.task import tasklist
 
 
 class Game:
