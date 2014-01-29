@@ -1,7 +1,7 @@
 from data.world.entity import blocking, entity, movable
 
 
-class DynamicEntity(entity.Entity, blocking.Blocked, movable.Walking):
+class DynamicEntity(entity.Entity, blocking.Blocked, movable.Movable):
     """ A dynamic entity. For example a horse.
 
     Member:
@@ -11,7 +11,7 @@ class DynamicEntity(entity.Entity, blocking.Blocked, movable.Walking):
     def __init__(self, id):
         entity.Entity.__init__(self, id)
         blocking.Blocked.__init__(self)
-        movable.Walking.__init__(self)
+        movable.Movable.__init__(self)
         self._direction_suffix = {
             movable.Direction.UP: '-up',
             movable.Direction.DOWN: '-down',

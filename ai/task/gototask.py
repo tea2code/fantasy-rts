@@ -1,8 +1,8 @@
 import logging
 
+from . import basetask
 from ai import pathfinding
-from ai.task import basetask
-
+from data.config import ID
 
 class GoToTask(basetask.BaseTask):
     """ Task which navigates a movable entity to a target.
@@ -25,8 +25,8 @@ class GoToTask(basetask.BaseTask):
             logger = logging.getLogger(__name__)
             logger.info('No path found from {0} to {1}.'.format(start, goal))
 
-        # Calculate time for one step.
-        self.time_per_step = 1.0 / entity.speed
+        # Calculate time for one step. Currently only walking is supported.
+        self.time_per_step = 1.0 / entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
 
     def execute_next(self, data):
         if not self.path:
