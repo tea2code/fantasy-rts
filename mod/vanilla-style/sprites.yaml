@@ -16,11 +16,8 @@ style:
                    chance: 0.25
                  - x: 16
                    y: 32
-                   chance: 0.25
+                   chance: 0.5
                  - x: 32
-                   y: 32
-                   chance: 0.25
-                 - x: 48
                    y: 32
                    chance: 0.25
             
