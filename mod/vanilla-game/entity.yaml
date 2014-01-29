@@ -6,6 +6,7 @@ entity:
         category:
             - namespace: blocking
               attribute:
+                - name: static
                 - name: wall
             - namespace: moving
               attribute:
@@ -27,13 +28,18 @@ entity:
             - name: berry-shrub
               blocked: 
                 - type: entity.attribute.blocking.wall
+                - type: entity.attribute.blocking.static
               blocking:
+                - type: entity.attribute.blocking.static
               resource: 
                 - type: resource.resource.berry
                   chance: 0.8
             - name: tree
               blocked:
-              - type: entity.attribute.blocking.wall
+                - type: entity.attribute.blocking.wall
+                - type: entity.attribute.blocking.static
+              blocking:
+                - type: entity.attribute.blocking.static
               blocking:
               resource:
               

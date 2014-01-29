@@ -29,8 +29,13 @@ style:
               y: 48
                 
             - name: shrub
-              x: 0
-              y: 16
+              multiple:
+                  - x: 0
+                    y: 144
+                    chance: 0.5
+                  - x: 16
+                    y: 144
+                    chance: 0.5
               
             - name: tree
               x: 0

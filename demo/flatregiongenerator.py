@@ -49,11 +49,22 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         # Add trees.
         for x in range(size_x):
             for y in range(size_y):
-                if random.random() > 0.05:
+                if random.random() > 0.03:
                     continue
                 point = PointFactory.new_point(x, y)
                 b = self._map[point]
                 e = Factory.new_static_entity(ID.ENTITY_STATIC_TREE, data)
+                if not b.is_blocking(e.blocked):
+                    b.insert_static(e)
+
+        # Add shrubs.
+        for x in range(size_x):
+            for y in range(size_y):
+                if random.random() > 0.03:
+                    continue
+                point = PointFactory.new_point(x, y)
+                b = self._map[point]
+                e = Factory.new_static_entity(ID.ENTITY_STATIC_BERRY_SHRUB, data)
                 if not b.is_blocking(e.blocked):
                     b.insert_static(e)
 
