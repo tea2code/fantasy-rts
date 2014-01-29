@@ -1,4 +1,4 @@
 load:
     - vanilla-config
-    - vanilla-game/
+    - vanilla-game
     - vanilla-style
