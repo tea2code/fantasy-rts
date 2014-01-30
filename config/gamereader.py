@@ -1,5 +1,4 @@
 from . import basereader
-from data import game
 
 class YamlGameReader(basereader.BaseYamlReader):
     """ Yaml reader for game types.

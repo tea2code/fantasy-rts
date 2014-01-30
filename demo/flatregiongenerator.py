@@ -1,8 +1,8 @@
 import random
 
 from data.config import ID
-from data.world import block, Factory
-from data.world.point import  Factory as PointFactory
+from data.world import block, factory
+from data.world.point import Factory as PointFactory
 from world import regiongenerator
 
 class FlatRegionGenerator(regiongenerator.RegionGenerator):
@@ -53,7 +53,7 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
                     continue
                 point = PointFactory.new_point(x, y)
                 b = self._map[point]
-                e = Factory.new_static_entity(ID.ENTITY_STATIC_TREE, data)
+                e = factory.new_static_entity(ID.ENTITY_STATIC_TREE, data)
                 if not b.is_blocking(e.blocked):
                     b.insert_static(e)
 
@@ -64,7 +64,7 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
                     continue
                 point = PointFactory.new_point(x, y)
                 b = self._map[point]
-                e = Factory.new_static_entity(ID.ENTITY_STATIC_BERRY_SHRUB, data)
+                e = factory.new_static_entity(ID.ENTITY_STATIC_BERRY_SHRUB, data)
                 if not b.is_blocking(e.blocked):
                     b.insert_static(e)
 
@@ -75,13 +75,13 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
         return self._map[pos]
 
     def __grass_block(self, data):
-        t = Factory.new_tile(ID.ENTITY_TILE_GRASS, data)
+        t = factory.new_tile(ID.ENTITY_TILE_GRASS, data)
         b = block.Block()
         b.insert_tile(t)
         return b
 
     def __wall_block(self, data):
-        t = Factory.new_tile(ID.ENTITY_TILE_WALL, data)
+        t = factory.new_tile(ID.ENTITY_TILE_WALL, data)
         b = block.Block()
         b.insert_tile(t)
         return b

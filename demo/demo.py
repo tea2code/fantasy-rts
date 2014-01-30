@@ -4,7 +4,7 @@ import time
 
 from . import flatregiongenerator, mazeregiongenerator
 from data.config import ID
-from data.world import Factory, region
+from data.world import factory, region
 
 
 class Demo:
@@ -36,7 +36,7 @@ class Demo:
         num_y = 20
         for x in range(1, num_x + 1):
             for y in range(1, num_y + 1):
-                entity = Factory.new_add_dynamic_entity(ID.ENTITY_DYNAMIC_DWARF, self.data, run_time, x, y, z=0)
+                entity = factory.new_add_dynamic_entity(ID.ENTITY_DYNAMIC_DWARF, self.data, run_time, x, y, z=0)
                 #free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
                 #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
