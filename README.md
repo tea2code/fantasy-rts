@@ -53,6 +53,12 @@ This describes a sprite entity with the *name* "unknown" in the *namespace* "spr
 
 The ID is used to link different data and check if a value already exists and should be overriden. For implementation reasons this may not always be the case. But that can change any time. This means always define namespace and name as specified in the following references.
 
+It is possible that an ID is specific to a certain state. This is indicated by a concatenated state string to the ID. The concatination is based on the template "state_id" defined in **Config Reference**. For example
+
+    entity.dynamic.dwarf[north]
+
+describes the dwarf entity facing north using the template "[{0}]" where "{0}" is replaced by north.
+
 ### Load Order File
 
 In the mod directory is a file "mod.yaml". It describes which configuration files should be loaded and in which order. It can load complete directories (loading all files in it) or single files. Example:
@@ -130,6 +136,7 @@ Sprites can be defined in two ways. First you can directly declare the coordinat
         num_fps_avg: <int, optional, "Number of frames to keep for calculation fps.">
         scroll_width_x: <int, optional, "Number of coordinates to scroll in x direction.">
         scroll_width_y: <int, optional, "Number of coordinates to scroll in y direction.">
+        state_id: <string, optional, "Template for state specific IDs.">
         view_x: <int, optional, "Size of viewport in x direction.">
         view_y: <int, optional, "Size of viewport in y direction.">
         window_title: <string, optional, "The window title. Currently it's possible to show the current fps in it.">

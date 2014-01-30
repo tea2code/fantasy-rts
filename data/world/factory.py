@@ -6,7 +6,7 @@ def new_dynamic_entity(id, data, run_time, init_task=True):
     """ Creates and returns a new dynamic entity. """
     # Entity.
     config = data.config.entity.dynamics[id]
-    entity = dynamicentity.DynamicEntity(id)
+    entity = dynamicentity.DynamicEntity(id, data.config)
     entity.blocked = [b.type for b in config.blocked]
     for moving in config.moving:
         entity.moving[moving.type] = moving.speed
@@ -30,7 +30,7 @@ def new_add_dynamic_entity(id, data, run_time, x=None, y=None, z=None, pos=None,
 def new_static_entity(id, data):
     """ Creates and returns a new static entity. """
     config = data.config.entity.statics[id]
-    entity = staticentity.StaticEntity(id)
+    entity = staticentity.StaticEntity(id, data.config)
     entity.blocked = [b.type for b in config.blocked]
     entity.blocking = [b.type for b in config.blocking]
     return entity
@@ -48,7 +48,7 @@ def new_add_static_entity(id, data, x=None, y=None, z=None, pos=None):
 def new_tile(id, data):
     """ Creates and returns a new tile. """
     config = data.config.entity.tiles[id]
-    entity = tile.Tile(id)
+    entity = tile.Tile(id, data.config)
     entity.blocking = [b.type for b in config.blocking]
     return entity
 

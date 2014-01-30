@@ -14,6 +14,7 @@ class Configuration:
     resources -- The resources config (data.config.resources).
     scroll_width_x -- Number of tiles scrolling changes the view port in x direction (int).
     scroll_width_y -- Number of tiles scrolling changes the view port in y direction (int).
+    state_id -- The template for the state id (int).
     style -- The style config (data.config.style).
     """
 
@@ -26,4 +27,5 @@ class Configuration:
         self.resources = resource.Resources()
         self.scroll_width_x = 3
         self.scroll_width_y = 3
+        self.state_id = '{0}'
         self.style = style.Style()

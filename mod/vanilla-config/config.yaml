@@ -4,6 +4,7 @@ config:
     num_fps_avg: 1000
     scroll_width_x: 30
     scroll_width_y: 25
+    state_id: "-{0}"
     view_x: 60
     view_y: 50
     window_title: "Fantasy-RTS (FPS: {0:.0f})"

@@ -11,6 +11,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
     NUM_FPS_AVG
     SCROLL_WIDTH_X
     SCROLL_WIDTH_Y
+    STATE_ID
     VIEW_X
     VIEW_Y
     WINDOW_TITLE
@@ -21,6 +22,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
     NUM_FPS_AVG = 'num_fps_avg'
     SCROLL_WIDTH_X = 'scroll_width_x'
     SCROLL_WIDTH_Y = 'scroll_width_y'
+    STATE_ID = 'state_id'
     VIEW_X = 'view_x'
     VIEW_Y = 'view_y'
     WINDOW_TITLE = 'window_title'
@@ -33,6 +35,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
         data.config.num_fps_avg = self.read_int(root, self.NUM_FPS_AVG, data.config.num_fps_avg)
         data.config.scroll_width_x = self.read_int(root, self.SCROLL_WIDTH_X, data.config.scroll_width_x)
         data.config.scroll_width_y = self.read_int(root, self.SCROLL_WIDTH_Y, data.config.scroll_width_y)
+        data.config.state_id = self.read_string(root, self.STATE_ID, data.config.state_id)
 
         data.graphics.view_x = self.read_int(root, self.VIEW_X, data.graphics.view_x)
         data.graphics.view_y = self.read_int(root, self.VIEW_Y, data.graphics.view_y)

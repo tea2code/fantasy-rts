@@ -25,6 +25,8 @@ class Validator:
             raise ValidatorError('Config.num_fps_avg must be bigger than 0.')
         if config.scroll_width_x <= 0 or config.scroll_width_y <= 0:
             raise ValidatorError('Config.scroll_width_x and Config.scroll_width_y must be bigger than 0.')
+        if '{0}' not in config.state_id:
+            raise ValidatorError('Config.state_id must contain "{0}".')
 
         # Resources
         resources = config.resources
