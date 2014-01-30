@@ -40,7 +40,7 @@ class Demo:
                 #free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
                 #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
 
-    def tick(self, run_time, delta_time, data):
+    def tick(self, run_time, delta_time, data, tick):
         # Burn additional time.
         if self.TIME_BURNER:
             time.sleep(self.TIME_BURNER)

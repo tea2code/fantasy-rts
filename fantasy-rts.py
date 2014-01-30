@@ -52,13 +52,13 @@ class MainLoopImp(mainloop.MainLoop):
         # Initialize main loop.
         super().__init__(1.0 / self.data.config.fps, self.data.config.max_frame_time)
 
-    def render(self, run_time, delta_time):
+    def render(self, run_time, delta_time, tick):
         for module in self.render_modules:
-            module.tick(run_time, delta_time, self.data)
+            module.tick(run_time, delta_time, self.data, tick)
 
-    def update(self, run_time, delta_time):
+    def update(self, run_time, delta_time, tick):
         for module in self.state_modules:
-            module.tick(run_time, delta_time, self.data)
+            module.tick(run_time, delta_time, self.data, tick)
 
 if __name__ == '__main__':
     # Initialize logging.

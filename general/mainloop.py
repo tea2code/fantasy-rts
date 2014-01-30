@@ -18,7 +18,7 @@ class MainLoop(metaclass=ABCMeta):
         self.max_frame_time = max_frame_time
 
     @abstractmethod
-    def render(self, run_time, delta_time):
+    def render(self, run_time, delta_time, tick):
         """ Implement this function with any code related to rendering. """
         pass
 
@@ -27,6 +27,7 @@ class MainLoop(metaclass=ABCMeta):
         run_time = 0.0
         current_time = self.__high_res_time()
         accumulator = 0.0
+        tick = 0
 
         while True:
             new_time = self.__high_res_time()
@@ -37,14 +38,15 @@ class MainLoop(metaclass=ABCMeta):
             accumulator += frame_time
 
             while accumulator >= self.delta_time:
-                self.update(run_time, self.delta_time)
+                self.update(run_time, self.delta_time, tick)
                 accumulator -= self.delta_time
                 run_time += self.delta_time
+                tick += 1
 
-            self.render(run_time, self.delta_time)
+            self.render(run_time, self.delta_time, tick)
 
     @abstractmethod
-    def update(self, run_time, delta_time):
+    def update(self, run_time, delta_time, tick):
         """ Implement this function with any code related to updating the
         state.
         """

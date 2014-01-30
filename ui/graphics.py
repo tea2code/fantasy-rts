@@ -30,7 +30,7 @@ class PygameGraphics:
         self.__draw_background(data)
         pygame.display.flip()
 
-    def tick(self, run_time, delta_time, data):
+    def tick(self, run_time, delta_time, data, tick):
         # Update screen.
         self.__update_screen(data)
 
