@@ -1,3 +1,4 @@
+from data.config import ID
 from data.world.entity import blocking, entity, movable
 
 
@@ -9,16 +10,16 @@ class DynamicEntity(entity.Entity, blocking.Blocked, movable.Movable):
     """
 
     DIRECTION_SUFFIX = {
-        movable.Direction.UP: 'up',
-        movable.Direction.DOWN: 'down',
-        movable.Direction.NORTH: 'north',
-        movable.Direction.SOUTH: 'south',
-        movable.Direction.WEST: 'west',
-        movable.Direction.EAST: 'east'
+        movable.Direction.UP: ID.STATE_DIRECTION_UP,
+        movable.Direction.DOWN: ID.STATE_DIRECTION_DOWN,
+        movable.Direction.NORTH: ID.STATE_DIRECTION_NORTH,
+        movable.Direction.SOUTH: ID.STATE_DIRECTION_SOUTH,
+        movable.Direction.WEST: ID.STATE_DIRECTION_WEST,
+        movable.Direction.EAST: ID.STATE_DIRECTION_EAST
     }
 
-    def __init__(self, id, config):
-        entity.Entity.__init__(self, id, config)
+    def __init__(self, id):
+        entity.Entity.__init__(self, id)
         blocking.Blocked.__init__(self)
         movable.Movable.__init__(self)
 

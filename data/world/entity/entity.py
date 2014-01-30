@@ -8,10 +8,10 @@ class Entity:
     state_id_template -- The state id template (string).
     """
 
-    def __init__(self, id, config):
+    def __init__(self, id):
         self.id = id
         self.sprite_num = None
-        self.state_id_template = config.state_id
+        self.state_id_template = '{0}'
 
     def state_id(self):
         """ Returns the id adapted to the current internal state. """

@@ -7,3 +7,11 @@ class ID:
     ENTITY_STATIC_TREE = 'entity.static.tree'
     ENTITY_TILE_GRASS = 'entity.tile.grass'
     ENTITY_TILE_WALL = 'entity.tile.wall'
+
+    STATE_DIRECTION_NORTH = 'north'
+    STATE_DIRECTION_SOUTH = 'south'
+    STATE_DIRECTION_EAST = 'east'
+    STATE_DIRECTION_WEST = 'west'
+    STATE_DIRECTION_UP = 'up'
+    STATE_DIRECTION_DOWN = 'down'
+    STATE_DIRECTION_STOP = 'stop'
