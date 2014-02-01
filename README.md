@@ -15,6 +15,7 @@ Current Version: **9**
 - Version 7: More generic configuration.
 - Version 8: Support für multiple sprites per entity and unregular sized sprites.
 - Version 9: Refactoring. Working shrubs. Better GotoTask.
+- Version 10: Decision tree. Configuration of current game and tasks.
 
 ## Coming Soon
 
