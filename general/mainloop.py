@@ -1,3 +1,4 @@
+import logging
 import time
 
 from abc import ABCMeta, abstractmethod
@@ -29,12 +30,19 @@ class MainLoop(metaclass=ABCMeta):
         accumulator = 0.0
         tick = 0
 
+        logger = logging.getLogger(__name__)
+        frame_time_tpl = 'Frame time of {0:.3f}s exceeded max frame time of {1:.3f}s.'
+
         while True:
             new_time = self.__high_res_time()
-            # Limit frame time to a maximum to avoid spiral of death.
-            frame_time = min(new_time - current_time, self.max_frame_time)
-            current_time = new_time
 
+            # Limit frame time to a maximum to avoid spiral of death.
+            frame_time = new_time - current_time
+            if frame_time > self.max_frame_time:
+                logger.debug(frame_time_tpl.format(frame_time, self.max_frame_time))
+                frame_time = self.max_frame_time
+
+            current_time = new_time
             accumulator += frame_time
 
             while accumulator >= self.delta_time:
