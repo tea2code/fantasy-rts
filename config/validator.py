@@ -1,4 +1,4 @@
-from gamemath import comparison
+from data.config import ID
 
 class ValidatorError(Exception):
     """ Thrown if a data violation is found. """
@@ -45,7 +45,7 @@ class Validator:
                 if blocked.type not in entity.attributes:
                     raise ValidatorError('Dynamic entity "{0}" has unknown blocked type "{1}".'.format(key, blocked.type))
             for moving in value.moving:
-                if moving.type not in entity.attributes:
+                if moving.type not in ID.ENTITY_ATTRIBUTE_MOVING:
                     raise ValidatorError('Dynamic entity "{0}" has unknown moving type "{1}".'.format(key, moving.type))
                 if moving.speed < 0.0:
                     raise ValidatorError('Speed of moving type "{0}" of dynamic entity "{1}" may not be negative.'.format(moving.type, key))

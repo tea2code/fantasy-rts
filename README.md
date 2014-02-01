@@ -60,6 +60,32 @@ It is possible that an ID is specific to a certain state. This is indicated by a
 
 describes the dwarf entity facing north using the template "[{0}]" where "{0}" is replaced by north.
 
+### Predefined IDs
+
+Most of the IDs in this game can be modified as long as their usage is consistent. But there are a couple of IDs which are predefined and cannot change. They are used in the source code to create, modify and identify certain elements.
+
+#### Attributes
+
+- entity.attribute.moving.walk
+
+#### Entities
+
+- entity.dynamic.dwarf
+- entity.static.berry-shrub
+- entity.static.tree
+- entity.tile.grass
+- entity.tile.wall
+
+#### Entity States
+
+- north
+- south
+- east
+- west
+- up
+- down
+- stop
+
 ### Load Order File
 
 In the mod directory is a file "mod.yaml". It describes which configuration files should be loaded and in which order. It can load complete directories (loading all files in it) or single files. Example:

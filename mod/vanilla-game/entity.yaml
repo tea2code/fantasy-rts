@@ -8,9 +8,6 @@ entity:
               attribute:
                 - name: static
                 - name: wall
-            - namespace: moving
-              attribute:
-                - name: walk
     
     dynamics:
         namespace: dynamic
