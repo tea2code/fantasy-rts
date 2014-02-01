@@ -1,0 +1,33 @@
+decisions:
+    namespace: decision
+    
+    decision:
+        - namespace: dwarf
+          entity: entity.dynamic.dwarf
+          default_task: task.idle
+          start_node: decision.dwarf.hungry
+          tree:
+            - name: hungry
+              type: decision.node.check_state
+              state: hunger
+              yes: decision.dwarf.eat
+              no: decision.dwarf.check_task
+            - name: check_task
+              type: decision.node.check_task
+              yes: decision.dwarf.next_task
+              no: 
+            - name: next_task
+              type: decision.node.next_task
+            - name: eat
+              type: decision.node.task
+              task: task.eat
+              yes:
+              no: decision.dwarf.log
+            - name: log
+              type: decision.node.log
+              message: "No food available."
+              next: decision.dwarf.idle
+            - name: idle
+              type: decision.node.task
+              task: task.idle
+              next: decision.dwarf.check_task
