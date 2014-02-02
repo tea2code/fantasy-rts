@@ -1,6 +1,7 @@
 import random
 
-from ai.task import factory
+from ai.task.factory import Factory as TaskFactory
+from data.config import ID
 
 class Director:
     """ The AI director manages all behaviour. """
@@ -8,16 +9,21 @@ class Director:
     def tick(self, run_time, delta_time, data, tick):
         # Execute tasks.
         for task in data.game.tasks.take(run_time):
-            more_steps = task.execute_next(data)
-            if more_steps:
-                data.game.tasks.insert(run_time + task.time(), task)
+            task.execute_next(data)
+            if not task.is_complete():
+                self.__add_task(task, run_time, data)
             else:
                 self.__new_task(task.entity, run_time, data)
 
     def __new_task(self, entity, run_time, data):
         """ Get the next task for the given entity. """
         if random.random() <= 0.9:
-            factory.new_add_idle_task(entity, run_time, data)
+            task = TaskFactory.new_task(ID.TASK_IDLE, entity, data)
         else:
-            free_pos = data.game.region.free_random_pos(entity.blocked, 0)
-            factory.new_add_goto_task(entity, run_time, free_pos, data)
+            task = TaskFactory.new_task(ID.TASK_GOTO, entity, data)
+        self.__add_task(task, run_time, data)
+
+    def __add_task(self, task, run_time, data):
+        """ Add task to task list. """
+        time = run_time + task.time()
+        data.game.tasks.insert(time, task)

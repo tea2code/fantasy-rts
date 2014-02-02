@@ -1,6 +1,7 @@
 from . import dynamicentity, staticentity, tile
 from .point import Factory as PointFactory
-from ai.task import factory as TaskFactory
+from ..config import ID
+from ai.task.factory import Factory as TaskFactory
 
 def new_dynamic_entity(id, data, run_time, init_task=True):
     """ Creates and returns a new dynamic entity. """
@@ -14,7 +15,8 @@ def new_dynamic_entity(id, data, run_time, init_task=True):
 
     # Initial task.
     if init_task:
-        TaskFactory.new_add_idle_task(entity, run_time, data)
+        task = TaskFactory.new_task(ID.TASK_IDLE, entity, data)
+        data.game.tasks.insert(run_time + task.time(), task)
 
     return entity
 

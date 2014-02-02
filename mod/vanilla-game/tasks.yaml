@@ -11,6 +11,6 @@ ai:
               type: task.type.idle
               parameters:
                 - type: task.parameter.time
-                  value: [2, 4]
+                  value: 2
             - name: random_goto
               type: task.type.random_goto

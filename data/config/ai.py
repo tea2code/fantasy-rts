@@ -11,5 +11,5 @@ class Task:
     def __init__(self, type):
         self.type = type
         self.parameters = {}
-        variance_max = 0.0
-        variance_min = 0.0
+        self.variance_max = 0.0
+        self.variance_min = 0.0

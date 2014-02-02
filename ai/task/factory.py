@@ -1,27 +1,17 @@
 from ai.task import gototask, idletask
+from data.config import ID
 
-def new_goto_task(entity, goal, data):
-    """ Creates a new goto task for given entity. Returns the task. """
-    task = gototask.GoToTask(entity, goal, data)
-    return task
+class Factory:
+    """ Factory for tasks. """
 
-def new_add_goto_task(entity, run_time, goal, data):
-    """ Creates a new goto task and adds it to the task list. Returns the
-    task. """
-    task = new_goto_task(entity, goal, data)
-    t = run_time + task.time()
-    data.game.tasks.insert(t, task)
-    return task
-
-def new_idle_task(entity):
-    """ Creates a new idle task for given entity. Returns the task. """
-    task = idletask.IdleTask(entity)
-    return task
-
-def new_add_idle_task(entity, run_time, data):
-    """ Creates a new idle task and adds it to the task list. Returns the
-    task. """
-    task = new_idle_task(entity)
-    t = run_time + task.time()
-    data.game.tasks.insert(t, task)
-    return task
+    @staticmethod
+    def new_task(id, entity, data):
+        """ Create new task. """
+        config = data.config.tasks[id]
+        id = config.type
+        if id == ID.TASK_TYPE_RANDOM_GOTO:
+            free_pos = data.game.region.free_random_pos(entity.blocked, 0)
+            task = gototask.GoToTask(entity, free_pos, data, config.variance_min, config.variance_max)
+        else:
+            task = idletask.IdleTask(entity, config, config.variance_min, config.variance_max)
+        return task

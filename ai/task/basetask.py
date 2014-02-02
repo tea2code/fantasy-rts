@@ -3,16 +3,22 @@ class BaseTask:
 
     Member:
     entity -- The entity which executes this task (data.world.entity).
+    variance_max -- The maximum time variance (float).
+    variance_min -- The minimum time variance (float).
     _sub_tasks -- List of sub tasks (list).
     """
 
-    def __init__(self, entity):
+    def __init__(self, entity, variance_min, variance_max):
         self.entity = entity
+        self.variance_max = variance_max
+        self.variance_min = variance_min
         self._sub_tasks = []
 
     def execute_next(self, data):
-        """ Execute next step in task on data. Returns true if more steps
-        are necessary else false. """
+        """ Execute next step in task on data. """
+
+    def is_complete(self):
+        """ Returns true if task is complete else false. """
         return False
 
     def time(self):

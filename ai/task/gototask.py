@@ -1,4 +1,5 @@
 import logging
+import random
 
 from . import basetask
 from ai import pathfinding
@@ -12,10 +13,11 @@ class GoToTask(basetask.BaseTask):
     goal -- The goal to go to (data.world.point).
     path -- The path to the target (list).
     time_per_step -- Time to go to the next position in the path (float).
+    _complete -- Indicates that the task is complete (bool).
     """
 
-    def __init__(self, entity, goal, data):
-        super().__init__(entity)
+    def __init__(self, entity, goal, data, variance_min, variance_max):
+        super().__init__(entity, variance_min, variance_max)
         self.goal = goal
 
         region = data.game.region
@@ -25,13 +27,19 @@ class GoToTask(basetask.BaseTask):
         if not self.path:
             self.__log_no_path(start, goal)
             self.time_per_step = 0.0
+            self._complete = True
         else:
             # Calculate time for one step. Currently only walking is supported.
             self.time_per_step = 1.0 / entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
+            self._complete = False
+
+    def is_complete(self):
+        return self._complete
 
     def execute_next(self, data):
         if not self.path:
-            return False
+            self._complete = True
+            return
 
         region = data.game.region
         last_pos = region.get_pos(self.entity)
@@ -41,7 +49,7 @@ class GoToTask(basetask.BaseTask):
             if not self.path:
                 self.__log_no_path(last_pos, self.goal)
                 self.entity.direction = Direction.STOP
-                return False
+                self._complete = True
             else:
                 pos = self.path.pop(0)
         region.set_pos(self.entity, pos)
@@ -53,7 +61,9 @@ class GoToTask(basetask.BaseTask):
         more = any(self.path)
         if not more:
             self.entity.direction = Direction.STOP
-        return more
+            self._complete = True
+        else:
+            self._complete = False
 
     def time(self):
         return self.time_per_step

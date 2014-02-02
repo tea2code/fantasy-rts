@@ -30,3 +30,6 @@ class ID:
     TASK_TYPE_IDLE = 'task.type.idle'
     TASK_TYPE_RANDOM_GOTO = 'task.type.random_goto'
     _TASK_TYPE = [TASK_TYPE_IDLE, TASK_TYPE_RANDOM_GOTO]
+
+    TASK_IDLE = 'ai.task.idle'
+    TASK_GOTO = 'ai.task.random_goto'

@@ -1,4 +1,4 @@
-from data.config import tasklist
+from data import tasklist
 
 
 class Game:
