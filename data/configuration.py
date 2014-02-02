@@ -17,6 +17,7 @@ class Configuration:
     scroll_width_y -- Number of tiles scrolling changes the view port in y direction (int).
     state_id -- The template for the state id (int).
     style -- The style config (data.config.style).
+    tasks -- Mapping of task id to task config (dict).
     """
 
     def __init__(self):
@@ -31,3 +32,4 @@ class Configuration:
         self.scroll_width_y = 3
         self.state_id = '{0}'
         self.style = style.Style()
+        self.tasks = {}

@@ -23,3 +23,10 @@ class ID:
     STATE_DIRECTION_UP = 'up'
     STATE_DIRECTION_DOWN = 'down'
     STATE_DIRECTION_STOP = 'stop'
+
+    TASK_PARAMETER_TIME = 'task.parameter.time'
+    _TASK_PARAMETER = [TASK_PARAMETER_TIME]
+
+    TASK_TYPE_IDLE = 'task.type.idle'
+    TASK_TYPE_RANDOM_GOTO = 'task.type.random_goto'
+    _TASK_TYPE = [TASK_TYPE_IDLE, TASK_TYPE_RANDOM_GOTO]

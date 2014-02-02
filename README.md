@@ -64,11 +64,11 @@ describes the dwarf entity facing north using the template "[{0}]" where "{0}" i
 
 Most of the IDs in this game can be modified as long as their usage is consistent. But there are a couple of IDs which are predefined and cannot change. They are used in the source code to create, modify and identify certain elements.
 
-#### Attributes
+#### Attributes:
 
 - entity.attribute.moving.walk
 
-#### Keyboard Config
+#### Keyboard Config:
 
 - action.scroll_north
 - action.scroll_south
@@ -77,7 +77,7 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 - action.scroll_up
 - action.scroll_down
 
-#### Entity States
+#### Entity States:
 
 - north
 - south
@@ -86,6 +86,13 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 - up
 - down
 - stop
+
+
+#### Tasks:
+
+- task.parameter.time
+- task.type.idle
+- task.type.random_goto
 
 ### Load Order File
 
@@ -243,3 +250,24 @@ The types "resource" and "type" can/should/will exist multiple times. Each repre
                     - type: <id, "Blocking type. Must match attribute.">
             
 The types "attribute", "dynamic", "static", "tile", "blocked", "blocking" and "moving" can/should/will exist multiple times. Each representing a single entity.
+
+#### AI:
+
+    ai:
+        namespace: <string, "Namespace part.">
+
+        tasks:
+            namespace: <string, "Namespace part.">
+            variance_min: <float, optional, "Default time variance minimum.">
+            variance_max: <float, optional, "Default time variance maximum.">
+            
+            task:
+                - name: <string, "Namespace end part.">
+                  type: <id, "Task type id.">
+                  variance_min: <float, optional, "Time variance minimum.">
+                  variance_max: <float, optional, "Time variance maximum.">
+                  parameters:
+                    - type: <id, "Id of a parameter.">
+                      value: <?, "Value of the parameter.">
+
+The types "task", and "parameters" can/should/will exist multiple times. Each representing a single object.

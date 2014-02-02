@@ -1,5 +1,6 @@
 import yaml
 
+from . import aireader
 from . import configreader
 from . import entityreader
 from . import gamereader
@@ -13,6 +14,7 @@ class YamlParser:
     """ Parses configuration files in yaml format.
 
     Constants:
+    AI
     CONFIG
     ENTITY
     GAME
@@ -23,6 +25,7 @@ class YamlParser:
     _readers -- Mapping of key to reader (dict).
     """
 
+    AI = 'ai'
     CONFIG = 'config'
     ENTITY = 'entity'
     GAME = 'game'
@@ -31,6 +34,7 @@ class YamlParser:
 
     def __init__(self):
         self._readers = {
+            self.AI: aireader.YamlAiReader(),
             self.CONFIG: configreader.YamlConfigReader(),
             self.ENTITY: entityreader.YamlEntityReader(),
             self.GAME: gamereader.YamlGameReader(),

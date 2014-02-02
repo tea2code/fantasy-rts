@@ -101,6 +101,17 @@ class Validator:
             if to not in style.sprites:
                 raise ValidatorError('Map ID "{0}" has unknown to ID "{1}".'.format(map, to))
 
+        # Tasks
+        tasks = config.tasks
+        for key, value in tasks.items():
+            if value.type not in ID._TASK_TYPE:
+                raise ValidatorError('Task "{0}" has unknown type "{1}".'.format(key, value.type))
+            if value.variance_max < value.variance_min:
+                raise ValidatorError('Task "{0}" variance max must not be smaller than variance min.'.format(key))
+            for param_key, param_value in value.parameters.items():
+                if param_key not in ID._TASK_PARAMETER:
+                    raise ValidatorError('Task "{0}" has unknown parameter type "{1}".'.format(key, param_key))
+
     def __validate_data(self, data):
         """ Validate data part. """
         pass

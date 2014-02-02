@@ -1,26 +1,16 @@
-tasks:
-    namespace: task
-    variance_min: -0.2
-    variance_max: 0.2
-    
-    task:
-        - name: idle
-          type: task.type.idle
-          time: [2, 4, 8, 16]
-        - name: eat
-          type: task.type.eat
-          sub_tasks:
-            - task: task.find_resource
-              resource: resource.type.food
-            - task: task.goto
-            - task: task.remove_resource
-            - task: task.reset_state
-              state: hunger
-        - name: find_resource
-          type: task.type.find_resource
-        - name: goto
-          type: task.type.goto
-        - name: remove_resource
-          type: task.type.remove_resource
-        - name: reset_state
-          type: task.type.reset_state
+ai:
+    namespace: ai
+
+    tasks:
+        namespace: task
+        variance_min: -0.2
+        variance_max: 0.2
+        
+        task:
+            - name: idle
+              type: task.type.idle
+              parameters:
+                - type: task.parameter.time
+                  value: [2, 4]
+            - name: random_goto
+              type: task.type.random_goto

@@ -1,6 +1,4 @@
 load:
     - vanilla-config
-    - vanilla-game/entity.yaml
-    - vanilla-game/game.yaml
-    - vanilla-game/resources.yaml
+    - vanilla-game
     - vanilla-style
