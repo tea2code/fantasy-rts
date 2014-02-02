@@ -110,7 +110,8 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
 - *optional*: This value is optional. If not set a value is always necessary.
 - *id*: A namespace id of a entity. See **ID, Namespace, Names** for more information.
 - *float*: A floating point value.
-- []: List of values.
+- *[]*: List of values.
+- *?*: Any value type allowed.
 
 #### Style Reference:
 
