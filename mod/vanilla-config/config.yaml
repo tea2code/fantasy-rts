@@ -8,3 +8,17 @@ config:
     view_x: 60
     view_y: 50
     window_title: "Fantasy-RTS (FPS: {0:.0f})"
+    
+    keys:
+        - action: action.scroll_north
+          key: W
+        - action: action.scroll_south
+          key: S
+        - action: action.scroll_west
+          key: A
+        - action: action.scroll_east
+          key: D
+        - action: action.scroll_up
+          key: R
+        - action: action.scroll_down
+          key: Q

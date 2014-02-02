@@ -28,6 +28,12 @@ class Validator:
         if '{0}' not in config.state_id:
             raise ValidatorError('Config.state_id must contain "{0}".')
 
+        # Keys
+        keys = config.keys
+        for key, value in keys.items():
+            if key not in ID._ACTION_SCROLL:
+                raise ValidatorError('Config.keys contains unknown action "{0}".'.format(key))
+
         # Resources
         resources = config.resources
         for key, value in resources.resources.items():
@@ -45,7 +51,7 @@ class Validator:
                 if blocked.type not in entity.attributes:
                     raise ValidatorError('Dynamic entity "{0}" has unknown blocked type "{1}".'.format(key, blocked.type))
             for moving in value.moving:
-                if moving.type not in ID.ENTITY_ATTRIBUTE_MOVING:
+                if moving.type not in ID._ENTITY_ATTRIBUTE_MOVING:
                     raise ValidatorError('Dynamic entity "{0}" has unknown moving type "{1}".'.format(key, moving.type))
                 if moving.speed < 0.0:
                     raise ValidatorError('Speed of moving type "{0}" of dynamic entity "{1}" may not be negative.'.format(moving.type, key))

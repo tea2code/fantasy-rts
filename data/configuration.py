@@ -9,6 +9,7 @@ class Configuration:
     config_dir -- The config directory (string).
     entity -- The entity config (data.config.entity).
     fps -- The should be frame rate (int).
+    keys -- Mapping of action ID to key (dict).
     max_frame_time -- Maximum time a frame may take (float).
     num_fps_avg -- Number of frames to keep for calculation fps (int).
     resources -- The resources config (data.config.resources).
@@ -22,6 +23,7 @@ class Configuration:
         self.config_dir = ''
         self.entity = entity.Entity()
         self.fps = 100
+        self.keys = {}
         self.max_frame_time = 0.25
         self.num_fps_avg = 1000
         self.resources = resource.Resources()

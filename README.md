@@ -68,6 +68,15 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 
 - entity.attribute.moving.walk
 
+#### Keyboard Config
+
+- action.scroll_north
+- action.scroll_south
+- action.scroll_west
+- action.scroll_east
+- action.scroll_up
+- action.scroll_down
+
 #### Entities
 
 - entity.dynamic.dwarf
@@ -167,6 +176,12 @@ Sprites can be defined in two ways. First you can directly declare the coordinat
         view_x: <int, optional, "Size of viewport in x direction.">
         view_y: <int, optional, "Size of viewport in y direction.">
         window_title: <string, optional, "The window title. Currently it's possible to show the current fps in it.">
+
+        keys:
+            - action: <string, "ID of the action to execute.">
+              key: <string, "Name of the key to press for this action.">
+
+The type "keys" can/should/will exist multiple times. Each representing a single setting.
 
 #### Resources Reference:
 

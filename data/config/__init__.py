@@ -1,8 +1,20 @@
 class ID:
-    """ ID constants. """
+    """ ID constants.
+
+    Constants with _ as prefix are no IDs but used for validation...
+    """
+
+    ACTION_SCROLL_NORTH = 'action.scroll_north'
+    ACTION_SCROLL_SOUTH = 'action.scroll_south'
+    ACTION_SCROLL_WEST = 'action.scroll_west'
+    ACTION_SCROLL_EAST = 'action.scroll_east'
+    ACTION_SCROLL_UP = 'action.scroll_up'
+    ACTION_SCROLL_DOWN = 'action.scroll_down'
+    _ACTION_SCROLL = [ACTION_SCROLL_DOWN, ACTION_SCROLL_EAST, ACTION_SCROLL_NORTH,
+                      ACTION_SCROLL_SOUTH, ACTION_SCROLL_UP, ACTION_SCROLL_WEST]
 
     ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'
-    ENTITY_ATTRIBUTE_MOVING = [ENTITY_ATTRIBUTE_MOVING_WALK]
+    _ENTITY_ATTRIBUTE_MOVING = [ENTITY_ATTRIBUTE_MOVING_WALK]
 
     ENTITY_DYNAMIC_DWARF = 'entity.dynamic.dwarf'
     ENTITY_STATIC_BERRY_SHRUB = 'entity.static.berry-shrub'

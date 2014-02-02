@@ -1,4 +1,4 @@
-from ai.task import tasklist
+from data.config import tasklist
 
 
 class Game:

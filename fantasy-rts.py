@@ -39,7 +39,7 @@ class MainLoopImp(mainloop.MainLoop):
         # State modules.
         self.state_modules = [
             demo_loader,
-            eventhandler.PygameEventHandler(),
+            eventhandler.PygameEventHandler(self.data),
             director.Director()
         ]
 

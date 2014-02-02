@@ -1,12 +1,14 @@
 from . import basereader
-from data import configuration
-from data import graphics
+from data.config import key as key_class
 
 class YamlConfigReader(basereader.BaseYamlReader):
     """ Yaml reader for config types.
 
     Constants:
+    ACTION
     FPS
+    KEY
+    KEYS
     MAX_FRAME_TIME
     NUM_FPS_AVG
     SCROLL_WIDTH_X
@@ -17,7 +19,10 @@ class YamlConfigReader(basereader.BaseYamlReader):
     WINDOW_TITLE
     """
 
+    ACTION = 'action'
     FPS = 'fps'
+    KEY = 'key'
+    KEYS = 'keys'
     MAX_FRAME_TIME = 'max_frame_time'
     NUM_FPS_AVG = 'num_fps_avg'
     SCROLL_WIDTH_X = 'scroll_width_x'
@@ -40,3 +45,13 @@ class YamlConfigReader(basereader.BaseYamlReader):
         data.graphics.view_x = self.read_int(root, self.VIEW_X, data.graphics.view_x)
         data.graphics.view_y = self.read_int(root, self.VIEW_Y, data.graphics.view_y)
         data.graphics.window_title = self.read_string(root, self.WINDOW_TITLE, data.graphics.window_title)
+
+        if self.has(root, self.KEYS):
+            self.__keys(root, data)
+
+    def __keys(self, root, data):
+        """ Parse keys. """
+        for key_config in self.read_req_object(root, self.KEYS):
+            action = self.read_req_string(key_config, self.ACTION)
+            key = self.read_req_string(key_config, self.KEY).upper()
+            data.config.keys[action] = key_class.Key(key)
