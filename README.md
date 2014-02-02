@@ -77,14 +77,6 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 - action.scroll_up
 - action.scroll_down
 
-#### Entities
-
-- entity.dynamic.dwarf
-- entity.static.berry-shrub
-- entity.static.tree
-- entity.tile.grass
-- entity.tile.wall
-
 #### Entity States
 
 - north
@@ -163,6 +155,13 @@ Sprites can be defined in two ways. First you can directly declare the coordinat
     game:
         size_x: <int, optional, "Size of game region in x direction.">
         size_y: <int, optional, "Size of game region in y direction.">
+
+        mappings:
+            race_player: <id, optional, "Race of the player.">
+            food_plant: <id, optional, "Plant for food.">
+            wood_plant: <id, optional, "Plant for wood.">
+            tile_ground: <id, optional, "Ground tile.">
+            tile_wall: <id, optional, "Wall tile.">
 
 #### Config Reference:
 

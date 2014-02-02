@@ -107,8 +107,18 @@ class Validator:
 
     def __validate_game(self, game):
         """ Validate game part. """
+        if not game.food_plant:
+                raise ValidatorError('Game.food_plant must not be empty.')
+        if not game.race_player:
+                raise ValidatorError('Game.race_player must not be empty.')
         if game.size_x <= 0 or game.size_y <= 0:
             raise ValidatorError('Game.size_x and Game.size_y must be bigger than 0.')
+        if not game.tile_ground:
+                raise ValidatorError('Game.tile_ground must not be empty.')
+        if not game.tile_wall:
+                raise ValidatorError('Game.tile_wall must not be empty.')
+        if not game.wood_plant:
+                raise ValidatorError('Game.wood_plant must not be empty.')
 
     def __validate_graphics(self, graphics):
         """ Validate graphics part. """

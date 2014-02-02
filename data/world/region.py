@@ -96,7 +96,7 @@ class Region:
         >>> r = Region(rg, 2, 2)
         >>> b = r.get_block(p)
         >>> b.get_tiles()[0].id
-        'entity.tile.grass'
+        'grass'
         """
         if pos not in self._pos_block:
             self._pos_block[pos] = self.region_generator.new_block(pos)

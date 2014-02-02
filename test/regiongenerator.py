@@ -22,9 +22,8 @@ class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
     def new_block(self, pos):
         return self._map[pos]
 
-    def __grass_block(self, ):
-        id = ID.ENTITY_TILE_GRASS
-        t = tile.Tile(id)
+    def __grass_block(self):
+        t = tile.Tile('grass')
         b = block.Block()
         b.insert_tile(t)
         return b

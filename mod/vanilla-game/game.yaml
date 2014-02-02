@@ -1,3 +1,10 @@
 game:
     size_x: 100
     size_y: 100
+    
+    mappings:
+        race_player: entity.dynamic.dwarf
+        food_plant: entity.static.berry-shrub
+        wood_plant: entity.static.tree
+        tile_ground: entity.tile.grass
+        tile_wall: entity.tile.wall
