@@ -30,7 +30,8 @@ class GoToTask(basetask.BaseTask):
             self._complete = True
         else:
             # Calculate time for one step. Currently only walking is supported.
-            self.time_per_step = 1.0 / entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
+            time = 1.0 + random.uniform(variance_min, variance_max)
+            self.time_per_step = time / entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
             self._complete = False
 
     def is_complete(self):

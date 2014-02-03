@@ -12,5 +12,5 @@ ai:
               parameters:
                 - type: task.parameter.time
                   value: 2
-            - name: random_goto
-              type: task.type.random_goto
+            - name: randomgoto
+              type: task.type.randomgoto

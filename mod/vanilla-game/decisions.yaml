@@ -7,30 +7,18 @@ ai:
         decision:
             - namespace: dwarf
               entity: entity.dynamic.dwarf
-              default_task: task.idle
-              start_node: decision.dwarf.hungry
+              start_node: ai.decision.dwarf.root
               tree:
-                - name: hungry
-                  type: decision.node.check_state
-                  state: hunger
-                  yes: decision.dwarf.eat
-                  no: decision.dwarf.check_task
-                - name: check_task
-                  type: decision.node.check_task
-                  yes: decision.dwarf.next_task
-                  no: 
-                - name: next_task
-                  type: decision.node.next_task
-                - name: eat
-                  type: decision.node.task
-                  task: task.eat
-                  yes:
-                  no: decision.dwarf.log
-                - name: log
-                  type: decision.node.log
-                  message: "No food available."
-                  next: decision.dwarf.idle
+                - name: root
+                  type: ai.decision.node.random
+                  random:
+                    - chance: 0.9
+                      next: ai.decision.dwarf.idle
+                    - chance: 0.1
+                      next: ai.decision.dwarf.randomgoto
                 - name: idle
-                  type: decision.node.task
-                  task: task.idle
-                  next: decision.dwarf.check_task
+                  type: ai.decision.node.task
+                  task: ai.task.idle
+                - name: randomgoto
+                  type: ai.decision.node.task
+                  task: ai.task.randomgoto
