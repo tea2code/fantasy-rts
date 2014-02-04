@@ -8,16 +8,27 @@ class DecisionTree:
 
     def __init__(self):
         self.nodes = {}
-        self.start_node = {}
+        self.start_nodes = {}
 
-class RandomNode:
+class BaseNode:
+    """ Base class for nodes.
+
+    Member:
+    type -- The node type (string).
+    """
+
+    def __init__(self, type):
+        self.type = type
+
+class RandomNode(BaseNode):
     """ A node which makes a decision by throwing a dice.
 
     Member:
     random -- List of next nodes with chance (list).
     """
 
-    def __init__(self):
+    def __init__(self, type):
+        super().__init__(type)
         self.random = []
 
 class RandomNodeEdge:
@@ -32,7 +43,7 @@ class RandomNodeEdge:
         self.chance = 0.0
         self.next = ''
 
-class TaskNode:
+class TaskNode(BaseNode):
     """ A node which executes a task. After executing this node there are
     three possible ways what happens next. If this node has no child the
     decision tree ends here. If it has one child this is executed next. If
@@ -46,7 +57,8 @@ class TaskNode:
     task -- Id of the task (string).
     """
 
-    def __init__(self):
+    def __init__(self, type):
+        super().__init__(type)
         self.fail = None
         self.next = None
         self.success = None

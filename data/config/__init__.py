@@ -15,6 +15,7 @@ class ID:
 
     AI_DECISION_NODE_RANDOM = 'ai.decision.node.random'
     AI_DECISION_NODE_TASK = 'ai.decision.node.task'
+    _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM]
 
     ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'
     _ENTITY_ATTRIBUTE_MOVING = [ENTITY_ATTRIBUTE_MOVING_WALK]

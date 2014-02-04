@@ -71,7 +71,7 @@ class YamlAiReader(basereader.BaseYamlReader):
             entity = self.read_string(decision, self.ENTITY, None)
             start_node = self.read_string(decision, self.START_NODE, None)
             if entity and start_node:
-                data.game.decision_tree.start_node[entity] = start_node
+                data.game.decision_tree.start_nodes[entity] = start_node
 
             # Nodes.
             for node in self.read_object(decision, self.TREE, []):
@@ -80,7 +80,7 @@ class YamlAiReader(basereader.BaseYamlReader):
                 type = self.read_req_string(node, self.TYPE)
 
                 if type == ID.AI_DECISION_NODE_RANDOM:
-                    node_obj = decision_class.RandomNode()
+                    node_obj = decision_class.RandomNode(type)
                     for random in self.read_req_object(node, self.RANDOM):
                         chance = self.read_req_float(random, self.CHANCE)
                         next = self.read_req_string(random, self.NEXT)
@@ -89,7 +89,7 @@ class YamlAiReader(basereader.BaseYamlReader):
                         edge.next = next
                         node_obj.random.append(edge)
                 elif type == ID.AI_DECISION_NODE_TASK:
-                    node_obj = decision_class.TaskNode()
+                    node_obj = decision_class.TaskNode(type)
                     node_obj.fail = self.read_string(node, self.FAIL, node_obj.fail)
                     node_obj.next = self.read_string(node, self.NEXT, node_obj.next)
                     node_obj.success = self.read_string(node, self.SUCCESS, node_obj.success)

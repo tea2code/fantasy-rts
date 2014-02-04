@@ -12,7 +12,7 @@ class Validator:
         information in case of a data violation. """
         self.__validate_data(data)
         self.__validate_config(data.config)
-        self.__validate_game(data.game)
+        self.__validate_game(data.game, data.config.entity, data.config.ai.tasks)
         self.__validate_graphics(data.graphics)
 
     def __validate_config(self, config):
@@ -119,7 +119,7 @@ class Validator:
         """ Validate data part. """
         pass
 
-    def __validate_game(self, game):
+    def __validate_game(self, game, entity, tasks):
         """ Validate game part. """
         if not game.food_plant:
                 raise ValidatorError('Game.food_plant must not be empty.')
@@ -133,6 +133,34 @@ class Validator:
                 raise ValidatorError('Game.tile_wall must not be empty.')
         if not game.wood_plant:
                 raise ValidatorError('Game.wood_plant must not be empty.')
+
+        # Decisions
+        decision_tree = game.decision_tree
+        for key, value in decision_tree.start_nodes.items():
+            if key not in entity.dynamics:
+                raise ValidatorError('DecisionTree.start_nodes has a unknown entity "{0}".'.format(key))
+            if value not in decision_tree.nodes:
+                raise ValidatorError('Start node "{0}" for entity "{1}" is unknown.'.format(value, key))
+        for key, value in decision_tree.nodes.items():
+            if value.type not in ID._AI_DECISION_NODE:
+                raise ValidatorError('Node "{0}" has unknown node type "{1}".'.format(key, value.type))
+            if value.type == ID.AI_DECISION_NODE_RANDOM:
+                for random in value.random:
+                    if random.chance < 0.0:
+                        raise ValidatorError('Chance of node "{0}" may not be negative.'.format(key))
+                    if random.next not in decision_tree.nodes:
+                        raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, random.next))
+            elif value.type == ID.AI_DECISION_NODE_TASK:
+                if value.task not in tasks:
+                    raise ValidatorError('Task "{0}" of node "{1}" is unknown.'.format(value.task, key))
+                if value.fail and value.fail not in decision_tree.nodes:
+                    raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.fail))
+                if value.next and value.next not in decision_tree.nodes:
+                    raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.next))
+                if value.success and value.success not in decision_tree.nodes:
+                    raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.success))
+            else:
+                raise ValidatorError('Missing validation of node type "{0}".'.format(value.type))
 
     def __validate_graphics(self, graphics):
         """ Validate graphics part. """

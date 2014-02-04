@@ -96,6 +96,11 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 - task.type.idle
 - task.type.random_goto
 
+#### Decision Tree:
+
+- ai.decision.node.random
+- ai.decision.node.task
+
 ### Load Order File
 
 In the mod directory is a file "mod.yaml". It describes which configuration files should be loaded and in which order. It can load complete directories (loading all files in it) or single files. Example:
@@ -273,4 +278,26 @@ The types "attribute", "dynamic", "static", "tile", "blocked", "blocking" and "m
                     - type: <id, "Id of a parameter.">
                       value: <?, "Value of the parameter.">
 
-The types "task", and "parameters" can/should/will exist multiple times. Each representing a single object.
+            decisions:
+                namespace: <string, "Namespace part.">
+                
+                decision:
+                    - namespace: <string, "Namespace part.">
+                      entity: <id, optional, "Name of entity for which this decision tree is.">
+                      start_node: <id, optional, "Id of root node.">
+                      tree:
+                        - name: <string, "Namespace end part.">
+                          type: ai.decision.node.random <id, "Random node type id.">
+                          random:
+                            - chance: <float, "Chance of this child node.">
+                              next: <id, "ID of this child node.">
+                        - name: <string, "Namespace end part.">
+                          type: ai.decision.node.task <id, "Task node type id.">
+                          task: <id, "ID of task to execute.">
+                          success: <id, optional, "Node in case of success.">
+                          fail: <id, optional, "Node in case of failure.">
+                          next: <id, optional, "If result of task doesn't matter this node will be executed.">
+
+The types "task", "parameters", "decision" and "tree" can/should/will exist multiple times. Each representing a single object.
+
+The three values "success", "fail" and "next of task nodes are completly optional. If none is defined the node is a leaf and the tree ends after this node.
