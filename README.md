@@ -16,6 +16,8 @@ Current Version: **9**
 - Version 8: Support für multiple sprites per entity and unregular sized sprites.
 - Version 9: Refactoring. Working shrubs. Better GotoTask.
 - Version 10: Decision tree. Configuration of current game and tasks.
+- Version 11: AI refactoring. Food.
+- Version 12: Events. Wood.
 
 ## Coming Soon
 
