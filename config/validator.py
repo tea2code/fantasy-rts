@@ -101,8 +101,11 @@ class Validator:
             if to not in style.sprites:
                 raise ValidatorError('Map ID "{0}" has unknown to ID "{1}".'.format(map, to))
 
+        # Ai
+        ai = config.ai
+
         # Tasks
-        tasks = config.tasks
+        tasks = ai.tasks
         for key, value in tasks.items():
             if value.type not in ID._TASK_TYPE:
                 raise ValidatorError('Task "{0}" has unknown type "{1}".'.format(key, value.type))

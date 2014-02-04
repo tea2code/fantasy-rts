@@ -3,7 +3,6 @@ import sys
 import time
 
 from . import flatregiongenerator, mazeregiongenerator
-from data.config import ID
 from data.world import factory, region
 
 

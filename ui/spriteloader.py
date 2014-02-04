@@ -2,8 +2,6 @@ import logging
 import pygame
 import random
 
-from data.world.entity import movable
-
 
 class PygameSpriteLoader:
     """ Gives access to sprite handling.

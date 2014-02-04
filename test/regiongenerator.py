@@ -1,4 +1,3 @@
-from data.config import ID
 from data.world import block, tile
 from data.world.point import Factory as PointFactory
 from world import regiongenerator

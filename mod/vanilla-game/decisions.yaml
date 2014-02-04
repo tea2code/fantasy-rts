@@ -22,3 +22,5 @@ ai:
                 - name: randomgoto
                   type: ai.decision.node.task
                   task: ai.task.randomgoto
+                  success: 
+                  fail: ai.decision.dwarf.idle

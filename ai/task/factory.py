@@ -7,7 +7,7 @@ class Factory:
     @staticmethod
     def new_task(id, entity, data):
         """ Create new task. """
-        config = data.config.tasks[id]
+        config = data.config.ai.tasks[id]
         id = config.type
         if id == ID.TASK_TYPE_RANDOM_GOTO:
             free_pos = data.game.region.free_random_pos(entity.blocked, 0)

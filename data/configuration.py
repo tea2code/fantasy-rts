@@ -1,3 +1,4 @@
+from .config import ai
 from .config import entity
 from .config import resource
 from .config import style
@@ -6,6 +7,7 @@ class Configuration:
     """ The configuration data object.
 
     Member:
+    ai -- The ai config (data.config.ai).
     config_dir -- The config directory (string).
     entity -- The entity config (data.config.entity).
     fps -- The should be frame rate (int).
@@ -17,10 +19,10 @@ class Configuration:
     scroll_width_y -- Number of tiles scrolling changes the view port in y direction (int).
     state_id -- The template for the state id (int).
     style -- The style config (data.config.style).
-    tasks -- Mapping of task id to task config (dict).
     """
 
     def __init__(self):
+        self.ai = ai.Ai()
         self.config_dir = ''
         self.entity = entity.Entity()
         self.fps = 100
@@ -32,4 +34,3 @@ class Configuration:
         self.scroll_width_y = 3
         self.state_id = '{0}'
         self.style = style.Style()
-        self.tasks = {}

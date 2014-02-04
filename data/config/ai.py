@@ -1,3 +1,13 @@
+class Ai:
+    """ They ai config.
+
+    Member:
+    tasks -- Mapping of task id to task config (dict).
+    """
+
+    def __init__(self):
+        self.tasks = {}
+
 class Task:
     """ A task config.
 
