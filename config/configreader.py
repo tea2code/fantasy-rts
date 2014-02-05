@@ -11,6 +11,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
     KEYS
     MAX_FRAME_TIME
     NUM_FPS_AVG
+    RENDER_DECISION_TREES
     SCROLL_WIDTH_X
     SCROLL_WIDTH_Y
     STATE_ID
@@ -25,6 +26,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
     KEYS = 'keys'
     MAX_FRAME_TIME = 'max_frame_time'
     NUM_FPS_AVG = 'num_fps_avg'
+    RENDER_DECISION_TREES = 'render_decision_trees'
     SCROLL_WIDTH_X = 'scroll_width_x'
     SCROLL_WIDTH_Y = 'scroll_width_y'
     STATE_ID = 'state_id'
@@ -38,6 +40,7 @@ class YamlConfigReader(basereader.BaseYamlReader):
         data.config.fps = self.read_int(root, self.FPS, data.config.fps)
         data.config.max_frame_time = self.read_float(root, self.MAX_FRAME_TIME, data.config.max_frame_time)
         data.config.num_fps_avg = self.read_int(root, self.NUM_FPS_AVG, data.config.num_fps_avg)
+        data.config.render_decision_trees = self.read_boolean(root, self.RENDER_DECISION_TREES, data.config.render_decision_trees)
         data.config.scroll_width_x = self.read_int(root, self.SCROLL_WIDTH_X, data.config.scroll_width_x)
         data.config.scroll_width_y = self.read_int(root, self.SCROLL_WIDTH_Y, data.config.scroll_width_y)
         data.config.state_id = self.read_string(root, self.STATE_ID, data.config.state_id)

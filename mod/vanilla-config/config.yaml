@@ -2,6 +2,7 @@ config:
     fps: 100
     max_frame_time: 0.1
     num_fps_avg: 1000
+    render_decision_trees: True
     scroll_width_x: 30
     scroll_width_y: 25
     state_id: "-{0}"

@@ -117,6 +117,7 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
 - *optional*: This value is optional. If not set a value is always necessary.
 - *id*: A namespace id of a entity. See **ID, Namespace, Names** for more information.
 - *float*: A floating point value.
+- *bool*: A boolean value.
 - *[]*: List of values.
 - *?*: Any value type allowed.
 
@@ -184,6 +185,7 @@ Sprites can be defined in two ways. First you can directly declare the coordinat
         fps: <int, optional, "Upper frames per second limit.">
         max_frame_time: <float, optional, "Maximum time between renders. The maximum time updating the state may take.">
         num_fps_avg: <int, optional, "Number of frames to keep for calculation fps.">
+        render_decision_trees: <bool, optional, "If true decision trees are rendered to images.">
         scroll_width_x: <int, optional, "Number of coordinates to scroll in x direction.">
         scroll_width_y: <int, optional, "Number of coordinates to scroll in y direction.">
         state_id: <string, optional, "Template for state specific IDs.">

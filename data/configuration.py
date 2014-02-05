@@ -14,6 +14,7 @@ class Configuration:
     keys -- Mapping of action ID to key (dict).
     max_frame_time -- Maximum time a frame may take (float).
     num_fps_avg -- Number of frames to keep for calculation fps (int).
+    render_decision_trees -- If true decision trees are rendered to images (bool).
     resources -- The resources config (data.config.resources).
     scroll_width_x -- Number of tiles scrolling changes the view port in x direction (int).
     scroll_width_y -- Number of tiles scrolling changes the view port in y direction (int).
@@ -29,6 +30,7 @@ class Configuration:
         self.keys = {}
         self.max_frame_time = 0.25
         self.num_fps_avg = 1000
+        self.render_decision_trees = False
         self.resources = resource.Resources()
         self.scroll_width_x = 3
         self.scroll_width_y = 3

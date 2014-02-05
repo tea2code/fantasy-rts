@@ -6,6 +6,7 @@ from ai import director
 from data import data
 from demo import demo
 from general import cleaner
+from general import decisiontreerenderer as dtr
 from general import mainloop
 from ui import eventhandler, graphics
 
@@ -44,6 +45,11 @@ class MainLoopImp(mainloop.MainLoop):
 
         # Load configuration.
         config.load_config(self.data, self.CONFIG_DIR, self.CONFIG_LOAD_FILE)
+
+        # Draw decision trees.
+        if self.data.config.render_decision_trees:
+            renderer = dtr.DecisionTreeRenderer(self.DECISION_GRAPH_DIR, self.DECISION_GRAPH_FILE)
+            renderer.render(self.data.game.decision_tree.start_nodes, self.data.game.decision_tree.nodes)
 
         # Demo mode.
         demo_loader = demo.Demo(self.data)
