@@ -7,6 +7,9 @@ class DynamicEntity(entity.Entity, blocking.Blocked, movable.Movable):
 
     Constants:
     DIRECTION_SUFFIX -- Mapping of direction to id suffix (dict).
+
+    Member:
+    last_decision_node -- ID of the last node executed in the decision tree (string).
     """
 
     DIRECTION_SUFFIX = {
@@ -22,6 +25,7 @@ class DynamicEntity(entity.Entity, blocking.Blocked, movable.Movable):
         entity.Entity.__init__(self, id)
         blocking.Blocked.__init__(self)
         movable.Movable.__init__(self)
+        self.last_decision_node = None
 
     def state_id(self):
         id = self.id

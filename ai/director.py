@@ -1,10 +1,16 @@
-import random
+from . import decision
+from .task.factory import Factory as TaskFactory
 
-from ai.task.factory import Factory as TaskFactory
-from data.config import ID
 
 class Director:
-    """ The AI director manages all behaviour. """
+    """ The AI director manages all behaviour.
+
+    Member:
+    decision_tree -- Parser for decision tree (ai.decision).
+    """
+
+    def __init__(self):
+        self.decision_tree = decision.DecisionTreeParser()
 
     def tick(self, run_time, delta_time, data, tick):
         # Execute tasks.
@@ -17,10 +23,8 @@ class Director:
 
     def __new_task(self, entity, run_time, data):
         """ Get the next task for the given entity. """
-        if random.random() <= 0.9:
-            task = TaskFactory.new_task(ID.TASK_IDLE, entity, data)
-        else:
-            task = TaskFactory.new_task(ID.TASK_GOTO, entity, data)
+        task_id = self.decision_tree.parse(entity, data.game.decision_tree)
+        task = TaskFactory.new_task(task_id, entity, data)
         self.__add_task(task, run_time, data)
 
     def __add_task(self, task, run_time, data):
