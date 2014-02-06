@@ -39,7 +39,7 @@ class MainLoop(metaclass=ABCMeta):
             # Limit frame time to a maximum to avoid spiral of death.
             frame_time = new_time - current_time
             if frame_time > self.max_frame_time:
-                logger.debug(frame_time_tpl.format(frame_time, self.max_frame_time))
+                logger.warning(frame_time_tpl.format(frame_time, self.max_frame_time))
                 frame_time = self.max_frame_time
 
             current_time = new_time
