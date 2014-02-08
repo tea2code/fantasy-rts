@@ -1,5 +1,6 @@
-from . import tasklist
 from .ai import decision
+from data.ai import tasklist
+
 
 class Game:
     """ The game state.

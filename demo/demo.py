@@ -35,9 +35,7 @@ class Demo:
         num_y = 20
         for x in range(1, num_x + 1):
             for y in range(1, num_y + 1):
-                entity = factory.new_add_dynamic_entity(self.data.game.race_player, self.data, run_time, x, y, z=0)
-                #free_pos = self.data.game.region.free_random_pos(entity.blocked, 0)
-                #TaskFactory.new_add_goto_task(entity, run_time, free_pos, self.data)
+                factory.new_add_dynamic_entity(self.data.game.race_player, self.data, run_time, x, y, z=0)
 
     def tick(self, run_time, delta_time, data, tick):
         # Burn additional time.

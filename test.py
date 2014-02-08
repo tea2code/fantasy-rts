@@ -1,6 +1,6 @@
 from ai import pathfinding
 from config import basereader
-from data import tasklist
+from data.ai import tasklist
 from data.world import block, point, region
 from ui import helper as ui_helper
 

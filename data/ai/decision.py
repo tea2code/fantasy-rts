@@ -10,6 +10,7 @@ class DecisionTree:
         self.nodes = {}
         self.start_nodes = {}
 
+
 class BaseNode:
     """ Base class for nodes.
 
@@ -19,6 +20,7 @@ class BaseNode:
 
     def __init__(self, type):
         self.type = type
+
 
 class RandomNode(BaseNode):
     """ A node which makes a decision by throwing a dice.
@@ -31,6 +33,7 @@ class RandomNode(BaseNode):
         super().__init__(type)
         self.random = []
 
+
 class RandomNodeEdge:
     """ An edge of a random node.
 
@@ -42,6 +45,7 @@ class RandomNodeEdge:
     def __init__(self):
         self.chance = 0.0
         self.next = ''
+
 
 class TaskNode(BaseNode):
     """ A node which executes a task. After executing this node there are

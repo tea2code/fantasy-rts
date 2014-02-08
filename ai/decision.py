@@ -10,7 +10,7 @@ class DecisionTreeParser:
         """ Parse the given entity. Returns the next task to execute. """
         node_id = None
 
-        if task_result is not None:
+        if task_result is not None and entity.last_decision_node:
             node = decision_tree.nodes[entity.last_decision_node]
             if node.next:
                 node_id = node.next
