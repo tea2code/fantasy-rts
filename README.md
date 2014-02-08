@@ -92,9 +92,8 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 
 #### Tasks:
 
-- task.parameter.time
-- task.type.idle
-- task.type.random_goto
+- ai.task.type.idle
+- ai.task.type.random_goto
 
 #### Decision Tree:
 
@@ -276,9 +275,7 @@ The types "attribute", "dynamic", "static", "tile", "blocked", "blocking" and "m
                   type: <id, "Task type id.">
                   variance_min: <float, optional, "Time variance minimum.">
                   variance_max: <float, optional, "Time variance maximum.">
-                  parameters:
-                    - type: <id, "Id of a parameter.">
-                      value: <?, "Value of the parameter.">
+                  ...
 
             decisions:
                 namespace: <string, "Namespace part.">
@@ -300,6 +297,12 @@ The types "attribute", "dynamic", "static", "tile", "blocked", "blocking" and "m
                           fail: <id, optional, "Node in case of failure.">
                           next: <id, optional, "If result of task doesn't matter this node will be executed.">
 
-The types "task", "parameters", "decision" and "tree" can/should/will exist multiple times. Each representing a single object.
+The types "task", "decision" and "tree" can/should/will exist multiple times. Each representing a single object.
 
 The three values "success", "fail" and "next of task nodes are completly optional. If none is defined the node is a leaf and the tree ends after this node.
+
+Every "task" can have different parameters as explained in the following:
+
+    - ...
+      type: ai.task.type.idle
+      time: <float, "The idle time.">

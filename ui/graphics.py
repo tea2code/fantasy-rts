@@ -1,7 +1,8 @@
+from collections import deque
+
 import pygame
 
 from . import helper, spriteloader
-from collections import deque
 from data.world.point import Factory as PointFactory
 
 

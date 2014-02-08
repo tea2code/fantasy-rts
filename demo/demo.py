@@ -2,7 +2,7 @@ import logging
 import sys
 import time
 
-from . import flatregiongenerator, mazeregiongenerator
+from . import flatregiongenerator
 from data.world import factory, region
 
 

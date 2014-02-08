@@ -1,7 +1,9 @@
-import config
-import logging, logging.config
+import logging
+import logging.config
+
 import yaml
 
+import config
 from ai import director
 from data import data
 from demo import demo
@@ -9,6 +11,7 @@ from general import cleaner
 from general import decisiontreerenderer as dtr
 from general import mainloop
 from ui import eventhandler, graphics
+
 
 class MainLoopImp(mainloop.MainLoop):
     """

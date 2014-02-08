@@ -15,14 +15,14 @@ def new_dynamic_entity(id, data, run_time, init_task=True):
 
     # Initial task.
     if init_task:
-        task_id = ID.TASK_IDLE
+        task_id = 'ai.task.idle'
         task_config = data.config.ai.tasks[task_id]
         parser = taskparser.IdleTaskParser(type=task_config.type,
                                            variance_min=task_config.variance_min,
                                            variance_max=task_config.variance_max,
                                            prev_task=None,
                                            entity=entity,
-                                           duration=task_config.parameters[ID.TASK_PARAMETER_TIME])
+                                           duration=task_config.parameters[ID.AI_TASK_PARAMETER_TIME])
         task = parser.create_new(data)
         data.game.tasks.insert(run_time + parser.time(), task)
 

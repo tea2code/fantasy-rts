@@ -1,11 +1,12 @@
 import logging
 import random
-
 from abc import abstractmethod
+
 from ai import pathfinding
 from data.ai.task import GoToTask, IdleTask
 from data.config import ID
 from data.world.entity.movable import Direction
+
 
 class TaskParameterException(Exception):
     """ Raised if not all parameters are given. """

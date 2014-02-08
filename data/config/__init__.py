@@ -17,6 +17,12 @@ class ID:
     AI_DECISION_NODE_TASK = 'ai.decision.node.task'
     _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM]
 
+    AI_TASK_PARAMETER_TIME = 'ai.task.parameter.time'
+
+    AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
+    AI_TASK_TYPE_RANDOM_GOTO = 'ai.task.type.randomgoto'
+    _AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_RANDOM_GOTO]
+
     ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'
     _ENTITY_ATTRIBUTE_MOVING = [ENTITY_ATTRIBUTE_MOVING_WALK]
 
@@ -27,13 +33,3 @@ class ID:
     STATE_DIRECTION_UP = 'up'
     STATE_DIRECTION_DOWN = 'down'
     STATE_DIRECTION_STOP = 'stop'
-
-    TASK_PARAMETER_TIME = 'task.parameter.time'
-    _TASK_PARAMETER = [TASK_PARAMETER_TIME]
-
-    TASK_TYPE_IDLE = 'task.type.idle'
-    TASK_TYPE_RANDOM_GOTO = 'task.type.randomgoto'
-    _TASK_TYPE = [TASK_TYPE_IDLE, TASK_TYPE_RANDOM_GOTO]
-
-    TASK_IDLE = 'ai.task.idle'
-    TASK_GOTO = 'ai.task.randomgoto'

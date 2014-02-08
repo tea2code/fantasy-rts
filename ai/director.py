@@ -37,7 +37,7 @@ class Director:
         """ Create new task and add to task list. """
         config = data.config.ai.tasks[task_id]
         task_type = config.type
-        if task_type == ID.TASK_TYPE_RANDOM_GOTO:
+        if task_type == ID.AI_TASK_TYPE_RANDOM_GOTO:
             goal = data.game.region.free_random_pos(prev_task.entity.blocked, 0)
             parser = taskparser.GoToTaskParser(type=task_type,
                                                variance_min=config.variance_min,
@@ -45,13 +45,13 @@ class Director:
                                                prev_task=prev_task,
                                                entity=prev_task.entity,
                                                goal=goal)
-        elif task_type == ID.TASK_TYPE_IDLE:
+        elif task_type == ID.AI_TASK_TYPE_IDLE:
             parser = taskparser.IdleTaskParser(type=task_type,
                                                variance_min=config.variance_min,
                                                variance_max=config.variance_max,
                                                prev_task=prev_task,
                                                entity=prev_task.entity,
-                                               duration=config.parameters[ID.TASK_PARAMETER_TIME])
+                                               duration=config.parameters[ID.AI_TASK_PARAMETER_TIME])
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
         task = parser.create_new(data)
@@ -59,9 +59,9 @@ class Director:
 
     def __task_parser(self, task):
         """ Finds the parser for the given task. """
-        if task.type == ID.TASK_TYPE_RANDOM_GOTO:
+        if task.type == ID.AI_TASK_TYPE_RANDOM_GOTO:
             parser = taskparser.GoToTaskParser(task=task)
-        elif task.type == ID.TASK_TYPE_IDLE:
+        elif task.type == ID.AI_TASK_TYPE_IDLE:
             parser = taskparser.IdleTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))

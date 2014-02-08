@@ -17,13 +17,13 @@ class YamlAiReader(basereader.BaseYamlReader):
     NAME
     NAMESPACE
     NEXT
-    PARAMETERS
     RANDOM
     START_NODE
     TASK
+    TASKS
+    TIME
     TREE
     TYPE
-    VALUE
     VARIANCE_MIN
     VARIANCE_MAX
     SUCCESS
@@ -37,15 +37,14 @@ class YamlAiReader(basereader.BaseYamlReader):
     NAME = 'name'
     NAMESPACE = 'namespace'
     NEXT = 'next'
-    PARAMETERS = 'parameters'
     RANDOM = 'random'
     START_NODE = 'start_node'
     SUCCESS = 'success'
     TASK = 'task'
     TASKS = 'tasks'
+    TIME = 'time'
     TREE = 'tree'
     TYPE = 'type'
-    VALUE = 'value'
     VARIANCE_MIN = 'variance_min'
     VARIANCE_MAX = 'variance_max'
 
@@ -115,9 +114,9 @@ class YamlAiReader(basereader.BaseYamlReader):
             task_obj.variance_min = self.read_float(task, self.VARIANCE_MIN, default_variance_min)
             task_obj.variance_max = self.read_float(task, self.VARIANCE_MAX, default_variance_max)
 
-            for param in self.read_object(task, self.PARAMETERS, []):
-                param_type = self.read_req_string(param, self.TYPE)
-                param_value = self.read_req_object(param, self.VALUE)
+            if type == ID.AI_TASK_TYPE_IDLE:
+                param_type = ID.AI_TASK_PARAMETER_TIME
+                param_value = self.read_req_float(task, self.TIME)
                 task_obj.parameters[param_type] = param_value
 
             data.config.ai.tasks[id] = task_obj

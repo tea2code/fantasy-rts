@@ -1,9 +1,11 @@
 import logging
-import pygame
 import sys
+
+import pygame
 
 from .keys import PygameKeys
 from data.config import ID
+
 
 class PygameEventHandler:
     """ Handles pygame events.

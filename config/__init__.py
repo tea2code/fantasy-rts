@@ -1,8 +1,10 @@
 import logging
 import os
+
 import yaml
 
 from . import basereader, parser, validator as config_validator
+
 
 def load_config(data, dir, load_file):
     """ Load the config dir. """

@@ -1,6 +1,7 @@
 import logging
-import pygame
 import random
+
+import pygame
 
 
 class PygameSpriteLoader:

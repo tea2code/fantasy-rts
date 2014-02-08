@@ -1,8 +1,10 @@
-import matplotlib.pyplot as plt
-import networkx as nx
 import os
 
+import matplotlib.pyplot as plt
+import networkx as nx
+
 from data.config import ID
+
 
 class DecisionTreeRenderer:
     """ Renders a decision tree for visualization.
