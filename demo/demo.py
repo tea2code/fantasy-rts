@@ -3,7 +3,8 @@ import sys
 import time
 
 from . import flatregiongenerator
-from data.world import factory, region
+from data.world import region
+from world import factory
 
 
 class Demo:

@@ -1,6 +1,6 @@
-from . import dynamicentity, staticentity, tile
-from .point import Factory as PointFactory
-from ai import task as task_parser
+from ai.task import factory as task_parser
+from data.world import dynamicentity, staticentity, tile
+from data.world.point import Factory as PointFactory
 
 
 def new_dynamic_entity(id, data, run_time, init_task=True):

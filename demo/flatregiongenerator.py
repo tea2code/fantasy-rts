@@ -1,8 +1,9 @@
 import random
 
-from data.world import block, factory
+from data.world import block
 from data.world.point import Factory as PointFactory
-from world import regiongenerator
+from world import regiongenerator, factory
+
 
 class FlatRegionGenerator(regiongenerator.RegionGenerator):
     """ Implementation of the region generator which creates always the same

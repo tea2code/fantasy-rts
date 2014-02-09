@@ -1,5 +1,5 @@
 from . import decision
-from . import task as task_parser
+from .task import factory as task_parser
 
 
 class UnknownTaskException(Exception):
