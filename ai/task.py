@@ -33,7 +33,7 @@ class BaseTaskParser():
             self.prev_task = task.prev_task
             self.task = task
             self.type = task.type
-        elif type and variance_min and variance_max and entity:
+        elif type and variance_min is not None and variance_max is not None and entity:
             self.entity = entity
             self.prev_task = prev_task
             self.type = type
@@ -153,6 +153,15 @@ class IdleTaskParser(BaseTaskParser):
         self.duration = task.duration if task else duration
 
     def create_new(self, data):
+        if isinstance(self.duration, list):
+            if self.prev_task and self.prev_task.type == self.type:
+                durations = self.duration
+                self.duration = durations[-1]
+                for index, duration in enumerate(durations[:-1]):
+                    if duration + self.variance_min <= self.prev_task.duration <= duration + self.variance_max:
+                        self.duration = durations[index + 1]
+            else:
+                self.duration = self.duration[0]
         self.duration = self.duration + random.uniform(self.variance_min, self.variance_max)
         self.task = IdleTask(self.type, self.prev_task, self.entity, self.duration)
         return self.task

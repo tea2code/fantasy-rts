@@ -9,6 +9,7 @@ ai:
         task:
             - name: idle
               type: ai.task.type.idle
-              time: 2.0
+              duration: 
+                - 2.0
             - name: randomgoto
               type: ai.task.type.randomgoto

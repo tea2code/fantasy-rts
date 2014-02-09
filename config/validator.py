@@ -111,6 +111,11 @@ class Validator:
                 raise ValidatorError('Task "{0}" has unknown type "{1}".'.format(key, value.type))
             if value.variance_max < value.variance_min:
                 raise ValidatorError('Task "{0}" variance max must not be smaller than variance min.'.format(key))
+            if value.type == ID.AI_TASK_TYPE_IDLE:
+                if isinstance(value.duration, float) and value.duration < 0:
+                    raise ValidatorError('Duration of task "{0}" may not be negative.'.format(key))
+                elif isinstance(value.duration, list) and not value.duration:
+                    raise ValidatorError('Duration list of task "{0}" may not be empty.'.format(key))
 
     def __validate_data(self, data):
         """ Validate data part. """

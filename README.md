@@ -120,7 +120,6 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
 - *id*: A namespace id of a entity. See **ID, Namespace, Names** for more information.
 - *float*: A floating point value.
 - *bool*: A boolean value.
-- *[]*: List of values.
 - *?*: Any value type allowed.
 
 #### Style Reference:
@@ -308,4 +307,8 @@ Every "task" can have different parameters as explained in the following:
 
     - ...
       type: ai.task.type.idle
-      time: <float, "The idle time.">
+      duration: <float, "The idle duration.">
+    - ...
+      type: ai.task.type.idle
+      duration: 
+        - <float, "The idle duration. Alternative version with a value list.">

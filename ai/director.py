@@ -51,7 +51,7 @@ class Director:
                                                variance_max=config.variance_max,
                                                prev_task=prev_task,
                                                entity=prev_task.entity,
-                                               duration=config.parameters[ID.AI_TASK_PARAMETER_TIME])
+                                               duration=config.duration)
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
         task = parser.create_new(data)

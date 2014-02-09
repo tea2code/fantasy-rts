@@ -2,8 +2,14 @@ from . import basereader
 from data.ai import decision as decision_class
 from data.config import ai, ID
 
+
 class UnknownNodeTypeException(Exception):
     """ Raised if a unknown node type is found in a decision tree. """
+
+
+class UnknownTaskTypeException(Exception):
+    """ Raised if a unknown task type is found. """
+
 
 class YamlAiReader(basereader.BaseYamlReader):
     """ Yaml reader for ai types.
@@ -12,6 +18,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     CHANCE
     DECISION
     DECISIONS
+    DURATION
     ENTITY
     FAIL
     NAME
@@ -21,7 +28,6 @@ class YamlAiReader(basereader.BaseYamlReader):
     START_NODE
     TASK
     TASKS
-    TIME
     TREE
     TYPE
     VARIANCE_MIN
@@ -32,6 +38,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     CHANCE = 'chance'
     DECISION = 'decision'
     DECISIONS = 'decisions'
+    DURATION = 'duration'
     ENTITY = 'entity'
     FAIL = 'fail'
     NAME = 'name'
@@ -42,7 +49,6 @@ class YamlAiReader(basereader.BaseYamlReader):
     SUCCESS = 'success'
     TASK = 'task'
     TASKS = 'tasks'
-    TIME = 'time'
     TREE = 'tree'
     TYPE = 'type'
     VARIANCE_MIN = 'variance_min'
@@ -110,13 +116,18 @@ class YamlAiReader(basereader.BaseYamlReader):
             name = self.read_req_string(task, self.NAME)
             id = self.namespace_to_id(namespace_list, name)
             type = self.read_req_string(task, self.TYPE)
-            task_obj = ai.Task(type)
-            task_obj.variance_min = self.read_float(task, self.VARIANCE_MIN, default_variance_min)
-            task_obj.variance_max = self.read_float(task, self.VARIANCE_MAX, default_variance_max)
+            variance_min = self.read_float(task, self.VARIANCE_MIN, default_variance_min)
+            variance_max = self.read_float(task, self.VARIANCE_MAX, default_variance_max)
 
             if type == ID.AI_TASK_TYPE_IDLE:
-                param_type = ID.AI_TASK_PARAMETER_TIME
-                param_value = self.read_req_float(task, self.TIME)
-                task_obj.parameters[param_type] = param_value
+                if self.is_type(task, self.DURATION, float):
+                    duration = self.read_req_object(task, self.DURATION)
+                else:
+                    duration = self.read_req_object(task, self.DURATION)
+                task_obj = ai.IdleTask(type, variance_min, variance_max, duration)
+            elif type == ID.AI_TASK_TYPE_RANDOM_GOTO:
+                task_obj = ai.GoToTask(type, variance_min, variance_max)
+            else:
+                raise UnknownTaskTypeException('Type "{0}" is not a known task type.'.format(type))
 
             data.config.ai.tasks[id] = task_obj
