@@ -1,4 +1,4 @@
-from data.config import ID
+from data import id as ID
 
 class ValidatorError(Exception):
     """ Thrown if a data violation is found. """

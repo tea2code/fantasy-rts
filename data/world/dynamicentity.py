@@ -1,4 +1,4 @@
-from data.config import ID
+from data import id as ID
 from data.world.entity import blocking, entity, movable
 
 

@@ -4,7 +4,7 @@ import sys
 import pygame
 
 from .keys import PygameKeys
-from data.config import ID
+from data import id as ID
 
 
 class PygameEventHandler:

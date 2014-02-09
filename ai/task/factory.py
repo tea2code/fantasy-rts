@@ -1,6 +1,6 @@
 from .gototask import GoToTaskParser
 from .idletask import IdleTaskParser
-from data.config import ID
+from data import id as ID
 
 
 class UnknownTaskException(Exception):

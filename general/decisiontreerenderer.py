@@ -1,9 +1,8 @@
 import os
-
 import matplotlib.pyplot as plt
 import networkx as nx
 
-from data.config import ID
+from data import id as ID
 
 
 class DecisionTreeRenderer:

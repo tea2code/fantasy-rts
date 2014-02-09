@@ -3,8 +3,8 @@ import logging
 
 from . import basetask
 from .. import pathfinding
+from data import id as ID
 from data.ai.task import GoToTask
-from data.config import ID
 from data.world.entity.movable import Direction
 
 

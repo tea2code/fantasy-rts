@@ -1,6 +1,7 @@
 from . import basereader
+from data import id as ID
 from data.ai import decision as decision_class
-from data.config import ai, ID
+from data.config import ai
 
 
 class UnknownNodeTypeException(Exception):
