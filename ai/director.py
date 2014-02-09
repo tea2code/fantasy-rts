@@ -22,6 +22,7 @@ class Director:
             if not parser.is_complete():
                 parser.execute_next(data)
             if parser.is_complete():
+                parser.cleanup(data)
                 task_id = self.decision_tree.parse(task.entity, data.game.decision_tree, parser.is_success())
                 self.__new_task(task_id, task, run_time, data)
             else:

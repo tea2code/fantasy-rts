@@ -96,6 +96,10 @@ class BaseTaskParser:
             raise TaskParameterException(msg)
 
     @abstractmethod
+    def cleanup(self, data):
+        """ Clean up after task completion. """
+
+    @abstractmethod
     def create_new(self, data):
         """ Creates a new task and returns it. """
 
@@ -128,6 +132,9 @@ class GoToTaskParser(BaseTaskParser):
                  prev_task=None, entity=None, task=None, goal=None):
         super().__init__(type, variance_min, variance_max, prev_task, entity, task)
         self.goal = task.goal if task else goal
+
+    def cleanup(self, data):
+        pass
 
     def create_new(self, data):
         region = data.game.region
@@ -199,6 +206,9 @@ class IdleTaskParser(BaseTaskParser):
                  prev_task=None, entity=None, task=None, duration=None):
         super().__init__(type, variance_min, variance_max, prev_task, entity, task)
         self.duration = task.duration if task else duration
+
+    def cleanup(self, data):
+        pass
 
     def create_new(self, data):
         if isinstance(self.duration, list):
