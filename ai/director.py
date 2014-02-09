@@ -1,6 +1,5 @@
 from . import decision
-from . import task as taskparser
-from data.config import ID
+from . import task as task_parser
 
 
 class UnknownTaskException(Exception):
@@ -19,7 +18,7 @@ class Director:
 
     def tick(self, run_time, delta_time, data, tick):
         for task in data.game.tasks.take(run_time):
-            parser = self.__task_parser(task)
+            parser = task_parser.Factory.from_task(task)
             if not parser.is_complete():
                 parser.execute_next(data)
             if parser.is_complete():
@@ -35,34 +34,6 @@ class Director:
 
     def __new_task(self, task_id, prev_task, run_time, data):
         """ Create new task and add to task list. """
-        config = data.config.ai.tasks[task_id]
-        task_type = config.type
-        if task_type == ID.AI_TASK_TYPE_RANDOM_GOTO:
-            goal = data.game.region.free_random_pos(prev_task.entity.blocked, 0)
-            parser = taskparser.GoToTaskParser(type=task_type,
-                                               variance_min=config.variance_min,
-                                               variance_max=config.variance_max,
-                                               prev_task=prev_task,
-                                               entity=prev_task.entity,
-                                               goal=goal)
-        elif task_type == ID.AI_TASK_TYPE_IDLE:
-            parser = taskparser.IdleTaskParser(type=task_type,
-                                               variance_min=config.variance_min,
-                                               variance_max=config.variance_max,
-                                               prev_task=prev_task,
-                                               entity=prev_task.entity,
-                                               duration=config.duration)
-        else:
-            raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
+        parser = task_parser.Factory.from_id(task_id, prev_task, data)
         task = parser.create_new(data)
         self.__add_task(parser, task, run_time, data)
-
-    def __task_parser(self, task):
-        """ Finds the parser for the given task. """
-        if task.type == ID.AI_TASK_TYPE_RANDOM_GOTO:
-            parser = taskparser.GoToTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_IDLE:
-            parser = taskparser.IdleTaskParser(task=task)
-        else:
-            raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
-        return parser
