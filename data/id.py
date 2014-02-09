@@ -3,6 +3,7 @@
 Constants with _ as prefix are no IDs but used for validation...
 """
 
+# Actions.
 ACTION_SCROLL_NORTH = 'action.scroll_north'
 ACTION_SCROLL_SOUTH = 'action.scroll_south'
 ACTION_SCROLL_WEST = 'action.scroll_west'
@@ -12,19 +13,24 @@ ACTION_SCROLL_DOWN = 'action.scroll_down'
 _ACTION_SCROLL = [ACTION_SCROLL_DOWN, ACTION_SCROLL_EAST, ACTION_SCROLL_NORTH,
                   ACTION_SCROLL_SOUTH, ACTION_SCROLL_UP, ACTION_SCROLL_WEST]
 
+# Decision tree nodes.
 AI_DECISION_NODE_RANDOM = 'ai.decision.node.random'
 AI_DECISION_NODE_TASK = 'ai.decision.node.task'
 _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM]
 
-AI_TASK_PARAMETER_TIME = 'ai.task.parameter.time'
-
+# Public task types.
 AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
 AI_TASK_TYPE_RANDOM_GOTO = 'ai.task.type.randomgoto'
 _AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_RANDOM_GOTO]
 
+# Internal task types.
+AI_TASK_TYPE_SUB = 'ai.task.type.sub'
+
+# Entity attributes.
 ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'
 _ENTITY_ATTRIBUTE_MOVING = [ENTITY_ATTRIBUTE_MOVING_WALK]
 
+# Entity states.
 STATE_DIRECTION_NORTH = 'north'
 STATE_DIRECTION_SOUTH = 'south'
 STATE_DIRECTION_EAST = 'east'
