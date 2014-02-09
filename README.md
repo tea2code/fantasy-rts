@@ -18,6 +18,9 @@ Current Version: **10**
 - Version 10: Decision tree. Configuration of current game and tasks.
 - Version 11: AI refactoring. Food.
 - Version 12: Events. Wood.
+- Version 13: Mouse and keyboard input.
+- Version 14: Multi-Block Sprites.
+- Version 15: Sidebar.
 
 ## Coming Soon
 
