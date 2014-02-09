@@ -25,6 +25,7 @@ class MainLoopImp(mainloop.MainLoop):
 
     Member:
     data -- The data module (data.Data).
+    logger -- The logger (logging).
     render_modules -- Modules regarding rendering the state (list).
     state_modules -- Modules regarding updating the state (list).
     """
@@ -33,60 +34,79 @@ class MainLoopImp(mainloop.MainLoop):
     CONFIG_LOAD_FILE = 'mod.yaml'
     LOG_DIR = 'log/'
     LOG_CONFIG_FILE = LOG_DIR + 'config.yaml'
+    LOG_TEXT_EXCEPTION = 'Exception thrown'
     DECISION_GRAPH_DIR = LOG_DIR + 'decision/'
     DECISION_GRAPH_FILE = '{0}.png'
 
     def __init__(self):
         # Logging.
         self.__setup_log()
-        logger = logging.getLogger(__name__)
-        logger.info('Starting game')
+        self.logger.info('Starting game')
 
-        # Data.
-        self.data = data.Data()
-        self.data.config.config_dir = self.CONFIG_DIR
+        try:
+            # Data.
+            self.data = data.Data()
+            self.data.config.config_dir = self.CONFIG_DIR
 
-        # Load configuration.
-        config.load_config(self.data, self.CONFIG_DIR, self.CONFIG_LOAD_FILE)
+            # Load configuration.
+            config.load_config(self.data, self.CONFIG_DIR, self.CONFIG_LOAD_FILE)
 
-        # Draw decision trees.
-        if self.data.config.render_decision_trees:
-            renderer = dtr.DecisionTreeRenderer(self.DECISION_GRAPH_DIR, self.DECISION_GRAPH_FILE)
-            renderer.render(self.data.game.decision_tree.start_nodes, self.data.game.decision_tree.nodes)
+            # Draw decision trees.
+            if self.data.config.render_decision_trees:
+                renderer = dtr.DecisionTreeRenderer(self.DECISION_GRAPH_DIR, self.DECISION_GRAPH_FILE)
+                renderer.render(self.data.game.decision_tree.start_nodes, self.data.game.decision_tree.nodes)
 
-        # Demo mode.
-        demo_loader = demo.Demo(self.data)
-        demo_loader.load()
+            # Demo mode.
+            demo_loader = demo.Demo(self.data)
+            demo_loader.load()
 
-        # State modules.
-        self.state_modules = [
-            demo_loader,
-            eventhandler.PygameEventHandler(self.data),
-            director.Director()
-        ]
+            # State modules.
+            self.state_modules = [
+                demo_loader,
+                eventhandler.PygameEventHandler(self.data),
+                director.Director()
+            ]
 
-        # Render modules.
-        self.render_modules = [
-            graphics.PygameGraphics(self.data),
-            cleaner.RenderCleaner()
-        ]
+            # Render modules.
+            self.render_modules = [
+                graphics.PygameGraphics(self.data),
+                cleaner.RenderCleaner()
+            ]
 
-        # Initialize main loop.
-        super().__init__(1.0 / self.data.config.fps, self.data.config.max_frame_time)
+            # Initialize main loop.
+            super().__init__(1.0 / self.data.config.fps, self.data.config.max_frame_time)
+        except:
+            self.logger.exception(self.LOG_TEXT_EXCEPTION)
+            raise
 
     def render(self, run_time, delta_time, tick):
-        for module in self.render_modules:
-            module.tick(run_time, delta_time, self.data, tick)
+        try:
+            for module in self.render_modules:
+                module.tick(run_time, delta_time, self.data, tick)
+        except SystemExit:
+            # Everything is ok. Just normal application exit.
+            raise
+        except:
+            self.logger.exception(self.LOG_TEXT_EXCEPTION)
+            raise
 
     def update(self, run_time, delta_time, tick):
-        for module in self.state_modules:
-            module.tick(run_time, delta_time, self.data, tick)
+        try:
+            for module in self.state_modules:
+                module.tick(run_time, delta_time, self.data, tick)
+        except SystemExit:
+            # Everything is ok. Just normal application exit.
+            raise
+        except:
+            self.logger.exception(self.LOG_TEXT_EXCEPTION)
+            raise
 
     def __setup_log(self):
         """ Setup logging. """
         with open(self.LOG_CONFIG_FILE, 'r') as file:
             logging_config = yaml.safe_load(file)
         logging.config.dictConfig(logging_config)
+        self.logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     app = MainLoopImp()
