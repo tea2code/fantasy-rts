@@ -31,11 +31,15 @@ class BaseTaskParser():
         if task:
             self.entity = task.entity
             self.prev_task = task.prev_task
+            if task.prev_task and task.prev_task.prev_task:
+                task.prev_task.prev_task = None
             self.task = task
             self.type = task.type
         elif type and variance_min is not None and variance_max is not None and entity:
             self.entity = entity
             self.prev_task = prev_task
+            if prev_task:
+                prev_task.prev_task = None
             self.type = type
             self.variance_max = variance_max
             self.variance_min = variance_min
