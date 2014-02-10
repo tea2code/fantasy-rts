@@ -9,7 +9,7 @@ ai:
         task:
             - name: idle
               type: ai.task.type.idle
-              duration: 
-                - 2.0
+              durations: 
+                - duration: 2.0
             - name: randomgoto
               type: ai.task.type.randomgoto

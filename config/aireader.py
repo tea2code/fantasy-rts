@@ -20,6 +20,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     DECISION
     DECISIONS
     DURATION
+    DURATIONS
     ENTITY
     FAIL
     NAME
@@ -40,6 +41,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     DECISION = 'decision'
     DECISIONS = 'decisions'
     DURATION = 'duration'
+    DURATIONS = 'durations'
     ENTITY = 'entity'
     FAIL = 'fail'
     NAME = 'name'
@@ -121,10 +123,12 @@ class YamlAiReader(basereader.BaseYamlReader):
             variance_max = self.read_float(task, self.VARIANCE_MAX, default_variance_max)
 
             if type == ID.AI_TASK_TYPE_IDLE:
-                if self.is_type(task, self.DURATION, float):
-                    duration = self.read_req_object(task, self.DURATION)
+                if self.has(task, self.DURATION):
+                    duration = self.read_req_float(task, self.DURATION)
                 else:
-                    duration = self.read_req_object(task, self.DURATION)
+                    duration = []
+                    for d in self.read_object(task, self.DURATIONS, []):
+                        duration.append(self.read_req_float(d, self.DURATION))
                 task_obj = ai.IdleTask(type, variance_min, variance_max, duration)
             elif type == ID.AI_TASK_TYPE_RANDOM_GOTO:
                 task_obj = ai.GoToTask(type, variance_min, variance_max)

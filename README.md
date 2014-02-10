@@ -310,5 +310,5 @@ Every "task" can have different parameters as explained in the following:
       duration: <float, "The idle duration.">
     - ...
       type: ai.task.type.idle
-      duration: 
-        - <float, "The idle duration. Alternative version with a value list.">
+      durations: 
+        - duration: <float, "The idle duration. Alternative version with a value list.">
