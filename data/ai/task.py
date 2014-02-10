@@ -43,3 +43,10 @@ class IdleTask(BaseTask):
     def __init__(self, type, prev_task, entity, duration):
         super().__init__(type, prev_task, entity)
         self.duration = duration
+
+
+class RandomPointTask(BaseTask):
+    """ Demo task which generates a random position. """
+
+    def __init__(self, type, prev_task, entity):
+        super().__init__(type, prev_task, entity)

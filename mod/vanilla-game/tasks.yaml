@@ -9,7 +9,15 @@ ai:
         task:
             - name: idle
               type: ai.task.type.idle
+              in: 
+              out: 
               durations: 
                 - duration: 2.0
-            - name: randomgoto
-              type: ai.task.type.randomgoto
+            - name: goto
+              type: ai.task.type.goto
+              in: goal
+              out: 
+            - name: randompoint
+              type: ai.task.type.demo.randompoint
+              in: 
+              out: goal

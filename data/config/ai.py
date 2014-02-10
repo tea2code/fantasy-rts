@@ -24,12 +24,6 @@ class BaseTask:
         self.variance_min = variance_min
 
 
-class GoToTask(BaseTask):
-    """ Config for go to tasks. """
-
-    def __init__(self, type, variance_min, variance_max):
-        super().__init__(type, variance_min, variance_max)
-
 class IdleTask(BaseTask):
     """ Config for idle tasks.
 

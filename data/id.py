@@ -16,15 +16,15 @@ _ACTION_SCROLL = [ACTION_SCROLL_DOWN, ACTION_SCROLL_EAST, ACTION_SCROLL_NORTH,
 # Decision tree nodes.
 AI_DECISION_NODE_RANDOM = 'ai.decision.node.random'
 AI_DECISION_NODE_TASK = 'ai.decision.node.task'
-_AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM]
+AI_DECISION_NODE_TASK_PIPELINE = 'ai.decision.node.taskpipeline'
+_AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM,
+                     AI_DECISION_NODE_TASK_PIPELINE]
 
-# Public task types.
+# Task types.
 AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
-AI_TASK_TYPE_RANDOM_GOTO = 'ai.task.type.randomgoto'
-_AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_RANDOM_GOTO]
-
-# Internal task types.
-AI_TASK_TYPE_SUB = 'ai.task.type.sub'
+AI_TASK_TYPE_GOTO = 'ai.task.type.goto'
+AI_TASK_TYPE_DEMO_RANDOMPOINT = 'ai.task.type.demo.randompoint'
+_AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_GOTO, AI_TASK_TYPE_DEMO_RANDOMPOINT]
 
 # Entity attributes.
 ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'

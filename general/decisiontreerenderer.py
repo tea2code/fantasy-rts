@@ -27,9 +27,11 @@ class DecisionTreeRenderer:
     TYPE_RANDOM = 'R'
     TYPE_START = 'S'
     TYPE_TASK = 'T'
+    TYPE_TASK_PIPELINE = 'TP'
     ID_TYPE = {
         ID.AI_DECISION_NODE_TASK: TYPE_TASK,
-        ID.AI_DECISION_NODE_RANDOM: TYPE_RANDOM
+        ID.AI_DECISION_NODE_RANDOM: TYPE_RANDOM,
+        ID.AI_DECISION_NODE_TASK_PIPELINE: TYPE_TASK_PIPELINE
     }
 
     def __init__(self, directory, file_template):
@@ -77,6 +79,9 @@ class DecisionTreeRenderer:
                     fail_name = self.__id_to_name(self.ID_TYPE[nodes[node.fail].type], node.fail)
                     g.add_edge(name, fail_name)
                     edge_labels[(name, fail_name)] = self.LABEL_FAIL
+            elif node.type == ID.AI_DECISION_NODE_TASK_PIPELINE:
+                next_name = self.__id_to_name(self.ID_TYPE[nodes[node.next].type], node.next)
+                g.add_edge(name, next_name)
 
         # Setup rendering.
         pos = nx.spectral_layout(g)

@@ -161,6 +161,9 @@ class Validator:
                     raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.next))
                 if value.success and value.success not in decision_tree.nodes:
                     raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.success))
+            elif value.type == ID.AI_DECISION_NODE_TASK_PIPELINE:
+                if value.next not in decision_tree.nodes:
+                    raise ValidatorError('Node "{0}" has a unknown child node "{1}".'.format(key, value.next))
             else:
                 raise ValidatorError('Missing validation of node type "{0}".'.format(value.type))
 

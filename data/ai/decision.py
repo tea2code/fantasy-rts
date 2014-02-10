@@ -67,3 +67,16 @@ class TaskNode(BaseNode):
         self.next = None
         self.success = None
         self.task = ''
+
+
+class TaskPipelineNode(BaseNode):
+    """ This node starts a new task pipeline by initializing the pipeline
+     model object.
+
+     Member:
+     next -- Id of the next node if single child (string).
+     """
+
+    def __init__(self, type):
+        super().__init__(type)
+        self.next = None

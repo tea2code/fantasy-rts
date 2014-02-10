@@ -102,6 +102,9 @@ class YamlAiReader(basereader.BaseYamlReader):
                     node_obj.next = self.read_string(node, self.NEXT, node_obj.next)
                     node_obj.success = self.read_string(node, self.SUCCESS, node_obj.success)
                     node_obj.task = self.read_req_string(node, self.TASK)
+                elif type == ID.AI_DECISION_NODE_TASK_PIPELINE:
+                    node_obj = decision_class.TaskPipelineNode(type)
+                    node_obj.next = self.read_req_string(node, self.NEXT)
                 else:
                     raise UnknownNodeTypeException('Type "{0}" is not a known decision tree node type.'.format(type))
 
@@ -130,8 +133,8 @@ class YamlAiReader(basereader.BaseYamlReader):
                     for d in self.read_object(task, self.DURATIONS, []):
                         duration.append(self.read_req_float(d, self.DURATION))
                 task_obj = ai.IdleTask(type, variance_min, variance_max, duration)
-            elif type == ID.AI_TASK_TYPE_RANDOM_GOTO:
-                task_obj = ai.GoToTask(type, variance_min, variance_max)
+            elif type == ID.AI_TASK_TYPE_GOTO or type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
+                task_obj = ai.BaseTask(type, variance_min, variance_max)
             else:
                 raise UnknownTaskTypeException('Type "{0}" is not a known task type.'.format(type))
 

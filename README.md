@@ -96,12 +96,13 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 #### Tasks:
 
 - ai.task.type.idle
-- ai.task.type.random_goto
+- ai.task.type.goto
 
 #### Decision Tree:
 
 - ai.decision.node.random
 - ai.decision.node.task
+- ai.decision.node.taskpipeline
 
 ### Load Order File
 

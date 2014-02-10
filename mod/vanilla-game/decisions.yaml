@@ -19,7 +19,14 @@ ai:
                 - name: idle
                   type: ai.decision.node.task
                   task: ai.task.idle
-                - name: randomgoto
+                # - name: randomgoto
+                #   type: ai.decision.node.taskpipeline
+                #   next: ai.decision.dwarf.randompoint
+                # - name: randompoint
+                #   type: ai.decision.node.task
+                #   task: ai.task.randompoint
+                #   next: ai.decision.dwarf.goto
+                - name: randomgoto # goto
                   type: ai.decision.node.task
-                  task: ai.task.randomgoto
+                  task: ai.task.goto
                   fail: ai.decision.dwarf.idle

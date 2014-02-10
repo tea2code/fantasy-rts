@@ -16,7 +16,7 @@ class Factory:
         config = data.config.ai.tasks[task_id]
         task_type = config.type
         entity = prev_task.entity if prev_task else entity
-        if task_type == ID.AI_TASK_TYPE_RANDOM_GOTO:
+        if task_type == ID.AI_TASK_TYPE_GOTO:
             goal = data.game.region.free_random_pos(prev_task.entity.blocked, 0)
             parser = GoToTaskParser(type=task_type,
                                     variance_min=config.variance_min,
@@ -38,7 +38,7 @@ class Factory:
     @staticmethod
     def from_task(task):
         """ Finds the parser for the given task. """
-        if task.type == ID.AI_TASK_TYPE_RANDOM_GOTO:
+        if task.type == ID.AI_TASK_TYPE_GOTO:
             parser = GoToTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_IDLE:
             parser = IdleTaskParser(task=task)
