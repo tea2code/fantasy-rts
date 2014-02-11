@@ -75,8 +75,10 @@ class TaskPipelineNode(BaseNode):
 
      Member:
      next -- Id of the next node if single child (string).
+     start -- If true this node starts a pipeline else it ends one (bool).
      """
 
-    def __init__(self, type):
+    def __init__(self, type, start):
         super().__init__(type)
         self.next = None
+        self.start = start

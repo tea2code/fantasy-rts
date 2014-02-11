@@ -23,9 +23,11 @@ class YamlAiReader(basereader.BaseYamlReader):
     DURATIONS
     ENTITY
     FAIL
+    INPUT
     NAME
     NAMESPACE
     NEXT
+    OUTPUT
     RANDOM
     START_NODE
     TASK
@@ -44,9 +46,11 @@ class YamlAiReader(basereader.BaseYamlReader):
     DURATIONS = 'durations'
     ENTITY = 'entity'
     FAIL = 'fail'
+    INPUT = 'input'
     NAME = 'name'
     NAMESPACE = 'namespace'
     NEXT = 'next'
+    OUTPUT = 'output'
     RANDOM = 'random'
     START_NODE = 'start_node'
     SUCCESS = 'success'
@@ -102,9 +106,12 @@ class YamlAiReader(basereader.BaseYamlReader):
                     node_obj.next = self.read_string(node, self.NEXT, node_obj.next)
                     node_obj.success = self.read_string(node, self.SUCCESS, node_obj.success)
                     node_obj.task = self.read_req_string(node, self.TASK)
-                elif type == ID.AI_DECISION_NODE_TASK_PIPELINE:
-                    node_obj = decision_class.TaskPipelineNode(type)
+                elif type == ID.AI_DECISION_NODE_PIPELINE_START:
+                    node_obj = decision_class.TaskPipelineNode(type, True)
                     node_obj.next = self.read_req_string(node, self.NEXT)
+                elif type == ID.AI_DECISION_NODE_PIPELINE_STOP:
+                    node_obj = decision_class.TaskPipelineNode(type, False)
+                    node_obj.next = self.read_string(node, self.NEXT, node_obj.next)
                 else:
                     raise UnknownNodeTypeException('Type "{0}" is not a known decision tree node type.'.format(type))
 
@@ -124,6 +131,8 @@ class YamlAiReader(basereader.BaseYamlReader):
             type = self.read_req_string(task, self.TYPE)
             variance_min = self.read_float(task, self.VARIANCE_MIN, default_variance_min)
             variance_max = self.read_float(task, self.VARIANCE_MAX, default_variance_max)
+            input = self.read_string(task, self.INPUT, None)
+            output = self.read_string(task, self.OUTPUT, None)
 
             if type == ID.AI_TASK_TYPE_IDLE:
                 if self.has(task, self.DURATION):
@@ -132,9 +141,9 @@ class YamlAiReader(basereader.BaseYamlReader):
                     duration = []
                     for d in self.read_object(task, self.DURATIONS, []):
                         duration.append(self.read_req_float(d, self.DURATION))
-                task_obj = ai.IdleTask(type, variance_min, variance_max, duration)
+                task_obj = ai.IdleTask(type, variance_min, variance_max, input, output, duration)
             elif type == ID.AI_TASK_TYPE_GOTO or type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
-                task_obj = ai.BaseTask(type, variance_min, variance_max)
+                task_obj = ai.BaseTask(type, variance_min, variance_max, input, output)
             else:
                 raise UnknownTaskTypeException('Type "{0}" is not a known task type.'.format(type))
 

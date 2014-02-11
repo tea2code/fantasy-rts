@@ -28,6 +28,9 @@ class DecisionTreeParser:
                 node_id = self.__random_node(node)
             elif node.type == ID.AI_DECISION_NODE_TASK:
                 task = node.task
+            elif node.type == ID.AI_DECISION_NODE_TASK_PIPELINE:
+
+                node_id = node.next
 
         entity.last_decision_node = node_id
         return task

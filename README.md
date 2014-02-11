@@ -102,7 +102,8 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 
 - ai.decision.node.random
 - ai.decision.node.task
-- ai.decision.node.taskpipeline
+- ai.decision.node.pipeline.start
+- ai.decision.node.pipeline.stop
 
 ### Load Order File
 

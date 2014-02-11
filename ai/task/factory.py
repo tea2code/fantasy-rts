@@ -31,6 +31,9 @@ class Factory:
                                     prev_task=prev_task,
                                     entity=entity,
                                     duration=config.duration)
+        elif task_type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
+            # TODO
+            raise NotImplementedError()
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
         return parser

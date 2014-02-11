@@ -16,9 +16,10 @@ _ACTION_SCROLL = [ACTION_SCROLL_DOWN, ACTION_SCROLL_EAST, ACTION_SCROLL_NORTH,
 # Decision tree nodes.
 AI_DECISION_NODE_RANDOM = 'ai.decision.node.random'
 AI_DECISION_NODE_TASK = 'ai.decision.node.task'
-AI_DECISION_NODE_TASK_PIPELINE = 'ai.decision.node.taskpipeline'
+AI_DECISION_NODE_PIPELINE_START = 'ai.decision.node.pipeline.start'
+AI_DECISION_NODE_PIPELINE_STOP = 'ai.decision.node.pipeline.stop'
 _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM,
-                     AI_DECISION_NODE_TASK_PIPELINE]
+                     AI_DECISION_NODE_PIPELINE_START, AI_DECISION_NODE_PIPELINE_STOP]
 
 # Task types.
 AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
