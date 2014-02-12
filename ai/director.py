@@ -23,8 +23,10 @@ class Director:
                 parser.execute_next(data)
             if parser.is_complete():
                 parser.cleanup(data)
-                task_id = self.decision_tree.parse(task.entity, data.game.decision_tree, parser.is_success())
-                self.__new_task(task_id, task, run_time, data)
+                task_id, pipeline = self.decision_tree.parse(task.entity,
+                                                             data.game.decision_tree,
+                                                             parser.is_success())
+                self.__new_task(task_id, task, run_time, data, pipeline)
             else:
                 self.__add_task(parser, task, run_time, data)
 
@@ -33,8 +35,8 @@ class Director:
         time = run_time + parser.time()
         data.game.tasks.insert(time, task)
 
-    def __new_task(self, task_id, prev_task, run_time, data):
+    def __new_task(self, task_id, prev_task, run_time, data, pipeline):
         """ Create new task and add to task list. """
-        parser = task_parser.Factory.from_id(task_id, prev_task, data)
+        parser = task_parser.Factory.from_id(task_id, prev_task, data, pipeline=pipeline)
         task = parser.create_new(data)
         self.__add_task(parser, task, run_time, data)

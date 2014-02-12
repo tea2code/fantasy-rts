@@ -19,6 +19,7 @@ class DecisionTreeParser:
             elif not task_result and node.fail:
                 node_id = node.fail
 
+        pipeline = None
         task = None
         while not task:
             if node_id is None:
@@ -28,12 +29,14 @@ class DecisionTreeParser:
                 node_id = self.__random_node(node)
             elif node.type == ID.AI_DECISION_NODE_TASK:
                 task = node.task
-            elif node.type == ID.AI_DECISION_NODE_TASK_PIPELINE:
-
+            elif node.type == ID.AI_DECISION_NODE_PIPELINE_START:
+                pipeline = {}
                 node_id = node.next
+            elif node.type == ID.AI_DECISION_NODE_PIPELINE_STOP:
+                pipeline = None
 
         entity.last_decision_node = node_id
-        return task
+        return task, pipeline
 
     def __random_node(self, node):
         """ Execute random node. Returns next node id. """

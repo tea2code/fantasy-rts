@@ -12,7 +12,7 @@ class Factory:
     """ Factory for task parsers. """
 
     @staticmethod
-    def from_id(task_id, prev_task, data, entity=None):
+    def from_id(task_id, prev_task, data, pipeline=None, entity=None):
         """ Find the parser for the given task id and initialize. """
         config = data.config.ai.tasks[task_id]
         task_type = config.type
@@ -20,9 +20,9 @@ class Factory:
         base_task_parameter.type = task_type
         base_task_parameter.prev_task = prev_task
         base_task_parameter.entity = prev_task.entity if prev_task else entity
-        base_task_parameter.input = None
-        base_task_parameter.output = None
-        base_task_parameter.pipeline = None
+        base_task_parameter.input = config.input
+        base_task_parameter.output = config.output
+        base_task_parameter.pipeline = pipeline
         if task_type == ID.AI_TASK_TYPE_GOTO:
             goal = data.game.region.free_random_pos(prev_task.entity.blocked, 0)
             parser = GoToTaskParser(base_task_parameter=base_task_parameter,

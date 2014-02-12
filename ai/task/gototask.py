@@ -72,7 +72,10 @@ class GoToTaskParser(basetask.BaseTaskParser):
         data.dirty_pos.add(pos)
 
     def is_complete(self):
-        return not self.task.path
+        complete = not self.task.path
+        if complete and self.output:
+            self.pipeline[self.output] = self.goal
+        return complete
 
     def is_success(self):
         return self.is_complete() and isinstance(self.task.path, list)
