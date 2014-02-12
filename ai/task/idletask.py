@@ -18,7 +18,7 @@ class IdleTaskParser(basetask.BaseTaskParser):
         if task:
             self.duration = self.task.duration
         elif self.input in self.pipeline:
-            self.duration = self.pipeline[input]
+            self.duration = self.pipeline[self.input]
 
     def cleanup(self, data):
         pass

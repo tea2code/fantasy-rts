@@ -22,7 +22,7 @@ class GoToTaskParser(basetask.BaseTaskParser):
         if task:
             self.goal = self.task.goal
         elif self.input in self.pipeline:
-            self.goal = self.pipeline[input]
+            self.goal = self.pipeline[self.input]
 
     def cleanup(self, data):
         pass

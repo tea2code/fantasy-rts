@@ -29,4 +29,7 @@ ai:
                 - name: goto
                   type: ai.decision.node.task
                   task: ai.task.goto
-                  fail: ai.decision.dwarf.idle
+                  fail: ai.decision.dwarf.randomgotoend
+                - name: randomgotoend
+                  type: ai.decision.node.pipeline.start
+                  next: ai.decision.dwarf.idle

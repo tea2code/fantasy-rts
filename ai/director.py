@@ -25,7 +25,8 @@ class Director:
                 parser.cleanup(data)
                 task_id, pipeline = self.decision_tree.parse(task.entity,
                                                              data.game.decision_tree,
-                                                             parser.is_success())
+                                                             task_result=parser.is_success(),
+                                                             pipeline=parser.pipeline)
                 self.__new_task(task_id, task, run_time, data, pipeline)
             else:
                 self.__add_task(parser, task, run_time, data)

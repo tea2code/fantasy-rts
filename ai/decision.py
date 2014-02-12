@@ -6,7 +6,7 @@ from data import id as ID
 class DecisionTreeParser:
     """ Executes a decision tree. """
 
-    def parse(self, entity, decision_tree, task_result = None):
+    def parse(self, entity, decision_tree, task_result = None, pipeline=None):
         """ Parse the given entity. Returns the next task to execute. """
         node_id = None
 
@@ -19,11 +19,11 @@ class DecisionTreeParser:
             elif not task_result and node.fail:
                 node_id = node.fail
 
-        pipeline = None
         task = None
         while not task:
             if node_id is None:
                 node_id = decision_tree.start_nodes[entity.id]
+                pipeline = None
             node = decision_tree.nodes[node_id]
             if node.type == ID.AI_DECISION_NODE_RANDOM:
                 node_id = self.__random_node(node)
