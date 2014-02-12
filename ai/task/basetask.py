@@ -21,9 +21,8 @@ class BaseTaskParser:
     variance_min -- The min duration variance (float).
     """
 
-    def __init__(self, type=None, variance_min=None, variance_max=None,
-                 prev_task=None, entity=None, input=None, output=None,
-                 pipeline=None, task=None):
+    def __init__(self, base_task_parameter=None, variance_min=None,
+                 variance_max=None, task=None):
         """ You must give the task parameter or all the others. """
         if task:
             self.entity = task.entity
@@ -35,24 +34,29 @@ class BaseTaskParser:
             self.input = task.input
             self.output = task.output
             self.pipeline = task.pipeline if task.pipeline else {}
-        elif type and variance_min is not None and variance_max is not None and entity:
-            self.entity = entity
-            self.prev_task = prev_task
-            if prev_task:
-                prev_task.prev_task = None
-            self.type = type
+        elif base_task_parameter.type and variance_min is not None and \
+             variance_max is not None and \
+             base_task_parameter.entity:
+            self.entity = base_task_parameter.entity
+            self.prev_task = base_task_parameter.prev_task
+            if base_task_parameter.prev_task:
+                base_task_parameter.prev_task.prev_task = None
+            self.type = base_task_parameter.type
             self.variance_max = variance_max
             self.variance_min = variance_min
-            self.input = input
-            self.output = output
-            self.pipeline = pipeline if pipeline else {}
+            self.input = base_task_parameter.input
+            self.output = base_task_parameter.output
+            self.pipeline = base_task_parameter.pipeline if base_task_parameter.pipeline else {}
         else:
             template = 'Not all expected parameters are given: ' \
                        'type={0}, variance_min={1}, variance_max={2}, ' \
                        'prev_task={3}, entity={4}, input={5}, output={6},' \
                        'pipeline={7}, task={8}'
-            msg = template.format(type, variance_min, variance_max, prev_task,
-                                  entity, input, output, pipeline, task)
+            msg = template.format(base_task_parameter.type, variance_min, variance_max,
+                                  base_task_parameter.prev_task,
+                                  base_task_parameter.entity, base_task_parameter.input,
+                                  base_task_parameter.output, base_task_parameter.pipeline,
+                                  task)
             raise TaskParameterException(msg)
 
     @abstractmethod

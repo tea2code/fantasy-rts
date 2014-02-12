@@ -1,6 +1,7 @@
 from .gototask import GoToTaskParser
 from .idletask import IdleTaskParser
 from data import id as ID
+from data.ai.task import BaseTaskParameter
 
 
 class UnknownTaskException(Exception):
@@ -15,21 +16,23 @@ class Factory:
         """ Find the parser for the given task id and initialize. """
         config = data.config.ai.tasks[task_id]
         task_type = config.type
-        entity = prev_task.entity if prev_task else entity
+        base_task_parameter = BaseTaskParameter()
+        base_task_parameter.type = task_type
+        base_task_parameter.prev_task = prev_task
+        base_task_parameter.entity = prev_task.entity if prev_task else entity
+        base_task_parameter.input = None
+        base_task_parameter.output = None
+        base_task_parameter.pipeline = None
         if task_type == ID.AI_TASK_TYPE_GOTO:
             goal = data.game.region.free_random_pos(prev_task.entity.blocked, 0)
-            parser = GoToTaskParser(type=task_type,
+            parser = GoToTaskParser(base_task_parameter=base_task_parameter,
                                     variance_min=config.variance_min,
                                     variance_max=config.variance_max,
-                                    prev_task=prev_task,
-                                    entity=entity,
                                     goal=goal)
         elif task_type == ID.AI_TASK_TYPE_IDLE:
-            parser = IdleTaskParser(type=task_type,
+            parser = IdleTaskParser(base_task_parameter=base_task_parameter,
                                     variance_min=config.variance_min,
                                     variance_max=config.variance_max,
-                                    prev_task=prev_task,
-                                    entity=entity,
                                     duration=config.duration)
         elif task_type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
             # TODO

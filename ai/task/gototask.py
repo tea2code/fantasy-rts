@@ -15,11 +15,9 @@ class GoToTaskParser(basetask.BaseTaskParser):
     goal -- The goal to go to (data.world.point).
     """
 
-    def __init__(self, type=None, variance_min=None, variance_max=None,
-                 prev_task=None, entity=None, input=None, output=None,
-                 pipeline=None, task=None, goal=None):
-        super().__init__(type, variance_min, variance_max, prev_task, entity,
-                         input, output, pipeline, task)
+    def __init__(self, base_task_parameter=None, variance_min=None,
+                 variance_max=None, task=None, goal=None):
+        super().__init__(base_task_parameter, variance_min, variance_max, task)
         self.goal = goal
         if task:
             self.goal = self.task.goal
