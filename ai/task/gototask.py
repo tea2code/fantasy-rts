@@ -4,7 +4,7 @@ import logging
 from . import basetask
 from .. import pathfinding
 from data import id as ID
-from data.ai.task import GoToTask
+from data.ai.task import BaseTaskParameter, GoToTask
 from data.world.entity.movable import Direction
 
 
@@ -16,9 +16,15 @@ class GoToTaskParser(basetask.BaseTaskParser):
     """
 
     def __init__(self, type=None, variance_min=None, variance_max=None,
-                 prev_task=None, entity=None, task=None, goal=None):
-        super().__init__(type, variance_min, variance_max, prev_task, entity, task)
-        self.goal = task.goal if task else goal
+                 prev_task=None, entity=None, input=None, output=None,
+                 pipeline=None, task=None, goal=None):
+        super().__init__(type, variance_min, variance_max, prev_task, entity,
+                         input, output, pipeline, task)
+        self.goal = goal
+        if task:
+            self.goal = self.task.goal
+        elif self.input in self.pipeline:
+            self.goal = self.pipeline[input]
 
     def cleanup(self, data):
         pass
@@ -36,8 +42,14 @@ class GoToTaskParser(basetask.BaseTaskParser):
             time = 1.0 + random.uniform(self.variance_min, self.variance_max)
             time_per_step = time / self.entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
 
-        self.task = GoToTask(self.type, self.prev_task, self.entity, self.goal,
-                             path, time_per_step)
+        base_task_parameter = BaseTaskParameter()
+        base_task_parameter.type = self.type
+        base_task_parameter.prev_task = self.prev_task
+        base_task_parameter.entity = self.entity
+        base_task_parameter.input = self.input
+        base_task_parameter.output = self.output
+        base_task_parameter.pipeline = self.pipeline
+        self.task = GoToTask(base_task_parameter, self.goal, path, time_per_step)
         return self.task
 
     def execute_next(self, data):

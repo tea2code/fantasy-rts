@@ -3,18 +3,45 @@ class BaseTask:
 
     Member:
     entity -- The entity which is executing this task (data.world.entity.entity).
+    input -- The key of the input value in the pipeline (string).
+    output -- The key of the output value in the pipeline (string).
+    pipeline -- The pipeline parameter object (dict).
     prev_task -- The previous task (task).
     type -- The task type (string).
     """
 
-    def __init__(self, type, prev_task, entity):
-        self.type = type
-        self.prev_task = prev_task
-        self.entity = entity
+    def __init__(self, base_task_parameter):
+        self.type = base_task_parameter.type
+        self.prev_task = base_task_parameter.prev_task
+        self.entity = base_task_parameter.entity
+        self.input = base_task_parameter.input
+        self.output = base_task_parameter.output
+        self.pipeline = base_task_parameter.pipeline
 
     def __lt__(self, other):
         """ No real implementation necessary. Only for heapq. """
         return True
+
+
+class BaseTaskParameter:
+    """ Class for common base task parameter.
+
+    Member:
+    entity -- The entity which is executing this task (data.world.entity.entity).
+    input -- The key of the input value in the pipeline (string).
+    output -- The key of the output value in the pipeline (string).
+    pipeline -- The pipeline parameter object (dict).
+    prev_task -- The previous task (task).
+    type -- The task type (string).
+    """
+
+    def __init__(self):
+        self.type = None
+        self.prev_task = None
+        self.entity = None
+        self.input = None
+        self.output = None
+        self.pipeline = None
 
 
 class GoToTask(BaseTask):
@@ -26,8 +53,8 @@ class GoToTask(BaseTask):
     time_per_step -- Duration of one step (float).
     """
 
-    def __init__(self, type, prev_task, entity, goal, path, time_per_step):
-        super().__init__(type, prev_task, entity)
+    def __init__(self, base_task_parameter, goal, path, time_per_step):
+        super().__init__(base_task_parameter)
         self.goal = goal
         self.path = path
         self.time_per_step = time_per_step
@@ -40,13 +67,13 @@ class IdleTask(BaseTask):
      duration -- The idle duration (float).
      """
 
-    def __init__(self, type, prev_task, entity, duration):
-        super().__init__(type, prev_task, entity)
+    def __init__(self, base_task_parameter, duration):
+        super().__init__(base_task_parameter)
         self.duration = duration
 
 
 class RandomPointTask(BaseTask):
     """ Demo task which generates a random position. """
 
-    def __init__(self, type, prev_task, entity):
-        super().__init__(type, prev_task, entity)
+    def __init__(self, base_task_parameter):
+        super().__init__(base_task_parameter)

@@ -11,6 +11,9 @@ class BaseTaskParser:
 
     Member:
     entity -- The entity which is executing the task (data.world.entity.entity).
+    input -- The key of the input value in the pipeline (string).
+    output -- The key of the output value in the pipeline (string).
+    pipeline -- The pipeline parameter object (dict).
     prev_task -- The previous executed task (data.ai.task).
     task -- The currently executed task (data.ai.task).
     type -- The type of task (string).
@@ -19,7 +22,8 @@ class BaseTaskParser:
     """
 
     def __init__(self, type=None, variance_min=None, variance_max=None,
-                 prev_task=None, entity=None, task=None):
+                 prev_task=None, entity=None, input=None, output=None,
+                 pipeline=None, task=None):
         """ You must give the task parameter or all the others. """
         if task:
             self.entity = task.entity
@@ -28,6 +32,9 @@ class BaseTaskParser:
                 task.prev_task.prev_task = None
             self.task = task
             self.type = task.type
+            self.input = task.input
+            self.output = task.output
+            self.pipeline = task.pipeline if task.pipeline else {}
         elif type and variance_min is not None and variance_max is not None and entity:
             self.entity = entity
             self.prev_task = prev_task
@@ -36,12 +43,16 @@ class BaseTaskParser:
             self.type = type
             self.variance_max = variance_max
             self.variance_min = variance_min
+            self.input = input
+            self.output = output
+            self.pipeline = pipeline if pipeline else {}
         else:
             template = 'Not all expected parameters are given: ' \
                        'type={0}, variance_min={1}, variance_max={2}, ' \
-                       'prev_task={3}, entity={4}, task={5}'
+                       'prev_task={3}, entity={4}, input={5}, output={6},' \
+                       'pipeline={7}, task={8}'
             msg = template.format(type, variance_min, variance_max, prev_task,
-                                  entity, task)
+                                  entity, input, output, pipeline, task)
             raise TaskParameterException(msg)
 
     @abstractmethod

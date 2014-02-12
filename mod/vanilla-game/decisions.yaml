@@ -15,17 +15,17 @@ ai:
                     - chance: 0.9
                       next: ai.decision.dwarf.idle
                     - chance: 0.1
-                      next: ai.decision.dwarf.randomgoto
+                      next: ai.decision.dwarf.goto
                 - name: idle
                   type: ai.decision.node.task
                   task: ai.task.idle
-                - name: randomgoto
-                  type: ai.decision.node.pipeline.start
-                  next: ai.decision.dwarf.randompoint
-                - name: randompoint
-                  type: ai.decision.node.task
-                  task: ai.task.randompoint
-                  next: ai.decision.dwarf.goto
+                #- name: randomgoto
+                #  type: ai.decision.node.pipeline.start
+                #  next: ai.decision.dwarf.randompoint
+                #- name: randompoint
+                #  type: ai.decision.node.task
+                #  task: ai.task.randompoint
+                #  next: ai.decision.dwarf.goto
                 - name: goto
                   type: ai.decision.node.task
                   task: ai.task.goto

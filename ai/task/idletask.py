@@ -1,7 +1,7 @@
 import random
 
 from . import basetask
-from data.ai.task import IdleTask
+from data.ai.task import BaseTaskParameter, IdleTask
 
 
 class IdleTaskParser(basetask.BaseTaskParser):
@@ -12,9 +12,15 @@ class IdleTaskParser(basetask.BaseTaskParser):
     """
 
     def __init__(self, type=None, variance_min=None, variance_max=None,
-                 prev_task=None, entity=None, task=None, duration=None):
-        super().__init__(type, variance_min, variance_max, prev_task, entity, task)
-        self.duration = task.duration if task else duration
+                 prev_task=None, entity=None, input=None, output=None,
+                 pipeline=None, task=None, duration=None):
+        super().__init__(type, variance_min, variance_max, prev_task, entity,
+                         input, output, pipeline, task)
+        self.duration = duration
+        if task:
+            self.duration = self.task.duration
+        elif self.input in self.pipeline:
+            self.duration = self.pipeline[input]
 
     def cleanup(self, data):
         pass
@@ -30,7 +36,15 @@ class IdleTaskParser(basetask.BaseTaskParser):
             else:
                 self.duration = self.duration[0]
         self.duration = self.duration + random.uniform(self.variance_min, self.variance_max)
-        self.task = IdleTask(self.type, self.prev_task, self.entity, self.duration)
+
+        base_task_parameter = BaseTaskParameter()
+        base_task_parameter.type = self.type
+        base_task_parameter.prev_task = self.prev_task
+        base_task_parameter.entity = self.entity
+        base_task_parameter.input = self.input
+        base_task_parameter.output = self.output
+        base_task_parameter.pipeline = self.pipeline
+        self.task = IdleTask(base_task_parameter, self.duration)
         return self.task
 
     def execute_next(self, data):
