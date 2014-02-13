@@ -24,5 +24,5 @@ class AllGrassRegionGenerator(regiongenerator.RegionGenerator):
     def __grass_block(self):
         t = tile.Tile('grass')
         b = block.Block()
-        b.insert_tile(t)
+        b._insert_tile(t)
         return b

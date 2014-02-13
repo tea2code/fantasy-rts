@@ -21,7 +21,7 @@ class Block():
         >>> b = Block()
         >>> b.get_dynamics()
         []
-        >>> b.insert_dynamic('test')
+        >>> b.__insert_dynamic('test')
         >>> b.get_dynamics()
         ['test']
         """
@@ -34,7 +34,7 @@ class Block():
         >>> b = Block()
         >>> b.get_statics()
         []
-        >>> b.insert_static('test')
+        >>> b.__insert_static('test')
         >>> b.get_statics()
         ['test']
         """
@@ -47,7 +47,7 @@ class Block():
         >>> b = Block()
         >>> b.get_tiles()
         []
-        >>> b.insert_tile('test')
+        >>> b._insert_tile('test')
         >>> b.get_tiles()
         ['test']
         """
@@ -60,7 +60,7 @@ class Block():
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.insert_dynamic('test')
+        >>> b.__insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         """
@@ -73,7 +73,7 @@ class Block():
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.insert_static('test')
+        >>> b.__insert_static('test')
         >>> b.has_static('test')
         True
         """
@@ -86,47 +86,50 @@ class Block():
         >>> b = Block()
         >>> b.has_tile('test')
         False
-        >>> b.insert_tile('test')
+        >>> b._insert_tile('test')
         >>> b.has_tile('test')
         True
         """
         return tile in self._tiles
 
-    def insert_dynamic(self, entity):
+    def _insert_dynamic(self, entity):
         """ Insert a dynamic entity.
+        Don't use this, instead use region.set_pos().
 
         Test:
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.insert_dynamic('test')
+        >>> b.__insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         """
         self._dynamics.append(entity)
 
-    def insert_static(self, entity):
+    def _insert_static(self, entity):
         """ Insert a static entity.
+        Don't use this, instead use region.set_pos().
 
         Test:
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.insert_static('test')
+        >>> b.__insert_static('test')
         >>> b.has_static('test')
         True
         """
         self._blocked = {}
         self._statics.append(entity)
 
-    def insert_tile(self, tile):
+    def _insert_tile(self, tile):
         """ Insert a tile.
+        Don't use this, instead use region.set_pos().
 
         Test:
         >>> b = Block()
         >>> b.has_tile('test')
         False
-        >>> b.insert_tile('test')
+        >>> b._insert_tile('test')
         >>> b.has_tile('test')
         True
         """
@@ -142,7 +145,7 @@ class Block():
         >>> t = tile.Tile('tile')
         >>> t.blocking = ['block']
         >>> b = Block()
-        >>> b.insert_tile(t)
+        >>> b.__insert_tile(t)
         >>> b.is_blocking(['block'])
         True
         >>> b.is_blocking(['non-block'])
@@ -163,7 +166,7 @@ class Block():
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.insert_dynamic('test')
+        >>> b.__insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         >>> b.remove_dynamic('test')
@@ -179,7 +182,7 @@ class Block():
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.insert_static('test')
+        >>> b.__insert_static('test')
         >>> b.has_static('test')
         True
         >>> b.remove_static('test')
@@ -196,7 +199,7 @@ class Block():
         >>> b = Block()
         >>> b.has_tile('test')
         False
-        >>> b.insert_tile('test')
+        >>> b.__insert_tile('test')
         >>> b.has_tile('test')
         True
         >>> b.remove_tile('test')

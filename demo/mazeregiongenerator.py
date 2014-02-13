@@ -100,11 +100,11 @@ class MazeRegionGenerator(regiongenerator.RegionGenerator):
     def __grass_block(self, data):
         t = factory.new_tile(data.game.tile_ground, data)
         b = block.Block()
-        b.insert_tile(t)
+        b._insert_tile(t)
         return b
 
     def __wall_block(self, data):
         t = factory.new_tile(data.game.tile_wall, data)
         b = block.Block()
-        b.insert_tile(t)
+        b._insert_tile(t)
         return b

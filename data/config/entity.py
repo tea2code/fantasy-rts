@@ -8,6 +8,7 @@ class Attribute:
     def __init__(self):
         self.type = ''
 
+
 class Blocked(Attribute):
     """ Settings of a blocked attribute.
 
@@ -17,6 +18,7 @@ class Blocked(Attribute):
     def __init__(self):
         super().__init__()
 
+
 class Blocking(Attribute):
     """ Settings of a blocking attribute.
 
@@ -25,6 +27,7 @@ class Blocking(Attribute):
 
     def __init__(self):
         super().__init__()
+
 
 class DynamicEntity:
     """ A dynamic entity config.
@@ -37,6 +40,7 @@ class DynamicEntity:
     def __init__(self):
         self.blocked = []
         self.moving = []
+
 
 class Entity:
     """ A entity config.
@@ -54,6 +58,7 @@ class Entity:
         self.statics = {}
         self.tiles = {}
 
+
 class Moving(Attribute):
     """ Settings of a moving attribute.
 
@@ -65,6 +70,7 @@ class Moving(Attribute):
         super().__init__()
         self.speed = 0.0
 
+
 class Resource(Attribute):
     """ Settings of a resource.
 
@@ -75,6 +81,7 @@ class Resource(Attribute):
     def __init__(self):
         super().__init__()
         self.chance = 0.0
+
 
 class StaticEntity:
     """ A static entity config.
@@ -89,6 +96,7 @@ class StaticEntity:
         self.blocked = []
         self.blocking = []
         self.resources = []
+
 
 class TileEntity:
     """ A tile entity config.

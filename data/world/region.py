@@ -224,11 +224,11 @@ class Region:
         # Insert in block.
         block = self.get_block(pos)
         if isinstance(entity, staticentity.StaticEntity):
-            block.insert_static(entity)
+            block._insert_static(entity)
         elif isinstance(entity, dynamicentity.DynamicEntity):
-            block.insert_dynamic(entity)
+            block._insert_dynamic(entity)
         else:
-            block.insert_tile(entity)
+            block._insert_tile(entity)
 
         # Insert in entity dict.
         self._entity_pos[entity] = pos

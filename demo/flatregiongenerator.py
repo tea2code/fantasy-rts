@@ -55,7 +55,7 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
                 b = self._map[point]
                 e = factory.new_static_entity(data.game.wood_plant, data)
                 if not b.is_blocking(e.blocked):
-                    b.insert_static(e)
+                    b._insert_static(e)
 
         # Add shrubs.
         for x in range(size_x):
@@ -66,7 +66,7 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
                 b = self._map[point]
                 e = factory.new_static_entity(data.game.food_plant, data)
                 if not b.is_blocking(e.blocked):
-                    b.insert_static(e)
+                    b._insert_static(e)
 
     def all_blocks(self, z_level):
         return self._map
@@ -77,11 +77,11 @@ class FlatRegionGenerator(regiongenerator.RegionGenerator):
     def __grass_block(self, data):
         t = factory.new_tile(data.game.tile_ground, data)
         b = block.Block()
-        b.insert_tile(t)
+        b._insert_tile(t)
         return b
 
     def __wall_block(self, data):
         t = factory.new_tile(data.game.tile_wall, data)
         b = block.Block()
-        b.insert_tile(t)
+        b._insert_tile(t)
         return b
