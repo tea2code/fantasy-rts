@@ -3,7 +3,8 @@ import sys
 import time
 
 from . import flatregiongenerator
-from data.world import region
+from ai import pathfinding
+from data.world import region, resourcemanager
 from world import factory
 
 
@@ -28,7 +29,10 @@ class Demo:
         # Create level map.
         #region_generator = mazeregiongenerator.MazeRegionGenerator(self.data)
         region_generator = flatregiongenerator.FlatRegionGenerator(self.data)
-        self.data.game.region = region.Region(region_generator, self.data.game.size_x, self.data.game.size_y)
+        resource_manager = resourcemanager.ResourceManager(pathfinding.EuclideanDistance(),
+                                                           self.data.config.entity)
+        self.data.game.region = region.Region(region_generator, self.data.game.size_x,
+                                              self.data.game.size_y, resource_manager)
 
         # Add creatures.
         run_time = 0

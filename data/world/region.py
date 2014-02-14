@@ -10,18 +10,26 @@ class Region:
 
     Member:
     region_generator -- The region generator behind the region (world.regiongenerator).
+    resource_manager -- The resource manager of this region (data.world.resourcemanager).
     size_x -- The size of the map in x direction (int).
     size_y -- The size of the map in y direction (int).
     _entity_pos -- Maps entities to their exact positions (dict).
     _pos_block -- Maps positions to the block on this position (dict).
     """
 
-    def __init__(self, region_generator, size_x, size_y):
+    def __init__(self, region_generator, size_x, size_y, resource_manager):
         self.region_generator = region_generator
+        self.resource_manager = resource_manager
+        self.resource_manager.region = self
         self.size_x = size_x
         self.size_y = size_y
         self._entity_pos = {}
         self._pos_block = {}
+
+    def find_resource(self, resource_type, pos):
+        """ Finds a nearby resource of the given type. Locks and returns the
+        entity containing this resource. """
+        return self.resource_manager.find_resource(resource_type, pos)
 
     def free_neighbors(self, pos, blocked):
         """ Returns free neighbors of given position.
@@ -99,7 +107,10 @@ class Region:
         'grass'
         """
         if pos not in self._pos_block:
-            self._pos_block[pos] = self.region_generator.new_block(pos)
+            block = self.region_generator.new_block(pos)
+            self._pos_block[pos] = block
+            for entity in block.get_statics():
+                self.resource_manager.add_entity(entity)
         return self._pos_block[pos]
 
     def get_pos(self, entity):
@@ -179,6 +190,10 @@ class Region:
             z_level = 0 # TODO Select random z-level.
         return PointFactory.new_point(x, y, z_level)
 
+    def release_resource(self, entity):
+        """ Releases a locked resource. """
+        self.resource_manager.release_resource(entity)
+
     def remove_entity(self, entity):
         """ Removes an entity.
 
@@ -204,6 +219,7 @@ class Region:
         block = self.get_block(pos)
         if isinstance(entity, staticentity.StaticEntity):
             block.remove_static(entity)
+            self.resource_manager.remove_entity(entity)
         elif isinstance(entity, dynamicentity.DynamicEntity):
             block.remove_dynamic(entity)
         else:
@@ -225,6 +241,8 @@ class Region:
         block = self.get_block(pos)
         if isinstance(entity, staticentity.StaticEntity):
             block._insert_static(entity)
+            # Important: ResourceManager currently only supports static entity.
+            self.resource_manager.add_entity(entity)
         elif isinstance(entity, dynamicentity.DynamicEntity):
             block._insert_dynamic(entity)
         else:
