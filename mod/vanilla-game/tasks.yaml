@@ -21,3 +21,8 @@ ai:
               type: ai.task.type.demo.randompoint
               in: 
               out: goal
+            - name: findfood
+              type: ai.task.type.findresource
+              resource: resource.resource.berry
+              in: 
+              out: goal

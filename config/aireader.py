@@ -29,6 +29,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     NEXT
     OUTPUT
     RANDOM
+    RESOURCE
     START_NODE
     TASK
     TASKS
@@ -52,6 +53,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     NEXT = 'next'
     OUTPUT = 'out'
     RANDOM = 'random'
+    RESOURCE = 'resource'
     START_NODE = 'start_node'
     SUCCESS = 'success'
     TASK = 'task'
@@ -144,6 +146,9 @@ class YamlAiReader(basereader.BaseYamlReader):
                 task_obj = ai.IdleTask(type, variance_min, variance_max, input, output, duration)
             elif type == ID.AI_TASK_TYPE_GOTO or type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
                 task_obj = ai.BaseTask(type, variance_min, variance_max, input, output)
+            elif type == ID.AI_TASK_TYPE_FINDRESOURCE:
+                resource = self.read_string(task, self.RESOURCE, None)
+                task_obj = ai.FindResourceTask(type, variance_min, variance_max, input, output, resource)
             else:
                 raise UnknownTaskTypeException('Type "{0}" is not a known task type.'.format(type))
 

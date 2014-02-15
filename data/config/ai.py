@@ -28,6 +28,18 @@ class BaseTask:
         self.output = output
 
 
+class FindResourceTask(BaseTask):
+    """ Find a resource task.
+    
+    Member:
+    resource -- Resource type to search (string). 
+    """
+    
+    def __init__(self, type, variance_min, variance_max, input, output, resource):
+        super().__init__(type, variance_min, variance_max, input, output)
+        self.resource = resource
+        
+
 class IdleTask(BaseTask):
     """ Config for idle tasks.
 

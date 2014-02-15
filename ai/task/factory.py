@@ -1,3 +1,4 @@
+from .findresourcetask import FindResourceTaskParser
 from .gototask import GoToTaskParser
 from .idletask import IdleTaskParser
 from .randompointtask import RandomPointTaskParser
@@ -37,6 +38,11 @@ class Factory:
             parser = RandomPointTaskParser(base_task_parameter=base_task_parameter,
                                            variance_min=config.variance_min,
                                            variance_max=config.variance_max)
+        elif task_type == ID.AI_TASK_TYPE_FINDRESOURCE:
+            parser = FindResourceTaskParser(base_task_parameter=base_task_parameter,
+                                            variance_min=config.variance_min,
+                                            variance_max=config.variance_max,
+                                            resource=config.resource)
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
         return parser
@@ -50,6 +56,8 @@ class Factory:
             parser = IdleTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
             parser = RandomPointTaskParser(task=task)
+        elif task.type == ID.AI_TASK_TYPE_FINDRESOURCE:
+            parser = FindResourceTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
         return parser

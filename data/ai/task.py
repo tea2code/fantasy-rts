@@ -70,3 +70,15 @@ class IdleTask(BaseTask):
     def __init__(self, base_task_parameter, duration):
         super().__init__(base_task_parameter)
         self.duration = duration
+        
+
+class SuccessTask(BaseTask):
+    """ Simple tasks which only stores the success.
+    
+    Member:
+    successful -- Indicates success of task (bool).
+    """
+    
+    def __init__(self, base_task_parameter, successful):
+        super().__init__(base_task_parameter)
+        self.successful = successful

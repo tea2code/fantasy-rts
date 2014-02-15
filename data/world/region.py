@@ -111,6 +111,7 @@ class Region:
             self._pos_block[pos] = block
             for entity in block.get_statics():
                 self.resource_manager.add_entity(entity)
+                self._entity_pos[entity] = pos
         return self._pos_block[pos]
 
     def get_pos(self, entity):

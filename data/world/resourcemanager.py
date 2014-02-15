@@ -39,8 +39,9 @@ class ResourceManager:
             if min_distance is None or distance < min_distance:
                 min_distance = distance
                 result = entity
-        self.remove_entity(result)
-        self._locked.append(result)
+        if result:
+            self.remove_entity(result)
+            self._locked.append(result)
         return result
 
     def release_resource(self, entity):

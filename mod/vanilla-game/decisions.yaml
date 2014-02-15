@@ -15,21 +15,22 @@ ai:
                     - chance: 0.9
                       next: ai.decision.dwarf.idle
                     - chance: 0.1
-                      next: ai.decision.dwarf.randomgoto
+                      next: ai.decision.dwarf.collectfoodbegin
                 - name: idle
                   type: ai.decision.node.task
                   task: ai.task.idle
-                - name: randomgoto
+                - name: collectfoodbegin
                   type: ai.decision.node.pipeline.start
-                  next: ai.decision.dwarf.randompoint
-                - name: randompoint
+                  next: ai.decision.dwarf.findfood
+                - name: findfood
                   type: ai.decision.node.task
-                  task: ai.task.randompoint
-                  next: ai.decision.dwarf.goto
+                  task: ai.task.findfood
+                  success: ai.decision.dwarf.goto
+                  fail: ai.decision.dwarf.idle
                 - name: goto
                   type: ai.decision.node.task
                   task: ai.task.goto
-                  fail: ai.decision.dwarf.randomgotoend
-                - name: randomgotoend
+                  fail: ai.decision.dwarf.collectfoodend
+                - name: collectfoodend
                   type: ai.decision.node.pipeline.start
                   next: ai.decision.dwarf.idle
