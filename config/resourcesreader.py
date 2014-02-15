@@ -11,7 +11,6 @@ class YamlResourcesReader(basereader.BaseYamlReader):
     RESOURCES
     TYPE
     TYPES
-    VALUE
     """
 
     NAME = 'name'
@@ -20,7 +19,6 @@ class YamlResourcesReader(basereader.BaseYamlReader):
     RESOURCES = 'resources'
     TYPE = 'type'
     TYPES = 'types'
-    VALUE = 'value'
 
     def parse(self, root, data):
         """ Parse the style structure. Writes the parsed information into the
@@ -41,8 +39,7 @@ class YamlResourcesReader(basereader.BaseYamlReader):
             name = self.read_req_string(resource, self.NAME)
             id = self.namespace_to_id(namespace_list, name)
             type = self.read_req_string(resource, self.TYPE)
-            value = self.read_req_float(resource, self.VALUE)
-            data.config.resources.resources[id] = resource_config.Resource(value, type)
+            data.config.resources.resources[id] = resource_config.Resource(type)
 
     def __types(self, namespace, root, data):
         """ Parse resource types. """

@@ -72,15 +72,10 @@ class Moving(Attribute):
 
 
 class Resource(Attribute):
-    """ Settings of a resource.
-
-    Member:
-    chance -- The chance that this resource appears (float).
-    """
+    """ Settings of a resource. """
 
     def __init__(self):
         super().__init__()
-        self.chance = 0.0
 
 
 class StaticEntity:

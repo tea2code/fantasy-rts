@@ -8,7 +8,6 @@ class YamlEntityReader(basereader.BaseYamlReader):
     ATTRIBUTE
     ATTRIBUTES
     CATEGORY
-    CHANCE
     BLOCKED
     BLOCKING
     DYNAMIC
@@ -30,7 +29,6 @@ class YamlEntityReader(basereader.BaseYamlReader):
     BLOCKED = 'blocked'
     BLOCKING = 'blocking'
     CATEGORY = 'category'
-    CHANCE = 'chance'
     DYNAMIC = 'dynamic'
     DYNAMICS = 'dynamics'
     MOVING = 'moving'
@@ -125,7 +123,6 @@ class YamlEntityReader(basereader.BaseYamlReader):
         for resource in resources:
             resource_obj = entity.Resource()
             resource_obj.type = self.read_req_string(resource, self.TYPE)
-            resource_obj.chance = self.read_req_float(resource, self.CHANCE)
             result.append(resource_obj)
         return result
 
