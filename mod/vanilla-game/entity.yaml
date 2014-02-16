@@ -30,6 +30,7 @@ entity:
                 - type: entity.attribute.blocking.static
               resource: 
                 - type: resource.resource.berry
+                  chance: 0.8
             - name: tree
               blocked:
                 - type: entity.attribute.blocking.wall
