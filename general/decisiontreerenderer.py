@@ -73,11 +73,11 @@ class DecisionTreeRenderer:
                 if node.next is not None:
                     next_name = self.__id_to_name(self.ID_TYPE[nodes[node.next].type], node.next)
                     g.add_edge(name, next_name)
-                elif node.success is not None:
+                if node.success is not None:
                     success_name = self.__id_to_name(self.ID_TYPE[nodes[node.success].type], node.success)
                     g.add_edge(name, success_name)
                     edge_labels[(name, success_name)] = self.LABEL_SUCCESS
-                elif node.fail is not None:
+                if node.fail is not None:
                     fail_name = self.__id_to_name(self.ID_TYPE[nodes[node.fail].type], node.fail)
                     g.add_edge(name, fail_name)
                     edge_labels[(name, fail_name)] = self.LABEL_FAIL
@@ -90,7 +90,7 @@ class DecisionTreeRenderer:
                     g.add_edge(name, next_name)
 
         # Setup rendering.
-        pos = nx.spectral_layout(g)
+        pos = nx.fruchterman_reingold_layout(g)
         nx.draw_networkx_nodes(g, pos, node_size=self.NODE_SIZE)
         nx.draw_networkx_edges(g, pos)
         nx.draw_networkx_labels(g, pos)
