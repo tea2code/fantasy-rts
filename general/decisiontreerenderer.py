@@ -9,26 +9,30 @@ class DecisionTreeRenderer:
     """ Renders a decision tree for visualization.
 
     Constants:
+    FRUCHTERMAN_K -- Value k of fruchterman reingold algorithm.
     LABEL_FAIL -- Edge label for failure (string).
     LABEL_SUCCESS -- Edge label for success (string).
     NODE_SIZE -- Size of a node (int).
     TYPE_RANDOM -- Type of random node (string).
     TYPE_START -- Type of start node (string).
     TYPE_TASK -- Type of task node (string).
+    TYPE_PIPELINE_START -- Type of pipeline start (string).
+    TYPE_PIPELINE_STOP -- Type of pipeline end (string).
 
     Member:
     directory -- The directory of the resulting graphs (string).
     file_template -- The template for file names (string).
     """
 
+    FRUCHTERMAN_K = 100
     LABEL_FAIL = 'fail'
     LABEL_SUCCESS = 'success'
     NODE_SIZE = 2000
     TYPE_RANDOM = 'R'
     TYPE_START = 'S'
     TYPE_TASK = 'T'
-    TYPE_PIPELINE_START = 'TPS'
-    TYPE_PIPELINE_STOP = 'TPS'
+    TYPE_PIPELINE_START = 'TPB'
+    TYPE_PIPELINE_STOP = 'TPE'
     ID_TYPE = {
         ID.AI_DECISION_NODE_TASK: TYPE_TASK,
         ID.AI_DECISION_NODE_RANDOM: TYPE_RANDOM,
@@ -90,7 +94,7 @@ class DecisionTreeRenderer:
                     g.add_edge(name, next_name)
 
         # Setup rendering.
-        pos = nx.fruchterman_reingold_layout(g)
+        pos = nx.fruchterman_reingold_layout(g, k=self.FRUCHTERMAN_K)
         nx.draw_networkx_nodes(g, pos, node_size=self.NODE_SIZE)
         nx.draw_networkx_edges(g, pos)
         nx.draw_networkx_labels(g, pos)

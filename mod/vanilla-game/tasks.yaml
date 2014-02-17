@@ -9,10 +9,10 @@ ai:
         task:
             - name: idle
               type: ai.task.type.idle
-              in: 
-              out: 
               durations: 
                 - duration: 2.0
+              in: 
+              out: 
             - name: goto
               type: ai.task.type.goto
               in: goal
@@ -26,3 +26,13 @@ ai:
               resource: resource.resource.berry
               in: 
               out: goal
+            - name: idleharvest
+              type: ai.task.type.idle
+              duration: 5.0
+              in: 
+              out: 
+            - name: idlestore
+              type: ai.task.type.idle
+              duration: 2.0
+              in: 
+              out: 
