@@ -2,32 +2,28 @@ from . import basetask
 from data.ai.task import BaseTaskParameter, SuccessTask
 
 
-class FindResourceTaskParser(basetask.BaseTaskParser):
-    """ Parses find resource tasks.
+class FindEntityTaskParser(basetask.BaseTaskParser):
+    """ Parses find entity tasks.
 
     Member:
-    resource -- The resource type to find (string).
     successful -- Indicates if task is successful (bool).
     """
 
     def __init__(self, base_task_parameter=None, variance_min=None,
-                 variance_max=None, task=None, resource=None):
+                 variance_max=None, task=None):
         super().__init__(base_task_parameter, variance_min, variance_max, task)
-        self.resource = resource
-        if self.input in self.pipeline:
-            self.resource = self.pipeline[self.input]
         self.successful = task.successful if task else False
 
     def cleanup(self, data):
         pass
 
     def create_new(self, data):
-        entity_pos = data.game.region.get_pos(self.entity)
-        resource_entity = data.game.region.find_resource(self.resource, entity_pos)
-        if resource_entity:
-            self.successful = True
-            if self.output:
-                self.pipeline[self.output] = resource_entity
+        if self.input in self.pipeline:
+            entity = self.pipeline[self.input]
+            pos = data.game.region.get_pos(entity)
+            if pos:
+                self.successful = True
+                self.pipeline[self.output] = pos
         
         base_task_parameter = BaseTaskParameter()
         base_task_parameter.type = self.type

@@ -25,14 +25,19 @@ ai:
                 - name: findfood
                   type: ai.decision.node.task
                   task: ai.task.findfood
+                  success: ai.decision.dwarf.findfoodentity
+                  fail: ai.decision.dwarf.harvestresend
+                - name: findfoodentity
+                  type: ai.decision.node.task
+                  task: ai.task.findentity
                   success: ai.decision.dwarf.goto
                   fail: ai.decision.dwarf.harvestresend
                 - name: goto
                   type: ai.decision.node.task
                   task: ai.task.goto
-                  success: ai.decision.dwarf.harvestfood
+                  success: ai.decision.dwarf.harvestres
                   fail: ai.decision.dwarf.harvestresend
-                - name: harvestfood
+                - name: harvestres
                   type: ai.decision.node.task
                   task: ai.task.idle
                   next: ai.decision.dwarf.harvestresend

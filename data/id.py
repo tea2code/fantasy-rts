@@ -25,9 +25,11 @@ _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM,
 AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
 AI_TASK_TYPE_GOTO = 'ai.task.type.goto'
 AI_TASK_TYPE_FINDRESOURCE = 'ai.task.type.findresource'
+AI_TASK_TYPE_FINDENTITY = 'ai.task.type.findentity'
 AI_TASK_TYPE_DEMO_RANDOMPOINT = 'ai.task.type.demo.randompoint'
+AI_TASK_TYPE_HARVEST = 'ai.task.type.harvest'
 _AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_GOTO, AI_TASK_TYPE_DEMO_RANDOMPOINT,
-                 AI_TASK_TYPE_FINDRESOURCE]
+                 AI_TASK_TYPE_FINDRESOURCE, AI_TASK_TYPE_HARVEST, AI_TASK_TYPE_FINDENTITY]
 
 # Entity attributes.
 ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'

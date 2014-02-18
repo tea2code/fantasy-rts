@@ -25,6 +25,10 @@ ai:
               type: ai.task.type.findresource
               resource: resource.resource.berry
               in: 
+              out: entity
+            - name: findentity
+              type: ai.task.type.findentity
+              in: entity
               out: goal
             - name: idleharvest
               type: ai.task.type.idle
@@ -36,3 +40,8 @@ ai:
               duration: 2.0
               in: 
               out: 
+            #- name: harvestres
+            #  type: ai.task.type.harvest
+            #  entity: 
+            #  in: entity
+            #  out: 

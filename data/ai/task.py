@@ -3,8 +3,8 @@ class BaseTask:
 
     Member:
     entity -- The entity which is executing this task (data.world.entity.entity).
-    input -- The key of the input value in the pipeline (string).
-    output -- The key of the output value in the pipeline (string).
+    input -- The key of the input value in the pipeline (string/list).
+    output -- The key of the output value in the pipeline (string/list).
     pipeline -- The pipeline parameter object (dict).
     prev_task -- The previous task (task).
     type -- The task type (string).
@@ -28,8 +28,8 @@ class BaseTaskParameter:
 
     Member:
     entity -- The entity which is executing this task (data.world.entity.entity).
-    input -- The key of the input value in the pipeline (string).
-    output -- The key of the output value in the pipeline (string).
+    input -- The key of the input value in the pipeline (string/list).
+    output -- The key of the output value in the pipeline (string/list).
     pipeline -- The pipeline parameter object (dict).
     prev_task -- The previous task (task).
     type -- The task type (string).

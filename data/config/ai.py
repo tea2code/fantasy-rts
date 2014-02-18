@@ -13,8 +13,8 @@ class BaseTask:
     """ Base class for task config.
 
     Member:
-    input -- Input variable name in pipeline (string).
-    output -- Output variable name in pipeline (string).
+    input -- Input variable name in pipeline (string/list).
+    output -- Output variable name in pipeline (string/list).
     type -- Id of the type (string).
     variance_max -- The maximum time variance (float).
     variance_min -- The minimum time variance (float).
@@ -50,3 +50,15 @@ class IdleTask(BaseTask):
     def __init__(self, type, variance_min, variance_max, input, output, duration):
         super().__init__(type, variance_min, variance_max, input, output)
         self.duration = duration
+
+
+class HarvestTask(BaseTask):
+    """ Find a harvest task.
+
+    Member:
+    entity -- The entity containing the resource (string).
+    """
+
+    def __init__(self, type, variance_min, variance_max, input, output, resource):
+        super().__init__(type, variance_min, variance_max, input, output)
+        self.resource = resource
