@@ -20,9 +20,6 @@ class IdleTaskParser(basetask.BaseTaskParser):
         elif self.input in self.pipeline:
             self.duration = self.pipeline[self.input]
 
-    def cleanup(self, data):
-        pass
-
     def create_new(self, data):
         if isinstance(self.duration, list):
             if self.prev_task and self.prev_task.type == self.type:

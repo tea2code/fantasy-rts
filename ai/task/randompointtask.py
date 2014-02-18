@@ -11,9 +11,6 @@ class RandomPointTaskParser(basetask.BaseTaskParser):
                  variance_max=None, task=None):
         super().__init__(base_task_parameter, variance_min, variance_max, task)
 
-    def cleanup(self, data):
-        pass
-
     def create_new(self, data):
         if self.output:
             goal = data.game.region.free_random_pos(self.entity.blocked, 0)

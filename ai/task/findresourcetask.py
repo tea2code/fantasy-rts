@@ -18,9 +18,6 @@ class FindResourceTaskParser(basetask.BaseTaskParser):
             self.resource = self.pipeline[self.input]
         self.successful = task.successful if task else False
 
-    def cleanup(self, data):
-        pass
-
     def create_new(self, data):
         entity_pos = data.game.region.get_pos(self.entity)
         resource_entity = data.game.region.find_resource(self.resource, entity_pos)

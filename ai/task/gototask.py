@@ -24,9 +24,6 @@ class GoToTaskParser(basetask.BaseTaskParser):
         elif self.input in self.pipeline:
             self.goal = self.pipeline[self.input]
 
-    def cleanup(self, data):
-        pass
-
     def create_new(self, data):
         region = data.game.region
         start = region.get_pos(self.entity)

@@ -14,9 +14,6 @@ class FindEntityTaskParser(basetask.BaseTaskParser):
         super().__init__(base_task_parameter, variance_min, variance_max, task)
         self.successful = task.successful if task else False
 
-    def cleanup(self, data):
-        pass
-
     def create_new(self, data):
         if self.input in self.pipeline:
             entity = self.pipeline[self.input]

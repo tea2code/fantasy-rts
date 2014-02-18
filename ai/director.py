@@ -22,7 +22,6 @@ class Director:
             if not parser.is_complete():
                 parser.execute_next(data)
             if parser.is_complete():
-                parser.cleanup(data)
                 task_id, pipeline = self.decision_tree.parse(task.entity,
                                                              data.game.decision_tree,
                                                              task_result=parser.is_success(),

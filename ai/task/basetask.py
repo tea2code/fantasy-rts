@@ -60,10 +60,6 @@ class BaseTaskParser:
             raise TaskParameterException(msg)
 
     @abstractmethod
-    def cleanup(self, data):
-        """ Clean up after task completion. """
-
-    @abstractmethod
     def create_new(self, data):
         """ Creates a new task and returns it. """
 
