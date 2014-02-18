@@ -40,8 +40,7 @@ ai:
               duration: 2.0
               in: 
               out: 
-            #- name: harvestres
-            #  type: ai.task.type.harvest
-            #  entity: 
-            #  in: entity
-            #  out: 
+            - name: pickupres
+              type: ai.task.type.harvest
+              in: entity
+              out: resource

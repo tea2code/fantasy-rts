@@ -3,6 +3,7 @@ from .findentitytask import FindEntityTaskParser
 from .gototask import GoToTaskParser
 from .idletask import IdleTaskParser
 from .randompointtask import RandomPointTaskParser
+from .harvesttask import HarvestTaskParser
 from data import id as ID
 from data.ai.task import BaseTaskParameter
 
@@ -19,6 +20,7 @@ class Factory:
         """ Find the parser for the given task id and initialize. """
         config = data.config.ai.tasks[task_id]
         task_type = config.type
+
         base_task_parameter = BaseTaskParameter()
         base_task_parameter.type = task_type
         base_task_parameter.prev_task = prev_task
@@ -26,6 +28,7 @@ class Factory:
         base_task_parameter.input = config.input
         base_task_parameter.output = config.output
         base_task_parameter.pipeline = pipeline
+
         if task_type == ID.AI_TASK_TYPE_GOTO:
             parser = GoToTaskParser(base_task_parameter=base_task_parameter,
                                     variance_min=config.variance_min,
@@ -46,10 +49,15 @@ class Factory:
                                             resource=config.resource)
         elif task_type == ID.AI_TASK_TYPE_FINDENTITY:
             parser = FindEntityTaskParser(base_task_parameter=base_task_parameter,
-                                            variance_min=config.variance_min,
-                                            variance_max=config.variance_max)
+                                          variance_min=config.variance_min,
+                                          variance_max=config.variance_max)
+        elif task_type == ID.AI_TASK_TYPE_HARVEST:
+            parser = HarvestTaskParser(base_task_parameter=base_task_parameter,
+                                       variance_min=config.variance_min,
+                                       variance_max=config.variance_max)
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
+
         return parser
 
     @staticmethod
@@ -65,6 +73,8 @@ class Factory:
             parser = FindResourceTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_FINDENTITY:
             parser = FindEntityTaskParser(task=task)
+        elif task.type == ID.AI_TASK_TYPE_HARVEST:
+            parser = HarvestTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
         return parser

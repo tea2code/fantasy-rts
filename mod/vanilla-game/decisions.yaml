@@ -15,32 +15,46 @@ ai:
                     - chance: 0.9
                       next: ai.decision.dwarf.idle
                     - chance: 0.1
-                      next: ai.decision.dwarf.harvestresbegin
+                      next: ai.decision.dwarf.harvest.begin
                 - name: idle
                   type: ai.decision.node.task
                   task: ai.task.idle
-                - name: harvestresbegin
+                - name: harvest.begin
                   type: ai.decision.node.pipeline.start
-                  next: ai.decision.dwarf.findfood
-                - name: findfood
+                  next: ai.decision.dwarf.harvest.findfood
+                - name: harvest.findfood
                   type: ai.decision.node.task
                   task: ai.task.findfood
-                  success: ai.decision.dwarf.findfoodentity
-                  fail: ai.decision.dwarf.harvestresend
-                - name: findfoodentity
+                  success: ai.decision.dwarf.harvest.findentity
+                  fail: ai.decision.dwarf.harvest.end
+                - name: harvest.findentity
                   type: ai.decision.node.task
                   task: ai.task.findentity
-                  success: ai.decision.dwarf.goto
-                  fail: ai.decision.dwarf.harvestresend
-                - name: goto
+                  success: ai.decision.dwarf.harvest.gotores
+                  fail: ai.decision.dwarf.harvest.end
+                - name: harvest.gotores
                   type: ai.decision.node.task
                   task: ai.task.goto
-                  success: ai.decision.dwarf.harvestres
-                  fail: ai.decision.dwarf.harvestresend
-                - name: harvestres
+                  success: ai.decision.dwarf.harvest.pickupidle
+                  fail: ai.decision.dwarf.harvest.end
+                - name: harvest.pickupidle
                   type: ai.decision.node.task
                   task: ai.task.idle
-                  next: ai.decision.dwarf.harvestresend
-                - name: harvestresend
+                  next: ai.decision.dwarf.harvest.pickup
+                - name: harvest.pickup
+                  type: ai.decision.node.task
+                  task: ai.task.pickupres
+                  next: ai.decision.dwarf.harvest.random
+                - name: harvest.random
+                  type: ai.decision.node.task
+                  task: ai.task.randompoint
+                  success: ai.decision.dwarf.harvest.gotodrop
+                  fail: ai.decision.dwarf.harvest.end
+                - name: harvest.gotodrop
+                  type: ai.decision.node.task
+                  task: ai.task.goto
+                  success: ai.decision.dwarf.harvest.end
+                  fail: ai.decision.dwarf.harvest.end
+                - name: harvest.end
                   type: ai.decision.node.pipeline.start
                   next: ai.decision.dwarf.idle
