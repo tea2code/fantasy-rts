@@ -21,7 +21,7 @@ class Block():
         >>> b = Block()
         >>> b.get_dynamics()
         []
-        >>> b.__insert_dynamic('test')
+        >>> b._insert_dynamic('test')
         >>> b.get_dynamics()
         ['test']
         """
@@ -34,7 +34,7 @@ class Block():
         >>> b = Block()
         >>> b.get_statics()
         []
-        >>> b.__insert_static('test')
+        >>> b._insert_static('test')
         >>> b.get_statics()
         ['test']
         """
@@ -60,7 +60,7 @@ class Block():
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.__insert_dynamic('test')
+        >>> b._insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         """
@@ -73,7 +73,7 @@ class Block():
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.__insert_static('test')
+        >>> b._insert_static('test')
         >>> b.has_static('test')
         True
         """
@@ -100,7 +100,7 @@ class Block():
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.__insert_dynamic('test')
+        >>> b._insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         """
@@ -114,7 +114,7 @@ class Block():
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.__insert_static('test')
+        >>> b._insert_static('test')
         >>> b.has_static('test')
         True
         """
@@ -145,7 +145,7 @@ class Block():
         >>> t = tile.Tile('tile')
         >>> t.blocking = ['block']
         >>> b = Block()
-        >>> b.__insert_tile(t)
+        >>> b._insert_tile(t)
         >>> b.is_blocking(['block'])
         True
         >>> b.is_blocking(['non-block'])
@@ -166,7 +166,7 @@ class Block():
         >>> b = Block()
         >>> b.has_dynamic('test')
         False
-        >>> b.__insert_dynamic('test')
+        >>> b._insert_dynamic('test')
         >>> b.has_dynamic('test')
         True
         >>> b.remove_dynamic('test')
@@ -182,7 +182,7 @@ class Block():
         >>> b = Block()
         >>> b.has_static('test')
         False
-        >>> b.__insert_static('test')
+        >>> b._insert_static('test')
         >>> b.has_static('test')
         True
         >>> b.remove_static('test')
@@ -199,7 +199,7 @@ class Block():
         >>> b = Block()
         >>> b.has_tile('test')
         False
-        >>> b.__insert_tile('test')
+        >>> b._insert_tile('test')
         >>> b.has_tile('test')
         True
         >>> b.remove_tile('test')

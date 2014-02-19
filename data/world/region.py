@@ -17,10 +17,11 @@ class Region:
     _pos_block -- Maps positions to the block on this position (dict).
     """
 
-    def __init__(self, region_generator, size_x, size_y, resource_manager):
+    def __init__(self, region_generator, size_x, size_y, resource_manager=None):
         self.region_generator = region_generator
         self.resource_manager = resource_manager
-        self.resource_manager.region = self
+        if self.resource_manager:
+            self.resource_manager.region = self
         self.size_x = size_x
         self.size_y = size_y
         self._entity_pos = {}
@@ -29,6 +30,8 @@ class Region:
     def find_resource(self, resource_type, pos):
         """ Finds a nearby resource of the given type. Locks and returns the
         entity containing this resource. """
+        if not self.resource_manager:
+            return None
         return self.resource_manager.find_resource(resource_type, pos)
 
     def free_neighbors(self, pos, blocked):
@@ -110,7 +113,8 @@ class Region:
             block = self.region_generator.new_block(pos)
             self._pos_block[pos] = block
             for entity in block.get_statics():
-                self.resource_manager.add_entity(entity)
+                if self.resource_manager:
+                    self.resource_manager.add_entity(entity)
                 self._entity_pos[entity] = pos
         return self._pos_block[pos]
 
@@ -193,7 +197,8 @@ class Region:
 
     def release_resource(self, entity):
         """ Releases a locked resource. """
-        self.resource_manager.release_resource(entity)
+        if self.resource_manager:
+            self.resource_manager.release_resource(entity)
 
     def remove_entity(self, entity):
         """ Removes an entity.
@@ -220,7 +225,8 @@ class Region:
         block = self.get_block(pos)
         if isinstance(entity, staticentity.StaticEntity):
             block.remove_static(entity)
-            self.resource_manager.remove_entity(entity)
+            if self.resource_manager:
+                    self.resource_manager.remove_entity(entity)
         elif isinstance(entity, dynamicentity.DynamicEntity):
             block.remove_dynamic(entity)
         else:
