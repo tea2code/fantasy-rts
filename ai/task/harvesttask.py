@@ -28,7 +28,8 @@ class HarvestTaskParser(basetask.BaseTaskParser):
                 self.successful = True
                 id = data.config.resources.resources[resource.type].entity
                 resource_entity = world.factory.new_static_entity(id, data)
-                data.game.region.set_pos(resource_entity, pos)
+                if self.output:
+                    self.pipeline[self.output] = resource_entity
 
         base_task_parameter = BaseTaskParameter()
         base_task_parameter.type = self.type
