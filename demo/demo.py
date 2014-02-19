@@ -4,6 +4,7 @@ import time
 
 from . import flatregiongenerator
 from ai import pathfinding
+from ai.task import factory as task_parser
 from data.world import region, resourcemanager
 from world import factory
 
@@ -40,7 +41,11 @@ class Demo:
         num_y = 20
         for x in range(1, num_x + 1):
             for y in range(1, num_y + 1):
-                factory.new_add_dynamic_entity(self.data.game.race_player, self.data, run_time, x, y, z=0)
+                entity = factory.new_add_dynamic_entity(self.data.game.race_player, self.data, run_time, x, y, z=0)
+                task_id = 'ai.task.idle'
+                parser = task_parser.Factory.from_id(task_id, None, self.data, entity=entity)
+                task = parser.create_new(self.data)
+                self.data.game.tasks.insert(run_time + parser.time(), task)
 
     def tick(self, run_time, delta_time, data, tick):
         # Burn additional time.

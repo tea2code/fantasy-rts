@@ -34,14 +34,16 @@ class Validator:
             if key not in ID._ACTION_SCROLL:
                 raise ValidatorError('Config.keys contains unknown action "{0}".'.format(key))
 
+        # Entity
+        entity = config.entity
+
         # Resources
         resources = config.resources
         for key, value in resources.resources.items():
             if value.type not in resources.types:
                 raise ValidatorError('Resource "{0}" has unknown type "{1}".'.format(key, value.type))
-
-        # Entity
-        entity = config.entity
+            if value.entity not in entity.statics:
+                raise ValidatorError('Resource "{0}" has unknown entity "{1}".'.format(key, value.entity))
 
         # Dynamic
         for key, value in entity.dynamics.items():

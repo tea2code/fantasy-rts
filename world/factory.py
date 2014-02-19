@@ -1,9 +1,9 @@
-from ai.task import factory as task_parser
+
 from data.world import dynamicentity, staticentity, tile
 from data.world.point import Factory as PointFactory
 
 
-def new_dynamic_entity(id, data, run_time, init_task=True):
+def new_dynamic_entity(id, data, run_time):
     """ Creates and returns a new dynamic entity. """
     # Entity.
     config = data.config.entity.dynamics[id]
@@ -12,23 +12,15 @@ def new_dynamic_entity(id, data, run_time, init_task=True):
     entity.blocked = [b.type for b in config.blocked]
     for moving in config.moving:
         entity.moving[moving.type] = moving.speed
-
-    # Initial task.
-    if init_task:
-        task_id = 'ai.task.idle'
-        parser = task_parser.Factory.from_id(task_id, None, data, entity=entity)
-        task = parser.create_new(data)
-        data.game.tasks.insert(run_time + parser.time(), task)
-
     return entity
 
 
-def new_add_dynamic_entity(id, data, run_time, x=None, y=None, z=None, pos=None, init_task=True):
+def new_add_dynamic_entity(id, data, run_time, x=None, y=None, z=None, pos=None):
     """ Creates a new dynamic entity, adds it to the region at given
     position and returns it. """
     if pos is None:
         pos = PointFactory.new_point(x, y, z)
-    entity = new_dynamic_entity(id, data, run_time, init_task)
+    entity = new_dynamic_entity(id, data, run_time)
     data.game.region.set_pos(entity, pos)
     data.dirty_pos.add(pos)
     return entity

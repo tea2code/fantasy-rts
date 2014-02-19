@@ -5,6 +5,7 @@ class YamlResourcesReader(basereader.BaseYamlReader):
     """ Yaml reader for resource types.
 
     Constants:
+    ENTITY
     NAME
     NAMESPACE
     RESOURCE
@@ -13,6 +14,7 @@ class YamlResourcesReader(basereader.BaseYamlReader):
     TYPES
     """
 
+    ENTITY = 'entity'
     NAME = 'name'
     NAMESPACE = 'namespace'
     RESOURCE = 'resource'
@@ -38,8 +40,9 @@ class YamlResourcesReader(basereader.BaseYamlReader):
         for resource in self.read_object(resources, self.RESOURCE, []):
             name = self.read_req_string(resource, self.NAME)
             id = self.namespace_to_id(namespace_list, name)
+            entity = self.read_req_string(resource, self.ENTITY)
             type = self.read_req_string(resource, self.TYPE)
-            data.config.resources.resources[id] = resource_config.Resource(type)
+            data.config.resources.resources[id] = resource_config.Resource(type, entity)
 
     def __types(self, namespace, root, data):
         """ Parse resource types. """

@@ -6,6 +6,7 @@ resources:
         resource:
             - name: berry
               type: resource.type.food
+              entity: entity.static.berry
         
     types:
         namespace: type

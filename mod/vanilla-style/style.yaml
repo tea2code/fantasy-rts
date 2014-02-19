@@ -25,6 +25,10 @@ style:
               map: entity.static.berry-shrub
               to: style.sprite.shrub
               
+            - name: berry
+              map: entity.static.berry
+              to: style.sprite.berry
+              
             - name: tree
               map: entity.static.tree
               to: style.sprite.tree

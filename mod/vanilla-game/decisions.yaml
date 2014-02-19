@@ -44,7 +44,8 @@ ai:
                 - name: harvest.pickup
                   type: ai.decision.node.task
                   task: ai.task.pickupres
-                  next: ai.decision.dwarf.harvest.random
+                  success: ai.decision.dwarf.harvest.random
+                  fail: ai.decision.dwarf.harvest.end
                 - name: harvest.random
                   type: ai.decision.node.task
                   task: ai.task.randompoint

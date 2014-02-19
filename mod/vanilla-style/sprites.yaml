@@ -33,6 +33,15 @@ style:
                   - x: 16
                     y: 144
                     chance: 0.5
+                    
+            - name: berry
+              multiple:
+                  - x: 0
+                    y: 160
+                    chance: 0.5
+                  - x: 16
+                    y: 160
+                    chance: 0.5
               
             - name: tree
               x: 0

@@ -1,3 +1,6 @@
+import random
+import world.factory
+
 from . import basetask
 from data.ai.task import BaseTaskParameter, SuccessTask
 
@@ -18,9 +21,14 @@ class HarvestTaskParser(basetask.BaseTaskParser):
         if self.input in self.pipeline:
             entity = self.pipeline[self.input]
             pos = data.game.region.get_pos(entity)
-            data.game.region.remove_entity(entity)
             data.dirty_pos.add(pos)
-            self.successful = True
+            data.game.region.remove_entity(entity)
+            resource = data.config.entity.statics[entity.id].resources[0]
+            if random.random() <= resource.chance:
+                self.successful = True
+                id = data.config.resources.resources[resource.type].entity
+                resource_entity = world.factory.new_static_entity(id, data)
+                data.game.region.set_pos(resource_entity, pos)
 
         base_task_parameter = BaseTaskParameter()
         base_task_parameter.type = self.type
