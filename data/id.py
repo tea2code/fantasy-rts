@@ -29,9 +29,10 @@ AI_TASK_TYPE_FINDENTITY = 'ai.task.type.findentity'
 AI_TASK_TYPE_DEMO_RANDOMPOINT = 'ai.task.type.demo.randompoint'
 AI_TASK_TYPE_HARVEST = 'ai.task.type.harvest'
 AI_TASK_TYPE_DROP = 'ai.task.type.drop'
+AI_TASK_TYPE_RELEASERESOURCE = 'ai.task.type.releaseresource'
 _AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_GOTO, AI_TASK_TYPE_DEMO_RANDOMPOINT,
                  AI_TASK_TYPE_FINDRESOURCE, AI_TASK_TYPE_HARVEST, AI_TASK_TYPE_FINDENTITY,
-                 AI_TASK_TYPE_DROP]
+                 AI_TASK_TYPE_DROP, AI_TASK_TYPE_RELEASERESOURCE]
 
 # Entity attributes.
 ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'

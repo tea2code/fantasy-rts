@@ -48,3 +48,7 @@ ai:
               type: ai.task.type.drop
               in: resource
               out: 
+            - name: releaseres
+              type: ai.task.type.releaseresource
+              in: entity
+              out: 

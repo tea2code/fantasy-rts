@@ -34,6 +34,7 @@ class DecisionTreeParser:
                 node_id = node.next
             elif node.type == ID.AI_DECISION_NODE_PIPELINE_STOP:
                 pipeline = None
+                node_id = node.next
 
         entity.last_decision_node = node_id
         return task, pipeline
