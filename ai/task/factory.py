@@ -4,6 +4,7 @@ from .gototask import GoToTaskParser
 from .idletask import IdleTaskParser
 from .randompointtask import RandomPointTaskParser
 from .harvesttask import HarvestTaskParser
+from .droptask import DropTaskParser
 from data import id as ID
 from data.ai.task import BaseTaskParameter
 
@@ -55,6 +56,10 @@ class Factory:
             parser = HarvestTaskParser(base_task_parameter=base_task_parameter,
                                        variance_min=config.variance_min,
                                        variance_max=config.variance_max)
+        elif task_type == ID.AI_TASK_TYPE_DROP:
+            parser = DropTaskParser(base_task_parameter=base_task_parameter,
+                                    variance_min=config.variance_min,
+                                    variance_max=config.variance_max)
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
 
@@ -75,6 +80,8 @@ class Factory:
             parser = FindEntityTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_HARVEST:
             parser = HarvestTaskParser(task=task)
+        elif task.type == ID.AI_TASK_TYPE_DROP:
+            parser = DropTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
         return parser

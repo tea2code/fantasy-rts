@@ -148,7 +148,8 @@ class YamlAiReader(basereader.BaseYamlReader):
                 resource = self.read_string(task, self.RESOURCE, None)
                 task_obj = ai.FindResourceTask(type, variance_min, variance_max, input, output, resource)
             elif type in [ID.AI_TASK_TYPE_GOTO, ID.AI_TASK_TYPE_DEMO_RANDOMPOINT,
-                          ID.AI_TASK_TYPE_FINDENTITY, ID.AI_TASK_TYPE_HARVEST]:
+                          ID.AI_TASK_TYPE_FINDENTITY, ID.AI_TASK_TYPE_HARVEST,
+                          ID.AI_TASK_TYPE_DROP]:
                 task_obj = ai.BaseTask(type, variance_min, variance_max, input, output)
             else:
                 raise UnknownTaskTypeException('Type "{0}" is not a known task type.'.format(type))

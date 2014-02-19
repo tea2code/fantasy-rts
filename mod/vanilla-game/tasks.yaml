@@ -44,3 +44,7 @@ ai:
               type: ai.task.type.harvest
               in: entity
               out: resource
+            - name: dropres
+              type: ai.task.type.drop
+              in: resource
+              out: 

@@ -12,7 +12,7 @@ ai:
                 - name: root
                   type: ai.decision.node.random
                   random:
-                    - chance: 0.9
+                    - chance: 0.0
                       next: ai.decision.dwarf.idle
                     - chance: 0.1
                       next: ai.decision.dwarf.harvest.begin
@@ -39,7 +39,7 @@ ai:
                   fail: ai.decision.dwarf.harvest.end
                 - name: harvest.pickupidle
                   type: ai.decision.node.task
-                  task: ai.task.idle
+                  task: ai.task.idleharvest
                   next: ai.decision.dwarf.harvest.pickup
                 - name: harvest.pickup
                   type: ai.decision.node.task
@@ -54,8 +54,16 @@ ai:
                 - name: harvest.gotodrop
                   type: ai.decision.node.task
                   task: ai.task.goto
-                  success: ai.decision.dwarf.harvest.end
+                  success: ai.decision.dwarf.harvest.dropidle
                   fail: ai.decision.dwarf.harvest.end
+                - name: harvest.dropidle
+                  type: ai.decision.node.task
+                  task: ai.task.idlestore
+                  next: ai.decision.dwarf.harvest.drop
+                - name: harvest.drop
+                  type: ai.decision.node.task
+                  task: ai.task.dropres
+                  next: ai.decision.dwarf.harvest.end
                 - name: harvest.end
                   type: ai.decision.node.pipeline.start
                   next: ai.decision.dwarf.idle

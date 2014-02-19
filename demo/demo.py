@@ -37,8 +37,8 @@ class Demo:
 
         # Add creatures.
         run_time = 0
-        num_x = 10
-        num_y = 20
+        num_x = 1
+        num_y = 1
         for x in range(1, num_x + 1):
             for y in range(1, num_y + 1):
                 entity = factory.new_add_dynamic_entity(self.data.game.race_player, self.data, run_time, x, y, z=0)
