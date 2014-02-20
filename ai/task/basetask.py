@@ -1,4 +1,9 @@
 from abc import abstractmethod
+from data.ai.task import BaseTaskParameter
+
+
+class PipelineParameterException(Exception):
+    """ Raised if a necessary pipeline parameter is not set. """
 
 
 class TaskParameterException(Exception):
@@ -40,6 +45,7 @@ class BaseTaskParser:
             self.entity = base_task_parameter.entity
             self.prev_task = base_task_parameter.prev_task
             if base_task_parameter.prev_task:
+                # Remove previous task of previous task to prevent memory leak.
                 base_task_parameter.prev_task.prev_task = None
             self.type = base_task_parameter.type
             self.variance_max = variance_max
@@ -63,19 +69,29 @@ class BaseTaskParser:
     def create_new(self, data):
         """ Creates a new task and returns it. """
 
-    @abstractmethod
     def execute_next(self, data):
         """ Execute next step in task on data. """
 
-    @abstractmethod
     def is_complete(self):
         """ Returns true if task is complete else false. """
+        return True
 
     @abstractmethod
     def is_success(self):
         """ Returns true if task is successful else false. """
 
-    @abstractmethod
     def time(self):
         """ Returns the execution time in seconds of the current step. After
         this time the next step can be executed. """
+        return 0.0
+
+    def base_task_parameter(self):
+        """ Returns the base task parameter of this parser. """
+        base_task_parameter = BaseTaskParameter()
+        base_task_parameter.type = self.type
+        base_task_parameter.prev_task = self.prev_task
+        base_task_parameter.entity = self.entity
+        base_task_parameter.input = self.input
+        base_task_parameter.output = self.output
+        base_task_parameter.pipeline = self.pipeline
+        return base_task_parameter

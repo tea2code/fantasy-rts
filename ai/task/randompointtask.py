@@ -1,7 +1,7 @@
 import random
 
 from . import basetask
-from data.ai.task import BaseTaskParameter, BaseTask
+from data.ai.task import BaseTask
 
 
 class RandomPointTaskParser(basetask.BaseTaskParser):
@@ -15,25 +15,11 @@ class RandomPointTaskParser(basetask.BaseTaskParser):
         if self.output:
             goal = data.game.region.free_random_pos(self.entity.blocked, 0)
             self.pipeline[self.output] = goal
+        else:
+            raise basetask.PipelineParameterException()
 
-        base_task_parameter = BaseTaskParameter()
-        base_task_parameter.type = self.type
-        base_task_parameter.prev_task = self.prev_task
-        base_task_parameter.entity = self.entity
-        base_task_parameter.input = self.input
-        base_task_parameter.output = self.output
-        base_task_parameter.pipeline = self.pipeline
-        self.task = BaseTask(base_task_parameter)
+        self.task = BaseTask(self.base_task_parameter())
         return self.task
-
-    def execute_next(self, data):
-        pass
-
-    def is_complete(self):
-        return True
 
     def is_success(self):
         return True
-
-    def time(self):
-        return 0.0

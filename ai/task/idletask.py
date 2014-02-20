@@ -1,7 +1,7 @@
 import random
 
 from . import basetask
-from data.ai.task import BaseTaskParameter, IdleTask
+from data.ai.task import IdleTask
 
 
 class IdleTaskParser(basetask.BaseTaskParser):
@@ -19,6 +19,8 @@ class IdleTaskParser(basetask.BaseTaskParser):
             self.duration = self.task.duration
         elif self.input in self.pipeline:
             self.duration = self.pipeline[self.input]
+        if self.duration is None:
+            raise basetask.TaskParameterException()
 
     def create_new(self, data):
         if isinstance(self.duration, list):
@@ -32,21 +34,8 @@ class IdleTaskParser(basetask.BaseTaskParser):
                 self.duration = self.duration[0]
         self.duration = self.duration + random.uniform(self.variance_min, self.variance_max)
 
-        base_task_parameter = BaseTaskParameter()
-        base_task_parameter.type = self.type
-        base_task_parameter.prev_task = self.prev_task
-        base_task_parameter.entity = self.entity
-        base_task_parameter.input = self.input
-        base_task_parameter.output = self.output
-        base_task_parameter.pipeline = self.pipeline
-        self.task = IdleTask(base_task_parameter, self.duration)
+        self.task = IdleTask(self.base_task_parameter(), self.duration)
         return self.task
-
-    def execute_next(self, data):
-        pass
-
-    def is_complete(self):
-        return True
 
     def is_success(self):
         return True

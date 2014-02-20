@@ -2,7 +2,7 @@ import random
 import world.factory
 
 from . import basetask
-from data.ai.task import BaseTaskParameter, SuccessTask
+from data.ai.task import SuccessTask
 
 
 class HarvestTaskParser(basetask.BaseTaskParser):
@@ -18,7 +18,7 @@ class HarvestTaskParser(basetask.BaseTaskParser):
         self.successful = task.successful if task else False
 
     def create_new(self, data):
-        if self.input in self.pipeline:
+        if self.input in self.pipeline and self.output:
             entity = self.pipeline[self.input]
             pos = data.game.region.get_pos(entity)
             data.dirty_pos.add(pos)
@@ -30,25 +30,11 @@ class HarvestTaskParser(basetask.BaseTaskParser):
                 resource_entity = world.factory.new_static_entity(id, data)
                 if self.output:
                     self.pipeline[self.output] = resource_entity
+        else:
+            raise basetask.PipelineParameterException()
 
-        base_task_parameter = BaseTaskParameter()
-        base_task_parameter.type = self.type
-        base_task_parameter.prev_task = self.prev_task
-        base_task_parameter.entity = self.entity
-        base_task_parameter.input = self.input
-        base_task_parameter.output = self.output
-        base_task_parameter.pipeline = self.pipeline
-        self.task = SuccessTask(base_task_parameter, self.successful)
+        self.task = SuccessTask(self.base_task_parameter(), self.successful)
         return self.task
-
-    def execute_next(self, data):
-        pass
-
-    def is_complete(self):
-        return True
 
     def is_success(self):
         return self.successful
-
-    def time(self):
-        return 0.0

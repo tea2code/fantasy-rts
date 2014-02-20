@@ -1,5 +1,5 @@
 from . import basetask
-from data.ai.task import BaseTaskParameter, SuccessTask
+from data.ai.task import SuccessTask
 
 
 class DropTaskParser(basetask.BaseTaskParser):
@@ -20,25 +20,11 @@ class DropTaskParser(basetask.BaseTaskParser):
             pos = data.game.region.get_pos(self.entity)
             entity = self.pipeline[self.input]
             data.game.region.set_pos(entity, pos)
+        else:
+            raise basetask.PipelineParameterException()
 
-        base_task_parameter = BaseTaskParameter()
-        base_task_parameter.type = self.type
-        base_task_parameter.prev_task = self.prev_task
-        base_task_parameter.entity = self.entity
-        base_task_parameter.input = self.input
-        base_task_parameter.output = self.output
-        base_task_parameter.pipeline = self.pipeline
-        self.task = SuccessTask(base_task_parameter, self.successful)
+        self.task = SuccessTask(self.base_task_parameter(), self.successful)
         return self.task
-
-    def execute_next(self, data):
-        pass
-
-    def is_complete(self):
-        return True
 
     def is_success(self):
         return self.successful
-
-    def time(self):
-        return 0.0

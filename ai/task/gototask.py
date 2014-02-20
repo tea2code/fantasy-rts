@@ -4,7 +4,7 @@ import logging
 from . import basetask
 from .. import pathfinding
 from data import id as ID
-from data.ai.task import BaseTaskParameter, GoToTask
+from data.ai.task import GoToTask
 from data.world.entity.movable import Direction
 
 
@@ -23,6 +23,8 @@ class GoToTaskParser(basetask.BaseTaskParser):
             self.goal = self.task.goal
         elif self.input in self.pipeline:
             self.goal = self.pipeline[self.input]
+        if self.goal is None:
+            raise basetask.TaskParameterException()
 
     def create_new(self, data):
         region = data.game.region
@@ -37,14 +39,7 @@ class GoToTaskParser(basetask.BaseTaskParser):
             time = 1.0 + random.uniform(self.variance_min, self.variance_max)
             time_per_step = time / self.entity.moving[ID.ENTITY_ATTRIBUTE_MOVING_WALK]
 
-        base_task_parameter = BaseTaskParameter()
-        base_task_parameter.type = self.type
-        base_task_parameter.prev_task = self.prev_task
-        base_task_parameter.entity = self.entity
-        base_task_parameter.input = self.input
-        base_task_parameter.output = self.output
-        base_task_parameter.pipeline = self.pipeline
-        self.task = GoToTask(base_task_parameter, self.goal, path, time_per_step)
+        self.task = GoToTask(self.base_task_parameter(), self.goal, path, time_per_step)
         return self.task
 
     def execute_next(self, data):
