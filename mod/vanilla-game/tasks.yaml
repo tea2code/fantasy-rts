@@ -11,20 +11,15 @@ ai:
               type: ai.task.type.idle
               durations: 
                 - duration: 2.0
-              in: 
-              out: 
             - name: goto
               type: ai.task.type.goto
               in: goal
-              out: 
             - name: randompoint
               type: ai.task.type.demo.randompoint
-              in: 
               out: goal
             - name: findfood
               type: ai.task.type.findresource
               resource: resource.resource.berry
-              in: 
               out: entity
             - name: findentity
               type: ai.task.type.findentity
@@ -33,13 +28,9 @@ ai:
             - name: idleharvest
               type: ai.task.type.idle
               duration: 5.0
-              in: 
-              out: 
             - name: idlestore
               type: ai.task.type.idle
               duration: 2.0
-              in: 
-              out: 
             - name: pickupres
               type: ai.task.type.harvest
               in: entity
@@ -47,8 +38,6 @@ ai:
             - name: dropres
               type: ai.task.type.drop
               in: resource
-              out: 
             - name: releaseres
               type: ai.task.type.releaseresource
               in: entity
-              out: 
