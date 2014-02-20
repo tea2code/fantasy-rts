@@ -17,8 +17,8 @@ Current Version: **11**
 - Version 9: Refactoring. Working shrubs. Better GotoTask.
 - Version 10: Decision tree. Configuration of current game and tasks.
 - Version 11: AI refactoring. Food.
-- Version 12: Events. Wood.
-- Version 13: Mouse and keyboard input.
+- Version 12: Wood. Documentation. Refactoring.
+- Version 13: Events. Mouse and keyboard input.
 - Version 14: Multi-Block Sprites.
 - Version 15: Sidebar.
 
