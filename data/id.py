@@ -24,15 +24,15 @@ _AI_DECISION_NODE = [AI_DECISION_NODE_TASK, AI_DECISION_NODE_RANDOM,
 # Task types.
 AI_TASK_TYPE_IDLE = 'ai.task.type.idle'
 AI_TASK_TYPE_GOTO = 'ai.task.type.goto'
-AI_TASK_TYPE_FINDRESOURCE = 'ai.task.type.findresource'
-AI_TASK_TYPE_FINDENTITY = 'ai.task.type.findentity'
+AI_TASK_TYPE_FIND_RESOURCE = 'ai.task.type.find.resource'
+AI_TASK_TYPE_FIND_ENTITY = 'ai.task.type.find.entity'
 AI_TASK_TYPE_DEMO_RANDOMPOINT = 'ai.task.type.demo.randompoint'
 AI_TASK_TYPE_HARVEST = 'ai.task.type.harvest'
 AI_TASK_TYPE_DROP = 'ai.task.type.drop'
-AI_TASK_TYPE_RELEASERESOURCE = 'ai.task.type.releaseresource'
+AI_TASK_TYPE_RELEASE_RESOURCE = 'ai.task.type.release.resource'
 _AI_TASK_TYPE = [AI_TASK_TYPE_IDLE, AI_TASK_TYPE_GOTO, AI_TASK_TYPE_DEMO_RANDOMPOINT,
-                 AI_TASK_TYPE_FINDRESOURCE, AI_TASK_TYPE_HARVEST, AI_TASK_TYPE_FINDENTITY,
-                 AI_TASK_TYPE_DROP, AI_TASK_TYPE_RELEASERESOURCE]
+                 AI_TASK_TYPE_FIND_RESOURCE, AI_TASK_TYPE_HARVEST, AI_TASK_TYPE_FIND_ENTITY,
+                 AI_TASK_TYPE_DROP, AI_TASK_TYPE_RELEASE_RESOURCE]
 
 # Entity attributes.
 ENTITY_ATTRIBUTE_MOVING_WALK = 'entity.attribute.moving.walk'

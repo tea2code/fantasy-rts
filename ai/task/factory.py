@@ -44,12 +44,12 @@ class Factory:
             parser = RandomPointTaskParser(base_task_parameter=base_task_parameter,
                                            variance_min=config.variance_min,
                                            variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_FINDRESOURCE:
+        elif task_type == ID.AI_TASK_TYPE_FIND_RESOURCE:
             parser = FindResourceTaskParser(base_task_parameter=base_task_parameter,
                                             variance_min=config.variance_min,
                                             variance_max=config.variance_max,
                                             resource=config.resource)
-        elif task_type == ID.AI_TASK_TYPE_FINDENTITY:
+        elif task_type == ID.AI_TASK_TYPE_FIND_ENTITY:
             parser = FindEntityTaskParser(base_task_parameter=base_task_parameter,
                                           variance_min=config.variance_min,
                                           variance_max=config.variance_max)
@@ -61,7 +61,7 @@ class Factory:
             parser = DropTaskParser(base_task_parameter=base_task_parameter,
                                     variance_min=config.variance_min,
                                     variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_RELEASERESOURCE:
+        elif task_type == ID.AI_TASK_TYPE_RELEASE_RESOURCE:
             parser = ReleaseResourceTaskParser(base_task_parameter=base_task_parameter,
                                                variance_min=config.variance_min,
                                                variance_max=config.variance_max)
@@ -79,15 +79,15 @@ class Factory:
             parser = IdleTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
             parser = RandomPointTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_FINDRESOURCE:
+        elif task.type == ID.AI_TASK_TYPE_FIND_RESOURCE:
             parser = FindResourceTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_FINDENTITY:
+        elif task.type == ID.AI_TASK_TYPE_FIND_ENTITY:
             parser = FindEntityTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_HARVEST:
             parser = HarvestTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_DROP:
             parser = DropTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_RELEASERESOURCE:
+        elif task.type == ID.AI_TASK_TYPE_RELEASE_RESOURCE:
             parser = ReleaseResourceTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))

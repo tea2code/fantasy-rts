@@ -24,12 +24,12 @@ ai:
                   next: ai.decision.dwarf.harvest.findfood
                 - name: harvest.findfood
                   type: ai.decision.node.task
-                  task: ai.task.findfood
+                  task: ai.task.find.food
                   success: ai.decision.dwarf.harvest.findentity
                   fail: ai.decision.dwarf.harvest.end
                 - name: harvest.findentity
                   type: ai.decision.node.task
-                  task: ai.task.findentity
+                  task: ai.task.find.entity
                   success: ai.decision.dwarf.harvest.gotores
                   fail: ai.decision.dwarf.harvest.end
                 - name: harvest.gotores
@@ -39,11 +39,11 @@ ai:
                   fail: ai.decision.dwarf.harvest.release
                 - name: harvest.pickupidle
                   type: ai.decision.node.task
-                  task: ai.task.idleharvest
+                  task: ai.task.idle.harvest
                   next: ai.decision.dwarf.harvest.pickup
                 - name: harvest.pickup
                   type: ai.decision.node.task
-                  task: ai.task.pickupres
+                  task: ai.task.pickup.resource
                   success: ai.decision.dwarf.harvest.random
                   fail: ai.decision.dwarf.harvest.end
                 - name: harvest.random
@@ -58,15 +58,15 @@ ai:
                   fail: ai.decision.dwarf.harvest.drop
                 - name: harvest.dropidle
                   type: ai.decision.node.task
-                  task: ai.task.idlestore
+                  task: ai.task.idle.store
                   next: ai.decision.dwarf.harvest.drop
                 - name: harvest.drop
                   type: ai.decision.node.task
-                  task: ai.task.dropres
+                  task: ai.task.drop.resource
                   next: ai.decision.dwarf.harvest.end
                 - name: harvest.release
                   type: ai.decision.node.task
-                  task: ai.task.releaseres
+                  task: ai.task.release.resource
                   next: ai.decision.dwarf.harvest.end
                 - name: harvest.end
                   type: ai.decision.node.pipeline.stop

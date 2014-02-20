@@ -17,27 +17,27 @@ ai:
             - name: randompoint
               type: ai.task.type.demo.randompoint
               out: goal
-            - name: findfood
-              type: ai.task.type.findresource
+            - name: find.food
+              type: ai.task.type.find.resource
               resource: resource.resource.berry
               out: entity
-            - name: findentity
-              type: ai.task.type.findentity
+            - name: find.entity
+              type: ai.task.type.find.entity
               in: entity
               out: goal
-            - name: idleharvest
+            - name: idle.harvest
               type: ai.task.type.idle
               duration: 5.0
-            - name: idlestore
+            - name: idle.store
               type: ai.task.type.idle
               duration: 2.0
-            - name: pickupres
+            - name: pickup.resource
               type: ai.task.type.harvest
               in: entity
               out: resource
-            - name: dropres
+            - name: drop.resource
               type: ai.task.type.drop
               in: resource
-            - name: releaseres
-              type: ai.task.type.releaseresource
+            - name: release.resource
+              type: ai.task.type.release.resource
               in: entity
