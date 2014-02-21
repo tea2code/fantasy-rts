@@ -21,13 +21,17 @@ ai:
                   task: ai.task.idle
                 - name: harvest.begin
                   type: ai.decision.node.pipeline.start
-                  next: ai.decision.dwarf.harvest.findfood
-                - name: harvest.findfood
+                  next: ai.decision.dwarf.harvest.food
+                - name: harvest.food
+                  type: ai.decision.node.task
+                  task: ai.task.resource.food
+                  next: ai.decision.dwarf.harvest.find.food
+                - name: harvest.find.food
                   type: ai.decision.node.task
                   task: ai.task.find.food
-                  success: ai.decision.dwarf.harvest.findentity
+                  success: ai.decision.dwarf.harvest.find.entity
                   fail: ai.decision.dwarf.harvest.end
-                - name: harvest.findentity
+                - name: harvest.find.entity
                   type: ai.decision.node.task
                   task: ai.task.find.entity
                   success: ai.decision.dwarf.harvest.gotores
@@ -71,3 +75,4 @@ ai:
                 - name: harvest.end
                   type: ai.decision.node.pipeline.stop
                   next: ai.decision.dwarf.idle
+                

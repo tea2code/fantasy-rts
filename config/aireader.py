@@ -35,6 +35,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     TASKS
     TREE
     TYPE
+    VALUE
     VARIANCE_MIN
     VARIANCE_MAX
     SUCCESS
@@ -60,6 +61,7 @@ class YamlAiReader(basereader.BaseYamlReader):
     TASKS = 'tasks'
     TREE = 'tree'
     TYPE = 'type'
+    VALUE = 'value'
     VARIANCE_MIN = 'variance_min'
     VARIANCE_MAX = 'variance_max'
 
@@ -147,6 +149,9 @@ class YamlAiReader(basereader.BaseYamlReader):
             elif type == ID.AI_TASK_TYPE_FIND_RESOURCE:
                 resource = self.read_string(task, self.RESOURCE, None)
                 task_obj = ai.FindResourceTask(type, variance_min, variance_max, input, output, resource)
+            elif type == ID.AI_TASK_TYPE_PIPELINE_VALUE:
+                value = self.read_object(task, self.VALUE, None)
+                task_obj = ai.PipelineValue(type, variance_min, variance_max, input, output, value)
             elif type in [ID.AI_TASK_TYPE_GOTO, ID.AI_TASK_TYPE_DEMO_RANDOMPOINT,
                           ID.AI_TASK_TYPE_FIND_ENTITY, ID.AI_TASK_TYPE_HARVEST,
                           ID.AI_TASK_TYPE_DROP, ID.AI_TASK_TYPE_RELEASE_RESOURCE]:

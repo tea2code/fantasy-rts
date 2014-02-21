@@ -62,3 +62,15 @@ class HarvestTask(BaseTask):
     def __init__(self, type, variance_min, variance_max, input, output, resource):
         super().__init__(type, variance_min, variance_max, input, output)
         self.resource = resource
+
+
+class PipelineValue(BaseTask):
+    """ Find a harvest task.
+
+    Member:
+    value -- The value to set.
+    """
+
+    def __init__(self, type, variance_min, variance_max, input, output, value):
+        super().__init__(type, variance_min, variance_max, input, output)
+        self.value = value

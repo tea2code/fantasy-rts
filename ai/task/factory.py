@@ -6,6 +6,7 @@ from .randompointtask import RandomPointTaskParser
 from .harvesttask import HarvestTaskParser
 from .droptask import DropTaskParser
 from .releaseresourcetask import ReleaseResourceTaskParser
+from .pipelinevaluetask import PipelineValueTaskParser
 from data import id as ID
 from data.ai.task import BaseTaskParameter
 
@@ -65,6 +66,11 @@ class Factory:
             parser = ReleaseResourceTaskParser(base_task_parameter=base_task_parameter,
                                                variance_min=config.variance_min,
                                                variance_max=config.variance_max)
+        elif task_type == ID.AI_TASK_TYPE_PIPELINE_VALUE:
+            parser = PipelineValueTaskParser(base_task_parameter=base_task_parameter,
+                                             variance_min=config.variance_min,
+                                             variance_max=config.variance_max,
+                                             value=config.value)
         else:
             raise UnknownTaskException('Task type "{0}" is unknown.'.format(task_type))
 
@@ -89,6 +95,8 @@ class Factory:
             parser = DropTaskParser(task=task)
         elif task.type == ID.AI_TASK_TYPE_RELEASE_RESOURCE:
             parser = ReleaseResourceTaskParser(task=task)
+        elif task.type == ID.AI_TASK_TYPE_PIPELINE_VALUE:
+            parser = PipelineValueTaskParser(task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
         return parser

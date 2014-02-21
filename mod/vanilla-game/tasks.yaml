@@ -19,7 +19,8 @@ ai:
               out: goal
             - name: find.food
               type: ai.task.type.find.resource
-              resource: resource.resource.berry
+              resource: 
+              in: resource.name
               out: entity
             - name: find.entity
               type: ai.task.type.find.entity
@@ -41,3 +42,7 @@ ai:
             - name: release.resource
               type: ai.task.type.release.resource
               in: entity
+            - name: resource.food
+              type: ai.task.type.pipeline.value
+              value: resource.resource.berry
+              out: resource.name
