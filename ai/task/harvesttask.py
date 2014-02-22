@@ -23,7 +23,7 @@ class HarvestTaskParser(basetask.BaseTaskParser):
             pos = data.game.region.get_pos(entity)
             data.dirty_pos.add(pos)
             data.game.region.remove_entity(entity)
-            resource = data.config.entity.statics[entity.id].resources[0]
+            resource = data.config.entity.statics[entity.id].resource
             if random.random() <= resource.chance:
                 self.successful = True
                 id = data.config.resources.resources[resource.type].entity

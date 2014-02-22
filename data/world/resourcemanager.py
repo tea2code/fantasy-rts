@@ -17,8 +17,8 @@ class ResourceManager:
 
         self._entity_resource = {}
         for key, entity in entity_config.statics.items():
-            for resource in entity.resources:
-                self._entity_resource.setdefault(key, []).append(resource.type)
+            if entity.resource:
+                self._entity_resource.setdefault(key, []).append(entity.resource.type)
 
     def add_entity(self, entity):
         """ Add entity to resource manager. """

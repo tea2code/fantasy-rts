@@ -29,7 +29,7 @@ entity:
               blocking:
                 - type: entity.attribute.blocking.static
               resource: 
-                - type: resource.resource.berry
+                  type: resource.resource.berry
                   chance: 0.8
                   
             - name: berry
@@ -45,7 +45,7 @@ entity:
                 - type: entity.attribute.blocking.static
               blocking:
               resource: 
-                - type: resource.resource.wood
+                  type: resource.resource.wood
                   chance: 1.0
               
             - name: wood

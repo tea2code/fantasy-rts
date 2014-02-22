@@ -119,15 +119,13 @@ class YamlEntityReader(basereader.BaseYamlReader):
 
     def __resource(self, root):
         """ Reads the resource attributes of a entity. """
-        resources = self.read_req_object(root, self.RESOURCE)
-        resources = resources if resources else []
-        result = []
-        for resource in resources:
+        resource = self.read_object(root, self.RESOURCE, None)
+        resource_obj = None
+        if resource:
             resource_obj = entity.Resource()
             resource_obj.type = self.read_req_string(resource, self.TYPE)
             resource_obj.chance = self.read_req_float(resource, self.CHANCE)
-            result.append(resource_obj)
-        return result
+        return resource_obj
 
     def __statics(self, namespace, root, data):
         """ Parse statics. """
@@ -140,7 +138,7 @@ class YamlEntityReader(basereader.BaseYamlReader):
             s = entity.StaticEntity()
             s.blocked = self.__blocked(static)
             s.blocking = self.__blocking(static)
-            s.resources = self.__resource(static)
+            s.resource = self.__resource(static)
             data.config.entity.statics[id] = s
 
     def __tiles(self, namespace, root, data):

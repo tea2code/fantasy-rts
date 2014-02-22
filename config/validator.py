@@ -64,11 +64,11 @@ class Validator:
             for blocking in value.blocking:
                 if blocking.type not in entity.attributes:
                     raise ValidatorError('Static entity "{0}" has unknown blocking type "{1}".'.format(key, blocking.type))
-            for resource in value.resources:
-                if resource.type not in resources.resources:
-                    raise ValidatorError('Static entity "{0}" has unknown resource type "{1}".'.format(key, resource.type))
-                if resource.chance < 0.0:
-                    raise ValidatorError('Chance of resource type "{0}" of static entity "{1}" may not be negative.'.format(resource.type, key))
+            if value.resource:
+                if value.resource.type not in resources.resources:
+                    raise ValidatorError('Static entity "{0}" has unknown resource type "{1}".'.format(key, value.resource.type))
+                if value.resource.chance < 0.0:
+                    raise ValidatorError('Chance of resource type "{0}" of static entity "{1}" may not be negative.'.format(value.resource.type, key))
 
         # Tiles
         for key, value in entity.tiles.items():

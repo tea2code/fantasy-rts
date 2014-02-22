@@ -89,13 +89,13 @@ class StaticEntity:
     Member:
     blocked -- List of blocked attributes (list).
     blocking -- List of blocking attributes (list).
-    resource -- List of resource attributes (list).
+    resource -- The resource (resource).
     """
 
     def __init__(self):
         self.blocked = []
         self.blocking = []
-        self.resources = []
+        self.resource = None
 
 
 class TileEntity:
