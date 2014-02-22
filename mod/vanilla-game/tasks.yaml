@@ -17,7 +17,7 @@ ai:
             - name: randompoint
               type: ai.task.type.demo.randompoint
               out: goal
-            - name: find.food
+            - name: find.resource
               type: ai.task.type.find.resource
               resource: 
               in: resource.name
@@ -45,4 +45,8 @@ ai:
             - name: resource.food
               type: ai.task.type.pipeline.value
               value: resource.resource.berry
+              out: resource.name
+            - name: resource.wood
+              type: ai.task.type.pipeline.value
+              value: resource.resource.wood
               out: resource.name

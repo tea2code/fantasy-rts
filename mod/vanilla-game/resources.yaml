@@ -7,8 +7,12 @@ resources:
             - name: berry
               type: resource.type.food
               entity: entity.static.berry
+            - name: wood
+              type: resource.type.wood
+              entity: entity.static.wood
         
     types:
         namespace: type
         type:
             - name: food
+            - name: wood

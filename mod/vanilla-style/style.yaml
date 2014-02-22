@@ -32,6 +32,10 @@ style:
             - name: tree
               map: entity.static.tree
               to: style.sprite.tree
+              
+            - name: wood
+              map: entity.static.wood
+              to: style.sprite.wood
                 
             - name: dwarf-north
               map: entity.dynamic.dwarf-north

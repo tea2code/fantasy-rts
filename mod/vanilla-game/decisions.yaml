@@ -21,14 +21,25 @@ ai:
                   task: ai.task.idle
                 - name: harvest.begin
                   type: ai.decision.node.pipeline.start
-                  next: ai.decision.dwarf.harvest.food
+                  next: ai.decision.dwarf.harvest.decide
+                - name: harvest.decide
+                  type: ai.decision.node.random
+                  random:
+                    - chance: 0.5
+                      next: ai.decision.dwarf.harvest.food
+                    - chance: 0.5
+                      next: ai.decision.dwarf.harvest.wood
                 - name: harvest.food
                   type: ai.decision.node.task
                   task: ai.task.resource.food
-                  next: ai.decision.dwarf.harvest.find.food
-                - name: harvest.find.food
+                  next: ai.decision.dwarf.harvest.find.resource
+                - name: harvest.wood
                   type: ai.decision.node.task
-                  task: ai.task.find.food
+                  task: ai.task.resource.wood
+                  next: ai.decision.dwarf.harvest.find.resource
+                - name: harvest.find.resource
+                  type: ai.decision.node.task
+                  task: ai.task.find.resource
                   success: ai.decision.dwarf.harvest.find.entity
                   fail: ai.decision.dwarf.harvest.end
                 - name: harvest.find.entity

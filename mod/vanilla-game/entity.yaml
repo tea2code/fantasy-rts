@@ -32,6 +32,11 @@ entity:
                 - type: resource.resource.berry
                   chance: 0.8
                   
+            - name: berry
+              blocked: 
+              blocking:
+              resource: 
+                  
             - name: tree
               blocked:
                 - type: entity.attribute.blocking.wall
@@ -39,9 +44,11 @@ entity:
               blocking:
                 - type: entity.attribute.blocking.static
               blocking:
-              resource:
+              resource: 
+                - type: resource.resource.wood
+                  chance: 1.0
               
-            - name: berry
+            - name: wood
               blocked: 
               blocking:
               resource: 
