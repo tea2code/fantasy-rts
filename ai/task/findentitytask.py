@@ -15,7 +15,7 @@ class FindEntityTaskParser(basetask.BaseTaskParser):
         self.successful = task.successful if task else False
 
     def create_new(self, data):
-        if self.input in self.pipeline:
+        if self.input in self.pipeline and self.output:
             entity = self.pipeline[self.input]
             pos = data.game.region.get_pos(entity)
             if pos:
