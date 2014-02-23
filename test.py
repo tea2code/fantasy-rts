@@ -1,7 +1,7 @@
 from ai import pathfinding
 from config import basereader
 from data.ai import tasklist
-from data.world import block, point, region
+from data.world import block, point, region, resourcemanager
 from ui import helper as ui_helper
 
 if __name__ == '__main__':
@@ -13,3 +13,4 @@ if __name__ == '__main__':
     doctest.testmod(ui_helper)
     doctest.testmod(block)
     doctest.testmod(tasklist)
+    doctest.testmod(resourcemanager)
