@@ -9,7 +9,7 @@ class DecisionTreeRenderer:
     """ Renders a decision tree for visualization.
 
     Constants:
-    FRUCHTERMAN_K -- Value k of fruchterman reingold algorithm.
+    FILE_EXTENSION -- The file extension (string).
     LABEL_FAIL -- Edge label for failure (string).
     LABEL_SUCCESS -- Edge label for success (string).
     NODE_SIZE -- Size of a node (int).
@@ -24,10 +24,10 @@ class DecisionTreeRenderer:
     file_template -- The template for file names (string).
     """
 
-    FRUCHTERMAN_K = 100
+    FILE_EXTENSION = 'png'
     LABEL_FAIL = 'fail'
     LABEL_SUCCESS = 'success'
-    NODE_SIZE = 2000
+    NODE_SIZE = 500
     TYPE_RANDOM = 'R'
     TYPE_START = 'S'
     TYPE_TASK = 'T'
@@ -54,7 +54,7 @@ class DecisionTreeRenderer:
 
     def __id_to_name(self, type, id):
         """ Converts id to node name. """
-        return type + ':' + id.split('.')[-1]
+        return type + ':' + id
 
     def __render_tree(self, entity, start_node, nodes):
         """ Render a single tree. """
@@ -94,13 +94,14 @@ class DecisionTreeRenderer:
                     g.add_edge(name, next_name)
 
         # Setup rendering.
-        pos = nx.fruchterman_reingold_layout(g, k=self.FRUCHTERMAN_K)
+        plt.figure(figsize=(20, 20))
+        pos = nx.spring_layout(g)
         nx.draw_networkx_nodes(g, pos, node_size=self.NODE_SIZE)
         nx.draw_networkx_edges(g, pos)
         nx.draw_networkx_labels(g, pos)
         nx.draw_networkx_edge_labels(g, pos, edge_labels=edge_labels)
 
         # Save graph.
-        file = self.directory + self.file_template.format(entity.split('.')[-1])
+        file = self.directory + self.file_template.format(entity.split('.')[-1], self.FILE_EXTENSION)
         plt.axis('off')
         plt.savefig(file)

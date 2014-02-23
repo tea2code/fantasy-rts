@@ -36,7 +36,7 @@ class MainLoopImp(mainloop.MainLoop):
     LOG_CONFIG_FILE = LOG_DIR + 'config.yaml'
     LOG_TEXT_EXCEPTION = 'Exception thrown'
     DECISION_GRAPH_DIR = LOG_DIR + 'decision/'
-    DECISION_GRAPH_FILE = '{0}.png'
+    DECISION_GRAPH_FILE = '{0}.{1}'
 
     def __init__(self):
         # Logging.
