@@ -1,6 +1,6 @@
 import random
-import world.factory
 
+import world.factory
 from . import basetask
 from data.ai.task import SuccessTask
 

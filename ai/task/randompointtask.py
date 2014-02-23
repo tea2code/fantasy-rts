@@ -1,5 +1,3 @@
-import random
-
 from . import basetask
 from data.ai.task import BaseTask
 

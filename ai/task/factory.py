@@ -16,7 +16,34 @@ class UnknownTaskException(Exception):
 
 
 class Factory:
-    """ Factory for task parsers. """
+    """ Factory for task parsers.
+
+    Member:
+    _from_id -- Mapping of id to task for from_id(). Only for tasks without
+                special parameter (dict).
+    _from_task -- Mapping of id to task for from_task() (dict).
+    """
+
+    _from_id = {
+        ID.AI_TASK_TYPE_DEMO_RANDOMPOINT: RandomPointTaskParser,
+        ID.AI_TASK_TYPE_DROP: DropTaskParser,
+        ID.AI_TASK_TYPE_FIND_ENTITY: FindEntityTaskParser,
+        ID.AI_TASK_TYPE_GOTO: GoToTaskParser,
+        ID.AI_TASK_TYPE_HARVEST: HarvestTaskParser,
+        ID.AI_TASK_TYPE_RELEASE_RESOURCE: ReleaseResourceTaskParser
+    }
+
+    _from_task = {
+        ID.AI_TASK_TYPE_DEMO_RANDOMPOINT: RandomPointTaskParser,
+        ID.AI_TASK_TYPE_DROP: DropTaskParser,
+        ID.AI_TASK_TYPE_FIND_ENTITY: FindEntityTaskParser,
+        ID.AI_TASK_TYPE_FIND_RESOURCE: FindResourceTaskParser,
+        ID.AI_TASK_TYPE_GOTO: GoToTaskParser,
+        ID.AI_TASK_TYPE_HARVEST: HarvestTaskParser,
+        ID.AI_TASK_TYPE_IDLE: IdleTaskParser,
+        ID.AI_TASK_TYPE_PIPELINE_VALUE: PipelineValueTaskParser,
+        ID.AI_TASK_TYPE_RELEASE_RESOURCE: ReleaseResourceTaskParser
+    }
 
     @staticmethod
     def from_id(task_id, prev_task, data, pipeline=None, entity=None):
@@ -32,40 +59,20 @@ class Factory:
         base_task_parameter.output = config.output
         base_task_parameter.pipeline = pipeline
 
-        if task_type == ID.AI_TASK_TYPE_GOTO:
-            parser = GoToTaskParser(base_task_parameter=base_task_parameter,
-                                    variance_min=config.variance_min,
-                                    variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_IDLE:
-            parser = IdleTaskParser(base_task_parameter=base_task_parameter,
-                                    variance_min=config.variance_min,
-                                    variance_max=config.variance_max,
-                                    duration=config.duration)
-        elif task_type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
-            parser = RandomPointTaskParser(base_task_parameter=base_task_parameter,
-                                           variance_min=config.variance_min,
-                                           variance_max=config.variance_max)
+        if task_type in Factory._from_id:
+            parser = Factory._from_id[task_type](base_task_parameter=base_task_parameter,
+                                                 variance_min=config.variance_min,
+                                                 variance_max=config.variance_max)
         elif task_type == ID.AI_TASK_TYPE_FIND_RESOURCE:
             parser = FindResourceTaskParser(base_task_parameter=base_task_parameter,
                                             variance_min=config.variance_min,
                                             variance_max=config.variance_max,
                                             resource=config.resource)
-        elif task_type == ID.AI_TASK_TYPE_FIND_ENTITY:
-            parser = FindEntityTaskParser(base_task_parameter=base_task_parameter,
-                                          variance_min=config.variance_min,
-                                          variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_HARVEST:
-            parser = HarvestTaskParser(base_task_parameter=base_task_parameter,
-                                       variance_min=config.variance_min,
-                                       variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_DROP:
-            parser = DropTaskParser(base_task_parameter=base_task_parameter,
+        elif task_type == ID.AI_TASK_TYPE_IDLE:
+            parser = IdleTaskParser(base_task_parameter=base_task_parameter,
                                     variance_min=config.variance_min,
-                                    variance_max=config.variance_max)
-        elif task_type == ID.AI_TASK_TYPE_RELEASE_RESOURCE:
-            parser = ReleaseResourceTaskParser(base_task_parameter=base_task_parameter,
-                                               variance_min=config.variance_min,
-                                               variance_max=config.variance_max)
+                                    variance_max=config.variance_max,
+                                    duration=config.duration)
         elif task_type == ID.AI_TASK_TYPE_PIPELINE_VALUE:
             parser = PipelineValueTaskParser(base_task_parameter=base_task_parameter,
                                              variance_min=config.variance_min,
@@ -79,24 +86,8 @@ class Factory:
     @staticmethod
     def from_task(task):
         """ Finds the parser for the given task. """
-        if task.type == ID.AI_TASK_TYPE_GOTO:
-            parser = GoToTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_IDLE:
-            parser = IdleTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_DEMO_RANDOMPOINT:
-            parser = RandomPointTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_FIND_RESOURCE:
-            parser = FindResourceTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_FIND_ENTITY:
-            parser = FindEntityTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_HARVEST:
-            parser = HarvestTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_DROP:
-            parser = DropTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_RELEASE_RESOURCE:
-            parser = ReleaseResourceTaskParser(task=task)
-        elif task.type == ID.AI_TASK_TYPE_PIPELINE_VALUE:
-            parser = PipelineValueTaskParser(task=task)
+        if task.type in Factory._from_task:
+            parser = Factory._from_task[task.type](task=task)
         else:
             raise UnknownTaskException('Task id "{0}" is unknown.'.format(task.type))
         return parser

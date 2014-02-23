@@ -1,5 +1,5 @@
 from . import basetask
-from data.ai.task import BaseTaskParameter, SuccessTask
+from data.ai.task import SuccessTask
 
 
 class ReleaseResourceTaskParser(basetask.BaseTaskParser):
