@@ -78,6 +78,8 @@ class Validator:
 
         # Style
         style = config.style
+        if not style.cursor_mapping:
+            raise ValidatorError('Style.cursor_mapping may not be empty.')
         if not style.default_mapping:
             raise ValidatorError('Style.default_mapping may not be empty.')
 

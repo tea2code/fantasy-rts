@@ -11,7 +11,9 @@ style:
            
     mappings:
         namespace: mapping
+        cursor: style.sprite.cursor
         default: style.sprite.unknown
+        
         mapping:
             - name: grass
               map: entity.tile.grass

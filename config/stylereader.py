@@ -6,6 +6,7 @@ class YamlStyleReader(basereader.BaseYamlReader):
 
     Constants:
     CHANCE
+    CURSOR
     DEFAULT
     IMAGE
     IMAGES
@@ -26,6 +27,7 @@ class YamlStyleReader(basereader.BaseYamlReader):
     """
 
     CHANCE = 'chance'
+    CURSOR = 'cursor'
     DEFAULT = 'default'
     IMAGE = 'image'
     IMAGES = 'images'
@@ -75,7 +77,8 @@ class YamlStyleReader(basereader.BaseYamlReader):
     def __mappings(self, namespace, root, data):
         """ Parse mappings. """
         mappings = self.read_req_object(root, self.MAPPINGS)
-        data.config.style.default_mapping = self.read_string(mappings, self.DEFAULT, '')
+        data.config.style.cursor_mapping = self.read_string(mappings, self.CURSOR, data.config.style.cursor_mapping)
+        data.config.style.default_mapping = self.read_string(mappings, self.DEFAULT, data.config.style.default_mapping)
 
         for mapping in self.read_object(mappings, self.MAPPING, []):
             map = self.read_req_string(mapping, self.MAP)

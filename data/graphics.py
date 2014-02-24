@@ -1,7 +1,11 @@
+from .world import point
+
+
 class Graphics:
     """ The graphics state.
 
     Member:
+    cursor -- Current position of the cursor (data.world.point).
     tile_x -- The size of a tile in x direction (int).
     tile_y -- The size of a tile in y direction (int).
     view_x -- Size of the view port in x direction (int).
@@ -13,6 +17,7 @@ class Graphics:
     """
 
     def __init__(self):
+        self.cursor = point.Factory.new_point(0, 0, 0)
         self.tile_x = 16
         self.tile_y = 16
         self.view_x = 40

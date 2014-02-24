@@ -8,6 +8,10 @@ style:
             - name: unknown
               x: 0
               y: 16
+              
+            - name: cursor
+              x: 0
+              y: 192
             
             - name: grass
               multiple:

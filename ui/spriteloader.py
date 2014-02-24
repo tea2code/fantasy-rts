@@ -52,3 +52,15 @@ class PygameSpriteLoader:
         # Select image and return result.
         image = self._sprite_images[sprite.image]
         return image, sprite.x, sprite.y
+
+    def get_sprite_by_id(self, id, sprite_num=0):
+        """ Returns the sprite image and the sprite coordinates for given id. """
+        sprite = self._style.sprites[id]
+
+        # In case of multiple sprites select sprite num.
+        if isinstance(sprite, list):
+            sprite = sprite[sprite_num]
+
+        # Select image and return result.
+        image = self._sprite_images[sprite.image]
+        return image, sprite.x, sprite.y

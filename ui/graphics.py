@@ -66,6 +66,10 @@ class PygameGraphics:
         self.__draw_entities(block.get_statics(), x, y, graphics.tile_x, graphics.tile_y)
         self.__draw_entities(block.get_dynamics(), x, y, graphics.tile_x, graphics.tile_y)
 
+        if pos == graphics.cursor:
+            sprite_img, sprite_x, sprite_y = self._sprite_loader.get_sprite_by_id(data.config.style.cursor_mapping)
+            self.screen.blit(sprite_img, (x, y), (sprite_x, sprite_y, graphics.tile_x, graphics.tile_y))
+
         return x, y, graphics.tile_x, graphics.tile_y
 
     def __show_title(self, data):
@@ -80,7 +84,6 @@ class PygameGraphics:
 
         dirty_rects = []
 
-        # First render tile.
         if graphics.view_updated:
             self.__calc_view_offset(graphics.view_offset_x, graphics.view_offset_y)
             self.__draw_background(data)

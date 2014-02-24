@@ -28,6 +28,7 @@ class Style:
     """ A style config.
 
     Member:
+    cursor_mapping -- Sprite id for cursor overlay (string).
     default_mapping -- The default sprite id to use (string).
     images -- Image id to image mapping (dict).
     mappings -- Object id to sprite id mapping (dict).
@@ -35,6 +36,7 @@ class Style:
     """
 
     def __init__(self):
+        self.cursor_mapping = ''
         self.default_mapping = ''
         self.images = {}
         self.mappings = {}

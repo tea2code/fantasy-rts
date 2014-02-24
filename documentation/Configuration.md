@@ -112,6 +112,7 @@ In the mod directory is a file "mod.yaml". It describes which configuration file
     
         mappings:
             namespace: <string, "Namespace part.">
+            cursor: <id, "Mapping of cursor overlay.">
             default: <id, "Default mapping.">
             mapping:
                 - name: <string, "Namespace end part.">
