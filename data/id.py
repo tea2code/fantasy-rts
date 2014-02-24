@@ -4,6 +4,10 @@ Constants with _ as prefix are no IDs but used for validation...
 """
 
 # Actions.
+ACTION_CURSOR_NORTH = 'action.cursor_north'
+ACTION_CURSOR_SOUTH = 'action.cursor_south'
+ACTION_CURSOR_WEST = 'action.cursor_west'
+ACTION_CURSOR_EAST = 'action.cursor_east'
 ACTION_SCROLL_NORTH = 'action.scroll_north'
 ACTION_SCROLL_SOUTH = 'action.scroll_south'
 ACTION_SCROLL_WEST = 'action.scroll_west'
@@ -11,7 +15,9 @@ ACTION_SCROLL_EAST = 'action.scroll_east'
 ACTION_SCROLL_UP = 'action.scroll_up'
 ACTION_SCROLL_DOWN = 'action.scroll_down'
 _ACTION_SCROLL = [ACTION_SCROLL_DOWN, ACTION_SCROLL_EAST, ACTION_SCROLL_NORTH,
-                  ACTION_SCROLL_SOUTH, ACTION_SCROLL_UP, ACTION_SCROLL_WEST]
+                  ACTION_SCROLL_SOUTH, ACTION_SCROLL_UP, ACTION_SCROLL_WEST,
+                  ACTION_CURSOR_EAST, ACTION_CURSOR_NORTH, ACTION_CURSOR_SOUTH,
+                  ACTION_CURSOR_WEST]
 
 # Decision tree nodes.
 AI_DECISION_NODE_RANDOM = 'ai.decision.node.random'

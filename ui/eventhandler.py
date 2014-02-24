@@ -5,6 +5,7 @@ import pygame
 
 from .keys import PygameKeys
 from data import id as ID
+from data.world import point
 
 
 class PygameEventHandler:
@@ -33,8 +34,26 @@ class PygameEventHandler:
         game = data.game
         graph = data.graphics
 
+        # Cursor
+        if event.key == self._keys[ID.ACTION_CURSOR_NORTH]:
+            data.dirty_pos.add(data.graphics.cursor)
+            data.graphics.cursor += point.Factory.new_point(0, -1, 0)
+            data.dirty_pos.add(data.graphics.cursor)
+        elif event.key == self._keys[ID.ACTION_CURSOR_SOUTH]:
+            data.dirty_pos.add(data.graphics.cursor)
+            data.graphics.cursor += point.Factory.new_point(0, +1, 0)
+            data.dirty_pos.add(data.graphics.cursor)
+        elif event.key == self._keys[ID.ACTION_CURSOR_WEST]:
+            data.dirty_pos.add(data.graphics.cursor)
+            data.graphics.cursor += point.Factory.new_point(-1, 0, 0)
+            data.dirty_pos.add(data.graphics.cursor)
+        elif event.key == self._keys[ID.ACTION_CURSOR_EAST]:
+            data.dirty_pos.add(data.graphics.cursor)
+            data.graphics.cursor += point.Factory.new_point(+1, 0, 0)
+            data.dirty_pos.add(data.graphics.cursor)
+
         # Scrolling
-        if event.key == self._keys[ID.ACTION_SCROLL_NORTH]:
+        elif event.key == self._keys[ID.ACTION_SCROLL_NORTH]:
             graph.view_offset_y = max(graph.view_offset_y - config.scroll_width_y,
                                       0)
             graph.view_updated = True

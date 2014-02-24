@@ -37,6 +37,10 @@ Most of the IDs in this game can be modified as long as their usage is consisten
 
 ### Keyboard Config:
 
+- action.cursor_north
+- action.cursor_south
+- action.cursor_west
+- action.cursor_east
 - action.scroll_north
 - action.scroll_south
 - action.scroll_west

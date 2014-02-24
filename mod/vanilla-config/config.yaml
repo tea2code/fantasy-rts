@@ -11,6 +11,14 @@ config:
     window_title: "Fantasy-RTS (FPS: {0:.0f})"
     
     keys:
+        - action: action.cursor_north
+          key: UP
+        - action: action.cursor_south
+          key: DOWN
+        - action: action.cursor_west
+          key: LEFT
+        - action: action.cursor_east
+          key: RIGHT
         - action: action.scroll_north
           key: W
         - action: action.scroll_south
