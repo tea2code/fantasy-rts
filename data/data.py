@@ -1,6 +1,7 @@
 from . import configuration
 from . import game
 from . import graphics
+from . import input
 
 class Data:
     """ The main data object.
@@ -11,6 +12,7 @@ class Data:
     fps -- List of frame per second for complete run time (list).
     game -- The game state.
     graphics -- The graphics state.
+    input -- The input state.
     """
 
     def __init__(self):
@@ -19,3 +21,4 @@ class Data:
         self.fps = []
         self.game = game.Game()
         self.graphics = graphics.Graphics()
+        self.input = input.Input()

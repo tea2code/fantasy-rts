@@ -28,45 +28,57 @@ class PygameEventHandler:
                 logger.info('Run Time = {0:.2f}s; FPS = {1:.2f}'.format(run_time, sum(data.fps) / len(data.fps)))
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                self.__key_down(event, data)
+                data.input.keys_pressed.append(event.key)
+            elif event.type == pygame.KEYUP:
+                data.input.keys_pressed.remove(event.key)
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.__mouse_down(event, data)
+                data.input.mouse_pressed = True
+            elif event.type == pygame.MOUSEBUTTONUP:
+                data.input.mouse_pressed = False
 
-    def __key_down(self, event, data):
+        if data.input.mouse_pressed:
+            self.__mouse_down(data)
+
+        if data.input.next_key_execution < run_time:
+            for key in data.input.keys_pressed:
+                self.__key_down(key, data)
+            data.input.next_key_execution += 0.1
+
+    def __key_down(self, key, data):
         """ Handle key down events. """
         config = data.config
         game = data.game
         graph = data.graphics
 
         # Cursor
-        if event.key == self._keys[ID.ACTION_CURSOR_NORTH]:
+        if key == self._keys[ID.ACTION_CURSOR_NORTH]:
             self.__move_cursor(data, point.Factory.new_point(0, -1, 0))
-        elif event.key == self._keys[ID.ACTION_CURSOR_SOUTH]:
+        elif key == self._keys[ID.ACTION_CURSOR_SOUTH]:
             self.__move_cursor(data, point.Factory.new_point(0, +1, 0))
-        elif event.key == self._keys[ID.ACTION_CURSOR_WEST]:
+        elif key == self._keys[ID.ACTION_CURSOR_WEST]:
             self.__move_cursor(data, point.Factory.new_point(-1, 0, 0))
-        elif event.key == self._keys[ID.ACTION_CURSOR_EAST]:
+        elif key == self._keys[ID.ACTION_CURSOR_EAST]:
             self.__move_cursor(data, point.Factory.new_point(+1, 0, 0))
 
         # Scrolling
-        elif event.key == self._keys[ID.ACTION_SCROLL_NORTH]:
+        elif key == self._keys[ID.ACTION_SCROLL_NORTH]:
             graph.view_offset_y = max(graph.view_offset_y - config.scroll_width_y,
                                       0)
             graph.view_updated = True
-        elif event.key == self._keys[ID.ACTION_SCROLL_SOUTH]:
+        elif key == self._keys[ID.ACTION_SCROLL_SOUTH]:
             graph.view_offset_y = min(graph.view_offset_y + config.scroll_width_y,
                                       game.size_y - graph.view_y)
             graph.view_updated = True
-        elif event.key == self._keys[ID.ACTION_SCROLL_WEST]:
+        elif key == self._keys[ID.ACTION_SCROLL_WEST]:
             graph.view_offset_x = max(graph.view_offset_x - config.scroll_width_x,
                                       0)
             graph.view_updated = True
-        elif event.key == self._keys[ID.ACTION_SCROLL_EAST]:
+        elif key == self._keys[ID.ACTION_SCROLL_EAST]:
             graph.view_offset_x = min(graph.view_offset_x + config.scroll_width_x,
                                       game.size_x - graph.view_x)
             graph.view_updated = True
 
-    def __mouse_down(self, event, data):
+    def __mouse_down(self, data):
         """ Handle mouse down events. """
         graphics = data.graphics
         screen_pos = pygame.mouse.get_pos()
