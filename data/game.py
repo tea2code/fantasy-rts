@@ -7,6 +7,7 @@ class Game:
 
     Member:
     decision_tree -- The decision tree (data.ai).
+    events -- The event list (list).
     food_plant -- ID of plant for food (string).
     race_player -- ID of race of player (string).
     region -- The game region (data.world.region).
@@ -20,6 +21,7 @@ class Game:
 
     def __init__(self):
         self.decision_tree = decision.DecisionTree()
+        self.events = []
         self.food_plant = ''
         self.race_player = ''
         self.region = None
