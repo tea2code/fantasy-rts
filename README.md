@@ -19,8 +19,12 @@ Current Version: **13**
 - Version 11: AI refactoring. Food.
 - Version 12: Wood. Documentation. Refactoring.
 - Version 13: Events. Mouse and keyboard input.
-- Version 14: Multi-Block Sprites.
-- Version 15: Sidebar.
+
+Python branch ends here. Begin of C++ branch.
+
+- Version 1: Design of architecture.
+- Version ?: Multi-Block Sprites.
+- Version ?: Sidebar.
 
 Major goals:
 
