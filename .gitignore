@@ -41,3 +41,4 @@ show_profile.bat
 profile.*
 *.log
 log/decision/
+*.pro.user
