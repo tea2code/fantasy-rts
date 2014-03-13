@@ -1,6 +1,9 @@
 #ifndef CONFIGNODE_H
 #define CONFIGNODE_H
 
+#include "ConfigNodeItr.h"
+#include "IteratorWrapper.h"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -14,7 +17,7 @@ namespace std
 namespace frts
 {
     class ConfigNode;
-    typedef std::shared_ptr<ConfigNode> ConfigNodePtr;
+    using ConfigNodePtr = std::shared_ptr<ConfigNode>;
 
     /**
      * @brief Interface of configuration nodes.
@@ -22,7 +25,24 @@ namespace frts
     class ConfigNode
     {
     public:
+        /**
+         *
+         */
+        using Iterator = IteratorWrapper<ConfigNodeItr, ConfigNodePtr, ConfigNodePtr, ConfigNodePtr>;
+
         virtual ~ConfigNode() {}
+
+        /**
+         * @brief begin
+         * @return
+         */
+        virtual Iterator begin() = 0;
+
+        /**
+         * @brief end
+         * @return
+         */
+        virtual Iterator end() = 0;
 
         /**
          * @brief getBool

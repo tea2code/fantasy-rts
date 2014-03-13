@@ -13,6 +13,13 @@ QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror
 # Deactivate some unnecessary warnings. Best to use "-Wno-error=..." and keep warnings.
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
+# Includes/Libs.
+INCLUDEPATH += $$PWD/../libraries/boost_1_55_0
+INCLUDEPATH += $$PWD/../libraries/yaml-cpp/include
+
 # Headers and sources.
 include(src/configuration/configuration.pri)
 SOURCES += src/main.cpp
+
+HEADERS += \
+    IteratorWrapper.h
