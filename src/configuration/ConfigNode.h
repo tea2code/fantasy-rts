@@ -103,27 +103,6 @@ namespace frts
         virtual int getInt(const std::string& key, int devaultValue) = 0;
 
         /**
-         * @brief Get value as map.
-         * @throws ConversionError if type conversion fails.
-         * @throws MissingValueError if value is not found.
-         * @param Key of the value.
-         * @return The value.
-         */
-        template<typename KT, typename VT>
-        std::map<KT, VT> getMap(const std::string& key) {}
-
-        /**
-         * @brief Get value as map.
-         * @throws ConversionError if type conversion fails.
-         * @param Key of the value.
-         * @param defaultValue
-         * @return The value.
-         */
-        template<typename KT, typename VT>
-        std::map<KT, VT> getMap(const std::string& key,
-                                const std::map<KT, VT>& defaultValue) {}
-
-        /**
          * @brief Get sub node.
          * @throws MissingValueError if value is not found.
          * @param Key of the value.
@@ -151,50 +130,11 @@ namespace frts
                                       const std::string& devaultValue) = 0;
 
         /**
-         * @brief Get value as vector.
-         * @throws ConversionError if type conversion fails.
-         * @throws MissingValueError if value is not found.
-         * @param Key of the value.
-         * @return The value.
-         */
-        template<typename T>
-        std::vector<T> getVector(const std::string& key)
-        {
-            throw std::runtime_error("Not implemented");
-        }
-
-        /**
-         * @brief Get value as vector.
-         * @throws ConversionError if type conversion fails.
-         * @param Key of the value.
-         * @param defaultValue
-         * @return The value.
-         */
-        template<typename T>
-        std::vector<T> getVector(const std::string& key,
-                                const std::vector<T>& defaultValue)
-        {
-            throw std::runtime_error("Not implemented");
-        }
-
-        /**
          * @brief Check if a value exists.
          * @param Key of the value.
          * @return True if value exists else false.
          */
         virtual bool has(const std::string& key) = 0;
-
-        /**
-         * @brief Check if value is of given type.
-         * @throws MissingValueError if value is not found.
-         * @param Key of the value.
-         * @return True if type is correct else false.
-         */
-        template<typename T>
-        bool isType(const std::string& key)
-        {
-            throw std::runtime_error("Not implemented");
-        }
     };
 }
 

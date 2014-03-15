@@ -2,9 +2,7 @@
 
 int main()
 {
-    // Temporary to prevent stupid error.
-    char x;
-    std::cin >> x;
+    std::cin.ignore();
     return 0;
 }
 
