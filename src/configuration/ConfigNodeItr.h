@@ -7,6 +7,9 @@ namespace frts
 {
     class ConfigNode;
 
+    /**
+     * @brief Interface of ConfigNode iterators.
+     */
     class ConfigNodeItr
     {
     public:
@@ -16,6 +19,8 @@ namespace frts
         typedef ConfigNode* pointer;
         typedef std::forward_iterator_tag iterator_category;
         typedef int difference_type;
+
+        virtual ~ConfigNodeItr() {}
 
         virtual self_type* operator++() = 0;
         virtual self_type* operator++(int junk) = 0;
