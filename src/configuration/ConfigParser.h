@@ -14,6 +14,11 @@ namespace frts
     public:
         virtual ~ConfigParser() {}
 
+        ConfigParser(const ConfigParser&) = delete;
+        ConfigParser& operator=(const ConfigParser&) = delete;
+        ConfigParser(ConfigParser&&) = delete;
+        ConfigParser& operator=(ConfigParser&&) = delete;
+
         /**
          * @brief Parses the given configuration file.
          * @param filePath The path to the configuration file with extension.

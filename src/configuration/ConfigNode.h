@@ -36,6 +36,11 @@ namespace frts
 
         virtual ~ConfigNode() {}
 
+        ConfigNode(const ConfigNode&) = delete;
+        ConfigNode& operator=(const ConfigNode&) = delete;
+        ConfigNode(ConfigNode&&) = delete;
+        ConfigNode& operator=(ConfigNode&&) = delete;
+
         /**
          * @brief If node is a list of node this allows iteration over it.
          * @return A begin iterator.
