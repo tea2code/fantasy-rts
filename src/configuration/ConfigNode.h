@@ -2,14 +2,9 @@
 #define CONFIGNODE_H
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
-
-namespace std
-{
-    template<class T>
-    class shared_ptr;
-}
 
 namespace frts
 {
@@ -35,11 +30,6 @@ namespace frts
         using Iterator = IteratorWrapper<ConfigNodeItr, ConfigNodePtr, ConfigNodePtr, ConfigNodePtr>;
 
         virtual ~ConfigNode() {}
-
-        ConfigNode(const ConfigNode&) = delete;
-        ConfigNode& operator=(const ConfigNode&) = delete;
-        ConfigNode(ConfigNode&&) = delete;
-        ConfigNode& operator=(ConfigNode&&) = delete;
 
         /**
          * @brief If node is a list of node this allows iteration over it.

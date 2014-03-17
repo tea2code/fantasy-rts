@@ -22,13 +22,8 @@ namespace frts
 
         virtual ~ConfigNodeItr() {}
 
-        ConfigNodeItr(const ConfigNodeItr&) = delete;
-        ConfigNodeItr& operator=(const ConfigNodeItr&) = delete;
-        ConfigNodeItr(ConfigNodeItr&&) = delete;
-        ConfigNodeItr& operator=(ConfigNodeItr&&) = delete;
-
         virtual self_type* operator++() = 0;
-        virtual self_type* operator++(int junk) = 0;
+        virtual self_type* operator++(int) = 0;
         virtual reference operator*() = 0;
         virtual pointer operator->() = 0;
         virtual bool operator==(const self_type& rhs) = 0;
