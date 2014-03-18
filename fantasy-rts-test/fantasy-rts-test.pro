@@ -14,14 +14,16 @@ QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
 # Includes.
-INCLUDEPATH += $$PWD/../libraries/boost_1_55_0
-INCLUDEPATH += $$PWD/../libraries/yaml-cpp/include
+INCLUDEPATH += $$PWD/../../libraries/Catch/single_include
+INCLUDEPATH += $$PWD/../../libraries/boost_1_55_0
+INCLUDEPATH += $$PWD/../../libraries/yaml-cpp/include
+INCLUDEPATH += $$PWD/../src
 
 # Libs.
-LIBS += -L$$PWD/../libraries/yaml-cpp -lyaml-cpp
+LIBS += -L$$PWD/../../libraries/yaml-cpp -lyaml-cpp
 
 # Headers and sources.
-include(src/configuration/configuration.pri)
-SOURCES += src/main.cpp
-
-HEADERS += src/IteratorWrapper.h
+include(configuration.pri)
+SOURCES += main.cpp \
+    configuration.cpp
+HEADERS += ../src/IteratorWrapper.h

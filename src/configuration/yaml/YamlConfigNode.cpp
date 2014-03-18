@@ -62,7 +62,7 @@ int frts::YamlConfigNode::getInt(const std::string& key, int devaultValue)
 frts::ConfigNodePtr frts::YamlConfigNode::getNode(const std::string& key)
 {
     throw std::runtime_error("");
-    return std::make_shared<frts::YamlConfigNode>();
+    return std::unique_ptr<frts::YamlConfigNode>();
 }
 
 std::string frts::YamlConfigNode::getString(const std::string& key)
