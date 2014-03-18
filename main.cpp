@@ -9,7 +9,9 @@
 
 int main()
 {
-    //frts::ConfigNodePtr node =  std::make_shared<frts::YamlConfigNode>();
+    frts::ConfigNodePtr node =  std::unique_ptr<frts::YamlConfigNode>(
+                new frts::YamlConfigNode());
+
     std::cin.ignore();
     return 0;
 }

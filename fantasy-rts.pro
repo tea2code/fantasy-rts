@@ -22,8 +22,10 @@ INCLUDEPATH += $$PWD/../libraries/yaml-cpp/include
 LIBS += -L$$PWD/../libraries/yaml-cpp -lyaml-cpp
 
 # Headers and sources.
-include(test/test.pri)
-include(src/configuration/configuration.pri)
-SOURCES += src/main.cpp
+UNIT_TEST {
+    include(test/test.pri)
+}
+include(configuration/configuration.pri)
+SOURCES += main.cpp
 
-HEADERS += src/IteratorWrapper.h
+HEADERS += IteratorWrapper.h

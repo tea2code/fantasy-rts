@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "../src/configuration/yaml/YamlConfigParser.h"
+#include <configuration/yaml/YamlConfigParser.h>
 
 SCENARIO("Parse YAML configuration file", "[configuration]")
 {

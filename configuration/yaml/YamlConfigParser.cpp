@@ -1,4 +1,5 @@
 #include "YamlConfigParser.h"
+
 #include <yaml-cpp/yaml.h>
 
 #include <stdexcept>

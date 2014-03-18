@@ -1,7 +1,7 @@
 #ifndef YAMLCONFIGNODEITR_H
 #define YAMLCONFIGNODEITR_H
 
-#include "../ConfigNodeItr.h"
+#include <configuration/ConfigNodeItr.h>
 
 namespace frts
 {

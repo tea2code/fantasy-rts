@@ -1,7 +1,7 @@
 #ifndef YAMLCONFIGPARSER_H
 #define YAMLCONFIGPARSER_H
 
-#include "../ConfigParser.h"
+#include <configuration/ConfigParser.h>
 
 namespace frts
 {

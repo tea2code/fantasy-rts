@@ -1,4 +1,4 @@
-SOURCES +=
+SOURCES += \
+    test/configuration.cpp
 
-HEADERS += \
-    test/configuration.h
+HEADERS +=
