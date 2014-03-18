@@ -1,5 +1,5 @@
 #include "YamlConfigNode.h"
-#include "IteratorWrapper.h"
+#include "../../IteratorWrapper.h"
 
 #include <stdexcept>
 

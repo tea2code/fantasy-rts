@@ -1,3 +1,5 @@
+#ifndef UNIT_TEST
+
 #include "configuration/yaml/YamlConfigNode.h"
 #include "configuration/yaml/YamlConfigNodeItr.h"
 #include "configuration/yaml/YamlConfigParser.h"
@@ -7,8 +9,14 @@
 
 int main()
 {
-    frts::ConfigNodePtr node =  std::make_shared<frts::YamlConfigNode>();
+    //frts::ConfigNodePtr node =  std::make_shared<frts::YamlConfigNode>();
     std::cin.ignore();
     return 0;
 }
 
+#else
+
+#define CATCH_CONFIG_MAIN
+#include <catch.hpp>
+
+#endif
