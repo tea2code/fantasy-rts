@@ -5,6 +5,7 @@
 
 #include <string>
 
+
 namespace frts
 {
     /**
@@ -17,6 +18,7 @@ namespace frts
 
         /**
          * @brief Parses the given configuration file.
+         * @throws FileNotFoundError if file is not found.
          * @param filePath The path to the configuration file with extension.
          * @return The config node of the root element in the config file.
          */

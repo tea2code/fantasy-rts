@@ -3,6 +3,9 @@
 
 #include <configuration/ConfigNode.h>
 
+#include <yaml-cpp/yaml.h>
+
+
 namespace frts
 {
     /**
@@ -11,7 +14,7 @@ namespace frts
     class YamlConfigNode : public ConfigNode
     {
     public:
-        YamlConfigNode();
+        YamlConfigNode(const YAML::Node& node);
         ~YamlConfigNode();
 
         Iterator begin();

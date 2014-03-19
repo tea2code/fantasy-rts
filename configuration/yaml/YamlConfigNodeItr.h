@@ -3,6 +3,7 @@
 
 #include <configuration/ConfigNodeItr.h>
 
+
 namespace frts
 {
     /**

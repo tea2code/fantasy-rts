@@ -1,16 +1,17 @@
 #ifndef CONFIGNODE_H
 #define CONFIGNODE_H
 
+#include "ConfigNodeItr.h"
+#include <IteratorWrapper.h>
+
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
+
 namespace frts
 {
-    template<class IteratorImpl, class Value, class Reference, class Pointer>
-    class IteratorWrapper;
-    class ConfigNodeItr;
     class ConfigNode;
 
     /**

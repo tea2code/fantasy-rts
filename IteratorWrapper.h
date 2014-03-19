@@ -3,6 +3,7 @@
 
 #include <iterator>
 
+
 namespace frts
 {
     /**
@@ -23,7 +24,7 @@ namespace frts
         IteratorWrapper(IteratorImpl *iterator) : iterator(iterator) {}
 
         self_type operator++() { self_type i = *this; (*iterator)++; return i; }
-        self_type operator++(int junk) { (*iterator)++; return *this; }
+        self_type operator++(int) { (*iterator)++; return *this; }
         reference operator*() { return *(*iterator); }
         pointer operator->() { return &(*(*iterator)); }
         bool operator==(const self_type& rhs) { return *iterator == *rhs.iterator; }

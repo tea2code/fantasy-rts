@@ -4,7 +4,8 @@
 
 #include <stdexcept>
 
-frts::YamlConfigNode::YamlConfigNode()
+
+frts::YamlConfigNode::YamlConfigNode(const YAML::Node& node)
 {
 
 }

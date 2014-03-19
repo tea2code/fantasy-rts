@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 
+
 int main()
 {
     frts::ConfigNodePtr node =  std::unique_ptr<frts::YamlConfigNode>(

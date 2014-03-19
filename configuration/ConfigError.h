@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 
+
 namespace frts
 {
     /**
@@ -14,6 +15,15 @@ namespace frts
     {
     public:
         ConversionError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
+    /**
+     * @brief Thrown if a config file is not found.
+     */
+    class FileNotFoundError : public std::runtime_error
+    {
+    public:
+        FileNotFoundError(const std::string& msg) : std::runtime_error(msg) {}
     };
 
     /**
