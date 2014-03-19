@@ -32,9 +32,9 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
     {
         frts::ConfigNodePtr subNode = node->getNode("nodes");
         int num = 1;
-        for(auto subSubNode = subNode->begin(); subSubNode != subNode->end(); ++subSubNode)
+        for(const auto& subSubNode : *subNode)
         {
-            REQUIRE((*subSubNode)->getInt("node") == num);
+            REQUIRE(subSubNode->getInt("node") == num);
             num += 1;
         }
     }

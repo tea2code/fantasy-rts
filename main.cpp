@@ -10,9 +10,6 @@
 
 int main()
 {
-    frts::ConfigNodePtr node =  std::unique_ptr<frts::YamlConfigNode>(
-                new frts::YamlConfigNode());
-
     std::cin.ignore();
     return 0;
 }

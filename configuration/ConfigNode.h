@@ -12,13 +12,6 @@
 
 namespace frts
 {
-    class ConfigNode;
-
-    /**
-     * @brief Pointer to ConfigNodes.
-     */
-    using ConfigNodePtr = std::unique_ptr<ConfigNode>;
-
     /**
      * @brief Interface of configuration nodes.
      */

@@ -2,10 +2,16 @@
 #define CONFIGNODEITR_H
 
 #include <iterator>
+#include <memory>
 
 namespace frts
 {
     class ConfigNode;
+
+    /**
+     * @brief Pointer to ConfigNodes.
+     */
+    using ConfigNodePtr = std::unique_ptr<ConfigNode>;
 
     /**
      * @brief Interface of ConfigNode iterators.
@@ -14,9 +20,9 @@ namespace frts
     {
     public:
         typedef ConfigNodeItr self_type;
-        typedef ConfigNode value_type;
-        typedef ConfigNode& reference;
-        typedef ConfigNode* pointer;
+        typedef ConfigNodePtr value_type;
+        typedef ConfigNodePtr reference;
+        typedef ConfigNodePtr pointer;
         typedef std::forward_iterator_tag iterator_category;
         typedef int difference_type;
 
