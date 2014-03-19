@@ -12,9 +12,19 @@ SCENARIO("Parse YAML configuration file", "[configuration]")
         {
             frts::ConfigNodePtr node = parser.parseFile("");
 
-            THEN("the pointer shouldn't be null")
+            THEN("the node shouldn't be null")
             {
-                REQUIRE(node != nullptr);
+                REQUIRE(node.get() != nullptr);
+            }
+        }
+
+        WHEN("the YAML file does not exists")
+        {
+            frts::ConfigNodePtr node = parser.parseFile("");
+
+            THEN("the node should be null")
+            {
+                REQUIRE(node.get() == nullptr);
             }
         }
     }
