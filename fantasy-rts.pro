@@ -14,9 +14,9 @@ QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
 # Includes.
-INCLUDEPATH += $$PWD/../libraries/Catch/single_include
-INCLUDEPATH += $$PWD/../libraries/boost_1_55_0
-INCLUDEPATH += $$PWD/../libraries/yaml-cpp/include
+INCLUDEPATH += $$PWD/dependency/Catch/single_include
+INCLUDEPATH += $$PWD/dependency/boost
+INCLUDEPATH += $$PWD/dependency/yaml-cpp/include
 
 # Libs.
 LIBS += -L$$PWD/../libraries/yaml-cpp -lyaml-cpp

@@ -42,3 +42,4 @@ profile.*
 *.log
 log/decision/
 *.pro.user
+dependency
