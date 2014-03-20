@@ -3,6 +3,8 @@
 
 #include <configuration/ConfigNodeItr.h>
 
+#include <yaml-cpp/yaml.h>
+
 
 namespace frts
 {
@@ -12,7 +14,7 @@ namespace frts
     class YamlConfigNodeItr : public ConfigNodeItr
     {
     public:
-        YamlConfigNodeItr();
+        YamlConfigNodeItr(YAML::Node::iterator iterator);
         ~YamlConfigNodeItr();
 
         self_type* operator++();
@@ -21,6 +23,9 @@ namespace frts
         pointer operator->();
         bool operator==(const self_type& rhs);
         bool operator!=(const self_type& rhs);
+
+    private:
+        YAML::Node::iterator iterator;
     };
 }
 

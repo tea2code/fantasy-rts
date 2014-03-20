@@ -43,19 +43,31 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
     {
         REQUIRE(node->getBool("boolValueTrue") == true);
         REQUIRE(node->getBool("boolValueFalse") == false);
+        REQUIRE(node->getBool("boolValueTrue", false) == true);
+        REQUIRE(node->getBool("boolValueFalse", true) == false);
         REQUIRE(node->getBool("notExistingKey", true) == true);
         REQUIRE(node->getBool("notExistingKey", false) == false);
+        REQUIRE(node->getBool("floatValue12", false) == false);
+        REQUIRE(node->getBool("intValue0", false) == false);
+        REQUIRE(node->getBool("stringValueAbc", false) == false);
         REQUIRE_THROWS_AS(node->getBool("floatValue12"), frts::ConversionError);
-        REQUIRE_THROWS_AS(node->getBool("floatValue12", false), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getBool("intValue0"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getBool("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getBool("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Read float value.")
     {
+        REQUIRE(node->getFloat("intValue0") == Approx(0.0));
+        REQUIRE(node->getFloat("intValue35") == Approx(35));
         REQUIRE(node->getFloat("floatValue12") == Approx(1.2));
         REQUIRE(node->getFloat("floatValue00") == Approx(0.0));
+        REQUIRE(node->getFloat("floatValue00", 2.56) == Approx(0.0));
         REQUIRE(node->getFloat("notExistingKey", 2.56) == Approx(2.56));
+        REQUIRE(node->getFloat("boolValueTrue", 2.56) == Approx(2.56));
+        REQUIRE(node->getFloat("stringValueAbc", 2.56) == Approx(2.56));
         REQUIRE_THROWS_AS(node->getFloat("boolValueTrue"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getFloat("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getFloat("notExistingKey"), frts::MissingValueError);
     }
 
@@ -63,8 +75,15 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
     {
         REQUIRE(node->getInt("intValue0") == 0);
         REQUIRE(node->getInt("intValue35") == 35);
+        REQUIRE(node->getInt("intValue35", 256) == 35);
         REQUIRE(node->getInt("notExistingKey", 256) == 256);
+        REQUIRE(node->getInt("boolValueTrue", 256) == 256);
+        REQUIRE(node->getInt("floatValue00", 256) == 256);
+        REQUIRE(node->getInt("floatValue12", 256) == 256);
         REQUIRE_THROWS_AS(node->getInt("boolValueTrue"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInt("floatValue00"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInt("floatValue12"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInt("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getInt("notExistingKey"), frts::MissingValueError);
     }
 
@@ -77,11 +96,17 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
 
     SECTION("Read string value.")
     {
+        REQUIRE(node->getString("boolValueTrue") == "true");
+        REQUIRE(node->getString("intValue35") == "35");
+        REQUIRE(node->getString("floatValue00") == "0.0");
         REQUIRE(node->getString("stringValueAbc") == "abc");
         REQUIRE(node->getString("stringValueSentence") == "Hello World");
         REQUIRE(node->getString("stringValueSentenceQuoted") == "Hello World");
+        REQUIRE(node->getString("boolValueTrue", "Test") == "true");
+        REQUIRE(node->getString("intValue35", "Test") == "35");
+        REQUIRE(node->getString("floatValue00", "Test") == "0.0");
+        REQUIRE(node->getString("stringValueAbc", "Test") == "abc");
         REQUIRE(node->getString("notExistingKey", "Test") == "Test");
-        REQUIRE_THROWS_AS(node->getString("boolValueTrue"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getString("notExistingKey"), frts::MissingValueError);
     }
 
@@ -89,5 +114,32 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
     {
         REQUIRE(node->has("boolValueTrue"));
         REQUIRE_FALSE(node->has("notExistingKey"));
+    }
+
+    SECTION("Check if node is of a certain type.")
+    {
+        REQUIRE(node->isBool("boolValueTrue"));
+        REQUIRE_FALSE(node->isBool("floatValue00"));
+        REQUIRE_FALSE(node->isBool("intValue0"));
+        REQUIRE_FALSE(node->isBool("stringValueAbc"));
+        REQUIRE_THROWS_AS(node->isBool("notExistingKey"), frts::MissingValueError);
+
+        REQUIRE(node->isFloat("floatValue00"));
+        REQUIRE(node->isFloat("intValue0"));
+        REQUIRE_FALSE(node->isFloat("boolValueTrue"));
+        REQUIRE_FALSE(node->isFloat("stringValueAbc"));
+        REQUIRE_THROWS_AS(node->isFloat("notExistingKey"), frts::MissingValueError);
+
+        REQUIRE(node->isInt("intValue0"));
+        REQUIRE_FALSE(node->isInt("floatValue00"));
+        REQUIRE_FALSE(node->isInt("boolValueTrue"));
+        REQUIRE_FALSE(node->isInt("stringValueAbc"));
+        REQUIRE_THROWS_AS(node->isInt("notExistingKey"), frts::MissingValueError);
+
+        REQUIRE(node->isString("boolValueTrue"));
+        REQUIRE(node->isString("floatValue00"));
+        REQUIRE(node->isString("intValue0"));
+        REQUIRE(node->isString("stringValueAbc"));
+        REQUIRE_THROWS_AS(node->isString("notExistingKey"), frts::MissingValueError);
     }
 }

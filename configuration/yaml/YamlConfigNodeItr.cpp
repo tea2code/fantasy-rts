@@ -1,44 +1,47 @@
 #include "YamlConfigNodeItr.h"
 
+#include "YamlConfigNode.h"
+
 #include <stdexcept>
 
 
-frts::YamlConfigNodeItr::YamlConfigNodeItr()
+frts::YamlConfigNodeItr::YamlConfigNodeItr(YAML::Node::iterator iterator)
+    : iterator{iterator}
 {
-
 }
 
 frts::YamlConfigNodeItr::~YamlConfigNodeItr()
 {
-
 }
 
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++()
 {
-    throw std::runtime_error("");
+    iterator++;
+    return this;
 }
 
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++(int)
 {
-    throw std::runtime_error("");
+    iterator++;
+    return this;
 }
 
 frts::ConfigNodeItr::reference frts::YamlConfigNodeItr::operator*()
 {
-    throw std::runtime_error("");
+    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
 }
 
 frts::ConfigNodeItr::pointer frts::YamlConfigNodeItr::operator->()
 {
-    throw std::runtime_error("");
+    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
 }
 
 bool frts::YamlConfigNodeItr::operator==(const self_type& rhs)
 {
-    throw std::runtime_error("");
+    return iterator == dynamic_cast<const YamlConfigNodeItr&>(rhs).iterator;
 }
 
 bool frts::YamlConfigNodeItr::operator!=(const self_type& rhs)
 {
-    throw std::runtime_error("");
+    return iterator != dynamic_cast<const YamlConfigNodeItr&>(rhs).iterator;
 }
