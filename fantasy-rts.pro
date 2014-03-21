@@ -19,7 +19,7 @@ INCLUDEPATH += $$PWD/dependency/boost
 INCLUDEPATH += $$PWD/dependency/yaml-cpp/include
 
 # Libs.
-LIBS += -L$$PWD/dependency/yaml-cpp -lyaml-cpp
+LIBS += -L$$PWD/dependency/yaml-cpp/build -lyaml-cpp
 
 # Headers and sources.
 UNIT_TEST {
