@@ -47,7 +47,7 @@ namespace frts
         virtual bool getBool(const std::string& key) = 0;
 
         /**
-         * @brief Get value as boolean.
+         * @brief Get value as boolean or default value.
          * @param key Key of the value.
          * @param Default value if key is not found or conversion fails.
          * @return The value.
@@ -55,38 +55,38 @@ namespace frts
         virtual bool getBool(const std::string& key, bool devaultValue) = 0;
 
         /**
-         * @brief Get value as float.
+         * @brief Get value as floating point number.
          * @throws ConversionError if type conversion fails.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return The value.
          */
-        virtual float getFloat(const std::string& key) = 0;
+        virtual double getFloat(const std::string& key) = 0;
 
         /**
-         * @brief Get value as float.
+         * @brief Get value as floating point number or default value.
          * @param key Key of the value.
          * @param Default value if key is not found or conversion fails.
          * @return The value.
          */
-        virtual float getFloat(const std::string& key, float devaultValue) = 0;
+        virtual double getFloat(const std::string& key, double devaultValue) = 0;
 
         /**
-         * @brief Get value as integer.
+         * @brief Get value as integer number.
          * @throws ConversionError if type conversion fails.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return The value.
          */
-        virtual int getInt(const std::string& key) = 0;
+        virtual long getInteger(const std::string& key) = 0;
 
         /**
-         * @brief Get value as integer.
+         * @brief Get value as integer number or default value.
          * @param key Key of the value.
          * @param Default value if key is not found or conversion fails.
          * @return The value.
          */
-        virtual int getInt(const std::string& key, int devaultValue) = 0;
+        virtual long getInteger(const std::string& key, long devaultValue) = 0;
 
         /**
          * @brief Get sub node.
@@ -97,7 +97,7 @@ namespace frts
         virtual ConfigNodePtr getNode(const std::string& key) = 0;
 
         /**
-         * @brief Get value as string.
+         * @brief Get value as string or default value.
          * @throws ConversionError if type conversion fails.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
@@ -130,7 +130,7 @@ namespace frts
         virtual bool isBool(const std::string& key) = 0;
 
         /**
-         * @brief Checks if a value is a float.
+         * @brief Checks if a value is a floating point number.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return True if type is correct else false.
@@ -138,12 +138,12 @@ namespace frts
         virtual bool isFloat(const std::string& key) = 0;
 
         /**
-         * @brief Checks if a value is an integer.
+         * @brief Checks if a value is an integer number.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return True if type is correct else false.
          */
-        virtual bool isInt(const std::string& key) = 0;
+        virtual bool isInteger(const std::string& key) = 0;
 
         /**
          * @brief Checks if a value is a string.

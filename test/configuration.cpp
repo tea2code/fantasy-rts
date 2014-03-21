@@ -34,7 +34,7 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         int num = 1;
         for(const auto& subSubNode : *subNode)
         {
-            REQUIRE(subSubNode->getInt("node") == num);
+            REQUIRE(subSubNode->getInteger("node") == num);
             num += 1;
         }
     }
@@ -73,25 +73,25 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
 
     SECTION("Read integer value.")
     {
-        REQUIRE(node->getInt("intValue0") == 0);
-        REQUIRE(node->getInt("intValue35") == 35);
-        REQUIRE(node->getInt("intValue35", 256) == 35);
-        REQUIRE(node->getInt("notExistingKey", 256) == 256);
-        REQUIRE(node->getInt("boolValueTrue", 256) == 256);
-        REQUIRE(node->getInt("floatValue00", 256) == 256);
-        REQUIRE(node->getInt("floatValue12", 256) == 256);
-        REQUIRE_THROWS_AS(node->getInt("boolValueTrue"), frts::ConversionError);
-        REQUIRE_THROWS_AS(node->getInt("floatValue00"), frts::ConversionError);
-        REQUIRE_THROWS_AS(node->getInt("floatValue12"), frts::ConversionError);
-        REQUIRE_THROWS_AS(node->getInt("stringValueAbc"), frts::ConversionError);
-        REQUIRE_THROWS_AS(node->getInt("notExistingKey"), frts::MissingValueError);
+        REQUIRE(node->getInteger("intValue0") == 0);
+        REQUIRE(node->getInteger("intValue35") == 35);
+        REQUIRE(node->getInteger("intValue35", 256) == 35);
+        REQUIRE(node->getInteger("notExistingKey", 256) == 256);
+        REQUIRE(node->getInteger("boolValueTrue", 256) == 256);
+        REQUIRE(node->getInteger("floatValue00", 256) == 256);
+        REQUIRE(node->getInteger("floatValue12", 256) == 256);
+        REQUIRE_THROWS_AS(node->getInteger("boolValueTrue"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInteger("floatValue00"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInteger("floatValue12"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInteger("stringValueAbc"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getInteger("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Read sub node.")
     {
         frts::ConfigNodePtr subNode = node->getNode("node");
         REQUIRE(subNode.get() != nullptr);
-        REQUIRE(subNode->getInt("test") == 1);
+        REQUIRE(subNode->getInteger("test") == 1);
     }
 
     SECTION("Read string value.")
@@ -130,11 +130,11 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_FALSE(node->isFloat("stringValueAbc"));
         REQUIRE_THROWS_AS(node->isFloat("notExistingKey"), frts::MissingValueError);
 
-        REQUIRE(node->isInt("intValue0"));
-        REQUIRE_FALSE(node->isInt("floatValue00"));
-        REQUIRE_FALSE(node->isInt("boolValueTrue"));
-        REQUIRE_FALSE(node->isInt("stringValueAbc"));
-        REQUIRE_THROWS_AS(node->isInt("notExistingKey"), frts::MissingValueError);
+        REQUIRE(node->isInteger("intValue0"));
+        REQUIRE_FALSE(node->isInteger("floatValue00"));
+        REQUIRE_FALSE(node->isInteger("boolValueTrue"));
+        REQUIRE_FALSE(node->isInteger("stringValueAbc"));
+        REQUIRE_THROWS_AS(node->isInteger("notExistingKey"), frts::MissingValueError);
 
         REQUIRE(node->isString("boolValueTrue"));
         REQUIRE(node->isString("floatValue00"));

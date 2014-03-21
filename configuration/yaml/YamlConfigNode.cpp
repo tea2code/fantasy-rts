@@ -72,7 +72,7 @@ T frts::YamlConfigNode::getDefault(const std::string& key, T defaultValue)
 
 bool frts::YamlConfigNode::getBool(const std::string& key)
 {
-    return get<bool>(key, "bool");
+    return get<bool>(key, "boolean");
 }
 
 bool frts::YamlConfigNode::getBool(const std::string& key, bool defaultValue)
@@ -80,24 +80,24 @@ bool frts::YamlConfigNode::getBool(const std::string& key, bool defaultValue)
     return getDefault<bool>(key, defaultValue);
 }
 
-float frts::YamlConfigNode::getFloat(const std::string& key)
+double frts::YamlConfigNode::getFloat(const std::string& key)
 {
-    return get<float>(key, "float");
+    return get<double>(key, "floating point");
 }
 
-float frts::YamlConfigNode::getFloat(const std::string& key, float defaultValue)
+double frts::YamlConfigNode::getFloat(const std::string& key, double defaultValue)
 {
-    return getDefault<float>(key, defaultValue);
+    return getDefault<double>(key, defaultValue);
 }
 
-int frts::YamlConfigNode::getInt(const std::string& key)
+long frts::YamlConfigNode::getInteger(const std::string& key)
 {
-    return get<int>(key, "int");
+    return get<long>(key, "integer");
 }
 
-int frts::YamlConfigNode::getInt(const std::string& key, int defaultValue)
+long frts::YamlConfigNode::getInteger(const std::string& key, long defaultValue)
 {
-    return getDefault<int>(key, defaultValue);
+    return getDefault<long>(key, defaultValue);
 }
 
 frts::ConfigNodePtr frts::YamlConfigNode::getNode(const std::string& key)
@@ -115,7 +115,7 @@ frts::ConfigNodePtr frts::YamlConfigNode::getNode(const std::string& key)
 
 std::string frts::YamlConfigNode::getString(const std::string& key)
 {
-    return get<std::string>(key, "std::string");
+    return get<std::string>(key, "string");
 }
 
 std::string frts::YamlConfigNode::getString(const std::string& key,
@@ -162,9 +162,9 @@ bool frts::YamlConfigNode::isFloat(const std::string& key)
     return is<float>(key);
 }
 
-bool frts::YamlConfigNode::isInt(const std::string& key)
+bool frts::YamlConfigNode::isInteger(const std::string& key)
 {
-    return is<int>(key);
+    return is<long>(key);
 }
 
 bool frts::YamlConfigNode::isString(const std::string& key)

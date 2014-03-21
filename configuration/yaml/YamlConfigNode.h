@@ -26,11 +26,11 @@ namespace frts
         bool getBool(const std::string& key);
         bool getBool(const std::string& key, bool defaultValue);
 
-        float getFloat(const std::string& key);
-        float getFloat(const std::string& key, float defaultValue);
+        double getFloat(const std::string& key);
+        double getFloat(const std::string& key, double defaultValue);
 
-        int getInt(const std::string& key);
-        int getInt(const std::string& key, int defaultValue);
+        long getInteger(const std::string& key);
+        long getInteger(const std::string& key, long defaultValue);
 
         ConfigNodePtr getNode(const std::string& key);
 
@@ -42,7 +42,7 @@ namespace frts
 
         bool isBool(const std::string& key);
         bool isFloat(const std::string& key);
-        bool isInt(const std::string& key);
+        bool isInteger(const std::string& key);
         bool isString(const std::string& key);
 
     private:
