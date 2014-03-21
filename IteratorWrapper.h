@@ -28,8 +28,8 @@ namespace frts
         self_type operator++(int) { (*iterator)++; return *this; }
         reference operator*() { return *(*iterator); }
         pointer operator->() { return &(*(*iterator)); }
-        bool operator==(const self_type& rhs) { return iterator == rhs.iterator; }
-        bool operator!=(const self_type& rhs) { return iterator != rhs.iterator; }
+        bool operator==(const self_type& rhs) { return *iterator == *rhs.iterator; }
+        bool operator!=(const self_type& rhs) { return *iterator != *rhs.iterator; }
 
     private:
         IteratorImpl *iterator;
