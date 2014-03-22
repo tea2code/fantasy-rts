@@ -18,6 +18,10 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 - [yaml-cpp](https://code.google.com/p/yaml-cpp/): Must be compiled statically.
 - [Catch](https://github.com/philsquared/Catch)
 
+### Deployment
+
+The deployment step should include copying the plugins directory to the build directory.
+
 ## Code Style
 
 There is no particular code style enfored. Just some simple recommendations which might help.
