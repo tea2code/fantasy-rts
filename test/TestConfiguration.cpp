@@ -9,14 +9,14 @@
 #include <stdexcept>
 
 
-#define CONFIG_FILE "configuration.yaml"
+#define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
 
-void setup()
+void setupConfiguration()
 {
-    std::ofstream file(CONFIG_FILE);
+    std::ofstream file(TEST_CONFIGURATION_CONFIG_FILE);
     if(!file)
     {
-        auto msg = boost::format(R"(Cannot open/create file "%1%".)") % CONFIG_FILE;
+        auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_CONFIGURATION_CONFIG_FILE;
         throw std::runtime_error(msg.str());
     }
     file << "boolValueTrue: true" << std::endl;
@@ -30,23 +30,26 @@ void setup()
     file << "stringValueSentenceQuoted: \"Hello World\"" << std::endl;
     file << "node:" << std::endl;
     file << "    test: 1" << std::endl;
-    file << "nodes:" << std::endl;
+    file << "nodesKey:" << std::endl;
     file << "    - node: 1" << std::endl;
     file << "    - node: 2" << std::endl;
     file << "    - node: 3" << std::endl;
     file << "    - node: 4" << std::endl;
+    file << "nodesNoKey:" << std::endl;
+    file << "    - 1" << std::endl;
+    file << "    - 2" << std::endl;
     file.close();
 }
 
 
 TEST_CASE("Parse YAML configuration file.", "[configuration]")
 {
-    setup();
+    setupConfiguration();
     frts::YamlConfigParser parser;
 
     SECTION("The YAML file exists.")
     {
-        frts::ConfigNodePtr node = parser.parseFile(CONFIG_FILE);
+        frts::ConfigNodePtr node = parser.parseFile(TEST_CONFIGURATION_CONFIG_FILE);
         REQUIRE(node.get() != nullptr);
     }
 
@@ -59,23 +62,39 @@ TEST_CASE("Parse YAML configuration file.", "[configuration]")
 
 TEST_CASE("Parse YAML configuration node.", "[configuration]")
 {
-    setup();
+    setupConfiguration();
     frts::YamlConfigParser parser;
-    frts::ConfigNodePtr node = parser.parseFile(CONFIG_FILE);
+    frts::ConfigNodePtr node = parser.parseFile(TEST_CONFIGURATION_CONFIG_FILE);
     REQUIRE(node.get() != nullptr);
 
-    SECTION("Iterate sub nodes.")
+    SECTION("Iterate sub nodes with key.")
     {
-        frts::ConfigNodePtr subNode = node->getNode("nodes");
+        frts::ConfigNodePtr subNode = node->getNode("nodesKey");
         int num = 1;
         int count = 0;
         for(const auto& subSubNode : *subNode)
         {
             REQUIRE(subSubNode->getInteger("node") == num);
+            REQUIRE(subSubNode->getInteger("node", -1) == num);
             num += 1;
             count += 1;
         }
         REQUIRE(count == 4);
+    }
+
+    SECTION("Iterate sub nodes without key.")
+    {
+        frts::ConfigNodePtr subNode = node->getNode("nodesNoKey");
+        int num = 1;
+        int count = 0;
+        for(const auto& subSubNode : *subNode)
+        {
+            REQUIRE(subSubNode->getInteger("") == num);
+            REQUIRE(subSubNode->getInteger("", -1) == num);
+            num += 1;
+            count += 1;
+        }
+        REQUIRE(count == 2);
     }
 
     SECTION("Read boolean value.")

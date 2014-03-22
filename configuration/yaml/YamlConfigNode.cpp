@@ -33,7 +33,11 @@ frts::ConfigNode::Iterator frts::YamlConfigNode::end()
 template<typename T>
 T frts::YamlConfigNode::get(const std::string& key, const std::string& type)
 {
-    YAML::Node valueNode = node[key];
+    if (!key.empty() && node.IsScalar())
+    {
+        throw makeMissingValueError(key);
+    }
+    YAML::Node valueNode = !key.empty() ? node[key] : node;
     if (valueNode)
     {
         try
@@ -55,7 +59,11 @@ template<typename T>
 T frts::YamlConfigNode::getDefault(const std::string& key, T defaultValue)
 {
     T result = defaultValue;
-    YAML::Node valueNode = node[key];
+    if (!key.empty() && node.IsScalar())
+    {
+        throw makeMissingValueError(key);
+    }
+    YAML::Node valueNode = !key.empty() ? node[key] : node;
     if (valueNode)
     {
         try

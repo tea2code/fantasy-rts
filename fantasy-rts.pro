@@ -26,6 +26,8 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(configuration/configuration.pri)
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    Application.cpp
 
-HEADERS += IteratorWrapper.h
+HEADERS += IteratorWrapper.h \
+    Application.h

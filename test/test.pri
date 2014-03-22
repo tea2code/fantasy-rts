@@ -1,4 +1,5 @@
 SOURCES += \
-    test/configuration.cpp
+    test/TestApplication.cpp \
+    test/TestConfiguration.cpp
 
 HEADERS +=

@@ -23,6 +23,7 @@ namespace frts
          */
         using Iterator = IteratorWrapper<ConfigNodeItr, ConfigNodePtr, ConfigNodePtr, ConfigNodePtr>;
 
+    public:
         virtual ~ConfigNode() {}
 
         /**
