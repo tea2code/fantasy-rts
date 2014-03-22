@@ -8,8 +8,8 @@ Current Version: **1**
 
 - Version 1: Configuration.
 - Version 2: Kernel.
-- Version 3: Data manager.
-- Version 4: Module interface.
+- Version 3: Module interface.
+- Version 4: Data manager.
 - Version 5: Plugins.
 - Version 6: Core architecture with full plugin support.
 
