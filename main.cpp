@@ -1,11 +1,7 @@
 #ifndef UNIT_TEST
 
-#include "configuration/yaml/YamlConfigNode.h"
-#include "configuration/yaml/YamlConfigNodeItr.h"
-#include "configuration/yaml/YamlConfigParser.h"
 
 #include <iostream>
-#include <memory>
 
 
 int main()

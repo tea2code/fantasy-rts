@@ -41,8 +41,8 @@ Based on recommendations from [stackoverflow.com](http://stackoverflow.com/q/276
 
 ### Blank Lines
 
-Separate functions, classes... by one line. The only exception are `#include` which should have two blank lines between the last `#include` and the following code (for example class).
+Separate functions, classes... by one line. The only exception are `#include` which should have two blank lines between the last `#include` and the following code (for example `class`).
 
 ## Unit Tests
 
-Unit tests are implemented using Catch which allows fast and easy creation of a huge number of test cases. To prevent problems with normal builds the directory *test* is only into the build included if qmake was executed with the parameters `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST`.
+Unit tests are implemented using Catch which allows fast and easy creation of a huge number of test cases. To prevent problems with normal builds the directory *test* is only included into the build if qmake was executed with the parameters `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST`.
