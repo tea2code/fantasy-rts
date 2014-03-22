@@ -3,14 +3,50 @@
 #include <configuration/ConfigError.h>
 #include <configuration/yaml/YamlConfigParser.h>
 
+#include <boost/format.hpp>
+
+#include <fstream>
+#include <stdexcept>
+
+
+#define CONFIG_FILE "configuration.yaml"
+
+void setup()
+{
+    std::ofstream file(CONFIG_FILE);
+    if(!file)
+    {
+        auto msg = boost::format(R"(Cannot open/create file "%1%".)") % CONFIG_FILE;
+        throw std::runtime_error(msg.str());
+    }
+    file << "boolValueTrue: true" << std::endl;
+    file << "boolValueFalse: false" << std::endl;
+    file << "floatValue00: 0.0" << std::endl;
+    file << "floatValue12: 1.2" << std::endl;
+    file << "intValue0: 0" << std::endl;
+    file << "intValue35: 35" << std::endl;
+    file << "stringValueAbc: abc" << std::endl;
+    file << "stringValueSentence: Hello World" << std::endl;
+    file << "stringValueSentenceQuoted: \"Hello World\"" << std::endl;
+    file << "node:" << std::endl;
+    file << "    test: 1" << std::endl;
+    file << "nodes:" << std::endl;
+    file << "    - node: 1" << std::endl;
+    file << "    - node: 2" << std::endl;
+    file << "    - node: 3" << std::endl;
+    file << "    - node: 4" << std::endl;
+    file.close();
+}
+
 
 TEST_CASE("Parse YAML configuration file.", "[configuration]")
 {
+    setup();
     frts::YamlConfigParser parser;
 
     SECTION("The YAML file exists.")
     {
-        frts::ConfigNodePtr node = parser.parseFile("configuration.yaml");
+        frts::ConfigNodePtr node = parser.parseFile(CONFIG_FILE);
         REQUIRE(node.get() != nullptr);
     }
 
@@ -23,9 +59,9 @@ TEST_CASE("Parse YAML configuration file.", "[configuration]")
 
 TEST_CASE("Parse YAML configuration node.", "[configuration]")
 {
-
+    setup();
     frts::YamlConfigParser parser;
-    frts::ConfigNodePtr node = parser.parseFile("configuration.yaml");
+    frts::ConfigNodePtr node = parser.parseFile(CONFIG_FILE);
     REQUIRE(node.get() != nullptr);
 
     SECTION("Iterate sub nodes.")
