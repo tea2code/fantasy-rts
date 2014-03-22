@@ -32,11 +32,14 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
     {
         frts::ConfigNodePtr subNode = node->getNode("nodes");
         int num = 1;
+        int count = 0;
         for(const auto& subSubNode : *subNode)
         {
             REQUIRE(subSubNode->getInteger("node") == num);
             num += 1;
+            count += 1;
         }
+        REQUIRE(count == 4);
     }
 
     SECTION("Read boolean value.")

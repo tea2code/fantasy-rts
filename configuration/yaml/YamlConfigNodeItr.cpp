@@ -16,26 +16,25 @@ frts::YamlConfigNodeItr::~YamlConfigNodeItr()
 
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++()
 {
-    iterator++;
+    ++iterator;
     return this;
 }
 
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++(int)
 {
+    frts::ConfigNodeItr::self_type* copy = new YamlConfigNodeItr(iterator);
     iterator++;
-    return this;
+    return copy;
 }
 
 frts::ConfigNodeItr::reference frts::YamlConfigNodeItr::operator*()
 {
-    frts::ConfigNodeItr::reference itr = frts::ConfigNodePtr(new YamlConfigNode(*iterator));
-    return itr;
+    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
 }
 
 frts::ConfigNodeItr::pointer frts::YamlConfigNodeItr::operator->()
 {
-    frts::ConfigNodeItr::pointer itr = frts::ConfigNodePtr(new YamlConfigNode(*iterator));
-    return itr;
+    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
 }
 
 bool frts::YamlConfigNodeItr::operator==(const self_type& rhs)

@@ -2,6 +2,7 @@
 #define ITERATORWRAPPER_H
 
 #include <iterator>
+#include <memory>
 
 
 namespace frts
@@ -21,18 +22,17 @@ namespace frts
         typedef std::forward_iterator_tag iterator_category;
         typedef int difference_type;
 
-        IteratorWrapper(IteratorImpl *iterator) : iterator(iterator) {}
-        ~IteratorWrapper() { delete iterator; }
+        IteratorWrapper(IteratorImpl *iterator) : iterator(std::shared_ptr<IteratorImpl>(iterator)) {}
 
-        self_type operator++() { self_type i = *this; (*iterator)++; return i; }
-        self_type operator++(int) { (*iterator)++; return *this; }
+        self_type operator++() { ++(*iterator); return *this; }
+        self_type operator++(int) { self_type i = *this; (*iterator)++; return i; }
         reference operator*() { return *(*iterator); }
         pointer operator->() { return &(*(*iterator)); }
         bool operator==(const self_type& rhs) { return *iterator == *rhs.iterator; }
         bool operator!=(const self_type& rhs) { return *iterator != *rhs.iterator; }
 
     private:
-        IteratorImpl *iterator;
+        std::shared_ptr<IteratorImpl> iterator;
     };
 }
 
