@@ -56,6 +56,15 @@ namespace frts
         virtual bool getBool(const std::string& key, bool devaultValue) = 0;
 
         /**
+         * @brief Get multiple boolean values in a list.
+         * @throws ConversionError if type conversion fails.
+         * @throws MissingValueError if values are not found.
+         * @param key Key of the value list.
+         * @return The values.
+         */
+        virtual std::vector<bool> getBools(const std::string& key) = 0;
+
+        /**
          * @brief Get value as floating point number.
          * @throws ConversionError if type conversion fails.
          * @throws MissingValueError if value is not found.
@@ -73,6 +82,15 @@ namespace frts
         virtual double getFloat(const std::string& key, double devaultValue) = 0;
 
         /**
+         * @brief Get multiple floating point values in a list.
+         * @throws ConversionError if type conversion fails.
+         * @throws MissingValueError if values are not found.
+         * @param key Key of the value list.
+         * @return The values.
+         */
+        virtual std::vector<double> getFloats(const std::string& key) = 0;
+
+        /**
          * @brief Get value as integer number.
          * @throws ConversionError if type conversion fails.
          * @throws MissingValueError if value is not found.
@@ -88,6 +106,15 @@ namespace frts
          * @return The value.
          */
         virtual long getInteger(const std::string& key, long devaultValue) = 0;
+
+        /**
+         * @brief Get multiple integer values in a list.
+         * @throws ConversionError if type conversion fails.
+         * @throws MissingValueError if values are not found.
+         * @param key Key of the value list.
+         * @return The values.
+         */
+        virtual std::vector<long> getIntegers(const std::string& key) = 0;
 
         /**
          * @brief Get sub node.
@@ -114,6 +141,15 @@ namespace frts
          */
         virtual std::string getString(const std::string& key,
                                       const std::string& devaultValue) = 0;
+
+        /**
+         * @brief Get multiple string values in a list.
+         * @throws ConversionError if type conversion fails.
+         * @throws MissingValueError if values are not found.
+         * @param key Key of the value list.
+         * @return The values.
+         */
+        virtual std::vector<std::string> getStrings(const std::string& key) = 0;
 
         /**
          * @brief Check if a value exists.

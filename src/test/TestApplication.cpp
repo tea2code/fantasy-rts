@@ -43,7 +43,7 @@ TEST_CASE("Execute start phases.", "[application]")
 {
     setupLoadFile();
 
-    frts::Application app;
+    frts::Application app(nullptr);
 
     SECTION("Read and parse load file")
     {

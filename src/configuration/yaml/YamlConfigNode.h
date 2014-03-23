@@ -25,18 +25,21 @@ namespace frts
 
         bool getBool(const std::string& key);
         bool getBool(const std::string& key, bool defaultValue);
+        std::vector<bool> getBools(const std::string& key);
 
         double getFloat(const std::string& key);
         double getFloat(const std::string& key, double defaultValue);
+        std::vector<double> getFloats(const std::string& key);
 
         long getInteger(const std::string& key);
         long getInteger(const std::string& key, long defaultValue);
+        std::vector<long> getIntegers(const std::string& key);
 
         ConfigNodePtr getNode(const std::string& key);
 
         std::string getString(const std::string& key);
-        std::string getString(const std::string& key,
-                                      const std::string& defaultValue);
+        std::string getString(const std::string& key, const std::string& defaultValue);
+        std::vector<std::string> getStrings(const std::string& key);
 
         bool has(const std::string& key);
 

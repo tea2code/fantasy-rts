@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <stdexcept>
+#include <vector>
 
 
 #define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
@@ -38,6 +39,19 @@ void setupConfiguration()
     file << "nodesNoKey:" << std::endl;
     file << "    - 1" << std::endl;
     file << "    - 2" << std::endl;
+    file << "nodesListBool:" << std::endl;
+    file << "    - true" << std::endl;
+    file << "    - false" << std::endl;
+    file << "nodesListFloat:" << std::endl;
+    file << "    - 0.0" << std::endl;
+    file << "    - 1.2" << std::endl;
+    file << "nodesListInt:" << std::endl;
+    file << "    - 0" << std::endl;
+    file << "    - 35" << std::endl;
+    file << "nodesListString:" << std::endl;
+    file << "    - abc" << std::endl;
+    file << "    - Hello World" << std::endl;
+    file << "    - \"Hello World\"" << std::endl;
     file.close();
 }
 
@@ -112,6 +126,13 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_THROWS_AS(node->getBool("intValue0"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getBool("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getBool("notExistingKey"), frts::MissingValueError);
+
+        std::vector<bool> values {true, false};
+        REQUIRE(node->getBools("nodesListBool") == values);
+        REQUIRE_THROWS_AS(node->getBools("nodesListFloat"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getBools("nodesListInt"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getBools("nodesListString"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getBools("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Read float value.")
@@ -127,6 +148,22 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_THROWS_AS(node->getFloat("boolValueTrue"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getFloat("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getFloat("notExistingKey"), frts::MissingValueError);
+
+        std::vector<double> values {0.0, 1.2};
+        std::vector<double> valuesGot = node->getFloats("nodesListFloat");
+        for(std::vector<double>::size_type i = 0; i != valuesGot.size(); ++i)
+        {
+            REQUIRE(valuesGot.at(i) == values.at(i));
+        }
+        values = {0, 35};
+        valuesGot = node->getFloats("nodesListInt");
+        for(std::vector<double>::size_type i = 0; i != valuesGot.size(); ++i)
+        {
+            REQUIRE(valuesGot.at(i) == values.at(i));
+        }
+        REQUIRE_THROWS_AS(node->getFloats("nodesListBool"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getFloats("nodesListString"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getFloats("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Read integer value.")
@@ -143,6 +180,13 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_THROWS_AS(node->getInteger("floatValue12"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getInteger("stringValueAbc"), frts::ConversionError);
         REQUIRE_THROWS_AS(node->getInteger("notExistingKey"), frts::MissingValueError);
+
+        std::vector<long> values {0, 35};
+        REQUIRE(node->getIntegers("nodesListInt") == values);
+        REQUIRE_THROWS_AS(node->getIntegers("nodesListBool"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getIntegers("nodesListFloat"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getIntegers("nodesListString"), frts::ConversionError);
+        REQUIRE_THROWS_AS(node->getIntegers("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Read sub node.")
@@ -166,6 +210,16 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE(node->getString("stringValueAbc", "Test") == "abc");
         REQUIRE(node->getString("notExistingKey", "Test") == "Test");
         REQUIRE_THROWS_AS(node->getString("notExistingKey"), frts::MissingValueError);
+
+        std::vector<std::string> values {"true", "false"};
+        REQUIRE(node->getStrings("nodesListBool") == values);
+        values = {"0.0", "1.2"};
+        REQUIRE(node->getStrings("nodesListFloat") == values);
+        values = {"0", "35"};
+        REQUIRE(node->getStrings("nodesListInt") == values);
+        values = {"abc", "Hello World", "Hello World"};
+        REQUIRE(node->getStrings("nodesListString") == values);
+        REQUIRE_THROWS_AS(node->getStrings("notExistingKey"), frts::MissingValueError);
     }
 
     SECTION("Check if node has value.")
