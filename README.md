@@ -9,7 +9,7 @@ Current Version: **2**
 - Version 1: Configuration.
 - Version 2: Kernel.
 - Version 3: Module interface.
-- Version 4: Data manager.
+- Version 4: Shared manager.
 - Version 5: Plugins.
 - Version 6: Core architecture with full plugin support.
 
