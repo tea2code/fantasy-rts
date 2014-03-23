@@ -21,7 +21,7 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 
 ### Deployment
 
-The deployment step should include copying the *plugins* directory to the build directory.
+The deployment step should include copying the *plugins* and *log* directories to the build directory.
 
 ## Code Style
 
