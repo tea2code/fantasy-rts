@@ -17,6 +17,7 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 - [Boost](http://www.boost.org/)
 - [yaml-cpp](https://code.google.com/p/yaml-cpp/): Must be compiled statically.
 - [Catch](https://github.com/philsquared/Catch)
+- [Easylogging++](http://easylogging.org/)
 
 ### Deployment
 

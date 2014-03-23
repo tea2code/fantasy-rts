@@ -1,0 +1,50 @@
+#ifndef LOG_H
+#define LOG_H
+
+#include <string>
+
+namespace frts
+{
+    /**
+     * @brief Interface for logger.
+     */
+    class Log
+    {
+    public:
+        virtual ~Log() {}
+
+        /**
+         * @brief Log message on debug level. Most verbose level. Only active in
+         * development.
+         * @param module The module.
+         * @param msg The message.
+         */
+        virtual void debug(const std::string& module, const std::string& msg) = 0;
+
+        /**
+         * @brief Log message on error level. Always active. Should be only used
+         * for exceptions/errors.
+         * @param module The module.
+         * @param msg The message.
+         */
+        virtual void error(const std::string& module, const std::string& msg) = 0;
+
+        /**
+         * @brief Log message on info level. Standard level for non critical
+         * messages. May be deactivated in stable releases.
+         * @param module The module.
+         * @param msg The message.
+         */
+        virtual void info(const std::string& module, const std::string& msg) = 0;
+
+        /**
+         * @brief Log message on warning level. Always active. Use for important
+         * messages which aren't critical as errors.
+         * @param module The module.
+         * @param msg The message.
+         */
+        virtual void warning(const std::string& module, const std::string& msg) = 0;
+    };
+}
+
+#endif // LOG_H
