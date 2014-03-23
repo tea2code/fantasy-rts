@@ -1,4 +1,5 @@
-HEADERS += configuration/ConfigParser.h \
+HEADERS += \
+    configuration/ConfigParser.h \
     configuration/ConfigNode.h \
     configuration/ConfigNodeItr.h \
     configuration/ConfigError.h \

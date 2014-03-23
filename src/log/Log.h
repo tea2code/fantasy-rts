@@ -1,10 +1,18 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <memory>
 #include <string>
 
 namespace frts
 {
+    class Log;
+
+    /**
+     * @brief Pointer to Log.
+     */
+    using LogPtr = std::shared_ptr<Log>;
+
     /**
      * @brief Interface for logger.
      */

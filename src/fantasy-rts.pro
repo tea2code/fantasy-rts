@@ -17,7 +17,7 @@ QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 INCLUDEPATH += $$PWD/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/dependency/boost
 INCLUDEPATH += $$PWD/dependency/yaml-cpp/include
-INCLUDEPATH += %%PWD/dependency/easyloggingpp/src
+INCLUDEPATH += $$PWD/dependency/easyloggingpp/src
 
 # Libs.
 LIBS += -L$$PWD/dependency/yaml-cpp/build -lyaml-cpp
@@ -27,9 +27,13 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(configuration/configuration.pri)
-SOURCES += main.cpp \
+include(log/log.pri)
+
+SOURCES += \
+    main.cpp \
     Application.cpp
 
-HEADERS += IteratorWrapper.h \
+HEADERS += \
+    IteratorWrapper.h \
     Application.h \
     Log.h

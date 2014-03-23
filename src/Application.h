@@ -1,6 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "log/Log.h"
+
 #include <string>
 #include <vector>
 
@@ -22,13 +24,19 @@ namespace frts
         };
 
     public:
-        Application();
+        /**
+         * @param log The logger.
+         */
+        Application(LogPtr log);
 
         /**
          * @brief Read and parse the file containing the load configuration.
          * @param filePath Path to load file.
          */
         LoadConfiguration readLoadFile(const std::string& filePath);
+
+    private:
+        LogPtr log;
     };
 }
 

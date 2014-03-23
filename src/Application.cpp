@@ -3,7 +3,8 @@
 #include "configuration/ConfigNode.h"
 #include "configuration/yaml/YamlConfigParser.h"
 
-frts::Application::Application()
+frts::Application::Application(LogPtr log)
+    : log{log}
 {
 }
 
