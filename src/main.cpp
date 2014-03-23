@@ -22,7 +22,7 @@ int main()
     // Most basic configuration.
     const std::string loadFile = "plugins/load.yaml";
     const std::string logConfigFile = "log/easylogging.conf";
-    const std::string logModule = "Core";
+    const std::string logModule = "Kernel";
 
     // Create logger.
     frts::LogPtr log = frts::LogPtr(new frts::EasyloggingLog(logConfigFile));
