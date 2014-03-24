@@ -3,8 +3,17 @@
 
 #include <log/Log.h>
 
+#include <memory>
+
 namespace frts
 {
+    class SharedManager;
+
+    /**
+     * Pointer to SharedManager.
+     */
+    using SharedManagerPtr = std::shared_ptr<SharedManager>;
+
     class SharedManager
     {
     public:
