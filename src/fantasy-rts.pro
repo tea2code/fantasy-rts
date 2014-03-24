@@ -28,6 +28,7 @@ UNIT_TEST {
 }
 include(configuration/configuration.pri)
 include(log/log.pri)
+include(module/module.pri)
 include(shared/shared.pri)
 
 SOURCES += \
