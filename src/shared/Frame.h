@@ -1,43 +1,42 @@
 #ifndef FRAME_H
 #define FRAME_H
 
+#include <memory>
+
 namespace frts
 {
+    class Frame;
+
+    /**
+     * @brief Pointer to a frame.
+     */
+    using FramePtr = std::shared_ptr<Frame>;
+
     /**
      * @brief Contains the frame specific data.
      */
     class Frame
     {
     public:
-        /**
-         * @param deltaTime Time passed since last frame.
-         * @param number Number of this frame.
-         * @param runTime Complete run time of application.
-         */
-        Frame(double deltaTime, unsigned long long number, double runTime);
+        virtual ~Frame() {}
 
         /**
-         * @brief getDeltaTime
-         * @return
+         * @brief Time passed since last frame.
+         * @return Delta time.
          */
-        double getDeltaTime() const;
+        virtual double getDeltaTime() const = 0;
 
         /**
-         * @brief getNumber
-         * @return
+         * @brief Number of this frame.
+         * @return Frame number.
          */
-        unsigned long long getNumber() const;
+        virtual unsigned long long getNumber() const = 0;
 
         /**
-         * @brief getRunTime
-         * @return
+         * @brief Complete run time of application.
+         * @return Run time.
          */
-        double getRunTime() const;
-
-    private:
-        double deltaTime;
-        unsigned long long number;
-        double runTime;
+        virtual double getRunTime() const = 0;
     };
 }
 
