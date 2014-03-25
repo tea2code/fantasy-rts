@@ -20,7 +20,7 @@ The configuration package contains classes related to reading and parsing config
 
 ## Log
 
-The log package contains implementations of loggers. Currently Easylogging++ is used. The log objects has a simple interface to create a log message. It can be accessed through the shared manager. A log message consists of a (hopefully) unique name for the module (for example the plugin module name) and the message. The configuration and the output files are stored in the directory log. Example:
+The log package contains implementations of loggers. Currently Easylogging++ is used. The log object has a simple interface to create a log message. It can be accessed through the shared manager. A log message consists of a (hopefully) unique name for the module (for example the plugin module name) and the message. The configuration and the output files are stored in the directory log. Example:
 
     log->debug("Kernel", "Hello World");
 
