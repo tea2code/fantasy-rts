@@ -35,6 +35,26 @@ The supported log levels are in order of their verbosity:
 - **Warning:** Use for important messages which aren't critical as errors. Always active.
 - **Error:** Use for exception and error messages. Always active.
 
+## Module
+
+The module package contains all module related interfaces and some additional classes like for error handling related to modules. 
+
+### Interface "Module"
+
+This is the base interface for all modules. It defines methods related to the execution phases of the application.
+
+### Interface "Tickable"
+
+A module which implements this interface can be called every frame with the current application state. Tickable modules represent the brain of this application.
+
+### Interface "Utility"
+
+Utility modules aren't automatically called but can be called by other modules. They represent common functions offered by plugins.
+
+## Shared
+
+The shared package contains the shared manager which repesents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager may become invalid. 
+
 ## Test
 
 The (unit) test package of the kernel. 
