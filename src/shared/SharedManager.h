@@ -14,6 +14,10 @@ namespace frts
      */
     using SharedManagerPtr = std::shared_ptr<SharedManager>;
 
+    /**
+     * @brief Interface representing the shared manager. It gives access
+     * to the shared state including data values and other modules.
+     */
     class SharedManager
     {
     public:

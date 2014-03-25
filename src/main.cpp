@@ -28,11 +28,11 @@ int main()
     frts::LogPtr log = frts::LogPtr(new frts::EasyloggingLog(logConfigFile));
 
     // Start application.
-    log->debug(logModule, "Start application");
+    log->info(logModule, "Start application");
     frts::Application app(log);
 
     // Read load configuration.
-    log->debug(logModule, "Read load configuration");
+    log->info(logModule, "Read load configuration");
     frts::Application::LoadConfiguration loadConfig = app.readLoadFile(loadFile);
     log->warning(logModule, "Log configuration:");
     logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
@@ -42,7 +42,7 @@ int main()
     logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
 
     // All done. Good night.
-    std::cin.ignore();
+    //std::cin.ignore();
     return 0;
 }
 
