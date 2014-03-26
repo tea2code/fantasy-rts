@@ -3,6 +3,7 @@
 
 #include "Log.h"
 
+
 namespace frts
 {
     class EasyloggingLog : public Log

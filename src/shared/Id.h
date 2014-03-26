@@ -1,50 +1,35 @@
 #ifndef ID_H
 #define ID_H
 
+#include <memory>
 #include <string>
+
 
 namespace frts
 {
+    class Id;
+
     /**
-     * @brief Represents an id.
+     * @brief Pointer to Id.
+     */
+    using IdPtr = std::shared_ptr<Id>;
+
+    /**
+     * @brief Represents an Id.
      */
     class Id
     {
     public:
-        /**
-         * @brief Create id from string representation.
-         * @param str The string representation of this id.
-         * @return The id.
-         */
-        static Id from(const std::string& str)
-        {
-            return Id(str);
-        }
+        virtual ~Id() {}
 
         /**
-         * @brief Get the string representation of this id.
+         * @brief Get the string representation of this Id.
          * @return The string representation.
          */
-        std::string toString()
-        {
-            return str;
-        }
+        virtual std::string toString() = 0;
 
-        bool operator==(const Id& rhs)
-        {
-            return str == rhs.str;
-        }
-
-        bool operator!=(const Id& rhs)
-        {
-            return str != rhs.str;
-        }
-
-    private:
-        std::string str;
-
-    private:
-        Id(const std::string& str) : str{str} {}
+        virtual bool operator==(const Id& rhs) = 0;
+        virtual bool operator!=(const Id& rhs) = 0;
     };
 }
 

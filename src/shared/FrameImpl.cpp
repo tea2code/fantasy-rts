@@ -1,5 +1,6 @@
 #include "FrameImpl.h"
 
+
 frts::FrameImpl::FrameImpl(double deltaTime, unsigned long long number, double runTime)
     : deltaTime{deltaTime}, number{number}, runTime{runTime}
 {

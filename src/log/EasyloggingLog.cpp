@@ -11,6 +11,7 @@
 
 _INITIALIZE_EASYLOGGINGPP
 
+
 frts::EasyloggingLog::EasyloggingLog(const std::string& configFilePath)
 {
     el::Configurations conf(configFilePath);

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+
 void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
                        const std::string& key, const std::vector<std::string>& values)
 {

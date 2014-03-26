@@ -5,6 +5,7 @@
 
 #include <memory>
 
+
 namespace frts
 {
     class SharedManager;

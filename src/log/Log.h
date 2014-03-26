@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+
 namespace frts
 {
     class Log;
