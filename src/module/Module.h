@@ -11,13 +11,6 @@
 
 namespace frts
 {
-    class Module;
-
-    /**
-     * Pointer to Module.
-     */
-    using ModulePtr = std::shared_ptr<Module>;
-
     class Module
     {
     public:

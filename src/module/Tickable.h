@@ -6,6 +6,13 @@
 
 namespace frts
 {
+    class Tickable;
+
+    /**
+     * Pointer to Tickable.
+     */
+    using TickablePtr = std::shared_ptr<Tickable>;
+
     class Tickable : public Module
     {
     public:
