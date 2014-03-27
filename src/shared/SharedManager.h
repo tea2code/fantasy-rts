@@ -5,7 +5,7 @@
 #include "Frame.h"
 #include "Id.h"
 #include <log/Log.h>
-#include <module/Utility.h>
+#include <module/ModulePtr.h>
 
 #include <memory>
 #include <string>
@@ -24,7 +24,7 @@ namespace frts
     /**
      * @brief Iterator to tickable modules.
      */
-    using TickableItr = std::vector<frts::TickableItr>::iterator;
+    using TickableItr = std::vector<TickablePtr>::iterator;
 
     /**
      * @brief Interface representing the shared manager. It gives access
@@ -37,6 +37,7 @@ namespace frts
 
         /**
          * @brief Get data value.
+         * @throws IdNotFoundError if data value with id does not exist.
          * @param id The id of the value.
          * @return The data value.
          */
@@ -56,6 +57,7 @@ namespace frts
 
         /**
          * @brief Get utility module.
+         * @throws IdNotFoundError if utility with id does not exist.
          * @param id The id of the module.
          * @return The module.
          */
@@ -81,7 +83,7 @@ namespace frts
         virtual TickableItr renderModulesEnd() const = 0;
 
         /**
-         * @brief Set data value.
+         * @brief Set data value. Existing values will be overriden.
          * @param id The id of the value.
          * @param value The data value.
          */

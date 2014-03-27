@@ -37,7 +37,7 @@ The supported log levels are in order of their verbosity:
 
 ## Module
 
-The module package contains all module related interfaces and some additional classes like for error handling related to modules. 
+The module package contains all module related interfaces and some additional classes like for error handling related to modules. Every module has a name. If it is necessary that a module is associated with an id the id is created from this name (for example utility modules).
 
 ### Interface "Module"
 

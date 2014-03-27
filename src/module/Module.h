@@ -11,6 +11,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Base interface for modules.
+     */
     class Module
     {
     public:
