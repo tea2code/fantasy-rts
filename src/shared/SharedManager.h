@@ -24,7 +24,7 @@ namespace frts
     /**
      * @brief Iterator to tickable modules.
      */
-    using TickableItr = std::vector<TickablePtr>::iterator;
+    using TickableItr = std::vector<TickablePtr>::const_iterator;
 
     /**
      * @brief Interface representing the shared manager. It gives access

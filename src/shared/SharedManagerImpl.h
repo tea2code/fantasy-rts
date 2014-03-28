@@ -4,10 +4,12 @@
 #include "DataValue.h"
 #include "Frame.h"
 #include "Id.h"
+#include "SharedError.h"
 #include "SharedManager.h"
 #include <module/Tickable.h>
 #include <module/Utility.h>
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -55,10 +57,15 @@ namespace frts
         TickableItr updateModulesEnd() const;
 
     private:
+        std::map<IdPtr, DataValuePtr> dataValues;
         FramePtr frame;
         LogPtr log;
-        std::vector<frts::TickablePtr> renderModules;
-        std::vector<frts::TickablePtr> updateModules;
+        std::vector<TickablePtr> renderModules;
+        std::vector<TickablePtr> updateModules;
+        std::map<IdPtr, UtilityPtr> utilityModules;
+
+    private:
+        IdNotFoundError makeIdNotFoundError(IdPtr id) const;
     };
 }
 

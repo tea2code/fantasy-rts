@@ -6,8 +6,10 @@
 #include <shared/DataValue.h>
 #include <shared/FrameImpl.h>
 #include <shared/IdImpl.h>
+#include <shared/SharedError.h>
 #include <shared/SharedManagerImpl.h>
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -108,15 +110,34 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
     sharedImpl->setFrame(frts::FramePtr(new frts::FrameImpl(0.01, 124, 1.24)));
 
-    frts::IdPtr id1 = frts::IdPtr(new frts::IdImpl("1"));
-    frts::IdPtr id2 = frts::IdPtr(new frts::IdImpl("2"));
-    frts::DataValuePtr dataValue = frts::DataValuePtr(new frts::TestDataValue());
-    sharedImpl->setValue(id1, dataValue);
+    frts::IdPtr notExistId = frts::IdPtr(new frts::IdImpl("notExistId"));
+
+    frts::IdPtr dataValueId = frts::IdPtr(new frts::IdImpl("dataValueId"));
+    frts::DataValuePtr dataValue1 = frts::DataValuePtr(new frts::TestDataValue());
+    frts::DataValuePtr dataValue2 = frts::DataValuePtr(new frts::TestDataValue());
+    sharedImpl->setValue(dataValueId, dataValue1);
 
     frts::UtilityPtr utility = frts::UtilityPtr(new frts::TestUtility());
     frts::IdPtr utilityId = frts::IdPtr(new frts::IdImpl(utility->getName()));
+    sharedImpl->setUtility(utilityId, utility);
 
-    frts::SharedManagerPtr shared = frts::SharedManagerPtr(sharedImpl.get());
+    frts::SharedManagerPtr shared = sharedImpl;
 
+    REQUIRE(shared->getLog() == log);
+    REQUIRE(std::distance(shared->renderModulesBegin(), shared->renderModulesEnd()) == 2);
+    REQUIRE(std::distance(shared->updateModulesBegin(), shared->updateModulesEnd()) == 1);
+    REQUIRE(shared->getFrame()->getDeltaTime() == Approx(0.01));
+    REQUIRE(shared->getFrame()->getNumber() == 124);
+    REQUIRE(shared->getFrame()->getRunTime() == Approx(1.24));
+    REQUIRE(shared->getUtility(utilityId) == utility);
+    REQUIRE_THROWS_AS(shared->getUtility(notExistId), frts::IdNotFoundError);
 
+    REQUIRE(shared->getDataValue(dataValueId) == dataValue1);
+    REQUIRE(shared->getDataValue(dataValueId) != dataValue2);
+    REQUIRE_THROWS_AS(shared->getDataValue(notExistId), frts::IdNotFoundError);
+
+    shared->setValue(dataValueId, dataValue2);
+    REQUIRE(shared->getDataValue(dataValueId) != dataValue1);
+    REQUIRE(shared->getDataValue(dataValueId) == dataValue2);
+    REQUIRE_THROWS_AS(shared->getDataValue(notExistId), frts::IdNotFoundError);
 }

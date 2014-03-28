@@ -1,5 +1,9 @@
 #include "SharedManagerImpl.h"
 
+#include "IdImpl.h"
+
+#include <boost/format.hpp>
+
 
 frts::SharedManagerImpl::SharedManagerImpl(LogPtr log,
                                            std::vector<frts::TickablePtr> renderModules,
@@ -16,37 +20,59 @@ frts::SharedManagerImpl::~SharedManagerImpl()
 
 frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
 {
-    throw 42;
+    std::map<IdPtr, DataValuePtr>::const_iterator it = dataValues.find(id);
+    if(it != dataValues.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        throw makeIdNotFoundError(id);
+    }
 }
 
 const frts::FramePtr frts::SharedManagerImpl::getFrame() const
 {
-    throw 42;
+    return frame;
 }
 
 frts::LogPtr frts::SharedManagerImpl::getLog() const
 {
-    throw 42;
+    return log;
 }
 
 frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 {
-    throw 42;
+    std::map<IdPtr, UtilityPtr>::const_iterator it = utilityModules.find(id);
+    if(it != utilityModules.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        throw makeIdNotFoundError(id);
+    }
 }
 
 frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
 {
-    throw 42;
+    return IdPtr(new IdImpl(str));
+}
+
+frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const
+{
+    auto msg = boost::format(R"(Id "%1%" could not be found.)") % id->toString();
+    return IdNotFoundError(msg.str());
 }
 
 frts::TickableItr frts::SharedManagerImpl::renderModulesBegin() const
 {
-    throw 42;
+    return renderModules.begin();
 }
 
 frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const
 {
-    throw 42;
+    return renderModules.end();
 }
 
 void frts::SharedManagerImpl::setFrame(FramePtr frame)
@@ -56,20 +82,20 @@ void frts::SharedManagerImpl::setFrame(FramePtr frame)
 
 void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
 {
-    throw 42;
+    utilityModules[id] = utility;
 }
 
 void frts::SharedManagerImpl::setValue(IdPtr id, DataValuePtr value)
 {
-    throw 42;
+    dataValues[id] = value;
 }
 
 frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const
 {
-    throw 42;
+    return updateModules.begin();
 }
 
 frts::TickableItr frts::SharedManagerImpl::updateModulesEnd() const
 {
-    throw 42;
+    return updateModules.end();
 }
