@@ -20,7 +20,7 @@ The configuration package contains classes related to reading and parsing config
 
 ## Log
 
-The log package contains implementations of loggers. Currently Easylogging++ is used. The log object has a simple interface to create a log message. It can be accessed through the shared manager. A log message consists of a (hopefully) unique name for the module (for example the plugin module name) and the message. The configuration and the output files are stored in the directory log. Example:
+The log package contains implementations of loggers. Currently Easylogging++ is used. The log object has a simple interface to create a log message. It can be accessed through the shared manager. A log message consists of a (hopefully) unique name for the module (for example the plugin module name) and the message. The configuration and the output files are stored in the directory *log*. Example:
 
     log->debug("Kernel", "Hello World");
 
@@ -53,7 +53,35 @@ Utility modules aren't automatically called but can be called by other modules. 
 
 ## Shared
 
-The shared package contains the shared manager which repesents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager may become invalid. 
+The shared package contains the shared manager which repesents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager stays valid. Following state data can be accessed through the manager:
+
+### Data Values
+
+Data values store all variable game state data. 
+
+### Frame
+
+The frame object contains meta information about the current frame. This includes the time since the last frame, the frame number and the passed time since the game start. If you need to schedule something in the future you should prefer the time since game start instead of the frame number. While it may be easier to use the frame number there is no guarantee that every frame has the same length. By using the time even on the slower computer the internal game speed stays (nearly) the same.
+
+### ID Generator
+
+The function *makeId()* generates a new id with the given string. This function may implement optimizations like caches and similar functions.
+
+### Log
+
+The current logger. See **Log** for more information.
+
+### Render Modules
+
+The currently used render modules. See **Modules** for more information.
+
+### Update Modules
+
+The currently used update modules. See **Modules** for more information.
+
+### Utilities
+
+Available utilities. See **Modules** for more information.
 
 ## Test
 
