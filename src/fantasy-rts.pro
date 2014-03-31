@@ -13,6 +13,9 @@ QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror
 # Deactivate some unnecessary warnings. Best to use "-Wno-error=..." and keep warnings.
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
+# Plugin Version.
+DEFINES += PLUGIN_VERSION=1
+
 # Includes.
 INCLUDEPATH += $$PWD/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/dependency/boost

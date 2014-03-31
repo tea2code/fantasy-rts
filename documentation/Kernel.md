@@ -51,6 +51,10 @@ A module which implements this interface can be called every frame with the curr
 
 Utility modules aren't automatically called but can be called by other modules. They represent common functions offered by plugins.
 
+## Plugin
+
+
+
 ## Shared
 
 The shared package contains the shared manager which repesents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager stays valid. Following state data can be accessed through the manager:
