@@ -5,8 +5,14 @@
 
 namespace frts
 {
+    class Module;
     class Tickable;
     class Utility;
+
+    /**
+     * Pointer to Module.
+     */
+    using ModulePtr = std::shared_ptr<Module>;
 
     /**
      * Pointer to Tickable.

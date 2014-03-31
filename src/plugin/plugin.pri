@@ -1,3 +1,4 @@
 SOURCES += 
 
-HEADERS += 
+HEADERS += \ 
+    plugin/Plugin.h
