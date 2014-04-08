@@ -6,7 +6,7 @@ frts::PluginManager::PluginManager()
 
 frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
 {
-
+    return nullptr;
 }
 
 

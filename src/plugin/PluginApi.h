@@ -29,7 +29,7 @@
 
     extern "C" PLUGIN_API int getVersion()
     {
-      return PLUGIN_VERSION;
+      return 1;
     }
 
 #endif

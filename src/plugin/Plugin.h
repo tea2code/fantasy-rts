@@ -1,5 +1,5 @@
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef PLUGIN_INTERFACE_H
+#define PLUGIN_INTERFACE_H
 
 #include <module/ModulePtr.h>
 #include <shared/Id.h>
@@ -14,10 +14,10 @@ namespace frts
         /**
          * @brief Get a module from this plugin.
          * @param id The module id.
-         * @return The module.
+         * @return The module or null.
          */
         virtual ModulePtr getModule(IdPtr id) = 0;
     };
 }
 
-#endif // PLUGIN_H
+#endif // PLUGIN_INTERFACE_H

@@ -1,5 +1,5 @@
-#ifndef MODULE_H
-#define MODULE_H
+#ifndef MODULE_INTERFACE_H
+#define MODULE_INTERFACE_H
 
 #include <configuration/ConfigNodeItr.h>
 #include <shared/SharedManager.h>
@@ -66,4 +66,4 @@ namespace frts
     };
 }
 
-#endif // MODULE_H
+#endif // MODULE_INTERFACE_H
