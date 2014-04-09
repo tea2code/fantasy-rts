@@ -5,4 +5,5 @@ HEADERS += \
     plugin/Plugin.h \
     plugin/PluginApi.h \
     plugin/PluginPtr.h \
-    plugin/PluginManager.h
+    plugin/PluginManager.h \
+    plugin/PluginError.h

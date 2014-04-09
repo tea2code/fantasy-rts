@@ -26,6 +26,7 @@ namespace frts
 
         /**
          * @brief Loads a plugin defined by given path and library name.
+         * @throws LibraryNotFound if the library was not found.
          * @param path The directory path where the library is.
          * @param name The name of the library without extension.
          */
