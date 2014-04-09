@@ -43,3 +43,4 @@ profile.*
 log/decision/
 *.pro.user
 dependency
+*.dll
