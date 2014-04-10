@@ -17,6 +17,11 @@ TEST_CASE("Find modules.", "[plugin]")
 
     SECTION("Find module.")
     {
+        /* For this test to work you must first compile the sub project
+         * TestPlugin in the folder test/TestPlugin/TestPlugin. Copy the
+         * generated library  into the directory test/TestPlugin.
+         */
+
         frts::PluginManager pluginManager;
 
         pluginManager.loadPlugin(path, testPlugin);
