@@ -29,7 +29,7 @@
 
     extern "C" PLUGIN_API int getVersion()
     {
-      return 1;
+      return 1; // Also update in plugin manager.
     }
 
 #endif

@@ -14,6 +14,15 @@ namespace frts
     public:
         LibraryNotFound(const std::string& msg) : std::runtime_error(msg) {}
     };
+
+    /**
+     * @brief Thrown if a library version is out dated.
+     */
+    class LibraryOutDated : public std::runtime_error
+    {
+    public:
+        LibraryOutDated(const std::string& msg) : std::runtime_error(msg) {}
+    };
 }
 
 #endif // PLUGINERROR_H
