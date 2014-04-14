@@ -15,11 +15,11 @@ namespace frts
          * @param runTime Complete run time of application.
          */
         FrameImpl(double deltaTime, unsigned long long number, double runTime);
-        ~FrameImpl();
+        ~FrameImpl() override;
 
-        double getDeltaTime() const;
-        unsigned long long getNumber() const;
-        double getRunTime() const;
+        double getDeltaTime() const override;
+        unsigned long long getNumber() const override;
+        double getRunTime() const override;
 
     private:
         double deltaTime;

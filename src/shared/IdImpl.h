@@ -10,7 +10,7 @@ namespace frts
     {
     public:
         IdImpl(const std::string& str);
-        ~IdImpl();
+        ~IdImpl() override;
 
         std::string toString() override;
 

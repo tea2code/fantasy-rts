@@ -15,14 +15,14 @@ namespace frts
     {
     public:
         YamlConfigNodeItr(YAML::Node::iterator iterator);
-        ~YamlConfigNodeItr();
+        ~YamlConfigNodeItr() override;
 
-        self_type* operator++();
-        self_type* operator++(int);
-        reference operator*();
-        pointer operator->();
-        bool operator==(const self_type& rhs);
-        bool operator!=(const self_type& rhs);
+        self_type* operator++() override;
+        self_type* operator++(int) override;
+        reference operator*() override;
+        pointer operator->() override;
+        bool operator==(const self_type& rhs) override;
+        bool operator!=(const self_type& rhs) override;
 
     private:
         YAML::Node::iterator iterator;

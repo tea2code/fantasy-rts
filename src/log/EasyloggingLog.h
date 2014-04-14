@@ -13,12 +13,12 @@ namespace frts
          * @param configFilePath Path to configuration file.
          */
         EasyloggingLog(const std::string& configFilePath);
-        ~EasyloggingLog();
+        ~EasyloggingLog() override;
 
-        void debug(const std::string& module, const std::string& msg);
-        void error(const std::string& module, const std::string& msg);
-        void info(const std::string& module, const std::string& msg);
-        void warning(const std::string& module, const std::string& msg);
+        void debug(const std::string& module, const std::string& msg) override;
+        void error(const std::string& module, const std::string& msg) override;
+        void info(const std::string& module, const std::string& msg) override;
+        void warning(const std::string& module, const std::string& msg) override;
 
     private:
         std::string formatMessage(const std::string& module, const std::string& msg);

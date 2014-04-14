@@ -13,9 +13,9 @@ namespace frts
     {
     public:
         YamlConfigParser();
-        ~YamlConfigParser();
+        ~YamlConfigParser() override;
 
-        ConfigNodePtr parseFile(const std::string& filePath);
+        ConfigNodePtr parseFile(const std::string& filePath) override;
     };
 }
 
