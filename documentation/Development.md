@@ -23,6 +23,38 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 
 The deployment step should include copying the *plugins* and *log* directories to the build directory.
 
+### Example configuration
+
+Following settings are for Qt Creator. Building/deployment steps marked with `code highlighting` are custom steps where the first line is the command, second are arguments and third is the working directory.
+
+If you're using gcc it is recommended to build with make argument `-j` to benefit from multi core building.
+
+#### TestPlugin
+
+Default compile settings with additional copy step after making:
+
+    xcopy
+    %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /seyi
+    %{buildDir}
+
+#### Kernel
+
+Release and debug builds use standard settings. For testing create variants of both and add `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST` to the additional arguments of qmake. Executing these builds will execute all unit tests.
+
+Running includes three custom steps to copy assets into the working directory:
+
+    xcopy
+    %{sourceDir}\..\plugins %{buildDir}\plugins /seyi
+    %{buildDir}
+
+    xcopy
+    %{sourceDir}\..\log %{buildDir}\log /seyi
+    %{buildDir}
+
+    xcopy
+    %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir} /seyi
+    %{buildDir}
+
 ## Code Style
 
 There is no particular code style enfored. Just some simple recommendations which might help.
