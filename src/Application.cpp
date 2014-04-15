@@ -9,7 +9,7 @@ frts::Application::Application(LogPtr log)
 {
 }
 
-frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath)
+frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath) const
 {
     YamlConfigParser parser;
     ConfigNodePtr node = parser.parseFile(filePath);

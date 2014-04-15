@@ -39,7 +39,7 @@ namespace frts
          * @return Pointer to the function.
          */
         template<typename Function>
-        Function* getFunctionPointer(HandleType library, const std::string& name);
+        Function* getFunctionPointer(HandleType library, const std::string& name) const;
 
         /**
          * @brief Load the library.
@@ -47,20 +47,20 @@ namespace frts
          * @param name Name of the library file without extension.
          * @return The library handle.
          */
-        HandleType load(const std::string& path, const std::string& name);
+        HandleType load(const std::string& path, const std::string& name) const;
 
         /**
          * @brief Unload the library.
          * @param library The library.
          */
-        void unload(HandleType library);
+        void unload(HandleType library) const;
     };
 }
 
 #if defined(WIN32) || defined(_WIN32)
 
 template<typename Function>
-Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name)
+Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name) const
 {
     FARPROC functionAddress = ::GetProcAddress(library, name.c_str());
     if(functionAddress == NULL)
@@ -74,7 +74,7 @@ Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std:
 #else
 
 template<typename Function>
-Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name)
+Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name) const
 {
     ::dlerror(); // clear error value
 

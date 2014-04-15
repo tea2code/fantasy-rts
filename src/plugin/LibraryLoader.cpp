@@ -7,7 +7,7 @@ frts::LibraryLoader::LibraryLoader()
 #if defined(WIN32) || defined(_WIN32)
 
 frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& path,
-                                                          const std::string& name)
+                                                          const std::string& name) const
 {
     const std::string pathWithExtension = path + name + ".dll";
 
@@ -20,7 +20,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     return moduleHandle;
 }
 
-void frts::LibraryLoader::unload(HandleType library)
+void frts::LibraryLoader::unload(HandleType library) const
 {
     BOOL result = ::FreeLibrary(library);
     if(result == FALSE)
@@ -31,7 +31,8 @@ void frts::LibraryLoader::unload(HandleType library)
 
 #else
 
-frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& path, const std::string& name)
+frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& path,
+                                                          const std::string& name) const
 {
     const std::string pathWithExtension = std::string("./lib") + path + name + ".so";
 
@@ -44,7 +45,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     return sharedObject;
 }
 
-void frts::LibraryLoader::unload(HandleType library)
+void frts::LibraryLoader::unload(HandleType library) const
 {
     int result = ::dlclose(library);
     if(result != 0)

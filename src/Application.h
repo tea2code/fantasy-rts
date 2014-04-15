@@ -34,7 +34,7 @@ namespace frts
          * @brief Read and parse the file containing the load configuration.
          * @param filePath Path to load file.
          */
-        LoadConfiguration readLoadFile(const std::string& filePath);
+        LoadConfiguration readLoadFile(const std::string& filePath) const;
 
     private:
         LogPtr log;
