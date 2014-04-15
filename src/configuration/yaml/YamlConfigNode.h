@@ -1,5 +1,5 @@
-#ifndef YAMLCONFIGNODE_H
-#define YAMLCONFIGNODE_H
+#ifndef FRTS_YAMLCONFIGNODE_H
+#define FRTS_YAMLCONFIGNODE_H
 
 #include <configuration/ConfigNode.h>
 
@@ -66,4 +66,4 @@ namespace frts
     };
 }
 
-#endif // YAMLCONFIGNODE_H
+#endif // FRTS_YAMLCONFIGNODE_H

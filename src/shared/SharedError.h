@@ -1,5 +1,5 @@
-#ifndef SHAREDERROR_H
-#define SHAREDERROR_H
+#ifndef FRTS_SHAREDERROR_H
+#define FRTS_SHAREDERROR_H
 
 #include <stdexcept>
 #include <string>
@@ -17,4 +17,4 @@ namespace frts
     };
 }
 
-#endif // SHAREDERROR_H
+#endif // FRTS_SHAREDERROR_H

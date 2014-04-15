@@ -1,5 +1,5 @@
-#ifndef YAMLCONFIGPARSER_H
-#define YAMLCONFIGPARSER_H
+#ifndef FRTS_YAMLCONFIGPARSER_H
+#define FRTS_YAMLCONFIGPARSER_H
 
 #include <configuration/ConfigParser.h>
 
@@ -19,4 +19,4 @@ namespace frts
     };
 }
 
-#endif // YAMLCONFIGPARSER_H
+#endif // FRTS_YAMLCONFIGPARSER_H

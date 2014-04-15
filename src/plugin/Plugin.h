@@ -1,5 +1,5 @@
-#ifndef PLUGIN_INTERFACE_H
-#define PLUGIN_INTERFACE_H
+#ifndef FRTS_PLUGIN_H
+#define FRTS_PLUGIN_H
 
 #include <module/ModulePtr.h>
 #include <shared/Id.h>
@@ -20,4 +20,4 @@ namespace frts
     };
 }
 
-#endif // PLUGIN_INTERFACE_H
+#endif // FRTS_PLUGIN_H

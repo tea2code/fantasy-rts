@@ -1,5 +1,5 @@
-#ifndef PLUGINPTR_H
-#define PLUGINPTR_H
+#ifndef FRTS_PLUGINPTR_H
+#define FRTS_PLUGINPTR_H
 
 #include <memory>
 
@@ -13,4 +13,4 @@ namespace frts
     using PluginPtr = std::shared_ptr<Plugin>;
 }
 
-#endif // PLUGINPTR_H
+#endif // FRTS_PLUGINPTR_H

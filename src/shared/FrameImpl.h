@@ -1,5 +1,5 @@
-#ifndef FRAMEIMPL_H
-#define FRAMEIMPL_H
+#ifndef FRTS_FRAMEIMPL_H
+#define FRTS_FRAMEIMPL_H
 
 #include "Frame.h"
 
@@ -28,4 +28,4 @@ namespace frts
     };
 }
 
-#endif // FRAMEIMPL_H
+#endif // FRTS_FRAMEIMPL_H

@@ -1,5 +1,5 @@
-#ifndef EASYLOGGINGLOG_H
-#define EASYLOGGINGLOG_H
+#ifndef FRTS_EASYLOGGINGLOG_H
+#define FRTS_EASYLOGGINGLOG_H
 
 #include "Log.h"
 
@@ -25,4 +25,4 @@ namespace frts
     };
 }
 
-#endif // EASYLOGGINGLOG_H
+#endif // FRTS_EASYLOGGINGLOG_H

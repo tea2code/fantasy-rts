@@ -1,5 +1,5 @@
-#ifndef MODULEPTR_H
-#define MODULEPTR_H
+#ifndef FRTS_MODULEPTR_H
+#define FRTS_MODULEPTR_H
 
 #include <memory>
 
@@ -25,4 +25,4 @@ namespace frts
     using UtilityPtr = std::shared_ptr<Utility>;
 }
 
-#endif // MODULEPTR_H
+#endif // FRTS_MODULEPTR_H

@@ -1,5 +1,5 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef FRTS_APPLICATION_H
+#define FRTS_APPLICATION_H
 
 #include "log/Log.h"
 
@@ -41,4 +41,4 @@ namespace frts
     };
 }
 
-#endif // APPLICATION_H
+#endif // FRTS_APPLICATION_H

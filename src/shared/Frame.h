@@ -1,5 +1,5 @@
-#ifndef FRAME_H
-#define FRAME_H
+#ifndef FRTS_FRAME_H
+#define FRTS_FRAME_H
 
 #include <memory>
 
@@ -41,4 +41,4 @@ namespace frts
     };
 }
 
-#endif // FRAME_H
+#endif // FRTS_FRAME_H

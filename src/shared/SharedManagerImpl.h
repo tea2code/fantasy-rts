@@ -1,5 +1,5 @@
-#ifndef SHAREDMANAGERIMPL_H
-#define SHAREDMANAGERIMPL_H
+#ifndef FRTS_SHAREDMANAGERIMPL_H
+#define FRTS_SHAREDMANAGERIMPL_H
 
 #include "DataValue.h"
 #include "Frame.h"
@@ -69,4 +69,4 @@ namespace frts
     };
 }
 
-#endif // SHAREDMANAGERIMPL_H
+#endif // FRTS_SHAREDMANAGERIMPL_H

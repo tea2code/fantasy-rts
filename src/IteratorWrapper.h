@@ -1,5 +1,5 @@
-#ifndef ITERATORWRAPPER_H
-#define ITERATORWRAPPER_H
+#ifndef FRTS_ITERATORWRAPPER_H
+#define FRTS_ITERATORWRAPPER_H
 
 #include <iterator>
 #include <memory>
@@ -36,4 +36,4 @@ namespace frts
     };
 }
 
-#endif // ITERATORWRAPPER_H
+#endif // FRTS_ITERATORWRAPPER_H

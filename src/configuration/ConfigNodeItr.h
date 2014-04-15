@@ -1,5 +1,5 @@
-#ifndef CONFIGNODEITR_H
-#define CONFIGNODEITR_H
+#ifndef FRTS_CONFIGNODEITR_H
+#define FRTS_CONFIGNODEITR_H
 
 #include <iterator>
 #include <memory>
@@ -38,4 +38,4 @@ namespace frts
     };
 }
 
-#endif // CONFIGNODEITR_H
+#endif // FRTS_CONFIGNODEITR_H

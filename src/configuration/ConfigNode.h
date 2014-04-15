@@ -1,5 +1,5 @@
-#ifndef CONFIGNODE_H
-#define CONFIGNODE_H
+#ifndef FRTS_CONFIGNODE_H
+#define FRTS_CONFIGNODE_H
 
 #include "ConfigNodeItr.h"
 #include <IteratorWrapper.h>
@@ -192,4 +192,4 @@ namespace frts
     };
 }
 
-#endif // CONFIGNODE_H
+#endif // FRTS_CONFIGNODE_H

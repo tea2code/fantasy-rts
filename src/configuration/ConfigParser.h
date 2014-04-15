@@ -1,5 +1,5 @@
-#ifndef CONFIGPARSER_H
-#define CONFIGPARSER_H
+#ifndef FRTS_CONFIGPARSER_H
+#define FRTS_CONFIGPARSER_H
 
 #include "ConfigNode.h"
 
@@ -26,4 +26,4 @@ namespace frts
     };
 }
 
-#endif // CONFIGPARSER_H
+#endif // FRTS_CONFIGPARSER_H

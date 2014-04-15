@@ -1,5 +1,5 @@
-#ifndef TICKABLE_H
-#define TICKABLE_H
+#ifndef FRTS_TICKABLE_H
+#define FRTS_TICKABLE_H
 
 #include "Module.h"
 
@@ -22,4 +22,4 @@ namespace frts
     };
 }
 
-#endif // TICKABLE_H
+#endif // FRTS_TICKABLE_H

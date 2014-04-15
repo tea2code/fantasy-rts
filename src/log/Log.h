@@ -1,5 +1,5 @@
-#ifndef LOG_H
-#define LOG_H
+#ifndef FRTS_LOG_H
+#define FRTS_LOG_H
 
 #include <memory>
 #include <string>
@@ -56,4 +56,4 @@ namespace frts
     };
 }
 
-#endif // LOG_H
+#endif // FRTS_LOG_H

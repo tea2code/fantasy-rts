@@ -1,5 +1,5 @@
-#ifndef ID_H
-#define ID_H
+#ifndef FRTS_ID_H
+#define FRTS_ID_H
 
 #include <memory>
 #include <string>
@@ -33,4 +33,4 @@ namespace frts
     };
 }
 
-#endif // ID_H
+#endif // FRTS_ID_H

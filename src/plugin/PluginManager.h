@@ -1,5 +1,5 @@
-#ifndef PLUGINMANAGER_H
-#define PLUGINMANAGER_H
+#ifndef FRTS_PLUGINMANAGER_H
+#define FRTS_PLUGINMANAGER_H
 
 #include "LibraryLoader.h"
 #include "PluginPtr.h"
@@ -51,4 +51,4 @@ namespace frts
     };
 }
 
-#endif // PLUGINMANAGER_H
+#endif // FRTS_PLUGINMANAGER_H

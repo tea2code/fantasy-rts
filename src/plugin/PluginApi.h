@@ -1,5 +1,5 @@
-#ifndef PLUGINAPI_H
-#define PLUGINAPI_H
+#ifndef FRTS_PLUGINAPI_H
+#define FRTS_PLUGINAPI_H
 
 #if defined(__GNUC__)
 
@@ -34,4 +34,4 @@
 
 #endif
 
-#endif // PLUGINAPI_H
+#endif // FRTS_PLUGINAPI_H

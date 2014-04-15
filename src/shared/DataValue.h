@@ -1,5 +1,5 @@
-#ifndef DATAVALUE_H
-#define DATAVALUE_H
+#ifndef FRTS_DATAVALUE_H
+#define FRTS_DATAVALUE_H
 
 #include <memory>
 #include <string>
@@ -30,4 +30,4 @@ namespace frts
     };
 }
 
-#endif // DATAVALUE_H
+#endif // FRTS_DATAVALUE_H

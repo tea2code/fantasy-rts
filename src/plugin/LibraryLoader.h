@@ -1,5 +1,5 @@
-#ifndef LIBRARYLOADER_H
-#define LIBRARYLOADER_H
+#ifndef FRTS_LIBRARYLOADER_H
+#define FRTS_LIBRARYLOADER_H
 
 #include <boost/format.hpp>
 
@@ -92,4 +92,4 @@ Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std:
 
 #endif
 
-#endif // LIBRARYLOADER_H
+#endif // FRTS_LIBRARYLOADER_H

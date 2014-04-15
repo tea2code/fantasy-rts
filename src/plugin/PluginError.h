@@ -1,5 +1,5 @@
-#ifndef PLUGINERROR_H
-#define PLUGINERROR_H
+#ifndef FRTS_PLUGINERROR_H
+#define FRTS_PLUGINERROR_H
 
 #include <stdexcept>
 #include <string>
@@ -25,4 +25,4 @@ namespace frts
     };
 }
 
-#endif // PLUGINERROR_H
+#endif // FRTS_PLUGINERROR_H

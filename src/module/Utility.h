@@ -1,5 +1,5 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef FRTS_UTILITY_H
+#define FRTS_UTILITY_H
 
 #include "Module.h"
 
@@ -16,4 +16,4 @@ namespace frts
     };
 }
 
-#endif // UTILITY_H
+#endif // FRTS_UTILITY_H

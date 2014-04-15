@@ -1,5 +1,5 @@
-#ifndef MODULEERROR_H
-#define MODULEERROR_H
+#ifndef FRTS_MODULEERROR_H
+#define FRTS_MODULEERROR_H
 
 #include <stdexcept>
 #include <string>
@@ -28,4 +28,4 @@ namespace frts
     };
 }
 
-#endif // MODULEERROR_H
+#endif // FRTS_MODULEERROR_H

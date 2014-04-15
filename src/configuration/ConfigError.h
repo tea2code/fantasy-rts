@@ -1,5 +1,5 @@
-#ifndef CONFIGERROR_H
-#define CONFIGERROR_H
+#ifndef FRTS_CONFIGERROR_H
+#define FRTS_CONFIGERROR_H
 
 #include <stdexcept>
 #include <string>
@@ -36,4 +36,4 @@ namespace frts
     };
 }
 
-#endif // CONFIGERROR_H
+#endif // FRTS_CONFIGERROR_H

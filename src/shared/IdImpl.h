@@ -1,5 +1,5 @@
-#ifndef IDIMPL_H
-#define IDIMPL_H
+#ifndef FRTS_IDIMPL_H
+#define FRTS_IDIMPL_H
 
 #include "Id.h"
 
@@ -22,4 +22,4 @@ namespace frts
     };
 }
 
-#endif // IDIMPL_H
+#endif // FRTS_IDIMPL_H
