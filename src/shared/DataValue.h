@@ -26,7 +26,7 @@ namespace frts
          * @brief Get the name of the value.
          * @return Value name.
          */
-        virtual std::string getName() const = 0;
+        virtual std::string getName() const noexcept = 0;
     };
 }
 

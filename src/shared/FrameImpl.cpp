@@ -10,17 +10,17 @@ frts::FrameImpl::~FrameImpl()
 {
 }
 
-double frts::FrameImpl::getDeltaTime() const
+double frts::FrameImpl::getDeltaTime() const noexcept
 {
     return deltaTime;
 }
 
-unsigned long long frts::FrameImpl::getNumber() const
+unsigned long long frts::FrameImpl::getNumber() const noexcept
 {
     return number;
 }
 
-double frts::FrameImpl::getRunTime() const
+double frts::FrameImpl::getRunTime() const noexcept
 {
     return runTime;
 }

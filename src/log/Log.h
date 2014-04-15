@@ -28,7 +28,7 @@ namespace frts
          * @param module The module.
          * @param msg The message.
          */
-        virtual void debug(const std::string& module, const std::string& msg) = 0;
+        virtual void debug(const std::string& module, const std::string& msg) noexcept = 0;
 
         /**
          * @brief Log message on error level. Always active. Should be only used
@@ -36,7 +36,7 @@ namespace frts
          * @param module The module.
          * @param msg The message.
          */
-        virtual void error(const std::string& module, const std::string& msg) = 0;
+        virtual void error(const std::string& module, const std::string& msg) noexcept = 0;
 
         /**
          * @brief Log message on info level. Standard level for non critical
@@ -44,7 +44,7 @@ namespace frts
          * @param module The module.
          * @param msg The message.
          */
-        virtual void info(const std::string& module, const std::string& msg) = 0;
+        virtual void info(const std::string& module, const std::string& msg) noexcept = 0;
 
         /**
          * @brief Log message on warning level. Always active. Use for important
@@ -52,7 +52,7 @@ namespace frts
          * @param module The module.
          * @param msg The message.
          */
-        virtual void warning(const std::string& module, const std::string& msg) = 0;
+        virtual void warning(const std::string& module, const std::string& msg) noexcept = 0;
     };
 }
 

@@ -15,13 +15,13 @@ namespace frts
         EasyloggingLog(const std::string& configFilePath);
         ~EasyloggingLog() override;
 
-        void debug(const std::string& module, const std::string& msg) override;
-        void error(const std::string& module, const std::string& msg) override;
-        void info(const std::string& module, const std::string& msg) override;
-        void warning(const std::string& module, const std::string& msg) override;
+        void debug(const std::string& module, const std::string& msg) noexcept override;
+        void error(const std::string& module, const std::string& msg) noexcept override;
+        void info(const std::string& module, const std::string& msg) noexcept override;
+        void warning(const std::string& module, const std::string& msg) noexcept override;
 
     private:
-        std::string formatMessage(const std::string& module, const std::string& msg);
+        std::string formatMessage(const std::string& module, const std::string& msg) noexcept;
     };
 }
 

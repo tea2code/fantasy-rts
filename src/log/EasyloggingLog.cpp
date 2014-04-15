@@ -22,29 +22,29 @@ frts::EasyloggingLog::~EasyloggingLog()
 {
 }
 
-void frts::EasyloggingLog::debug(const std::string& module, const std::string& msg)
+void frts::EasyloggingLog::debug(const std::string& module, const std::string& msg) noexcept
 {
     LOG(DEBUG) << formatMessage(module, msg);
 }
 
-void frts::EasyloggingLog::error(const std::string& module, const std::string& msg)
+void frts::EasyloggingLog::error(const std::string& module, const std::string& msg) noexcept
 {
     LOG(ERROR) << formatMessage(module, msg);
 }
 
-std::string frts::EasyloggingLog::formatMessage(const std::string& module, const std::string& msg)
+std::string frts::EasyloggingLog::formatMessage(const std::string& module, const std::string& msg) noexcept
 {
     std::string tmpl = R"(%1% - %2%)";
     auto formatted = boost::format(tmpl) % module % msg;
     return formatted.str();
 }
 
-void frts::EasyloggingLog::info(const std::string& module, const std::string& msg)
+void frts::EasyloggingLog::info(const std::string& module, const std::string& msg) noexcept
 {
     LOG(INFO) << formatMessage(module, msg);
 }
 
-void frts::EasyloggingLog::warning(const std::string& module, const std::string& msg)
+void frts::EasyloggingLog::warning(const std::string& module, const std::string& msg) noexcept
 {
     LOG(WARNING) << formatMessage(module, msg);
 }

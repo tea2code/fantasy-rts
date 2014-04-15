@@ -47,13 +47,13 @@ namespace frts
          * @brief Get current frame data.
          * @return The frame data.
          */
-        virtual const FramePtr getFrame() const = 0;
+        virtual const FramePtr getFrame() const noexcept = 0;
 
         /**
          * @brief Get log.
          * @return The log.
          */
-        virtual LogPtr getLog() const = 0;
+        virtual LogPtr getLog() const noexcept = 0;
 
         /**
          * @brief Get utility module.
@@ -68,38 +68,38 @@ namespace frts
          * @param str The string representing this id.
          * @return The id.
          */
-        virtual IdPtr makeId(const std::string& str) const = 0;
+        virtual IdPtr makeId(const std::string& str) const noexcept = 0;
 
         /**
          * @brief Get render modules.
          * @return Iterator to beginning of modules.
          */
-        virtual TickableItr renderModulesBegin() const = 0;
+        virtual TickableItr renderModulesBegin() const noexcept = 0;
 
         /**
          * @brief Get render modules.
          * @return Iterator to end of modules.
          */
-        virtual TickableItr renderModulesEnd() const = 0;
+        virtual TickableItr renderModulesEnd() const noexcept = 0;
 
         /**
          * @brief Set data value. Existing values will be overriden.
          * @param id The id of the value.
          * @param value The data value.
          */
-        virtual void setValue(IdPtr id, DataValuePtr value) = 0;
+        virtual void setValue(IdPtr id, DataValuePtr value) noexcept = 0;
 
         /**
          * @brief Get update modules.
          * @return Iterator to beginning of modules.
          */
-        virtual TickableItr updateModulesBegin() const = 0;
+        virtual TickableItr updateModulesBegin() const noexcept = 0;
 
         /**
          * @brief Get update modules.
          * @return Iterator to end of modules.
          */
-        virtual TickableItr updateModulesEnd() const = 0;
+        virtual TickableItr updateModulesEnd() const noexcept = 0;
     };
 }
 

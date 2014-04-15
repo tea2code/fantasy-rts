@@ -46,15 +46,15 @@ namespace frts
         void setUtility(IdPtr id, UtilityPtr utility);
 
         DataValuePtr getDataValue(IdPtr id) const override;
-        const FramePtr getFrame() const override;
-        LogPtr getLog() const;
+        const FramePtr getFrame() const noexcept override;
+        LogPtr getLog() const noexcept;
         UtilityPtr getUtility(IdPtr id) const override;
-        IdPtr makeId(const std::string& str) const override;
-        TickableItr renderModulesBegin() const override;
-        TickableItr renderModulesEnd() const override;
-        void setValue(IdPtr id, DataValuePtr value) override;
-        TickableItr updateModulesBegin() const override;
-        TickableItr updateModulesEnd() const override;
+        IdPtr makeId(const std::string& str) const noexcept override;
+        TickableItr renderModulesBegin() const noexcept override;
+        TickableItr renderModulesEnd() const noexcept override;
+        void setValue(IdPtr id, DataValuePtr value) noexcept override;
+        TickableItr updateModulesBegin() const noexcept override;
+        TickableItr updateModulesEnd() const noexcept override;
 
     private:
         std::map<IdPtr, DataValuePtr> dataValues;

@@ -17,9 +17,9 @@ namespace frts
         FrameImpl(double deltaTime, unsigned long long number, double runTime);
         ~FrameImpl() override;
 
-        double getDeltaTime() const override;
-        unsigned long long getNumber() const override;
-        double getRunTime() const override;
+        double getDeltaTime() const noexcept override;
+        unsigned long long getNumber() const noexcept override;
+        double getRunTime() const noexcept override;
 
     private:
         double deltaTime;

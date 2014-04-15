@@ -34,7 +34,7 @@ frts::PluginManager::~PluginManager()
     }
 }
 
-frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
+frts::ModulePtr frts::PluginManager::findModule(IdPtr id) noexcept
 {
     ModulePtr result = nullptr;
     for (auto& plugin : plugins)

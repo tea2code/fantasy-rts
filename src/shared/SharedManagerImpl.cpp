@@ -31,12 +31,12 @@ frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
     }
 }
 
-const frts::FramePtr frts::SharedManagerImpl::getFrame() const
+const frts::FramePtr frts::SharedManagerImpl::getFrame() const noexcept
 {
     return frame;
 }
 
-frts::LogPtr frts::SharedManagerImpl::getLog() const
+frts::LogPtr frts::SharedManagerImpl::getLog() const noexcept
 {
     return log;
 }
@@ -54,7 +54,7 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
     }
 }
 
-frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
+frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const noexcept
 {
     return IdPtr(new IdImpl(str));
 }
@@ -65,12 +65,12 @@ frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) con
     return IdNotFoundError(msg.str());
 }
 
-frts::TickableItr frts::SharedManagerImpl::renderModulesBegin() const
+frts::TickableItr frts::SharedManagerImpl::renderModulesBegin() const noexcept
 {
     return renderModules.begin();
 }
 
-frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const
+frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const noexcept
 {
     return renderModules.end();
 }
@@ -85,17 +85,17 @@ void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
     utilityModules[id] = utility;
 }
 
-void frts::SharedManagerImpl::setValue(IdPtr id, DataValuePtr value)
+void frts::SharedManagerImpl::setValue(IdPtr id, DataValuePtr value) noexcept
 {
     dataValues[id] = value;
 }
 
-frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const
+frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const noexcept
 {
     return updateModules.begin();
 }
 
-frts::TickableItr frts::SharedManagerImpl::updateModulesEnd() const
+frts::TickableItr frts::SharedManagerImpl::updateModulesEnd() const noexcept
 {
     return updateModules.end();
 }
