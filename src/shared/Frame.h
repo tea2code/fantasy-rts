@@ -1,18 +1,8 @@
 #ifndef FRTS_FRAME_H
 #define FRTS_FRAME_H
 
-#include <memory>
-
-
 namespace frts
 {
-    class Frame;
-
-    /**
-     * @brief Pointer to a frame.
-     */
-    using FramePtr = std::shared_ptr<Frame>;
-
     /**
      * @brief Contains the frame specific data.
      */

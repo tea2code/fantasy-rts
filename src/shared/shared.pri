@@ -6,7 +6,8 @@ HEADERS += \
     shared/Id.h \
     shared/impl/IdImpl.h \
     shared/impl/SharedManagerImpl.h \
-    shared/SharedError.h
+    shared/SharedError.h \
+    shared/SharedPtr.h
 
 
 SOURCES += \ 

@@ -1,19 +1,11 @@
 #ifndef FRTS_ID_H
 #define FRTS_ID_H
 
-#include <memory>
 #include <string>
 
 
 namespace frts
 {
-    class Id;
-
-    /**
-     * @brief Pointer to Id.
-     */
-    using IdPtr = std::shared_ptr<Id>;
-
     /**
      * @brief Represents an Id.
      */

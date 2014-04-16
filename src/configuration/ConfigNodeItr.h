@@ -1,19 +1,13 @@
 #ifndef FRTS_CONFIGNODEITR_H
 #define FRTS_CONFIGNODEITR_H
 
+#include "ConfigNodePtr.h"
+
 #include <iterator>
-#include <memory>
 
 
 namespace frts
 {
-    class ConfigNode;
-
-    /**
-     * @brief Pointer to ConfigNodes.
-     */
-    using ConfigNodePtr = std::unique_ptr<ConfigNode>;
-
     /**
      * @brief Interface of ConfigNode iterators.
      */

@@ -1,26 +1,16 @@
 #ifndef FRTS_SHAREDMANAGER_H
 #define FRTS_SHAREDMANAGER_H
 
-#include "DataValue.h"
-#include "Frame.h"
-#include "Id.h"
+#include "SharedPtr.h"
 #include <log/Log.h>
 #include <module/ModulePtr.h>
 
-#include <memory>
 #include <string>
 #include <vector>
 
 
 namespace frts
 {
-    class SharedManager;
-
-    /**
-     * @brief Pointer to SharedManager.
-     */
-    using SharedManagerPtr = std::shared_ptr<SharedManager>;
-
     /**
      * @brief Iterator to tickable modules.
      */

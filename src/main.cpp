@@ -3,7 +3,6 @@
 #include "Application.h"
 #include <log/EasyloggingLog.h>
 
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -43,7 +42,6 @@ int main()
     logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
 
     // All done. Good night.
-    //std::cin.ignore();
     return 0;
 }
 

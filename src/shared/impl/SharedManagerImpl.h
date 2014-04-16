@@ -1,11 +1,7 @@
 #ifndef FRTS_SHAREDMANAGERIMPL_H
 #define FRTS_SHAREDMANAGERIMPL_H
 
-#include <module/Tickable.h>
-#include <module/Utility.h>
-#include <shared/DataValue.h>
-#include <shared/Frame.h>
-#include <shared/Id.h>
+#include <module/ModulePtr.h>
 #include <shared/SharedError.h>
 #include <shared/SharedManager.h>
 

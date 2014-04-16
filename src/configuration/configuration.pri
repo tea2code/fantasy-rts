@@ -5,7 +5,8 @@ HEADERS += \
     configuration/ConfigError.h \
     configuration/yaml/YamlConfigParser.h \
     configuration/yaml/YamlConfigNode.h \
-    configuration/yaml/YamlConfigNodeItr.h
+    configuration/yaml/YamlConfigNodeItr.h \
+    configuration/ConfigNodePtr.h
 
 SOURCES += \
     configuration/yaml/YamlConfigParser.cpp \

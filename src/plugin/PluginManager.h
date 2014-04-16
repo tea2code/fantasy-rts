@@ -5,7 +5,7 @@
 #include "PluginPtr.h"
 
 #include <module/ModulePtr.h>
-#include <shared/Id.h>
+#include <shared/SharedPtr.h>
 
 #include <string>
 #include <vector>

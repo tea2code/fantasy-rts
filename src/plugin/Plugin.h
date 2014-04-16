@@ -2,7 +2,7 @@
 #define FRTS_PLUGIN_H
 
 #include <module/ModulePtr.h>
-#include <shared/Id.h>
+#include <shared/SharedPtr.h>
 
 namespace frts
 {

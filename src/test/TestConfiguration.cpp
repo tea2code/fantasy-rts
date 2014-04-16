@@ -1,6 +1,8 @@
 #include <catch.hpp>
 
 #include <configuration/ConfigError.h>
+#include <configuration/ConfigNodeItr.h>
+#include <configuration/ConfigNode.h>
 #include <configuration/yaml/YamlConfigParser.h>
 
 #include <boost/format.hpp>

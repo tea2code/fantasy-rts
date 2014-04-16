@@ -1,7 +1,7 @@
 #ifndef FRTS_CONFIGPARSER_H
 #define FRTS_CONFIGPARSER_H
 
-#include "ConfigNode.h"
+#include "ConfigNodePtr.h"
 
 #include <string>
 

@@ -1,8 +1,8 @@
 #ifndef FRTS_MODULE_H
 #define FRTS_MODULE_H
 
-#include <configuration/ConfigNodeItr.h>
-#include <shared/SharedManager.h>
+#include <configuration/ConfigNodePtr.h>
+#include <shared/SharedPtr.h>
 
 #include <memory>
 #include <string>
@@ -11,6 +11,8 @@
 
 namespace frts
 {
+    class ConfigNodeItr;
+
     /**
      * @brief Base interface for modules.
      */

@@ -1,17 +1,18 @@
 #ifndef FRTS_CONFIGNODE_H
 #define FRTS_CONFIGNODE_H
 
-#include "ConfigNodeItr.h"
+#include "ConfigNodePtr.h"
 #include <IteratorWrapper.h>
 
 #include <map>
-#include <memory>
 #include <string>
 #include <vector>
 
 
 namespace frts
 {
+    class ConfigNodeItr;
+
     /**
      * @brief Interface of configuration nodes.
      */
