@@ -2,14 +2,14 @@ HEADERS += \
     shared/SharedManager.h \
     shared/DataValue.h \
     shared/Frame.h \
-    shared/FrameImpl.h \
+    shared/impl/FrameImpl.h \
     shared/Id.h \
-    shared/IdImpl.h \
-    shared/SharedManagerImpl.h \
+    shared/impl/IdImpl.h \
+    shared/impl/SharedManagerImpl.h \
     shared/SharedError.h
 
 
 SOURCES += \ 
-    shared/FrameImpl.cpp \
-    shared/IdImpl.cpp \
-    shared/SharedManagerImpl.cpp
+    shared/impl/FrameImpl.cpp \
+    shared/impl/IdImpl.cpp \
+    shared/impl/SharedManagerImpl.cpp

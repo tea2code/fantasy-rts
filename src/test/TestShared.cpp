@@ -4,10 +4,10 @@
 #include <module/Tickable.h>
 #include <module/Utility.h>
 #include <shared/DataValue.h>
-#include <shared/FrameImpl.h>
-#include <shared/IdImpl.h>
+#include <shared/impl/FrameImpl.h>
+#include <shared/impl/IdImpl.h>
 #include <shared/SharedError.h>
-#include <shared/SharedManagerImpl.h>
+#include <shared/impl/SharedManagerImpl.h>
 
 #include <algorithm>
 #include <memory>

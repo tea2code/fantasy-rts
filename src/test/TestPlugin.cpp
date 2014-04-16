@@ -4,7 +4,7 @@
 #include <module/ModulePtr.h>
 #include <plugin/PluginError.h>
 #include <plugin/PluginManager.h>
-#include <shared/IdImpl.h>
+#include <shared/impl/IdImpl.h>
 
 #include <cstdio>
 #include <memory>
