@@ -4,6 +4,8 @@
 
 #include <boost/format.hpp>
 
+#include <memory>
+
 
 frts::SharedManagerImpl::SharedManagerImpl(LogPtr log,
                                            std::vector<frts::TickablePtr> renderModules,
@@ -56,7 +58,7 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 
 frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const noexcept
 {
-    return IdPtr(new IdImpl(str));
+    return std::make_shared<IdImpl>(str);
 }
 
 frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const

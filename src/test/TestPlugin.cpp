@@ -7,6 +7,7 @@
 #include <shared/IdImpl.h>
 
 #include <cstdio>
+#include <memory>
 #include <string>
 
 TEST_CASE("Find modules.", "[plugin]")
@@ -25,12 +26,12 @@ TEST_CASE("Find modules.", "[plugin]")
         frts::PluginManager pluginManager;
 
         pluginManager.loadPlugin(path, testPlugin);
-        frts::IdPtr id = frts::IdPtr(new frts::IdImpl(testModule));
+        frts::IdPtr id = std::make_shared<frts::IdImpl>(testModule);
         frts::ModulePtr module = pluginManager.findModule(id);
         REQUIRE(module != nullptr);
         REQUIRE(module->getName() == testModule);
 
-        id = frts::IdPtr(new frts::IdImpl("NotExistingModule"));
+        id = std::make_shared<frts::IdImpl>("NotExistingModule");
         module = pluginManager.findModule(id);
         REQUIRE(module == nullptr);
 

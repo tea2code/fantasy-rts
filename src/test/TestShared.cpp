@@ -10,6 +10,7 @@
 #include <shared/SharedManagerImpl.h>
 
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -19,7 +20,7 @@ TEST_CASE("Create and use frame data.", "[shared]")
     double deltaTime = 0.002145;
     unsigned long long number = 4098353456392489llu;
     double runTime = 254121.54123;
-    frts::FramePtr frame = frts::FramePtr(new frts::FrameImpl(deltaTime, number, runTime));
+    frts::FramePtr frame = std::make_shared<frts::FrameImpl>(deltaTime, number, runTime);
 
     REQUIRE(frame->getDeltaTime() == Approx(deltaTime));
     REQUIRE(frame->getNumber() == number);
@@ -30,11 +31,11 @@ TEST_CASE("Create and use frame data.", "[shared]")
 TEST_CASE("Create and use id.", "[shared]")
 {
     std::string str1 = "test";
-    frts::IdPtr id1 = frts::IdPtr(new frts::IdImpl(str1));
-    frts::IdPtr id2 = frts::IdPtr(new frts::IdImpl(str1));
+    frts::IdPtr id1 = std::make_shared<frts::IdImpl>(str1);
+    frts::IdPtr id2 = std::make_shared<frts::IdImpl>(str1);
 
     std::string str2 = "testtest";
-    frts::IdPtr id3 = frts::IdPtr(new frts::IdImpl(str2));
+    frts::IdPtr id3 = std::make_shared<frts::IdImpl>(str2);
 
     REQUIRE(id1->toString() == str1);
     REQUIRE(id2->toString() == str1);
@@ -97,28 +98,28 @@ namespace frts
 
 TEST_CASE("Create and use shared manager.", "[shared]")
 {
-    frts::LogPtr log = frts::LogPtr(new frts::TestLog());
+    frts::LogPtr log = std::make_shared<frts::TestLog>();
 
-    frts::TickablePtr tickable1 = frts::TickablePtr(new frts::TestTickable());
-    frts::TickablePtr tickable2 = frts::TickablePtr(new frts::TestTickable());
-    frts::TickablePtr tickable3 = frts::TickablePtr(new frts::TestTickable());
+    frts::TickablePtr tickable1 = std::make_shared<frts::TestTickable>();
+    frts::TickablePtr tickable2 = std::make_shared<frts::TestTickable>();
+    frts::TickablePtr tickable3 = std::make_shared<frts::TestTickable>();
     std::vector<frts::TickablePtr> renderModules = {tickable1, tickable2};
     std::vector<frts::TickablePtr> updateModules = {tickable3};
 
-    frts::SharedManagerImplPtr sharedImpl = frts::SharedManagerImplPtr(
-                new frts::SharedManagerImpl(log, renderModules, updateModules));
+    frts::SharedManagerImplPtr sharedImpl =
+            std::make_shared<frts::SharedManagerImpl>(log, renderModules, updateModules);
 
-    sharedImpl->setFrame(frts::FramePtr(new frts::FrameImpl(0.01, 124, 1.24)));
+    sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(0.01, 124, 1.24));
 
-    frts::IdPtr notExistId = frts::IdPtr(new frts::IdImpl("notExistId"));
+    frts::IdPtr notExistId = std::make_shared<frts::IdImpl>("notExistId");
 
-    frts::IdPtr dataValueId = frts::IdPtr(new frts::IdImpl("dataValueId"));
-    frts::DataValuePtr dataValue1 = frts::DataValuePtr(new frts::TestDataValue());
-    frts::DataValuePtr dataValue2 = frts::DataValuePtr(new frts::TestDataValue());
+    frts::IdPtr dataValueId = std::make_shared<frts::IdImpl>("dataValueId");
+    frts::DataValuePtr dataValue1 = std::make_shared<frts::TestDataValue>();
+    frts::DataValuePtr dataValue2 = std::make_shared<frts::TestDataValue>();
     sharedImpl->setValue(dataValueId, dataValue1);
 
-    frts::UtilityPtr utility = frts::UtilityPtr(new frts::TestUtility());
-    frts::IdPtr utilityId = frts::IdPtr(new frts::IdImpl(utility->getName()));
+    frts::UtilityPtr utility = std::make_shared<frts::TestUtility>();
+    frts::IdPtr utilityId = std::make_shared<frts::IdImpl>(utility->getName());
     sharedImpl->setUtility(utilityId, utility);
 
     frts::SharedManagerPtr shared = sharedImpl;
