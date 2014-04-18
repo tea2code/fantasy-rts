@@ -23,7 +23,7 @@ frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++()
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++(int)
 {
     frts::ConfigNodeItr::self_type* copy = new YamlConfigNodeItr(iterator);
-    iterator++;
+    ++iterator;
     return copy;
 }
 

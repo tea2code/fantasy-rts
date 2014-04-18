@@ -59,7 +59,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
     {
         handle = loader.load(path, name);
     }
-    catch(std::runtime_error e)
+    catch(std::runtime_error& e)
     {
         // Library doesn't exist.
         throw LibraryNotFound(e.what());
