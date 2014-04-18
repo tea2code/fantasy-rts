@@ -1,9 +1,8 @@
-#include <frts/plugin>
-#include <frts/shared>
-
 #include "Plugin.h"
 
 #include "Module.h"
+
+#include <frts/shared>
 
 const std::string Plugin::moduleId = "TestModule";
 

@@ -29,14 +29,6 @@ Following settings are for Qt Creator. Building/deployment steps marked with `co
 
 If you're using gcc it is recommended to build with make argument `-j` to benefit from multi core building.
 
-#### TestPlugin
-
-Default compile settings with additional copy step after making:
-
-    xcopy
-    %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /seyi
-    %{buildDir}
-
 #### Kernel
 
 Release and debug builds use standard settings. For testing create variants of both and add `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST` to the additional arguments of qmake. Executing these builds will execute all unit tests.
@@ -55,6 +47,14 @@ Running includes three custom steps to copy assets into the working directory:
     %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir} /seyi
     %{buildDir}
 
+#### TestPlugin
+
+Default compile settings with additional copy step after making:
+
+    xcopy
+    %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /seyi
+    %{buildDir}
+
 ## Code Style
 
 There is no particular code style enfored. Just some simple recommendations which might help.
@@ -70,7 +70,7 @@ Based on recommendations from [stackoverflow.com](http://stackoverflow.com/q/276
     #include "header-of-cpp.h"
 
     #include "internal-header-same-directory.h"
-    #include <other-internal-header.h"
+    #include <other-internal-header.h>
 
     #include <external-dependencies.h>
 
