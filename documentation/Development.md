@@ -6,7 +6,7 @@ This document describes the steps necessary to work on the source code and compi
 
 The application is developed using [Qt Creator](https://qt-project.org/) and [MinGW-w64](http://mingw-w64.sourceforge.net/) on Windows. It should be possible to compile it with other compilers (especially [GCC](http://gcc.gnu.org/)) on any os but changing the IDE may require recreating the project/make file. Currently .pro and .pri files are used with qmake. 
 
-The compiler is executed with support for C++11 (`-std=c++11`) and all warnings (`-pedantic -Wall -Wextra`). Warnings are considered errors (`-Werror`). Only exception are some minor problems which are kept as warnings (`-Wno-error=unused-parameter`).
+The compiler is executed with support for C++11 (`-std=c++11`) and all warnings (`-pedantic -Wall -Wextra  -Wdeprecated`). Warnings are considered errors (`-Werror`). Only exception are some minor problems which are kept as warnings (`-Wno-error=unused-parameter`).
 
 ### Dependencies
 

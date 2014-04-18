@@ -2,7 +2,7 @@
 #define FRTS_CONFIGNODE_H
 
 #include "ConfigNodePtr.h"
-#include <IteratorWrapper.h>
+#include <main/IteratorWrapper.h>
 
 #include <map>
 #include <string>

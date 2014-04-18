@@ -2,21 +2,21 @@
 
 The kernel or core consists only of a couple of classes defining the plugin architecture and the shared data. All game implementation related stuff exists in external plugins.
 
-## main.cpp
-
-Puts everything together.
-
-## Application
-
-The application class executes all the execution phase related functions and is mostly a collection of more or less unrelated methods.
-
-## IteratorWrapper
-
-Simple wrapper for iterator pointer which alows usage of interfaces in iterators.
-
 ## Configuration
 
 The configuration package contains classes related to reading and parsing configuration files. Current implementation uses the YAML format. The configuration object has ja simple generic interface to access values in the configuration files. Depending on the unterlaying format not all format specific details may be supported. It can be accessed through the shared manager. 
+
+## FRTS
+
+This package consists of include files which allow an easier usage of the other packages. The best way to use this in external projects like plugins is to add the *src* directory to the include path and use the kernel packages with the following includes:
+
+    #include <frts/configuration>
+    #include <frts/log>
+    #include <frts/module>
+    #include <frts/plugin>
+    #include <frts/shared>
+
+These include files only contain classes... which are useful in external projects.
 
 ## Log
 
@@ -34,6 +34,20 @@ The supported log levels are in order of their verbosity:
 - **Info:** Standard level for non critical messages. Normally disabled in major stable builds.
 - **Warning:** Use for important messages which aren't critical as errors. Always active.
 - **Error:** Use for exception and error messages. Always active.
+
+## Main
+
+### main.cpp
+
+Puts everything together.
+
+### Application
+
+The application class executes all the execution phase related functions and is mostly a collection of more or less unrelated methods.
+
+### IteratorWrapper
+
+Simple wrapper for iterator pointer which alows usage of interfaces in iterators.
 
 ## Module
 

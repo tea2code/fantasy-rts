@@ -8,7 +8,7 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11
 
 # Activate warnings.
-QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror
+QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror -Wdeprecated
 
 # Deactivate some unnecessary warnings. Best to use "-Wno-error=..." and keep warnings.
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
@@ -28,15 +28,12 @@ UNIT_TEST {
 }
 include(configuration/configuration.pri)
 include(log/log.pri)
+include(frts/frts.pri)
+include(main/main.pri)
 include(module/module.pri)
 include(plugin/plugin.pri)
 include(shared/shared.pri)
 
 SOURCES += \
-    main.cpp \
-    Application.cpp
 
 HEADERS += \
-    IteratorWrapper.h \
-    Application.h \
-    Log.h

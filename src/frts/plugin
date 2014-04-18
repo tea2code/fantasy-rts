@@ -1,0 +1,8 @@
+#ifndef FRTS_PLUGIN_INCLUDE_H
+#define FRTS_PLUGIN_INCLUDE_H
+
+#include <plugin/Plugin.h>
+#include <plugin/PluginApi.h>
+#include <plugin/PluginPtr.h>
+
+#endif // FRTS_PLUGIN_INCLUDE_H

@@ -1,0 +1,9 @@
+#ifndef FRTS_CONFIGURATION_INCLUDE_H
+#define FRTS_CONFIGURATION_INCLUDE_H
+
+#include <configuration/ConfigError.h>
+#include <configuration/ConfigNode.h>
+#include <configuration/ConfigNodeItr.h>
+#include <configuration/ConfigNodePtr.h>
+
+#endif // FRTS_CONFIGURATION_INCLUDE_H

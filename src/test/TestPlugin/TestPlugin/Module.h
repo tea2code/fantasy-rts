@@ -1,7 +1,7 @@
 #ifndef MODULE_H
 #define MODULE_H
 
-#include <module/Module.h>
+#include <frts/module>
 
 class Module : public frts::Module
 {

@@ -2,7 +2,7 @@
 
 #include "YamlConfigNodeItr.h"
 #include <configuration/ConfigError.h>
-#include <IteratorWrapper.h>
+#include <main/IteratorWrapper.h>
 
 #include <boost/format.hpp>
 

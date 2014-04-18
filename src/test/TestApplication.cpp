@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include <Application.h>
+#include <main/Application.h>
 
 #include <boost/format.hpp>
 

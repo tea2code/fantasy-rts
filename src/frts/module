@@ -1,0 +1,10 @@
+#ifndef FRTS_MODULE_INCLUDE_H
+#define FRTS_MODULE_INCLUDE_H
+
+#include <module/Module.h>
+#include <module/ModuleError.h>
+#include <module/ModulePtr.h>
+#include <module/Tickable.h>
+#include <module/Utility.h>
+
+#endif // FRTS_MODULE_INCLUDE_H

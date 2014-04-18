@@ -1,7 +1,7 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
-#include <plugin/Plugin.h>
+#include <frts/plugin>
 
 #include <string>
 

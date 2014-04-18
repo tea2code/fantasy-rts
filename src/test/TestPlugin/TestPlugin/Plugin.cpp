@@ -1,4 +1,5 @@
-#include <plugin/PluginApi.h>
+#include <frts/plugin>
+#include <frts/shared>
 
 #include "Plugin.h"
 

@@ -1,0 +1,6 @@
+#ifndef FRTS_LOG_INCLUDE_H
+#define FRTS_LOG_INCLUDE_H
+
+#include <log/Log.h>
+
+#endif // FRTS_LOG_INCLUDE_H
