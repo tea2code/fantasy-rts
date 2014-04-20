@@ -1,7 +1,8 @@
 #ifndef FRTS_APPLICATION_H
 #define FRTS_APPLICATION_H
 
-#include "log/Log.h"
+#include <log/Log.h>
+#include <plugin/PluginPtr.h>
 
 #include <string>
 #include <vector>
@@ -35,6 +36,13 @@ namespace frts
          * @param filePath Path to load file.
          */
         LoadConfiguration readLoadFile(const std::string& filePath) const;
+
+        /**
+         * @brief Load libraries and get plugins.
+         * @param pluginPaths List of paths to plugins.
+         * @return List of plugins.
+         */
+        std::vector<PluginPtr> loadPlugins(const std::vector<std::string>& pluginPaths) const;
 
     private:
         LogPtr log;

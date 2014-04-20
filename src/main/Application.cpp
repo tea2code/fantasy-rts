@@ -1,12 +1,19 @@
 #include "Application.h"
 
-#include "configuration/ConfigNode.h"
-#include "configuration/yaml/YamlConfigParser.h"
+#include <configuration/ConfigNode.h>
+#include <configuration/yaml/YamlConfigParser.h>
+#include <plugin/PluginManager.h>
 
 
 frts::Application::Application(LogPtr log)
     : log{log}
 {
+}
+
+std::vector<frts::PluginPtr> frts::Application::loadPlugins(const std::vector<std::string>& pluginPaths) const
+{
+    PluginManager pluginManager;
+
 }
 
 frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath) const
