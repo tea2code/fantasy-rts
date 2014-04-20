@@ -31,7 +31,7 @@ int main()
     log->info(logModule, "Start application");
     frts::Application app(log);
 
-    // Read load configuration.
+    // Phase 1: Read load configuration.
     log->info(logModule, "Read load configuration");
     frts::Application::LoadConfiguration loadConfig = app.readLoadFile(loadFile);
     log->warning(logModule, "Log configuration:");
@@ -40,6 +40,26 @@ int main()
     logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
     logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
     logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
+
+    // Phase 2: Load plugins.
+
+
+    // Phase 3: Get modules.
+
+    // Phase 4: Check required modules.
+
+    // Phase 5: Create data.
+
+    // Phaes 6: Register main config keys.
+
+    // Phase 7: Read config.
+
+    // Phase 8: Validate config.
+
+    // Phase 9: Initialize modules.
+
+    // Run.
+    // ...
 
     // All done. Good night.
     return 0;
