@@ -55,16 +55,27 @@ int main()
 
     // Phase 3: Get modules.
     log->info(logModule, "Phase 3: Get modules.");
-    shared->setRenderModules(app.findTickables(loadConfig.renderModules));
-    shared->setUpdateModules(app.findTickables(loadConfig.updateModules));
+    // Keep lists of modules for phase 4.
+    std::vector<frts::TickablePtr> renderModules = app.findTickables(loadConfig.renderModules);
+    std::vector<frts::TickablePtr> updateModules = app.findTickables(loadConfig.updateModules);
+    shared->setRenderModules(renderModules);
+    shared->setUpdateModules(updateModules);
+    std::vector<frts::UtilityPtr> utilityModules;
     for(const auto& moduleName : loadConfig.utilities)
     {
         frts::IdPtr id = frts::makeId(moduleName);
-        shared->setUtility(id, app.findUtility(id));
+        frts::UtilityPtr utilityModule = app.findUtility(id);
+        utilityModules.push_back(utilityModule);
+        shared->setUtility(id, utilityModule);
     }
 
     // Phase 4: Check required modules.
     log->info(logModule, "Phase 4: Check required modules.");
+
+    // List of modules no longer needed. Clean up.
+    renderModules.clear();
+    updateModules.clear();
+    utilityModules.clear();
 
     // Phase 5: Create data.
     log->info(logModule, "Phase 5: Create data.");
