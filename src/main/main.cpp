@@ -20,9 +20,10 @@ void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
 int main()
 {
     // Most basic configuration.
-    const std::string loadFile = "plugins/load.yaml";
+    const std::string loadFile = "load.yaml";
     const std::string logConfigFile = "log/easylogging.conf";
     const std::string logModule = "Kernel";
+    const std::string pluginsRoot = "plugins/";
 
     // Create logger.
     frts::LogPtr log = frts::LogPtr(new frts::EasyloggingLog(logConfigFile));
@@ -32,8 +33,8 @@ int main()
     frts::Application app(log);
 
     // Phase 1: Read load configuration.
-    log->info(logModule, "Read load configuration");
-    frts::Application::LoadConfiguration loadConfig = app.readLoadFile(loadFile);
+    log->info(logModule, "Phase 1: Read load configuration.");
+    frts::Application::LoadConfiguration loadConfig = app.readLoadFile(pluginsRoot + loadFile);
     log->warning(logModule, "Log configuration:");
     logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
     logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
@@ -42,26 +43,36 @@ int main()
     logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
 
     // Phase 2: Load plugins.
-
+    log->info(logModule, "Phase 2: Load plugins.");
+    app.loadPlugins(pluginsRoot, loadConfig.plugins);
 
     // Phase 3: Get modules.
+    log->info(logModule, "Phase 3: Get modules.");
 
     // Phase 4: Check required modules.
+    log->info(logModule, "Phase 4: Check required modules.");
 
     // Phase 5: Create data.
+    log->info(logModule, "Phase 5: Create data.");
 
-    // Phaes 6: Register main config keys.
+    // Phase 6: Register main config keys.
+    log->info(logModule, "Phase 6: Register main config keys.");
 
     // Phase 7: Read config.
+    log->info(logModule, "Phase 7: Read config.");
 
     // Phase 8: Validate config.
+    log->info(logModule, "Phase 8: Validate config.");
 
     // Phase 9: Initialize modules.
+    log->info(logModule, "Phase 9: Initialize modules.");
 
     // Run.
+    log->info(logModule, "Run game.");
     // ...
 
     // All done. Good night.
+    log->info(logModule, "Application finished.");
     return 0;
 }
 
