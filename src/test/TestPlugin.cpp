@@ -25,12 +25,12 @@ TEST_CASE("Find modules.", "[plugin]")
 
         frts::PluginManager pluginManager;
         pluginManager.loadPlugin(path, testPlugin);
-        frts::IdPtr id = std::make_shared<frts::IdImpl>(testModule);
+        frts::IdPtr id = frts::makeId(testModule);
         frts::ModulePtr module = pluginManager.findModule(id);
         REQUIRE(module != nullptr);
         REQUIRE(module->getName() == testModule);
 
-        id = std::make_shared<frts::IdImpl>("NotExistingModule");
+        id = frts::makeId("NotExistingModule");
         module = pluginManager.findModule(id);
         REQUIRE(module == nullptr);
 

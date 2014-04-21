@@ -1,6 +1,9 @@
 #ifndef FRTS_SHAREDPTR_H
 #define FRTS_SHAREDPTR_H
 
+#include <memory>
+
+
 namespace frts
 {
     class DataValue;

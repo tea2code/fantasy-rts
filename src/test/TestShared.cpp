@@ -31,11 +31,11 @@ TEST_CASE("Create and use frame data.", "[shared]")
 TEST_CASE("Create and use id.", "[shared]")
 {
     std::string str1 = "test";
-    frts::IdPtr id1 = std::make_shared<frts::IdImpl>(str1);
-    frts::IdPtr id2 = std::make_shared<frts::IdImpl>(str1);
+    frts::IdPtr id1 = frts::makeId(str1);
+    frts::IdPtr id2 = frts::makeId(str1);
 
     std::string str2 = "testtest";
-    frts::IdPtr id3 = std::make_shared<frts::IdImpl>(str2);
+    frts::IdPtr id3 = frts::makeId(str2);
 
     REQUIRE(id1->toString() == str1);
     REQUIRE(id2->toString() == str1);
@@ -111,15 +111,15 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
     sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(0.01, 124, 1.24));
 
-    frts::IdPtr notExistId = std::make_shared<frts::IdImpl>("notExistId");
+    frts::IdPtr notExistId = frts::makeId("notExistId");
 
-    frts::IdPtr dataValueId = std::make_shared<frts::IdImpl>("dataValueId");
+    frts::IdPtr dataValueId = frts::makeId("dataValueId");
     frts::DataValuePtr dataValue1 = std::make_shared<frts::TestDataValue>();
     frts::DataValuePtr dataValue2 = std::make_shared<frts::TestDataValue>();
     sharedImpl->setValue(dataValueId, dataValue1);
 
     frts::UtilityPtr utility = std::make_shared<frts::TestUtility>();
-    frts::IdPtr utilityId = std::make_shared<frts::IdImpl>(utility->getName());
+    frts::IdPtr utilityId = frts::makeId(utility->getName());
     sharedImpl->setUtility(utilityId, utility);
 
     frts::SharedManagerPtr shared = sharedImpl;

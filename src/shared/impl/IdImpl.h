@@ -2,6 +2,7 @@
 #define FRTS_IDIMPL_H
 
 #include <shared/Id.h>
+#include <shared/SharedPtr.h>
 
 
 namespace frts
@@ -20,6 +21,8 @@ namespace frts
     private:
         std::string str;
     };
+
+    IdPtr makeId(const std::string& str);
 }
 
 #endif // FRTS_IDIMPL_H

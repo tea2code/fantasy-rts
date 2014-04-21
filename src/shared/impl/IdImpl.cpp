@@ -24,3 +24,8 @@ bool frts::IdImpl::operator!=(const Id& rhs)
 {
     return str != dynamic_cast<const IdImpl&>(rhs).str;
 }
+
+frts::IdPtr frts::makeId(const std::string& str)
+{
+    return std::make_shared<frts::IdImpl>(str);
+}

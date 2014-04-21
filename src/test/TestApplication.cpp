@@ -1,6 +1,8 @@
 #include <catch.hpp>
 
 #include <main/Application.h>
+#include <module/ModulePtr.h>
+#include <module/Tickable.h>
 #include <plugin/PluginPtr.h>
 
 #include <boost/format.hpp>
@@ -25,11 +27,11 @@ void setupLoadFile()
     file << "    - plugin2" << std::endl;
     file << "" << std::endl;
     file << "renderModules:" << std::endl;
-    file << "    - test/renderModule1" << std::endl;
+    file << "    - renderModule1" << std::endl;
     file << "    - renderModule2" << std::endl;
     file << "" << std::endl;
     file << "updateModules:" << std::endl;
-    file << "    - test/updateModule1" << std::endl;
+    file << "    - updateModule1" << std::endl;
     file << "    - updateModule2" << std::endl;
     file << "" << std::endl;
     file << "utilities:" << std::endl;
@@ -56,11 +58,11 @@ TEST_CASE("Execute start phases.", "[application]")
         REQUIRE(loadConfig.plugins.at(1) == "plugin2");
 
         REQUIRE(loadConfig.renderModules.size() == 2);
-        REQUIRE(loadConfig.renderModules.at(0) == "test/renderModule1");
+        REQUIRE(loadConfig.renderModules.at(0) == "renderModule1");
         REQUIRE(loadConfig.renderModules.at(1) == "renderModule2");
 
         REQUIRE(loadConfig.updateModules.size() == 2);
-        REQUIRE(loadConfig.updateModules.at(0) == "test/updateModule1");
+        REQUIRE(loadConfig.updateModules.at(0) == "updateModule1");
         REQUIRE(loadConfig.updateModules.at(1) == "updateModule2");
 
         REQUIRE(loadConfig.utilities.size() == 0);
@@ -76,6 +78,21 @@ TEST_CASE("Execute start phases.", "[application]")
         std::vector<std::string> pluginPaths = {"TestPlugin"};
 
         // Should execute without exception.
-        //app.loadPlugins(rootPath, pluginPaths);
+        app.loadPlugins(rootPath, pluginPaths);
+
+        SECTION("Phase 3: Get modules.")
+        {
+            // Execute as sub section of phase 2 because we need the TestPlugin
+            // to be loaded to find TestModule.
+
+            std::vector<std::string> moduleNames = {"TestModule"};
+
+            std::vector<frts::TickablePtr> tickableModules = app.findTickables(moduleNames);
+
+            REQUIRE(tickableModules.size() == 1);
+            REQUIRE(tickableModules.at(0).get() != nullptr);
+            REQUIRE(tickableModules.at(0)->getName() == "TestModule");
+        }
     }
+
 }

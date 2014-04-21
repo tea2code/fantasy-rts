@@ -2,6 +2,9 @@
 
 #include <configuration/ConfigNode.h>
 #include <configuration/yaml/YamlConfigParser.h>
+#include <module/Tickable.h>
+#include <module/Utility.h>
+#include <shared/impl/IdImpl.h>
 
 #include <algorithm>
 #include <string>
@@ -10,6 +13,30 @@
 frts::Application::Application(LogPtr log)
     : log{log}
 {
+}
+
+std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vector<std::string>& moduleNames)
+{
+    std::vector<TickablePtr> result;
+    for(const auto& moduleName : moduleNames)
+    {
+        IdPtr id = makeId(moduleName);
+        TickablePtr module = std::dynamic_pointer_cast<Tickable>(pluginManager.findModule(id));
+        result.push_back(module);
+    }
+    return result;
+}
+
+std::vector<frts::UtilityPtr> frts::Application::findUtilities(const std::vector<std::string>& moduleNames)
+{
+    std::vector<UtilityPtr> result;
+    for(const auto& moduleName : moduleNames)
+    {
+        IdPtr id = makeId(moduleName);
+        UtilityPtr module = std::dynamic_pointer_cast<Utility>(pluginManager.findModule(id));
+        result.push_back(module);
+    }
+    return result;
 }
 
 void frts::Application::loadPlugins(const std::string& rootPath,

@@ -5,6 +5,7 @@
 
 #include <boost/format.hpp>
 
+
 const int frts::PluginManager::supportedVersion = 1;
 
 frts::PluginManager::PluginManager()
@@ -47,7 +48,6 @@ frts::ModulePtr frts::PluginManager::findModule(IdPtr id) noexcept
     }
     return result;
 }
-
 
 void frts::PluginManager::loadPlugin(const std::string& path, const std::string& name)
 {

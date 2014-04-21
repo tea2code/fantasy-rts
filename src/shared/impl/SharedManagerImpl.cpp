@@ -58,7 +58,7 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 
 frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const noexcept
 {
-    return std::make_shared<IdImpl>(str);
+    return makeId(str);
 }
 
 frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const

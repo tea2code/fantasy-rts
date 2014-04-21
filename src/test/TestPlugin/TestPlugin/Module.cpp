@@ -29,6 +29,11 @@ void Module::parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr)
 
 }
 
+void Module::tick(frts::SharedManagerPtr)
+{
+
+}
+
 void Module::validateData(frts::SharedManagerPtr)
 {
 

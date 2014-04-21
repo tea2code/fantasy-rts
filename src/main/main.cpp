@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include <log/EasyloggingLog.h>
+#include <module/ModulePtr.h>
 
 #include <string>
 #include <vector>
@@ -48,6 +49,9 @@ int main()
 
     // Phase 3: Get modules.
     log->info(logModule, "Phase 3: Get modules.");
+    std::vector<frts::TickablePtr> renderModules = app.findTickables(loadConfig.renderModules);
+    std::vector<frts::TickablePtr> updateModules = app.findTickables(loadConfig.updateModules);
+    std::vector<frts::UtilityPtr> utilityModules = app.findUtilities(loadConfig.utilities);
 
     // Phase 4: Check required modules.
     log->info(logModule, "Phase 4: Check required modules.");
