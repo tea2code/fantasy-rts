@@ -40,6 +40,12 @@ namespace frts
         virtual std::vector<std::string> getSupportedConfig() = 0;
 
         /**
+         * @brief Get the module version.
+         * @return Version number of the module.
+         */
+        virtual int getVersion() const = 0;
+
+        /**
          * @brief Initialize the module.
          * @param shared The shared manager.
          */

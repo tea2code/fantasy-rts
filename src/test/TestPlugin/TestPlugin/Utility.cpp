@@ -19,6 +19,11 @@ std::vector<std::string> Utility::getSupportedConfig()
     return std::vector<std::string>();
 }
 
+int Utility::getVersion() const
+{
+    return 1;
+}
+
 void Utility::init(frts::SharedManagerPtr)
 {
 

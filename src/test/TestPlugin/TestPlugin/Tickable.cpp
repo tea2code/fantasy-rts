@@ -19,6 +19,11 @@ std::vector<std::string> Tickable::getSupportedConfig()
     return std::vector<std::string>();
 }
 
+int Tickable::getVersion() const
+{
+    return 1;
+}
+
 void Tickable::init(frts::SharedManagerPtr)
 {
 
