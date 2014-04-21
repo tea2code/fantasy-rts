@@ -18,10 +18,8 @@ INCLUDEPATH += $$PWD/../../..
 # Headers and sources.
 SOURCES += \
     Plugin.cpp \
-    Tickable.cpp \
-    Utility.cpp
+    Module.cpp
 
 HEADERS += \
     Plugin.h \
-    Tickable.h \
-    Utility.h
+    Tickable.h

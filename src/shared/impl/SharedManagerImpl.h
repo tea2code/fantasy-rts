@@ -23,23 +23,33 @@ namespace frts
     class SharedManagerImpl : public SharedManager
     {
     public:
-        SharedManagerImpl(LogPtr log,
-                          std::vector<frts::TickablePtr> renderModules,
-                          std::vector<frts::TickablePtr> updateModules);
+        SharedManagerImpl(LogPtr log);
         ~SharedManagerImpl() override;
 
         /**
          * @brief Set current frame.
          * @param frame The frame.
          */
-        void setFrame(FramePtr frame);
+        void setFrame(FramePtr frame) noexcept;
+
+        /**
+         * @brief Set render modules
+         * @param modules The modules.
+         */
+        void setRenderModules(const std::vector<frts::TickablePtr>& modules) noexcept;
+
+        /**
+         * @brief Set update modules
+         * @param modules The modules.
+         */
+        void setUpdateModules(const std::vector<frts::TickablePtr>& modules) noexcept;
 
         /**
          * @brief Set utility module
          * @param id The id of the module.
          * @param utility The module.
          */
-        void setUtility(IdPtr id, UtilityPtr utility);
+        void setUtility(IdPtr id, UtilityPtr utility) noexcept;
 
         DataValuePtr getDataValue(IdPtr id) const override;
         const FramePtr getFrame() const noexcept override;

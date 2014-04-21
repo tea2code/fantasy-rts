@@ -14,7 +14,7 @@ TEST_CASE("Find modules.", "[plugin]")
 {
     const std::string path = "";
     const std::string testPlugin = "TestPlugin";
-    const std::string testModule = "TestModule";
+    const std::string testModule = "TestTickable";
 
     SECTION("Find module.")
     {

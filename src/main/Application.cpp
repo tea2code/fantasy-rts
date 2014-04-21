@@ -27,16 +27,9 @@ std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vecto
     return result;
 }
 
-std::vector<frts::UtilityPtr> frts::Application::findUtilities(const std::vector<std::string>& moduleNames)
+frts::UtilityPtr frts::Application::findUtility(IdPtr id)
 {
-    std::vector<UtilityPtr> result;
-    for(const auto& moduleName : moduleNames)
-    {
-        IdPtr id = makeId(moduleName);
-        UtilityPtr module = std::dynamic_pointer_cast<Utility>(pluginManager.findModule(id));
-        result.push_back(module);
-    }
-    return result;
+    return std::dynamic_pointer_cast<Utility>(pluginManager.findModule(id));
 }
 
 void frts::Application::loadPlugins(const std::string& rootPath,

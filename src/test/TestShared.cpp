@@ -100,14 +100,7 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 {
     frts::LogPtr log = std::make_shared<frts::TestLog>();
 
-    frts::TickablePtr tickable1 = std::make_shared<frts::TestTickable>();
-    frts::TickablePtr tickable2 = std::make_shared<frts::TestTickable>();
-    frts::TickablePtr tickable3 = std::make_shared<frts::TestTickable>();
-    std::vector<frts::TickablePtr> renderModules = {tickable1, tickable2};
-    std::vector<frts::TickablePtr> updateModules = {tickable3};
-
-    frts::SharedManagerImplPtr sharedImpl =
-            std::make_shared<frts::SharedManagerImpl>(log, renderModules, updateModules);
+    frts::SharedManagerImplPtr sharedImpl = std::make_shared<frts::SharedManagerImpl>(log);
 
     sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(0.01, 124, 1.24));
 
@@ -117,6 +110,14 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     frts::DataValuePtr dataValue1 = std::make_shared<frts::TestDataValue>();
     frts::DataValuePtr dataValue2 = std::make_shared<frts::TestDataValue>();
     sharedImpl->setValue(dataValueId, dataValue1);
+
+    frts::TickablePtr tickable1 = std::make_shared<frts::TestTickable>();
+    frts::TickablePtr tickable2 = std::make_shared<frts::TestTickable>();
+    frts::TickablePtr tickable3 = std::make_shared<frts::TestTickable>();
+    std::vector<frts::TickablePtr> renderModules = {tickable1, tickable2};
+    std::vector<frts::TickablePtr> updateModules = {tickable3};
+    sharedImpl->setRenderModules(renderModules);
+    sharedImpl->setUpdateModules(updateModules);
 
     frts::UtilityPtr utility = std::make_shared<frts::TestUtility>();
     frts::IdPtr utilityId = frts::makeId(utility->getName());

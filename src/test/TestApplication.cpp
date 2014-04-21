@@ -3,7 +3,9 @@
 #include <main/Application.h>
 #include <module/ModulePtr.h>
 #include <module/Tickable.h>
+#include <module/Utility.h>
 #include <plugin/PluginPtr.h>
+#include <shared/impl/IdImpl.h>
 
 #include <boost/format.hpp>
 
@@ -85,14 +87,19 @@ TEST_CASE("Execute start phases.", "[application]")
             // Execute as sub section of phase 2 because we need the TestPlugin
             // to be loaded to find TestModule.
 
-            std::vector<std::string> moduleNames = {"TestModule"};
+            std::vector<std::string> tickableNames = {"TestTickable"};
+            std::string utilityName = "TestUtility";
 
-            std::vector<frts::TickablePtr> tickableModules = app.findTickables(moduleNames);
+            std::vector<frts::TickablePtr> tickableModules = app.findTickables(tickableNames);
 
             REQUIRE(tickableModules.size() == 1);
             REQUIRE(tickableModules.at(0).get() != nullptr);
-            REQUIRE(tickableModules.at(0)->getName() == "TestModule");
+            REQUIRE(tickableModules.at(0)->getName() == "TestTickable");
+
+            frts::IdPtr id = frts::makeId(utilityName);
+            frts::UtilityPtr utilityModule = app.findUtility(id);
+            REQUIRE(utilityModule.get() != nullptr);
+            REQUIRE(utilityModule->getName() == "TestUtility");
         }
     }
-
 }

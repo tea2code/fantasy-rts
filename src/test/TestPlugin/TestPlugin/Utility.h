@@ -1,22 +1,21 @@
-#ifndef MODULE_H
-#define MODULE_H
+#ifndef UTILITY_H
+#define UTILITY_H
 
 #include <frts/module>
 #include <frts/shared>
 
-class Module : public frts::Tickable
+class Utility : public frts::Utility
 {
 public:
-    Module();
+    Utility();
 
     void createData(frts::SharedManagerPtr shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;
     void init(frts::SharedManagerPtr shared) override;
     void parseConfig(frts::ConfigNodePtr node, frts::SharedManagerPtr shared) override;
-    void tick(frts::SharedManagerPtr shared);
     void validateData(frts::SharedManagerPtr shared) override;
     void validateModules(frts::SharedManagerPtr shared) override;
 };
 
-#endif // MODULE_H
+#endif // UTILITY_H

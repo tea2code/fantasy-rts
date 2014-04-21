@@ -4,6 +4,7 @@
 #include <log/Log.h>
 #include <module/ModulePtr.h>
 #include <plugin/PluginManager.h>
+#include <shared/SharedPtr.h>
 
 #include <string>
 #include <vector>
@@ -40,11 +41,11 @@ namespace frts
         std::vector<TickablePtr> findTickables(const std::vector<std::string>& moduleNames);
 
         /**
-         * @brief Find utility modules in loaded plugins.
-         * @param moduleNames List of module names.
+         * @brief Find utility module in loaded plugins.
+         * @param id Id of the module.
          * @return List of utility modules.
          */
-        std::vector<UtilityPtr> findUtilities(const std::vector<std::string>& moduleNames);
+        UtilityPtr findUtility(IdPtr id);
 
         /**
          * @brief Load libraries and get plugins.

@@ -7,12 +7,8 @@
 #include <memory>
 
 
-frts::SharedManagerImpl::SharedManagerImpl(LogPtr log,
-                                           std::vector<frts::TickablePtr> renderModules,
-                                           std::vector<frts::TickablePtr> updateModules)
-    : log{log},
-      renderModules{renderModules},
-      updateModules{updateModules}
+frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
+    : log{log}
 {
 }
 
@@ -77,12 +73,22 @@ frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const noexcept
     return renderModules.end();
 }
 
-void frts::SharedManagerImpl::setFrame(FramePtr frame)
+void frts::SharedManagerImpl::setFrame(FramePtr frame) noexcept
 {
     this->frame = frame;
 }
 
-void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
+void frts::SharedManagerImpl::setRenderModules(const std::vector<frts::TickablePtr>& modules) noexcept
+{
+    renderModules = modules;
+}
+
+void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickablePtr>& modules) noexcept
+{
+    updateModules = modules;
+}
+
+void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility) noexcept
 {
     utilityModules[id] = utility;
 }

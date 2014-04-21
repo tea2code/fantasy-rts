@@ -13,7 +13,8 @@ public:
     frts::ModulePtr getModule(frts::IdPtr id) noexcept override;
 
 private:
-    static const std::string moduleId;
+    static const std::string tickableId;
+    static const std::string utilityId;
 };
 
 #endif // PLUGIN_H
