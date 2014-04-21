@@ -1,11 +1,13 @@
 #include <catch.hpp>
 
 #include <main/Application.h>
+#include <plugin/PluginPtr.h>
 
 #include <boost/format.hpp>
 
 #include <fstream>
 #include <stdexcept>
+#include <vector>
 
 
 #define TEST_APPLICATION_LOAD_FILE "load.yaml"
@@ -19,8 +21,8 @@ void setupLoadFile()
         throw std::runtime_error(msg.str());
     }
     file << "plugins:" << std::endl;
-    file << "    - test/plugin1.dll" << std::endl;
-    file << "    - plugin2.dll" << std::endl;
+    file << "    - test/plugin1" << std::endl;
+    file << "    - plugin2" << std::endl;
     file << "" << std::endl;
     file << "renderModules:" << std::endl;
     file << "    - test/renderModule1" << std::endl;
@@ -45,13 +47,13 @@ TEST_CASE("Execute start phases.", "[application]")
 
     frts::Application app(nullptr);
 
-    SECTION("Read and parse load file")
+    SECTION("Phase 1: Read load configuration.")
     {
         frts::Application::LoadConfiguration loadConfig = app.readLoadFile(TEST_APPLICATION_LOAD_FILE);
 
         REQUIRE(loadConfig.plugins.size() == 2);
-        REQUIRE(loadConfig.plugins.at(0) == "test/plugin1.dll");
-        REQUIRE(loadConfig.plugins.at(1) == "plugin2.dll");
+        REQUIRE(loadConfig.plugins.at(0) == "test/plugin1");
+        REQUIRE(loadConfig.plugins.at(1) == "plugin2");
 
         REQUIRE(loadConfig.renderModules.size() == 2);
         REQUIRE(loadConfig.renderModules.at(0) == "test/renderModule1");
@@ -66,5 +68,14 @@ TEST_CASE("Execute start phases.", "[application]")
         REQUIRE(loadConfig.configurations.size() == 2);
         REQUIRE(loadConfig.configurations.at(0) == "test/configuration1.yaml");
         REQUIRE(loadConfig.configurations.at(1) == "configuration2.yaml");
+    }
+
+    SECTION("Phase 2: Load plugins.")
+    {
+        const std::string rootPath = "";
+        std::vector<std::string> pluginPaths = {"TestPlugin"};
+
+        // Should execute without exception.
+        //app.loadPlugins(rootPath, pluginPaths);
     }
 }

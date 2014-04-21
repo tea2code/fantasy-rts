@@ -33,6 +33,8 @@ If you're using gcc it is recommended to build with make argument `-j` to benefi
 
 Release and debug builds use standard settings. For testing create variants of both and add `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST` to the additional arguments of qmake. Executing these builds will execute all unit tests.
 
+##### Windows
+
 Running includes three custom steps to copy assets into the working directory:
 
     xcopy
@@ -43,17 +45,27 @@ Running includes three custom steps to copy assets into the working directory:
     %{sourceDir}\..\log %{buildDir}\log /seyi
     %{buildDir}
 
-    xcopy
-    %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir} /seyi
+    cmd.exe
+    /c copy %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir} /y
     %{buildDir}
 
+#### Linux
+
+TODO
+
 #### TestPlugin
+
+##### Windows
 
 Default compile settings with additional copy step after making:
 
     xcopy
     %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /seyi
     %{buildDir}
+
+#### Linux
+
+TODO
 
 ## Code Style
 

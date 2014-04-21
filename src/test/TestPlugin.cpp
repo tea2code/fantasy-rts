@@ -24,7 +24,6 @@ TEST_CASE("Find modules.", "[plugin]")
          */
 
         frts::PluginManager pluginManager;
-
         pluginManager.loadPlugin(path, testPlugin);
         frts::IdPtr id = std::make_shared<frts::IdImpl>(testModule);
         frts::ModulePtr module = pluginManager.findModule(id);

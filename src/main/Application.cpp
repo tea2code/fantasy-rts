@@ -2,7 +2,9 @@
 
 #include <configuration/ConfigNode.h>
 #include <configuration/yaml/YamlConfigParser.h>
-#include <plugin/PluginManager.h>
+
+#include <algorithm>
+#include <string>
 
 
 frts::Application::Application(LogPtr log)
@@ -10,10 +12,33 @@ frts::Application::Application(LogPtr log)
 {
 }
 
-std::vector<frts::PluginPtr> frts::Application::loadPlugins(const std::vector<std::string>& pluginPaths) const
+void frts::Application::loadPlugins(const std::string& rootPath,
+                                    const std::vector<std::string>& pluginPaths)
 {
-    PluginManager pluginManager;
+    for(const auto& pluginPath : pluginPaths)
+    {
+        // Normalize path.
+        std::string path = rootPath + pluginPath;
+        std::replace(path.begin(), path.end(), '\\', '/');
 
+        // Split path into path and library name.
+        std::string name;
+        std::string::size_type index = path.find_last_of('/');
+        if (index != std::string::npos)
+        {
+            index += 1;
+            name = path.substr(index, path.size() - index);
+            path = path.substr(0, index);
+        }
+        else
+        {
+            name = path;
+            path = "";
+        }
+
+        // Load plugin.
+        pluginManager.loadPlugin(path, name);
+    }
 }
 
 frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath) const

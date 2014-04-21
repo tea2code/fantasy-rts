@@ -2,7 +2,7 @@
 #define FRTS_APPLICATION_H
 
 #include <log/Log.h>
-#include <plugin/PluginPtr.h>
+#include <plugin/PluginManager.h>
 
 #include <string>
 #include <vector>
@@ -32,20 +32,23 @@ namespace frts
         Application(LogPtr log);
 
         /**
+         * @brief Load libraries and get plugins.
+         * @param rootPath The root path of all plugins. Must end with path
+         *                 delimiter.
+         * @param pluginPaths List of paths to plugins in the root directory.
+         */
+        void loadPlugins(const std::string& rootPath,
+                         const std::vector<std::string>& pluginPaths);
+
+        /**
          * @brief Read and parse the file containing the load configuration.
          * @param filePath Path to load file.
          */
         LoadConfiguration readLoadFile(const std::string& filePath) const;
 
-        /**
-         * @brief Load libraries and get plugins.
-         * @param pluginPaths List of paths to plugins.
-         * @return List of plugins.
-         */
-        std::vector<PluginPtr> loadPlugins(const std::vector<std::string>& pluginPaths) const;
-
     private:
         LogPtr log;
+        PluginManager pluginManager;
     };
 }
 
