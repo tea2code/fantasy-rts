@@ -31,8 +31,7 @@ TEST_CASE("Find modules.", "[plugin]")
         REQUIRE(module->getName() == testModule);
 
         id = frts::makeId("NotExistingModule");
-        module = pluginManager.findModule(id);
-        REQUIRE(module == nullptr);
+        REQUIRE_THROWS_AS(pluginManager.findModule(id), frts::ModuleNotFound);
 
         REQUIRE_THROWS_AS(pluginManager.loadPlugin(path, "NotExistingPlugin"),
                           frts::LibraryNotFound);

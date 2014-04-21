@@ -26,7 +26,7 @@ namespace frts
          * @param id The module id.
          * @return The module or null.
          */
-        virtual ModulePtr findModule(IdPtr id) noexcept;
+        virtual ModulePtr findModule(IdPtr id);
 
         /**
          * @brief Loads a plugin defined by given path and library name.

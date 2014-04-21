@@ -2,6 +2,7 @@
 
 #include "Plugin.h"
 #include "PluginError.h"
+#include <shared/Id.h>
 
 #include <boost/format.hpp>
 
@@ -35,7 +36,7 @@ frts::PluginManager::~PluginManager()
     }
 }
 
-frts::ModulePtr frts::PluginManager::findModule(IdPtr id) noexcept
+frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
 {
     ModulePtr result = nullptr;
     for (auto& plugin : plugins)
@@ -45,6 +46,12 @@ frts::ModulePtr frts::PluginManager::findModule(IdPtr id) noexcept
         {
             break;
         }
+    }
+    if (result == nullptr)
+    {
+        auto msg = boost::format(R"(Module "%1%" not found.)")
+                % id->toString();
+        throw ModuleNotFound(msg.str());
     }
     return result;
 }
