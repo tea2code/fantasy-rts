@@ -1,11 +1,13 @@
 #include <catch.hpp>
 
 #include <main/Application.h>
+#include <module/ModuleError.h>
 #include <module/ModulePtr.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
 #include <plugin/PluginPtr.h>
 #include <shared/impl/IdImpl.h>
+#include <shared/impl/SharedManagerImpl.h>
 
 #include <boost/format.hpp>
 
@@ -79,13 +81,12 @@ TEST_CASE("Execute start phases.", "[application]")
         const std::string rootPath = "";
         std::vector<std::string> pluginPaths = {"TestPlugin"};
 
-        // Should execute without exception.
-        app.loadPlugins(rootPath, pluginPaths);
+        REQUIRE_NOTHROW(app.loadPlugins(rootPath, pluginPaths));
 
         SECTION("Phase 3: Get modules.")
         {
             // Execute as sub section of phase 2 because we need the TestPlugin
-            // to be loaded to find TestModule.
+            // to be loaded to find modules.
 
             std::vector<std::string> tickableNames = {"TestTickable"};
             std::string utilityName = "TestUtility";
@@ -100,6 +101,24 @@ TEST_CASE("Execute start phases.", "[application]")
             frts::UtilityPtr utilityModule = app.findUtility(id);
             REQUIRE(utilityModule.get() != nullptr);
             REQUIRE(utilityModule->getName() == "TestUtility");
+
+            SECTION("Phase 4: Check required modules.")
+            {
+                // Execute as sub section of phase 3 because we need the modules
+                // of TestPlugin.
+
+                frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(nullptr);
+                std::vector<frts::ModulePtr> utilityModules = {utilityModule};
+                std::vector<frts::ModulePtr> updateModules;
+                for (auto& module : tickableModules)
+                {
+                    updateModules.push_back(module);
+                }
+
+                REQUIRE_NOTHROW(app.validateRequiredModules(updateModules, shared));
+                REQUIRE_THROWS_AS(app.validateRequiredModules(utilityModules, shared),
+                                  frts::ModuleViolation);
+            }
         }
     }
 }

@@ -46,5 +46,5 @@ void Tickable::validateData(frts::SharedManagerPtr)
 
 void Tickable::validateModules(frts::SharedManagerPtr)
 {
-
+    // Everything is ok.
 }

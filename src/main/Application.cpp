@@ -2,6 +2,7 @@
 
 #include <configuration/ConfigNode.h>
 #include <configuration/yaml/YamlConfigParser.h>
+#include <module/Module.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
 #include <shared/impl/IdImpl.h>
@@ -73,4 +74,13 @@ frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::
     result.utilities = node->getStrings("utilities");
     result.configurations = node->getStrings("configurations");
     return result;
+}
+
+void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules,
+                                                SharedManagerPtr shared) const
+{
+    for (auto& module : modules)
+    {
+        module->validateModules(shared);
+    }
 }

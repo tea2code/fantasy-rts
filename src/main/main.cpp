@@ -2,7 +2,10 @@
 
 #include "Application.h"
 #include <log/EasyloggingLog.h>
+#include <module/Module.h>
 #include <module/ModulePtr.h>
+#include <module/Tickable.h>
+#include <module/Utility.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -55,7 +58,7 @@ int main()
 
     // Phase 3: Get modules.
     log->info(logModule, "Phase 3: Get modules.");
-    // Keep lists of modules for phase 4.
+    // Keep lists of modules for following phases.
     std::vector<frts::TickablePtr> renderModules = app.findTickables(loadConfig.renderModules);
     std::vector<frts::TickablePtr> updateModules = app.findTickables(loadConfig.updateModules);
     shared->setRenderModules(renderModules);
@@ -71,11 +74,20 @@ int main()
 
     // Phase 4: Check required modules.
     log->info(logModule, "Phase 4: Check required modules.");
-
-    // List of modules no longer needed. Clean up.
-    renderModules.clear();
-    updateModules.clear();
-    utilityModules.clear();
+    std::vector<frts::ModulePtr> modules;
+    for (auto& module : renderModules)
+    {
+        modules.push_back(module);
+    }
+    for (auto& module : updateModules)
+    {
+        modules.push_back(module);
+    }
+    for (auto& module : utilityModules)
+    {
+        modules.push_back(module);
+    }
+    app.validateRequiredModules(modules, shared);
 
     // Phase 5: Create data.
     log->info(logModule, "Phase 5: Create data.");
@@ -91,6 +103,12 @@ int main()
 
     // Phase 9: Initialize modules.
     log->info(logModule, "Phase 9: Initialize modules.");
+
+    // List of modules no longer needed. Clean up.
+    renderModules.clear();
+    updateModules.clear();
+    utilityModules.clear();
+    modules.clear();
 
     // Run.
     log->info(logModule, "Run game.");

@@ -62,6 +62,15 @@ namespace frts
          */
         LoadConfiguration readLoadFile(const std::string& filePath) const;
 
+        /**
+         * @brief Validate that all required modules are available aka check
+         *        dependencies between modules.
+         * @param modules The modules which should validate.
+         * @param shared The shared manager.
+         */
+        void validateRequiredModules(const std::vector<ModulePtr>& modules,
+                                     SharedManagerPtr shared) const;
+
     private:
         LogPtr log;
         PluginManager pluginManager;

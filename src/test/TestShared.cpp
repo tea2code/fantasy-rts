@@ -74,6 +74,7 @@ namespace frts
         void createData(SharedManagerPtr) {}
         std::string getName() const { return "TestTickable"; }
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
+        int getVersion() const { return 1; }
         void init(SharedManagerPtr) {}
         void parseConfig(ConfigNodePtr, SharedManagerPtr) {}
         void tick(SharedManagerPtr) {}
@@ -89,6 +90,7 @@ namespace frts
         void createData(SharedManagerPtr) {}
         std::string getName() const { return "TestUtility"; }
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
+        int getVersion() const { return 1; }
         void init(SharedManagerPtr) {}
         void parseConfig(ConfigNodePtr, SharedManagerPtr) {}
         void validateData(SharedManagerPtr) {}

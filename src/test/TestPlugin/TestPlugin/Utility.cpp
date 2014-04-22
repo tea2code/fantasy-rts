@@ -41,5 +41,6 @@ void Utility::validateData(frts::SharedManagerPtr)
 
 void Utility::validateModules(frts::SharedManagerPtr)
 {
-
+    // I miss something.
+    throw frts::ModuleViolation("I miss something.");
 }
