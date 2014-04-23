@@ -29,7 +29,7 @@ void Utility::init(frts::SharedManagerPtr)
 
 }
 
-void Utility::parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr)
+void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
 {
 
 }

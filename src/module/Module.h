@@ -53,10 +53,11 @@ namespace frts
 
         /**
          * @brief Parse the given configuration node.
+         * @param key The key of this node.
          * @param node The configuration node.
          * @param shared The shared manager.
          */
-        virtual void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) = 0;
+        virtual void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Validate the current data values.

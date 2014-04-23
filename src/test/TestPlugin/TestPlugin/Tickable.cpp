@@ -37,7 +37,7 @@ void Tickable::init(frts::SharedManagerPtr)
 
 }
 
-void Tickable::parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr)
+void Tickable::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
 {
 
 }

@@ -76,7 +76,7 @@ namespace frts
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
         int getVersion() const { return 1; }
         void init(SharedManagerPtr) {}
-        void parseConfig(ConfigNodePtr, SharedManagerPtr) {}
+        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
         void tick(SharedManagerPtr) {}
         void validateData(SharedManagerPtr) {}
         void validateModules(SharedManagerPtr) {}
@@ -92,7 +92,7 @@ namespace frts
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
         int getVersion() const { return 1; }
         void init(SharedManagerPtr) {}
-        void parseConfig(ConfigNodePtr, SharedManagerPtr) {}
+        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
         void validateData(SharedManagerPtr) {}
         void validateModules(SharedManagerPtr) {}
     };
