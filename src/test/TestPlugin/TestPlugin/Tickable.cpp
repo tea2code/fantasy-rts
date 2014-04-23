@@ -24,7 +24,7 @@ std::string Tickable::getName() const
 
 std::vector<std::string> Tickable::getSupportedConfig()
 {
-    return std::vector<std::string>();
+    return {"ConfigKey1", "ConfigKey2"};
 }
 
 int Tickable::getVersion() const

@@ -16,7 +16,7 @@ std::string Utility::getName() const
 
 std::vector<std::string> Utility::getSupportedConfig()
 {
-    return std::vector<std::string>();
+    return {"ConfigKey1", "ConfigKey3"};
 }
 
 int Utility::getVersion() const
