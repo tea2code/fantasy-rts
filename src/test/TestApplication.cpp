@@ -113,11 +113,14 @@ TEST_CASE("Execute start phases.", "[application]")
                 updateModules.push_back(module);
             }
 
+            std::vector<frts::ModulePtr> modules = updateModules;
+            modules.push_back(utilityModule);
+
+            // Execute the following sub sections after phase 3 because we need
+            // the modules of TestPlugin.
+
             SECTION("Phase 4: Check required modules.")
             {
-                // Execute as sub section of phase 3 because we need the modules
-                // of TestPlugin.
-
                 REQUIRE_NOTHROW(app.validateRequiredModules(updateModules, shared));
                 REQUIRE_THROWS_AS(app.validateRequiredModules(utilityModules, shared),
                                   frts::ModuleViolation);
@@ -125,9 +128,6 @@ TEST_CASE("Execute start phases.", "[application]")
 
             SECTION("Phase 5: Create data.")
             {
-                // Execute as sub section of phase 3 because we need the modules
-                // of TestPlugin.
-
                 REQUIRE_NOTHROW(app.createData(updateModules, shared));
                 REQUIRE_NOTHROW(app.createData(utilityModules, shared));
 
@@ -135,6 +135,15 @@ TEST_CASE("Execute start phases.", "[application]")
                 frts::DataValuePtr data = shared->getDataValue(dataId);
                 REQUIRE(data.get() != nullptr);
                 REQUIRE(data->getName() == "TestDataValue");
+            }
+
+            SECTION("Phase 6: Register main config keys.")
+            {
+                auto configKeys = app.registerConfigKeys(modules);
+                REQUIRE(configKeys.size() == 3);
+                REQUIRE(configKeys.at("ConfigKey1").size() == 2);
+                REQUIRE(configKeys.at("ConfigKey2").size() == 1);
+                REQUIRE(configKeys.at("ConfigKey3").size() == 1);
             }
         }
     }

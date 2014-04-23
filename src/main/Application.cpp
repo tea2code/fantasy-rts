@@ -85,6 +85,21 @@ frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::
     return result;
 }
 
+std::map<std::string, std::vector<frts::ModulePtr>> frts::Application::registerConfigKeys(const std::vector<ModulePtr>& modules) const
+{
+    std::map<std::string, std::vector<frts::ModulePtr>> result;
+    for (auto& module : modules)
+    {
+        auto configKeys = module->getSupportedConfig();
+        for (auto& key : configKeys)
+        {
+            result[key].push_back(module);
+        }
+    }
+    return result;
+}
+
+
 void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules,
                                                 SharedManagerPtr shared) const
 {

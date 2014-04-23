@@ -6,6 +6,7 @@
 #include <plugin/PluginManager.h>
 #include <shared/SharedPtr.h>
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -68,6 +69,13 @@ namespace frts
          * @param filePath Path to load file.
          */
         LoadConfiguration readLoadFile(const std::string& filePath) const;
+
+        /**
+         * @brief Let's every module register it's supported configuration keys.
+         * @param modules The modules.
+         * @return Mapping configuration keys and the modules which support it.
+         */
+        std::map<std::string, std::vector<ModulePtr>> registerConfigKeys(const std::vector<ModulePtr>& modules) const;
 
         /**
          * @brief Validate that all required modules are available aka check

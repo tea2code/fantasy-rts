@@ -95,6 +95,7 @@ int main()
 
     // Phase 6: Register main config keys.
     log->info(logModule, "Phase 6: Register main config keys.");
+    auto configKeys = app.registerConfigKeys(modules);
 
     // Phase 7: Read config.
     log->info(logModule, "Phase 7: Read config.");
