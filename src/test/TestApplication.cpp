@@ -1,11 +1,13 @@
 #include <catch.hpp>
 
+#include <log/ConsoleLog.h>
 #include <main/Application.h>
 #include <module/ModuleError.h>
 #include <module/ModulePtr.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
 #include <plugin/PluginPtr.h>
+#include <shared/DataValue.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -102,22 +104,37 @@ TEST_CASE("Execute start phases.", "[application]")
             REQUIRE(utilityModule.get() != nullptr);
             REQUIRE(utilityModule->getName() == "TestUtility");
 
+            frts::LogPtr log = std::make_shared<frts::ConsoleLog>();
+            frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+            std::vector<frts::ModulePtr> utilityModules = {utilityModule};
+            std::vector<frts::ModulePtr> updateModules;
+            for (auto& module : tickableModules)
+            {
+                updateModules.push_back(module);
+            }
+
             SECTION("Phase 4: Check required modules.")
             {
                 // Execute as sub section of phase 3 because we need the modules
                 // of TestPlugin.
 
-                frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(nullptr);
-                std::vector<frts::ModulePtr> utilityModules = {utilityModule};
-                std::vector<frts::ModulePtr> updateModules;
-                for (auto& module : tickableModules)
-                {
-                    updateModules.push_back(module);
-                }
-
                 REQUIRE_NOTHROW(app.validateRequiredModules(updateModules, shared));
                 REQUIRE_THROWS_AS(app.validateRequiredModules(utilityModules, shared),
                                   frts::ModuleViolation);
+            }
+
+            SECTION("Phase 5: Create data.")
+            {
+                // Execute as sub section of phase 3 because we need the modules
+                // of TestPlugin.
+
+                REQUIRE_NOTHROW(app.createData(updateModules, shared));
+                REQUIRE_NOTHROW(app.createData(utilityModules, shared));
+
+                frts::IdPtr dataId = shared->makeId("TestDataValue");
+                frts::DataValuePtr data = shared->getDataValue(dataId);
+                REQUIRE(data.get() != nullptr);
+                REQUIRE(data->getName() == "TestDataValue");
             }
         }
     }

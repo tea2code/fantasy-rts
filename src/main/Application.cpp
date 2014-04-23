@@ -16,6 +16,15 @@ frts::Application::Application(LogPtr log)
 {
 }
 
+void frts::Application::createData(const std::vector<ModulePtr>& modules,
+                                   SharedManagerPtr shared) const
+{
+    for(auto& module : modules)
+    {
+        module->createData(shared);
+    }
+}
+
 std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vector<std::string>& moduleNames)
 {
     std::vector<TickablePtr> result;

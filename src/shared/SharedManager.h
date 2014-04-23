@@ -77,7 +77,7 @@ namespace frts
          * @param id The id of the value.
          * @param value The data value.
          */
-        virtual void setValue(IdPtr id, DataValuePtr value) noexcept = 0;
+        virtual void setDataValue(IdPtr id, DataValuePtr value) noexcept = 0;
 
         /**
          * @brief Get update modules.

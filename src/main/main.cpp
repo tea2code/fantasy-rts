@@ -91,6 +91,7 @@ int main()
 
     // Phase 5: Create data.
     log->info(logModule, "Phase 5: Create data.");
+    app.createData(modules, shared);
 
     // Phase 6: Register main config keys.
     log->info(logModule, "Phase 6: Register main config keys.");

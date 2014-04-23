@@ -1,11 +1,14 @@
 #include "SharedManagerImpl.h"
 
+#include <shared/DataValue.h>
 #include "IdImpl.h"
 
 #include <boost/format.hpp>
 
 #include <memory>
 
+
+const std::string frts::SharedManagerImpl::logModule = "SharedManager";
 
 frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
     : log{log}
@@ -18,7 +21,7 @@ frts::SharedManagerImpl::~SharedManagerImpl()
 
 frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
 {
-    std::map<IdPtr, DataValuePtr>::const_iterator it = dataValues.find(id);
+    std::map<std::string, DataValuePtr>::const_iterator it = dataValues.find(id->toString());
     if(it != dataValues.end())
     {
         return it->second;
@@ -41,7 +44,7 @@ frts::LogPtr frts::SharedManagerImpl::getLog() const noexcept
 
 frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 {
-    std::map<IdPtr, UtilityPtr>::const_iterator it = utilityModules.find(id);
+    std::map<std::string, UtilityPtr>::const_iterator it = utilityModules.find(id->toString());
     if(it != utilityModules.end())
     {
         return it->second;
@@ -54,7 +57,7 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 
 frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const noexcept
 {
-    return makeId(str);
+    return frts::makeId(str);
 }
 
 frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const
@@ -90,12 +93,12 @@ void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickableP
 
 void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility) noexcept
 {
-    utilityModules[id] = utility;
+    utilityModules[id->toString()] = utility;
 }
 
-void frts::SharedManagerImpl::setValue(IdPtr id, DataValuePtr value) noexcept
+void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value) noexcept
 {
-    dataValues[id] = value;
+    dataValues[id->toString()] = value;
 }
 
 frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const noexcept

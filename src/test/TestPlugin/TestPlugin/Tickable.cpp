@@ -1,12 +1,20 @@
 #include "Tickable.h"
 
+#include "DataValue.h"
+
+#include <frts/shared>
+
+# include <memory>
+
 Tickable::Tickable()
 {
 }
 
-void Tickable::createData(frts::SharedManagerPtr)
+void Tickable::createData(frts::SharedManagerPtr shared)
 {
-
+    frts::DataValuePtr data = std::make_shared<DataValue>();
+    frts::IdPtr id = shared->makeId(data->getName());
+    shared->setDataValue(id, data);
 }
 
 std::string Tickable::getName() const

@@ -58,17 +58,19 @@ namespace frts
         IdPtr makeId(const std::string& str) const noexcept override;
         TickableItr renderModulesBegin() const noexcept override;
         TickableItr renderModulesEnd() const noexcept override;
-        void setValue(IdPtr id, DataValuePtr value) noexcept override;
+        void setDataValue(IdPtr id, DataValuePtr value) noexcept override;
         TickableItr updateModulesBegin() const noexcept override;
         TickableItr updateModulesEnd() const noexcept override;
 
     private:
-        std::map<IdPtr, DataValuePtr> dataValues;
+        static const std::string logModule;
+
+        std::map<std::string, DataValuePtr> dataValues;
         FramePtr frame;
         LogPtr log;
         std::vector<TickablePtr> renderModules;
         std::vector<TickablePtr> updateModules;
-        std::map<IdPtr, UtilityPtr> utilityModules;
+        std::map<std::string, UtilityPtr> utilityModules;
 
     private:
         IdNotFoundError makeIdNotFoundError(IdPtr id) const;

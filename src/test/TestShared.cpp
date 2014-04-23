@@ -108,10 +108,11 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
     frts::IdPtr notExistId = frts::makeId("notExistId");
 
-    frts::IdPtr dataValueId = frts::makeId("dataValueId");
+    frts::IdPtr dataValueId1 = frts::makeId("dataValueId");
+    frts::IdPtr dataValueId2 = frts::makeId("dataValueId");
     frts::DataValuePtr dataValue1 = std::make_shared<frts::TestDataValue>();
     frts::DataValuePtr dataValue2 = std::make_shared<frts::TestDataValue>();
-    sharedImpl->setValue(dataValueId, dataValue1);
+    sharedImpl->setDataValue(dataValueId1, dataValue1);
 
     frts::TickablePtr tickable1 = std::make_shared<frts::TestTickable>();
     frts::TickablePtr tickable2 = std::make_shared<frts::TestTickable>();
@@ -136,12 +137,14 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     REQUIRE(shared->getUtility(utilityId) == utility);
     REQUIRE_THROWS_AS(shared->getUtility(notExistId), frts::IdNotFoundError);
 
-    REQUIRE(shared->getDataValue(dataValueId) == dataValue1);
-    REQUIRE(shared->getDataValue(dataValueId) != dataValue2);
+    REQUIRE(shared->getDataValue(dataValueId1) == dataValue1);
+    REQUIRE(shared->getDataValue(dataValueId2) == dataValue1);
+    REQUIRE(shared->getDataValue(dataValueId1) != dataValue2);
     REQUIRE_THROWS_AS(shared->getDataValue(notExistId), frts::IdNotFoundError);
 
-    shared->setValue(dataValueId, dataValue2);
-    REQUIRE(shared->getDataValue(dataValueId) != dataValue1);
-    REQUIRE(shared->getDataValue(dataValueId) == dataValue2);
+    shared->setDataValue(dataValueId1, dataValue2);
+    REQUIRE(shared->getDataValue(dataValueId1) != dataValue1);
+    REQUIRE(shared->getDataValue(dataValueId1) == dataValue2);
+    REQUIRE(shared->getDataValue(dataValueId2) == dataValue2);
     REQUIRE_THROWS_AS(shared->getDataValue(notExistId), frts::IdNotFoundError);
 }

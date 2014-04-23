@@ -34,6 +34,13 @@ namespace frts
         Application(LogPtr log);
 
         /**
+         * @brief Create data objects for modules.
+         * @param modules The modules.
+         * @param shared The shared manager.
+         */
+        void createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+
+        /**
          * @brief Find tickable modules in loaded plugins.
          * @param moduleNames List of module names.
          * @return List of tickable modules.
