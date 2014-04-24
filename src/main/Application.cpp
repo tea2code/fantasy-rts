@@ -71,6 +71,36 @@ void frts::Application::loadPlugins(const std::string& rootPath,
     }
 }
 
+void frts::Application::readConfig(const std::map<std::string, std::vector<ModulePtr>>& supportedKeys,
+                                   SharedManagerPtr shared,
+                                   const std::string& rootPath,
+                                   const std::vector<std::string>& configFiles) const
+{
+    YamlConfigParser parser;
+
+    for (const auto& configFile : configFiles)
+    {
+        // Parse file.
+        ConfigNodePtr node = parser.parseFile(rootPath + configFile);
+
+        // Check if config node contains supported keys.
+        for (auto it = supportedKeys.begin(); it != supportedKeys.end(); ++it)
+        {
+            // Node has key.
+            if (node->has(it->first))
+            {
+                ConfigNodePtr keyNode = node->getNode(it->first);
+
+                // Give every associated module chance to parse node.
+                for (auto& module : it->second)
+                {
+                    module->parseConfig(it->first, keyNode, shared);
+                }
+            }
+        }
+    }
+}
+
 frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath) const
 {
     YamlConfigParser parser;

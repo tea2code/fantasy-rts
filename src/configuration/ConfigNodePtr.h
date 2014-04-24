@@ -11,7 +11,7 @@ namespace frts
     /**
      * @brief Pointer to ConfigNodes.
      */
-    using ConfigNodePtr = std::unique_ptr<ConfigNode>;
+    using ConfigNodePtr = std::shared_ptr<ConfigNode>;
 }
 
 #endif // FRTS_CONFIGNODEPTR_H

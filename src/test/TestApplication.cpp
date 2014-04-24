@@ -18,40 +18,62 @@
 #include <vector>
 
 
-#define TEST_APPLICATION_LOAD_FILE "load.yaml"
-
-void setupLoadFile()
+namespace TestApp
 {
-    std::ofstream file(TEST_APPLICATION_LOAD_FILE);
-    if(!file)
+    #define TEST_APPLICATION_LOAD_FILE "load.yaml"
+
+    void setupLoadFile()
     {
-        auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_APPLICATION_LOAD_FILE;
-        throw std::runtime_error(msg.str());
+        std::ofstream file(TEST_APPLICATION_LOAD_FILE);
+        if(!file)
+        {
+            auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_APPLICATION_LOAD_FILE;
+            throw std::runtime_error(msg.str());
+        }
+        file << "plugins:" << std::endl;
+        file << "    - test/plugin1" << std::endl;
+        file << "    - plugin2" << std::endl;
+        file << "" << std::endl;
+        file << "renderModules:" << std::endl;
+        file << "    - renderModule1" << std::endl;
+        file << "    - renderModule2" << std::endl;
+        file << "" << std::endl;
+        file << "updateModules:" << std::endl;
+        file << "    - updateModule1" << std::endl;
+        file << "    - updateModule2" << std::endl;
+        file << "" << std::endl;
+        file << "utilities:" << std::endl;
+        file << "    # No utilities." << std::endl;
+        file << "" << std::endl;
+        file << "configurations:" << std::endl;
+        file << "    - test/configuration1.yaml" << std::endl;
+        file << "    - configuration2.yaml" << std::endl;
+        file.close();
     }
-    file << "plugins:" << std::endl;
-    file << "    - test/plugin1" << std::endl;
-    file << "    - plugin2" << std::endl;
-    file << "" << std::endl;
-    file << "renderModules:" << std::endl;
-    file << "    - renderModule1" << std::endl;
-    file << "    - renderModule2" << std::endl;
-    file << "" << std::endl;
-    file << "updateModules:" << std::endl;
-    file << "    - updateModule1" << std::endl;
-    file << "    - updateModule2" << std::endl;
-    file << "" << std::endl;
-    file << "utilities:" << std::endl;
-    file << "    # No utilities." << std::endl;
-    file << "" << std::endl;
-    file << "configurations:" << std::endl;
-    file << "    - test/configuration1.yaml" << std::endl;
-    file << "    - configuration2.yaml" << std::endl;
-    file.close();
+
+    #define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
+
+    void setupConfiguration()
+    {
+        std::ofstream file(TEST_CONFIGURATION_CONFIG_FILE);
+        if(!file)
+        {
+            auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_CONFIGURATION_CONFIG_FILE;
+            throw std::runtime_error(msg.str());
+        }
+        file << "ConfigKey1:" << std::endl;
+        file << "    key: value" << std::endl;
+        file << "ConfigKey2:" << std::endl;
+        file << "    key: value" << std::endl;
+        file << "ConfigKey3:" << std::endl;
+        file << "    key: value" << std::endl;
+        file.close();
+    }
 }
 
 TEST_CASE("Execute start phases.", "[application]")
 {
-    setupLoadFile();
+    TestApp::setupLoadFile();
 
     frts::Application app(nullptr);
 
@@ -139,11 +161,22 @@ TEST_CASE("Execute start phases.", "[application]")
 
             SECTION("Phase 6: Register main config keys.")
             {
-                auto configKeys = app.registerConfigKeys(modules);
-                REQUIRE(configKeys.size() == 3);
-                REQUIRE(configKeys.at("ConfigKey1").size() == 2);
-                REQUIRE(configKeys.at("ConfigKey2").size() == 1);
-                REQUIRE(configKeys.at("ConfigKey3").size() == 1);
+                auto supportedKeys = app.registerConfigKeys(modules);
+                REQUIRE(supportedKeys.size() == 3);
+                REQUIRE(supportedKeys.at("ConfigKey1").size() == 2);
+                REQUIRE(supportedKeys.at("ConfigKey2").size() == 1);
+                REQUIRE(supportedKeys.at("ConfigKey3").size() == 1);
+
+                SECTION("Phase 7: Read config.")
+                {
+                    // Execute the following sub sections after phase 6 because we need
+                    // the config keys.
+
+                    TestApp::setupConfiguration();
+                    std::vector<std::string> configFiles = {TEST_CONFIGURATION_CONFIG_FILE};
+
+                    REQUIRE_NOTHROW(app.readConfig(supportedKeys, shared, "", configFiles));
+                }
             }
         }
     }

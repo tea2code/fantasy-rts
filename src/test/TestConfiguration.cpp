@@ -12,55 +12,58 @@
 #include <vector>
 
 
-#define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
-
-void setupConfiguration()
+namespace TestConfig
 {
-    std::ofstream file(TEST_CONFIGURATION_CONFIG_FILE);
-    if(!file)
+    #define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
+
+    void setupConfiguration()
     {
-        auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_CONFIGURATION_CONFIG_FILE;
-        throw std::runtime_error(msg.str());
+        std::ofstream file(TEST_CONFIGURATION_CONFIG_FILE);
+        if(!file)
+        {
+            auto msg = boost::format(R"(Cannot open/create file "%1%".)") % TEST_CONFIGURATION_CONFIG_FILE;
+            throw std::runtime_error(msg.str());
+        }
+        file << "boolValueTrue: true" << std::endl;
+        file << "boolValueFalse: false" << std::endl;
+        file << "floatValue00: 0.0" << std::endl;
+        file << "floatValue12: 1.2" << std::endl;
+        file << "intValue0: 0" << std::endl;
+        file << "intValue35: 35" << std::endl;
+        file << "stringValueAbc: abc" << std::endl;
+        file << "stringValueSentence: Hello World" << std::endl;
+        file << "stringValueSentenceQuoted: \"Hello World\"" << std::endl;
+        file << "node:" << std::endl;
+        file << "    test: 1" << std::endl;
+        file << "nodesKey:" << std::endl;
+        file << "    - node: 1" << std::endl;
+        file << "    - node: 2" << std::endl;
+        file << "    - node: 3" << std::endl;
+        file << "    - node: 4" << std::endl;
+        file << "nodesNoKey:" << std::endl;
+        file << "    - 1" << std::endl;
+        file << "    - 2" << std::endl;
+        file << "nodesListBool:" << std::endl;
+        file << "    - true" << std::endl;
+        file << "    - false" << std::endl;
+        file << "nodesListFloat:" << std::endl;
+        file << "    - 0.0" << std::endl;
+        file << "    - 1.2" << std::endl;
+        file << "nodesListInt:" << std::endl;
+        file << "    - 0" << std::endl;
+        file << "    - 35" << std::endl;
+        file << "nodesListString:" << std::endl;
+        file << "    - abc" << std::endl;
+        file << "    - Hello World" << std::endl;
+        file << "    - \"Hello World\"" << std::endl;
+        file.close();
     }
-    file << "boolValueTrue: true" << std::endl;
-    file << "boolValueFalse: false" << std::endl;
-    file << "floatValue00: 0.0" << std::endl;
-    file << "floatValue12: 1.2" << std::endl;
-    file << "intValue0: 0" << std::endl;
-    file << "intValue35: 35" << std::endl;
-    file << "stringValueAbc: abc" << std::endl;
-    file << "stringValueSentence: Hello World" << std::endl;
-    file << "stringValueSentenceQuoted: \"Hello World\"" << std::endl;
-    file << "node:" << std::endl;
-    file << "    test: 1" << std::endl;
-    file << "nodesKey:" << std::endl;
-    file << "    - node: 1" << std::endl;
-    file << "    - node: 2" << std::endl;
-    file << "    - node: 3" << std::endl;
-    file << "    - node: 4" << std::endl;
-    file << "nodesNoKey:" << std::endl;
-    file << "    - 1" << std::endl;
-    file << "    - 2" << std::endl;
-    file << "nodesListBool:" << std::endl;
-    file << "    - true" << std::endl;
-    file << "    - false" << std::endl;
-    file << "nodesListFloat:" << std::endl;
-    file << "    - 0.0" << std::endl;
-    file << "    - 1.2" << std::endl;
-    file << "nodesListInt:" << std::endl;
-    file << "    - 0" << std::endl;
-    file << "    - 35" << std::endl;
-    file << "nodesListString:" << std::endl;
-    file << "    - abc" << std::endl;
-    file << "    - Hello World" << std::endl;
-    file << "    - \"Hello World\"" << std::endl;
-    file.close();
 }
 
 
 TEST_CASE("Parse YAML configuration file.", "[configuration]")
 {
-    setupConfiguration();
+    TestConfig::setupConfiguration();
     frts::YamlConfigParser parser;
 
     SECTION("The YAML file exists.")
@@ -78,7 +81,7 @@ TEST_CASE("Parse YAML configuration file.", "[configuration]")
 
 TEST_CASE("Parse YAML configuration node.", "[configuration]")
 {
-    setupConfiguration();
+    TestConfig::setupConfiguration();
     frts::YamlConfigParser parser;
     frts::ConfigNodePtr node = parser.parseFile(TEST_CONFIGURATION_CONFIG_FILE);
     REQUIRE(node.get() != nullptr);

@@ -95,10 +95,11 @@ int main()
 
     // Phase 6: Register main config keys.
     log->info(logModule, "Phase 6: Register main config keys.");
-    auto configKeys = app.registerConfigKeys(modules);
+    auto supportedKeys = app.registerConfigKeys(modules);
 
     // Phase 7: Read config.
     log->info(logModule, "Phase 7: Read config.");
+    app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
 
     // Phase 8: Validate config.
     log->info(logModule, "Phase 8: Validate config.");

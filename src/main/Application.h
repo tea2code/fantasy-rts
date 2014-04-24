@@ -65,6 +65,20 @@ namespace frts
                          const std::vector<std::string>& pluginPaths);
 
         /**
+         * @brief Read configuration.
+         * @param supportedKeys List of supported configuration keys and the
+         *                      associated modules.
+         * @param shared List of shared manager.
+         * @param rootPath The root path of all plugins. Must end with path
+         *                 delimiter.
+         * @param configFiles List of configuration file names.
+         */
+        void readConfig(const std::map<std::string, std::vector<ModulePtr>>& supportedKeys,
+                        SharedManagerPtr shared,
+                        const std::string& rootPath,
+                        const std::vector<std::string>& configFiles) const;
+
+        /**
          * @brief Read and parse the file containing the load configuration.
          * @param filePath Path to load file.
          */
