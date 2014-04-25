@@ -36,7 +36,8 @@ void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedM
 
 void Utility::validateData(frts::SharedManagerPtr)
 {
-
+    // I miss something.
+    throw frts::DataViolation("I miss something.");
 }
 
 void Utility::validateModules(frts::SharedManagerPtr)

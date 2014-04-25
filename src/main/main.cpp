@@ -101,8 +101,9 @@ int main()
     log->info(logModule, "Phase 7: Read config.");
     app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
 
-    // Phase 8: Validate config.
-    log->info(logModule, "Phase 8: Validate config.");
+    // Phase 8: Validate data.
+    log->info(logModule, "Phase 8: Validate data.");
+    app.validateData(modules, shared);
 
     // Phase 9: Initialize modules.
     log->info(logModule, "Phase 9: Initialize modules.");

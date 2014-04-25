@@ -92,6 +92,15 @@ namespace frts
         std::map<std::string, std::vector<ModulePtr>> registerConfigKeys(const std::vector<ModulePtr>& modules) const;
 
         /**
+         * @brief Validate that all necessary configuration is loaded (represented
+         *        by data values.
+         * @param modules The modules which should validate the current config.
+         * @param shared The shared manager.
+         */
+        void validateData(const std::vector<ModulePtr>& modules,
+                          SharedManagerPtr shared) const;
+
+        /**
          * @brief Validate that all required modules are available aka check
          *        dependencies between modules.
          * @param modules The modules which should validate.

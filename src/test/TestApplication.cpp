@@ -178,6 +178,13 @@ TEST_CASE("Execute start phases.", "[application]")
                     REQUIRE_NOTHROW(app.readConfig(supportedKeys, shared, "", configFiles));
                 }
             }
+
+            SECTION("Phase 8: Validate data.")
+            {
+                REQUIRE_NOTHROW(app.validateData(updateModules, shared));
+                REQUIRE_THROWS_AS(app.validateData(utilityModules, shared),
+                                  frts::DataViolation);
+            }
         }
     }
 }

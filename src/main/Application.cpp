@@ -130,6 +130,16 @@ std::map<std::string, std::vector<frts::ModulePtr>> frts::Application::registerC
 }
 
 
+void frts::Application::validateData(const std::vector<ModulePtr>& modules,
+                                     SharedManagerPtr shared) const
+{
+    for (auto& module : modules)
+    {
+        module->validateData(shared);
+    }
+}
+
+
 void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules,
                                                 SharedManagerPtr shared) const
 {
