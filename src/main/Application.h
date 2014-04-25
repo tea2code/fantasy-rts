@@ -56,6 +56,13 @@ namespace frts
         UtilityPtr findUtility(IdPtr id);
 
         /**
+         * @brief Initialize given modules with the shared manager.
+         * @param modules The modules to initialize.
+         * @param shared The shared manager.
+         */
+        void init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+
+        /**
          * @brief Load libraries and get plugins.
          * @param rootPath The root path of all plugins. Must end with path
          *                 delimiter.

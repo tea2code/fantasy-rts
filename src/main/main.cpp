@@ -107,6 +107,7 @@ int main()
 
     // Phase 9: Initialize modules.
     log->info(logModule, "Phase 9: Initialize modules.");
+    app.init(modules, shared);
 
     // List of modules no longer needed. Clean up.
     renderModules.clear();

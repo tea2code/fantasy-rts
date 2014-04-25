@@ -185,6 +185,11 @@ TEST_CASE("Execute start phases.", "[application]")
                 REQUIRE_THROWS_AS(app.validateData(utilityModules, shared),
                                   frts::DataViolation);
             }
+
+            SECTION("Phase 9: Initialize modules.")
+            {
+                REQUIRE_NOTHROW(app.init(modules, shared));
+            }
         }
     }
 }

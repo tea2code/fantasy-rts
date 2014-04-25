@@ -42,6 +42,14 @@ frts::UtilityPtr frts::Application::findUtility(IdPtr id)
     return std::dynamic_pointer_cast<Utility>(pluginManager.findModule(id));
 }
 
+void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+{
+    for (auto& module : modules)
+    {
+        module->init(shared);
+    }
+}
+
 void frts::Application::loadPlugins(const std::string& rootPath,
                                     const std::vector<std::string>& pluginPaths)
 {
