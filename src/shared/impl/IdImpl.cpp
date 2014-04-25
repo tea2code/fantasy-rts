@@ -10,7 +10,7 @@ frts::IdImpl::~IdImpl()
 {
 }
 
-std::string frts::IdImpl::toString() const noexcept
+std::string frts::IdImpl::toString() const
 {
     return str;
 }

@@ -18,7 +18,7 @@ namespace frts
          * @brief Get the string representation of this Id.
          * @return The string representation.
          */
-        virtual std::string toString() const noexcept = 0;
+        virtual std::string toString() const = 0;
 
         virtual bool operator==(const Id& rhs) = 0;
         virtual bool operator!=(const Id& rhs) = 0;

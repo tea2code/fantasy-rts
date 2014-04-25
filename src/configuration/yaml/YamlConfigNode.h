@@ -24,24 +24,24 @@ namespace frts
         Iterator end() override;
 
         bool getBool(const std::string& key) override;
-        bool getBool(const std::string& key, bool defaultValue) noexcept override;
+        bool getBool(const std::string& key, bool defaultValue) override;
         std::vector<bool> getBools(const std::string& key) override;
 
         double getFloat(const std::string& key) override;
-        double getFloat(const std::string& key, double defaultValue) noexcept override;
+        double getFloat(const std::string& key, double defaultValue) override;
         std::vector<double> getFloats(const std::string& key) override;
 
         long getInteger(const std::string& key) override;
-        long getInteger(const std::string& key, long defaultValue) noexcept override;
+        long getInteger(const std::string& key, long defaultValue) override;
         std::vector<long> getIntegers(const std::string& key) override;
 
         ConfigNodePtr getNode(const std::string& key) override;
 
         std::string getString(const std::string& key) override;
-        std::string getString(const std::string& key, const std::string& defaultValue) noexcept override;
+        std::string getString(const std::string& key, const std::string& defaultValue) override;
         std::vector<std::string> getStrings(const std::string& key) override;
 
-        bool has(const std::string& key) noexcept override;
+        bool has(const std::string& key) override;
 
         bool isBool(const std::string& key) override;
         bool isFloat(const std::string& key) override;

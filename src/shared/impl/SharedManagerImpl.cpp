@@ -32,12 +32,12 @@ frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
     }
 }
 
-const frts::FramePtr frts::SharedManagerImpl::getFrame() const noexcept
+const frts::FramePtr frts::SharedManagerImpl::getFrame() const
 {
     return frame;
 }
 
-frts::LogPtr frts::SharedManagerImpl::getLog() const noexcept
+frts::LogPtr frts::SharedManagerImpl::getLog() const
 {
     return log;
 }
@@ -55,7 +55,7 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
     }
 }
 
-frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const noexcept
+frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
 {
     return frts::makeId(str);
 }
@@ -66,47 +66,47 @@ frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) con
     return IdNotFoundError(msg.str());
 }
 
-frts::TickableItr frts::SharedManagerImpl::renderModulesBegin() const noexcept
+frts::TickableItr frts::SharedManagerImpl::renderModulesBegin() const
 {
     return renderModules.begin();
 }
 
-frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const noexcept
+frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const
 {
     return renderModules.end();
 }
 
-void frts::SharedManagerImpl::setFrame(FramePtr frame) noexcept
+void frts::SharedManagerImpl::setFrame(FramePtr frame)
 {
     this->frame = frame;
 }
 
-void frts::SharedManagerImpl::setRenderModules(const std::vector<frts::TickablePtr>& modules) noexcept
+void frts::SharedManagerImpl::setRenderModules(const std::vector<frts::TickablePtr>& modules)
 {
     renderModules = modules;
 }
 
-void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickablePtr>& modules) noexcept
+void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickablePtr>& modules)
 {
     updateModules = modules;
 }
 
-void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility) noexcept
+void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
 {
     utilityModules[id->toString()] = utility;
 }
 
-void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value) noexcept
+void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
 {
     dataValues[id->toString()] = value;
 }
 
-frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const noexcept
+frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const
 {
     return updateModules.begin();
 }
 
-frts::TickableItr frts::SharedManagerImpl::updateModulesEnd() const noexcept
+frts::TickableItr frts::SharedManagerImpl::updateModulesEnd() const
 {
     return updateModules.end();
 }

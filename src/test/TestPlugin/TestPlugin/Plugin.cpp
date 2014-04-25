@@ -16,7 +16,7 @@ Plugin::Plugin()
 
 }
 
-frts::ModulePtr Plugin::getModule(frts::IdPtr id) noexcept
+frts::ModulePtr Plugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
     if (id->toString() == tickableId)

@@ -4,7 +4,7 @@ DataValue::DataValue()
 {
 }
 
-std::string DataValue::getName() const noexcept
+std::string DataValue::getName() const
 {
     return "TestDataValue";
 }

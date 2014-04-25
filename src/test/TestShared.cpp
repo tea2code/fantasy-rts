@@ -53,17 +53,17 @@ namespace frts
     public:
         TestLog() {}
         ~TestLog() {}
-        void debug(const std::string&, const std::string&) noexcept {}
-        void error(const std::string&, const std::string&) noexcept {}
-        void info(const std::string&, const std::string&) noexcept {}
-        void warning(const std::string&, const std::string&) noexcept {}
+        void debug(const std::string&, const std::string&) {}
+        void error(const std::string&, const std::string&) {}
+        void info(const std::string&, const std::string&) {}
+        void warning(const std::string&, const std::string&) {}
     };
 
     class TestDataValue : public DataValue
     {
     public:
         ~TestDataValue() {}
-        std::string getName() const noexcept { return "TestDataValue"; }
+        std::string getName() const { return "TestDataValue"; }
     };
 
     class TestTickable : public Tickable

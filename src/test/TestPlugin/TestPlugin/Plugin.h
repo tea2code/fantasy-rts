@@ -10,7 +10,7 @@ class Plugin : public frts::Plugin
 public:
     Plugin();
 
-    frts::ModulePtr getModule(frts::IdPtr id) noexcept override;
+    frts::ModulePtr getModule(frts::IdPtr id) override;
 
 private:
     static const std::string tickableId;

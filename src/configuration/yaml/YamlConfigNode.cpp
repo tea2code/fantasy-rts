@@ -83,7 +83,7 @@ bool frts::YamlConfigNode::getBool(const std::string& key)
     return get<bool>(key, "boolean");
 }
 
-bool frts::YamlConfigNode::getBool(const std::string& key, bool defaultValue) noexcept
+bool frts::YamlConfigNode::getBool(const std::string& key, bool defaultValue)
 {
     return getDefault<bool>(key, defaultValue);
 }
@@ -104,7 +104,7 @@ double frts::YamlConfigNode::getFloat(const std::string& key)
     return get<double>(key, "floating point");
 }
 
-double frts::YamlConfigNode::getFloat(const std::string& key, double defaultValue) noexcept
+double frts::YamlConfigNode::getFloat(const std::string& key, double defaultValue)
 {
     return getDefault<double>(key, defaultValue);
 }
@@ -125,7 +125,7 @@ long frts::YamlConfigNode::getInteger(const std::string& key)
     return get<long>(key, "integer");
 }
 
-long frts::YamlConfigNode::getInteger(const std::string& key, long defaultValue) noexcept
+long frts::YamlConfigNode::getInteger(const std::string& key, long defaultValue)
 {
     return getDefault<long>(key, defaultValue);
 }
@@ -160,7 +160,7 @@ std::string frts::YamlConfigNode::getString(const std::string& key)
 }
 
 std::string frts::YamlConfigNode::getString(const std::string& key,
-                                            const std::string& defaultValue) noexcept
+                                            const std::string& defaultValue)
 {
     return getDefault<std::string>(key, defaultValue);
 }
@@ -176,7 +176,7 @@ std::vector<std::string> frts::YamlConfigNode::getStrings(const std::string& key
     return result;
 }
 
-bool frts::YamlConfigNode::has(const std::string& key) noexcept
+bool frts::YamlConfigNode::has(const std::string& key)
 {
     return node[key];
 }

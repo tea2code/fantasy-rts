@@ -54,7 +54,7 @@ namespace frts
          * @param Default value if key is not found or conversion fails.
          * @return The value.
          */
-        virtual bool getBool(const std::string& key, bool devaultValue) noexcept = 0;
+        virtual bool getBool(const std::string& key, bool devaultValue) = 0;
 
         /**
          * @brief Get multiple boolean values in a list.
@@ -80,7 +80,7 @@ namespace frts
          * @param Default value if key is not found or conversion fails.
          * @return The value.
          */
-        virtual double getFloat(const std::string& key, double devaultValue) noexcept = 0;
+        virtual double getFloat(const std::string& key, double devaultValue) = 0;
 
         /**
          * @brief Get multiple floating point values in a list.
@@ -106,7 +106,7 @@ namespace frts
          * @param Default value if key is not found or conversion fails.
          * @return The value.
          */
-        virtual long getInteger(const std::string& key, long devaultValue) noexcept = 0;
+        virtual long getInteger(const std::string& key, long devaultValue) = 0;
 
         /**
          * @brief Get multiple integer values in a list.
@@ -141,7 +141,7 @@ namespace frts
          * @return The value.
          */
         virtual std::string getString(const std::string& key,
-                                      const std::string& devaultValue) noexcept = 0;
+                                      const std::string& devaultValue) = 0;
 
         /**
          * @brief Get multiple string values in a list.
@@ -157,7 +157,7 @@ namespace frts
          * @param key Key of the value.
          * @return True if value exists else false.
          */
-        virtual bool has(const std::string& key) noexcept = 0;
+        virtual bool has(const std::string& key) = 0;
 
         /**
          * @brief Checks if a value is a boolean.

@@ -14,14 +14,14 @@ namespace frts
     public:
         ConsoleLog();
 
-        void debug(const std::string& module, const std::string& msg) noexcept override;
-        void error(const std::string& module, const std::string& msg) noexcept override;
-        void info(const std::string& module, const std::string& msg) noexcept override;
-        void warning(const std::string& module, const std::string& msg) noexcept override;
+        void debug(const std::string& module, const std::string& msg) override;
+        void error(const std::string& module, const std::string& msg) override;
+        void info(const std::string& module, const std::string& msg) override;
+        void warning(const std::string& module, const std::string& msg) override;
 
     private:
         void print(const std::string& level, const std::string& module,
-                   const std::string& msg) noexcept;
+                   const std::string& msg);
     };
 }
 

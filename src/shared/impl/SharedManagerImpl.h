@@ -30,37 +30,37 @@ namespace frts
          * @brief Set current frame.
          * @param frame The frame.
          */
-        void setFrame(FramePtr frame) noexcept;
+        void setFrame(FramePtr frame);
 
         /**
          * @brief Set render modules
          * @param modules The modules.
          */
-        void setRenderModules(const std::vector<frts::TickablePtr>& modules) noexcept;
+        void setRenderModules(const std::vector<frts::TickablePtr>& modules);
 
         /**
          * @brief Set update modules
          * @param modules The modules.
          */
-        void setUpdateModules(const std::vector<frts::TickablePtr>& modules) noexcept;
+        void setUpdateModules(const std::vector<frts::TickablePtr>& modules);
 
         /**
          * @brief Set utility module
          * @param id The id of the module.
          * @param utility The module.
          */
-        void setUtility(IdPtr id, UtilityPtr utility) noexcept;
+        void setUtility(IdPtr id, UtilityPtr utility);
 
         DataValuePtr getDataValue(IdPtr id) const override;
-        const FramePtr getFrame() const noexcept override;
-        LogPtr getLog() const noexcept;
+        const FramePtr getFrame() const override;
+        LogPtr getLog() const;
         UtilityPtr getUtility(IdPtr id) const override;
-        IdPtr makeId(const std::string& str) const noexcept override;
-        TickableItr renderModulesBegin() const noexcept override;
-        TickableItr renderModulesEnd() const noexcept override;
-        void setDataValue(IdPtr id, DataValuePtr value) noexcept override;
-        TickableItr updateModulesBegin() const noexcept override;
-        TickableItr updateModulesEnd() const noexcept override;
+        IdPtr makeId(const std::string& str) const override;
+        TickableItr renderModulesBegin() const override;
+        TickableItr renderModulesEnd() const override;
+        void setDataValue(IdPtr id, DataValuePtr value) override;
+        TickableItr updateModulesBegin() const override;
+        TickableItr updateModulesEnd() const override;
 
     private:
         static const std::string logModule;

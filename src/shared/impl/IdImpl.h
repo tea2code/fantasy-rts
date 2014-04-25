@@ -13,7 +13,7 @@ namespace frts
         IdImpl(const std::string& str);
         ~IdImpl() override;
 
-        std::string toString() const noexcept override;
+        std::string toString() const override;
 
         bool operator==(const Id& rhs) override;
         bool operator!=(const Id& rhs) override;

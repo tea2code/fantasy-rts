@@ -8,7 +8,7 @@ class DataValue : public frts::DataValue
 public:
     DataValue();
 
-    std::string getName() const noexcept override;
+    std::string getName() const override;
 };
 
 #endif // DATAVALUE_H
