@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **6**
+Current Version: **7**
 
 - Version 1: Configuration.
 - Version 2: Kernel.
