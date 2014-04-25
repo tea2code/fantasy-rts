@@ -33,6 +33,8 @@ If you're using gcc it is recommended to build with make argument `-j` to benefi
 
 Release and debug builds use standard settings. For testing create variants of both and add `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST` to the additional arguments of qmake. Executing these builds will execute all unit tests.
 
+For optimization add `DEFINES+=OPTIMIZE` to the additional arguments of qmake.
+
 ##### Windows
 
 Running includes three custom steps to copy assets into the working directory:

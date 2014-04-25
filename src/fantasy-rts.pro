@@ -13,6 +13,11 @@ QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror -Wdeprecated
 # Deactivate some unnecessary warnings. Best to use "-Wno-error=..." and keep warnings.
 QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
+# Optimization flags.
+OPTIMIZE {
+    QMAKE_CXXFLAGS += -O3
+}
+
 # Includes.
 INCLUDEPATH += $$PWD/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/dependency/boost
@@ -33,7 +38,3 @@ include(main/main.pri)
 include(module/module.pri)
 include(plugin/plugin.pri)
 include(shared/shared.pri)
-
-SOURCES += \
-
-HEADERS += \
