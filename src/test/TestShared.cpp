@@ -17,14 +17,14 @@
 
 TEST_CASE("Create and use frame data.", "[shared]")
 {
-    double deltaTime = 0.002145;
+    frts::Frame::time deltaTime = frts::fromMilliseconds(2);
     unsigned long long number = 4098353456392489llu;
-    double runTime = 254121.54123;
+    frts::Frame::time runTime = frts::fromMilliseconds(254121541);
     frts::FramePtr frame = std::make_shared<frts::FrameImpl>(deltaTime, number, runTime);
 
-    REQUIRE(frame->getDeltaTime() == Approx(deltaTime));
+    REQUIRE(frame->getDeltaTime() == deltaTime);
     REQUIRE(frame->getNumber() == number);
-    REQUIRE(frame->getRunTime() == Approx(runTime));
+    REQUIRE(frame->getRunTime() == runTime);
 }
 
 
@@ -104,7 +104,10 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
     frts::SharedManagerImplPtr sharedImpl = std::make_shared<frts::SharedManagerImpl>(log);
 
-    sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(0.01, 124, 1.24));
+    frts::Frame::time deltaTime = frts::fromMilliseconds(10);
+    unsigned long long numberFrames = 124llu;
+    frts::Frame::time runTime = frts::fromMilliseconds(1240);
+    sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(deltaTime, numberFrames, runTime));
 
     frts::IdPtr notExistId = frts::makeId("notExistId");
 
@@ -131,9 +134,9 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     REQUIRE(shared->getLog() == log);
     REQUIRE(std::distance(shared->renderModulesBegin(), shared->renderModulesEnd()) == 2);
     REQUIRE(std::distance(shared->updateModulesBegin(), shared->updateModulesEnd()) == 1);
-    REQUIRE(shared->getFrame()->getDeltaTime() == Approx(0.01));
-    REQUIRE(shared->getFrame()->getNumber() == 124);
-    REQUIRE(shared->getFrame()->getRunTime() == Approx(1.24));
+    REQUIRE(shared->getFrame()->getDeltaTime() == deltaTime);
+    REQUIRE(shared->getFrame()->getNumber() == numberFrames);
+    REQUIRE(shared->getFrame()->getRunTime() == runTime);
     REQUIRE(shared->getUtility(utilityId) == utility);
     REQUIRE_THROWS_AS(shared->getUtility(notExistId), frts::IdNotFoundError);
 

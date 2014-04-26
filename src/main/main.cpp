@@ -1,11 +1,13 @@
 #ifndef UNIT_TEST
 
 #include "Application.h"
+#include "MainLoop.h"
 #include <log/EasyloggingLog.h>
 #include <module/Module.h>
 #include <module/ModulePtr.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
+#include <shared/impl/FrameImpl.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -26,9 +28,11 @@ void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
 int main()
 {
     // Most basic configuration.
+    const frts::Frame::time deltaTime = frts::fromMilliseconds(10); // 100 Fps
     const std::string loadFile = "load.yaml";
     const std::string logConfigFile = "log/easylogging.conf";
     const std::string logModule = "Kernel";
+    const frts::Frame::time maxFrameTime = frts::fromMilliseconds(100);
     const std::string pluginsRoot = "plugins/";
 
     // Create logger.
@@ -117,7 +121,9 @@ int main()
 
     // Run.
     log->info(logModule, "Run game.");
-    // ...
+    shared->setQuitApplication(true); // TODO Remove.
+    frts::MainLoop mainLoop(deltaTime, maxFrameTime);
+    mainLoop.start(shared);
 
     // All done. Good night.
     log->info(logModule, "Application finished.");

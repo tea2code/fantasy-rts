@@ -193,3 +193,4 @@ TEST_CASE("Execute start phases.", "[application]")
         }
     }
 }
+

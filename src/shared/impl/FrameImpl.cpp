@@ -1,7 +1,7 @@
 #include "FrameImpl.h"
 
 
-frts::FrameImpl::FrameImpl(double deltaTime, unsigned long long number, double runTime)
+frts::FrameImpl::FrameImpl(time deltaTime, ticks number, time runTime)
     : deltaTime{deltaTime}, number{number}, runTime{runTime}
 {
 }
@@ -10,17 +10,23 @@ frts::FrameImpl::~FrameImpl()
 {
 }
 
-double frts::FrameImpl::getDeltaTime() const
+frts::Frame::time frts::FrameImpl::getDeltaTime() const
 {
     return deltaTime;
 }
 
-unsigned long long frts::FrameImpl::getNumber() const
+frts::Frame::ticks frts::FrameImpl::getNumber() const
 {
     return number;
 }
 
-double frts::FrameImpl::getRunTime() const
+frts::Frame::time frts::FrameImpl::getRunTime() const
 {
     return runTime;
+}
+
+
+frts::Frame::time frts::fromMilliseconds(unsigned int ms)
+{
+    return std::chrono::duration_cast<Frame::time>(std::chrono::milliseconds(ms));
 }

@@ -14,18 +14,26 @@ namespace frts
          * @param number Number of this frame.
          * @param runTime Complete run time of application.
          */
-        FrameImpl(double deltaTime, unsigned long long number, double runTime);
+        FrameImpl(time deltaTime, ticks number, time runTime);
         ~FrameImpl() override;
 
-        double getDeltaTime() const override;
-        unsigned long long getNumber() const override;
-        double getRunTime() const override;
+        time getDeltaTime() const override;
+        ticks getNumber() const override;
+        time getRunTime() const override;
 
     private:
-        double deltaTime;
-        unsigned long long number;
-        double runTime;
+        time deltaTime;
+        ticks number;
+        time runTime;
     };
+
+    /**
+     * @brief Helper function which will convert milliseconds to the time format
+     *        of frame.
+     * @param ms The time in milliseconds.
+     * @return The time in the frame time format.
+     */
+    Frame::time fromMilliseconds(unsigned int ms);
 }
 
 #endif // FRTS_FRAMEIMPL_H
