@@ -44,7 +44,7 @@ int main()
 
     // Phase 1: Read load configuration.
     log->info(logModule, "Phase 1: Read load configuration.");
-    frts::Application::LoadConfiguration loadConfig = app.readLoadFile(pluginsRoot + loadFile);
+    auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
     log->warning(logModule, "Log configuration:");
     logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
     logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
@@ -63,8 +63,8 @@ int main()
     // Phase 3: Get modules.
     log->info(logModule, "Phase 3: Get modules.");
     // Keep lists of modules for following phases.
-    std::vector<frts::TickablePtr> renderModules = app.findTickables(loadConfig.renderModules);
-    std::vector<frts::TickablePtr> updateModules = app.findTickables(loadConfig.updateModules);
+    auto renderModules = app.findTickables(loadConfig.renderModules);
+    auto updateModules = app.findTickables(loadConfig.updateModules);
     shared->setRenderModules(renderModules);
     shared->setUpdateModules(updateModules);
     std::vector<frts::UtilityPtr> utilityModules;

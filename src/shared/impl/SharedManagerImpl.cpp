@@ -21,7 +21,7 @@ frts::SharedManagerImpl::~SharedManagerImpl()
 
 frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
 {
-    std::map<std::string, DataValuePtr>::const_iterator it = dataValues.find(id->toString());
+    auto it = dataValues.find(id->toString());
     if(it != dataValues.end())
     {
         return it->second;
@@ -44,7 +44,7 @@ frts::LogPtr frts::SharedManagerImpl::getLog() const
 
 frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 {
-    std::map<std::string, UtilityPtr>::const_iterator it = utilityModules.find(id->toString());
+    auto it = utilityModules.find(id->toString());
     if(it != utilityModules.end())
     {
         return it->second;

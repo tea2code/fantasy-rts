@@ -18,7 +18,7 @@
 TEST_CASE("Create and use frame data.", "[shared]")
 {
     frts::Frame::time deltaTime = frts::fromMilliseconds(2);
-    unsigned long long number = 4098353456392489llu;
+    frts::Frame::ticks number = 4098353456392489llu;
     frts::Frame::time runTime = frts::fromMilliseconds(254121541);
     frts::FramePtr frame = std::make_shared<frts::FrameImpl>(deltaTime, number, runTime);
 
@@ -105,7 +105,7 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     frts::SharedManagerImplPtr sharedImpl = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::Frame::time deltaTime = frts::fromMilliseconds(10);
-    unsigned long long numberFrames = 124llu;
+    frts::Frame::ticks numberFrames = 124llu;
     frts::Frame::time runTime = frts::fromMilliseconds(1240);
     sharedImpl->setFrame(std::make_shared<frts::FrameImpl>(deltaTime, numberFrames, runTime));
 
