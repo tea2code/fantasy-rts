@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Interface for plugins.
+     */
     class Plugin
     {
     public:

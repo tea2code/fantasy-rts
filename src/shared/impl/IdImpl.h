@@ -7,6 +7,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Id implementation using string comparison. Probably slow.
+     */
     class IdImpl : public Id
     {
     public:

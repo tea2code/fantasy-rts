@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Log class using Easylogging++.
+     */
     class EasyloggingLog : public Log
     {
     public:
