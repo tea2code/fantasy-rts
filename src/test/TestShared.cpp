@@ -137,6 +137,10 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     REQUIRE(shared->getUtility(utilityId) == utility);
     REQUIRE_THROWS_AS(shared->getUtility(notExistId), frts::IdNotFoundError);
 
+    REQUIRE_FALSE(shared->isQuitApplication() );
+    shared->setQuitApplication(true);
+    REQUIRE(shared->isQuitApplication());
+
     REQUIRE(shared->getDataValue(dataValueId1) == dataValue1);
     REQUIRE(shared->getDataValue(dataValueId2) == dataValue1);
     REQUIRE(shared->getDataValue(dataValueId1) != dataValue2);

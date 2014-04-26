@@ -11,7 +11,7 @@
 const std::string frts::SharedManagerImpl::logModule = "SharedManager";
 
 frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
-    : log{log}
+    : log{log}, quitApplication{false}
 {
 }
 
@@ -55,6 +55,11 @@ frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
     }
 }
 
+bool frts::SharedManagerImpl::isQuitApplication() const
+{
+    return quitApplication;
+}
+
 frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
 {
     return frts::makeId(str);
@@ -84,6 +89,11 @@ void frts::SharedManagerImpl::setFrame(FramePtr frame)
 void frts::SharedManagerImpl::setRenderModules(const std::vector<frts::TickablePtr>& modules)
 {
     renderModules = modules;
+}
+
+void frts::SharedManagerImpl::setQuitApplication(bool quit)
+{
+    quitApplication = quit;
 }
 
 void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickablePtr>& modules)

@@ -55,10 +55,12 @@ namespace frts
         const FramePtr getFrame() const override;
         LogPtr getLog() const;
         UtilityPtr getUtility(IdPtr id) const override;
+        bool isQuitApplication() const override;
         IdPtr makeId(const std::string& str) const override;
         TickableItr renderModulesBegin() const override;
         TickableItr renderModulesEnd() const override;
         void setDataValue(IdPtr id, DataValuePtr value) override;
+        void setQuitApplication(bool quit) override;
         TickableItr updateModulesBegin() const override;
         TickableItr updateModulesEnd() const override;
 
@@ -69,6 +71,7 @@ namespace frts
         FramePtr frame;
         LogPtr log;
         std::vector<TickablePtr> renderModules;
+        bool quitApplication;
         std::vector<TickablePtr> updateModules;
         std::map<std::string, UtilityPtr> utilityModules;
 

@@ -54,6 +54,12 @@ namespace frts
         virtual UtilityPtr getUtility(IdPtr id) const = 0;
 
         /**
+         * @brief Indicates that the application should end.
+         * @return True if the application should end else false.
+         */
+        virtual bool isQuitApplication() const = 0;
+
+        /**
          * @brief Create id from string.
          * @param str The string representing this id.
          * @return The id.
@@ -78,6 +84,12 @@ namespace frts
          * @param value The data value.
          */
         virtual void setDataValue(IdPtr id, DataValuePtr value) = 0;
+
+        /**
+         * @brief Set or reset flag to indicate that the application should quit.
+         * @param quit If true the application will end.
+         */
+        virtual void setQuitApplication(bool quit) = 0;
 
         /**
          * @brief Get update modules.
