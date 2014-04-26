@@ -13,6 +13,7 @@ Current Version: **7**
 - Version 5: Plugins.
 - Version 6: Refactoring, testing, documenting.
 - Version 7: Core architecture with full plugin support.
+- Version 8: Main loop, refactoring. Final kernel version.
 
 Major goals:
 
