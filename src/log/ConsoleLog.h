@@ -1,5 +1,5 @@
-#ifndef CONSOLELOG_H
-#define CONSOLELOG_H
+#ifndef FRTS_CONSOLELOG_H
+#define FRTS_CONSOLELOG_H
 
 #include "Log.h"
 
@@ -25,4 +25,4 @@ namespace frts
     };
 }
 
-#endif // CONSOLELOG_H
+#endif // FRTS_CONSOLELOG_H
