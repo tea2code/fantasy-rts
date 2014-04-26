@@ -13,6 +13,10 @@ const std::string frts::SharedManagerImpl::logModule = "SharedManager";
 frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
     : log{log}, quitApplication{false}
 {
+    if (log == nullptr)
+    {
+        throw std::invalid_argument("Log must not be null.");
+    }
 }
 
 frts::SharedManagerImpl::~SharedManagerImpl()
@@ -83,6 +87,11 @@ frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const
 
 void frts::SharedManagerImpl::setFrame(FramePtr frame)
 {
+    if (frame == nullptr)
+    {
+        throw std::invalid_argument("Frame must not be null.");
+    }
+
     this->frame = frame;
 }
 
@@ -103,11 +112,21 @@ void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickableP
 
 void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
 {
+    if (utility == nullptr)
+    {
+        throw std::invalid_argument("Utility must not be null.");
+    }
+
     utilityModules[id->toString()] = utility;
 }
 
 void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
 {
+    if (value == nullptr)
+    {
+        throw std::invalid_argument("Data value must not be null.");
+    }
+
     dataValues[id->toString()] = value;
 }
 
