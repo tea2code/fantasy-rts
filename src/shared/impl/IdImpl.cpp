@@ -27,5 +27,20 @@ bool frts::IdImpl::operator!=(const Id& rhs)
 
 frts::IdPtr frts::makeId(const std::string& str)
 {
+    // The following commented code is a example implementation of a cached
+    // solution which would allow the direct usage of IdPtr for maps...
+    // It is not yet usable because it's missing thread safety (for example a
+    // mutex around the check and insert.
+//    static std::map<std::string, IdPtr> cache;
+
+//    auto it = cache.find(str);
+//    if(it == cache.end())
+//    {
+//        IdPtr id = std::make_shared<frts::IdImpl>(str);
+//        cache[str] = id;
+//    }
+
+//    return cache.at(str);
+
     return std::make_shared<frts::IdImpl>(str);
 }
