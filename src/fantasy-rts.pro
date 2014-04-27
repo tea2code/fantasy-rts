@@ -27,6 +27,8 @@ INCLUDEPATH += $$PWD/dependency/easyloggingpp/src
 # Libs.
 LIBS += -L$$PWD/dependency/yaml-cpp/build -lyaml-cpp
 LINUX_LDL {
+    # Necessary on Linux if compiler throws "undefined reference to dlerror"...
+    # errors. See documentation "Development.md".
     LIBS += -ldl
 }
 
