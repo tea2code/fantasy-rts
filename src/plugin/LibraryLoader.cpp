@@ -34,7 +34,7 @@ void frts::LibraryLoader::unload(HandleType library) const
 frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& path,
                                                           const std::string& name) const
 {
-    const std::string pathWithExtension = std::string("./lib") + path + name + ".so";
+    const std::string pathWithExtension = std::string("./") + path + "lib" + name + ".so";
 
     void* sharedObject = ::dlopen(pathWithExtension.c_str(), RTLD_NOW);
     if(sharedObject == NULL)

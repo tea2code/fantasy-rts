@@ -11,6 +11,7 @@
     #define VC_EXTRALEAN
     #include <windows.h>
 #else
+    #pragma GCC system_header
     #include <dlfcn.h>
 #endif
 

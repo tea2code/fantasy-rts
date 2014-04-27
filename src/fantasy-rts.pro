@@ -26,6 +26,9 @@ INCLUDEPATH += $$PWD/dependency/easyloggingpp/src
 
 # Libs.
 LIBS += -L$$PWD/dependency/yaml-cpp/build -lyaml-cpp
+LINUX_LDL {
+    LIBS += -ldl
+}
 
 # Headers and sources.
 UNIT_TEST {
