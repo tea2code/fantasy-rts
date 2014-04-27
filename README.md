@@ -15,9 +15,15 @@ Current Version: **7**
 - Version 7: Core architecture with full plugin support.
 - Version 8: Main loop, refactoring. Final kernel version.
 
+Reached: *Spring 2014: Full plugin based architecture.*
+
+- Version 9: Design of region, entity and resource data.
+- Version 10: Implementation of region, entity and resource data.
+- Version 11: Input support with SDL2.
+- Version 12: Graphic support with SDL2.
+
 Major goals:
 
-- Spring 2014: Full plugin based architecture.
 - Later 2014: Playable demo  including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
 
 ## Coming Soon

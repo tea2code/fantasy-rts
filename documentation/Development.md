@@ -27,13 +27,15 @@ The deployment step should include copying the *plugins* and *log* directories t
 
 Following settings are for Qt Creator. Building/deployment steps marked with `code highlighting` are custom steps where the first line is the command, second are arguments and third is the working directory.
 
-If you're using gcc it is recommended to build with make argument `-j` to benefit from multi core building.
+If you're using gcc it is recommended to build with make argument `-j` (Windows) or `-j<number-of-jobs>` (Linux) to benefit from multi core building.
 
 #### Kernel
 
 Release and debug builds use standard settings. For testing create variants of both and add `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST` to the additional arguments of qmake. Executing these builds will execute all unit tests.
 
 For optimization add `DEFINES+=OPTIMIZE` to the additional arguments of qmake.
+
+On Linux it may be necessary to add `CONFIG+=LINUX_LDL` to the additional arguments of qmake. This is only necessary if you see compiler errors like `undefined reference to dlerror`, `undefined reference to dlsym`... (mostly on Ubuntu based distributions).
 
 ##### Windows
 
@@ -53,7 +55,17 @@ Running includes three custom steps to copy assets into the working directory:
 
 #### Linux
 
-TODO
+    cp
+    -R %{sourceDir}/../plugins %{buildDir}/plugins
+    %{buildDir}
+
+    cp
+    -R %{sourceDir}/../log %{buildDir}/log
+    %{buildDir}
+
+    cp
+    %{sourceDir}/test/TestPlugin/libTestPlugin.so %{buildDir}
+    %{buildDir}
 
 #### TestPlugin
 
@@ -67,7 +79,9 @@ Default compile settings with additional copy step after making:
 
 #### Linux
 
-TODO
+    cp
+    %{buildDir}/libTestPlugin.so %{buildDir}/../../
+    %{buildDir}
 
 ## Code Style
 

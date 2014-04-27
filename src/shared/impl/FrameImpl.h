@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Simple Frame implementation.
+     */
     class FrameImpl : public Frame
     {
     public:

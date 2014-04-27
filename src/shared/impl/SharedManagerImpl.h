@@ -20,6 +20,9 @@ namespace frts
      */
     using SharedManagerImplPtr = std::shared_ptr<SharedManagerImpl>;
 
+    /**
+     * @brief Implementation of SharedManager.
+     */
     class SharedManagerImpl : public SharedManager
     {
     public:
