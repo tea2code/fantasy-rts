@@ -39,7 +39,7 @@ The supported log levels are in order of their verbosity:
 
 ### main.cpp
 
-Puts everything together.
+Puts everything together. You can manipulate the base settings using command line arguments. For example `fantasy-rts.exe help` will print the command line options help. To reset the length of one frame to 42 use `fantasy-rts.exe deltaTime 42`.
 
 ### Application
 

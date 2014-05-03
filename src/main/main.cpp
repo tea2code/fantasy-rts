@@ -11,32 +11,103 @@
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
+#include <algorithm>
+#include <cstdlib>
+#include <ostream>
 #include <string>
 #include <vector>
 
 
+/**
+ * @brief Check if command line options exist. See http://stackoverflow.com/a/868894/1931663.
+ * @param begin Begin of options.
+ * @param end End of options.
+ * @param option The option key.
+ * @return True if key exists else false.
+ */
+bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+    return std::find(begin, end, option) != end;
+}
+
+/**
+ * @brief Get command line options. See http://stackoverflow.com/a/868894/1931663.
+ * @param begin Begin of options.
+ * @param end End of options.
+ * @param option The option key.
+ * @return The option value.
+ */
+char* getCmdOption(char** begin, char** end, const std::string& option)
+{
+    char** itr = std::find(begin, end, option);
+    if (itr != end && ++itr != end)
+    {
+        return *itr;
+    }
+    return 0;
+}
+
+/**
+ * @brief Write load config to log.
+ * @param log The log.
+ * @param logModule The log module.
+ * @param key The key.
+ * @param values The values.
+ */
 void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
                        const std::string& key, const std::vector<std::string>& values)
 {
-    log->warning(logModule, "  " + key);
+    log->warning(logModule, "\t" + key);
     for(const auto& value : values)
     {
-        log->warning(logModule, "    -" + value);
+        log->warning(logModule, "\t\t-" + value);
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+    // Parse arguments.
+    if (cmdOptionExists(argv, argv+argc, "help"))
+    {
+        std::cout << "Command line options:" << std::endl;
+        std::cout << "help - Produce this help message." << std::endl;
+        std::cout << "deltaTime - Set length of one frame." << std::endl;
+        std::cout << "loadFile - File name of load file." << std::endl;
+        std::cout << "logConfigFile - Path to log config file." << std::endl;
+        std::cout << "maxFrameTime - Maximum length of a frame." << std::endl;
+        std::cout << "pluginsRoot - Path to plugins root directory." << std::endl;
+        std::cout << "Example: deltaTime 10 loadFile load.yaml" << std::endl;
+        return 0;
+    }
+
     // Most basic configuration.
-    const frts::Frame::time deltaTime = frts::fromMilliseconds(10); // 100 Fps
-    const std::string loadFile = "load.yaml";
-    const std::string logConfigFile = "log/easylogging.conf";
+    const frts::Frame::time deltaTime = frts::fromMilliseconds(
+                cmdOptionExists(argv, argv+argc, "deltaTime") ?
+                std::atoi(getCmdOption(argv, argv+argc, "deltaTime")) : 10
+    );
+    const std::string loadFile = cmdOptionExists(argv, argv+argc, "loadFile") ?
+                getCmdOption(argv, argv+argc, "loadFile") : "load.yaml";
+    const std::string logConfigFile = cmdOptionExists(argv, argv+argc, "logConfigFile") ?
+                getCmdOption(argv, argv+argc, "logConfigFile") : "log/easylogging.conf";
+    const frts::Frame::time maxFrameTime = frts::fromMilliseconds(
+                cmdOptionExists(argv, argv+argc, "maxFrameTime") ?
+                std::atoi(getCmdOption(argv, argv+argc, "maxFrameTime")) : 100
+    );
+    const std::string pluginsRoot = cmdOptionExists(argv, argv+argc, "pluginsRoot") ?
+                getCmdOption(argv, argv+argc, "pluginsRoot") : "plugins/";
+
     const std::string logModule = "Kernel";
-    const frts::Frame::time maxFrameTime = frts::fromMilliseconds(100);
-    const std::string pluginsRoot = "plugins/";
 
     // Create logger.
     frts::LogPtr log = frts::LogPtr(new frts::EasyloggingLog(logConfigFile));
+
+    // Log basic configuration.
+    log->warning(logModule, "Basic configuration:");
+    log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
+    log->warning(logModule, "\tloadFile = " + loadFile);
+    log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
+    log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
+    log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
 
     // Start application.
     log->info(logModule, "Start application");
@@ -45,7 +116,7 @@ int main()
     // Phase 1: Read load configuration.
     log->info(logModule, "Phase 1: Read load configuration.");
     auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
-    log->warning(logModule, "Log configuration:");
+    log->warning(logModule, "Load configuration:");
     logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
     logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
     logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
