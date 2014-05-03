@@ -32,7 +32,7 @@ namespace frts
         /**
          * @param log The logger.
          */
-        Application(LogPtr log);
+        explicit Application(LogPtr log);
 
         /**
          * @brief Create data objects for modules.

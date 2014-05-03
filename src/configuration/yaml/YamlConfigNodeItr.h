@@ -14,7 +14,7 @@ namespace frts
     class YamlConfigNodeItr : public ConfigNodeItr
     {
     public:
-        YamlConfigNodeItr(YAML::Node::iterator iterator);
+        explicit YamlConfigNodeItr(YAML::Node::iterator iterator);
         ~YamlConfigNodeItr() override;
 
         self_type* operator++() override;

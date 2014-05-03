@@ -12,7 +12,7 @@ namespace frts
     class LibraryNotFound : public std::runtime_error
     {
     public:
-        LibraryNotFound(const std::string& msg) : std::runtime_error(msg) {}
+        explicit LibraryNotFound(const std::string& msg) : std::runtime_error(msg) {}
     };
 
     /**
@@ -21,7 +21,7 @@ namespace frts
     class LibraryOutDated : public std::runtime_error
     {
     public:
-        LibraryOutDated(const std::string& msg) : std::runtime_error(msg) {}
+        explicit LibraryOutDated(const std::string& msg) : std::runtime_error(msg) {}
     };
 
     /**
@@ -30,7 +30,7 @@ namespace frts
     class ModuleNotFound : public std::runtime_error
     {
     public:
-        ModuleNotFound(const std::string& msg) : std::runtime_error(msg) {}
+        explicit ModuleNotFound(const std::string& msg) : std::runtime_error(msg) {}
     };
 }
 

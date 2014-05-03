@@ -17,7 +17,7 @@ namespace frts
     class YamlConfigNode : public ConfigNode
     {
     public:
-        YamlConfigNode(const YAML::Node& node);
+        explicit YamlConfigNode(const YAML::Node& node);
         ~YamlConfigNode() override;
 
         Iterator begin() override;

@@ -22,7 +22,7 @@ namespace frts
         typedef std::forward_iterator_tag iterator_category;
         typedef int difference_type;
 
-        IteratorWrapper(IteratorImpl *iterator) : iterator(std::shared_ptr<IteratorImpl>(iterator)) {}
+        explicit IteratorWrapper(IteratorImpl *iterator) : iterator(std::shared_ptr<IteratorImpl>(iterator)) {}
 
         self_type operator++() { ++(*iterator); return *this; }
         self_type operator++(int) { self_type i = *this; (*iterator)++; return i; }

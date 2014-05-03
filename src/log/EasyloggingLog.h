@@ -15,7 +15,7 @@ namespace frts
         /**
          * @param configFilePath Path to configuration file.
          */
-        EasyloggingLog(const std::string& configFilePath);
+        explicit EasyloggingLog(const std::string& configFilePath);
         ~EasyloggingLog() override;
 
         void debug(const std::string& module, const std::string& msg) override;

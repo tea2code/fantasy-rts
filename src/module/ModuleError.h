@@ -14,7 +14,7 @@ namespace frts
     class DataViolation : public std::runtime_error
     {
     public:
-        DataViolation(const std::string& msg) : std::runtime_error(msg) {}
+        explicit DataViolation(const std::string& msg) : std::runtime_error(msg) {}
     };
 
     /**
@@ -24,7 +24,7 @@ namespace frts
     class ModuleViolation : public std::runtime_error
     {
     public:
-        ModuleViolation(const std::string& msg) : std::runtime_error(msg) {}
+        explicit ModuleViolation(const std::string& msg) : std::runtime_error(msg) {}
     };
 }
 

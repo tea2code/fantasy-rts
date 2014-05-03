@@ -26,7 +26,7 @@ namespace frts
     class SharedManagerImpl : public SharedManager
     {
     public:
-        SharedManagerImpl(LogPtr log);
+        explicit SharedManagerImpl(LogPtr log);
         ~SharedManagerImpl() override;
 
         /**
