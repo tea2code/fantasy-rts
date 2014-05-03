@@ -9,11 +9,11 @@ class Utility : public frts::Utility
 public:
     Utility();
 
-    void createData(frts::SharedManagerPtr shared) override;
+    bool createData(frts::SharedManagerPtr shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;
     int getVersion() const override;
-    void init(frts::SharedManagerPtr shared) override;
+    bool init(frts::SharedManagerPtr shared) override;
     void parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared) override;
     void validateData(frts::SharedManagerPtr shared) override;
     void validateModules(frts::SharedManagerPtr shared) override;

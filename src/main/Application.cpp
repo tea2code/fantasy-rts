@@ -19,9 +19,19 @@ frts::Application::Application(LogPtr log)
 void frts::Application::createData(const std::vector<ModulePtr>& modules,
                                    SharedManagerPtr shared) const
 {
-    for(auto& module : modules)
+    std::vector<ModulePtr> todo = modules;
+    std::vector<ModulePtr> repeat;
+    while (!todo.empty())
     {
-        module->createData(shared);
+        for(auto& module : modules)
+        {
+            if (module->createData(shared))
+            {
+                repeat.push_back(module);
+            }
+        }
+        todo = repeat;
+        repeat.clear();
     }
 }
 
@@ -44,9 +54,19 @@ frts::UtilityPtr frts::Application::findUtility(IdPtr id)
 
 void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
-    for (auto& module : modules)
+    std::vector<ModulePtr> todo = modules;
+    std::vector<ModulePtr> repeat;
+    while (!todo.empty())
     {
-        module->init(shared);
+        for(auto& module : modules)
+        {
+            if (module->init(shared))
+            {
+                repeat.push_back(module);
+            }
+        }
+        todo = repeat;
+        repeat.clear();
     }
 }
 

@@ -10,11 +10,13 @@ Tickable::Tickable()
 {
 }
 
-void Tickable::createData(frts::SharedManagerPtr shared)
+bool Tickable::createData(frts::SharedManagerPtr shared)
 {
     frts::DataValuePtr data = std::make_shared<DataValue>();
     frts::IdPtr id = shared->makeId(data->getName());
     shared->setDataValue(id, data);
+
+    return false;
 }
 
 std::string Tickable::getName() const
@@ -32,9 +34,9 @@ int Tickable::getVersion() const
     return 1;
 }
 
-void Tickable::init(frts::SharedManagerPtr)
+bool Tickable::init(frts::SharedManagerPtr)
 {
-
+    return false;
 }
 
 void Tickable::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)

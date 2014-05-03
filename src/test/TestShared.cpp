@@ -71,11 +71,11 @@ namespace frts
     public:
         TestTickable() {}
         ~TestTickable() {}
-        void createData(SharedManagerPtr) {}
+        bool createData(SharedManagerPtr) { return false; }
         std::string getName() const { return "TestTickable"; }
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
         int getVersion() const { return 1; }
-        void init(SharedManagerPtr) {}
+        bool init(SharedManagerPtr) { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
         void tick(SharedManagerPtr) {}
         void validateData(SharedManagerPtr) {}
@@ -87,11 +87,11 @@ namespace frts
     public:
         TestUtility() {}
         ~TestUtility() {}
-        void createData(SharedManagerPtr) {}
+        bool createData(SharedManagerPtr) { return false; }
         std::string getName() const { return "TestUtility"; }
         std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
         int getVersion() const { return 1; }
-        void init(SharedManagerPtr) {}
+        bool init(SharedManagerPtr) { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
         void validateData(SharedManagerPtr) {}
         void validateModules(SharedManagerPtr) {}

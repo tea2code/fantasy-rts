@@ -24,8 +24,9 @@ namespace frts
         /**
          * @brief Create data value objects.
          * @param shared The shared manager.
+         * @return True if another execution of this method is requested else false.
          */
-        virtual void createData(SharedManagerPtr shared) = 0;
+        virtual bool createData(SharedManagerPtr shared) = 0;
 
         /**
          * @brief Get the module name.
@@ -48,8 +49,9 @@ namespace frts
         /**
          * @brief Initialize the module.
          * @param shared The shared manager.
+         * @return True if another execution of this method is requested else false.
          */
-        virtual void init(SharedManagerPtr shared) = 0;
+        virtual bool init(SharedManagerPtr shared) = 0;
 
         /**
          * @brief Parse the given configuration node.

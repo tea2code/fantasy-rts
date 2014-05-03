@@ -4,9 +4,9 @@ Utility::Utility()
 {
 }
 
-void Utility::createData(frts::SharedManagerPtr)
+bool Utility::createData(frts::SharedManagerPtr)
 {
-
+    return false;
 }
 
 std::string Utility::getName() const
@@ -24,9 +24,9 @@ int Utility::getVersion() const
     return 1;
 }
 
-void Utility::init(frts::SharedManagerPtr)
+bool Utility::init(frts::SharedManagerPtr)
 {
-
+    return false;
 }
 
 void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)

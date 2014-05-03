@@ -9,11 +9,11 @@ class Tickable : public frts::Tickable
 public:
     Tickable();
 
-    void createData(frts::SharedManagerPtr shared) override;
+    bool createData(frts::SharedManagerPtr shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;
     int getVersion() const override;
-    void init(frts::SharedManagerPtr shared) override;
+    bool init(frts::SharedManagerPtr shared) override;
     void parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared) override;
     void tick(frts::SharedManagerPtr shared);
     void validateData(frts::SharedManagerPtr shared) override;
