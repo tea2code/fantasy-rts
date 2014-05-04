@@ -37,9 +37,9 @@ For optimization add `DEFINES+=OPTIMIZE` to the additional arguments of qmake.
 
 On Linux it may be necessary to add `CONFIG+=LINUX_LDL` to the additional arguments of qmake. This is only necessary if you see compiler errors like `undefined reference to dlerror`, `undefined reference to dlsym`... (mostly on Ubuntu based distributions).
 
-##### Windows
-
 Running includes three custom steps to copy assets into the working directory:
+
+##### Windows
 
     xcopy
     %{sourceDir}\..\plugins %{buildDir}\plugins /seyi
@@ -49,8 +49,8 @@ Running includes three custom steps to copy assets into the working directory:
     %{sourceDir}\..\log %{buildDir}\log /seyi
     %{buildDir}
 
-    cmd.exe
-    /c copy %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir} /y
+    xcopy
+    %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir}\ /eiy
     %{buildDir}
 
 #### Linux
@@ -69,18 +69,44 @@ Running includes three custom steps to copy assets into the working directory:
 
 #### TestPlugin
 
-##### Windows
+The project of this plugin exists in the test directory of the kernel. It's sole purpose is for the unit tests of kernel.
 
 Default compile settings with additional copy step after making:
 
+##### Windows
+
     xcopy
-    %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /seyi
+    %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /eiy
     %{buildDir}
 
 #### Linux
 
     cp
     %{buildDir}/libTestPlugin.so %{buildDir}/../../
+    %{buildDir}
+
+#### Real plugins
+
+The following settings apply to all plugins created in *src-plugins* with the build directory also under *src-plugins*. For example:
+
+    src-plugins/
+        vanilla-demo/
+            ...
+        vanilla-demo-build/
+            ....
+
+Default compile settings with additional copy step after making:
+
+##### Windows
+
+    xcopy
+    %{buildDir}\release\plugin-name.dll %{buildDir}\..\..\..\plugins\plugin-name\ /eiy
+    %{buildDir}
+
+#### Linux
+
+    cp
+    %{buildDir}/libplugin-name.so %{buildDir}/../../../plugins/plugin-name\
     %{buildDir}
 
 ## Code Style
@@ -111,3 +137,5 @@ Separate functions, classes... by one line. The only exception are `#include` wh
 ## Unit Tests
 
 Unit tests are implemented using Catch which allows fast and easy creation of a huge number of test cases. To prevent problems with normal builds the directory *test* is only included into the build if qmake was executed with the parameters `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST`.
+
+This principle can be also applied to plugins. Additionally it is necessary to build the plugins in test mode as applications instead of libraries.

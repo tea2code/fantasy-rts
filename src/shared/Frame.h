@@ -44,7 +44,27 @@ namespace frts
         virtual time getRunTime() const = 0;
     };
 
+    /**
+     * @brief Helper function which will convert milliseconds to the time format
+     *        of frame.
+     * @param ms The time in milliseconds.
+     * @return The time in the frame time format.
+     */
+    inline Frame::time fromMilliseconds(unsigned int ms)
+    {
+        return std::chrono::duration_cast<Frame::time>(std::chrono::milliseconds(ms));
+    }
 
+    /**
+     * @brief Helper function which will convert time format of frame to standard
+     *        milliseconds representation.
+     * @param time The time.
+     * @return The time as standard milliseconds.
+     */
+    inline std::chrono::milliseconds toMilliseconds(Frame::time time)
+    {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(time);
+    }
 }
 
 #endif // FRTS_FRAME_H

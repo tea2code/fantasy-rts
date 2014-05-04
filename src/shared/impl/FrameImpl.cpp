@@ -24,9 +24,3 @@ frts::Frame::time frts::FrameImpl::getRunTime() const
 {
     return runTime;
 }
-
-
-frts::Frame::time frts::fromMilliseconds(unsigned int ms)
-{
-    return std::chrono::duration_cast<Frame::time>(std::chrono::milliseconds(ms));
-}

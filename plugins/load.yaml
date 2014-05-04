@@ -1,11 +1,11 @@
 plugins:
-    # Nothing yet.
+    - vanilla-demo/vanilla-demo
     
 renderModules:
     # Nothing yet.
     
 updateModules:
-    # Nothing yet.
+    - VanillaDemo
     
 utilities:
     # Nothing yet.

@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <memory>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -99,7 +100,7 @@ int main(int argc, char* argv[])
     const std::string logModule = "Kernel";
 
     // Create logger.
-    frts::LogPtr log = frts::LogPtr(new frts::EasyloggingLog(logConfigFile));
+    frts::LogPtr log = std::make_shared<frts::EasyloggingLog>(logConfigFile);
 
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");
@@ -192,7 +193,6 @@ int main(int argc, char* argv[])
 
     // Run.
     log->info(logModule, "Run game.");
-    shared->setQuitApplication(true); // TODO Remove.
     frts::MainLoop mainLoop(deltaTime, maxFrameTime);
     mainLoop.start(shared);
 

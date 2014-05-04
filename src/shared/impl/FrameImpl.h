@@ -29,14 +29,6 @@ namespace frts
         ticks number;
         time runTime;
     };
-
-    /**
-     * @brief Helper function which will convert milliseconds to the time format
-     *        of frame.
-     * @param ms The time in milliseconds.
-     * @return The time in the frame time format.
-     */
-    Frame::time fromMilliseconds(unsigned int ms);
 }
 
 #endif // FRTS_FRAMEIMPL_H

@@ -69,8 +69,6 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
             tick += 1;
         }
 
-        FramePtr frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
-        shared->setFrame(frame);
         render(shared);
     }
 }
