@@ -41,7 +41,7 @@ void frts::VanillaDemoTickable::parseConfig(const std::string&, frts::ConfigNode
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
-    int fps = (fromMilliseconds(1000) / toMilliseconds(shared->getFrame()->getDeltaTime()).count()).count();
+    int fps = (fromMilliseconds(1000) / shared->getFrame()->getDeltaTime());
     if (shared->getFrame()->getNumber() % fps == 0)
     {
         shared->getLog()->debug(getName(), "Frame " + std::to_string(shared->getFrame()->getNumber()));
@@ -58,7 +58,15 @@ void frts::VanillaDemoTickable::validateData(frts::SharedManagerPtr)
     // Everything is ok.
 }
 
-void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr)
+void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
-    // Everything is ok.
+    try
+    {
+        IdPtr id = shared->makeId("ModelFactory");
+        shared->getUtility(id);
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw ModuleViolation("Utility ModelFactory not found.");
+    }
 }

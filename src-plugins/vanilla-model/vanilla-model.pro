@@ -30,9 +30,5 @@ INCLUDEPATH += $$PWD/../../src/dependency/boost
 UNIT_TEST {
     include(test/test.pri)
 }
-SOURCES += \
-    main.cpp \
-    VanillaModelPlugin.cpp
-
-HEADERS += \
-    VanillaModelPlugin.h
+include(frts/frts.pri)
+include(main/main.pri)

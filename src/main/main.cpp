@@ -102,20 +102,20 @@ int main(int argc, char* argv[])
     // Create logger.
     frts::LogPtr log = std::make_shared<frts::EasyloggingLog>(logConfigFile);
 
+    // Log basic configuration.
+    log->warning(logModule, "Basic configuration:");
+    log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
+    log->warning(logModule, "\tloadFile = " + loadFile);
+    log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
+    log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
+    log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
+
+    // Start application.
+    log->info(logModule, "Start application");
+    frts::Application app(log);
+
     try
     {
-        // Log basic configuration.
-        log->warning(logModule, "Basic configuration:");
-        log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
-        log->warning(logModule, "\tloadFile = " + loadFile);
-        log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
-        log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
-        log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
-
-        // Start application.
-        log->info(logModule, "Start application");
-        frts::Application app(log);
-
         // Phase 1: Read load configuration.
         log->info(logModule, "Phase 1: Read load configuration.");
         auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
