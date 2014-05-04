@@ -1,10 +1,12 @@
 plugins:
     - vanilla-demo/vanilla-demo
+    - vanilla-model/vanilla-model
     
 renderModules:
     # Nothing yet.
     
 updateModules:
+    - VanillaModel
     - VanillaDemo
     
 utilities:

@@ -1,4 +1,4 @@
-#include "VanillaModelPlugin.h"
+#include "VanillaDemoPlugin.h"
 
 #include "VanillaDemoTickable.h"
 
@@ -7,11 +7,11 @@
 #include <memory>
 
 
-frts::VanillaModelPlugin::VanillaModelPlugin()
+frts::VanillaDemoPlugin::VanillaDemoPlugin()
 {
 }
 
-frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaDemoPlugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
     if (id->toString() == module)
@@ -21,4 +21,4 @@ frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
     return result;
 }
 
-REGISTER_PLUGIN(frts::VanillaModelPlugin)
+REGISTER_PLUGIN(frts::VanillaDemoPlugin)

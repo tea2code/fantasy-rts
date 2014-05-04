@@ -97,108 +97,117 @@ int main(int argc, char* argv[])
     const std::string pluginsRoot = cmdOptionExists(argv, argv+argc, "pluginsRoot") ?
                 getCmdOption(argv, argv+argc, "pluginsRoot") : "plugins/";
 
-    const std::string logModule = "Kernel";
+    const std::string logModule = "frts::Kernel";
 
     // Create logger.
     frts::LogPtr log = std::make_shared<frts::EasyloggingLog>(logConfigFile);
 
-    // Log basic configuration.
-    log->warning(logModule, "Basic configuration:");
-    log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
-    log->warning(logModule, "\tloadFile = " + loadFile);
-    log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
-    log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
-    log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
-
-    // Start application.
-    log->info(logModule, "Start application");
-    frts::Application app(log);
-
-    // Phase 1: Read load configuration.
-    log->info(logModule, "Phase 1: Read load configuration.");
-    auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
-    log->warning(logModule, "Load configuration:");
-    logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
-    logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
-    logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
-    logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
-    logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
-
-    // Phase 2: Load plugins.
-    log->info(logModule, "Phase 2: Load plugins.");
-    app.loadPlugins(pluginsRoot, loadConfig.plugins);
-
-    // Create shared manager.
-    log->info(logModule, "Create shared manager.");
-    frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
-
-    // Phase 3: Get modules.
-    log->info(logModule, "Phase 3: Get modules.");
-    // Keep lists of modules for following phases.
-    auto renderModules = app.findTickables(loadConfig.renderModules);
-    auto updateModules = app.findTickables(loadConfig.updateModules);
-    shared->setRenderModules(renderModules);
-    shared->setUpdateModules(updateModules);
-    std::vector<frts::UtilityPtr> utilityModules;
-    for(const auto& moduleName : loadConfig.utilities)
+    try
     {
-        frts::IdPtr id = frts::makeId(moduleName);
-        frts::UtilityPtr utilityModule = app.findUtility(id);
-        utilityModules.push_back(utilityModule);
-        shared->setUtility(id, utilityModule);
-    }
+        // Log basic configuration.
+        log->warning(logModule, "Basic configuration:");
+        log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
+        log->warning(logModule, "\tloadFile = " + loadFile);
+        log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
+        log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
+        log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
 
-    // Phase 4: Check required modules.
-    log->info(logModule, "Phase 4: Check required modules.");
-    std::vector<frts::ModulePtr> modules;
-    for (auto& module : renderModules)
+        // Start application.
+        log->info(logModule, "Start application");
+        frts::Application app(log);
+
+        // Phase 1: Read load configuration.
+        log->info(logModule, "Phase 1: Read load configuration.");
+        auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
+        log->warning(logModule, "Load configuration:");
+        logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
+        logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
+        logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
+        logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
+        logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
+
+        // Phase 2: Load plugins.
+        log->info(logModule, "Phase 2: Load plugins.");
+        app.loadPlugins(pluginsRoot, loadConfig.plugins);
+
+        // Create shared manager.
+        log->info(logModule, "Create shared manager.");
+        frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+
+        // Phase 3: Get modules.
+        log->info(logModule, "Phase 3: Get modules.");
+        // Keep lists of modules for following phases.
+        auto renderModules = app.findTickables(loadConfig.renderModules);
+        auto updateModules = app.findTickables(loadConfig.updateModules);
+        shared->setRenderModules(renderModules);
+        shared->setUpdateModules(updateModules);
+        std::vector<frts::UtilityPtr> utilityModules;
+        for(const auto& moduleName : loadConfig.utilities)
+        {
+            frts::IdPtr id = frts::makeId(moduleName);
+            frts::UtilityPtr utilityModule = app.findUtility(id);
+            utilityModules.push_back(utilityModule);
+            shared->setUtility(id, utilityModule);
+        }
+
+        // Phase 4: Check required modules.
+        log->info(logModule, "Phase 4: Check required modules.");
+        std::vector<frts::ModulePtr> modules;
+        for (auto& module : renderModules)
+        {
+            modules.push_back(module);
+        }
+        for (auto& module : updateModules)
+        {
+            modules.push_back(module);
+        }
+        for (auto& module : utilityModules)
+        {
+            modules.push_back(module);
+        }
+        app.validateRequiredModules(modules, shared);
+
+        // Phase 5: Create data.
+        log->info(logModule, "Phase 5: Create data.");
+        app.createData(modules, shared);
+
+        // Phase 6: Register main config keys.
+        log->info(logModule, "Phase 6: Register main config keys.");
+        auto supportedKeys = app.registerConfigKeys(modules);
+
+        // Phase 7: Read config.
+        log->info(logModule, "Phase 7: Read config.");
+        app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
+
+        // Phase 8: Validate data.
+        log->info(logModule, "Phase 8: Validate data.");
+        app.validateData(modules, shared);
+
+        // Phase 9: Initialize modules.
+        log->info(logModule, "Phase 9: Initialize modules.");
+        app.init(modules, shared);
+
+        // List of modules no longer needed. Clean up.
+        renderModules.clear();
+        updateModules.clear();
+        utilityModules.clear();
+        modules.clear();
+
+        // Run.
+        log->info(logModule, "Run game.");
+        frts::MainLoop mainLoop(deltaTime, maxFrameTime);
+        mainLoop.start(shared);
+
+        // All done. Good night.
+        log->info(logModule, "Application finished.");
+        return 0;
+    }
+    catch(const std::exception& ex)
     {
-        modules.push_back(module);
+        // Something bad happened.
+        log->error(logModule, ex.what());
+        return 1;
     }
-    for (auto& module : updateModules)
-    {
-        modules.push_back(module);
-    }
-    for (auto& module : utilityModules)
-    {
-        modules.push_back(module);
-    }
-    app.validateRequiredModules(modules, shared);
-
-    // Phase 5: Create data.
-    log->info(logModule, "Phase 5: Create data.");
-    app.createData(modules, shared);
-
-    // Phase 6: Register main config keys.
-    log->info(logModule, "Phase 6: Register main config keys.");
-    auto supportedKeys = app.registerConfigKeys(modules);
-
-    // Phase 7: Read config.
-    log->info(logModule, "Phase 7: Read config.");
-    app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
-
-    // Phase 8: Validate data.
-    log->info(logModule, "Phase 8: Validate data.");
-    app.validateData(modules, shared);
-
-    // Phase 9: Initialize modules.
-    log->info(logModule, "Phase 9: Initialize modules.");
-    app.init(modules, shared);
-
-    // List of modules no longer needed. Clean up.
-    renderModules.clear();
-    updateModules.clear();
-    utilityModules.clear();
-    modules.clear();
-
-    // Run.
-    log->info(logModule, "Run game.");
-    frts::MainLoop mainLoop(deltaTime, maxFrameTime);
-    mainLoop.start(shared);
-
-    // All done. Good night.
-    log->info(logModule, "Application finished.");
-    return 0;
 }
 
 #else

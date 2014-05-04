@@ -32,9 +32,7 @@ UNIT_TEST {
 }
 SOURCES += \
     main.cpp \
-    VanillaDemoTickable.cpp \
-    VanillaDemoPlugin.cpp
+    VanillaModelPlugin.cpp
 
 HEADERS += \
-    VanillaDemoTickable.h \
-    VanillaDemoPlugin.h
+    VanillaModelPlugin.h
