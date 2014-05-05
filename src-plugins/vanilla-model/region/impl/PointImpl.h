@@ -10,6 +10,19 @@ namespace frts
     {
     public:
         PointImpl();
+
+        length getLength() const override;
+        value getX() const override;
+        value getY() const override;
+        value getZ() const override;
+        PointPtr operator+(const Point& other) const override;
+        PointPtr operator-(const Point& other) const override;
+        PointPtr operator*(const Point& other) const override;
+        PointPtr operator+=(const Point& other) const override;
+        PointPtr operator-=(const Point& other) const override;
+        PointPtr operator*=(const Point& other) const override;
+        bool operator==(const Point& other) const override;
+        bool operator!=(const Point& other) const override;
     };
 }
 

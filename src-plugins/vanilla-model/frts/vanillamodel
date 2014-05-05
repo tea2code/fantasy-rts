@@ -2,5 +2,6 @@
 #define FRTS_VANILLAMODEL_INCLUDE_H
 
 #include <main/ModelFactory.h>
+#include <region/Point.h>
 
 #endif // FRTS_VANILLAMODEL_INCLUDE_H

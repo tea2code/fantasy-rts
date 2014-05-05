@@ -36,6 +36,14 @@ namespace frts
         virtual value getX() const = 0;
         virtual value getY() const = 0;
         virtual value getZ() const = 0;
+        virtual PointPtr operator+(const Point& other) const = 0;
+        virtual PointPtr operator-(const Point& other) const = 0;
+        virtual PointPtr operator*(const Point& other) const = 0;
+        virtual PointPtr operator+=(const Point& other) const = 0;
+        virtual PointPtr operator-=(const Point& other) const = 0;
+        virtual PointPtr operator*=(const Point& other) const = 0;
+        virtual bool operator==(const Point& other) const = 0;
+        virtual bool operator!=(const Point& other) const = 0;
     };
 }
 

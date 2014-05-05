@@ -1,6 +1,10 @@
 #include "ModelFactoryImpl.h"
 
+#include <region/impl/PointImpl.h>
+
 #include <frts/shared>
+
+#include <memory>
 
 
 frts::ModelFactoryImpl::ModelFactoryImpl()
@@ -30,6 +34,11 @@ int frts::ModelFactoryImpl::getVersion() const
 bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr)
 {
     return false;
+}
+
+frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y, Point::value z)
+{
+    return std::make_shared<PointImpl>();
 }
 
 void frts::ModelFactoryImpl::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)

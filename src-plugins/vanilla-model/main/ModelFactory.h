@@ -1,6 +1,8 @@
 #ifndef FRTS_MODELFACTORY_H
 #define FRTS_MODELFACTORY_H
 
+#include <region/Point.h>
+
 #include <frts/module>
 
 namespace frts
@@ -20,6 +22,8 @@ namespace frts
     {
     public:
         virtual ~ModelFactory() {}
+
+        virtual PointPtr makePoint(Point::value x, Point::value y, Point::value z) = 0;
     };
 }
 

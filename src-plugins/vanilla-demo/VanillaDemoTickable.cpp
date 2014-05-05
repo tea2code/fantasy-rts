@@ -1,6 +1,7 @@
 #include "VanillaDemoTickable.h"
 
 #include <frts/shared>
+#include <frts/vanillamodel>
 
 
 frts::VanillaDemoTickable::VanillaDemoTickable::VanillaDemoTickable()
