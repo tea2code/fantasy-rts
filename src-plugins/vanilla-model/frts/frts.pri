@@ -1,2 +1,3 @@
 HEADERS += \
+    frts/vanillamodel \
     

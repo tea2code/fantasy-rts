@@ -41,10 +41,12 @@ void frts::VanillaDemoTickable::parseConfig(const std::string&, frts::ConfigNode
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
+    // Do not adopt this practice. Use frame number only for quick trial and error.
     int fps = (fromMilliseconds(1000) / shared->getFrame()->getDeltaTime());
-    if (shared->getFrame()->getNumber() % fps == 0)
+    Frame::ticks number = shared->getFrame()->getNumber();
+    if (number % fps == 0)
     {
-        shared->getLog()->debug(getName(), "Frame " + std::to_string(shared->getFrame()->getNumber()));
+        shared->getLog()->debug(getName(), "Frame " + std::to_string(number));
     }
 
     if (shared->getFrame()->getRunTime() >= fromMilliseconds(5 * 1000))

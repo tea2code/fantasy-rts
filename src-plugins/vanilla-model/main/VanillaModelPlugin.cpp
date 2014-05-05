@@ -1,6 +1,6 @@
 #include "VanillaModelPlugin.h"
 
-#include "ModelFactory.h"
+#include "impl/ModelFactoryImpl.h"
 
 #include <frts/shared>
 
@@ -16,7 +16,7 @@ frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
     frts::ModulePtr result = nullptr;
     if (id->toString() == modelFactory)
     {
-        result = std::make_shared<ModelFactory>();
+        result = std::make_shared<ModelFactoryImpl>();
     }
     return result;
 }

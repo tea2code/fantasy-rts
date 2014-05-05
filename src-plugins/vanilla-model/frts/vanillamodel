@@ -1,0 +1,6 @@
+#ifndef FRTS_VANILLAMODEL_INCLUDE_H
+#define FRTS_VANILLAMODEL_INCLUDE_H
+
+#include <main/ModelFactory.h>
+
+#endif // FRTS_VANILLAMODEL_INCLUDE_H
