@@ -1,7 +1,7 @@
 #include "PointImpl.h"
 
 
-frts::PointImpl::PointImpl()
+frts::PointImpl::PointImpl(value x, value y, value z)
 {
 }
 
@@ -30,17 +30,12 @@ frts::PointPtr frts::PointImpl::operator+(const Point& other) const
     return nullptr;
 }
 
-frts::PointPtr frts::PointImpl::operator-(const Point& other) const
-{
-    return nullptr;
-}
-
-frts::PointPtr frts::PointImpl::operator*(const Point& other) const
-{
-    return nullptr;
-}
-
 frts::PointPtr frts::PointImpl::operator+=(const Point& other) const
+{
+    return nullptr;
+}
+
+frts::PointPtr frts::PointImpl::operator-(const Point& other) const
 {
     return nullptr;
 }
@@ -50,7 +45,22 @@ frts::PointPtr frts::PointImpl::operator-=(const Point& other) const
     return nullptr;
 }
 
+frts::PointPtr frts::PointImpl::operator*(const Point& other) const
+{
+    return nullptr;
+}
+
 frts::PointPtr frts::PointImpl::operator*=(const Point& other) const
+{
+    return nullptr;
+}
+
+frts::PointPtr frts::PointImpl::operator*(value scalar) const
+{
+    return nullptr;
+}
+
+frts::PointPtr frts::PointImpl::operator*=(value scalar) const
 {
     return nullptr;
 }
