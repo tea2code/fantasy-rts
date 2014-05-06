@@ -38,7 +38,7 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr)
 
 frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y, Point::value z)
 {
-    return std::make_shared<PointImpl>(x, y, z);
+    return frts::makePoint(x, y, z);
 }
 
 void frts::ModelFactoryImpl::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)

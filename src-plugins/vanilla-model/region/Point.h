@@ -22,7 +22,7 @@ namespace frts
         /**
          * @brief Type of length.
          */
-        using length = unsigned long;
+        using length = double;
 
         /**
          * @brief Type of single coordinate.

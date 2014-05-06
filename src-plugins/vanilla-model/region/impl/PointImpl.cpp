@@ -1,75 +1,81 @@
 #include "PointImpl.h"
 
+#include <cmath>
+
 
 frts::PointImpl::PointImpl(value x, value y, value z)
+    : x{x}, y{y}, z{z}
 {
 }
 
 frts::Point::length frts::PointImpl::getLength() const
 {
-    return 0;
+    return std::sqrt((x * x) + (y * y) + (z * z));
 }
 
 frts::Point::value frts::PointImpl::getX() const
 {
-    return 0;
+    return x;
 }
 
 frts::Point::value frts::PointImpl::getY() const
 {
-    return 0;
+    return y;
 }
 
 frts::Point::value frts::PointImpl::getZ() const
 {
-    return 0;
+    return z;
 }
 
 frts::PointPtr frts::PointImpl::operator+(const Point& other) const
 {
-    return nullptr;
+    return *this += other;
 }
 
 frts::PointPtr frts::PointImpl::operator+=(const Point& other) const
 {
-    return nullptr;
+    return makePoint(x + other.getX(), y + other.getY(), z + other.getZ());
 }
 
 frts::PointPtr frts::PointImpl::operator-(const Point& other) const
 {
-    return nullptr;
+    return *this -= other;
 }
 
 frts::PointPtr frts::PointImpl::operator-=(const Point& other) const
 {
-    return nullptr;
+    return makePoint(x - other.getX(), y - other.getY(), z - other.getZ());
 }
 
 frts::PointPtr frts::PointImpl::operator*(const Point& other) const
 {
-    return nullptr;
+    return *this *= other;
 }
 
 frts::PointPtr frts::PointImpl::operator*=(const Point& other) const
 {
-    return nullptr;
+    value cx = y * other.getZ() - z * other.getY();
+    value cy = z * other.getX() - x * other.getZ();
+    value cz = x * other.getY() - y * other.getX();
+    return makePoint(cx, cy, cz);
 }
 
 frts::PointPtr frts::PointImpl::operator*(value scalar) const
 {
-    return nullptr;
+    return *this *= scalar;
 }
 
 frts::PointPtr frts::PointImpl::operator*=(value scalar) const
 {
-    return nullptr;
+    return makePoint(x * scalar, y * scalar, z * scalar);
 }
 
 bool frts::PointImpl::operator==(const Point& other) const
 {
-    return getX() == other.getX() &&
-           getY() == other.getY() &&
-           getZ() == other.getZ();
+    return x == other.getX() &&
+           y == other.getY() &&
+           z == other.getZ();
 }
 
 bool frts::PointImpl::operator!=(const Point& other) const
