@@ -1,4 +1,7 @@
 SOURCES += \
+    entity/impl/BlockingImpl.cpp
     
 
-HEADERS +=
+HEADERS += \
+    entity/Blocking.h \
+    entity/impl/BlockingImpl.h
