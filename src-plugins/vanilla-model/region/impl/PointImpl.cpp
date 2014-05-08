@@ -30,30 +30,15 @@ frts::Point::value frts::PointImpl::getZ() const
 
 frts::PointPtr frts::PointImpl::operator+(const Point& other) const
 {
-    return *this += other;
-}
-
-frts::PointPtr frts::PointImpl::operator+=(const Point& other) const
-{
     return makePoint(x + other.getX(), y + other.getY(), z + other.getZ());
 }
 
 frts::PointPtr frts::PointImpl::operator-(const Point& other) const
 {
-    return *this -= other;
-}
-
-frts::PointPtr frts::PointImpl::operator-=(const Point& other) const
-{
     return makePoint(x - other.getX(), y - other.getY(), z - other.getZ());
 }
 
 frts::PointPtr frts::PointImpl::operator*(const Point& other) const
-{
-    return *this *= other;
-}
-
-frts::PointPtr frts::PointImpl::operator*=(const Point& other) const
 {
     value cx = y * other.getZ() - z * other.getY();
     value cy = z * other.getX() - x * other.getZ();
@@ -62,11 +47,6 @@ frts::PointPtr frts::PointImpl::operator*=(const Point& other) const
 }
 
 frts::PointPtr frts::PointImpl::operator*(value scalar) const
-{
-    return *this *= scalar;
-}
-
-frts::PointPtr frts::PointImpl::operator*=(value scalar) const
 {
     return makePoint(x * scalar, y * scalar, z * scalar);
 }

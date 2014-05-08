@@ -16,13 +16,9 @@ namespace frts
         value getY() const override;
         value getZ() const override;
         PointPtr operator+(const Point& other) const override;
-        PointPtr operator+=(const Point& other) const override;
         PointPtr operator-(const Point& other) const override;
-        PointPtr operator-=(const Point& other) const override;
         PointPtr operator*(const Point& other) const override;
-        PointPtr operator*=(const Point& other) const override;
         PointPtr operator*(value scalar) const override;
-        PointPtr operator*=(value scalar) const override;
         bool operator==(const Point& other) const override;
         bool operator!=(const Point& other) const override;
 

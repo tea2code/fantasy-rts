@@ -59,44 +59,23 @@ namespace frts
         /**
          * @brief Add two points.
          * @param other The second point.
-         * @return Resulting point pointer.
+         * @return Resulting point.
          */
         virtual PointPtr operator+(const Point& other) const = 0;
 
         /**
-         * @brief Add two points.
-         * @param other The second point.
-         * @return Resulting point pointer.
-         */
-        virtual PointPtr operator+=(const Point& other) const = 0;
-
-        /**
          * @brief Substract two points.
          * @param other The second point.
-         * @return Resulting point pointer.
+         * @return Resulting point.
          */
         virtual PointPtr operator-(const Point& other) const = 0;
 
         /**
-         * @brief Substract two points.
-         * @param other The second point.
-         * @return Resulting point pointer.
-         */
-        virtual PointPtr operator-=(const Point& other) const = 0;
-
-        /**
          * @brief Cross product of two points.
          * @param other The second point.
-         * @return Resulting point pointer.
+         * @return Resulting point.
          */
         virtual PointPtr operator*(const Point& other) const = 0;
-
-        /**
-         * @brief Cross product of two points.
-         * @param other The second point.
-         * @return Resulting point pointer.
-         */
-        virtual PointPtr operator*=(const Point& other) const = 0;
 
         /**
          * @brief Scalar multiplication.
@@ -104,13 +83,6 @@ namespace frts
          * @return Resulting point pointer.
          */
         virtual PointPtr operator*(value scalar) const = 0;
-
-        /**
-         * @brief Scalar multiplication.
-         * @param scalar The scalar.
-         * @return Resulting point pointer.
-         */
-        virtual PointPtr operator*=(value scalar) const = 0;
 
         /**
          * @brief Compare equality.
@@ -131,11 +103,88 @@ namespace frts
      * @brief Scalar multiplication with scalar first.
      * @param scalar The scalar.
      * @param point The point.
-     * @return Resulting point pointer.
+     * @return Resulting point.
      */
     inline PointPtr operator*(Point::value scalar, const Point& point)
     {
         return point * scalar;
+    }
+
+    /**
+     * @brief Add two points.
+     * @param first First point.
+     * @param second Second point.
+     * @return Resulting point.
+     */
+    inline PointPtr operator+(PointPtr first, PointPtr second)
+    {
+        return *first + *second;
+    }
+
+    /**
+     * @brief Substract two points.
+     * @param first First point.
+     * @param second Second point.
+     * @return Resulting point.
+     */
+    inline PointPtr operator-(PointPtr first, PointPtr second)
+    {
+        return *first - *second;
+    }
+
+    /**
+     * @brief Cross product of two points.
+     * @param first First point.
+     * @param second Second point.
+     * @return Resulting point.
+     */
+    inline PointPtr operator*(PointPtr first, PointPtr second)
+    {
+        return *first * *second;
+    }
+
+    /**
+     * @brief Scalar multiplication.
+     * @param first First point.
+     * @param second Second point.
+     * @return Resulting point.
+     */
+    inline PointPtr operator*(PointPtr point, Point::value scalar)
+    {
+        return *point * scalar;
+    }
+
+    /**
+     * @brief Scalar multiplication with scalar first.
+     * @param first First point.
+     * @param second Second point.
+     * @return Resulting point.
+     */
+    inline PointPtr operator*(Point::value scalar, PointPtr point)
+    {
+        return *point * scalar;
+    }
+
+    /**
+     * @brief Compare equality.
+     * @param first First point.
+     * @param second Second point.
+     * @return True if points are equal.
+     */
+    inline bool operator==(PointPtr first, PointPtr second)
+    {
+        return *first == *second;
+    }
+
+    /**
+     * @brief Compare inequality.
+     * @param first First point.
+     * @param second Second point.
+     * @return True if points are not equal.
+     */
+    inline bool operator!=(PointPtr first, PointPtr second)
+    {
+        return *first != *second;
     }
 }
 
