@@ -2,21 +2,23 @@
 
 
 frts::BlockingImpl::BlockingImpl(bool wall, bool water)
-    : wall{wall}, water{water}
+    : blocksWall{wall}, blocksWater{water}
 {
 }
 
 bool frts::BlockingImpl::blocks(BlockingPtr other)
 {
-    return false;
+    bool blocksWall = wall() && other->wall();
+    bool blocksWater = water() && other->water();
+    return blocksWall || blocksWater;
 }
 
 bool frts::BlockingImpl::wall() const
 {
-    return wall;
+    return blocksWall;
 }
 
 bool frts::BlockingImpl::water() const
 {
-    return water;
+    return blocksWater;
 }

@@ -19,7 +19,7 @@ namespace frts
     class Blocking
     {
     public:
-        virtual ~Blocking() = 0;
+        virtual ~Blocking() {}
 
         /**
          * @brief Does this object block the other.

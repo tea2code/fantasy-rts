@@ -6,7 +6,7 @@
 
 namespace frts
 {
-    class BlockingImpl : Blocking
+    class BlockingImpl : public Blocking
     {
     public:
         BlockingImpl(bool wall, bool water);
@@ -16,8 +16,8 @@ namespace frts
         bool water() const override;
 
     private:
-        bool wall;
-        bool water;
+        bool blocksWall;
+        bool blocksWater;
     };
 
     inline BlockingPtr makeBlocking(bool wall, bool water)
