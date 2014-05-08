@@ -8,9 +8,9 @@ frts::BlockingImpl::BlockingImpl(bool wall, bool water)
 
 bool frts::BlockingImpl::blocks(BlockingPtr other)
 {
-    bool blocksWall = wall() && other->wall();
-    bool blocksWater = water() && other->water();
-    return blocksWall || blocksWater;
+    bool wallBlocked = blocksWall && other->wall();
+    bool waterBlocked = blocksWater && other->water();
+    return wallBlocked || waterBlocked;
 }
 
 bool frts::BlockingImpl::wall() const
