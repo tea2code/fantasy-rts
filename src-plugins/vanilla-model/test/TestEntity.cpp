@@ -17,3 +17,9 @@ TEST_CASE("Blocking.", "[entity]")
     REQUIRE(blocks->blocks(blocked1));
     REQUIRE_FALSE(blocks->blocks(blocked2));
 }
+
+
+TEST_CASE("Entity.", "[entity]")
+{
+
+}
