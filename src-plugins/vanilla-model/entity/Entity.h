@@ -5,7 +5,7 @@
 
 #include <frts/shared>
 
-#include <memory>>
+#include <memory>
 
 
 namespace frts
@@ -23,6 +23,11 @@ namespace frts
     class Entity
     {
     public:
+        /**
+         * @brief The default sort order.
+         */
+        const static int defaultSortOrder = 0;
+
         /**
          * @brief Type of entity.
          */
@@ -68,6 +73,19 @@ namespace frts
          * @return The type.
          */
         virtual Type getType() const = 0;
+
+        /**
+         * @brief Set the sort order. Will only be used the next time this entity
+         *        is added to a block.
+         * @param sortOrder The sort order.
+         */
+        virtual void setSortOrder(int sortOrder) = 0;
+
+        /**
+         * @brief Set the current state id.
+         * @param state The state id.
+         */
+        virtual void setStateId(IdPtr state) = 0;
     };
 }
 

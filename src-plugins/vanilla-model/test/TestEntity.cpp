@@ -2,6 +2,10 @@
 
 #include <entity/impl/BaseEntityImpl.h>
 #include <entity/impl/BlockingImpl.h>
+#include <entity/impl/DynamicEntityImpl.h>
+#include <entity/impl/ResourceImpl.h>
+#include <entity/impl/StaticEntityImpl.h>
+#include <entity/impl/TileImpl.h>
 
 #include <frts/shared>
 
@@ -29,7 +33,25 @@ TEST_CASE("BaseEntityImpl.", "[entity]")
     frts::IdPtr state = nullptr;
     int sortOrder = 3;
 
-    frts::BaseEntityImplPtr entity = frts::makeBaseEntity(blockedBy, blocking, state, sortOrder);
+    frts::BaseEntityImpl entity(blockedBy, blocking, state, sortOrder);
+
+    REQUIRE(entity.getBlockedBy()->wall() == blockedBy->wall());
+    REQUIRE(entity.getBlockedBy()->water() == blockedBy->water());
+    REQUIRE(entity.getBlocking()->wall() == blocking->wall());
+    REQUIRE(entity.getBlocking()->water() == blocking->water());
+    REQUIRE(entity.getStateId() == state);
+    REQUIRE(entity.getSortOrder() == sortOrder);
+}
+
+
+TEST_CASE("DynamicEntity.", "[entity]")
+{
+    frts::BlockingPtr blockedBy = frts::makeBlocking(true, false);
+    frts::BlockingPtr blocking = frts::makeBlocking(false, true);
+    frts::IdPtr state = nullptr;
+    int sortOrder = 3;
+
+    frts::DynamicEntityPtr entity = frts::makeDynamicEntity(blockedBy, blocking, state, sortOrder);
 
     REQUIRE(entity->getBlockedBy()->wall() == blockedBy->wall());
     REQUIRE(entity->getBlockedBy()->water() == blockedBy->water());
@@ -37,11 +59,62 @@ TEST_CASE("BaseEntityImpl.", "[entity]")
     REQUIRE(entity->getBlocking()->water() == blocking->water());
     REQUIRE(entity->getStateId() == state);
     REQUIRE(entity->getSortOrder() == sortOrder);
+    REQUIRE(entity->getType() == frts::Entity::Type::Dynamic);
 }
 
 
-TEST_CASE("DynamicEntity.", "[entity]")
+TEST_CASE("Resource.", "[entity]")
 {
+    frts::BlockingPtr blockedBy = frts::makeBlocking(true, false);
+    frts::BlockingPtr blocking = frts::makeBlocking(false, true);
+    frts::IdPtr state = nullptr;
+    int sortOrder = 3;
 
+    frts::StaticEntityPtr entity = frts::makeStaticEntity(blockedBy, blocking, state, sortOrder);
+
+    REQUIRE(entity->getBlockedBy()->wall() == blockedBy->wall());
+    REQUIRE(entity->getBlockedBy()->water() == blockedBy->water());
+    REQUIRE(entity->getBlocking()->wall() == blocking->wall());
+    REQUIRE(entity->getBlocking()->water() == blocking->water());
+    REQUIRE(entity->getStateId() == state);
+    REQUIRE(entity->getSortOrder() == sortOrder);
+    REQUIRE(entity->getType() == frts::Entity::Type::Dynamic);
 }
 
+
+TEST_CASE("StaticEntity.", "[entity]")
+{
+    frts::BlockingPtr blockedBy = frts::makeBlocking(true, false);
+    frts::BlockingPtr blocking = frts::makeBlocking(false, true);
+    frts::IdPtr state = nullptr;
+    int sortOrder = 3;
+
+    frts::ResourcePtr entity = frts::makeResource(blockedBy, blocking, state, sortOrder);
+
+    REQUIRE(entity->getBlockedBy()->wall() == blockedBy->wall());
+    REQUIRE(entity->getBlockedBy()->water() == blockedBy->water());
+    REQUIRE(entity->getBlocking()->wall() == blocking->wall());
+    REQUIRE(entity->getBlocking()->water() == blocking->water());
+    REQUIRE(entity->getStateId() == state);
+    REQUIRE(entity->getSortOrder() == sortOrder);
+    REQUIRE(entity->getType() == frts::Entity::Type::Dynamic);
+}
+
+
+TEST_CASE("Tile.", "[entity]")
+{
+    frts::BlockingPtr blockedBy = frts::makeBlocking(true, false);
+    frts::BlockingPtr blocking = frts::makeBlocking(false, true);
+    frts::IdPtr state = nullptr;
+    int sortOrder = 3;
+
+    frts::TilePtr entity = frts::makeTile(blockedBy, blocking, state, sortOrder);
+
+    REQUIRE(entity->getBlockedBy()->wall() == blockedBy->wall());
+    REQUIRE(entity->getBlockedBy()->water() == blockedBy->water());
+    REQUIRE(entity->getBlocking()->wall() == blocking->wall());
+    REQUIRE(entity->getBlocking()->water() == blocking->water());
+    REQUIRE(entity->getStateId() == state);
+    REQUIRE(entity->getSortOrder() == sortOrder);
+    REQUIRE(entity->getType() == frts::Entity::Type::Dynamic);
+}
