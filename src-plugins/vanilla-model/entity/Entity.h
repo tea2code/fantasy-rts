@@ -23,6 +23,18 @@ namespace frts
     class Entity
     {
     public:
+        /**
+         * @brief Type of entity.
+         */
+        enum class Type
+        {
+            Dynamic,
+            Resource,
+            Static,
+            Tile
+        };
+
+    public:
         virtual ~Entity() {}
 
         /**
@@ -48,6 +60,14 @@ namespace frts
          * @return The state id.
          */
         virtual IdPtr getStateId() const = 0;
+
+        /**
+         * @brief Get the type of entity. This allows fast access to the derived
+         *        type without using dynamic_cast (use static_cast instead after
+         *        checking the type).
+         * @return The type.
+         */
+        virtual Type getType() const = 0;
     };
 }
 
