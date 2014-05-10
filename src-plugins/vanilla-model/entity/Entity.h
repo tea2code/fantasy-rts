@@ -41,13 +41,13 @@ namespace frts
          * @brief Defines by what types this entity is blocked.
          * @return The blocking.
          */
-        virtual Blocking getBlockedBy() const = 0;
+        virtual BlockingPtr getBlockedBy() const = 0;
 
         /**
          * @brief Defines what types this entity blocks.
          * @return The blocking.
          */
-        virtual Blocking getBlocking() const = 0;
+        virtual BlockingPtr getBlocking() const = 0;
 
         /**
          * @brief Get the sorder order of this entity in a block.
