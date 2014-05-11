@@ -23,6 +23,7 @@ namespace frts
     public:
         virtual ~ModelFactory() {}
 
+        
         virtual PointPtr makePoint(Point::value x, Point::value y, Point::value z) = 0;
     };
 }

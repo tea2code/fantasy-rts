@@ -30,7 +30,7 @@ frts::IdPtr frts::StaticEntityImpl::getStateId() const
 
 frts::Entity::Type frts::StaticEntityImpl::getType() const
 {
-    return Type::Dynamic;
+    return Type::Static;
 }
 
 void frts::StaticEntityImpl::setSortOrder(int sortOrder)

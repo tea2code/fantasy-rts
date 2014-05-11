@@ -24,13 +24,13 @@ namespace frts
         TileImpl(BlockingPtr blockedBy, BlockingPtr blocking,
                  IdPtr state, int sortOrder = Entity::defaultSortOrder);
 
-        BlockingPtr getBlockedBy() const;
-        BlockingPtr getBlocking() const;
-        int getSortOrder() const;
-        IdPtr getStateId() const;
-        Type getType() const;
-        void setSortOrder(int sortOrder);
-        void setStateId(IdPtr state);
+        BlockingPtr getBlockedBy() const override;
+        BlockingPtr getBlocking() const override;
+        int getSortOrder() const override;
+        IdPtr getStateId() const override;
+        Type getType() const override;
+        void setSortOrder(int sortOrder) override;
+        void setStateId(IdPtr state) override;
 
     private:
         BaseEntityImpl baseEntity;

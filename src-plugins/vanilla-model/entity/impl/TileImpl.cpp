@@ -30,7 +30,7 @@ frts::IdPtr frts::TileImpl::getStateId() const
 
 frts::Entity::Type frts::TileImpl::getType() const
 {
-    return Type::Dynamic;
+    return Type::Tile;
 }
 
 void frts::TileImpl::setSortOrder(int sortOrder)
