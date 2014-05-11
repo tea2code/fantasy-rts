@@ -11,13 +11,6 @@
 
 namespace frts
 {
-    class TileImpl;
-
-    /**
-     * @brief Pointer to TileImpl.
-     */
-    using TileImplPtr = std::shared_ptr<TileImpl>;
-
     class TileImpl : public Tile
     {
     public:
@@ -44,8 +37,8 @@ namespace frts
      * @param sortOrder The sort order.
      * @return The base entity.
      */
-    inline TileImplPtr makeTile(BlockingPtr blockedBy, BlockingPtr blocking,
-                                IdPtr state, int sortOrder = Entity::defaultSortOrder)
+    inline TilePtr makeTile(BlockingPtr blockedBy, BlockingPtr blocking,
+                            IdPtr state, int sortOrder = Entity::defaultSortOrder)
     {
         return std::make_shared<TileImpl>(blockedBy, blocking, state, sortOrder);
     }

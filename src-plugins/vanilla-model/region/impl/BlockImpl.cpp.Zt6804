@@ -1,0 +1,64 @@
+#include "BlockImpl.h"
+
+
+frts::BlockImpl::BlockImpl()
+    : dynamicEntities{std::make_shared<EntitySet>()},
+      resources{std::make_shared<EntitySet>()},
+      staticEntities{std::make_shared<EntitySet>()},
+      tiles{std::make_shared<EntitySet>()}
+{
+}
+
+frts::Block::EntitySet frts::BlockImpl::getByType(Entity::Type type) const
+{
+    switch(type)
+    {
+    case Entity::Type::Dynamic:
+        return *dynamicEntities;
+        break;
+
+    case Entity::Type::Resource:
+        return *resources;
+        break;
+
+    case Entity::Type::Static:
+        return *staticEntities;
+        break;
+
+    case Entity::Type::Tile:
+        return *tiles;
+        break;
+
+    default:
+        throw makeUnknownTypeError(type);
+    }
+}
+
+bool frts::BlockImpl::has(EntityPtr entity) const
+{
+    EntitySet entitySet = getByType(entity->getType());
+    auto it = entitySet.find(entity);
+    return it != entitySet.end();
+}
+
+void frts::BlockImpl::insert(EntityPtr entity)
+{
+    EntitySet entitySet = getByType(entity->getType());
+    entitySet.insert(entity);
+}
+
+bool frts::BlockImpl::isBlocking(BlockingPtr blockedBy) const
+{
+    return false;
+}
+
+void frts::BlockImpl::remove(EntityPtr entity)
+{
+    EntitySet entitySet = getByType(entity->getType());
+    entitySet.erase(entity);
+}
+
+std::runtime_error frts::BlockImpl::makeUnknownTypeError(Entity::Type) const
+{
+    return std::runtime_error("Unknown entity type.");
+}

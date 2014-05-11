@@ -11,13 +11,6 @@
 
 namespace frts
 {
-    class ResourceImpl;
-
-    /**
-     * @brief Pointer to ResourceImpl.
-     */
-    using ResourceImplPtr = std::shared_ptr<ResourceImpl>;
-
     class ResourceImpl : public Resource
     {
     public:
@@ -44,8 +37,8 @@ namespace frts
      * @param sortOrder The sort order.
      * @return The base entity.
      */
-    inline ResourceImplPtr makeResource(BlockingPtr blockedBy, BlockingPtr blocking,
-                                        IdPtr state, int sortOrder = Entity::defaultSortOrder)
+    inline ResourcePtr makeResource(BlockingPtr blockedBy, BlockingPtr blocking,
+                                    IdPtr state, int sortOrder = Entity::defaultSortOrder)
     {
         return std::make_shared<ResourceImpl>(blockedBy, blocking, state, sortOrder);
     }

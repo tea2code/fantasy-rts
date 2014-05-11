@@ -18,13 +18,17 @@ Utility module which acts as a factory to create model related objects like poin
 
 Include using `ModelFactory`.
 
+### Block
+
+A block describes a certain point in the world consisting of the entities at this point.
+
 ### Blocking
 
 Entities have the ability to block other entities. This is implemented by the blocking class. It allows different types of blocking and acts as an indication of what a entity can block and by what it is blocked.
 
 ### Entity
 
-Entities represent all interactable objects in the world. 
+Entities represent all interactable objects in the world:
 
 #### Dynamic Entity
 

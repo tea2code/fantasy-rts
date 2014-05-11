@@ -11,13 +11,6 @@
 
 namespace frts
 {
-    class DynamicEntityImpl;
-
-    /**
-     * @brief Pointer to DynamicEntityImpl.
-     */
-    using DynamicEntityImplPtr = std::shared_ptr<DynamicEntityImpl>;
-
     class DynamicEntityImpl : public DynamicEntity
     {
     public:
@@ -44,8 +37,8 @@ namespace frts
      * @param sortOrder The sort order.
      * @return The base entity.
      */
-    inline DynamicEntityImplPtr makeDynamicEntity(BlockingPtr blockedBy, BlockingPtr blocking,
-                                                  IdPtr state, int sortOrder = Entity::defaultSortOrder)
+    inline DynamicEntityPtr makeDynamicEntity(BlockingPtr blockedBy, BlockingPtr blocking,
+                                              IdPtr state, int sortOrder = Entity::defaultSortOrder)
     {
         return std::make_shared<DynamicEntityImpl>(blockedBy, blocking, state, sortOrder);
     }

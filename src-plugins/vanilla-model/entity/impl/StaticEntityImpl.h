@@ -11,13 +11,6 @@
 
 namespace frts
 {
-    class StaticEntityImpl;
-
-    /**
-     * @brief Pointer to StaticEntityImpl.
-     */
-    using StaticEntityImplPtr = std::shared_ptr<StaticEntityImpl>;
-
     class StaticEntityImpl : public StaticEntity
     {
     public:
@@ -44,8 +37,8 @@ namespace frts
      * @param sortOrder The sort order.
      * @return The base entity.
      */
-    inline StaticEntityImplPtr makeStaticEntity(BlockingPtr blockedBy, BlockingPtr blocking,
-                                                IdPtr state, int sortOrder = Entity::defaultSortOrder)
+    inline StaticEntityPtr makeStaticEntity(BlockingPtr blockedBy, BlockingPtr blocking,
+                                            IdPtr state, int sortOrder = Entity::defaultSortOrder)
     {
         return std::make_shared<StaticEntityImpl>(blockedBy, blocking, state, sortOrder);
     }
