@@ -20,6 +20,12 @@ namespace frts
         bool blocksWater;
     };
 
+    /**
+     * @brief Create new blocking object.
+     * @param wall Is wall blocked.
+     * @param water Is water blocked.
+     * @return The blocking pointer.
+     */
     inline BlockingPtr makeBlocking(bool wall, bool water)
     {
         return std::make_shared<BlockingImpl>(wall, water);

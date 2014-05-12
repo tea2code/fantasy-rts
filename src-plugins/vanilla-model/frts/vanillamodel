@@ -8,6 +8,8 @@
 #include <entity/StaticEntity.h>
 #include <entity/Tile.h>
 #include <main/ModelFactory.h>
+#include <region/Block.h>
 #include <region/Point.h>
+#include <region/Region.h>
 
 #endif // FRTS_VANILLAMODEL_INCLUDE_H

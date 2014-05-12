@@ -28,6 +28,13 @@ namespace frts
         value z;
     };
 
+    /**
+     * @brief Create a new point object.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param z The z coordinate.
+     * @return The point pointer.
+     */
     inline PointPtr makePoint(Point::value x, Point::value y, Point::value z)
     {
         return std::make_shared<PointImpl>(x, y, z);

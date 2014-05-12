@@ -49,6 +49,10 @@ namespace frts
         std::runtime_error makeUnknownTypeError(Entity::Type type) const;
     };
 
+    /**
+     * @brief Create a new block object.
+     * @return The block pointer.
+     */
     inline BlockImplPtr makeBlock()
     {
         return std::make_shared<BlockImpl>();
