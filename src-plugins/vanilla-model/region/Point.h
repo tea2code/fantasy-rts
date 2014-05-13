@@ -58,21 +58,21 @@ namespace frts
 
         /**
          * @brief Add two points.
-         * @param other The second point.
+         * @param other The rhs point.
          * @return Resulting point.
          */
         virtual PointPtr operator+(const Point& other) const = 0;
 
         /**
          * @brief Substract two points.
-         * @param other The second point.
+         * @param other The rhs point.
          * @return Resulting point.
          */
         virtual PointPtr operator-(const Point& other) const = 0;
 
         /**
          * @brief Cross product of two points.
-         * @param other The second point.
+         * @param other The rhs point.
          * @return Resulting point.
          */
         virtual PointPtr operator*(const Point& other) const = 0;
@@ -86,21 +86,21 @@ namespace frts
 
         /**
          * @brief Compare equality.
-         * @param other The second point.
+         * @param other The rhs point.
          * @return True if points are equal.
          */
         virtual bool operator==(const Point& other) const = 0;
 
         /**
          * @brief Compare inequality.
-         * @param other The second point.
+         * @param other The rhs point.
          * @return True if points are not equal.
          */
         virtual bool operator!=(const Point& other) const = 0;
     };
 
     /**
-     * @brief Scalar multiplication with scalar first.
+     * @brief Scalar multiplication with scalar lhs.
      * @param scalar The scalar.
      * @param point The point.
      * @return Resulting point.
@@ -112,41 +112,41 @@ namespace frts
 
     /**
      * @brief Add two points.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return Resulting point.
      */
-    inline PointPtr operator+(PointPtr first, PointPtr second)
+    inline PointPtr operator+(PointPtr lhs, PointPtr rhs)
     {
-        return *first + *second;
+        return *lhs + *rhs;
     }
 
     /**
      * @brief Substract two points.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return Resulting point.
      */
-    inline PointPtr operator-(PointPtr first, PointPtr second)
+    inline PointPtr operator-(PointPtr lhs, PointPtr rhs)
     {
-        return *first - *second;
+        return *lhs - *rhs;
     }
 
     /**
      * @brief Cross product of two points.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return Resulting point.
      */
-    inline PointPtr operator*(PointPtr first, PointPtr second)
+    inline PointPtr operator*(PointPtr lhs, PointPtr rhs)
     {
-        return *first * *second;
+        return *lhs * *rhs;
     }
 
     /**
      * @brief Scalar multiplication.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return Resulting point.
      */
     inline PointPtr operator*(PointPtr point, Point::value scalar)
@@ -155,9 +155,9 @@ namespace frts
     }
 
     /**
-     * @brief Scalar multiplication with scalar first.
-     * @param first First point.
-     * @param second Second point.
+     * @brief Scalar multiplication with scalar lhs.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return Resulting point.
      */
     inline PointPtr operator*(Point::value scalar, PointPtr point)
@@ -167,25 +167,50 @@ namespace frts
 
     /**
      * @brief Compare equality.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return True if points are equal.
      */
-    inline bool operator==(PointPtr first, PointPtr second)
+    inline bool operator==(PointPtr lhs, PointPtr rhs)
     {
-        return *first == *second;
+        return *lhs == *rhs;
     }
 
     /**
      * @brief Compare inequality.
-     * @param first First point.
-     * @param second Second point.
+     * @param lhs lhs point.
+     * @param rhs rhs point.
      * @return True if points are not equal.
      */
-    inline bool operator!=(PointPtr first, PointPtr second)
+    inline bool operator!=(PointPtr lhs, PointPtr rhs)
     {
-        return *first != *second;
+        return *lhs != *rhs;
     }
+
+    /**
+     * @brief Hash function object for points.
+     */
+    struct PointHash
+    {
+        std::size_t operator() (PointPtr point) const
+        {
+            return intHash(point->getX() + point->getY() + point->getZ());
+        }
+
+    private:
+        std::hash<int> intHash;
+    };
+
+    /**
+     * @brief Equal to function object for points.
+     */
+    struct PointEqual
+    {
+        bool operator() (PointPtr lhs, PointPtr rhs) const
+        {
+            return lhs == rhs;
+        }
+    };
 }
 
 #endif // FRTS_POINT_H

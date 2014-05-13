@@ -11,4 +11,5 @@ HEADERS += \
     region/impl/BlockImpl.h \
     region/Region.h \
     region/impl/RegionImpl.h \
-    region/RegionGenerator.h
+    region/RegionGenerator.h \
+    region/WriteableBlock.h

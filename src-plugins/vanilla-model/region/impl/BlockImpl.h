@@ -1,7 +1,7 @@
 #ifndef FRTS_BLOCKIMPL_H
 #define FRTS_BLOCKIMPL_H
 
-#include <region/Block.h>
+#include <region/WriteableBlock.h>
 
 #include <memory>
 #include <stdexcept>
@@ -16,25 +16,15 @@ namespace frts
      */
     using BlockImplPtr = std::shared_ptr<BlockImpl>;
 
-    class BlockImpl : public Block
+    class BlockImpl : public WriteableBlock
     {
     public:
         BlockImpl();
 
         EntitySet getByType(Entity::Type type) const override;
         bool has(EntityPtr entity) const override;
-        bool isBlocking(BlockingPtr blockedBy) const override;
-
-        /**
-         * @brief Insert entity into block.
-         * @param entity The entity.
-         */
         void insert(EntityPtr entity);
-
-        /**
-         * @brief Remove entity from block.
-         * @param entity The entity.
-         */
+        bool isBlocking(BlockingPtr blockedBy) const override;
         void remove(EntityPtr entity);
 
     private:

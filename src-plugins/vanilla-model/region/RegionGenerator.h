@@ -1,8 +1,8 @@
 #ifndef FRTS_REGIONGENERATOR_H
 #define FRTS_REGIONGENERATOR_H
 
-#include "Block.h"
 #include "Point.h"
+#include "WriteableBlock.h"
 
 #include <map>
 #include <memory>
@@ -31,14 +31,14 @@ namespace frts
          * @param zLevel The z-level.
          * @return Mapping of points to block.
          */
-        virtual std::map<PointPtr, BlockPtr> allBlocks(Point::value zLevel) = 0;
+        virtual std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel) = 0;
 
         /**
          * @brief Get a new point for given position.
          * @param pos The position.
          * @return The generated block.
          */
-        virtual BlockPtr newBlock(PointPtr pos) = 0;
+        virtual WriteableBlockPtr newBlock(PointPtr pos) = 0;
     };
 }
 

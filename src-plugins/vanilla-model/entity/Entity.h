@@ -5,6 +5,7 @@
 
 #include <frts/shared>
 
+#include <functional>
 #include <memory>
 
 
@@ -86,6 +87,31 @@ namespace frts
          * @param state The state id.
          */
         virtual void setStateId(IdPtr state) = 0;
+    };
+
+    /**
+     * @brief Hash function object for entities.
+     */
+    struct EntityHash
+    {
+        std::size_t operator() (EntityPtr entity) const
+        {
+            return ptrHash(entity);
+        }
+
+    private:
+        std::hash<EntityPtr> ptrHash;
+    };
+
+    /**
+     * @brief Equal to function object for entities.
+     */
+    struct EntityEqual
+    {
+        bool operator() (EntityPtr lhs, EntityPtr rhs) const
+        {
+            return lhs == rhs;
+        }
     };
 }
 
