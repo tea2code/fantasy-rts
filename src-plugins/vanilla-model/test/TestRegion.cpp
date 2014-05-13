@@ -198,33 +198,33 @@ TEST_CASE("Region.", "[region]")
 //        }
 //    }
 
-//    SECTION("Find free neightbors.")
-//    {
-//        std::vector<frts::PointPtr> correctPositions = {
-//            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
-//        };
-//        auto positions = region->findFreeNeighbors(point2, blocking);
-//        REQUIRE(positions.size() == correctPositions.size());
-//        for(auto pos : positions)
-//        {
-//            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
-//                    correctPositions.end());
-//        }
-//    }
+    SECTION("Find free neightbors.")
+    {
+        std::vector<frts::PointPtr> correctPositions = {
+            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
+        };
+        auto positions = region->findFreeNeighbors(point2, blocking);
+        REQUIRE(positions.size() == correctPositions.size());
+        for(auto pos : positions)
+        {
+            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
+                    correctPositions.end());
+        }
+    }
 
-//    SECTION("Get neightbors.")
-//    {
-//        std::vector<frts::PointPtr> correctPositions = {
-//            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
-//        };
-//        auto positions = region->getNeightbors(point2);
-//        REQUIRE(positions.size() == correctPositions.size());
-//        for(auto pos : positions)
-//        {
-//            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
-//                    correctPositions.end());
-//        }
-//    }
+    SECTION("Get neightbors.")
+    {
+        std::vector<frts::PointPtr> correctPositions = {
+            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
+        };
+        auto positions = region->getNeightbors(point2);
+        REQUIRE(positions.size() == correctPositions.size());
+        for(auto pos : positions)
+        {
+            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
+                    correctPositions.end());
+        }
+    }
 
     SECTION("Get block.")
     {
