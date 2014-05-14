@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <iterator>
 #include <memory>
 #include <ostream>
 #include <string>
@@ -157,26 +158,16 @@ int main(int argc, char* argv[])
         // Phase 4: Check required modules.
         log->info(logModule, "Phase 4: Check required modules.");
         std::vector<frts::ModulePtr> modules;
-        for (auto& module : startupModules)
-        {
-            modules.push_back(module);
-        }
-        for (auto& module : shutdownModules)
-        {
-            modules.push_back(module);
-        }
-        for (auto& module : renderModules)
-        {
-            modules.push_back(module);
-        }
-        for (auto& module : updateModules)
-        {
-            modules.push_back(module);
-        }
-        for (auto& module : utilityModules)
-        {
-            modules.push_back(module);
-        }
+        std::copy(startupModules.begin(), startupModules.end(),
+                  std::back_insert_iterator<decltype(modules)>(modules));
+        std::copy(shutdownModules.begin(), shutdownModules.end(),
+                  std::back_insert_iterator<decltype(modules)>(modules));
+        std::copy(renderModules.begin(), renderModules.end(),
+                  std::back_insert_iterator<decltype(modules)>(modules));
+        std::copy(updateModules.begin(), updateModules.end(),
+                  std::back_insert_iterator<decltype(modules)>(modules));
+        std::copy(utilityModules.begin(), utilityModules.end(),
+                  std::back_insert_iterator<decltype(modules)>(modules));
         app.validateRequiredModules(modules, shared);
 
         // Phase 5: Create data.
