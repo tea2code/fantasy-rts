@@ -23,7 +23,7 @@ namespace frts
                    RegionGeneratorPtr regionGenerator);
 
         std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockingPtr blockedBy);
-        PointPtr findFreeRandomPos(std::vector<Point::value> zLevels, BlockingPtr blockedBy);
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockingPtr blockedBy);
         BlockPtr getBlock(PointPtr pos);
         std::vector<PointPtr> getNeightbors(PointPtr pos);
         PointPtr getPos(EntityPtr entity);

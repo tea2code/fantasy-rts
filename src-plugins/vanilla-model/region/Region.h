@@ -43,7 +43,7 @@ namespace frts
          * @param blockedBy Description of what can block.
          * @return A single position.
          */
-        virtual PointPtr findFreeRandomPos(std::vector<Point::value> zLevels, BlockingPtr blockedBy) = 0;
+        virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockingPtr blockedBy) = 0;
 
         /**
          * @brief Get block at position.
