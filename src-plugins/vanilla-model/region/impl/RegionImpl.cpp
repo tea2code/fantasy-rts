@@ -2,6 +2,8 @@
 
 #include <region/impl/PointImpl.h>
 
+#include <frts/random.h>
+
 #include <algorithm>
 
 
@@ -31,7 +33,30 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
 
 frts::PointPtr frts::RegionImpl::findFreeRandomPos(std::vector<Point::value> zLevels, BlockingPtr blockedBy)
 {
-    return nullptr;
+    // TODO Current implementation may not find a random position.
+
+    const int numTries = 100;
+
+    PointPtr result = nullptr;
+
+    for (int i = 0; i < numTries; ++i)
+    {
+        Point::value x = frts::randomInteger<Point::value>(0, mapSizeX - 1);
+        Point::value y = frts::randomInteger<Point::value>(0, mapSizeY - 1);
+        Point::value z = *frts::selectRandomly(zLevels.begin(), zLevels.end());
+
+        result = makePoint(x, y, z);
+        if (!getBlock(result)->isBlocking(blockedBy))
+        {
+            break;
+        }
+        else
+        {
+            result = nullptr;
+        }
+    }
+    
+    return result;
 }
 
 frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos)

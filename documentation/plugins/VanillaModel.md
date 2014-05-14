@@ -49,3 +49,7 @@ Tiles represent the current floor. They usually don't allow any interaction.
 ### Point
 
 A Point represents a 3D coordinate in the current region. It consists of x, y and z. It allows different mathematical operations.
+
+### Region
+
+The region consists of blocks at certain positions and represents the game world. It allows to set the position of entities in the world and retrieve them or whole blocks. 

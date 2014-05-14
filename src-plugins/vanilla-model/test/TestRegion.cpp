@@ -189,14 +189,14 @@ TEST_CASE("Region.", "[region]")
     region->setPos(entity1, point1);
     region->setPos(entity2, point3);
 
-//    SECTION("Find free random position.")
-//    {
-//        for (int i = 0; i < 20; ++i)
-//        {
-//            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1);
-//            REQUIRE(point != point1);
-//        }
-//    }
+    SECTION("Find free random position.")
+    {
+        for (int i = 0; i < 100; ++i)
+        {
+            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1);
+            REQUIRE(point != point1);
+        }
+    }
 
     SECTION("Find free neightbors.")
     {
@@ -236,7 +236,9 @@ TEST_CASE("Region.", "[region]")
     SECTION("Get/set/remove entities.")
     {
         REQUIRE(region->getPos(entity1) == point1);
+        REQUIRE(region->getPos(entity1) != point2);
         region->setPos(entity1, point2);
+        REQUIRE(region->getPos(entity1) != point1);
         REQUIRE(region->getPos(entity1) == point2);
         region->removeEntity(entity1);
         REQUIRE(region->getPos(entity1) == nullptr);
