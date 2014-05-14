@@ -4,7 +4,6 @@
 #include "ConfigNodePtr.h"
 #include <main/IteratorWrapper.h>
 
-#include <map>
 #include <string>
 #include <vector>
 

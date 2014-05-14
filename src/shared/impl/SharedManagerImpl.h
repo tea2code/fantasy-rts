@@ -2,12 +2,13 @@
 #define FRTS_SHAREDMANAGERIMPL_H
 
 #include <module/ModulePtr.h>
+#include <shared/Id.h>
 #include <shared/SharedError.h>
 #include <shared/SharedManager.h>
 
-#include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 
@@ -68,15 +69,19 @@ namespace frts
         TickableItr updateModulesEnd() const override;
 
     private:
+        using DataValueMap = std::unordered_map<IdPtr, DataValuePtr, IdHash, IdEqual>;
+        using UtilityModulesMap = std::unordered_map<IdPtr, UtilityPtr, IdHash, IdEqual>;
+
+    private:
         static const std::string logModule;
 
-        std::map<std::string, DataValuePtr> dataValues;
+        DataValueMap dataValues;
         FramePtr frame;
         LogPtr log;
         std::vector<TickablePtr> renderModules;
         bool quitApplication;
         std::vector<TickablePtr> updateModules;
-        std::map<std::string, UtilityPtr> utilityModules;
+        UtilityModulesMap utilityModules;
 
     private:
         IdNotFoundError makeIdNotFoundError(IdPtr id) const;

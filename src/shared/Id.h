@@ -1,6 +1,9 @@
 #ifndef FRTS_ID_H
 #define FRTS_ID_H
 
+#include "SharedPtr.h"
+
+#include <functional>
 #include <string>
 
 
@@ -22,6 +25,31 @@ namespace frts
 
         virtual bool operator==(const Id& rhs) = 0;
         virtual bool operator!=(const Id& rhs) = 0;
+    };
+
+    /**
+     * @brief Hash function object for Ids.
+     */
+    struct IdHash
+    {
+        std::size_t operator() (IdPtr id) const
+        {
+            return stringHash(id->toString());
+        }
+
+    private:
+        std::hash<std::string> stringHash;
+    };
+
+    /**
+     * @brief Equal to function object for Ids.
+     */
+    struct IdEqual
+    {
+        bool operator() (IdPtr lhs, IdPtr rhs) const
+        {
+            return *lhs == *rhs;
+        }
     };
 }
 

@@ -1,6 +1,7 @@
 #ifndef FRTS_POINT_H
 #define FRTS_POINT_H
 
+#include <functional>
 #include <memory>
 
 
@@ -192,7 +193,7 @@ namespace frts
      */
     struct PointHash
     {
-        std::size_t operator() (PointPtr point) const
+        std::hash<int>::result_type operator() (PointPtr point) const
         {
             return intHash(point->getX() + point->getY() + point->getZ());
         }

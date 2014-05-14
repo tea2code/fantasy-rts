@@ -31,10 +31,10 @@ namespace frts
         void setPos(EntityPtr entity, PointPtr pos);
 
     private:
-        using PosBlockMap = std::unordered_map<frts::PointPtr, frts::WriteableBlockPtr,
-            frts::PointHash, frts::PointEqual>;
-        using EntityPosMap = std::unordered_map<frts::EntityPtr, frts::PointPtr,
-            frts::EntityHash, frts::EntityEqual>;
+        using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,
+            PointHash, PointEqual>;
+        using EntityPosMap = std::unordered_map<EntityPtr, PointPtr,
+            EntityHash, EntityEqual>;
 
     private:
         EntityPosMap entityPos;

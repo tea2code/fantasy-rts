@@ -25,7 +25,7 @@ frts::SharedManagerImpl::~SharedManagerImpl()
 
 frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
 {
-    auto it = dataValues.find(id->toString());
+    auto it = dataValues.find(id);
     if(it != dataValues.end())
     {
         return it->second;
@@ -48,7 +48,7 @@ frts::LogPtr frts::SharedManagerImpl::getLog() const
 
 frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
 {
-    auto it = utilityModules.find(id->toString());
+    auto it = utilityModules.find(id);
     if(it != utilityModules.end())
     {
         return it->second;
@@ -117,7 +117,7 @@ void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
         throw std::invalid_argument("Utility must not be null.");
     }
 
-    utilityModules[id->toString()] = utility;
+    utilityModules[id] = utility;
 }
 
 void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
@@ -127,7 +127,7 @@ void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
         throw std::invalid_argument("Data value must not be null.");
     }
 
-    dataValues[id->toString()] = value;
+    dataValues[id] = value;
 }
 
 frts::TickableItr frts::SharedManagerImpl::updateModulesBegin() const
