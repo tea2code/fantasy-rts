@@ -24,6 +24,8 @@ namespace frts
             std::vector<std::string> configurations;
             std::vector<std::string> plugins;
             std::vector<std::string> renderModules;
+            std::vector<std::string> shutdownModules;
+            std::vector<std::string> startupModules;
             std::vector<std::string> updateModules;
             std::vector<std::string> utilities;
         };
@@ -40,6 +42,13 @@ namespace frts
          * @param shared The shared manager.
          */
         void createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+
+        /**
+         * @brief Execute given tickable modules.
+         * @param modules The modules.
+         * @param shared The shared manager.
+         */
+        void executeModules(const std::vector<TickablePtr>& modules, SharedManagerPtr shared) const;
 
         /**
          * @brief Find tickable modules in loaded plugins.

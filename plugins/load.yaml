@@ -2,6 +2,12 @@ plugins:
     - vanilla-demo/vanilla-demo
     - vanilla-model/vanilla-model
     
+startupModules:
+    # Nothing yet.
+    
+shutdownModules:
+    # Nothing yet.
+    
 renderModules:
     # Nothing yet.
     

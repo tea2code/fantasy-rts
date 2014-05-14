@@ -34,6 +34,12 @@ namespace TestApp
         file << "    - test/plugin1" << std::endl;
         file << "    - plugin2" << std::endl;
         file << "" << std::endl;
+        file << "startupModules:" << std::endl;
+        file << "    - startupModule1" << std::endl;
+        file << "" << std::endl;
+        file << "shutdownModules:" << std::endl;
+        file << "    - shutdownModule1" << std::endl;
+        file << "    - shutdownModule2" << std::endl;
         file << "renderModules:" << std::endl;
         file << "    - renderModule1" << std::endl;
         file << "    - renderModule2" << std::endl;
@@ -84,6 +90,13 @@ TEST_CASE("Execute start phases.", "[application]")
         REQUIRE(loadConfig.plugins.size() == 2);
         REQUIRE(loadConfig.plugins.at(0) == "test/plugin1");
         REQUIRE(loadConfig.plugins.at(1) == "plugin2");
+
+        REQUIRE(loadConfig.startupModules.size() == 1);
+        REQUIRE(loadConfig.startupModules.at(0) == "startupModule1");
+
+        REQUIRE(loadConfig.shutdownModules.size() == 2);
+        REQUIRE(loadConfig.shutdownModules.at(0) == "shutdownModule1");
+        REQUIRE(loadConfig.shutdownModules.at(1) == "shutdownModule2");
 
         REQUIRE(loadConfig.renderModules.size() == 2);
         REQUIRE(loadConfig.renderModules.at(0) == "renderModule1");

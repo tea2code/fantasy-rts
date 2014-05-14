@@ -36,6 +36,14 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules,
     }
 }
 
+void frts::Application::executeModules(const std::vector<TickablePtr>& modules, SharedManagerPtr shared) const
+{
+    for(auto& module : modules)
+    {
+        module->tick(shared);
+    }
+}
+
 std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vector<std::string>& moduleNames)
 {
     std::vector<TickablePtr> result;
@@ -138,6 +146,8 @@ frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::
     LoadConfiguration result;
     result.plugins = node->getStrings("plugins");
     result.renderModules = node->getStrings("renderModules");
+    result.shutdownModules = node->getStrings("shutdownModules");
+    result.startupModules = node->getStrings("startupModules");
     result.updateModules = node->getStrings("updateModules");
     result.utilities = node->getStrings("utilities");
     result.configurations = node->getStrings("configurations");

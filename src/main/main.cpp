@@ -121,6 +121,8 @@ int main(int argc, char* argv[])
         auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
         log->warning(logModule, "Load configuration:");
         logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
+        logLoadConfigList(log, logModule, "Startup Modules", loadConfig.startupModules);
+        logLoadConfigList(log, logModule, "Shutdown Modules", loadConfig.shutdownModules);
         logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
         logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
         logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
@@ -137,6 +139,8 @@ int main(int argc, char* argv[])
         // Phase 3: Get modules.
         log->info(logModule, "Phase 3: Get modules.");
         // Keep lists of modules for following phases.
+        auto startupModules = app.findTickables(loadConfig.startupModules);
+        auto shutdownModules = app.findTickables(loadConfig.shutdownModules);
         auto renderModules = app.findTickables(loadConfig.renderModules);
         auto updateModules = app.findTickables(loadConfig.updateModules);
         shared->setRenderModules(renderModules);
@@ -153,6 +157,14 @@ int main(int argc, char* argv[])
         // Phase 4: Check required modules.
         log->info(logModule, "Phase 4: Check required modules.");
         std::vector<frts::ModulePtr> modules;
+        for (auto& module : startupModules)
+        {
+            modules.push_back(module);
+        }
+        for (auto& module : shutdownModules)
+        {
+            modules.push_back(module);
+        }
         for (auto& module : renderModules)
         {
             modules.push_back(module);
@@ -187,19 +199,31 @@ int main(int argc, char* argv[])
         log->info(logModule, "Phase 9: Initialize modules.");
         app.init(modules, shared);
 
-        // List of modules no longer needed. Clean up.
+        // Phase 10: Startup.
+        log->info(logModule, "Phase 10: Startup");
+        app.executeModules(startupModules, shared);
+
+        // Clean up no longer needed lists of modules.
+        startupModules.clear();
         renderModules.clear();
         updateModules.clear();
         utilityModules.clear();
         modules.clear();
 
-        // Run.
-        log->info(logModule, "Run game.");
+        // Phase 11: Run game.
+        log->info(logModule, "Phase 11: Run game.");
         frts::MainLoop mainLoop(deltaTime, maxFrameTime);
         mainLoop.start(shared);
 
-        // All done. Good night.
-        log->info(logModule, "Application finished.");
+        // Phase 12: Shutdown.
+        log->info(logModule, "Phase 12: Shutdown");
+        app.executeModules(shutdownModules, shared);
+
+        // Clean up no longer needed lists of modules.
+        shutdownModules.clear();
+
+        // Phase 13: All done. Good night.
+        log->info(logModule, "Phase 13: Application finished.");
         return 0;
     }
     catch(const std::exception& ex)
