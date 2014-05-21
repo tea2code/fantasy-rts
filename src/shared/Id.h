@@ -28,6 +28,28 @@ namespace frts
     };
 
     /**
+     * @brief Compare equality.
+     * @param lhs First id.
+     * @param rhs Second id.
+     * @return True if id are equal.
+     */
+    inline bool operator==(IdPtr lhs, IdPtr rhs)
+    {
+        return *lhs == *rhs;
+    }
+
+    /**
+     * @brief Compare inequality.
+     * @param lhs First id.
+     * @param rhs Second id.
+     * @return True if id are not equal.
+     */
+    inline bool operator!=(IdPtr lhs, IdPtr rhs)
+    {
+        return *lhs != *rhs;
+    }
+
+    /**
      * @brief Hash function object for Ids.
      */
     struct IdHash
@@ -48,7 +70,7 @@ namespace frts
     {
         bool operator() (IdPtr lhs, IdPtr rhs) const
         {
-            return *lhs == *rhs;
+            return lhs == rhs;
         }
     };
 }

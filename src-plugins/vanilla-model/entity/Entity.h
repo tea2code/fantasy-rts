@@ -2,6 +2,7 @@
 #define FRTS_ENTITY_H
 
 #include "Blocking.h"
+#include "Component.h"
 
 #include <frts/shared>
 
@@ -19,74 +20,39 @@ namespace frts
     using EntityPtr = std::shared_ptr<Entity>;
 
     /**
-     * @brief Base class of entities.
+     * @brief A entity consisting of components describing it's abilities.
      */
     class Entity
     {
     public:
-        /**
-         * @brief The default sort order.
-         */
-        const static int defaultSortOrder = 0;
-
-        /**
-         * @brief Type of entity.
-         */
-        enum class Type
-        {
-            Dynamic,
-            Resource,
-            Static,
-            Tile
-        };
-
-    public:
         virtual ~Entity() {}
 
         /**
-         * @brief Defines by what types this entity is blocked.
-         * @return The blocking.
+         * @brief Add component to entity. It will replace another component
+         *        with the same type.
+         * @param component The component.
          */
-        virtual BlockingPtr getBlockedBy() const = 0;
+        virtual void addComponent(ComponentPtr component) = 0;
 
         /**
-         * @brief Defines what types this entity blocks.
-         * @return The blocking.
+         * @brief Get component with current values.
+         * @param type The component type.
+         * @return The component or null if not found.
          */
-        virtual BlockingPtr getBlocking() const = 0;
+        virtual ComponentPtr getComponent(Component::Type type) const = 0;
 
         /**
-         * @brief Get the sorder order of this entity in a block.
-         * @return The sort order.
+         * @brief Check if entity has the given entity.
+         * @param type The component type.
+         * @return True if entity has component else false.
          */
-        virtual int getSortOrder() const = 0;
+        virtual bool hasComponent(Component::Type type) const = 0;
 
         /**
-         * @brief Get the current state id.
-         * @return The state id.
+         * @brief Remove component from entity.
+         * @param type The component type.
          */
-        virtual IdPtr getStateId() const = 0;
-
-        /**
-         * @brief Get the type of entity. This allows fast access to the derived
-         *        type without using dynamic_cast (use static_cast instead after
-         *        checking the type).
-         * @return The type.
-         */
-        virtual Type getType() const = 0;
-
-        /**
-         * @brief Set the sort order. Will only be used the next time this entity
-         *        is added to a block.
-         * @param sortOrder The sort order.
-         */
-        virtual void setSortOrder(int sortOrder) = 0;
-
-        /**
-         * @brief Set the current state id.
-         * @param state The state id.
-         */
-        virtual void setStateId(IdPtr state) = 0;
+        virtual void removeComponent(Component::Type type) = 0;
     };
 
     /**

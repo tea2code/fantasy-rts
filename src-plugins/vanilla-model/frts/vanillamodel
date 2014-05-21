@@ -1,12 +1,8 @@
 #ifndef FRTS_VANILLAMODEL_INCLUDE_H
 #define FRTS_VANILLAMODEL_INCLUDE_H
 
-#include <entity/Blocking.h>
-#include <entity/DynamicEntity.h>
+#include <entity/Component.h>
 #include <entity/Entity.h>
-#include <entity/Resource.h>
-#include <entity/StaticEntity.h>
-#include <entity/Tile.h>
 #include <main/ModelFactory.h>
 #include <region/Block.h>
 #include <region/Point.h>

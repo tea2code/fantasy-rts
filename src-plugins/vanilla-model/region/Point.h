@@ -113,8 +113,8 @@ namespace frts
 
     /**
      * @brief Add two points.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return Resulting point.
      */
     inline PointPtr operator+(PointPtr lhs, PointPtr rhs)
@@ -124,8 +124,8 @@ namespace frts
 
     /**
      * @brief Substract two points.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return Resulting point.
      */
     inline PointPtr operator-(PointPtr lhs, PointPtr rhs)
@@ -135,8 +135,8 @@ namespace frts
 
     /**
      * @brief Cross product of two points.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return Resulting point.
      */
     inline PointPtr operator*(PointPtr lhs, PointPtr rhs)
@@ -146,8 +146,8 @@ namespace frts
 
     /**
      * @brief Scalar multiplication.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return Resulting point.
      */
     inline PointPtr operator*(PointPtr point, Point::value scalar)
@@ -157,8 +157,8 @@ namespace frts
 
     /**
      * @brief Scalar multiplication with scalar lhs.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return Resulting point.
      */
     inline PointPtr operator*(Point::value scalar, PointPtr point)
@@ -168,8 +168,8 @@ namespace frts
 
     /**
      * @brief Compare equality.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return True if points are equal.
      */
     inline bool operator==(PointPtr lhs, PointPtr rhs)
@@ -179,8 +179,8 @@ namespace frts
 
     /**
      * @brief Compare inequality.
-     * @param lhs lhs point.
-     * @param rhs rhs point.
+     * @param lhs First point.
+     * @param rhs Second point.
      * @return True if points are not equal.
      */
     inline bool operator!=(PointPtr lhs, PointPtr rhs)

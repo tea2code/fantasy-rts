@@ -8,6 +8,7 @@
 #include <entity/Entity.h>
 
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 
