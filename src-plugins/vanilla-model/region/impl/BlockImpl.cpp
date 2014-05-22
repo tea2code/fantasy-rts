@@ -54,7 +54,7 @@ void frts::BlockImpl::insert(EntityPtr entity)
     entitySet->insert(entity);
 }
 
-bool frts::BlockImpl::isBlocking(BlockingPtr blockedBy) const
+bool frts::BlockImpl::isBlocking(BlockedByPtr blockedBy) const
 {
     return isBlocking(getPtrByType(Entity::Type::Static), blockedBy) ||
            isBlocking(getPtrByType(Entity::Type::Dynamic), blockedBy) ||
@@ -62,7 +62,7 @@ bool frts::BlockImpl::isBlocking(BlockingPtr blockedBy) const
            isBlocking(getPtrByType(Entity::Type::Tile), blockedBy);
 }
 
-bool frts::BlockImpl::isBlocking(std::shared_ptr<EntitySet> entitySet, BlockingPtr blockedBy) const
+bool frts::BlockImpl::isBlocking(std::shared_ptr<EntitySet> entitySet, BlockedByPtr blockedBy) const
 {
     bool result = false;
     for (auto entity : *entitySet)

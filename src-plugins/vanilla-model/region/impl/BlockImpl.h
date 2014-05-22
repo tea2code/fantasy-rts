@@ -24,7 +24,7 @@ namespace frts
         EntitySet getByType(Entity::Type type) const override;
         bool has(EntityPtr entity) const override;
         void insert(EntityPtr entity);
-        bool isBlocking(BlockingPtr blockedBy) const override;
+        bool isBlocking(BlockedByPtr blockedBy) const override;
         void remove(EntityPtr entity);
 
     private:
@@ -35,7 +35,7 @@ namespace frts
 
     private:
         std::shared_ptr<EntitySet> getPtrByType(Entity::Type type) const;
-        bool isBlocking(std::shared_ptr<EntitySet> entitySet, BlockingPtr blockedBy) const;
+        bool isBlocking(std::shared_ptr<EntitySet> entitySet, BlockedByPtr blockedBy) const;
         std::runtime_error makeUnknownTypeError(Entity::Type type) const;
     };
 

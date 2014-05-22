@@ -13,7 +13,7 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 {
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockingPtr blockedBy)
+std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy)
 {
     std::vector<PointPtr> result = getNeightbors(pos);
     for (auto it = result.begin(); it != result.end(); )
@@ -31,7 +31,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value> &zLevels, BlockingPtr blockedBy)
+frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value> &zLevels, BlockedByPtr blockedBy)
 {
     // TODO Current implementation may not find a random position.
 

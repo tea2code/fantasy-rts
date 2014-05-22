@@ -1,12 +1,14 @@
 #include <catch.hpp>
 
 #include <region/RegionGenerator.h>
+#include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
-#include <entity/impl/DynamicEntityImpl.h>
-#include <entity/impl/ResourceImpl.h>
+#include <entity/impl/EntityImpl.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionImpl.h>
+
+#include <shared/impl/IdImpl.h>
 
 #include <algorithm>
 #include <iterator>
@@ -14,16 +16,34 @@
 
 TEST_CASE("Block.", "[region]")
 {
-    frts::BlockingPtr blockedBy1 = frts::makeBlocking(true, false);
-    frts::BlockingPtr blockedBy2 = frts::makeBlocking(false, false);
-    frts::BlockingPtr blocking = frts::makeBlocking(true, false);
+    frts::IdPtr block1 = frts::makeId("block1");
+    frts::IdPtr block2 = frts::makeId("block2");
 
-    frts::DynamicEntityPtr entity1 = frts::makeDynamicEntity(blockedBy1, blocking, nullptr, 3);
-    frts::DynamicEntityPtr entity2 = frts::makeDynamicEntity(blockedBy1, blocking, nullptr, 1);
-    frts::DynamicEntityPtr entity3 = frts::makeDynamicEntity(blockedBy1, blocking, nullptr, 2);
-    frts::ResourcePtr entity4 = frts::makeResource(blockedBy1, blocking, nullptr, 0);
-    frts::ResourcePtr entity5 = frts::makeResource(blockedBy1, blocking, nullptr, 0);
-    frts::ResourcePtr entity6 = frts::makeResource(blockedBy1, blocking, nullptr, 1);
+    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy();
+    blockedBy1->addBlock(block1);
+    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy();
+    blockedBy2->addBlock(block2);
+    frts::BlockingPtr blocking = frts::makeBlocking();
+    blocking->addBlock(block1);
+
+    frts::EntityPtr entity1 = frts::makeEntity();
+    entity1->addComponent(blockedBy1);
+    entity1->addComponent(blocking);
+    frts::EntityPtr entity2 = frts::makeEntity();
+    entity2->addComponent(blockedBy1);
+    entity2->addComponent(blocking);
+    frts::EntityPtr entity3 = frts::makeEntity();
+    entity3->addComponent(blockedBy1);
+    entity3->addComponent(blocking);
+    frts::ResourcePtr entity4 = frts::makeEntity();
+    entity4->addComponent(blockedBy1);
+    entity4->addComponent(blocking);
+    frts::ResourcePtr entity5 = frts::makeEntity();
+    entity5->addComponent(blockedBy1);
+    entity5->addComponent(blocking);
+    frts::ResourcePtr entity6 = frts::makeEntity();
+    entity6->addComponent(blockedBy1);
+    entity6->addComponent(blocking);
 
     frts::BlockImplPtr blockImpl = frts::makeBlock();
     frts::BlockPtr block = blockImpl;

@@ -39,20 +39,20 @@ namespace frts
          * @param type The component type.
          * @return The component or null if not found.
          */
-        virtual ComponentPtr getComponent(Component::Type type) const = 0;
+        virtual ComponentPtr getComponent(Component::ComponentType type) const = 0;
 
         /**
          * @brief Check if entity has the given entity.
          * @param type The component type.
          * @return True if entity has component else false.
          */
-        virtual bool hasComponent(Component::Type type) const = 0;
+        virtual bool hasComponent(Component::ComponentType type) const = 0;
 
         /**
          * @brief Remove component from entity.
          * @param type The component type.
          */
-        virtual void removeComponent(Component::Type type) = 0;
+        virtual void removeComponent(Component::ComponentType type) = 0;
     };
 
     /**

@@ -22,8 +22,8 @@ namespace frts
         RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                    RegionGeneratorPtr regionGenerator);
 
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockingPtr blockedBy);
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockingPtr blockedBy);
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy);
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy);
         BlockPtr getBlock(PointPtr pos);
         std::vector<PointPtr> getNeightbors(PointPtr pos);
         PointPtr getPos(EntityPtr entity);

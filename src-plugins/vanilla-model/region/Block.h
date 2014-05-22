@@ -1,7 +1,7 @@
 #ifndef FRTS_BLOCK_H
 #define FRTS_BLOCK_H
 
-#include <entity/Blocking.h>
+#include <entity/BlockedBy.h>
 #include <entity/Entity.h>
 
 #include <memory>
@@ -58,7 +58,7 @@ namespace frts
          * @param blockedBy The blocked by definition.
          * @return True if block is blocking.
          */
-        virtual bool isBlocking(BlockingPtr blockedBy) const = 0;
+        virtual bool isBlocking(BlockedByPtr blockedBy) const = 0;
     };
 }
 

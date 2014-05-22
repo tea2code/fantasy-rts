@@ -4,7 +4,7 @@
 #include "Block.h"
 #include "Point.h"
 
-#include <entity/Blocking.h>
+#include <entity/BlockedBy.h>
 #include <entity/Entity.h>
 
 #include <memory>
@@ -36,7 +36,7 @@ namespace frts
          * @param blockedBy Description of what can block.
          * @return List of free neightbors.
          */
-        virtual std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockingPtr blockedBy) = 0;
+        virtual std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy) = 0;
 
         /**
          * @brief Find random position.
@@ -44,7 +44,7 @@ namespace frts
          * @param blockedBy Description of what can block.
          * @return A single position.
          */
-        virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockingPtr blockedBy) = 0;
+        virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy) = 0;
 
         /**
          * @brief Get block at position.

@@ -27,6 +27,8 @@ namespace frts
     public:
         using BlockSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
 
+        const IdPtr componentType;
+        
     public:
         virtual ~BlockedBy() {}
 

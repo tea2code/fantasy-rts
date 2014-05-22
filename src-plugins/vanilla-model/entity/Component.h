@@ -31,7 +31,7 @@ namespace frts
          * @brief Get type of component.
          * @return The component type.
          */
-        static ComponentType getComponentType() const;
+        virtual ComponentType getComponentType() = 0;
     };
 }
 
