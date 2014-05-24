@@ -13,9 +13,9 @@ namespace frts
     public:
         BlockedByImpl();
 
-        void addBlock(IdPtr block);
-        const BlockSet getBlocks() const;
-        void removeBlock(IdPtr block);
+        void addBlock(IdPtr block) override;
+        const BlockSet getBlocks() const override;
+        void removeBlock(IdPtr block) override;
 
     private:
         BaseBlocking blocking;

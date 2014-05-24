@@ -22,13 +22,13 @@ namespace frts
         RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                    RegionGeneratorPtr regionGenerator);
 
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy);
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy);
-        BlockPtr getBlock(PointPtr pos);
-        std::vector<PointPtr> getNeightbors(PointPtr pos);
-        PointPtr getPos(EntityPtr entity);
-        void removeEntity(EntityPtr entity);
-        void setPos(EntityPtr entity, PointPtr pos);
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy) override;
+        BlockPtr getBlock(PointPtr pos) override;
+        std::vector<PointPtr> getNeightbors(PointPtr pos) override;
+        PointPtr getPos(EntityPtr entity) override;
+        void removeEntity(EntityPtr entity) override;
+        void setPos(EntityPtr entity, PointPtr pos) override;
 
     private:
         using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,

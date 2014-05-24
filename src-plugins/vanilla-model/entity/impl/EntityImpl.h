@@ -16,10 +16,10 @@ namespace frts
     public:
         EntityImpl();
 
-        void addComponent(ComponentPtr component);
-        ComponentPtr getComponent(Component::ComponentType type) const;
-        bool hasComponent(Component::ComponentType type) const;
-        void removeComponent(Component::ComponentType type);
+        void addComponent(ComponentPtr component) override;
+        ComponentPtr getComponent(Component::ComponentType type) const override;
+        bool hasComponent(Component::ComponentType type) const override;
+        void removeComponent(Component::ComponentType type) override;
 
     private:
         using ComponentMap = std::unordered_map<Component::ComponentType, ComponentPtr,

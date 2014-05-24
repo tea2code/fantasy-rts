@@ -23,9 +23,9 @@ namespace frts
 
         EntitySet getByType(Entity::Type type) const override;
         bool has(EntityPtr entity) const override;
-        void insert(EntityPtr entity);
+        void insert(EntityPtr entity) override;
         bool isBlocking(BlockedByPtr blockedBy) const override;
-        void remove(EntityPtr entity);
+        void remove(EntityPtr entity) override;
 
     private:
         std::shared_ptr<EntitySet> dynamicEntities;
