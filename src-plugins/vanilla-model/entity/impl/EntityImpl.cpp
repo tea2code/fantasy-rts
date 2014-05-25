@@ -17,7 +17,7 @@ void frts::EntityImpl::addComponent(ComponentPtr component)
     components[component->getComponentType()] = component;
 }
 
-frts::ComponentPtr frts::EntityImpl::getComponent(Component::ComponentType type) const
+frts::ComponentPtr frts::EntityImpl::getComponent(IdPtr type) const
 {
     ComponentPtr result = nullptr;
     auto it = components.find(type);
@@ -28,12 +28,12 @@ frts::ComponentPtr frts::EntityImpl::getComponent(Component::ComponentType type)
     return result;
 }
 
-bool frts::EntityImpl::hasComponent(Component::ComponentType type) const
+bool frts::EntityImpl::hasComponent(IdPtr type) const
 {
     return getComponent(type) != nullptr;
 }
 
-void frts::EntityImpl::removeComponent(Component::ComponentType type)
+void frts::EntityImpl::removeComponent(IdPtr type)
 {
     components.erase(type);
 }

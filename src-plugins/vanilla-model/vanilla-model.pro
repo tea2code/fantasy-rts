@@ -29,6 +29,14 @@ INCLUDEPATH += $$PWD/../../src-helper/
 
 # Headers and sources.
 UNIT_TEST {
+    # Necessary to create IDs for tests.
+    HEADERS += \
+        $$PWD/../../src/shared/impl/IdImpl.h \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.h
+    SOURCES += \
+        $$PWD/../../src/shared/impl/IdImpl.cpp \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.cpp
+
     include(test/test.pri)
 }
 include(entity/entity.pri)

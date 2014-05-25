@@ -4,4 +4,5 @@ SOURCES += \
     test/TestEntity.cpp
     
 
-HEADERS +=
+HEADERS += \
+    test/LogStub.h

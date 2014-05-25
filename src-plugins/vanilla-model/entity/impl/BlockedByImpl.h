@@ -2,8 +2,9 @@
 #define FRTS_BLOCKEDBYIMPL_H
 
 #include "BaseBlocking.h"
-
 #include <entity/BlockedBy.h>
+
+#include <frts/shared>
 
 
 namespace frts
@@ -11,23 +12,26 @@ namespace frts
     class BlockedByImpl : public BlockedBy
     {
     public:
-        BlockedByImpl();
+        BlockedByImpl(SharedManagerPtr shared);
 
         void addBlock(IdPtr block) override;
         const BlockSet getBlocks() const override;
+        IdPtr getComponentType() override;
         void removeBlock(IdPtr block) override;
 
     private:
         BaseBlocking blocking;
+        IdPtr type;
     };
 
     /**
      * @brief Create new BlockedBy.
+     * @param shared The shared manager.
      * @return The BlockedBy.
      */
-    inline BlockedByPtr makeBlockedBy()
+    inline BlockedByPtr makeBlockedBy(SharedManagerPtr shared)
     {
-        return std::shared_ptr<BlockedByImpl>();
+        return std::make_shared<BlockedByImpl>(shared);
     }
 }
 

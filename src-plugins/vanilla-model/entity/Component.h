@@ -22,17 +22,28 @@ namespace frts
     {
     public:
         /**
-         * @brief Type of Component.
-         */
-        using ComponentType = IdPtr;
-
-    public:
-        /**
          * @brief Get type of component.
          * @return The component type.
          */
-        virtual ComponentType getComponentType() = 0;
+        virtual IdPtr getComponentType() = 0;
     };
+
+    /**
+     * @brief Converts a component to the given type if id matches component type.
+     * @param type The component type.
+     * @param component The component.
+     * @return The converted component or null.
+     */
+    template<typename ComponentClass>
+    inline std::shared_ptr<ComponentClass> castComponent(IdPtr type, ComponentPtr component)
+    {
+        std::shared_ptr<ComponentClass> result = nullptr;
+        if (component != nullptr && component->getComponentType() == type)
+        {
+            result = std::static_pointer_cast<ComponentClass>(component);
+        }
+        return result;
+    }
 }
 
 #endif // FRTS_COMPONENT_H

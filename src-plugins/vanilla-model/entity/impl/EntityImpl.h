@@ -17,12 +17,12 @@ namespace frts
         EntityImpl();
 
         void addComponent(ComponentPtr component) override;
-        ComponentPtr getComponent(Component::ComponentType type) const override;
-        bool hasComponent(Component::ComponentType type) const override;
-        void removeComponent(Component::ComponentType type) override;
+        ComponentPtr getComponent(IdPtr type) const override;
+        bool hasComponent(IdPtr type) const override;
+        void removeComponent(IdPtr type) override;
 
     private:
-        using ComponentMap = std::unordered_map<Component::ComponentType, ComponentPtr,
+        using ComponentMap = std::unordered_map<IdPtr, ComponentPtr,
                                                 IdHash, IdEqual>;
 
     private:
@@ -33,7 +33,7 @@ namespace frts
      * @brief Create new entity.
      * @return The entity.
      */
-    EntityPtr makeEntity()
+    inline EntityPtr makeEntity()
     {
         return std::make_shared<EntityImpl>();
     }
@@ -43,7 +43,7 @@ namespace frts
      * @param components The components.
      * @return The entity.
      */
-    EntityPtr makeEntity(std::vector<ComponentPtr> components)
+    inline EntityPtr makeEntity(std::vector<ComponentPtr> components)
     {
         EntityPtr entity = makeEntity();
         for (auto component : components)

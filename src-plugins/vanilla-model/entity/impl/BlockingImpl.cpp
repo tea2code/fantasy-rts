@@ -1,10 +1,13 @@
 #include "BlockingImpl.h"
 
+#include <entity/ComponentIds.h>
+
 #include <algorithm>
 #include <iterator>
 
 
-frts::BlockingImpl::BlockingImpl()
+frts::BlockingImpl::BlockingImpl(SharedManagerPtr shared)
+    : type{shared->makeId(ComponentIds::blocking())}
 {
 }
 
@@ -24,6 +27,11 @@ bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
                           std::inserter(intersect, intersect.begin()));
 
     return !intersect.empty();
+}
+
+frts::IdPtr frts::BlockingImpl::getComponentType()
+{
+    return type;
 }
 
 void frts::BlockingImpl::removeBlock(IdPtr block)

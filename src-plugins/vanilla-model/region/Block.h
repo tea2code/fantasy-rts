@@ -3,6 +3,9 @@
 
 #include <entity/BlockedBy.h>
 #include <entity/Entity.h>
+#include <entity/SortOrder.h>
+
+#include <frts/shared>
 
 #include <memory>
 #include <set>
@@ -18,33 +21,22 @@ namespace frts
     using BlockPtr = std::shared_ptr<Block>;
 
     /**
-     * @brief Orders entities by sort order.
-     */
-    struct SortOrdered
-    {
-        bool operator() (EntityPtr lhs, EntityPtr rhs) const
-        {
-            return lhs->getSortOrder() < rhs->getSortOrder();
-        }
-    };
-
-    /**
      * @brief A world block at a certain position consisting of entities.
      */
     class Block
     {
     public:
-        using EntitySet = std::multiset<EntityPtr, SortOrdered>;
+        using EntitySet = std::multiset<EntityPtr, SortOrder::SortOrdered>;
 
     public:
         virtual ~Block() {}
 
         /**
-         * @brief Get all entities in this block by type.
-         * @param type The entity type.
-         * @return Ordered set of entities of given type.
+         * @brief Get all entities in this block which have a certain component.
+         * @param componentType The type of component.
+         * @return Ordered set of entities.
          */
-        virtual EntitySet getByType(Entity::Type type) const = 0;
+        virtual EntitySet getByComponent(IdPtr componentType) const = 0;
 
         /**
          * @brief Check if block contains entity.

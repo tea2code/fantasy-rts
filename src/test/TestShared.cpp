@@ -52,49 +52,45 @@ namespace frts
     {
     public:
         TestLog() {}
-        ~TestLog() {}
-        void debug(const std::string&, const std::string&) {}
-        void error(const std::string&, const std::string&) {}
-        void info(const std::string&, const std::string&) {}
-        void warning(const std::string&, const std::string&) {}
+        void debug(const std::string&, const std::string&) override {}
+        void error(const std::string&, const std::string&) override {}
+        void info(const std::string&, const std::string&) override {}
+        void warning(const std::string&, const std::string&) override {}
     };
 
     class TestDataValue : public DataValue
     {
     public:
-        ~TestDataValue() {}
-        std::string getName() const { return "TestDataValue"; }
+        std::string getName() const override { return "TestDataValue"; }
     };
 
     class TestTickable : public Tickable
     {
     public:
         TestTickable() {}
-        ~TestTickable() {}
-        bool createData(SharedManagerPtr) { return false; }
-        std::string getName() const { return "TestTickable"; }
-        std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
-        int getVersion() const { return 1; }
-        bool init(SharedManagerPtr) { return false; }
-        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
-        void tick(SharedManagerPtr) {}
-        void validateData(SharedManagerPtr) {}
-        void validateModules(SharedManagerPtr) {}
+        bool createData(SharedManagerPtr) override { return false; }
+        std::string getName() const override { return "TestTickable"; }
+        std::vector<std::string> getSupportedConfig() override { return std::vector<std::string>(); }
+        int getVersion() const override { return 1; }
+        bool init(SharedManagerPtr) override { return false; }
+        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
+        void tick(SharedManagerPtr) override {}
+        void validateData(SharedManagerPtr) override {}
+        void validateModules(SharedManagerPtr) override {}
     };
 
     class TestUtility : public Utility
     {
     public:
         TestUtility() {}
-        ~TestUtility() {}
-        bool createData(SharedManagerPtr) { return false; }
-        std::string getName() const { return "TestUtility"; }
-        std::vector<std::string> getSupportedConfig() { return std::vector<std::string>(); }
-        int getVersion() const { return 1; }
-        bool init(SharedManagerPtr) { return false; }
-        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) {}
-        void validateData(SharedManagerPtr) {}
-        void validateModules(SharedManagerPtr) {}
+        bool createData(SharedManagerPtr) override { return false; }
+        std::string getName() const override { return "TestUtility"; }
+        std::vector<std::string> getSupportedConfig() override { return std::vector<std::string>(); }
+        int getVersion() const override { return 1; }
+        bool init(SharedManagerPtr) override { return false; }
+        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
+        void validateData(SharedManagerPtr) override {}
+        void validateModules(SharedManagerPtr) override {}
     };
 }
 

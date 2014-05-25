@@ -39,21 +39,33 @@ namespace frts
          * @param type The component type.
          * @return The component or null if not found.
          */
-        virtual ComponentPtr getComponent(Component::ComponentType type) const = 0;
+        virtual ComponentPtr getComponent(IdPtr type) const = 0;
 
         /**
          * @brief Check if entity has the given entity.
          * @param type The component type.
          * @return True if entity has component else false.
          */
-        virtual bool hasComponent(Component::ComponentType type) const = 0;
+        virtual bool hasComponent(IdPtr type) const = 0;
 
         /**
          * @brief Remove component from entity.
          * @param type The component type.
          */
-        virtual void removeComponent(Component::ComponentType type) = 0;
+        virtual void removeComponent(IdPtr type) = 0;
     };
+
+    /**
+     * @brief Get and convert a component from a entity to the given type.
+     * @param type The type.
+     * @param entity The entity containing the component
+     * @return The converted component or null.
+     */
+    template<typename ComponentClass>
+    inline std::shared_ptr<ComponentClass> getComponent(IdPtr type, EntityPtr entity)
+    {
+        return castComponent<ComponentClass>(type, entity->getComponent(type));
+    }
 
     /**
      * @brief Hash function object for entities.

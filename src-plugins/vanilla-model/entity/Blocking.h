@@ -43,17 +43,6 @@ namespace frts
          */
         virtual void removeBlock(IdPtr block) = 0;
     };
-
-    /**
-     * @brief Get Blocking component if entity has it.
-     * @param entity The entity.
-     * @return The component or null.
-     */
-    inline BlockingPtr getBlocking(EntityPtr entity)
-    {
-        auto component = entity->getComponent(Blocking::getComponentType());
-        return std::static_pointer_cast<Blocking>(component);
-    }
 }
 
 #endif // FRTS_BLOCKING_H

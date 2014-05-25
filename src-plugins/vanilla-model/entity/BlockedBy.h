@@ -2,11 +2,10 @@
 #define FRTS_BLOCKEDBY_H
 
 #include "Component.h"
-#include "Entity.h"
-
 #include <frts/shared>
 
 #include <memory>
+#include <string>
 #include <unordered_set>
 
 
@@ -48,17 +47,6 @@ namespace frts
          */
         virtual void removeBlock(IdPtr block) = 0;
     };
-
-    /**
-     * @brief Get BlockedBy component if entity has it.
-     * @param entity The entity.
-     * @return The component or null.
-     */
-    inline BlockedByPtr getBlockedBy(EntityPtr entity)
-    {
-        auto component = entity->getComponent(BlockedBy::getComponentType());
-        return std::static_pointer_cast<BlockedBy>(component);
-    }
 }
 
 #endif // FRTS_BLOCKEDBY_H
