@@ -39,8 +39,8 @@ TEST_CASE("Entity.", "[entity]")
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
-    frts::IdPtr id = frts::makeId(frts::ComponentIds::sortOrder());
     frts::SortOrderPtr component = frts::makeSortOrder(shared);
+    frts::IdPtr id = component->getComponentType();
     frts::EntityPtr entity = frts::makeEntity();
 
     REQUIRE_FALSE(entity->hasComponent(id));

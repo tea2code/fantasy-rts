@@ -59,7 +59,7 @@ namespace frts
          */
         struct SortOrdered
         {
-            SortOrdered(IdPtr componentType = nullptr)
+            SortOrdered(IdPtr componentType)
                 : componentType{componentType}
             {}
 

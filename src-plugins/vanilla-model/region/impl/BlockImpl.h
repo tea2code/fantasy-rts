@@ -6,6 +6,7 @@
 #include <region/WriteableBlock.h>
 
 #include <memory>
+#include <set>
 #include <stdexcept>
 
 
@@ -26,7 +27,7 @@ namespace frts
          */
         BlockImpl(IdPtr blockingType, IdPtr sortOrderType);
 
-        EntitySet getByComponent(IdPtr componentType) const override;
+        std::vector<EntityPtr> getByComponent(IdPtr componentType) const override;
         bool has(EntityPtr entity) const override;
         void insert(EntityPtr entity) override;
         bool isBlocking(BlockedByPtr blockedBy) const override;
@@ -74,9 +75,14 @@ namespace frts
             IdPtr blockingType;
         };
 
+        /**
+         * @brief Ordered set of entities.
+         */
+        using EntitySet = std::multiset<EntityPtr, SortOrder::SortOrdered>;
+
     private:
         IdPtr blockingType;
-        EntitySet entities;
+        std::unique_ptr<EntitySet> entities;
     };
 
     /**

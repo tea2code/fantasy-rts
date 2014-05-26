@@ -1,5 +1,6 @@
 #include "EntityImpl.h"
 
+#include <algorithm>
 #include <stdexcept>
 
 

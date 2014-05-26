@@ -2,11 +2,12 @@
 
 #include "LogStub.h"
 
-#include <region/RegionGenerator.h>
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/SortOrderImpl.h>
+#include <region/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionImpl.h>
@@ -34,15 +35,21 @@ TEST_CASE("Block.", "[region]")
     frts::BlockingPtr blocking = frts::makeBlocking(shared);
     blocking->addBlock(block1);
 
+    frts::SortOrderPtr sortOrder = frts::makeSortOrder(shared);
+    frts::IdPtr sort = sortOrder->getComponentType();
+
     frts::EntityPtr entity1 = frts::makeEntity();
     entity1->addComponent(blockedBy1);
     entity1->addComponent(blocking);
+    entity1->addComponent(sortOrder);
     frts::EntityPtr entity2 = frts::makeEntity();
     entity2->addComponent(blockedBy1);
     entity2->addComponent(blocking);
+    entity2->addComponent(sortOrder);
     frts::EntityPtr entity3 = frts::makeEntity();
     entity3->addComponent(blockedBy1);
     entity3->addComponent(blocking);
+    entity3->addComponent(sortOrder);
     frts::EntityPtr entity4 = frts::makeEntity();
     entity4->addComponent(blockedBy1);
     entity4->addComponent(blocking);
@@ -52,7 +59,6 @@ TEST_CASE("Block.", "[region]")
     frts::EntityPtr entity6 = frts::makeEntity();
     entity6->addComponent(blockedBy1);
     entity6->addComponent(blocking);
-
 
     frts::BlockImplPtr blockImpl = frts::makeBlock(
                 frts::makeId(frts::ComponentIds::blocking()),
@@ -64,23 +70,23 @@ TEST_CASE("Block.", "[region]")
     blockImpl->insert(entity3);
     blockImpl->insert(entity4);
 
-//    auto dynamicEntities = block->getByType(frts::Entity::Type::Dynamic);
-//    REQUIRE(dynamicEntities.size() == 3);
-//    auto it = dynamicEntities.begin();
-//    REQUIRE(*it == entity2);
-//    std::advance(it, 1);
-//    REQUIRE(*it == entity3);
-//    std::advance(it, 1);
-//    REQUIRE(*it == entity1);
+    auto sortEntities = block->getByComponent(sort);
+    REQUIRE(sortEntities.size() == 3);
+    auto it = sortEntities.begin();
+    REQUIRE(*it == entity1);
+    std::advance(it, 1);
+    REQUIRE(*it == entity2);
+    std::advance(it, 1);
+    REQUIRE(*it == entity3);
 
-//    blockImpl->remove(entity3);
+    blockImpl->remove(entity3);
 
-//    dynamicEntities = block->getByType(frts::Entity::Type::Dynamic);
-//    REQUIRE(dynamicEntities.size() == 2);
-//    it = dynamicEntities.begin();
-//    REQUIRE(*it == entity2);
-//    std::advance(it, 1);
-//    REQUIRE(*it == entity1);
+    sortEntities = block->getByComponent(sort);
+    REQUIRE(sortEntities.size() == 2);
+    it = sortEntities.begin();
+    REQUIRE(*it == entity1);
+    std::advance(it, 1);
+    REQUIRE(*it == entity2);
 
     REQUIRE(block->has(entity4));
     REQUIRE_FALSE(block->has(entity5));
@@ -212,75 +218,92 @@ namespace frts
 
 TEST_CASE("Region.", "[region]")
 {
-//    frts::BlockingPtr blockedBy1 = frts::makeBlocking(true, false);
-//    frts::BlockingPtr blockedBy2 = frts::makeBlocking(false, false);
-//    frts::BlockingPtr blocking = frts::makeBlocking(true, false);
+    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
-//    frts::DynamicEntityPtr entity1 = frts::makeDynamicEntity(blockedBy1, blocking, nullptr, 3);
-//    frts::DynamicEntityPtr entity2 = frts::makeDynamicEntity(blockedBy2, blocking, nullptr, 1);
+    frts::IdPtr block1 = frts::makeId("block1");
+    frts::IdPtr block2 = frts::makeId("block2");
 
-//    frts::PointPtr point1 = frts::makePoint(0, 0, -1);
-//    frts::PointPtr point2 = frts::makePoint(0, 0, 0);
-//    frts::PointPtr point3 = frts::makePoint(0, 0, 1);
+    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(shared);
+    blockedBy1->addBlock(block1);
+    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(shared);
+    blockedBy2->addBlock(block2);
+    frts::BlockingPtr blocking = frts::makeBlocking(shared);
+    blocking->addBlock(block1);
 
-//    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
-//    frts::RegionPtr region = frts::makeRegion(2, 2, regionGenerator);
+    frts::SortOrderPtr sortOrder = frts::makeSortOrder(shared);
+    frts::IdPtr sort = sortOrder->getComponentType();
 
-//    region->setPos(entity1, point1);
-//    region->setPos(entity2, point3);
+    frts::EntityPtr entity1 = frts::makeEntity();
+    entity1->addComponent(blockedBy1);
+    entity1->addComponent(blocking);
+    entity1->addComponent(sortOrder);
+    frts::EntityPtr entity2 = frts::makeEntity();
+    entity2->addComponent(blockedBy1);
+    entity2->addComponent(blocking);
 
-//    SECTION("Find free random position.")
-//    {
-//        for (int i = 0; i < 100; ++i)
-//        {
-//            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1);
-//            REQUIRE(point != point1);
-//        }
-//    }
+    frts::PointPtr point1 = frts::makePoint(0, 0, -1);
+    frts::PointPtr point2 = frts::makePoint(0, 0, 0);
+    frts::PointPtr point3 = frts::makePoint(0, 0, 1);
 
-//    SECTION("Find free neightbors.")
-//    {
-//        std::vector<frts::PointPtr> correctPositions = {
-//            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
-//        };
-//        auto positions = region->findFreeNeighbors(point2, blocking);
-//        REQUIRE(positions.size() == correctPositions.size());
-//        for(auto pos : positions)
-//        {
-//            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
-//                    correctPositions.end());
-//        }
-//    }
+    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
+    frts::RegionPtr region = frts::makeRegion(2, 2, regionGenerator);
 
-//    SECTION("Get neightbors.")
-//    {
-//        std::vector<frts::PointPtr> correctPositions = {
-//            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
-//        };
-//        auto positions = region->getNeightbors(point2);
-//        REQUIRE(positions.size() == correctPositions.size());
-//        for(auto pos : positions)
-//        {
-//            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
-//                    correctPositions.end());
-//        }
-//    }
+    region->setPos(entity1, point1);
+    region->setPos(entity2, point3);
 
-//    SECTION("Get block.")
-//    {
-//        auto block = region->getBlock(point1);
-//        auto foundEntity = *block->getByType(frts::Entity::Type::Dynamic).begin();
-//        REQUIRE(foundEntity == entity1);
-//    }
+    SECTION("Find free random position.")
+    {
+        for (int i = 0; i < 100; ++i)
+        {
+            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1);
+            REQUIRE(point != point1);
+        }
+    }
 
-//    SECTION("Get/set/remove entities.")
-//    {
-//        REQUIRE(region->getPos(entity1) == point1);
-//        REQUIRE(region->getPos(entity1) != point2);
-//        region->setPos(entity1, point2);
-//        REQUIRE(region->getPos(entity1) != point1);
-//        REQUIRE(region->getPos(entity1) == point2);
-//        region->removeEntity(entity1);
-//        REQUIRE(region->getPos(entity1) == nullptr);
-//    }
+    SECTION("Find free neightbors.")
+    {
+        std::vector<frts::PointPtr> correctPositions = {
+            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
+        };
+        auto positions = region->findFreeNeighbors(point2, blockedBy1);
+        REQUIRE(positions.size() == correctPositions.size());
+        for(auto pos : positions)
+        {
+            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
+                    correctPositions.end());
+        }
+    }
+
+    SECTION("Get neightbors.")
+    {
+        std::vector<frts::PointPtr> correctPositions = {
+            frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
+        };
+        auto positions = region->getNeightbors(point2);
+        REQUIRE(positions.size() == correctPositions.size());
+        for(auto pos : positions)
+        {
+            REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
+                    correctPositions.end());
+        }
+    }
+
+    SECTION("Get block.")
+    {
+        auto block = region->getBlock(point1);
+        auto foundEntity = *block->getByComponent(sort).begin();
+        REQUIRE(foundEntity == entity1);
+    }
+
+    SECTION("Get/set/remove entities.")
+    {
+        REQUIRE(region->getPos(entity1) == point1);
+        REQUIRE(region->getPos(entity1) != point2);
+        region->setPos(entity1, point2);
+        REQUIRE(region->getPos(entity1) != point1);
+        REQUIRE(region->getPos(entity1) == point2);
+        region->removeEntity(entity1);
+        REQUIRE(region->getPos(entity1) == nullptr);
+    }
 }
