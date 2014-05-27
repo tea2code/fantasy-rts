@@ -65,7 +65,7 @@ void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
     try
     {
-        IdPtr id = shared->makeId("ModelFactory");
+        IdPtr id = shared->makeId("frts/ModelFactory");
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)

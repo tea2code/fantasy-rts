@@ -11,7 +11,7 @@ namespace frts
     class VanillaModelPlugin : public Plugin
     {
     public:
-        const std::string modelFactory = "ModelFactory";
+        const std::string modelFactory = "frts/ModelFactory";
 
     public:
         VanillaModelPlugin();

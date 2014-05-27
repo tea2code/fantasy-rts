@@ -7,15 +7,15 @@
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/SortOrderImpl.h>
+#include <region/impl/BlockImpl.h>
 
-#include <frts/log>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
 #include <memory>
 
 
-TEST_CASE("Blocking.", "[entity]")
+TEST_CASE("Blocking/BlockedBy.", "[entity]")
 {
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
@@ -52,4 +52,41 @@ TEST_CASE("Entity.", "[entity]")
 
     entity->removeComponent(id);
     REQUIRE(entity->getComponent(id) == nullptr);
+}
+
+TEST_CASE("SortOrder.", "[entity]")
+{
+    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+
+    frts::SortOrderPtr sortOrder1 = frts::makeSortOrder(shared, frts::SortOrder::DEFAULT);
+    frts::SortOrderPtr sortOrder2 = frts::makeSortOrder(shared, frts::SortOrder::TOP);
+    frts::SortOrderPtr sortOrder3 = frts::makeSortOrder(shared, frts::SortOrder::BOTTOM);
+
+    frts::IdPtr sort = sortOrder1->getComponentType();
+
+    frts::EntityPtr entity1 = frts::makeEntity();
+    entity1->addComponent(sortOrder1);
+    frts::EntityPtr entity2 = frts::makeEntity();
+    entity2->addComponent(sortOrder2);
+    frts::EntityPtr entity3 = frts::makeEntity();
+    entity3->addComponent(sortOrder3);
+
+    frts::BlockImplPtr blockImpl = frts::makeBlock(
+                frts::makeId(frts::ComponentIds::blocking()),
+                frts::makeId(frts::ComponentIds::sortOrder()));
+    frts::BlockPtr block = blockImpl;
+
+    blockImpl->insert(entity1);
+    blockImpl->insert(entity2);
+    blockImpl->insert(entity3);
+
+    auto sortEntities = block->getByComponent(sort);
+    REQUIRE(sortEntities.size() == 3);
+    auto it = sortEntities.begin();
+    REQUIRE(*it == entity3);
+    std::advance(it, 1);
+    REQUIRE(*it == entity1);
+    std::advance(it, 1);
+    REQUIRE(*it == entity2);
 }

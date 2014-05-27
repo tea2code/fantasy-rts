@@ -12,7 +12,6 @@
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionImpl.h>
 
-#include <frts/log>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 

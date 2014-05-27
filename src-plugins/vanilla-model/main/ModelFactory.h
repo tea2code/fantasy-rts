@@ -23,7 +23,13 @@ namespace frts
     public:
         virtual ~ModelFactory() {}
 
-        
+       /**
+        * @brief Create a new point.
+        * @param x The x coordinate.
+        * @param y The y coordinate.
+        * @param z The z coordinate.
+        * @return The point pointer.
+        */
         virtual PointPtr makePoint(Point::value x, Point::value y, Point::value z) = 0;
     };
 }

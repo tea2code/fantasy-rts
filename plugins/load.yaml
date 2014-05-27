@@ -12,10 +12,10 @@ renderModules:
     # Nothing yet.
     
 updateModules:
-    - VanillaDemo
+    - frts/VanillaDemo
     
 utilities:
-    - ModelFactory
+    - frts/ModelFactory
     
 configurations:
     # Nothing yet.
