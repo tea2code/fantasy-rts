@@ -1,13 +1,11 @@
 #include "BlockingImpl.h"
 
-#include <entity/ComponentIds.h>
-
 #include <algorithm>
 #include <iterator>
 
 
-frts::BlockingImpl::BlockingImpl(SharedManagerPtr shared)
-    : type{shared->makeId(ComponentIds::blocking())}
+frts::BlockingImpl::BlockingImpl(IdPtr type)
+    : type{type}
 {
 }
 

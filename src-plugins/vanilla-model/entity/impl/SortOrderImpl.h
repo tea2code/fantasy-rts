@@ -11,7 +11,7 @@ namespace frts
     class SortOrderImpl : public SortOrder
     {
     public:
-        SortOrderImpl(SharedManagerPtr shared);
+        SortOrderImpl(IdPtr type);
 
         IdPtr getComponentType() override;
         int getSortOrder() const override;
@@ -24,12 +24,12 @@ namespace frts
 
     /**
      * @brief Create new SortOrder.
-     * @param shared The shared manager.
+     * @param type The component type.
      * @return The SortOrder.
      */
-    inline SortOrderPtr makeSortOrder(SharedManagerPtr shared, int sortOrder = SortOrder::Position::DEFAULT)
+    inline SortOrderPtr makeSortOrder(IdPtr type, int sortOrder = SortOrder::Position::DEFAULT)
     {
-        SortOrderPtr component = std::make_shared<SortOrderImpl>(shared);
+        SortOrderPtr component = std::make_shared<SortOrderImpl>(type);
         component->setSortOrder(sortOrder);
         return component;
     }

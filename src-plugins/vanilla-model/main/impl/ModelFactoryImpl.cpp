@@ -1,8 +1,15 @@
 #include "ModelFactoryImpl.h"
 
+#include <entity/ComponentIds.h>
+#include <entity/impl/BlockedByBuilder.h>
+#include <entity/impl/BlockingBuilder.h>
+#include <entity/impl/SortOrderBuilder.h>
+#include <main/ModelError.h>
 #include <region/impl/PointImpl.h>
 
 #include <frts/shared>
+
+#include <boost/format.hpp>
 
 #include <memory>
 
@@ -14,6 +21,20 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr)
 {
     return false;
+}
+
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
+{
+    auto it = componentBuilders.find(builderId);
+    if(it != componentBuilders.end())
+    {
+        return it->second->build(shared);
+    }
+    else
+    {
+        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
+        throw UnknownBuilderError(msg.str());
+    }
 }
 
 std::string frts::ModelFactoryImpl::getName() const
@@ -31,8 +52,23 @@ int frts::ModelFactoryImpl::getVersion() const
     return 1;
 }
 
-bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr)
+bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
 {
+    // BlockedBy.
+    IdPtr id = shared->makeId(ComponentIds::blockedBy());
+    ComponentBuilderPtr componentBuilder = makeBlockedByBuilder();
+    registerComponentBuilder(id, componentBuilder);
+
+    // Blocking.
+    id = shared->makeId(ComponentIds::blocking());
+    componentBuilder = makeBlockingBuilder();
+    registerComponentBuilder(id, componentBuilder);
+
+    // SortOrder.
+    id = shared->makeId(ComponentIds::sortOrder());
+    componentBuilder = makeSortOrderBuilder();
+    registerComponentBuilder(id, componentBuilder);
+
     return false;
 }
 
@@ -44,6 +80,11 @@ frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y,
 void frts::ModelFactoryImpl::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
 {
 
+}
+
+void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
+{
+    componentBuilders[builderId] = builder;
 }
 
 void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr)

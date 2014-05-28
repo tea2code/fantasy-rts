@@ -1,7 +1,5 @@
 #include <catch.hpp>
 
-#include "LogStub.h"
-
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
@@ -17,17 +15,14 @@
 
 TEST_CASE("Blocking/BlockedBy.", "[entity]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
-
     frts::IdPtr block1 = frts::makeId("block1");
     frts::IdPtr block2 = frts::makeId("block2");
 
-    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy1->addBlock(block1);
-    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy2->addBlock(block2);
-    frts::BlockingPtr blocking = frts::makeBlocking(shared);
+    frts::BlockingPtr blocking = frts::makeBlocking(frts::makeId(frts::ComponentIds::blocking()));
     blocking->addBlock(block1);
 
     REQUIRE(blocking->blocks(blockedBy1));
@@ -36,10 +31,7 @@ TEST_CASE("Blocking/BlockedBy.", "[entity]")
 
 TEST_CASE("Entity.", "[entity]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
-
-    frts::SortOrderPtr component = frts::makeSortOrder(shared);
+    frts::SortOrderPtr component = frts::makeSortOrder(frts::makeId(frts::ComponentIds::sortOrder()));
     frts::IdPtr id = component->getComponentType();
     frts::EntityPtr entity = frts::makeEntity();
 
@@ -56,14 +48,11 @@ TEST_CASE("Entity.", "[entity]")
 
 TEST_CASE("SortOrder.", "[entity]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::IdPtr sort = frts::makeId(frts::ComponentIds::sortOrder());
 
-    frts::SortOrderPtr sortOrder1 = frts::makeSortOrder(shared, frts::SortOrder::DEFAULT);
-    frts::SortOrderPtr sortOrder2 = frts::makeSortOrder(shared, frts::SortOrder::TOP);
-    frts::SortOrderPtr sortOrder3 = frts::makeSortOrder(shared, frts::SortOrder::BOTTOM);
-
-    frts::IdPtr sort = sortOrder1->getComponentType();
+    frts::SortOrderPtr sortOrder1 = frts::makeSortOrder(sort, frts::SortOrder::DEFAULT);
+    frts::SortOrderPtr sortOrder2 = frts::makeSortOrder(sort, frts::SortOrder::TOP);
+    frts::SortOrderPtr sortOrder3 = frts::makeSortOrder(sort, frts::SortOrder::BOTTOM);
 
     frts::EntityPtr entity1 = frts::makeEntity();
     entity1->addComponent(sortOrder1);

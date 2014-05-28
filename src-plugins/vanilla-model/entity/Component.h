@@ -21,6 +21,8 @@ namespace frts
     class Component
     {
     public:
+        virtual ~Component() {}
+
         /**
          * @brief Get type of component.
          * @return The component type.

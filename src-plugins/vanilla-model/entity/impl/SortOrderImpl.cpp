@@ -1,9 +1,7 @@
 #include "SortOrderImpl.h"
 
-#include <entity/ComponentIds.h>
-
-frts::SortOrderImpl::SortOrderImpl(SharedManagerPtr shared)
-    : type{shared->makeId(ComponentIds::sortOrder())}
+frts::SortOrderImpl::SortOrderImpl(IdPtr type)
+    : type{type}
 {
 
 }

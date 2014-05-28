@@ -12,7 +12,7 @@ namespace frts
     class BlockedByImpl : public BlockedBy
     {
     public:
-        BlockedByImpl(SharedManagerPtr shared);
+        BlockedByImpl(IdPtr type);
 
         void addBlock(IdPtr block) override;
         const BlockSet getBlocks() const override;
@@ -26,12 +26,12 @@ namespace frts
 
     /**
      * @brief Create new BlockedBy.
-     * @param shared The shared manager.
+     * @param type The component type.
      * @return The BlockedBy.
      */
-    inline BlockedByPtr makeBlockedBy(SharedManagerPtr shared)
+    inline BlockedByPtr makeBlockedBy(IdPtr type)
     {
-        return std::make_shared<BlockedByImpl>(shared);
+        return std::make_shared<BlockedByImpl>(type);
     }
 }
 

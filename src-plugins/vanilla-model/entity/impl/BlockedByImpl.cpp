@@ -1,10 +1,8 @@
 #include "BlockedByImpl.h"
 
-#include <entity/ComponentIds.h>
 
-
-frts::BlockedByImpl::BlockedByImpl(SharedManagerPtr shared)
-    : type{shared->makeId(ComponentIds::blockedBy())}
+frts::BlockedByImpl::BlockedByImpl(IdPtr type)
+    : type{type}
 {
 }
 

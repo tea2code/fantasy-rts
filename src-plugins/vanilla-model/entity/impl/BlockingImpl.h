@@ -12,7 +12,7 @@ namespace frts
     class BlockingImpl : public Blocking
     {
     public:
-        BlockingImpl(SharedManagerPtr shared);
+        BlockingImpl(IdPtr type);
 
         void addBlock(IdPtr block) override;
         bool blocks(BlockedByPtr blockedBy) override;
@@ -26,12 +26,12 @@ namespace frts
 
     /**
      * @brief Create new BlockedBy.
-     * @param shared The shared manager.
+     * @param type The component type.
      * @return The BlockedBy.
      */
-    inline BlockingPtr makeBlocking(SharedManagerPtr shared)
+    inline BlockingPtr makeBlocking(IdPtr type)
     {
-        return std::make_shared<BlockingImpl>(shared);
+        return std::make_shared<BlockingImpl>(type);
     }
 }
 

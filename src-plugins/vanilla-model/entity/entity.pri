@@ -3,7 +3,10 @@ SOURCES += \
     entity/impl/BaseBlocking.cpp \
     entity/impl/BlockedByImpl.cpp \
     entity/impl/BlockingImpl.cpp \
-    entity/impl/SortOrderImpl.cpp
+    entity/impl/SortOrderImpl.cpp \
+    entity/impl/BlockedByBuilder.cpp \
+    entity/impl/BlockingBuilder.cpp \
+    entity/impl/SortOrderBuilder.cpp
     
 
 HEADERS += \
@@ -17,4 +20,8 @@ HEADERS += \
     entity/impl/BlockingImpl.h \
     entity/SortOrder.h \
     entity/impl/SortOrderImpl.h \
-    entity/ComponentIds.h
+    entity/ComponentIds.h \
+    entity/ComponentBuilder.h \
+    entity/impl/BlockedByBuilder.h \
+    entity/impl/BlockingBuilder.h \
+    entity/impl/SortOrderBuilder.h

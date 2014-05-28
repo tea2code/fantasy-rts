@@ -1,7 +1,5 @@
 #include <catch.hpp>
 
-#include "LogStub.h"
-
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
@@ -21,20 +19,17 @@
 
 TEST_CASE("Block.", "[region]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
-
     frts::IdPtr block1 = frts::makeId("block1");
     frts::IdPtr block2 = frts::makeId("block2");
 
-    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy1->addBlock(block1);
-    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy2->addBlock(block2);
-    frts::BlockingPtr blocking = frts::makeBlocking(shared);
+    frts::BlockingPtr blocking = frts::makeBlocking(frts::makeId(frts::ComponentIds::blocking()));
     blocking->addBlock(block1);
 
-    frts::SortOrderPtr sortOrder = frts::makeSortOrder(shared);
+    frts::SortOrderPtr sortOrder = frts::makeSortOrder(frts::makeId(frts::ComponentIds::sortOrder()));
     frts::IdPtr sort = sortOrder->getComponentType();
 
     frts::EntityPtr entity1 = frts::makeEntity();
@@ -217,20 +212,17 @@ namespace frts
 
 TEST_CASE("Region.", "[region]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
-
     frts::IdPtr block1 = frts::makeId("block1");
     frts::IdPtr block2 = frts::makeId("block2");
 
-    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy1->addBlock(block1);
-    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(shared);
+    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy2->addBlock(block2);
-    frts::BlockingPtr blocking = frts::makeBlocking(shared);
+    frts::BlockingPtr blocking = frts::makeBlocking(frts::makeId(frts::ComponentIds::blocking()));
     blocking->addBlock(block1);
 
-    frts::SortOrderPtr sortOrder = frts::makeSortOrder(shared);
+    frts::SortOrderPtr sortOrder = frts::makeSortOrder(frts::makeId(frts::ComponentIds::sortOrder()));
     frts::IdPtr sort = sortOrder->getComponentType();
 
     frts::EntityPtr entity1 = frts::makeEntity();

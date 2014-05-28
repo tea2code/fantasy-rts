@@ -22,29 +22,27 @@ Include using `ModelFactory`.
 
 A block describes a certain point in the world consisting of the entities at this point.
 
-### Blocking
+### Components
 
-Entities have the ability to block other entities. This is implemented by the blocking class. It allows different types of blocking and acts as an indication of what a entity can block and by what it is blocked.
+#### BlockedBy
+
+Entities have the ability to block other entities. BlockedBy describes by what a entity is blocked.
+
+#### Blocking
+
+Entities have the ability to block other entities. Blocking describes what a entity blocks.
+
+#### SortOrder
+
+Entities may have a certain order in a block. The sort order component stores this attribute.
+
+### Component Builder
+
+Components are created using builders which can be registered at the model factory.
 
 ### Entity
 
-Entities represent all interactable objects in the world:
-
-#### Dynamic Entity
-
-Dynamic entities are mostly living things which act on their own.
-
-#### Resource
-
-The resource entity represents are usable resource which can be dropped by other entities.
-
-#### Static Entity
-
-Static entities are most of the inanimated objects. They often drop resource entities.
-
-#### Tile
-
-Tiles represent the current floor. They usually don't allow any interaction.
+Entities represent all interactable objects in the world. They consist of components representing their abilities, attributes...
 
 ### Point
 
@@ -53,3 +51,7 @@ A Point represents a 3D coordinate in the current region. It consists of x, y an
 ### Region
 
 The region consists of blocks at certain positions and represents the game world. It allows to set the position of entities in the world and retrieve them or whole blocks. 
+
+### Region Generator
+
+The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
