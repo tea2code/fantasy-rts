@@ -29,6 +29,16 @@ frts::ComponentPtr frts::EntityImpl::getComponent(IdPtr type) const
     return result;
 }
 
+std::vector<frts::ComponentPtr> frts::EntityImpl::getComponents() const
+{
+    std::vector<ComponentPtr> result;
+    for (auto pair : components)
+    {
+        result.push_back(pair.second);
+    }
+    return result;
+}
+
 bool frts::EntityImpl::hasComponent(IdPtr type) const
 {
     return getComponent(type) != nullptr;

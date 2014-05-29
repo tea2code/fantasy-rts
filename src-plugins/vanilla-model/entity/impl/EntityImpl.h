@@ -18,6 +18,7 @@ namespace frts
 
         void addComponent(ComponentPtr component) override;
         ComponentPtr getComponent(IdPtr type) const override;
+        std::vector<ComponentPtr> getComponents() const override;
         bool hasComponent(IdPtr type) const override;
         void removeComponent(IdPtr type) override;
 

@@ -46,6 +46,14 @@ TEST_CASE("Entity.", "[entity]")
 
     entity->removeComponent(id);
     REQUIRE(entity->getComponent(id) == nullptr);
+
+    entity->addComponent(component);
+    entity->addComponent(component);
+
+    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource("wood")));
+    entity->addComponent(hasResource);
+
+    REQUIRE(entity->getComponents().size() == 2);
 }
 
 TEST_CASE("Resource.", "[entity]")

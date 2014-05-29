@@ -8,6 +8,7 @@
 
 #include <functional>
 #include <memory>
+#include <vector>
 
 
 namespace frts
@@ -40,6 +41,12 @@ namespace frts
          * @return The component or null if not found.
          */
         virtual ComponentPtr getComponent(IdPtr type) const = 0;
+
+        /**
+         * @brief Get all components.
+         * @return The components.
+         */
+        virtual std::vector<ComponentPtr> getComponents() const = 0;
 
         /**
          * @brief Check if entity has the given entity.
