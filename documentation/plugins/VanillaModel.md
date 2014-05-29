@@ -10,13 +10,15 @@ Default path of plugin is `vanilla-model/vanilla-model`.
 
 Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillamodel` (e.g. `#include <frts/vanillamodel>`).
 
-## Interface
+An additional include `frts/vanillamodeldev` exists if you need to develope your own components... It contains the normal include and some additional headers like for component builder or the region interface.
+
+## Interfaces
 
 ### Model Factory
 
 Utility module which acts as a factory to create model related objects like points, entities...
 
-Include using `ModelFactory`.
+Load using `ModelFactory` in the utilities section of the load file.
 
 ### Block
 
@@ -51,6 +53,7 @@ Entities with this component represent a resource. The type of this component is
 
 Default ID is `frts.vanillamodel.entity.component.isresource.<resource-name>`.    
 For example: `frts.vanillamodel.entity.component.isresource.wood`
+
 #### SortOrder
 
 Entities may have a certain order in a block. The sort order component stores this attribute.

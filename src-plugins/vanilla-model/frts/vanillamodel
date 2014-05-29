@@ -1,11 +1,17 @@
 #ifndef FRTS_VANILLAMODEL_INCLUDE_H
 #define FRTS_VANILLAMODEL_INCLUDE_H
 
+#include <entity/BlockedBy.h>
+#include <entity/Blocking.h>
 #include <entity/Component.h>
+#include <entity/ComponentIds.h>
 #include <entity/Entity.h>
+#include <entity/HasResource.h>
+#include <entity/IsResource.h>
+#include <entity/SortOrder.h>
 #include <main/ModelFactory.h>
 #include <region/Block.h>
 #include <region/Point.h>
-#include <region/Region.h>
+#include <resource/ResourceLock.h>
 
 #endif // FRTS_VANILLAMODEL_INCLUDE_H

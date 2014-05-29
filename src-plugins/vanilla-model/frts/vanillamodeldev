@@ -1,0 +1,12 @@
+#ifndef FRTS_VANILLAMODELDEV_INCLUDE_H
+#define FRTS_VANILLAMODELDEV_INCLUDE_H
+
+#include "vanillamodel"
+
+#include <entity/ComponentBuilder.h>
+#include <region/Region.h>
+#include <region/RegionGenerator.h>
+#include <region/WriteableBlock.h>
+#include <Resource/LockableResourceManager.h>
+
+#endif // FRTS_VANILLAMODELDEV_INCLUDE_H

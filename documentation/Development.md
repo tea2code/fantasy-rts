@@ -115,7 +115,7 @@ There is no particular code style enfored. Just some simple recommendations whic
 
 ### Namespace
 
-The application core uses the namespace *frts* while plugins should use their own. Any namespace should be short but descriptive.
+The application core and all vanilla plugins use the namespace *frts*. It is recommended that 3rd party plugins use their own namespace. Any namespace should be short but descriptive.
 
 ### Order of Includes
 
