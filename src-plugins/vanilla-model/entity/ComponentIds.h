@@ -21,6 +21,16 @@ namespace frts
             return "frts.vanillamodel.entity.component.blocking";
         }
 
+        static std::string hasResource(const std::string& resource)
+        {
+            return "frts.vanillamodel.entity.component.hasresource." + resource;
+        }
+
+        static std::string isResource(const std::string& resource)
+        {
+            return "frts.vanillamodel.entity.component.isresource." + resource;
+        }
+
         static std::string sortOrder()
         {
             return "frts.vanillamodel.entity.component.sortorder";

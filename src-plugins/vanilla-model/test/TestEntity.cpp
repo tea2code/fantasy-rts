@@ -4,6 +4,8 @@
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/HasResourceImpl.h>
+#include <entity/impl/IsResourceImpl.h>
 #include <entity/impl/SortOrderImpl.h>
 #include <region/impl/BlockImpl.h>
 
@@ -44,6 +46,23 @@ TEST_CASE("Entity.", "[entity]")
 
     entity->removeComponent(id);
     REQUIRE(entity->getComponent(id) == nullptr);
+}
+
+TEST_CASE("Resource.", "[entity]")
+{
+    frts::EntityPtr entity = frts::makeEntity();
+
+    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource("wood")));
+    frts::IdPtr id = hasResource->getComponentType();
+    entity->addComponent(hasResource);
+
+    REQUIRE(frts::getComponent<frts::HasResource>(id, entity) != nullptr);
+
+    frts::IsResourcePtr isResource = frts::makeIsResource(frts::makeId(frts::ComponentIds::isResource("wood")));
+    id = isResource->getComponentType();
+    entity->addComponent(isResource);
+
+    REQUIRE(frts::getComponent<frts::IsResource>(id, entity) != nullptr);
 }
 
 TEST_CASE("SortOrder.", "[entity]")

@@ -3,6 +3,8 @@
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingBuilder.h>
+#include <entity/impl/HasResourceBuilder.h>
+#include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
 #include <main/ModelError.h>
 #include <region/impl/PointImpl.h>
@@ -62,6 +64,17 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     // Blocking.
     id = shared->makeId(ComponentIds::blocking());
     componentBuilder = makeBlockingBuilder();
+    registerComponentBuilder(id, componentBuilder);
+
+    // HasResource.
+    std::string resource = "wood";
+    id = shared->makeId(ComponentIds::hasResource(resource));
+    componentBuilder = makeHasResourceBuilder(resource);
+    registerComponentBuilder(id, componentBuilder);
+
+    // IsResource.
+    id = shared->makeId(ComponentIds::isResource(resource));
+    componentBuilder = makeIsResourceBuilder(resource);
     registerComponentBuilder(id, componentBuilder);
 
     // SortOrder.

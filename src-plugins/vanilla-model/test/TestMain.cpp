@@ -27,6 +27,12 @@ TEST_CASE("MainFactory.", "[main]")
         id = shared->makeId(frts::ComponentIds::blocking());
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
 
+        id = shared->makeId(frts::ComponentIds::hasResource("wood"));
+        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+
+        id = shared->makeId(frts::ComponentIds::isResource("wood"));
+        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+
         id = shared->makeId(frts::ComponentIds::sortOrder());
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
     }

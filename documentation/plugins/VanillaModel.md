@@ -24,17 +24,38 @@ A block describes a certain point in the world consisting of the entities at thi
 
 ### Components
 
+Components describe the attributes, abilities... of a entity.
+
 #### BlockedBy
 
 Entities have the ability to block other entities. BlockedBy describes by what a entity is blocked.
+
+Default ID is `frts.vanillamodel.entity.component.blockedby`.
 
 #### Blocking
 
 Entities have the ability to block other entities. Blocking describes what a entity blocks.
 
+Default ID is `frts.vanillamodel.entity.component.blocking`.
+
+#### HasResource
+
+Entities may contain resources which can be harvested. The type of this component is also the resource type.
+
+Default ID is `frts.vanillamodel.entity.component.hasresource.<resource-name>`.    
+For example: `frts.vanillamodel.entity.component.hasresource.wood`
+
+#### IsResource
+
+Entities with this component represent a resource. The type of this component is also the resource type.
+
+Default ID is `frts.vanillamodel.entity.component.isresource.<resource-name>`.    
+For example: `frts.vanillamodel.entity.component.isresource.wood`
 #### SortOrder
 
 Entities may have a certain order in a block. The sort order component stores this attribute.
+
+Default ID is `frts.vanillamodel.entity.component.sortorder`.
 
 ### Component Builder
 

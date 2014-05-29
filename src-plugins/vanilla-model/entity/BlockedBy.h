@@ -2,10 +2,10 @@
 #define FRTS_BLOCKEDBY_H
 
 #include "Component.h"
+
 #include <frts/shared>
 
 #include <memory>
-#include <string>
 #include <unordered_set>
 
 
@@ -14,7 +14,7 @@ namespace frts
     class BlockedBy;
 
     /**
-     * @brief Pointer to Blocking.
+     * @brief Pointer to BlockedBy.
      */
     using BlockedByPtr = std::shared_ptr<BlockedBy>;
 

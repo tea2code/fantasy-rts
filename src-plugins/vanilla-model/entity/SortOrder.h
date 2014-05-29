@@ -3,10 +3,10 @@
 
 #include "Component.h"
 #include "Entity.h"
+
 #include <frts/shared>
 
 #include <memory>
-#include <string>
 
 
 namespace frts
