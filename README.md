@@ -18,8 +18,9 @@ Current Version: **8 (Spring 2014: Full plugin based architecture.)**
 Reached: *Spring 2014: Full plugin based architecture.*
 
 - Version 9: Implementation of region, entity and resource data.
-- Version 10: Input support with SDL2.
-- Version 11: Graphic support with SDL2.
+- Version 10: Configuration of model plugin.
+- Version 11: Input support with SDL2.
+- Version 12: Graphic support with SDL2.
 
 Major goals:
 
