@@ -16,7 +16,7 @@ const frts::BlockedBy::BlockSet frts::BlockedByImpl::getBlocks() const
     return blocking.getBlocks();
 }
 
-frts::IdPtr frts::BlockedByImpl::getComponentType()
+frts::IdPtr frts::BlockedByImpl::getComponentType() const
 {
     return type;
 }

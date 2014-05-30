@@ -4,13 +4,12 @@
 #include <entity/ComponentIds.h>
 
 
-frts::IsResourceBuilder::IsResourceBuilder(const std::string& resource)
-    : resource{resource}
+frts::IsResourceBuilder::IsResourceBuilder()
 {
 }
 
 frts::ComponentPtr frts::IsResourceBuilder::build(SharedManagerPtr shared)
 {
-    IdPtr id = shared->makeId(ComponentIds::isResource(resource));
+    IdPtr id = shared->makeId(ComponentIds::isResource());
     return makeIsResource(id);
 }

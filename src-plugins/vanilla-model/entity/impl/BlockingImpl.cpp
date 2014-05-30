@@ -27,7 +27,7 @@ bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
     return !intersect.empty();
 }
 
-frts::IdPtr frts::BlockingImpl::getComponentType()
+frts::IdPtr frts::BlockingImpl::getComponentType() const
 {
     return type;
 }

@@ -11,9 +11,14 @@ namespace frts
     public:
         HasResourceImpl(IdPtr type);
 
-        IdPtr getComponentType() override;
+        void addResource(IdPtr resourceType);
+        IdPtr getComponentType() const override;
+        ResourceSet getResources() const;
+        bool hasResource(IdPtr resourceType) const;
+        void removeResource(IdPtr resourceType);
 
     private:
+        ResourceSet resources;
         IdPtr type;
     };
 

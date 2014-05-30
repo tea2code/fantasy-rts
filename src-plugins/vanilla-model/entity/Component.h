@@ -27,7 +27,7 @@ namespace frts
          * @brief Get type of component.
          * @return The component type.
          */
-        virtual IdPtr getComponentType() = 0;
+        virtual IdPtr getComponentType() const = 0;
     };
 
     /**

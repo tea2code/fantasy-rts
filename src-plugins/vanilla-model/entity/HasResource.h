@@ -4,6 +4,7 @@
 #include "Component.h"
 
 #include <memory>
+#include <unordered_set>
 
 
 namespace frts
@@ -21,7 +22,35 @@ namespace frts
     class HasResource : public Component
     {
     public:
+        using ResourceSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
+
+    public:
         virtual ~HasResource() {}
+
+        /**
+         * @brief Add resource.
+         * @param resourceType The resource type.
+         */
+        virtual void addResource(IdPtr resourceType) = 0;
+
+        /**
+         * @brief Get all resources.
+         * @return The resources.
+         */
+        virtual ResourceSet getResources() const = 0;
+
+        /**
+         * @brief Check if entity has resource.
+         * @param resourceType The resource type.
+         * @return
+         */
+        virtual bool hasResource(IdPtr resourceType) const = 0;
+
+        /**
+         * @brief Remove the resource.
+         * @param resourceType The resource type.
+         */
+        virtual void removeResource(IdPtr resourceType) = 0;
     };
 }
 

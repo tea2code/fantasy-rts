@@ -13,7 +13,7 @@ namespace frts
     public:
         SortOrderImpl(IdPtr type);
 
-        IdPtr getComponentType() override;
+        IdPtr getComponentType() const override;
         int getSortOrder() const override;
         void setSortOrder(int sortOrder) override;
 

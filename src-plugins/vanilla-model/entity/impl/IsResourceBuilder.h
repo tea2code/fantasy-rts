@@ -11,17 +11,18 @@ namespace frts
     class IsResourceBuilder : public ComponentBuilder
     {
     public:
-        IsResourceBuilder(const std::string& resource);
+        IsResourceBuilder();
 
         ComponentPtr build(SharedManagerPtr shared) override;
-
-    private:
-        std::string resource;
     };
 
-    inline ComponentBuilderPtr makeIsResourceBuilder(const std::string& resource)
+    /**
+     * @brief Create new IsResourceBuilder.
+     * @return The IsResourceBuilder.
+     */
+    inline ComponentBuilderPtr makeIsResourceBuilder()
     {
-        return std::make_shared<IsResourceBuilder>(resource);
+        return std::make_shared<IsResourceBuilder>();
     }
 }
 

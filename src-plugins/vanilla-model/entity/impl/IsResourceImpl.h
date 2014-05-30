@@ -9,22 +9,25 @@ namespace frts
     class IsResourceImpl : public IsResource
     {
     public:
-        IsResourceImpl(IdPtr type);
+        IsResourceImpl(IdPtr componentType);
 
-        IdPtr getComponentType() override;
+        IdPtr getComponentType() const override;
+        IdPtr getResourceType() const override;
+        void setResourceType(IdPtr resourceType) override;
 
     private:
-        IdPtr type;
+        IdPtr componentType;
+        IdPtr resourceType;
     };
 
     /**
      * @brief Create new IsResource.
-     * @param type The component and resource type.
+     * @param componentType The component type.
      * @return The IsResource.
      */
-    inline IsResourcePtr makeIsResource(IdPtr type)
+    inline IsResourcePtr makeIsResource(IdPtr componentType)
     {
-        return std::make_shared<IsResourceImpl>(type);
+        return std::make_shared<IsResourceImpl>(componentType);
     }
 }
 

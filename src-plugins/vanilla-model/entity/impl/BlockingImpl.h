@@ -16,7 +16,7 @@ namespace frts
 
         void addBlock(IdPtr block) override;
         bool blocks(BlockedByPtr blockedBy) override;
-        IdPtr getComponentType() override;
+        IdPtr getComponentType() const override;
         void removeBlock(IdPtr block) override;
 
     private:

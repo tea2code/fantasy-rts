@@ -67,14 +67,13 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     registerComponentBuilder(id, componentBuilder);
 
     // HasResource.
-    std::string resource = "wood";
-    id = shared->makeId(ComponentIds::hasResource(resource));
-    componentBuilder = makeHasResourceBuilder(resource);
+    id = shared->makeId(ComponentIds::hasResource());
+    componentBuilder = makeHasResourceBuilder();
     registerComponentBuilder(id, componentBuilder);
 
     // IsResource.
-    id = shared->makeId(ComponentIds::isResource(resource));
-    componentBuilder = makeIsResourceBuilder(resource);
+    id = shared->makeId(ComponentIds::isResource());
+    componentBuilder = makeIsResourceBuilder();
     registerComponentBuilder(id, componentBuilder);
 
     // SortOrder.

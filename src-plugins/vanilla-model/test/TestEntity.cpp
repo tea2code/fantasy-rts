@@ -50,7 +50,7 @@ TEST_CASE("Entity.", "[entity]")
     entity->addComponent(component);
     entity->addComponent(component);
 
-    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource("wood")));
+    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource()));
     entity->addComponent(hasResource);
 
     REQUIRE(entity->getComponents().size() == 2);
@@ -59,18 +59,40 @@ TEST_CASE("Entity.", "[entity]")
 TEST_CASE("Resource.", "[entity]")
 {
     frts::EntityPtr entity = frts::makeEntity();
+    frts::IdPtr resourceId1 = frts::makeId("wood");
+    frts::IdPtr resourceId2 = frts::makeId("food");
 
-    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource("wood")));
+    frts::HasResourcePtr hasResource = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource()));
+    hasResource->addResource(resourceId1);
     frts::IdPtr id = hasResource->getComponentType();
     entity->addComponent(hasResource);
 
-    REQUIRE(frts::getComponent<frts::HasResource>(id, entity) != nullptr);
+    frts::HasResourcePtr foundHasResource = frts::getComponent<frts::HasResource>(id, entity);
+    REQUIRE(foundHasResource != nullptr);
+    REQUIRE(foundHasResource->hasResource(resourceId1));
+    REQUIRE_FALSE(foundHasResource->hasResource(resourceId2));
+    REQUIRE(foundHasResource->getResources().size() == 1);
 
-    frts::IsResourcePtr isResource = frts::makeIsResource(frts::makeId(frts::ComponentIds::isResource("wood")));
+    foundHasResource->addResource(resourceId2);
+
+    REQUIRE(foundHasResource->hasResource(resourceId1));
+    REQUIRE(foundHasResource->hasResource(resourceId2));
+    REQUIRE(foundHasResource->getResources().size() == 2);
+
+    foundHasResource->removeResource(resourceId1);
+
+    REQUIRE_FALSE(foundHasResource->hasResource(resourceId1));
+    REQUIRE(foundHasResource->hasResource(resourceId2));
+    REQUIRE(foundHasResource->getResources().size() == 1);
+
+    frts::IsResourcePtr isResource = frts::makeIsResource(frts::makeId(frts::ComponentIds::isResource()));
+    isResource->setResourceType(resourceId1);
     id = isResource->getComponentType();
     entity->addComponent(isResource);
 
-    REQUIRE(frts::getComponent<frts::IsResource>(id, entity) != nullptr);
+    frts::IsResourcePtr foundIsResource = frts::getComponent<frts::IsResource>(id, entity);
+    REQUIRE(foundIsResource != nullptr);
+    REQUIRE(foundIsResource->getResourceType() == resourceId1);
 }
 
 TEST_CASE("SortOrder.", "[entity]")

@@ -22,6 +22,18 @@ namespace frts
     {
     public:
         virtual ~IsResource() {}
+
+        /**
+         * @brief Get type of resource.
+         * @return The resource type.
+         */
+        virtual IdPtr getResourceType() const = 0;
+
+        /**
+         * @brief Set type of resource.
+         * @param resourceType The resource type.
+         */
+        virtual void setResourceType(IdPtr resourceType) = 0;
     };
 }
 

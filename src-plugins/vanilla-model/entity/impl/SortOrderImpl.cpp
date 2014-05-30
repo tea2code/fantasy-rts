@@ -6,7 +6,7 @@ frts::SortOrderImpl::SortOrderImpl(IdPtr type)
 
 }
 
-frts::IdPtr frts::SortOrderImpl::getComponentType()
+frts::IdPtr frts::SortOrderImpl::getComponentType() const
 {
     return type;
 }
