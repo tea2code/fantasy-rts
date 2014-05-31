@@ -1,7 +1,9 @@
 #ifndef FRTS_RESOURCELOCK_H
 #define FRTS_RESOURCELOCK_H
 
-#include <region/Point.h>
+#include <entity/Entity.h>
+
+#include <frts/shared>
 
 #include <memory>
 
@@ -17,7 +19,8 @@ namespace frts
 
     /**
      * @brief A resource lock prevents other entities from claiming a certain
-     *        resource until it is released.
+     *        resource until it is released. Releasing can happen manually
+     *        but also automatically if all instances of this lock are destroyed.
      */
     class ResourceLock
     {
@@ -25,15 +28,30 @@ namespace frts
         virtual ~ResourceLock() {}
 
         /**
-         * @brief Prevent copying locks.
+         * @brief Get the resource entity.
+         * @return The entity.
          */
-        ResourceLock(const ResourceLock&) = delete;
+        virtual EntityPtr getEntity() const = 0;
 
         /**
-         * @brief Get position of resource.
-         * @return The position.
+         * @brief Get the resource type.
+         * @return The resource type.
          */
-        PointPtr getPos() const;
+        virtual IdPtr getResourceType() const = 0;
+
+        /**
+         * @brief Check if lock is still valid. You should always do this before
+         *        accessing any data of this lock. A lock becomes invalid if
+         *        it is released.
+         * @return True if lock is valid else false.
+         */
+        virtual bool isValid() const = 0;
+
+        /**
+         * @brief Release the lock. It is invalid afterwards. Accessing the entity
+         *        or the resource type is undefined afterwards.
+         */
+        virtual void release() = 0;
     };
 }
 
