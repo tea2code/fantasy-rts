@@ -15,7 +15,7 @@ TEST_CASE("MainFactory.", "[main]")
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
-    frts::ModelFactoryPtr modelFactory = std::make_shared<frts::ModelFactoryImpl>();
+    frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
 
     SECTION("Build components.")
     {

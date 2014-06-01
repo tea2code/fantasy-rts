@@ -31,6 +31,15 @@ namespace frts
     private:
         ComponentBuilderMap componentBuilders;
     };
+
+    /**
+     * @brief Create new ModelFactory.
+     * @return The model factory.
+     */
+    inline ModelFactoryPtr makeModelFactory()
+    {
+        return std::make_shared<ModelFactoryImpl>();
+    }
 }
 
 #endif // FRTS_MODELFACTORYIMPL_H

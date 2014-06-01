@@ -8,9 +8,18 @@
 
 #include <frts/shared>
 
+#include <memory>
+
 
 namespace frts
 {
+    class LockableResourceManager;
+
+    /**
+     * @brief Pointer to LockableResourceManager.
+     */
+    using LockableResourceManagerPtr = std::shared_ptr<LockableResourceManager>;
+
     /**
      * @brief A LockableResourceManager allows to search for resources. If one is
      *        found it will be locked. This means that further searches won't find
@@ -37,6 +46,27 @@ namespace frts
         virtual ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) = 0;
 
         /**
+         * @brief Get entity of lock.
+         * @param lock The resource lock.
+         * @return The entity or null if lock is invalid.
+         */
+        virtual EntityPtr getEntity(ConstResourceLockPtr lock) const = 0;
+
+        /**
+         * @brief Get resource type of lock.
+         * @param lock The resource lock.
+         * @return The resource type or null if lock is invalid.
+         */
+        virtual IdPtr getResourceType(ConstResourceLockPtr lock) const = 0;
+
+        /**
+         * @brief Check if resource lock is still valid.
+         * @param lock The resource lock.
+         * @return True if lock is valid else false.
+         */
+        virtual bool isValid(ConstResourceLockPtr lock) const = 0;
+
+        /**
          * @brief Release the lock.
          * @param lock The resource lock.
          */
@@ -47,7 +77,7 @@ namespace frts
          *        any lock.
          * @param entity The entity.
          */
-        virtual void remove(Entity entity) = 0;
+        virtual void remove(EntityPtr entity) = 0;
     };
 }
 

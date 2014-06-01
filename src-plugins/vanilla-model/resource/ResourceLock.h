@@ -18,6 +18,11 @@ namespace frts
     using ResourceLockPtr = std::shared_ptr<ResourceLock>;
 
     /**
+     * @brief Const pointer to ResourceLock.
+     */
+    using ConstResourceLockPtr = std::shared_ptr<const ResourceLock>;
+
+    /**
      * @brief A resource lock prevents other entities from claiming a certain
      *        resource until it is released. Releasing can happen manually
      *        but also automatically if all instances of this lock are destroyed.
