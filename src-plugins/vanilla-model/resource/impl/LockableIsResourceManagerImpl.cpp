@@ -1,6 +1,9 @@
 #include "LockableIsResourceManagerImpl.h"
 
-frts::LockableIsResourceManagerImpl::LockableIsResourceManagerImpl()
+
+frts::LockableIsResourceManagerImpl::LockableIsResourceManagerImpl(
+        RegionPtr region, DistanceAlgorithmPtr distAlgo)
+    : distAlgo{distAlgo}, region{region}
 {
 }
 

@@ -1,6 +1,9 @@
 #include "LockableHasResourceManagerImpl.h"
 
-frts::LockableHasResourceManagerImpl::LockableHasResourceManagerImpl()
+
+frts::LockableHasResourceManagerImpl::LockableHasResourceManagerImpl(
+        RegionPtr region, DistanceAlgorithmPtr distAlgo)
+    : distAlgo(distAlgo), region{region}
 {
 }
 
@@ -39,4 +42,3 @@ void frts::LockableHasResourceManagerImpl::remove(EntityPtr entity)
 {
 
 }
-

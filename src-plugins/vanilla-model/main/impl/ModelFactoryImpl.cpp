@@ -56,6 +56,14 @@ int frts::ModelFactoryImpl::getVersion() const
 
 bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
 {
+    /**
+     * @todo The implementation should wait the first call of init() (return true)
+     *       so that other plugins may change the default implementations. Only in
+     *       the second call they initialization is executed. For example should
+     *       the pathfinding plugin being able to set it's own distance algorithm
+     *       instead of the default implementation of Vanilla Model.
+     */
+
     // BlockedBy.
     IdPtr id = shared->makeId(ComponentIds::blockedBy());
     ComponentBuilderPtr componentBuilder = makeBlockedByBuilder();

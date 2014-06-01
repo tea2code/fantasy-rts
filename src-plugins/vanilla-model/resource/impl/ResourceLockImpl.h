@@ -11,12 +11,12 @@ namespace frts
     {
     public:
         ResourceLockImpl(LockableResourceManagerPtr manager);
-        ~ResourceLockImpl();
+        ~ResourceLockImpl() override;
 
-        EntityPtr getEntity() const;
-        IdPtr getResourceType() const;
-        bool isValid() const;
-        void release();
+        EntityPtr getEntity() const override;
+        IdPtr getResourceType() const override;
+        bool isValid() const override;
+        void release() override;
 
     private:
         LockableResourceManagerPtr manager;
