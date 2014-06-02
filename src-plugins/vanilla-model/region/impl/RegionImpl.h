@@ -33,8 +33,7 @@ namespace frts
     private:
         using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,
             PointHash, PointEqual>;
-        using EntityPosMap = std::unordered_map<EntityPtr, PointPtr,
-            EntityHash, EntityEqual>;
+        using EntityPosMap = std::unordered_map<EntityPtr, PointPtr>;
 
     private:
         EntityPosMap entityPos;

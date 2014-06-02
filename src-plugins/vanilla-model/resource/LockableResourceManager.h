@@ -50,21 +50,21 @@ namespace frts
          * @param lock The resource lock.
          * @return The entity or null if lock is invalid.
          */
-        virtual EntityPtr getEntity(ConstResourceLockPtr lock) const = 0;
+        virtual EntityPtr getEntity(ResourceLockPtr lock) const = 0;
 
         /**
          * @brief Get resource type of lock.
          * @param lock The resource lock.
          * @return The resource type or null if lock is invalid.
          */
-        virtual IdPtr getResourceType(ConstResourceLockPtr lock) const = 0;
+        virtual IdPtr getResourceType(ResourceLockPtr lock) const = 0;
 
         /**
          * @brief Check if resource lock is still valid.
          * @param lock The resource lock.
          * @return True if lock is valid else false.
          */
-        virtual bool isValid(ConstResourceLockPtr lock) const = 0;
+        virtual bool isValid(ResourceLockPtr lock) const = 0;
 
         /**
          * @brief Release the lock.

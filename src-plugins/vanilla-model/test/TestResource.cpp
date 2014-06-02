@@ -87,9 +87,11 @@ TEST_CASE("LockableResourceManager.", "[resource]")
 
     SECTION("With HasResource")
     {
-        frts::HasResourcePtr component1 = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource()));
+        frts::IdPtr componentType = frts::makeId(frts::ComponentIds::hasResource());
+
+        frts::HasResourcePtr component1 = frts::makeHasResource(componentType);
         component1->addResource(resourceId1);
-        frts::HasResourcePtr component2 = frts::makeHasResource(frts::makeId(frts::ComponentIds::hasResource()));
+        frts::HasResourcePtr component2 = frts::makeHasResource(componentType);
         component2->addResource(resourceId2);
 
         entity1->addComponent(component1);
@@ -97,7 +99,7 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         // entity3 doesn't get a resource.
         entity4->addComponent(component1);
 
-        frts::LockableResourceManagerPtr resourceManager = frts::makeLockableHasResourceManager(region, distAlgo);
+        frts::LockableResourceManagerPtr resourceManager = frts::makeLockableHasResourceManager(componentType, region, distAlgo);
 
         resourceManager->add(entity1);
         resourceManager->add(entity2);
@@ -164,9 +166,11 @@ TEST_CASE("LockableResourceManager.", "[resource]")
 
     SECTION("With IsResource.")
     {
-        frts::IsResourcePtr component1 = frts::makeIsResource(frts::makeId(frts::ComponentIds::isResource()));
+        frts::IdPtr componentType = frts::makeId(frts::ComponentIds::isResource());
+
+        frts::IsResourcePtr component1 = frts::makeIsResource(componentType);
         component1->setResourceType(resourceId1);
-        frts::IsResourcePtr component2 = frts::makeIsResource(frts::makeId(frts::ComponentIds::isResource()));
+        frts::IsResourcePtr component2 = frts::makeIsResource(componentType);
         component2->setResourceType(resourceId2);
 
         entity1->addComponent(component1);
@@ -174,7 +178,7 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         // entity3 doesn't get a resource.
         entity4->addComponent(component1);
 
-        frts::LockableResourceManagerPtr resourceManager = frts::makeLockableIsResourceManager(region, distAlgo);
+        frts::LockableResourceManagerPtr resourceManager = frts::makeLockableIsResourceManager(componentType, region, distAlgo);
 
         resourceManager->add(entity1);
         resourceManager->add(entity2);

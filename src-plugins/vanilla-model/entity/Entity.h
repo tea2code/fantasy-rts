@@ -73,31 +73,6 @@ namespace frts
     {
         return castComponent<ComponentClass>(type, entity->getComponent(type));
     }
-
-    /**
-     * @brief Hash function object for entities.
-     */
-    struct EntityHash
-    {
-        std::size_t operator() (EntityPtr entity) const
-        {
-            return ptrHash(entity);
-        }
-
-    private:
-        std::hash<EntityPtr> ptrHash;
-    };
-
-    /**
-     * @brief Equal to function object for entities.
-     */
-    struct EntityEqual
-    {
-        bool operator() (EntityPtr lhs, EntityPtr rhs) const
-        {
-            return lhs == rhs;
-        }
-    };
 }
 
 #endif // FRTS_ENTITY_H

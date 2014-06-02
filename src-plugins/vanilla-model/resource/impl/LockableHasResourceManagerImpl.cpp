@@ -1,44 +1,64 @@
 #include "LockableHasResourceManagerImpl.h"
 
+#include <entity/HasResource.h>
+
 
 frts::LockableHasResourceManagerImpl::LockableHasResourceManagerImpl(
-        RegionPtr region, DistanceAlgorithmPtr distAlgo)
-    : distAlgo(distAlgo), region{region}
+        IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
+    : componentType{componentType}, distAlgo(distAlgo), region{region}
 {
 }
 
 void frts::LockableHasResourceManagerImpl::add(EntityPtr entity)
 {
+    HasResourcePtr component = getComponent<HasResource>(componentType, entity);
+    if (component == nullptr)
+    {
+        return;
+    }
 
+    for (auto resourceType : component->getResources())
+    {
+        resourceManager.add(resourceType, entity);
+    }
 }
 
 frts::ResourceLockPtr frts::LockableHasResourceManagerImpl::findNearest(
         IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
 {
-    return nullptr;
+    return resourceManager.findNearest(entityGroup, resourceType, pos);
 }
 
-frts::EntityPtr frts::LockableHasResourceManagerImpl::getEntity(ConstResourceLockPtr lock) const
+frts::EntityPtr frts::LockableHasResourceManagerImpl::getEntity(ResourceLockPtr lock) const
 {
-    return nullptr;
+    return resourceManager.getEntity(lock);
 }
 
-frts::IdPtr frts::LockableHasResourceManagerImpl::getResourceType(ConstResourceLockPtr lock) const
+frts::IdPtr frts::LockableHasResourceManagerImpl::getResourceType(ResourceLockPtr lock) const
 {
-    return nullptr;
+    return resourceManager.getResourceType(lock);
 }
 
-bool frts::LockableHasResourceManagerImpl::isValid(ConstResourceLockPtr lock) const
+bool frts::LockableHasResourceManagerImpl::isValid(ResourceLockPtr lock) const
 {
-    return false;
+    return resourceManager.isValid(lock);
 }
 
 void frts::LockableHasResourceManagerImpl::release(ResourceLockPtr lock)
 {
-
+    resourceManager.release(lock);
 }
 
 void frts::LockableHasResourceManagerImpl::remove(EntityPtr entity)
 {
+    HasResourcePtr component = getComponent<HasResource>(componentType, entity);
+    if (component == nullptr)
+    {
+        return;
+    }
 
+    for (auto resourceType : component->getResources())
+    {
+        resourceManager.remove(resourceType, entity);
+    }
 }
