@@ -28,10 +28,5 @@ bool frts::ResourceLockImpl::isValid() const
 
 void frts::ResourceLockImpl::release()
 {
-    if (!isValid())
-    {
-        return;
-    }
-
     manager->release(shared_from_this());
 }

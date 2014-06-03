@@ -10,7 +10,7 @@
 
 namespace frts
 {
-    class LockableIsResourceManagerImpl : public LockableResourceManager
+    class LockableIsResourceManagerImpl : public LockableResourceManager, public std::enable_shared_from_this<LockableIsResourceManagerImpl>
     {
     public:
         LockableIsResourceManagerImpl(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo);
@@ -25,8 +25,6 @@ namespace frts
 
     private:
         IdPtr componentType;
-        DistanceAlgorithmPtr distAlgo;
-        RegionPtr region;
         BaseLockableResourceManager resourceManager;
     };
 

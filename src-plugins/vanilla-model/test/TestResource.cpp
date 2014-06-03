@@ -164,6 +164,7 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(region->getPos(lock5->getEntity()) == pos1);
     }
 
+    /*
     SECTION("With IsResource.")
     {
         frts::IdPtr componentType = frts::makeId(frts::ComponentIds::isResource());
@@ -242,4 +243,5 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(lock6->isValid());
         REQUIRE(region->getPos(lock5->getEntity()) == pos1);
     }
+    */
 }

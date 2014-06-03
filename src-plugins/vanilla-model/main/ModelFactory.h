@@ -33,7 +33,7 @@ namespace frts
          * @param builderId The builder ID.
          * @return The component.
          */
-        virtual ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared);
+        virtual ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) = 0;
 
        /**
         * @brief Create a new point.

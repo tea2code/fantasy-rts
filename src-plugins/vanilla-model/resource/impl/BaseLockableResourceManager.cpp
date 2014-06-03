@@ -1,31 +1,54 @@
 #include "BaseLockableResourceManager.h"
 
+#include "ResourceLockImpl.h"
 
-frts::BaseLockableResourceManager::BaseLockableResourceManager()
+
+frts::BaseLockableResourceManager::BaseLockableResourceManager(DistanceAlgorithmPtr distAlgo, RegionPtr region)
+    : distAlgo{distAlgo}, region{region}
 {    
 }
 
 void frts::BaseLockableResourceManager::add(IdPtr resourceType, EntityPtr entity)
 {
-    freeResources[resourceType].insert(entity);
+    // Using a set allows to dismiss any contains check.
+    resources[resourceType].insert(entity);
 }
 
-frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
+frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(
+        IdPtr entityGroup, IdPtr resourceType, PointPtr pos, LockableResourceManagerPtr parent)
 {
-    ResourceLockPtr result = nullptr;
+    EntityPtr foundEntity = nullptr;
+    Point::length distance = -1;
 
-    /*
-    auto resourceIt = freeResources.find(resourceType);
-    if (resourceIt != freeResources.end())
+    auto resourceIt = resources.find(resourceType);
+    if (resourceIt != resources.end())
     {
         for (auto entity : resourceIt->second)
         {
-            auto entityIt = entityLocks.find(entity);
-            if (entityIt != entityLocks.end() && entityIt->second->)
+            if (lockedEntities[entityGroup].find(entity) != lockedEntities[entityGroup].end())
+            {
+                continue;
+            }
+
+            Point::length currentDistance = distAlgo->distance(pos, region->getPos(entity));
+            if (distance == -1 || currentDistance < distance)
+            {
+                distance = currentDistance;
+                foundEntity = entity;
+            }
         }
     }
-    */
 
+    ResourceLockPtr result = nullptr;
+    if (foundEntity != nullptr)
+    {
+        result = makeResourceLock(parent);
+        entityLocks[foundEntity].insert(result);
+        lockedEntities[entityGroup].insert(foundEntity);
+        lockInfo[result].entity = foundEntity;
+        lockInfo[result].entityGroup = entityGroup;
+        lockInfo[result].resourceType = resourceType;
+    }
     return result;
 }
 
@@ -63,18 +86,21 @@ void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
         return;
     }
 
-    entityLocks[lockInfo[lock].entity].erase(lock);
+    LockInfo& info = lockInfo[lock];
+    entityLocks[info.entity].erase(lock);
+    lockedEntities[info.entityGroup].erase(info.entity);
     lockInfo.erase(lock);
 }
 
 void frts::BaseLockableResourceManager::remove(IdPtr resourceType, EntityPtr entity)
 {
-    freeResources[resourceType].erase(entity);
+    resources[resourceType].erase(entity);
     auto it = entityLocks.find(entity);
     if (it != entityLocks.end())
     {
         for (auto lock : it->second)
         {
+            lockedEntities[lockInfo[lock].entityGroup].erase(entity);
             lockInfo.erase(lock);
         }
         entityLocks.erase(entity);

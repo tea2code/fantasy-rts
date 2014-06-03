@@ -5,7 +5,7 @@
 
 frts::LockableIsResourceManagerImpl::LockableIsResourceManagerImpl(
         IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
-    : componentType{componentType}, distAlgo{distAlgo}, region{region}
+    : componentType{componentType}, resourceManager{distAlgo, region}
 {
 }
 
@@ -23,7 +23,7 @@ void frts::LockableIsResourceManagerImpl::add(EntityPtr entity)
 frts::ResourceLockPtr frts::LockableIsResourceManagerImpl::findNearest(
         IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
 {
-    return resourceManager.findNearest(entityGroup, resourceType, pos);
+    return resourceManager.findNearest(entityGroup, resourceType, pos, shared_from_this());
 }
 
 frts::EntityPtr frts::LockableIsResourceManagerImpl::getEntity(ResourceLockPtr lock) const
