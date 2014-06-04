@@ -19,7 +19,21 @@ namespace frts
         void release() override;
 
     private:
+        bool isReleased;
         LockableResourceManagerPtr manager;
+    };
+
+    /**
+     * @brief Custom deleter for usage of ResourceLock with smart pointers.
+     */
+    struct ResourceLockDeleter
+    {
+        void operator()(ResourceLockImpl* p)
+        {
+            // First release lock then delete it.
+            p->release();
+            delete p;
+        }
     };
 
     /**
@@ -29,7 +43,8 @@ namespace frts
      */
     inline ResourceLockPtr makeResourceLock(LockableResourceManagerPtr manager)
     {
-        return std::make_shared<ResourceLockImpl>(manager);
+        //return std::make_shared<ResourceLockImpl>(manager);
+        return std::shared_ptr<ResourceLockImpl>(new ResourceLockImpl(manager), ResourceLockDeleter());
     }
 }
 

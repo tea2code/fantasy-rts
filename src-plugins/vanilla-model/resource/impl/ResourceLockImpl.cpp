@@ -2,13 +2,13 @@
 
 
 frts::ResourceLockImpl::ResourceLockImpl(LockableResourceManagerPtr manager)
-    : manager{manager}
+    : isReleased{false}, manager{manager}
 {
 }
 
 frts::ResourceLockImpl::~ResourceLockImpl()
 {
-    release();
+    //release();
 }
 
 frts::EntityPtr frts::ResourceLockImpl::getEntity() const
@@ -28,5 +28,10 @@ bool frts::ResourceLockImpl::isValid() const
 
 void frts::ResourceLockImpl::release()
 {
+    if (isReleased)
+    {
+        return;
+    }
+    isReleased = true;
     manager->release(shared_from_this());
 }

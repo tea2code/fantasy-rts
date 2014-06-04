@@ -161,10 +161,9 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(lock6->getEntity() == entity2);
         REQUIRE(lock6->getResourceType() == resourceId2);
         REQUIRE(lock6->isValid());
-        REQUIRE(region->getPos(lock5->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock6->getEntity()) == pos2);
     }
 
-    /*
     SECTION("With IsResource.")
     {
         frts::IdPtr componentType = frts::makeId(frts::ComponentIds::isResource());
@@ -241,7 +240,6 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(lock6->getEntity() == entity2);
         REQUIRE(lock6->getResourceType() == resourceId2);
         REQUIRE(lock6->isValid());
-        REQUIRE(region->getPos(lock5->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock6->getEntity()) == pos2);
     }
-    */
 }

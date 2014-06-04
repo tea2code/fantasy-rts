@@ -98,10 +98,10 @@ void frts::BaseLockableResourceManager::remove(IdPtr resourceType, EntityPtr ent
     auto it = entityLocks.find(entity);
     if (it != entityLocks.end())
     {
-        for (auto lock : it->second)
+        auto locks = it->second;
+        for (auto lock : locks)
         {
-            lockedEntities[lockInfo[lock].entityGroup].erase(entity);
-            lockInfo.erase(lock);
+            lock->release();
         }
         entityLocks.erase(entity);
     }
