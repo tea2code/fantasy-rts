@@ -2,7 +2,8 @@ HEADERS += \
     main/VanillaModelPlugin.h \
     main/ModelFactory.h \
     main/impl/ModelFactoryImpl.h \
-    main/ModelError.h
+    main/ModelError.h \
+    main/RegionManager.h
 
 SOURCES += \ 
     main/main.cpp \

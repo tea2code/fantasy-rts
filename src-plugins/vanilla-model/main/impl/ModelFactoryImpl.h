@@ -14,14 +14,15 @@ namespace frts
         ModelFactoryImpl();
 
         bool createData(SharedManagerPtr shared) override;
-        ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
+        ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
+        EntityPtr makeEntity() override;
         PointPtr makePoint(Point::value x, Point::value y, Point::value z) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder);
+        void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 

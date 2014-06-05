@@ -3,6 +3,7 @@
 
 #include <entity/Component.h>
 #include <entity/ComponentBuilder.h>
+#include <entity/Entity.h>
 #include <region/Point.h>
 
 #include <frts/module>
@@ -34,6 +35,12 @@ namespace frts
          * @return The component.
          */
         virtual ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) = 0;
+
+        /**
+         * @brief Make an empty enttiy.
+         * @return The entity;
+         */
+        virtual EntityPtr makeEntity() = 0;
 
        /**
         * @brief Create a new point.

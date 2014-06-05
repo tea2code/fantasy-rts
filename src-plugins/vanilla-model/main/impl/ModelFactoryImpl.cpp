@@ -3,6 +3,7 @@
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingBuilder.h>
+#include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
@@ -23,20 +24,6 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr)
 {
     return false;
-}
-
-frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
-{
-    auto it = componentBuilders.find(builderId);
-    if(it != componentBuilders.end())
-    {
-        return it->second->build(shared);
-    }
-    else
-    {
-        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
-        throw UnknownBuilderError(msg.str());
-    }
 }
 
 std::string frts::ModelFactoryImpl::getName() const
@@ -90,6 +77,25 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     registerComponentBuilder(id, componentBuilder);
 
     return false;
+}
+
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
+{
+    auto it = componentBuilders.find(builderId);
+    if(it != componentBuilders.end())
+    {
+        return it->second->build(shared);
+    }
+    else
+    {
+        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
+        throw UnknownBuilderError(msg.str());
+    }
+}
+
+frts::EntityPtr frts::ModelFactoryImpl::makeEntity()
+{
+    return makeEntity();
 }
 
 frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y, Point::value z)
