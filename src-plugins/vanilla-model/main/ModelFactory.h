@@ -9,6 +9,9 @@
 #include <frts/module>
 #include <frts/shared>
 
+#include <memory>
+
+
 namespace frts
 {
     class ModelFactory;

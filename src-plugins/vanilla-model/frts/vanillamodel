@@ -10,6 +10,7 @@
 #include <entity/IsResource.h>
 #include <entity/SortOrder.h>
 #include <main/ModelFactory.h>
+#include <main/RegionManager.h>
 #include <region/Block.h>
 #include <region/Point.h>
 #include <resource/ResourceLock.h>

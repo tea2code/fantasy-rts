@@ -1,5 +1,7 @@
 #include "ModelFactoryImpl.h"
 
+#include "RegionManagerImpl.h"
+
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingBuilder.h>
@@ -21,8 +23,13 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 {
 }
 
-bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr)
+bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
+    // Add region manager to data values.
+    RegionManagerPtr regionManager = makeRegionManager();
+    IdPtr id = shared->makeId(regionManager->identifier);
+    shared->setDataValue(id, regionManager);
+
     return false;
 }
 
@@ -46,7 +53,7 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     /**
      * @todo The implementation should wait the first call of init() (return true)
      *       so that other plugins may change the default implementations. Only in
-     *       the second call they initialization is executed. For example should
+     *       the second call the initialization is executed. For example should
      *       the pathfinding plugin being able to set it's own distance algorithm
      *       instead of the default implementation of Vanilla Model.
      */
