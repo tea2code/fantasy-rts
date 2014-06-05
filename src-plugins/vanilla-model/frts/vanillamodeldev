@@ -7,6 +7,7 @@
 #include <region/Region.h>
 #include <region/RegionGenerator.h>
 #include <region/WriteableBlock.h>
-#include <Resource/LockableResourceManager.h>
+#include <resource/DistanceAlgorithm.h>
+#include <resource/LockableResourceManager.h>
 
 #endif // FRTS_VANILLAMODELDEV_INCLUDE_H
