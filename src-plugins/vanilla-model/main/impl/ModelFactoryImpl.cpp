@@ -102,7 +102,7 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
 
 frts::EntityPtr frts::ModelFactoryImpl::makeEntity()
 {
-    return makeEntity();
+    return frts::makeEntity();
 }
 
 frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y, Point::value z)

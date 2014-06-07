@@ -36,4 +36,18 @@ TEST_CASE("MainFactory.", "[main]")
         id = shared->makeId(frts::ComponentIds::sortOrder());
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
     }
+
+    SECTION("Build empty entity.")
+    {
+        frts::EntityPtr entity = modelFactory->makeEntity();
+        REQUIRE(entity->getComponents().size() == 0);
+    }
+
+    SECTION("Build points.")
+    {
+        frts::PointPtr point = modelFactory->makePoint(1, 2, 3);
+        REQUIRE(point->getX() == 1);
+        REQUIRE(point->getY() == 2);
+        REQUIRE(point->getZ() == 3);
+    }
 }

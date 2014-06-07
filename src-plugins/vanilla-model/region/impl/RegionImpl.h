@@ -27,8 +27,8 @@ namespace frts
         BlockPtr getBlock(PointPtr pos) override;
         std::vector<PointPtr> getNeightbors(PointPtr pos) override;
         PointPtr getPos(EntityPtr entity) override;
-        void removeEntity(EntityPtr entity) override;
-        void setPos(EntityPtr entity, PointPtr pos) override;
+        PointPtr removeEntity(EntityPtr entity) override;
+        PointPtr setPos(EntityPtr entity, PointPtr pos) override;
 
     private:
         using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,

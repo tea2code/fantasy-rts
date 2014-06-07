@@ -70,16 +70,18 @@ namespace frts
         /**
          * @brief Remove entity from region.
          * @param entity The entity.
+         * @return The last position of the entity or null if entity was not in region.
          */
-        virtual void removeEntity(EntityPtr entity) = 0;
+        virtual PointPtr removeEntity(EntityPtr entity) = 0;
 
         /**
          * @brief Add entity at position. This will also move it if it already is
          *        in the region.
          * @param entity The entity.
          * @param pos The position.
+         * @return The previous position of the entity or null if entity was not in region.
          */
-        virtual void setPos(EntityPtr entity, PointPtr pos) = 0;
+        virtual PointPtr setPos(EntityPtr entity, PointPtr pos) = 0;
     };
 }
 

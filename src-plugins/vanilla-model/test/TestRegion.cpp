@@ -291,10 +291,12 @@ TEST_CASE("Region.", "[region]")
     {
         REQUIRE(region->getPos(entity1) == point1);
         REQUIRE(region->getPos(entity1) != point2);
-        region->setPos(entity1, point2);
+        frts::PointPtr lastPos = region->setPos(entity1, point2);
+        REQUIRE(lastPos == point1);
         REQUIRE(region->getPos(entity1) != point1);
         REQUIRE(region->getPos(entity1) == point2);
-        region->removeEntity(entity1);
+        lastPos = region->removeEntity(entity1);
+        REQUIRE(lastPos == point2);
         REQUIRE(region->getPos(entity1) == nullptr);
     }
 }

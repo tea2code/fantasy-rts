@@ -126,7 +126,7 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos)
     return result;
 }
 
-void frts::RegionImpl::removeEntity(EntityPtr entity)
+frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity)
 {
     PointPtr pos = getPos(entity);
     if (pos != nullptr)
@@ -137,16 +137,19 @@ void frts::RegionImpl::removeEntity(EntityPtr entity)
         // Remove from entity pos map.
         entityPos.erase(entity);
     }
+    return pos;
 }
 
-void frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos)
+frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos)
 {
     // Remove from block if exists.
-    removeEntity(entity);
+    PointPtr lastPos = removeEntity(entity);
 
     // Insert in block.
     getWriteableBlock(pos)->insert(entity);
 
     // Insert in entity pos map.
     entityPos[entity] = pos;
+
+    return lastPos;
 }

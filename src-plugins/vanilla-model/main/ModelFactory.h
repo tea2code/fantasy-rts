@@ -40,7 +40,7 @@ namespace frts
         virtual ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) = 0;
 
         /**
-         * @brief Make an empty enttiy.
+         * @brief Make an empty entity.
          * @return The entity;
          */
         virtual EntityPtr makeEntity() = 0;
