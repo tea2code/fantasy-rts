@@ -22,6 +22,7 @@ namespace frts
         EntityPtr makeEntity() override;
         PointPtr makePoint(Point::value x, Point::value y, Point::value z) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
+        bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;

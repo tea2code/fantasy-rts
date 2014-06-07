@@ -40,6 +40,11 @@ void frts::VanillaDemoTickable::parseConfig(const std::string&, frts::ConfigNode
 
 }
 
+bool frts::VanillaDemoTickable::preInit(frts::SharedManagerPtr)
+{
+    return false;
+}
+
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
     // Do not adopt this practice. Use frame number only for quick trial and error.

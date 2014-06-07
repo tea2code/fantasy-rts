@@ -17,6 +17,7 @@ namespace frts
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
+        bool preInit(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared);
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;

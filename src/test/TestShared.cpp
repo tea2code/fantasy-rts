@@ -74,6 +74,7 @@ namespace frts
         int getVersion() const override { return 1; }
         bool init(SharedManagerPtr) override { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
+        bool preInit(frts::SharedManagerPtr) override { return false; }
         void tick(SharedManagerPtr) override {}
         void validateData(SharedManagerPtr) override {}
         void validateModules(SharedManagerPtr) override {}
@@ -89,6 +90,7 @@ namespace frts
         int getVersion() const override { return 1; }
         bool init(SharedManagerPtr) override { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
+        bool preInit(frts::SharedManagerPtr) override { return false; }
         void validateData(SharedManagerPtr) override {}
         void validateModules(SharedManagerPtr) override {}
     };

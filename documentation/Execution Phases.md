@@ -22,38 +22,42 @@ In the third phase the modules are created using the loaded modules. Failing to 
 
 Every module has now the chance to check if any required module is missing by accessing the shared manager.
 
-### 5. Create Data
+### 5. Preinitialize Modules.
+
+A first initialization step which can be used to preconfigure modules. For example influence the creation of data. Should only be used for cases where no other phase is fitting.
+
+### 6. Create Data
 
 The modules should create any data objects in the shared manager in this phase. It is possible to request another execution if required. This allows for example to let another module create it's data objects and then modify them afterwards.
 
-### 6. Register Main Config Keys
+### 7. Register Main Config Keys
 
 Modules must register main config keys in this step. This allows the application core to call for every config key the appropriate modules.
 
-### 7. Read Config
+### 8. Read Config
 
 The application core parse the config in this step and whenever if encounters a registered key it will call the modules registered for this key.
 
-### 8. Validate Data
+### 9. Validate Data
 
 After reading all configuration files the modules can validate the data. This includes their own data but also data from other modules.
 
-### 9. Initialize Modules
+### 10. Initialize Modules
 
 The application core will call the *init()* method in this phase. Every module can now initialize it's internal state and make last changes to the shared manager. 
 
-### 10. Startup
+### 11. Startup
 
 Before running the game a initial set of modules is executed. This allows for example to load a specific map. The frame data of the shared manager doesn't have any defined value and is most likely to be null.
 
-### 11. Run Game
+### 12. Run Game
 
 The most important phase. The application core will start the main loop which runs until the quit flag is set on the shared manager.
 
-### 12. Shutdown
+### 13. Shutdown
 
 After stopping the main loop another set of modules is executed. This may involve cleanup modules and saving the current game. Like in phase 10 the frame data doesn't have any defined value and may or may not be null.
 
-### 13. Application Finished
+### 14. Application Finished
 
 The end. Have a nice day.

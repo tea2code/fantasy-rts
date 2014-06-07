@@ -108,6 +108,24 @@ void frts::Application::loadPlugins(const std::string& rootPath,
     }
 }
 
+void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+{
+    std::vector<ModulePtr> todo = modules;
+    std::vector<ModulePtr> repeat;
+    while (!todo.empty())
+    {
+        for(auto& module : modules)
+        {
+            if (module->preInit(shared))
+            {
+                repeat.push_back(module);
+            }
+        }
+        todo = repeat;
+        repeat.clear();
+    }
+}
+
 void frts::Application::readConfig(const std::map<std::string, std::vector<ModulePtr>>& supportedKeys,
                                    SharedManagerPtr shared,
                                    const std::string& rootPath,

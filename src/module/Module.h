@@ -62,6 +62,13 @@ namespace frts
         virtual void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) = 0;
 
         /**
+         * @brief Preinitialize the module.
+         * @param shared The shared manager.
+         * @return True if another execution of this method is requested else false.
+         */
+        virtual bool preInit(SharedManagerPtr shared) = 0;
+
+        /**
          * @brief Validate the current data values.
          * @throws DataViolation if a data value is invalid.
          * @param shared The shared manager.

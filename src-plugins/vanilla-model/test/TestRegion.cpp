@@ -129,7 +129,6 @@ TEST_CASE("Point.", "[region]")
         REQUIRE(point3->getX() == 4);
         REQUIRE(point3->getY() == 6);
         REQUIRE(point3->getZ() == 2);
-
     }
 
     SECTION("Substraction.")
@@ -177,7 +176,6 @@ TEST_CASE("Point.", "[region]")
         REQUIRE(point2 != point3);
     }
 }
-
 
 namespace frts
 {

@@ -81,6 +81,13 @@ namespace frts
                          const std::vector<std::string>& pluginPaths);
 
         /**
+         * @brief Preinitialize given modules with the shared manager.
+         * @param modules The modules to initialize.
+         * @param shared The shared manager.
+         */
+        void preInit(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+
+        /**
          * @brief Read configuration.
          * @param supportedKeys List of supported configuration keys and the
          *                      associated modules.

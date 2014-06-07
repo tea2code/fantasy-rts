@@ -34,6 +34,11 @@ void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedM
 
 }
 
+bool Utility::preInit(frts::SharedManagerPtr)
+{
+    return false;
+}
+
 void Utility::validateData(frts::SharedManagerPtr)
 {
     // I miss something.

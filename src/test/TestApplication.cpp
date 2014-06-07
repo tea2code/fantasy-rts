@@ -161,7 +161,12 @@ TEST_CASE("Execute start phases.", "[application]")
                                   frts::ModuleViolation);
             }
 
-            SECTION("Phase 5: Create data.")
+            SECTION("Phase 5: Preinitialize modules.")
+            {
+                REQUIRE_NOTHROW(app.preInit(modules, shared));
+            }
+
+            SECTION("Phase 6: Create data.")
             {
                 REQUIRE_NOTHROW(app.createData(updateModules, shared));
                 REQUIRE_NOTHROW(app.createData(utilityModules, shared));
@@ -172,7 +177,7 @@ TEST_CASE("Execute start phases.", "[application]")
                 REQUIRE(data->getName() == "TestDataValue");
             }
 
-            SECTION("Phase 6: Register main config keys.")
+            SECTION("Phase 7: Register main config keys.")
             {
                 auto supportedKeys = app.registerConfigKeys(modules);
                 REQUIRE(supportedKeys.size() == 3);
@@ -180,7 +185,7 @@ TEST_CASE("Execute start phases.", "[application]")
                 REQUIRE(supportedKeys.at("ConfigKey2").size() == 1);
                 REQUIRE(supportedKeys.at("ConfigKey3").size() == 1);
 
-                SECTION("Phase 7: Read config.")
+                SECTION("Phase 8: Read config.")
                 {
                     // Execute the following sub sections after phase 6 because we need
                     // the config keys.
@@ -192,14 +197,14 @@ TEST_CASE("Execute start phases.", "[application]")
                 }
             }
 
-            SECTION("Phase 8: Validate data.")
+            SECTION("Phase 9: Validate data.")
             {
                 REQUIRE_NOTHROW(app.validateData(updateModules, shared));
                 REQUIRE_THROWS_AS(app.validateData(utilityModules, shared),
                                   frts::DataViolation);
             }
 
-            SECTION("Phase 9: Initialize modules.")
+            SECTION("Phase 10: Initialize modules.")
             {
                 REQUIRE_NOTHROW(app.init(modules, shared));
             }

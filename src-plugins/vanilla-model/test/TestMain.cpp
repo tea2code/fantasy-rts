@@ -51,3 +51,8 @@ TEST_CASE("MainFactory.", "[main]")
         REQUIRE(point->getZ() == 3);
     }
 }
+
+TEST_CASE("RegionManager.", "[main]")
+{
+
+}
