@@ -20,7 +20,7 @@ A block describes a certain point in the world consisting of the entities at thi
 
 ### Components
 
-Components describe the attributes, abilities... of a entity.
+Components describe the attributes, abilities... of a entity. Their default IDs can be found in the static class ComponentIds.
 
 #### BlockedBy
 
@@ -67,6 +67,14 @@ Entities represent all interactable objects in the world. They consist of compon
 Utility module which acts as a factory to create model related objects like points, entities...
 
 Load using `frts/ModelFactory` in the utilities section of the load file.
+
+### Model Reseter
+
+The model reseter handles model related clean up at the end of each frame. It should be placed as the last render module. Currently the following resets are done:
+
+- Reset changed positions.
+
+Load using `frts/ModelReseter` in the render module section of the load file.
 
 ### Point
 

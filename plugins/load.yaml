@@ -9,7 +9,7 @@ shutdownModules:
     # Nothing yet.
     
 renderModules:
-    # Nothing yet.
+    - frts/ModelReseter
     
 updateModules:
     - frts/VanillaDemo

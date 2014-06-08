@@ -10,10 +10,10 @@
 
 namespace frts
 {
-    class LockableIsResourceManagerImpl : public LockableResourceManager, public std::enable_shared_from_this<LockableIsResourceManagerImpl>
+    class LockableIsResourceManager : public LockableResourceManager, public std::enable_shared_from_this<LockableIsResourceManager>
     {
     public:
-        LockableIsResourceManagerImpl(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo);
+        LockableIsResourceManager(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo);
 
         void add(EntityPtr entity) override;
         ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
@@ -37,7 +37,7 @@ namespace frts
      */
     inline LockableResourceManagerPtr makeLockableIsResourceManager(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
     {
-        return std::make_shared<LockableIsResourceManagerImpl>(componentType, region, distAlgo);
+        return std::make_shared<LockableIsResourceManager>(componentType, region, distAlgo);
     }
 }
 

@@ -9,8 +9,8 @@
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <resource/impl/DistanceAlgorithmImpl.h>
-#include <resource/impl/LockableHasResourceManagerImpl.h>
-#include <resource/impl/LockableIsResourceManagerImpl.h>
+#include <resource/impl/LockableHasResourceManager.h>
+#include <resource/impl/LockableIsResourceManager.h>
 #include <resource/impl/ResourceLockImpl.h>
 
 #include <shared/impl/IdImpl.h>

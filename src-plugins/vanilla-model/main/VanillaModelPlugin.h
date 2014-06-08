@@ -12,6 +12,7 @@ namespace frts
     {
     public:
         const std::string modelFactory = "frts/ModelFactory";
+        const std::string modelReseter = "frts/ModelReseter";
 
     public:
         VanillaModelPlugin();

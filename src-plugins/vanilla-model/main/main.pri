@@ -6,11 +6,13 @@ HEADERS += \
     main/RegionManager.h \
     main/impl/RegionManagerImpl.h \
     main/RegionConfig.h \
-    main/impl/RegionConfigImpl.h
+    main/impl/RegionConfigImpl.h \
+    main/ModelReseter.h
 
 SOURCES += \ 
     main/main.cpp \
     main/VanillaModelPlugin.cpp \
     main/impl/ModelFactoryImpl.cpp \
     main/impl/RegionManagerImpl.cpp \
-    main/impl/RegionConfigImpl.cpp
+    main/impl/RegionConfigImpl.cpp \
+    main/ModelReseter.cpp

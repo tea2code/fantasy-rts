@@ -1,6 +1,7 @@
 #include "VanillaModelPlugin.h"
 
 #include "impl/ModelFactoryImpl.h"
+#include "ModelReseter.h"
 
 #include <frts/shared>
 
@@ -16,7 +17,11 @@ frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
     frts::ModulePtr result = nullptr;
     if (id->toString() == modelFactory)
     {
-        result = std::make_shared<ModelFactoryImpl>();
+        result = makeModelFactory();
+    }
+    else if (id->toString() == modelReseter)
+    {
+        result == makeModelReseter();
     }
     return result;
 }

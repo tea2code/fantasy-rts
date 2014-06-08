@@ -8,12 +8,13 @@
 #include <entity/impl/IsResourceImpl.h>
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
+#include <main/ModelReseter.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <resource/impl/DistanceAlgorithmImpl.h>
-#include <resource/impl/LockableHasResourceManagerImpl.h>
-#include <resource/impl/LockableIsResourceManagerImpl.h>
+#include <resource/impl/LockableHasResourceManager.h>
+#include <resource/impl/LockableIsResourceManager.h>
 
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
@@ -21,7 +22,7 @@
 #include <memory>
 
 
-TEST_CASE("MainFactory.", "[main]")
+TEST_CASE("ModelFactory.", "[main]")
 {
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
@@ -62,6 +63,28 @@ TEST_CASE("MainFactory.", "[main]")
         REQUIRE(point->getY() == 2);
         REQUIRE(point->getZ() == 3);
     }
+}
+
+TEST_CASE("ModelReseter.", "[main]")
+{
+    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+
+    frts::TickablePtr modelReseter = frts::makeModelReseter();
+    REQUIRE_THROWS_AS(modelReseter->validateData(shared), frts::DataViolation);
+
+    frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
+    modelFactory->createData(shared);
+    modelFactory->init(shared);
+    REQUIRE_NOTHROW(modelReseter->validateData(shared));
+
+    frts::IdPtr regionManagerId = shared->makeId(frts::RegionManager::identifier());
+    frts::RegionManagerPtr regionManager = std::static_pointer_cast<frts::RegionManager>(shared->getDataValue(regionManagerId));
+    regionManager->addChangedPos(frts::makePoint(0, 0, 0));
+    REQUIRE(regionManager->getChangedPos().size() == 1);
+
+    modelReseter->tick(shared);
+    REQUIRE(regionManager->getChangedPos().empty());
 }
 
 TEST_CASE("RegionManager.", "[main]")
