@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **8 (Spring 2014: Full plugin based architecture.)**
+Current Version: **9**
 
 - Version 1: Configuration.
 - Version 2: Kernel.
@@ -24,7 +24,7 @@ Reached: *Spring 2014: Full plugin based architecture.*
 
 Major goals:
 
-- Later 2014: Playable demo  including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
+- Later 2014: Playable demo. Including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
 
 ## Coming Soon
 
