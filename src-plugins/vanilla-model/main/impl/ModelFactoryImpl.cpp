@@ -1,5 +1,6 @@
 #include "ModelFactoryImpl.h"
 
+#include "RegionConfigImpl.h"
 #include "RegionManagerImpl.h"
 
 #include <entity/ComponentIds.h>
@@ -11,6 +12,11 @@
 #include <entity/impl/SortOrderBuilder.h>
 #include <main/ModelError.h>
 #include <region/impl/PointImpl.h>
+#include <region/impl/RegionGeneratorImpl.h>
+#include <region/impl/RegionImpl.h>
+#include <resource/impl/DistanceAlgorithmImpl.h>
+#include <resource/impl/LockableHasResourceManagerImpl.h>
+#include <resource/impl/LockableIsResourceManagerImpl.h>
 
 #include <frts/shared>
 
@@ -25,12 +31,10 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
-    // Add region manager to data values.
-    RegionManagerPtr regionManager = makeRegionManager(region, resourceManager,
-                                                       resourceEntityManager,
-                                                       hasResourceType, isResourceType);
-    IdPtr id = shared->makeId(regionManager->identifier);
-    shared->setDataValue(id, regionManager);
+    // Create region config data.
+    RegionConfigPtr regionConfig = makeRegionConfig();
+    IdPtr regionConfigId = shared->makeId(regionConfig->identifier());
+    shared->setDataValue(regionConfigId, regionConfig);
 
     return false;
 }
@@ -52,30 +56,84 @@ int frts::ModelFactoryImpl::getVersion() const
 
 bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
 {
+    // Components:
     // BlockedBy.
-    IdPtr id = shared->makeId(ComponentIds::blockedBy());
+    IdPtr blockedById = shared->makeId(ComponentIds::blockedBy());
     ComponentBuilderPtr componentBuilder = makeBlockedByBuilder();
-    registerComponentBuilder(id, componentBuilder);
+    registerComponentBuilder(blockedById, componentBuilder);
 
     // Blocking.
-    id = shared->makeId(ComponentIds::blocking());
+    IdPtr blockingId = shared->makeId(ComponentIds::blocking());
     componentBuilder = makeBlockingBuilder();
-    registerComponentBuilder(id, componentBuilder);
+    registerComponentBuilder(blockingId, componentBuilder);
 
     // HasResource.
-    id = shared->makeId(ComponentIds::hasResource());
+    IdPtr hasResourceId = shared->makeId(ComponentIds::hasResource());
     componentBuilder = makeHasResourceBuilder();
-    registerComponentBuilder(id, componentBuilder);
+    registerComponentBuilder(hasResourceId, componentBuilder);
 
     // IsResource.
-    id = shared->makeId(ComponentIds::isResource());
+    IdPtr isResourceId = shared->makeId(ComponentIds::isResource());
     componentBuilder = makeIsResourceBuilder();
-    registerComponentBuilder(id, componentBuilder);
+    registerComponentBuilder(isResourceId, componentBuilder);
 
     // SortOrder.
-    id = shared->makeId(ComponentIds::sortOrder());
+    IdPtr sortOrderId = shared->makeId(ComponentIds::sortOrder());
     componentBuilder = makeSortOrderBuilder();
-    registerComponentBuilder(id, componentBuilder);
+    registerComponentBuilder(sortOrderId, componentBuilder);
+
+    // Region Manager:
+    // Initialize if not already done.
+    IdPtr regionConfigId = shared->makeId(RegionConfigImpl::identifier());
+    RegionConfigPtr regionConfig = std::static_pointer_cast<RegionConfig>(shared->getDataValue(regionConfigId));
+
+    if (regionGenerator == nullptr)
+    {
+        regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
+                                              regionConfig->getMapSizeX(),
+                                              regionConfig->getMapSizeY());
+    }
+
+    if (region == nullptr)
+    {
+        region = makeRegion(regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
+                            regionGenerator);
+    }
+
+    if (distAlgo == nullptr)
+    {
+        distAlgo = makeDistanceAlgorithm();
+    }
+
+    if (hasResourceType == nullptr)
+    {
+        hasResourceType = shared->makeId(ComponentIds::hasResource());
+    }
+
+    if (isResourceType == nullptr)
+    {
+        isResourceType = shared->makeId(ComponentIds::isResource());
+    }
+
+    if (resourceEntityManager == nullptr)
+    {
+        resourceEntityManager = makeLockableHasResourceManager(hasResourceType,
+                                                               region, distAlgo);
+    }
+
+    if (resourceManager == nullptr)
+    {
+        resourceManager = makeLockableIsResourceManager(isResourceType, region,
+                                                        distAlgo);
+    }
+
+    // Add region manager to data values. This should happen in createData() but
+    // is currently not possible.
+    RegionManagerPtr regionManager = makeRegionManager(region, resourceManager,
+                                                       resourceEntityManager,
+                                                       hasResourceType, isResourceType);
+    IdPtr regionManagerId = shared->makeId(regionManager->identifier());
+    shared->setDataValue(regionManagerId, regionManager);
 
     return false;
 }
@@ -109,22 +167,49 @@ void frts::ModelFactoryImpl::parseConfig(const std::string&, frts::ConfigNodePtr
 
 }
 
-bool frts::ModelFactoryImpl::preInit(frts::SharedManagerPtr shared)
+bool frts::ModelFactoryImpl::preInit(frts::SharedManagerPtr)
 {
-    /**
-     * @todo The implementation should wait the first call of init() (return true)
-     *       so that other plugins may change the default implementations. Only in
-     *       the second call the initialization is executed. For example should
-     *       the pathfinding plugin being able to set it's own distance algorithm
-     *       instead of the default implementation of Vanilla Model.
-     */
-
     return false;
 }
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
 {
     componentBuilders[builderId] = builder;
+}
+
+void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo)
+{
+    this->distAlgo = distAlgo;
+}
+
+void frts::ModelFactoryImpl::setHasResourceType(IdPtr hasResourceType)
+{
+    this->hasResourceType = hasResourceType;
+}
+
+void frts::ModelFactoryImpl::setIsResourceType(IdPtr isResourceType)
+{
+    this->isResourceType = isResourceType;
+}
+
+void frts::ModelFactoryImpl::setRegion(RegionPtr region)
+{
+    this->region = region;
+}
+
+void frts::ModelFactoryImpl::setRegionGenerator(RegionGeneratorPtr regionGenerator)
+{
+    this->regionGenerator = regionGenerator;
+}
+
+void frts::ModelFactoryImpl::setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager)
+{
+    this->resourceEntityManager = resourceEntityManager;
+}
+
+void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resourceManager)
+{
+    this->resourceManager = resourceManager;
 }
 
 void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr)

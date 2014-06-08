@@ -35,9 +35,6 @@ namespace frts
         using PointSet = std::unordered_set<PointPtr, PointHash, PointEqual>;
 
     public:
-        const std::string identifier = "frts.vanillamodel.regionmanager";
-
-    public:
         virtual ~RegionManager() {}
 
         /**
@@ -106,6 +103,15 @@ namespace frts
          * @return The position or null if entity is not in region.
          */
         virtual PointPtr getPos(EntityPtr entity) = 0;
+
+        /**
+         * @brief The default identifier for this data value.
+         * @return The id string.
+         */
+        static std::string identifier()
+        {
+            return "frts.vanillamodel.regionmanager";
+        }
 
         /**
          * @brief Remove entity from region. Will update changed positions.

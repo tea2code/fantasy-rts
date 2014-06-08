@@ -76,6 +76,10 @@ A Point represents a 3D coordinate in the current region. It consists of x, y an
 
 The region consists of blocks at certain positions and represents the game world. It allows to set the position of entities in the world and retrieve them or whole blocks. 
 
+### Region Config
+
+Region related meta settings like the size of the map are stored in this data value. It can be accessed via the shared manager using the id `frts.vanillamodel.regionconfig`.
+
 ### Region Generator
 
 The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
@@ -84,7 +88,11 @@ The blocks of a region are created by a region generator. At the beginning a reg
 
 The region manager is the access interface to all region and resource managing related methods. It represents a data value containing the region. It also manages a list of changed positions since last reset. The will mostly be set automatically but can be also set by hand.
 
-The region manager is implemented as an data value and can be accessed in the shared manager using the id `frts.vanillamodel.regionmanager`.
+Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator. The default implementation is used if no other is set.
+
+The region manager is implemented as an data value and can be accessed via the shared manager using the id `frts.vanillamodel.regionmanager`.
+
+**IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase 10 is complete. Doing so will most likely result in a crash or undefined behavior.
 
 ### Resource Lock
 

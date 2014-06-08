@@ -1,13 +1,12 @@
 #include <catch.hpp>
 
-#include "TestRegionGenerator.h"
-
 #include <entity/ComponentIds.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
 #include <entity/impl/IsResourceImpl.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
+#include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <resource/impl/DistanceAlgorithmImpl.h>
 #include <resource/impl/LockableHasResourceManagerImpl.h>
@@ -38,8 +37,12 @@ TEST_CASE("LockableResourceManager.", "[resource]")
     frts::IdPtr resourceId2 = frts::makeId("food");
     frts::IdPtr resourceId3 = frts::makeId("iron");
 
-    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
-    frts::RegionPtr region = frts::makeRegion(10, 10, regionGenerator);
+    frts::Point::value sizeX = 10;
+    frts::Point::value sizeY = 10;
+    frts::RegionGeneratorPtr regionGenerator = frts::makeRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
+                                                                         frts::makeId(frts::ComponentIds::sortOrder()),
+                                                                         sizeX, sizeY);
+    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
     region->setPos(entity1, pos1);
     region->setPos(entity2, pos2);

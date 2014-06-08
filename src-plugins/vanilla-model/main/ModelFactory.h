@@ -5,6 +5,10 @@
 #include <entity/ComponentBuilder.h>
 #include <entity/Entity.h>
 #include <region/Point.h>
+#include <region/Region.h>
+#include <region/RegionGenerator.h>
+#include <resource/DistanceAlgorithm.h>
+#include <resource/LockableResourceManager.h>
 
 #include <frts/module>
 #include <frts/shared>
@@ -64,6 +68,58 @@ namespace frts
          * @param builder The builder to register.
          */
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
+
+        /**
+         * @brief Set distance algorithm for resource managers. Only used for the
+         *        build in resource managers. This method has only an effect
+         *        if it is used before init().
+         * @param distAlgo The distance algorithm.
+         */
+        virtual void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) = 0;
+
+        /**
+         * @brief Set has resource type. Only used for the build in resource
+         *        managers. This method has only an effect if it is used before
+         *        init().
+         * @param hasResourceType The resource type.
+         */
+        virtual void setHasResourceType(IdPtr hasResourceType) = 0;
+
+        /**
+         * @brief Set is resource type. Only used for the build in resource
+         *        managers. This method has only an effect if it is used before
+         *        init().
+         * @param isResourceType The resource type.
+         */
+        virtual void setIsResourceType(IdPtr isResourceType) = 0;
+
+        /**
+         * @brief Set region. This method has only an effect if it is used
+         *        before init().
+         * @param region The region.
+         */
+        virtual void setRegion(RegionPtr region) = 0;
+
+        /**
+         * @brief Set region generator. Only used for the build in region. This
+         *        method has only an effect if it is used before init().
+         * @param regionGenerator The region generator.
+         */
+        virtual void setRegionGenerator(RegionGeneratorPtr regionGenerator) = 0;
+
+        /**
+         * @brief Set resource entity manager.  This method has only an effect
+         *        if it is used before init().
+         * @param resourceEntityManager The resource manager.
+         */
+        virtual void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) = 0;
+
+        /**
+         * @brief Set resource manager. This method has only an effect if it is
+         *        used before init().
+         * @param resourceManager The resource manager.
+         */
+        virtual void setResourceManager(LockableResourceManagerPtr resourceManager) = 0;
     };
 }
 

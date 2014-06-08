@@ -82,15 +82,23 @@ void frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos)
 
 void frts::RegionManagerImpl::updateResources(EntityPtr entity)
 {
+    bool hasResourceSet = false;
+    bool isResourceSet = false;
     for (auto component : entity->getComponents())
     {
-        if (component->getComponentType() == hasResourceType)
+        if (!hasResourceSet && component->getComponentType() == hasResourceType)
         {
             resourceEntityManager->add(entity);
+            hasResourceSet = true;
         }
-        else if (component->getComponentType() == isResourceType)
+        else if (!isResourceSet && component->getComponentType() == isResourceType)
         {
             resourceManager->add(entity);
+            isResourceSet = true;
+        }
+        if (hasResourceSet && isResourceSet)
+        {
+            break;
         }
     }
 }

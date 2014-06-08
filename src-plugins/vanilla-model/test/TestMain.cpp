@@ -1,7 +1,6 @@
 #include <catch.hpp>
 
 #include "LogStub.h"
-#include "TestRegionGenerator.h"
 
 #include <entity/ComponentIds.h>
 #include <entity/impl/EntityImpl.h>
@@ -10,6 +9,7 @@
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
 #include <region/impl/PointImpl.h>
+#include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <resource/impl/DistanceAlgorithmImpl.h>
 #include <resource/impl/LockableHasResourceManagerImpl.h>
@@ -30,6 +30,7 @@ TEST_CASE("MainFactory.", "[main]")
 
     SECTION("Build components.")
     {
+        modelFactory->createData(shared);
         modelFactory->init(shared);
 
         frts::IdPtr id = shared->makeId(frts::ComponentIds::blockedBy());
@@ -68,8 +69,12 @@ TEST_CASE("RegionManager.", "[main]")
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
-    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
-    frts::RegionPtr region = frts::makeRegion(10, 10, regionGenerator);
+    frts::Point::value sizeX = 10;
+    frts::Point::value sizeY = 10;
+    frts::RegionGeneratorPtr regionGenerator = frts::makeRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
+                                                                         frts::makeId(frts::ComponentIds::sortOrder()),
+                                                                         sizeX, sizeY);
+    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
     frts::DistanceAlgorithmPtr distAlgo = frts::makeDistanceAlgorithm();
     frts::IdPtr hasResourceType = frts::makeId(frts::ComponentIds::hasResource());

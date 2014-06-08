@@ -8,6 +8,7 @@
 #include <region/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
+#include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 
 #include <shared/impl/IdImpl.h>
@@ -177,37 +178,6 @@ TEST_CASE("Point.", "[region]")
     }
 }
 
-namespace frts
-{
-    class TestRegionGenerator : public RegionGenerator
-    {
-    public:
-        TestRegionGenerator()
-            : blockingType{makeId(ComponentIds::blocking())},
-              sortOrderType{makeId(ComponentIds::sortOrder())}
-        {}
-
-        std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel) override
-        {
-            std::map<PointPtr, WriteableBlockPtr> result;
-            result[makePoint(0, 0, zLevel)] = makeBlock(blockingType, sortOrderType);
-            result[makePoint(0, 1, zLevel)] = makeBlock(blockingType, sortOrderType);
-            result[makePoint(1, 0, zLevel)] = makeBlock(blockingType, sortOrderType);
-            result[makePoint(1, 1, zLevel)] = makeBlock(blockingType, sortOrderType);
-            return result;
-        }
-
-        WriteableBlockPtr newBlock(PointPtr) override
-        {
-            return makeBlock(blockingType, sortOrderType);
-        }
-
-    private:
-        IdPtr blockingType;
-        IdPtr sortOrderType;
-    };
-}
-
 TEST_CASE("Region.", "[region]")
 {
     frts::IdPtr block1 = frts::makeId("block1");
@@ -235,8 +205,12 @@ TEST_CASE("Region.", "[region]")
     frts::PointPtr point2 = frts::makePoint(0, 0, 0);
     frts::PointPtr point3 = frts::makePoint(0, 0, 1);
 
-    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
-    frts::RegionPtr region = frts::makeRegion(2, 2, regionGenerator);
+    frts::Point::value sizeX = 2;
+    frts::Point::value sizeY = 2;
+    frts::RegionGeneratorPtr regionGenerator = frts::makeRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
+                                                                         frts::makeId(frts::ComponentIds::sortOrder()),
+                                                                         sizeX, sizeY);
+    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
     region->setPos(entity1, point1);
     region->setPos(entity2, point3);

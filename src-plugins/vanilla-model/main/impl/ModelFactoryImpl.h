@@ -3,6 +3,8 @@
 
 #include <main/ModelFactory.h>
 #include <region/Region.h>
+#include <region/RegionGenerator.h>
+#include <resource/DistanceAlgorithm.h>
 #include <resource/LockableResourceManager.h>
 
 #include <unordered_map>
@@ -26,6 +28,13 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
+        void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) override;
+        void setHasResourceType(IdPtr hasResourceType) override;
+        void setIsResourceType(IdPtr isResourceType) override;
+        void setRegion(RegionPtr region) override;
+        void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
+        void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) override;
+        void setResourceManager(LockableResourceManagerPtr resourceManager) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
@@ -34,11 +43,13 @@ namespace frts
 
     private:
         ComponentBuilderMap componentBuilders;
+        DistanceAlgorithmPtr distAlgo;
         IdPtr hasResourceType;
         IdPtr isResourceType;
         RegionPtr region;
-        LockableResourceManagerPtr resourceManager;
+        RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;
+        LockableResourceManagerPtr resourceManager;
     };
 
     /**
