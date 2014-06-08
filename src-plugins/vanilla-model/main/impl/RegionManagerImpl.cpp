@@ -1,45 +1,49 @@
 #include "RegionManagerImpl.h"
 
 
-frts::RegionManagerImpl::RegionManagerImpl()
+frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
+                                           LockableResourceManagerPtr resourceManager,
+                                           LockableResourceManagerPtr resourceEntityManager,
+                                           IdPtr hasResourceType, IdPtr isResourceType)
+    : hasResourceType{hasResourceType}, isResourceType{isResourceType}, region{region},
+      resourceManager{resourceManager}, resourceEntityManager{resourceEntityManager}
 {
 }
 
 void frts::RegionManagerImpl::addChangedPos(PointPtr pos)
 {
-
+    changedPos.insert(pos);
 }
 
 std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy)
 {
-    return {};
+    return region->findFreeNeighbors(pos, blockedBy);
 }
 
 frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy)
 {
-    return nullptr;
+    return region->findFreeRandomPos(zLevels, blockedBy);
 }
 
 frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
 {
-    return nullptr;
+    return resourceManager->findNearest(entityGroup, resourceType, pos);
 }
 
 frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
 {
-    return nullptr;
+    return resourceEntityManager->findNearest(entityGroup, resourceType, pos);
 }
 
 frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos)
 {
-    return nullptr;
+    return region->getBlock(pos);
 }
 
-std::unordered_set<frts::PointPtr> frts::RegionManagerImpl::getChangedPos()
+frts::RegionManager::PointSet frts::RegionManagerImpl::getChangedPos()
 {
-    return {};
+    return changedPos;
 }
-
 
 std::string frts::RegionManagerImpl::getName() const
 {
@@ -48,25 +52,45 @@ std::string frts::RegionManagerImpl::getName() const
 
 std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos)
 {
-    return {};
+    return region->getNeightbors(pos);
 }
 
 frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity)
 {
-    return nullptr;
+    return region->getPos(entity);
 }
 
 void frts::RegionManagerImpl::removeEntity(EntityPtr entity)
 {
-
+    PointPtr pos = region->removeEntity(entity);
+    resourceEntityManager->remove(entity);
+    resourceManager->remove(entity);
+    addChangedPos(pos);
 }
 
 void frts::RegionManagerImpl::resetChangedPos()
 {
-
+    changedPos.clear();
 }
 
 void frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos)
 {
+    region->setPos(entity, pos);
+    updateResources(entity);
+    addChangedPos(pos);
+}
 
+void frts::RegionManagerImpl::updateResources(EntityPtr entity)
+{
+    for (auto component : entity->getComponents())
+    {
+        if (component->getComponentType() == hasResourceType)
+        {
+            resourceEntityManager->add(entity);
+        }
+        else if (component->getComponentType() == isResourceType)
+        {
+            resourceManager->add(entity);
+        }
+    }
 }

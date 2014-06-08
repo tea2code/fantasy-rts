@@ -26,7 +26,9 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
     // Add region manager to data values.
-    RegionManagerPtr regionManager = makeRegionManager();
+    RegionManagerPtr regionManager = makeRegionManager(region, resourceManager,
+                                                       resourceEntityManager,
+                                                       hasResourceType, isResourceType);
     IdPtr id = shared->makeId(regionManager->identifier);
     shared->setDataValue(id, regionManager);
 

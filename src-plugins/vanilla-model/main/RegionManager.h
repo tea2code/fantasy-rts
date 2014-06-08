@@ -32,6 +32,9 @@ namespace frts
     class RegionManager : public DataValue
     {
     public:
+        using PointSet = std::unordered_set<PointPtr, PointHash, PointEqual>;
+
+    public:
         const std::string identifier = "frts.vanillamodel.regionmanager";
 
     public:
@@ -88,7 +91,7 @@ namespace frts
          * @brief Get list of all changed positions.
          * @return The changed positions.
          */
-        virtual std::unordered_set<PointPtr> getChangedPos() = 0;
+        virtual PointSet getChangedPos() = 0;
 
         /**
          * @brief Get all neightbors (north, east, south, west, up, down) of position.
@@ -117,11 +120,19 @@ namespace frts
 
         /**
          * @brief Add entity at position. This will also move it if it already is
-         *        in the region. Will update changed positions.
+         *        in the region. Will update changed positions. Will update resources.
          * @param entity The entity.
          * @param pos The position.
          */
         virtual void setPos(EntityPtr entity, PointPtr pos) = 0;
+
+        /**
+         * @brief If resource components of a entity change it is necessary to
+         *        update the resource managers. This will automaticallay happen
+         *        if you call setPos() on the entity.
+         * @param entity The entity.
+         */
+        virtual void updateResources(EntityPtr entity) = 0;
     };
 }
 

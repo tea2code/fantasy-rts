@@ -2,6 +2,8 @@
 #define FRTS_MODELFACTORYIMPL_H
 
 #include <main/ModelFactory.h>
+#include <region/Region.h>
+#include <resource/LockableResourceManager.h>
 
 #include <unordered_map>
 
@@ -32,6 +34,11 @@ namespace frts
 
     private:
         ComponentBuilderMap componentBuilders;
+        IdPtr hasResourceType;
+        IdPtr isResourceType;
+        RegionPtr region;
+        LockableResourceManagerPtr resourceManager;
+        LockableResourceManagerPtr resourceEntityManager;
     };
 
     /**

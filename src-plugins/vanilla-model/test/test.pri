@@ -6,4 +6,5 @@ SOURCES += \
     
 
 HEADERS += \
-    test/LogStub.h
+    test/LogStub.h \
+    test/TestRegionGenerator.h

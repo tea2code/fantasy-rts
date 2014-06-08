@@ -2,6 +2,9 @@
 #define FRTS_REGIONMANAGERIMPL_H
 
 #include <main/RegionManager.h>
+#include <region/Point.h>
+#include <region/Region.h>
+#include <resource/LockableResourceManager.h>
 
 
 namespace frts
@@ -9,30 +12,45 @@ namespace frts
     class RegionManagerImpl : public RegionManager
     {
     public:
-        RegionManagerImpl();
+        RegionManagerImpl(RegionPtr region, LockableResourceManagerPtr resourceManager,
+                          LockableResourceManagerPtr resourceEntityManager,
+                          IdPtr hasResourceType, IdPtr isResourceType);
 
-        void addChangedPos(PointPtr pos);
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy);
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy);
-        ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos);
-        ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos);
-        BlockPtr getBlock(PointPtr pos);
-        std::unordered_set<PointPtr> getChangedPos();
-        std::string getName() const;
-        std::vector<PointPtr> getNeightbors(PointPtr pos);
-        PointPtr getPos(EntityPtr entity);
-        void removeEntity(EntityPtr entity);
-        void resetChangedPos();
-        void setPos(EntityPtr entity, PointPtr pos);
+        void addChangedPos(PointPtr pos) override;
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy) override;
+        ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
+        ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
+        BlockPtr getBlock(PointPtr pos) override;
+        PointSet getChangedPos() override;
+        std::string getName() const override;
+        std::vector<PointPtr> getNeightbors(PointPtr pos) override;
+        PointPtr getPos(EntityPtr entity) override;
+        void removeEntity(EntityPtr entity) override;
+        void resetChangedPos() override;
+        void setPos(EntityPtr entity, PointPtr pos) override;
+        void updateResources(EntityPtr entity) override;
+
+    private:
+        PointSet changedPos;
+        IdPtr hasResourceType;
+        IdPtr isResourceType;
+        RegionPtr region;
+        LockableResourceManagerPtr resourceManager;
+        LockableResourceManagerPtr resourceEntityManager;
     };
 
     /**
      * @brief Create new region manager.
      * @return The region manager.
      */
-    inline RegionManagerPtr makeRegionManager()
+    inline RegionManagerPtr makeRegionManager(RegionPtr region,
+                                              LockableResourceManagerPtr resourceManager,
+                                              LockableResourceManagerPtr resourceEntityManager,
+                                              IdPtr hasResourceType, IdPtr isResourceType)
     {
-        return std::make_shared<RegionManagerImpl>();
+        return std::make_shared<RegionManagerImpl>(region, resourceManager, resourceEntityManager,
+                                                   hasResourceType, isResourceType);
     }
 }
 

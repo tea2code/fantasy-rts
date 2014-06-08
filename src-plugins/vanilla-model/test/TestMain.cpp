@@ -1,6 +1,7 @@
 #include <catch.hpp>
 
 #include "LogStub.h"
+#include "TestRegionGenerator.h"
 
 #include <entity/ComponentIds.h>
 #include <entity/impl/EntityImpl.h>
@@ -9,6 +10,10 @@
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
 #include <region/impl/PointImpl.h>
+#include <region/impl/RegionImpl.h>
+#include <resource/impl/DistanceAlgorithmImpl.h>
+#include <resource/impl/LockableHasResourceManagerImpl.h>
+#include <resource/impl/LockableIsResourceManagerImpl.h>
 
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
@@ -63,7 +68,18 @@ TEST_CASE("RegionManager.", "[main]")
     frts::LogPtr log = std::make_shared<TestLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
-    frts::RegionManagerPtr regionManager = frts::makeRegionManager();
+    frts::RegionGeneratorPtr regionGenerator = std::make_shared<frts::TestRegionGenerator>();
+    frts::RegionPtr region = frts::makeRegion(10, 10, regionGenerator);
+
+    frts::DistanceAlgorithmPtr distAlgo = frts::makeDistanceAlgorithm();
+    frts::IdPtr hasResourceType = frts::makeId(frts::ComponentIds::hasResource());
+    frts::LockableResourceManagerPtr resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
+    frts::IdPtr isResourceType = frts::makeId(frts::ComponentIds::isResource());
+    frts::LockableResourceManagerPtr resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
+
+    frts::RegionManagerPtr regionManager = frts::makeRegionManager(
+                region, resourceManager, resourceEntityManager, hasResourceType,
+                isResourceType);
 
     SECTION("Changed positions.")
     {
