@@ -3,6 +3,7 @@
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
+#include <entity/impl/DropImpl.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
 #include <entity/impl/IsResourceImpl.h>
@@ -29,6 +30,36 @@ TEST_CASE("Blocking/BlockedBy.", "[entity]")
 
     REQUIRE(blocking->blocks(blockedBy1));
     REQUIRE_FALSE(blocking->blocks(blockedBy2));
+}
+
+TEST_CASE("Drop.", "[entity]")
+{
+    frts::EntityPtr entity = frts::makeEntity();
+    frts::IdPtr resourceId1 = frts::makeId("wood");
+    frts::IdPtr resourceId2 = frts::makeId("food");
+
+    frts::DropPtr drop = frts::makeDrop(frts::makeId(frts::ComponentIds::drop()));
+    drop->addDrop(resourceId1);
+    frts::IdPtr id = drop->getComponentType();
+    entity->addComponent(drop);
+
+    frts::DropPtr foundDrop = frts::getComponent<frts::Drop>(id, entity);
+    REQUIRE(foundDrop != nullptr);
+    REQUIRE(foundDrop->hasDrop(resourceId1));
+    REQUIRE_FALSE(foundDrop->hasDrop(resourceId2));
+    REQUIRE(foundDrop->getDrops().size() == 1);
+
+    foundDrop->addDrop(resourceId2);
+
+    REQUIRE(foundDrop->hasDrop(resourceId1));
+    REQUIRE(foundDrop->hasDrop(resourceId2));
+    REQUIRE(foundDrop->getDrops().size() == 2);
+
+    foundDrop->removeDrop(resourceId1);
+
+    REQUIRE_FALSE(foundDrop->hasDrop(resourceId1));
+    REQUIRE(foundDrop->hasDrop(resourceId2));
+    REQUIRE(foundDrop->getDrops().size() == 1);
 }
 
 TEST_CASE("Entity.", "[entity]")

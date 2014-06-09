@@ -1,0 +1,37 @@
+entities:
+    namespace: entity
+    
+    entity:
+        # Has Resource
+        - name: shrub.berry
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.surface
+                - blocking.wall
+                - blocking.water
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.surface
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.berry
+            - component: frts.vanillamodel.entity.component.hasresource
+              resources:
+                - resource.food
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: STATIC_DEFAULT
+        
+        # Is Resource
+        - name: berry
+          components:
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.food
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: STATIC_NORMAL
+        - name: wood.log
+          components:
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.wood
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: STATIC_NORMAL

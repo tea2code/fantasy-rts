@@ -40,6 +40,9 @@ TEST_CASE("ModelFactory.", "[main]")
         id = shared->makeId(frts::ComponentIds::blocking());
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
 
+        id = shared->makeId(frts::ComponentIds::drop());
+        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+
         id = shared->makeId(frts::ComponentIds::hasResource());
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
 

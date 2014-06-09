@@ -10,7 +10,9 @@ SOURCES += \
     entity/impl/IsResourceImpl.cpp \
     entity/impl/HasResourceImpl.cpp \
     entity/impl/HasResourceBuilder.cpp \
-    entity/impl/IsResourceBuilder.cpp
+    entity/impl/IsResourceBuilder.cpp \
+    entity/impl/DropImpl.cpp \
+    entity/impl/DropBuilder.cpp
     
 
 HEADERS += \
@@ -34,4 +36,7 @@ HEADERS += \
     entity/impl/IsResourceImpl.h \
     entity/impl/HasResourceImpl.h \
     entity/impl/HasResourceBuilder.h \
-    entity/impl/IsResourceBuilder.h
+    entity/impl/IsResourceBuilder.h \
+    entity/Drop.h \
+    entity/impl/DropImpl.h \
+    entity/impl/DropBuilder.h

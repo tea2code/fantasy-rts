@@ -6,6 +6,7 @@
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingBuilder.h>
+#include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceBuilder.h>
@@ -66,6 +67,11 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     IdPtr blockingId = shared->makeId(ComponentIds::blocking());
     componentBuilder = makeBlockingBuilder();
     registerComponentBuilder(blockingId, componentBuilder);
+
+    // Drop.
+    IdPtr dropId = shared->makeId(ComponentIds::drop());
+    componentBuilder = makeDropBuilder();
+    registerComponentBuilder(dropId, componentBuilder);
 
     // HasResource.
     IdPtr hasResourceId = shared->makeId(ComponentIds::hasResource());

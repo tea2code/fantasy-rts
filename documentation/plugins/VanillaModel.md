@@ -34,6 +34,12 @@ Entities have the ability to block other entities. Blocking describes what a ent
 
 Default ID is `frts.vanillamodel.entity.component.blocking`.
 
+#### Drop
+
+Entities can drop other entities if they are destroyed, killed, harvested... The dropable entities are defined by this component.
+
+Default ID is `frts.vanillamodel.entity.component.drop`.
+
 #### HasResource
 
 Entities may contain resources which can be harvested. The type of this component is also the resource type.

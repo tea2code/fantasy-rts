@@ -1,0 +1,7 @@
+resources:
+    namespace: resource
+    
+    resource:
+        - food
+        - stone
+        - wood

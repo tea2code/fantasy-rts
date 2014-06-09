@@ -21,6 +21,11 @@ namespace frts
             return "frts.vanillamodel.entity.component.blocking";
         }
 
+        static std::string drop()
+        {
+            return "frts.vanillamodel.entity.component.drop";
+        }
+
         static std::string hasResource()
         {
             return "frts.vanillamodel.entity.component.hasresource";
