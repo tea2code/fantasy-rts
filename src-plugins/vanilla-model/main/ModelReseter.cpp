@@ -51,21 +51,20 @@ void frts::ModelReseter::tick(SharedManagerPtr shared)
     regionManager->resetChangedPos();
 }
 
-void frts::ModelReseter::validateData(SharedManagerPtr shared)
+void frts::ModelReseter::validateData(SharedManagerPtr)
 {
-    IdPtr regionManagerId = shared->makeId(RegionManager::identifier());
-    try
-    {
-        shared->getDataValue(regionManagerId);
-    }
-    catch (IdNotFoundError)
-    {
-        auto msg = boost::format(R"(Missing data value "%1%".)") % regionManagerId->toString();
-        throw DataViolation(msg.str());
-    }
+    // Cannot check here for RegionManager. See documentation "VanillaModel".
 }
 
-void frts::ModelReseter::validateModules(SharedManagerPtr)
+void frts::ModelReseter::validateModules(SharedManagerPtr shared)
 {
-
+    try
+    {
+        IdPtr id = shared->makeId("frts/ModelFactory");
+        shared->getUtility(id);
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw ModuleViolation("Utility ModelFactory not found.");
+    }
 }

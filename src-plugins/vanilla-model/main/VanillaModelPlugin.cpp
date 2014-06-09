@@ -21,7 +21,7 @@ frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
     }
     else if (id->toString() == modelReseter)
     {
-        result == makeModelReseter();
+        result = makeModelReseter();
     }
     return result;
 }

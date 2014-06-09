@@ -18,4 +18,6 @@ utilities:
     - frts/ModelFactory
     
 configurations:
-    # Nothing yet.
+    - vanilla-model/entities.yaml
+    - vanilla-model/region.yaml
+    - vanilla-model/resources.yaml
