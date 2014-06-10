@@ -115,3 +115,16 @@ A resource lock prevents other entities from claiming a certain resource until i
 ### Resource Manager
 
 The resource manager uses locks to manage access to resources by different entity groups. A entity group is only a fancy name for an id which is associated with a certain type of entities like a certain civilization. To find the nearest resource or entity with a certain resource it uses an algorithm to calculate the distance between the given position and the position of the resource. Currently this is the euclidian distance.  
+
+## Configuration
+
+### Entities
+
+### Region
+
+The region config allows to set the size of the map in x and y direction. Use the following keys to do so:
+
+    size_x: <integer greater 0>
+    size_y: <integer greater 0>
+
+### Resources

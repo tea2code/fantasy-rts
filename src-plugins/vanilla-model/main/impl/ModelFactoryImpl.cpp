@@ -19,6 +19,7 @@
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 
+#include <frts/configuration>
 #include <frts/shared>
 
 #include <boost/format.hpp>
@@ -42,12 +43,12 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 
 std::string frts::ModelFactoryImpl::getName() const
 {
-    return "frts::ModelFactory";
+    return moduleName;
 }
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
-    return {};
+    return {entitiesConfigKey, regionConfigKey, resourcesConfigKey};
 }
 
 int frts::ModelFactoryImpl::getVersion() const
@@ -90,8 +91,7 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
 
     // Region Manager:
     // Initialize if not already done.
-    IdPtr regionConfigId = shared->makeId(RegionConfigImpl::identifier());
-    RegionConfigPtr regionConfig = std::static_pointer_cast<RegionConfig>(shared->getDataValue(regionConfigId));
+    RegionConfigPtr regionConfig = getRegionConfig(shared);
 
     if (regionGenerator == nullptr)
     {
@@ -168,14 +168,33 @@ frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y,
     return frts::makePoint(x, y, z);
 }
 
-void frts::ModelFactoryImpl::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
+void frts::ModelFactoryImpl::parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared)
 {
+    if (key == entitiesConfigKey)
+    {
 
+    }
+    else if (key == regionConfigKey)
+    {
+        RegionConfigPtr regionConfig = getRegionConfig(shared);
+        regionConfig->setMapSizeX(node->getInteger("size_x"));
+        regionConfig->setMapSizeY(node->getInteger("size_y"));
+    }
+    else if (key == resourcesConfigKey)
+    {
+
+    }
 }
 
 bool frts::ModelFactoryImpl::preInit(frts::SharedManagerPtr)
 {
     return false;
+}
+
+frts::RegionConfigPtr frts::ModelFactoryImpl::getRegionConfig(SharedManagerPtr shared) const
+{
+    IdPtr id = shared->makeId(RegionConfigImpl::identifier());
+    return std::static_pointer_cast<RegionConfig>(shared->getDataValue(id));
 }
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
@@ -218,9 +237,17 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
     this->resourceManager = resourceManager;
 }
 
-void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr)
+void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr shared)
 {
-    // Everything is ok.
+    RegionConfigPtr regionConfig = getRegionConfig(shared);
+    if (regionConfig->getMapSizeX() <= 0)
+    {
+        throw DataViolation("Region:size_x must be greater than zero.");
+    }
+    if (regionConfig->getMapSizeY() <= 0)
+    {
+        throw DataViolation("Region:size_y must be greater than zero.");
+    }
 }
 
 void frts::ModelFactoryImpl::validateModules(frts::SharedManagerPtr)

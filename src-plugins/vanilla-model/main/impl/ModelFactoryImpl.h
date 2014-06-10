@@ -2,6 +2,7 @@
 #define FRTS_MODELFACTORYIMPL_H
 
 #include <main/ModelFactory.h>
+#include <main/RegionConfig.h>
 #include <region/Region.h>
 #include <region/RegionGenerator.h>
 #include <resource/DistanceAlgorithm.h>
@@ -42,6 +43,12 @@ namespace frts
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr, IdHash, IdEqual>;
 
     private:
+        const std::string entitiesConfigKey = "entities";
+        const std::string regionConfigKey = "region";
+        const std::string resourcesConfigKey = "resources";
+
+        const std::string moduleName = "frts::ModelFactory";
+
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distAlgo;
         IdPtr hasResourceType;
@@ -50,6 +57,9 @@ namespace frts
         RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;
         LockableResourceManagerPtr resourceManager;
+
+    private:
+        RegionConfigPtr getRegionConfig(SharedManagerPtr shared) const;
     };
 
     /**
