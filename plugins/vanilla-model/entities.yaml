@@ -20,7 +20,7 @@ entities:
               resources:
                 - resource.food
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: STATIC_DEFAULT
+              sort_order: 100
         
         # Is Resource
         - name: berry
@@ -28,10 +28,10 @@ entities:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.food
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: STATIC_NORMAL
+              sort_order: 140
         - name: wood.log
           components:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.wood
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: STATIC_NORMAL
+              sort_order: 140

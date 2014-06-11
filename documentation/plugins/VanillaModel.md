@@ -118,6 +118,38 @@ The resource manager uses locks to manage access to resources by different entit
 
 ## Configuration
 
+### Components
+
+Following are the component specific attributes:
+
+#### BlockedBy
+
+    blocks:
+        - <string representing an id>
+
+#### Blocking
+
+    blocks:
+        - <string representing an id>
+
+#### Drop
+
+    drops:
+        - <string representing an entity id>
+
+#### HasResource
+
+    resources:
+        - <string representing an id>
+
+#### IsResource
+
+    resource_type: <string representing an id>
+
+#### SortOrder
+
+    sort_order: <integer>
+
 ### Entities
 
 Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes.
