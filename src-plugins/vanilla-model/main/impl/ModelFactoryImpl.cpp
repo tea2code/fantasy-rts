@@ -48,7 +48,7 @@ std::string frts::ModelFactoryImpl::getName() const
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
-    return {entitiesConfigKey, regionConfigKey, resourcesConfigKey};
+    return {entitiesConfigKey, regionConfigKey};
 }
 
 int frts::ModelFactoryImpl::getVersion() const
@@ -90,9 +90,7 @@ bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
     registerComponentBuilder(sortOrderId, componentBuilder);
 
     // Region Manager:
-    // Initialize if not already done.
     RegionConfigPtr regionConfig = getRegionConfig(shared);
-
     if (regionGenerator == nullptr)
     {
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
@@ -168,11 +166,30 @@ frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y,
     return frts::makePoint(x, y, z);
 }
 
-void frts::ModelFactoryImpl::parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared)
+void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
 {
     if (key == entitiesConfigKey)
     {
+        std::string namePrefix = "";
+        if (node->has("namespace"))
+        {
+            namePrefix = node->getString("namespace");
+            namePrefix += ".";
+        }
 
+        if (node->has("entities"))
+        {
+            ConfigNodePtr entitiesNode = node->getNode("entities");
+            for (auto entityNode : *entitiesNode)
+            {
+                IdPtr id = shared->makeId(namePrefix + entityNode->getString("name"));
+                ConfigNodePtr componentsNode = entityNode->getNode("components");
+                entityConfig[id] = componentsNode;
+            }
+        }
+
+        auto msg = boost::format(R"(Read %1% entity configurations.)") % entityConfig.size();
+        shared->getLog()->debug(moduleName, msg.str());
     }
     else if (key == regionConfigKey)
     {
@@ -180,13 +197,9 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, frts::ConfigNod
         regionConfig->setMapSizeX(node->getInteger("size_x"));
         regionConfig->setMapSizeY(node->getInteger("size_y"));
     }
-    else if (key == resourcesConfigKey)
-    {
-
-    }
 }
 
-bool frts::ModelFactoryImpl::preInit(frts::SharedManagerPtr)
+bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 {
     return false;
 }
@@ -237,7 +250,7 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
     this->resourceManager = resourceManager;
 }
 
-void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr shared)
+void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
 {
     RegionConfigPtr regionConfig = getRegionConfig(shared);
     if (regionConfig->getMapSizeX() <= 0)
@@ -250,7 +263,7 @@ void frts::ModelFactoryImpl::validateData(frts::SharedManagerPtr shared)
     }
 }
 
-void frts::ModelFactoryImpl::validateModules(frts::SharedManagerPtr)
+void frts::ModelFactoryImpl::validateModules(SharedManagerPtr)
 {
     // Everything is ok.
 }

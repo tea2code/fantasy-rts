@@ -41,16 +41,17 @@ namespace frts
 
     private:
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr, IdHash, IdEqual>;
+        using EntityConfigMap = std::unordered_map<IdPtr, ConfigNodePtr, IdHash, IdEqual>;
 
     private:
         const std::string entitiesConfigKey = "entities";
         const std::string regionConfigKey = "region";
-        const std::string resourcesConfigKey = "resources";
 
         const std::string moduleName = "frts::ModelFactory";
 
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distAlgo;
+        EntityConfigMap entityConfig;
         IdPtr hasResourceType;
         IdPtr isResourceType;
         RegionPtr region;

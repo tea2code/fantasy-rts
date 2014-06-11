@@ -120,6 +120,19 @@ The resource manager uses locks to manage access to resources by different entit
 
 ### Entities
 
+Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes.
+
+    entities:
+        namespace: <string>
+        
+        entities:
+            - name: <string>
+              components:
+                - component: <string representing an id>
+                  ...
+
+The main key is `entities`.
+
 ### Region
 
 The region config allows to set the size of the map in x and y direction. Use the following keys to do so:
@@ -127,4 +140,4 @@ The region config allows to set the size of the map in x and y direction. Use th
     size_x: <integer greater 0>
     size_y: <integer greater 0>
 
-### Resources
+The main key is `region`.
