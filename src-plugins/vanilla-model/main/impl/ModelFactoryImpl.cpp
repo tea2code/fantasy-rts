@@ -43,7 +43,7 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 
 std::string frts::ModelFactoryImpl::getName() const
 {
-    return moduleName;
+    return "frts::ModelFactory";
 }
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
@@ -56,7 +56,7 @@ int frts::ModelFactoryImpl::getVersion() const
     return 1;
 }
 
-bool frts::ModelFactoryImpl::init(frts::SharedManagerPtr shared)
+bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 {
     // Components:
     // BlockedBy.
@@ -156,9 +156,44 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
     }
 }
 
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared)
+{
+    auto it = componentBuilders.find(builderId);
+    if(it != componentBuilders.end())
+    {
+        return it->second->build(shared, node);
+    }
+    else
+    {
+        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
+        throw UnknownBuilderError(msg.str());
+    }
+}
+
 frts::EntityPtr frts::ModelFactoryImpl::makeEntity()
 {
     return frts::makeEntity();
+}
+
+frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr shared)
+{
+    try
+    {
+        EntityPtr entity = makeEntity();
+        ConfigNodePtr componentNodes = entityConfig.at(id);
+        for (auto componentNode : *componentNodes)
+        {
+            IdPtr componentId = shared->makeId(componentNode->getString("component"));
+            ComponentPtr component = makeComponent(componentId, componentNode, shared);
+            entity->addComponent(component);
+        }
+        return entity;
+    }
+    catch(const std::out_of_range&)
+    {
+        auto msg = boost::format(R"(Entity "%1%" has no configuration.)") % id->toString();
+        throw UnknownEntityError(msg.str());
+    }
 }
 
 frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y, Point::value z)
@@ -189,7 +224,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         }
 
         auto msg = boost::format(R"(Read %1% entity configurations.)") % entityConfig.size();
-        shared->getLog()->debug(moduleName, msg.str());
+        shared->getLog()->debug(getName(), msg.str());
     }
     else if (key == regionConfigKey)
     {

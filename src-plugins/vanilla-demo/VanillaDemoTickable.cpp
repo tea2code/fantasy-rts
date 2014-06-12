@@ -50,6 +50,28 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     // Do not adopt this practice. Use frame number only for quick trial and error.
     int fps = (fromMilliseconds(1000) / shared->getFrame()->getDeltaTime());
     Frame::ticks number = shared->getFrame()->getNumber();
+
+    if (number == 0)
+    {
+        IdPtr modelFactoryId = shared->makeId("frts/ModelFactory");
+        ModelFactoryPtr modelFactory = std::static_pointer_cast<ModelFactory>(shared->getUtility(modelFactoryId));
+
+        IdPtr entityId = shared->makeId("entity.shrub.berry");
+        EntityPtr entity = modelFactory->makeEntity(entityId, shared);
+
+        IdPtr componentId = shared->makeId("frts.vanillamodel.entity.component.hasresource");
+        HasResourcePtr component = getComponent<HasResource>(componentId, entity);
+        IdPtr resourceId = shared->makeId("resource.food");
+        if (component->hasResource(resourceId))
+        {
+            shared->getLog()->debug(getName(), "Berry shrub is configured.");
+        }
+        else
+        {
+            shared->getLog()->debug(getName(), "Berry shrub not found. We must starve.");
+        }
+    }
+
     if (number % fps == 0)
     {
         shared->getLog()->debug(getName(), "Frame " + std::to_string(number));

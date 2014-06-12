@@ -3,6 +3,7 @@
 
 #include "Component.h"
 
+#include <frts/configuration>
 #include <frts/shared>
 
 #include <memory>
@@ -26,10 +27,19 @@ namespace frts
         virtual ~ComponentBuilder() {}
 
         /**
-         * @brief Create the component.
+         * @brief Create component.
+         * @param shared The shared manager.
          * @return The component.
          */
         virtual ComponentPtr build(SharedManagerPtr shared) = 0;
+
+        /**
+         * @brief Create component and initialize with configured data.
+         * @param shared The shared manager.
+         * @param node The configuration node.
+         * @return The component.
+         */
+        virtual ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) = 0;
     };
 }
 

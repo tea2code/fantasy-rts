@@ -8,6 +8,7 @@
 #include <entity/impl/IsResourceImpl.h>
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
+#include <main/ModelError.h>
 #include <main/ModelReseter.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
@@ -59,6 +60,12 @@ TEST_CASE("ModelFactory.", "[main]")
         REQUIRE(entity->getComponents().empty());
     }
 
+    SECTION("Build entity.")
+    {
+        frts::IdPtr id = frts::makeId("not.existing.entity.id");
+        REQUIRE_THROWS_AS(modelFactory->makeEntity(id, shared), frts::UnknownEntityError);
+    }
+
     SECTION("Build points.")
     {
         frts::PointPtr point = modelFactory->makePoint(1, 2, 3);
@@ -74,7 +81,6 @@ TEST_CASE("ModelReseter.", "[main]")
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
-    REQUIRE_THROWS_AS(modelReseter->validateData(shared), frts::DataViolation);
 
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
     modelFactory->createData(shared);

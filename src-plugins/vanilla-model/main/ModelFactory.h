@@ -49,6 +49,15 @@ namespace frts
          */
         virtual EntityPtr makeEntity() = 0;
 
+        /**
+         * @brief Make an initialized entity from configuration.
+         * @throws UnknownEntityError if no configuration for given ID is found.
+         * @param id The entity id.
+         * @param shared The shared manager.
+         * @return The entity;
+         */
+        virtual EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) = 0;
+
        /**
         * @brief Create a new point.
         * @param x The x coordinate.

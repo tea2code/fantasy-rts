@@ -15,6 +15,15 @@ namespace frts
     public:
         UnknownBuilderError(const std::string& msg) : std::runtime_error(msg) {}
     };
+
+    /**
+     * @brief Thrown if there is no configuration for an entity.
+     */
+    class UnknownEntityError : public std::runtime_error
+    {
+    public:
+        UnknownEntityError(const std::string& msg) : std::runtime_error(msg) {}
+    };
 }
 
 #endif // FRTS_MODELERROR_H

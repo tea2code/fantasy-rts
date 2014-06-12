@@ -12,6 +12,7 @@ namespace frts
         DropBuilder();
 
         ComponentPtr build(SharedManagerPtr shared) override;
+        ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) override;
     };
 
     inline ComponentBuilderPtr makeDropBuilder()

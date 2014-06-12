@@ -14,6 +14,7 @@ namespace frts
         IsResourceBuilder();
 
         ComponentPtr build(SharedManagerPtr shared) override;
+        ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) override;
     };
 
     /**

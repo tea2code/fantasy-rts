@@ -25,6 +25,7 @@ namespace frts
         bool init(SharedManagerPtr shared) override;
         ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
         EntityPtr makeEntity() override;
+        EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) override;
         PointPtr makePoint(Point::value x, Point::value y, Point::value z) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
@@ -47,8 +48,6 @@ namespace frts
         const std::string entitiesConfigKey = "entities";
         const std::string regionConfigKey = "region";
 
-        const std::string moduleName = "frts::ModelFactory";
-
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distAlgo;
         EntityConfigMap entityConfig;
@@ -61,6 +60,7 @@ namespace frts
 
     private:
         RegionConfigPtr getRegionConfig(SharedManagerPtr shared) const;
+        ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);
     };
 
     /**

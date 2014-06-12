@@ -9,6 +9,7 @@
 #include <entity/HasResource.h>
 #include <entity/IsResource.h>
 #include <entity/SortOrder.h>
+#include <main/ModelError.h>
 #include <main/ModelFactory.h>
 #include <main/RegionConfig.h>
 #include <main/RegionManager.h>
