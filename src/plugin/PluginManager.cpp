@@ -72,10 +72,6 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
         throw LibraryNotFound(e.what());
     }
 
-    // Prepare doesn't implement plugin api error.
-    auto msg = boost::format(R"(Library "%1%" in path "%2%" doesn't implement the plugin API.)")
-            % name % path;
-
     // Try get plugin version and check it.
     try
     {
@@ -83,6 +79,8 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
         if (supportedVersion != pluginVersion())
         {
             loader.unload(handle);
+            auto msg = boost::format(R"(Library "%1%" in path "%2%" implements an out-dated version of the plugin API.)")
+                    % name % path;
             throw LibraryOutDated(msg.str());
         }
     }
