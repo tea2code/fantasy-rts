@@ -4,7 +4,7 @@
 #include <frts/vanillamodel>
 
 
-frts::VanillaDemoTickable::VanillaDemoTickable::VanillaDemoTickable()
+frts::VanillaDemoTickable::VanillaDemoTickable()
 {
 }
 

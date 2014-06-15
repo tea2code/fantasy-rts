@@ -1,6 +1,7 @@
 plugins:
     - vanilla-demo/vanilla-demo
     - vanilla-model/vanilla-model
+    - vanilla-sdl2/vanilla-sdl2
     
 startupModules:
     # Nothing yet.
@@ -9,6 +10,7 @@ shutdownModules:
     # Nothing yet.
     
 renderModules:
+    - frts/VanillaSdl2
     - frts/ModelReseter
     
 updateModules:
