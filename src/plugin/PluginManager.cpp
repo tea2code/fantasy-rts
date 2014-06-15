@@ -89,8 +89,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
     catch(std::runtime_error)
     {
         // This is not a plugin library.
-        loader.unload(handle);
-        throw LibraryNotFound(msg.str());
+        return;
     }
 
     // Try get plugin.
@@ -103,7 +102,6 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
     catch(std::runtime_error)
     {
         // This is not a plugin library.
-        loader.unload(handle);
-        throw LibraryNotFound(msg.str());
+        return;
     }
 }
