@@ -29,6 +29,8 @@ namespace frts
         SDL_Renderer *ren;
         SDL_Texture *tex;
         SDL_Window *win;
+
+        unsigned int lastTime;
     };
 }
 

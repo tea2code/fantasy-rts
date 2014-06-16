@@ -2,6 +2,8 @@
 
 #include <frts/shared>
 
+#include <boost/format.hpp>
+
 #include <string>
 
 
@@ -59,7 +61,7 @@ bool frts::VanillaSdl2Tickable::init(frts::SharedManagerPtr shared)
         return false;
     }
 
-    SDL_Surface *bmp = SDL_LoadBMP("F:/Programmieren/scripts/SDL2/hello.bmp");
+    SDL_Surface *bmp = SDL_LoadBMP("plugins/vanilla-sdl2/hello.bmp");
     if (bmp == nullptr)
     {
         shared->getLog()->error(getName(), "SDL_LoadBMP Error: " + std::string(SDL_GetError()));
@@ -78,6 +80,8 @@ bool frts::VanillaSdl2Tickable::init(frts::SharedManagerPtr shared)
     SDL_RenderCopy(ren, tex, NULL, NULL);
     SDL_RenderPresent(ren);
 
+    lastTime = SDL_GetTicks();
+
     return false;
 }
 
@@ -91,9 +95,26 @@ bool frts::VanillaSdl2Tickable::preInit(frts::SharedManagerPtr)
     return false;
 }
 
-void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr)
+void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr shared)
 {
+    SDL_Event e;
+    while (SDL_PollEvent(&e))
+    {
+        if (e.type == SDL_QUIT)
+        {
+            shared->setQuitApplication(true);
+        }
+    }
 
+    unsigned int currentTime = SDL_GetTicks();
+    unsigned int diff = currentTime - lastTime;
+    if (diff > 0)
+    {
+        unsigned int fps = 1000 / diff;
+        lastTime = currentTime;
+        auto msg = boost::format(R"(Fps = %1%)") % fps;
+        SDL_SetWindowTitle(win, msg.str().c_str());
+    }
 }
 
 void frts::VanillaSdl2Tickable::validateData(frts::SharedManagerPtr)
