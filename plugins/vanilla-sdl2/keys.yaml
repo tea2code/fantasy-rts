@@ -1,0 +1,4 @@
+keys:
+
+    - key: escape
+      command: command.quit
