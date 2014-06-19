@@ -1,5 +1,9 @@
 HEADERS += \
-    main/VanillaCommandPlugin.h
+    main/VanillaCommandPlugin.h \
+    main/Command.h \
+    main/CommandFactory.h \
+    main/CommandError.h \
+    main/CommandBuilder.h
 
 
 SOURCES += \ 
