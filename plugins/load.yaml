@@ -1,4 +1,5 @@
 plugins:
+    - vanilla-command/vanilla-command
     - vanilla-demo/vanilla-demo
     - vanilla-model/vanilla-model
     - vanilla-sdl2/SDL2

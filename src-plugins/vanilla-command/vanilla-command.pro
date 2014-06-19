@@ -25,17 +25,11 @@ OPTIMIZE {
 INCLUDEPATH += $$PWD/../../src
 INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
-INCLUDEPATH += $$PWD/../vanilla-model
 
 # Headers and sources.
-#UNIT_TEST {
-#    include(test/test.pri)
-#}
-SOURCES += \
-    main.cpp \
-    VanillaDemoTickable.cpp \
-    VanillaDemoPlugin.cpp
-
-HEADERS += \
-    VanillaDemoTickable.h \
-    VanillaDemoPlugin.h
+UNIT_TEST {
+    include(test/test.pri)
+}
+include(command/command.pri)
+include(frts/frts.pri)
+include(main/main.pri)
