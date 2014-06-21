@@ -11,9 +11,6 @@
 #include <region/impl/BlockImpl.h>
 
 #include <shared/impl/IdImpl.h>
-#include <shared/impl/SharedManagerImpl.h>
-
-#include <memory>
 
 
 TEST_CASE("Blocking/BlockedBy.", "[entity]")

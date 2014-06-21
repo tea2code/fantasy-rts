@@ -25,3 +25,9 @@ Builder create commands and can be registered at the factory. They are identifie
 The command factory is implemented as a utility module. It has a couple of pre registered commands but also allows to add custom commands from other plugins.
 
 Load using `frts/CommandFactory` in the utilities section of the load file.
+
+## Commands
+
+### QuitCommand
+
+Quits the application. If `undo()` is during the current frame executed the command is reverted.  

@@ -12,7 +12,7 @@ namespace frts
     class NoLog : public Log
     {
     public:
-        NoLog();
+        NoLog() {}
 
         void debug(const std::string&, const std::string&) override {}
         void error(const std::string&, const std::string&) override {}

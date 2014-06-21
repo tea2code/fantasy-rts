@@ -1,4 +1,5 @@
 SOURCES += \
+    test/TestCommands.cpp
 
     
 

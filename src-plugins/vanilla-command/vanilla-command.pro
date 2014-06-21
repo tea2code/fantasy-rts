@@ -28,6 +28,15 @@ INCLUDEPATH += $$PWD/../../src/dependency/boost
 
 # Headers and sources.
 UNIT_TEST {
+    # Necessary for tests.
+    HEADERS += \
+        $$PWD/../../src/log/NoLog.h \
+        $$PWD/../../src/shared/impl/IdImpl.h \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.h
+    SOURCES += \
+        $$PWD/../../src/shared/impl/IdImpl.cpp \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.cpp
+
     include(test/test.pri)
 }
 include(command/command.pri)
