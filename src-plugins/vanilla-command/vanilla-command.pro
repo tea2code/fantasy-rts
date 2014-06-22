@@ -40,5 +40,6 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(command/command.pri)
+include(commandbuilder/commandbuilder.pri)
 include(frts/frts.pri)
 include(main/main.pri)

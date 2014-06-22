@@ -14,7 +14,7 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ### Command
 
-A command represents an action which can be executed and in some cases also undone. 
+A command represents an action which can be executed and in some cases also undone. Their default IDs can be found in the static class CommandIds.
 
 ### CommandBuilder
 
@@ -31,3 +31,5 @@ Load using `frts/CommandFactory` in the utilities section of the load file.
 ### QuitCommand
 
 Quits the application. If `undo()` is during the current frame executed the command is reverted.  
+
+Default ID is `frts.vanillacommand.command.quit`.

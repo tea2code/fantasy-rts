@@ -1,5 +1,6 @@
 SOURCES += \
-    test/TestCommands.cpp
+    test/TestCommands.cpp \
+    test/TestMain.cpp
 
     
 

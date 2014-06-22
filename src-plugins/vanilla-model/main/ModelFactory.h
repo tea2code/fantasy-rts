@@ -36,7 +36,7 @@ namespace frts
 
         /**
          * @brief Make a component using the specified builder.
-         * @throws UnknownBuilderError if there is not builder registered for the
+         * @throws UnknownComponentBuilderError if there is not builder registered for the
          *         given ID.
          * @param builderId The builder ID.
          * @return The component.

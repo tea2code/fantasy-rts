@@ -10,10 +10,10 @@ namespace frts
     /**
      * @brief Thrown if a component builder is unknown/not registered.
      */
-    class UnknownBuilderError : public std::runtime_error
+    class UnknownComponentBuilderError : public std::runtime_error
     {
     public:
-        UnknownBuilderError(const std::string& msg) : std::runtime_error(msg) {}
+        UnknownComponentBuilderError(const std::string& msg) : std::runtime_error(msg) {}
     };
 
     /**

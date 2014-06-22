@@ -1,6 +1,7 @@
 #include "VanillaDemoTickable.h"
 
 #include <frts/shared>
+#include <frts/vanillacommand>
 #include <frts/vanillamodel>
 
 #include <chrono>
@@ -82,7 +83,11 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
     if (shared->getFrame()->getRunTime() >= fromMilliseconds(5 * 1000))
     {
-        shared->setQuitApplication(true);
+        IdPtr commandFactoryId = shared->makeId("frts/CommandFactory");
+        CommandFactoryPtr commandFactory = std::static_pointer_cast<CommandFactory>(shared->getUtility(commandFactoryId));
+
+        IdPtr quitCommandId = shared->makeId(CommandIds::quit());
+        commandFactory->makeCommand(quitCommandId, shared)->execute(shared);
     }
 }
 

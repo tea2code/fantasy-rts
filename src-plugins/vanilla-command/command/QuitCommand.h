@@ -16,8 +16,8 @@ namespace frts
     public:
         QuitCommand();
 
-        void execute(SharedManagerPtr shared);
-        void undo(SharedManagerPtr shared);
+        void execute(SharedManagerPtr shared) override;
+        void undo(SharedManagerPtr shared) override;
     };
 
     /**

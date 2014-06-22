@@ -122,7 +122,27 @@ void frts::VanillaSdl2Tickable::validateData(frts::SharedManagerPtr)
     // Everything is ok.
 }
 
-void frts::VanillaSdl2Tickable::validateModules(frts::SharedManagerPtr)
+void frts::VanillaSdl2Tickable::validateModules(frts::SharedManagerPtr shared)
 {
+    // VanillaCommand.
+    try
+    {
+        IdPtr id = shared->makeId("frts/CommandFactory");
+        shared->getUtility(id);
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw ModuleViolation("Utility CommandFactory not found.");
+    }
 
+    // VanillaModel.
+    try
+    {
+        IdPtr id = shared->makeId("frts/ModelFactory");
+        shared->getUtility(id);
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw ModuleViolation("Utility ModelFactory not found.");
+    }
 }

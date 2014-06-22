@@ -19,6 +19,7 @@ updateModules:
     - frts/VanillaDemo
     
 utilities:
+    - frts/CommandFactory
     - frts/ModelFactory
     
 configurations:

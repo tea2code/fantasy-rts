@@ -1,6 +1,10 @@
 #ifndef FRTS_VANILLACOMMAND_INCLUDE_H
 #define FRTS_VANILLACOMMAND_INCLUDE_H
 
-
+#include <main/Command.h>
+#include <main/CommandBuilder.h>
+#include <main/CommandError.h>
+#include <main/CommandFactory.h>
+#include <main/CommandIds.h>
 
 #endif // FRTS_VANILLACOMMAND_INCLUDE_H

@@ -30,7 +30,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The command.
          */
-        virtual Command build(SharedManagerPtr shared) = 0;
+        virtual CommandPtr build(SharedManagerPtr shared) = 0;
     };
 }
 

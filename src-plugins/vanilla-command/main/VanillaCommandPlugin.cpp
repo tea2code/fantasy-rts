@@ -1,5 +1,7 @@
 #include "VanillaCommandPlugin.h"
 
+#include "impl/CommandFactoryImpl.h"
+
 #include <frts/shared>
 
 #include <memory>
@@ -14,7 +16,7 @@ frts::ModulePtr frts::VanillaCommandPlugin::getModule(frts::IdPtr id)
     frts::ModulePtr result = nullptr;
     if (id->toString() == module)
     {
-        //result = std::make_shared<VanillaSdl2Tickable>();
+        result = makeCommandFactory();
     }
     return result;
 }

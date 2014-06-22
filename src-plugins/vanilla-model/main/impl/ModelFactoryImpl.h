@@ -47,6 +47,7 @@ namespace frts
     private:
         const std::string entitiesConfigKey = "entities";
         const std::string regionConfigKey = "region";
+        const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distAlgo;

@@ -5,6 +5,7 @@
 #include "CommandBuilder.h"
 
 #include <frts/shared>
+#include <frts/module>
 
 #include <memory>
 
@@ -22,7 +23,7 @@ namespace frts
      * @brief Interface for command factory. Allows registration and creation
      *        of new command instances.
      */
-    class CommandFactory
+    class CommandFactory : public Utility
     {
     public:
         virtual ~CommandFactory() {}
@@ -41,7 +42,7 @@ namespace frts
          * @param builderId The id of the command builder.
          * @param commandBuilder The command builder.
          */
-        virtual void registerCommandBuilder(IdPtr builderId, CommandBuilderPtr commandBuilder) = 0;
+        virtual void registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder) = 0;
     };
 }
 

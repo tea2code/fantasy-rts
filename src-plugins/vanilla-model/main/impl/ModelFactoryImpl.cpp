@@ -151,8 +151,8 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
     }
     else
     {
-        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
-        throw UnknownBuilderError(msg.str());
+        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString();
+        throw UnknownComponentBuilderError(msg.str());
     }
 }
 
@@ -165,8 +165,8 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Config
     }
     else
     {
-        auto msg = boost::format(R"(No component builder is registered for ID "%1%".)") % builderId->toString();
-        throw UnknownBuilderError(msg.str());
+        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString();
+        throw UnknownComponentBuilderError(msg.str());
     }
 }
 
