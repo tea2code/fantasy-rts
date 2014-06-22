@@ -1,0 +1,6 @@
+#ifndef FRTS_VANILLASDL2_INCLUDE_H
+#define FRTS_VANILLASDL2_INCLUDE_H
+
+#include "vanillasdl2input"
+
+#endif // FRTS_VANILLASDL2_INCLUDE_H

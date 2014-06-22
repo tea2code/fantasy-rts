@@ -8,6 +8,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Temporary test module.
+     */
     class VanillaSdl2Tickable : public Tickable
     {
     public:

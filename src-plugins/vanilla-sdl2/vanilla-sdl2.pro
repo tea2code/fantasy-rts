@@ -34,13 +34,18 @@ LIBS += -L$$PWD/dependency/SDL2/build -L$$PWD/dependency/SDL2/build/.libs
 LIBS += -lSDL2main -lSDL2
 
 # Headers and sources.
-#UNIT_TEST {
-#    include(test/test.pri)
-#}
-SOURCES += main.cpp \
-    VanillaSdl2Plugin.cpp \
-    VanillaSdl2Tickable.cpp
+UNIT_TEST {
+    # Necessary for tests.
+    HEADERS += \
+        $$PWD/../../src/log/NoLog.h \
+        $$PWD/../../src/shared/impl/IdImpl.h \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.h
+    SOURCES += \
+        $$PWD/../../src/shared/impl/IdImpl.cpp \
+        $$PWD/../../src/shared/impl/SharedManagerImpl.cpp
 
-HEADERS += \
-    VanillaSdl2Plugin.h \
-    VanillaSdl2Tickable.h
+    include(test/test.pri)
+}
+include(frts/frts.pri)
+include(main/main.pri)
+
