@@ -5,5 +5,4 @@ SOURCES += \
     test/TestResource.cpp
     
 
-HEADERS += \
-    test/LogStub.h
+HEADERS +=

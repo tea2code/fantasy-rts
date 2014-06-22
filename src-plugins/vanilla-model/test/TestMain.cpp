@@ -1,7 +1,5 @@
 #include <catch.hpp>
 
-#include "LogStub.h"
-
 #include <entity/ComponentIds.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
@@ -17,6 +15,7 @@
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 
+#include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -25,7 +24,7 @@
 
 TEST_CASE("ModelFactory.", "[main]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
@@ -77,7 +76,7 @@ TEST_CASE("ModelFactory.", "[main]")
 
 TEST_CASE("ModelReseter.", "[main]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
@@ -98,7 +97,7 @@ TEST_CASE("ModelReseter.", "[main]")
 
 TEST_CASE("RegionManager.", "[main]")
 {
-    frts::LogPtr log = std::make_shared<TestLog>();
+    frts::LogPtr log = frts::makeNoLog();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::Point::value sizeX = 10;

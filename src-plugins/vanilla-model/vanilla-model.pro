@@ -29,8 +29,9 @@ INCLUDEPATH += $$PWD/../../src-helper/
 
 # Headers and sources.
 UNIT_TEST {
-    # Necessary to create IDs for tests.
+    # Necessary for tests.
     HEADERS += \
+        $$PWD/../../src/log/NoLog.h \
         $$PWD/../../src/shared/impl/IdImpl.h \
         $$PWD/../../src/shared/impl/SharedManagerImpl.h
     SOURCES += \

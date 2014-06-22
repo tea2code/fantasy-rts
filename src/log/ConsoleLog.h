@@ -3,6 +3,8 @@
 
 #include "Log.h"
 
+#include <memory>
+
 
 namespace frts
 {
@@ -23,6 +25,15 @@ namespace frts
         void print(const std::string& level, const std::string& module,
                    const std::string& msg);
     };
+
+    /**
+     * @brief Create new ConsoleLog.
+     * @return The log.
+     */
+    inline LogPtr makeConsoleLog()
+    {
+        return std::make_shared<ConsoleLog>();
+    }
 }
 
 #endif // FRTS_CONSOLELOG_H

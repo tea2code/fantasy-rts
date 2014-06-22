@@ -9,7 +9,7 @@
 
 TEST_CASE("CommandFactory.", "[main]")
 {
-    frts::LogPtr log = std::make_shared<frts::NoLog>();
+    frts::LogPtr log = frts::makeNoLog();
     frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
 
     frts::CommandFactoryPtr commandFactory = frts::makeCommandFactory();

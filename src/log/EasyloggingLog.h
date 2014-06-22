@@ -3,6 +3,8 @@
 
 #include "Log.h"
 
+#include <memory>
+
 
 namespace frts
 {
@@ -26,6 +28,16 @@ namespace frts
     private:
         std::string formatMessage(const std::string& module, const std::string& msg);
     };
+
+    /**
+     * @brief Create new EasyloggingLog.
+     * @param configFilePath Path to configuration file.
+     * @return The log.
+     */
+    inline LogPtr makeEasyloggingLog(const std::string& configFilePath)
+    {
+        return std::make_shared<EasyloggingLog>(configFilePath);
+    }
 }
 
 #endif // FRTS_EASYLOGGINGLOG_H

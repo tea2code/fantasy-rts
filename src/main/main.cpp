@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     const std::string logModule = "frts::Kernel";
 
     // Create logger.
-    frts::LogPtr log = std::make_shared<frts::EasyloggingLog>(logConfigFile);
+    frts::LogPtr log = frts::makeEasyloggingLog(logConfigFile);
 
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");

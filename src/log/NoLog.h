@@ -3,6 +3,8 @@
 
 #include "Log.h"
 
+#include <memory>
+
 
 namespace frts
 {
@@ -19,6 +21,15 @@ namespace frts
         void info(const std::string&, const std::string&) override {}
         void warning(const std::string&, const std::string&) override {}
     };
+
+    /**
+     * @brief Create new NoLog.
+     * @return The log.
+     */
+    inline LogPtr makeNoLog()
+    {
+        return std::make_shared<NoLog>();
+    }
 }
 
 #endif // NOLOG_H
