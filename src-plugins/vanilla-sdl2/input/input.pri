@@ -1,4 +1,5 @@
 HEADERS += \
-    input/Key.h
+    input/Key.h \
+    input/StringToSdl2Key.h
 
     

@@ -2,6 +2,14 @@
 
 This plugin implements input handling and 2D visualization using [SDL2](http://www.libsdl.org/).
 
+## Installation
+
+Default path of plugin is `vanilla-sdl2/vanilla-sdl2`. Before including this plugin it is necessary to include the SDL2 library using `vanilla-sdl2/SDL2`.
+
+## Development
+
+Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
+
 ## Input Handling
 
 ### Configuration
@@ -13,19 +21,19 @@ This plugin implements input handling and 2D visualization using [SDL2](http://w
 
 ### Keys
 
-Following keys are currently supported:
+Following keys are currently supported. If multiple names for one key exist they are space separated. Used in configuration files they are case insensitive. An equivalent enum exists and will be included using `frts/vanillasdl2input`.
 
 #### Numbers:
-        Number0
-        Number1
-        Number2
-        Number3
-        Number4
-        Number5
-        Number6
-        Number7
-        Number8
-        Number9
+        Number0 0
+        Number1 1
+        Number2 2
+        Number3 3
+        Number4 4
+        Number5 5
+        Number6 6
+        Number7 7
+        Number8 8
+        Number9 9
 
 #### Letters:
         A
@@ -85,15 +93,15 @@ Following keys are currently supported:
         LeftAlt
         RightAlt
         Space
-        Enter
+        Enter Return
         Backspace
         Insert
-        Del
+        Del Delete
         Home
         End
         PageUp
         PageDown
-        Esc
+        Esc Escape
         Print
         ScrollLock
         Pause
@@ -113,37 +121,34 @@ Following keys are currently supported:
         KeyPadMultiply
         KeyPadMinus
         KeyPadPlus
-        KeyPadEnter
+        KeyPadEnter KeyPadReturn
         KeyPadComma
-        Numlock
+        Numlock Clear
 
 #### Punctuation...:
-        Comma
-        Semicolon
-        Dot
-        Colon
-        Hyphen
-        Underscore
-        Plus
-        Minus
-        Apostrophe
-        Hash
-        Multiplay
-        Divide
-        Plus
-        Minus
-        Backslash
-        Question
-        Leftparenthesis
-        Rightparenthesis
-        Leftbracket
-        Rightbracket
-        Leftbrace
-        Rightbrace
-        Ampersand
-        Percent
-        Dollar
-        Quote
-        Exclamation
-        At
-        Caret
+        Comma ,
+        Semicolon ;
+        Dot Period .
+        Colon :
+        Underscore _
+        Plus +
+        Minus Hyphen -
+        Apostrophe Quote '
+        Hash #
+        Multiply Asterisk *
+        Divide Slash /
+        Backslash \
+        Question ?
+        Leftparenthesis (
+        Rightparenthesis )
+        Leftbracket [
+        Rightbracket ]
+        Leftbrace {
+        Rightbrace }
+        Ampersand &
+        Percent %
+        Dollar $
+        DoubleQuote
+        Exclamation !
+        At @
+        Caret ^
