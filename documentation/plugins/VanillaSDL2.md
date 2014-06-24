@@ -139,12 +139,12 @@ Following keys are currently supported. If multiple names for one key exist they
         Divide Slash /
         Backslash \
         Question ?
-        Leftparenthesis (
-        Rightparenthesis )
-        Leftbracket [
-        Rightbracket ]
-        Leftbrace {
-        Rightbrace }
+        LeftParenthesis (
+        RightParenthesis )
+        LeftBracket [
+        RightBracket ]
+        LeftBrace {
+        RightBrace }
         Ampersand &
         Percent %
         Dollar $
