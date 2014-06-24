@@ -26,6 +26,7 @@ INCLUDEPATH += $$PWD/../../src
 INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/dependency/SDL2/include
+INCLUDEPATH += $$PWD/../vanilla-command
 
 # Libs.
 LIBS += -lmingw32 -mwindows -mconsole
