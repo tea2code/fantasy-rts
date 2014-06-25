@@ -16,6 +16,7 @@ renderModules:
     - frts/ModelReseter
     
 updateModules:
+    - frts/InputHandler
     - frts/VanillaDemo
     
 utilities:

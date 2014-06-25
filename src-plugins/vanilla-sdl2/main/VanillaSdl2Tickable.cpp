@@ -97,15 +97,6 @@ bool frts::VanillaSdl2Tickable::preInit(frts::SharedManagerPtr)
 
 void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr shared)
 {
-    SDL_Event e;
-    while (SDL_PollEvent(&e))
-    {
-        if (e.type == SDL_QUIT)
-        {
-            shared->setQuitApplication(true);
-        }
-    }
-
     unsigned int currentTime = SDL_GetTicks();
     unsigned int diff = currentTime - lastTime;
     if (diff > 0)
