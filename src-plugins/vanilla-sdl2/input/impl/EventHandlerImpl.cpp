@@ -78,18 +78,24 @@ void frts::EventHandlerImpl::tick(SharedManagerPtr shared)
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        if (event.type == SDL_QUIT)
+        switch(event.type)
         {
-            shared->setQuitApplication(true);
-        }
-        else if (event.type == SDL_KEYDOWN)
-        {
-            SDL_Keycode key = event.key.keysym.sym;
-            auto it = keyCommands.find(key);
-            if (it != keyCommands.end())
+            case SDL_QUIT:
             {
-                it->second->execute(shared);
+                shared->setQuitApplication(true);
             }
+            break;
+
+            case SDL_KEYDOWN:
+            {
+                SDL_Keycode key = event.key.keysym.sym;
+                auto it = keyCommands.find(key);
+                if (it != keyCommands.end())
+                {
+                    it->second->execute(shared);
+                }
+            }
+            break;
         }
     }
 }
