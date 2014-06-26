@@ -1,4 +1,4 @@
 keys:
 
     - key: escape
-      command: command.quit
+      command: frts.vanillacommand.command.quit

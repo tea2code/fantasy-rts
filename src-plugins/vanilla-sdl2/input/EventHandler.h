@@ -1,5 +1,5 @@
-#ifndef FRTS_INPUTHANDLER_H
-#define FRTS_INPUTHANDLER_H
+#ifndef FRTS_EVENTHANDLER_H
+#define FRTS_EVENTHANDLER_H
 
 #include "Key.h"
 
@@ -10,13 +10,13 @@
 namespace frts
 {
     /**
-     * @brief The input handler consumes the SDL2 event queue and handles all
-     *        input events.
+     * @brief The event handler consumes the SDL2 event queue and handles all
+     *        events but mostly input events.
      */
-    class InputHandler : public Tickable
+    class EventHandler : public Tickable
     {
     public:
-        virtual ~InputHandler() {}
+        virtual ~EventHandler() {}
 
         /**
          * @brief Register a custom command with an key.
@@ -27,4 +27,4 @@ namespace frts
     };
 }
 
-#endif // FRTS_INPUTHANDLER_H
+#endif // FRTS_EVENTHANDLER_H

@@ -16,7 +16,7 @@ renderModules:
     - frts/ModelReseter
     
 updateModules:
-    - frts/InputHandler
+    - frts/EventHandler
     - frts/VanillaDemo
     
 utilities:
@@ -26,3 +26,4 @@ utilities:
 configurations:
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
+    - vanilla-sdl2/keys.yaml

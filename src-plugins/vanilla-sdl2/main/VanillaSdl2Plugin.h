@@ -11,7 +11,7 @@ namespace frts
     class VanillaSdl2Plugin : public Plugin
     {
     public:
-        const std::string inputModule = "frts/InputHandler";
+        const std::string eventModule = "frts/EventHandler";
 
         const std::string module = "frts/VanillaSdl2";
 

@@ -1,7 +1,7 @@
-#ifndef FRTS_INPUTHANDLERIMPL_H
-#define FRTS_INPUTHANDLERIMPL_H
+#ifndef FRTS_EVENTHANDLERIMPL_H
+#define FRTS_EVENTHANDLERIMPL_H
 
-#include <input/InputHandler.h>
+#include <input/EventHandler.h>
 
 #include <SDL2/SDL.h>
 
@@ -11,10 +11,10 @@
 
 namespace frts
 {
-    class InputHandlerImpl : public InputHandler
+    class EventHandlerImpl : public EventHandler
     {
     public:
-        InputHandlerImpl();
+        EventHandlerImpl();
 
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
@@ -31,17 +31,19 @@ namespace frts
     private:
         const std::string configKey = "keys";
 
+        std::vector<ConfigNodePtr> configNodes;
+        bool firstInit = true;
         std::unordered_map<SDL_Keycode, CommandPtr, std::hash<char>> keyCommands;
     };
 
     /**
-     * @brief Create new InputHandler.
+     * @brief Create new EventHandler.
      * @return The module.
      */
-    inline ModulePtr makeInputHandler()
+    inline ModulePtr makeEventHandler()
     {
-        return std::make_shared<InputHandlerImpl>();
+        return std::make_shared<EventHandlerImpl>();
     }
 }
 
-#endif // FRTS_INPUTHANDLERIMPL_H
+#endif // FRTS_EVENTHANDLERIMPL_H

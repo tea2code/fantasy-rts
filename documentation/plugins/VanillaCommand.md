@@ -28,6 +28,8 @@ Load using `frts/CommandFactory` in the utilities section of the load file.
 
 ## Commands
 
+Commands are registered during execution phase 10 (module initialization). This means they are not accessible earlier. Trying so will result in an exception stating the command builder is not found with the given ID.
+
 ### QuitCommand
 
 Quits the application. If `undo()` is during the current frame executed the command is reverted.  

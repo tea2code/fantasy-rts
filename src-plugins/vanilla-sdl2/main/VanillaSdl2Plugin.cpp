@@ -1,7 +1,7 @@
 #include "VanillaSdl2Plugin.h"
 
 #include "VanillaSdl2Tickable.h"
-#include <input/impl/InputHandlerImpl.h>
+#include <input/impl/EventHandlerImpl.h>
 
 #include <frts/shared>
 
@@ -19,9 +19,9 @@ frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
     {
         result = std::make_shared<VanillaSdl2Tickable>();
     }
-    else if (id->toString() == inputModule)
+    else if (id->toString() == eventModule)
     {
-        result = makeInputHandler();
+        result = makeEventHandler();
     }
     return result;
 }

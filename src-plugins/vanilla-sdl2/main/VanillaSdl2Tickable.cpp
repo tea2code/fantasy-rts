@@ -95,7 +95,7 @@ bool frts::VanillaSdl2Tickable::preInit(frts::SharedManagerPtr)
     return false;
 }
 
-void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr shared)
+void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr)
 {
     unsigned int currentTime = SDL_GetTicks();
     unsigned int diff = currentTime - lastTime;
