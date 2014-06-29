@@ -15,7 +15,8 @@ namespace frts
         virtual ~Tickable() {}
 
         /**
-         * @brief Called every frame with the currend shared state.
+         * @brief Called every frame with the currend shared state. Executed
+         *        during "Startup", "Run Game" and "Shutdown" phases.
          * @param shared The shared manager.
          */
         virtual void tick(SharedManagerPtr shared) = 0;
