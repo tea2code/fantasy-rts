@@ -1,30 +1,59 @@
 #ifndef FRTS_EVENTHANDLER_H
 #define FRTS_EVENTHANDLER_H
 
-#include "Key.h"
-
 #include <frts/module>
 #include <frts/vanillacommand>
+
+#include <SDL2/SDL.h>
+
+#include <unordered_map>
+#include <memory>
 
 
 namespace frts
 {
+    class EventHandler;
+
     /**
-     * @brief The event handler consumes the SDL2 event queue and handles all
-     *        events but mostly input events.
+     * @brief Pointer to EventHandler.
      */
+    using EventHandlerPtr = std::shared_ptr<EventHandler>;
+
     class EventHandler : public Tickable
     {
     public:
-        virtual ~EventHandler() {}
+        EventHandler();
+
+        bool createData(SharedManagerPtr shared) override;
+        std::string getName() const override;
+        std::vector<std::string> getSupportedConfig() override;
+        int getVersion() const override;
+        bool init(SharedManagerPtr shared) override;
+        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
+        bool preInit(SharedManagerPtr shared) override;
+        void tick(SharedManagerPtr shared) override;
+        void validateData(SharedManagerPtr shared) override;
+        void validateModules(SharedManagerPtr shared) override;
 
         /**
          * @brief Register a custom command with an key.
          * @param key The key.
          * @param command The command.
          */
-        virtual void registerCommand(Key key, CommandPtr command) = 0;
+        void registerCommand(SDL_Keycode key, CommandPtr command);
+
+    private:
+        std::unordered_map<SDL_Keycode, CommandPtr, std::hash<char>> keyCommands;
     };
+
+    /**
+     * @brief Create new EventHandler.
+     * @return The module.
+     */
+    inline EventHandlerPtr makeEventHandler()
+    {
+        return std::make_shared<EventHandler>();
+    }
 }
 
 #endif // FRTS_EVENTHANDLER_H

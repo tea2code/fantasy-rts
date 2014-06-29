@@ -1,6 +1,8 @@
 #ifndef FRTS_VANILLASDL2PLUGIN_H
 #define FRTS_VANILLASDL2PLUGIN_H
 
+#include <input/EventHandler.h>
+
 #include <frts/plugin>
 
 #include <string>
@@ -12,6 +14,7 @@ namespace frts
     {
     public:
         const std::string eventModule = "frts/EventHandler";
+        const std::string inputModule = "frts/InputHandler";
 
         const std::string module = "frts/VanillaSdl2";
 
@@ -19,6 +22,12 @@ namespace frts
         VanillaSdl2Plugin();
 
         ModulePtr getModule(frts::IdPtr id) override;
+
+    private:
+        EventHandlerPtr eventHandler;
+
+    private:
+        EventHandlerPtr getEventHandler();
     };
 }
 

@@ -12,11 +12,17 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ## Input Handling
 
-### Event Module
+### Event Handler
 
-The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. It allows to register commands by using the configuration or the interface. 
+The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. 
 
-Load using `frts/EventHandler` in the render module section of the load file.
+Load using `frts/EventHandler` in the update (recommended) or render module section of the load file.
+
+### Input Handler
+
+The input handler module allows to register commands to certain keys by using the configuration or the interface.  
+
+Load using `frts/InputHandler` in the utility module section of the load file.
 
 ### Configuration
 

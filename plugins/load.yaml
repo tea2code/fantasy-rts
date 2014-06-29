@@ -21,6 +21,7 @@ updateModules:
     
 utilities:
     - frts/CommandFactory
+    - frts/InputHandler
     - frts/ModelFactory
     
 configurations:

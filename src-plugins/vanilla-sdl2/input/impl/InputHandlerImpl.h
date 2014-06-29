@@ -1,20 +1,23 @@
-#ifndef FRTS_EVENTHANDLERIMPL_H
-#define FRTS_EVENTHANDLERIMPL_H
+#ifndef FRTS_INPUTHANDLERIMPL_H
+#define FRTS_INPUTHANDLERIMPL_H
 
 #include <input/EventHandler.h>
+#include <input/InputHandler.h>
 
 #include <SDL2/SDL.h>
 
-#include <unordered_map>
 #include <memory>
 
 
 namespace frts
 {
-    class EventHandlerImpl : public EventHandler
+    class InputHandlerImpl : public InputHandler
     {
     public:
-        EventHandlerImpl();
+        /**
+         * @param eventHandler The event handler.
+         */
+        InputHandlerImpl(EventHandlerPtr eventHandler);
 
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
@@ -24,7 +27,6 @@ namespace frts
         void registerCommand(Key key, CommandPtr command) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
-        void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
@@ -32,18 +34,19 @@ namespace frts
         const std::string configKey = "keys";
 
         std::vector<ConfigNodePtr> configNodes;
+        EventHandlerPtr eventHandler;
         bool firstInit = true;
-        std::unordered_map<SDL_Keycode, CommandPtr, std::hash<char>> keyCommands;
     };
 
     /**
-     * @brief Create new EventHandler.
+     * @brief Create new InputHandler.
+     * @param eventHandler The event handler.
      * @return The module.
      */
-    inline ModulePtr makeEventHandler()
+    inline ModulePtr makeInputHandler(EventHandlerPtr eventHandler)
     {
-        return std::make_shared<EventHandlerImpl>();
+        return std::make_shared<InputHandlerImpl>(eventHandler);
     }
 }
 
-#endif // FRTS_EVENTHANDLERIMPL_H
+#endif // FRTS_INPUTHANDLERIMPL_H
