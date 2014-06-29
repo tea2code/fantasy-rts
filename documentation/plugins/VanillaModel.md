@@ -74,6 +74,8 @@ Utility module which acts as a factory to create model related objects like poin
 
 Load using `frts/ModelFactory` in the utilities section of the load file.
 
+Will identify itself by the name `frts::ModelFactory`.
+
 ### Model Reseter
 
 The model reseter handles model related clean up at the end of each frame. It should be placed as the last render module. Currently the following resets are done:
@@ -81,6 +83,8 @@ The model reseter handles model related clean up at the end of each frame. It sh
 - Reset changed positions.
 
 Load using `frts/ModelReseter` in the render module section of the load file.
+
+Will identify itself by the name `frts::ModelReseter`.
 
 ### Point
 

@@ -26,6 +26,8 @@ The command factory is implemented as a utility module. It has a couple of pre r
 
 Load using `frts/CommandFactory` in the utilities section of the load file.
 
+Will identify itself by the name `frts::CommandFactory`.
+
 ## Commands
 
 Commands are registered during execution phase 10 (module initialization). This means they are not accessible earlier. Trying so will result in an exception stating the command builder is not found with the given ID.
