@@ -10,7 +10,7 @@ Default path of plugin is `vanilla-sdl2/vanilla-sdl2`. Before including this plu
 
 Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
 
-## Input Handling
+## Input/Event Handling
 
 ### Event Handler
 
@@ -168,3 +168,36 @@ Following keys are currently supported. If multiple names for one key exist they
         Exclamation !
         At @
         Caret ^
+
+## Graphic Output
+
+### Sprite Config
+
+A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default image may be set below the `sprites` key. It will be used if no image is defined on a sprite. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same.
+
+    style:
+        namespace: <string>
+        
+        images:
+            namespace: <string>
+            image:
+                - name: <string>
+                  path: <string>
+    
+        sprites:
+            namespace: <string>
+            image: <string>
+            sprite:
+                - name: <string>
+                  image: <string>
+                  x: <int>
+                  y: <int>
+                  
+                - name: <string>
+                  multiple:
+                     - x: <int>
+                       y: <int>
+                       chance: <float, optional>
+                     - x: <int>
+                       y: <int>
+                       chance: <float, optional>
