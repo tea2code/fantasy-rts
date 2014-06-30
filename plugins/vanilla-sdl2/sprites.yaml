@@ -1,6 +1,12 @@
 style:
     namespace: style
     
+    images:
+        namespace: image
+        image:
+            - name: vanilla
+              path: vanilla-sdl2/sprite.png
+    
     sprites:
         namespace: sprite
         image: style.image.vanilla
