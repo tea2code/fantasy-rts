@@ -1,0 +1,19 @@
+entities:
+    namespace: entity
+    
+    entities:
+        # Has Resource
+        - name: shrub.berry
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.shrub
+        
+        # Is Resource
+        - name: berry
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.berry
+        - name: wood.log
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.wood
