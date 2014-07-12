@@ -180,12 +180,14 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
     try
     {
         EntityPtr entity = makeEntity();
-        ConfigNodePtr componentNodes = entityConfig.at(id);
-        for (auto componentNode : *componentNodes)
+        for (ConfigNodePtr componentNodes : entityConfig.at(id))
         {
-            IdPtr componentId = shared->makeId(componentNode->getString("component"));
-            ComponentPtr component = makeComponent(componentId, componentNode, shared);
-            entity->addComponent(component);
+            for (auto componentNode : *componentNodes)
+            {
+                IdPtr componentId = shared->makeId(componentNode->getString("component"));
+                ComponentPtr component = makeComponent(componentId, componentNode, shared);
+                entity->addComponent(component);
+            }
         }
         return entity;
     }
@@ -219,7 +221,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
             {
                 IdPtr id = shared->makeId(namePrefix + entityNode->getString("name"));
                 ConfigNodePtr componentsNode = entityNode->getNode("components");
-                entityConfig[id] = componentsNode;
+                entityConfig[id].push_back(componentsNode);
             }
         }
 

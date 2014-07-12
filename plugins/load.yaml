@@ -28,3 +28,4 @@ configurations:
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
     - vanilla-sdl2/keys.yaml
+    #- vanilla-sdl2/entities.yaml

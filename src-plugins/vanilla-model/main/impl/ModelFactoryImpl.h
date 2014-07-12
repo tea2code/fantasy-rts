@@ -9,6 +9,7 @@
 #include <resource/LockableResourceManager.h>
 
 #include <unordered_map>
+#include <vector>
 
 
 namespace frts
@@ -42,7 +43,7 @@ namespace frts
 
     private:
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr, IdHash, IdEqual>;
-        using EntityConfigMap = std::unordered_map<IdPtr, ConfigNodePtr, IdHash, IdEqual>;
+        using EntityConfigMap = std::unordered_map<IdPtr, std::vector<ConfigNodePtr>, IdHash, IdEqual>;
 
     private:
         const std::string entitiesConfigKey = "entities";
