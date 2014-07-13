@@ -27,6 +27,7 @@ INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/dependency/SDL2/include
 INCLUDEPATH += $$PWD/../vanilla-command
+INCLUDEPATH += $$PWD/../vanilla-model
 
 # Libs.
 LIBS += -lmingw32 -mwindows -mconsole
@@ -47,6 +48,7 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(frts/frts.pri)
+include(graphic/graphic.pri)
 include(input/input.pri)
 include(main/main.pri)
 

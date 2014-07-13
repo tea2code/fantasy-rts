@@ -171,6 +171,14 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Graphic Output
 
+### Renderable
+
+This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
+
+Its config consists only of the sprite ID:
+
+    sprite: <string representing an id>
+
 ### Sprite Config
 
 A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default image may be set below the `sprites` key. It will be used if no image is defined on a sprite. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same.
