@@ -156,7 +156,7 @@ Following are the component specific attributes:
 
 ### Entities
 
-Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes.
+Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes. It's possible to define a entity in several files. The final entity will contain all components.
 
     entities:
         namespace: <string>
