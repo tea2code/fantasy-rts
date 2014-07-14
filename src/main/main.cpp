@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
 
         // Create shared manager.
         log->info(logModule, "Create shared manager.");
-        frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+        frts::SharedManagerImplPtr shared = frts::makeSharedManager(log);
 
         // Phase 3: Get modules.
         log->info(logModule, "Phase 3: Get modules.");

@@ -100,7 +100,7 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 {
     frts::LogPtr log = std::make_shared<frts::TestLog>();
 
-    frts::SharedManagerImplPtr sharedImpl = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::SharedManagerImplPtr sharedImpl = frts::makeSharedManager(log);
 
     frts::Frame::time deltaTime = frts::fromMilliseconds(10);
     frts::Frame::ticks numberFrames = 124llu;

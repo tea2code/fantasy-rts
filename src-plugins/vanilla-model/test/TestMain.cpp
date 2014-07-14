@@ -25,7 +25,7 @@
 TEST_CASE("ModelFactory.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
 
@@ -77,7 +77,7 @@ TEST_CASE("ModelFactory.", "[main]")
 TEST_CASE("ModelReseter.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
 
@@ -98,7 +98,7 @@ TEST_CASE("ModelReseter.", "[main]")
 TEST_CASE("RegionManager.", "[main]")
 {
     frts::LogPtr log = frts::makeNoLog();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
     frts::Point::value sizeX = 10;
     frts::Point::value sizeY = 10;

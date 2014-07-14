@@ -10,7 +10,7 @@
 TEST_CASE("QuitCommand.", "[command]")
 {
     frts::LogPtr log = frts::makeNoLog();
-    frts::SharedManagerPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
     frts::CommandBuilderPtr builder = frts::makeQuitCommandBuilder();
     frts::CommandPtr command = builder->build(shared);

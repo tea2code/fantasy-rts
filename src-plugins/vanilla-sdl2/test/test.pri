@@ -1,5 +1,6 @@
 SOURCES += \
-    test/TestInput.cpp
+    test/TestInput.cpp \
+    test/TestGraphic.cpp
     
 
 HEADERS += \

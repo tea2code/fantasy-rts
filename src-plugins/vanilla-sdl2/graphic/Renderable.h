@@ -21,7 +21,16 @@ namespace frts
     class Renderable : public Component
     {
     public:
-        virtual void ~Renderable() {}
+        virtual ~Renderable() {}
+
+        /**
+         * @brief Default ID string for component type.
+         * @return The ID string.
+         */
+        static std::string componentType()
+        {
+            return "frts.vanillasdl2.graphic.renderable";
+        }
 
         /**
          * @brief Get the ID of the sprite to use.

@@ -140,7 +140,7 @@ TEST_CASE("Execute start phases.", "[application]")
             REQUIRE(utilityModule->getName() == "TestUtility");
 
             frts::LogPtr log = std::make_shared<frts::ConsoleLog>();
-            frts::SharedManagerImplPtr shared = std::make_shared<frts::SharedManagerImpl>(log);
+            frts::SharedManagerImplPtr shared = frts::makeSharedManager(log);
             std::vector<frts::ModulePtr> utilityModules = {utilityModule};
             std::vector<frts::ModulePtr> updateModules;
             for (auto& module : tickableModules)

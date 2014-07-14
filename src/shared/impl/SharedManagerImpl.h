@@ -86,6 +86,16 @@ namespace frts
     private:
         IdNotFoundError makeIdNotFoundError(IdPtr id) const;
     };
+
+    /**
+     * @brief Create new SharedManager.
+     * @param log The log.
+     * @return The SharedManager.
+     */
+    inline SharedManagerImplPtr makeSharedManager(LogPtr log)
+    {
+        return std::make_shared<SharedManagerImpl>(log);
+    }
 }
 
 #endif // FRTS_SHAREDMANAGERIMPL_H
