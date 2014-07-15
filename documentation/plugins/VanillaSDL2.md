@@ -171,6 +171,10 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Graphic Output
 
+### Drawer
+
+Draws and updates the screen.
+
 ### Fps Manager
 
 Limits the frame rate and calculates the current frame rate.
