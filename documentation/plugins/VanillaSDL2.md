@@ -171,6 +171,10 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Graphic Output
 
+### Fps Manager
+
+Limits the frame rate and calculates the current frame rate.
+
 ### Renderable
 
 This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
