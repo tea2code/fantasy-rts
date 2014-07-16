@@ -3,7 +3,8 @@ HEADERS += \
     graphic/impl/RenderableImpl.h \
     graphic/impl/RenderableBuilder.h \
     graphic/FpsManager.h \
-    graphic/Drawer.h
+    graphic/Drawer.h \
+    graphic/Sdl2Renderer.h
     
 
 SOURCES += \

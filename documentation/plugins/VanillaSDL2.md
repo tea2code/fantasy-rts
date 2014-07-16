@@ -187,6 +187,14 @@ Its config consists only of the sprite ID:
 
     sprite: <string representing an id>
 
+### SDL2 Renderer
+
+The renderer module manages everything graphic related. It allows to replace some parts like the fps manager and the drawer.
+
+Load using `frts/SDL2Renderer` in the utility module section of the load file.
+
+Will identify itself by the name `frts::SDL2Renderer`.
+
 ### Sprite Config
 
 A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default image may be set below the `sprites` key. It will be used if no image is defined on a sprite. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same.

@@ -4,5 +4,6 @@
 #include <graphic/Drawer.h>
 #include <graphic/FpsManager.h>
 #include <graphic/Renderable.h>
+#include <graphic/Sdl2Renderer.h>
 
 #endif // FRTS_VANILLASDL2GRAPHIC_INCLUDE_H
