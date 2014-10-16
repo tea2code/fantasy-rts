@@ -1,4 +1,3 @@
-
 #ifndef UNIT_TEST
 
 #include "Application.h"
@@ -16,7 +15,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <memory>
-#include <ostream>
+#include <iostream>
 #include <string>
 #include <vector>
 

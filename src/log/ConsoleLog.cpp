@@ -2,7 +2,7 @@
 
 #include <boost/format.hpp>
 
-#include <ostream>
+#include <iostream>
 
 
 frts::ConsoleLog::ConsoleLog()
