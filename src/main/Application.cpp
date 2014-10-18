@@ -24,7 +24,7 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules,
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
-        for(auto& module : modules)
+        for(auto& module : todo)
         {
             if (module->createData(shared))
             {
@@ -67,7 +67,7 @@ void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManage
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
-        for(auto& module : modules)
+        for(auto& module : todo)
         {
             if (module->init(shared))
             {
@@ -114,7 +114,7 @@ void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedMan
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
-        for(auto& module : modules)
+        for(auto& module : todo)
         {
             if (module->preInit(shared))
             {
