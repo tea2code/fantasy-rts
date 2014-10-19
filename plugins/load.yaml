@@ -3,6 +3,9 @@ plugins:
     - vanilla-demo/vanilla-demo
     - vanilla-model/vanilla-model
     - vanilla-sdl2/SDL2
+    - vanilla-sdl2/SDL2_image
+    - vanilla-sdl2/zlib1
+    - vanilla-sdl2/libpng16-16
     - vanilla-sdl2/vanilla-sdl2
     
 startupModules:

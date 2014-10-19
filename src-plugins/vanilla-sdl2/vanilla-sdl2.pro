@@ -26,13 +26,15 @@ INCLUDEPATH += $$PWD/../../src
 INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/dependency/SDL2/include
+INCLUDEPATH += $$PWD/dependency/SDL2_image/i686-w64-mingw32/include
 INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-model
 
 # Libs.
 LIBS += -lmingw32 -mwindows -mconsole
 LIBS += -L$$PWD/dependency/SDL2/build -L$$PWD/dependency/SDL2/build/.libs
-LIBS += -lSDL2main -lSDL2
+LIBS += -L$$PWD/dependency/SDL2_image/i686-w64-mingw32/lib
+LIBS += -lSDL2main -lSDL2 -lSDL2_image
 
 # Headers and sources.
 UNIT_TEST {

@@ -107,7 +107,15 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos)
 
 frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity)
 {
-    return entityPos[entity];
+    auto found = entityPos.find(entity);
+    if (found != entityPos.end())
+    {
+        return found->second;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos)

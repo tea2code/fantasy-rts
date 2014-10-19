@@ -3,6 +3,7 @@
 #include <frts/shared>
 
 #include <boost/format.hpp>
+#include <SDL2/SDL_image.h>
 
 #include <string>
 
@@ -13,9 +14,10 @@ frts::VanillaSdl2Tickable::VanillaSdl2Tickable()
 
 frts::VanillaSdl2Tickable::~VanillaSdl2Tickable()
 {
-    SDL_DestroyTexture(tex);
-    SDL_DestroyRenderer(ren);
-    SDL_DestroyWindow(win);
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -47,38 +49,45 @@ bool frts::VanillaSdl2Tickable::init(frts::SharedManagerPtr shared)
         return false;
     }
 
-    win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-    if (win == nullptr)
+    int imageFlags = IMG_INIT_PNG;
+    if (IMG_Init(imageFlags) != imageFlags)
+    {
+        shared->getLog()->error(getName(), "IMG_Init Error: " + std::string(IMG_GetError()));
+        return false;
+    }
+
+    window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 640, SDL_WINDOW_SHOWN);
+    if (window == nullptr)
     {
         shared->getLog()->error(getName(), "SDL_CreateWindow Error: " + std::string(SDL_GetError()));
         return false;
     }
 
-    ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (ren == nullptr)
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (renderer == nullptr)
     {
         shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return false;
     }
 
-    SDL_Surface *bmp = SDL_LoadBMP("plugins/vanilla-sdl2/hello.bmp");
-    if (bmp == nullptr)
+    SDL_Surface *surface = IMG_Load("plugins/vanilla-sdl2/sprite.png");
+    if (surface == nullptr)
     {
-        shared->getLog()->error(getName(), "SDL_LoadBMP Error: " + std::string(SDL_GetError()));
+        shared->getLog()->error(getName(), "IMG_Load Error: " + std::string(IMG_GetError()));
         return false;
     }
 
-    tex = SDL_CreateTextureFromSurface(ren, bmp);
-    SDL_FreeSurface(bmp);
-    if (tex == nullptr)
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
+    if (texture == nullptr)
     {
         shared->getLog()->error(getName(), "SDL_CreateTextureFromSurface Error: " + std::string(SDL_GetError()));
         return false;
     }
 
-    SDL_RenderClear(ren);
-    SDL_RenderCopy(ren, tex, NULL, NULL);
-    SDL_RenderPresent(ren);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
 
     lastTime = SDL_GetTicks();
 
@@ -104,7 +113,7 @@ void frts::VanillaSdl2Tickable::tick(frts::SharedManagerPtr)
         unsigned int fps = 1000 / diff;
         lastTime = currentTime;
         auto msg = boost::format(R"(Fps = %1%)") % fps;
-        SDL_SetWindowTitle(win, msg.str().c_str());
+        SDL_SetWindowTitle(window, msg.str().c_str());
     }
 }
 

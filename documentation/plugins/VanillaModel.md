@@ -106,7 +106,7 @@ The blocks of a region are created by a region generator. At the beginning a reg
 
 The region manager is the access interface to all region and resource managing related methods. It represents a data value containing the region. It also manages a list of changed positions since last reset. The will mostly be set automatically but can be also set by hand.
 
-Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator. The default implementation is used if no other is set.
+Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator. The default implementation is used if no other is set. This can be done in the Model Factory.
 
 The region manager is implemented as an data value and can be accessed via the shared manager using the id `frts.vanillamodel.regionmanager`.
 
