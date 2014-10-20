@@ -27,7 +27,7 @@ Reached: *Spring 2014: Full plugin based architecture.*
 
 Major goals:
 
-- Later 2014: Playable demo. Including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
+- Spring 2015: Playable demo. Including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
 
 ## Coming Soon
 
