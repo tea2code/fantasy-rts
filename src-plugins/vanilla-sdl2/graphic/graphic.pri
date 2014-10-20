@@ -5,10 +5,12 @@ HEADERS += \
     graphic/FpsManager.h \
     graphic/Drawer.h \
     graphic/Sdl2Renderer.h \
-    graphic/impl/FpsManagerImpl.h
+    graphic/impl/FpsManagerImpl.h \
+    $$PWD/impl/Sprite.h
     
 
 SOURCES += \
     graphic/impl/RenderableImpl.cpp \
     graphic/impl/RenderableBuilder.cpp \
-    graphic/impl/FpsManagerImpl.cpp
+    graphic/impl/FpsManagerImpl.cpp \
+    $$PWD/impl/Sprite.cpp
