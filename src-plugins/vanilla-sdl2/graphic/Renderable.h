@@ -33,10 +33,22 @@ namespace frts
         }
 
         /**
+         * @brief Add sprite to renderable.
+         * @param id The ID.
+         */
+        virtual void addSprite(IdPtr id) = 0;
+
+        /**
+         * @brief Get current number of sprites in this renderable.
+         * @return Number of sprites.
+         */
+        virtual int getNumSprites() const = 0;
+
+        /**
          * @brief Get the ID of the sprite to use.
          * @return The ID.
          */
-        virtual IdPtr getSprite() const = 0;
+        virtual IdPtr getSprite(int spriteIndex) const = 0;
 
         /**
          * @brief Get the index of the sprite. Default 0 but may change if sprite
@@ -44,12 +56,6 @@ namespace frts
          * @return The index.
          */
         virtual int getSpriteIndex() const = 0;
-
-        /**
-         * @brief Set the ID of the sprite to use.
-         * @param id The ID.
-         */
-        virtual void setSprite(IdPtr id) = 0;
 
         /**
          * @brief Set the index of the sprite.

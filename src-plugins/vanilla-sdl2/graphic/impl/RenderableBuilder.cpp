@@ -17,6 +17,6 @@ frts::ComponentPtr frts::RenderableBuilder::build(SharedManagerPtr shared, Confi
 {
     RenderablePtr component = std::static_pointer_cast<Renderable>(build(shared));
     IdPtr id = shared->makeId(node->getString("sprite"));
-    component->setSprite(id);
+    component->addSprite(id);
     return component;
 }

@@ -12,9 +12,9 @@ TEST_CASE("Renderable.", "[graphic]")
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
     frts::RenderablePtr component = frts::makeRenderable(shared->makeId(frts::Renderable::componentType()));
-    component->setSprite(shared->makeId("sprite1"));
+    component->addSprite(shared->makeId("sprite1"));
     component->setSpriteIndex(3);
 
-    REQUIRE(component->getSprite() == shared->makeId("sprite1"));
+    REQUIRE(component->getSprite(0) == shared->makeId("sprite1"));
     REQUIRE(component->getSpriteIndex() == 3);
 }
