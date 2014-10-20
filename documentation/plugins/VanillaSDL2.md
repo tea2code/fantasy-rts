@@ -4,11 +4,32 @@ This plugin implements input handling and 2D visualization using [SDL2](http://w
 
 ## Installation
 
-Default path of plugin is `vanilla-sdl2/vanilla-sdl2`. Before including this plugin it is necessary to include the SDL2 library using `vanilla-sdl2/SDL2`.
+Default path of plugin is `vanilla-sdl2/vanilla-sdl2`. Before including this plugin it is necessary to include the SDL2, SDL2_image and libpng libraries using following:
+
+    vanilla-sdl2/SDL2
+    vanilla-sdl2/SDL2_image
+    vanilla-sdl2/zlib1
+    vanilla-sdl2/libpng16-16
+
+## Dependencies
+
+
+The .pro file assumes that all dependencies are put into a directory *dependency* in the plugin root. For the naming of the individual directories of every dependency see the .pro file.
+
+- [SDL2](https://www.libsdl.org/)
+- [SDL2_image](https://www.libsdl.org/projects/SDL_image/)
 
 ## Development
 
 Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
+
+For tests it is necessary to copy the SDL2_image library to the executable:
+
+### Windows
+
+    xcopy
+    %{buildDir}\..\..\vanilla-sdl2\dependency\SDL2_image\i686-w64-mingw32\bin\SDL2_image.dll %{buildDir}  /eiy
+    %{buildDir}
 
 ## Input/Event Handling
 

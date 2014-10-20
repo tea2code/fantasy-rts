@@ -53,7 +53,7 @@ Running includes three custom steps to copy assets into the working directory:
     %{sourceDir}\test\TestPlugin\TestPlugin.dll %{buildDir}\ /eiy
     %{buildDir}
 
-#### Linux
+##### Linux
 
     cp
     -R %{sourceDir}/../plugins %{buildDir}/plugins
@@ -79,7 +79,7 @@ Default compile settings with additional copy step after making:
     %{buildDir}\release\TestPlugin.dll %{buildDir}\..\..\ /eiy
     %{buildDir}
 
-#### Linux
+##### Linux
 
     cp
     %{buildDir}/libTestPlugin.so %{buildDir}/../../
@@ -103,7 +103,7 @@ Default compile settings with additional copy step after making:
     %{buildDir}\release\plugin-name.dll %{buildDir}\..\..\..\plugins\plugin-name\ /eiy
     %{buildDir}
 
-#### Linux
+##### Linux
 
     cp
     %{buildDir}/libplugin-name.so %{buildDir}/../../../plugins/plugin-name\
