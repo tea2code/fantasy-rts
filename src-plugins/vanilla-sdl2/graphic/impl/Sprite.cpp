@@ -1,14 +1,9 @@
 #include "Sprite.h"
 
 
-frts::Sprite::Sprite(IdPtr image, int height, int width, int x, int y, double chance)
-    : chance{chance}, height{height}, image{image}, width{width}, x{x}, y{y}
+frts::Sprite::Sprite(IdPtr image, int height, int width, std::vector<SpritePoint> spritePoints)
+    : height{height}, image{image}, spritePoints{spritePoints}, width{width}
 {
-}
-
-double frts::Sprite::getChance() const
-{
-    return chance;
 }
 
 int frts::Sprite::getHeight() const
@@ -21,6 +16,11 @@ frts::IdPtr frts::Sprite::getImage() const
     return image;
 }
 
+std::vector<frts::SpritePoint> frts::Sprite::getSpritePoints() const
+{
+    return spritePoints;
+}
+
 int frts::Sprite::getWidth() const
 {
     return width;
@@ -28,10 +28,15 @@ int frts::Sprite::getWidth() const
 
 int frts::Sprite::getX() const
 {
-    return x;
+    return spritePoints.at(spritePointIndex).getX();
 }
 
 int frts::Sprite::getY() const
 {
-    return y;
+    return spritePoints.at(spritePointIndex).getY();
+}
+
+void frts::Sprite::setSpritePointIndex(int spritePointIndex)
+{
+        this->spritePointIndex = spritePointIndex;
 }

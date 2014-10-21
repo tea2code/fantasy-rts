@@ -1,42 +1,31 @@
 #ifndef FRTS_SPRITE_H
 #define FRTS_SPRITE_H
 
+#include "SpritePoint.h"
+
 #include <frts/shared>
 
-#include <memory>
+#include <vector>
 
 
 namespace frts
 {
-    class Sprite;
-
-    /**
-     * @brief Pointer to Sprite.
-     */
-    using SpritePtr = std::shared_ptr<Sprite>;
-
     /**
      * @brief A sprite consists of an image, its coordinates and its size. It
      *        describes the visual representation of an entity.
      */
     class Sprite
     {
+    friend class SpriteManager;
+
     public:
         /**
          * @param image ID of the image.
          * @param height The height.
          * @param width The width.
-         * @param x The x-coordinate.
-         * @param y The y-coordinate.
-         * @param chance The chance that this sprite is selected.
+         * @param spritePoints List of sprite points.
          */
-        Sprite(IdPtr image, int height, int width, int x, int y, double chance = 1.0);
-
-        /**
-         * @brief The chance that this sprite is selected.
-         * @return The chance.
-         */
-        double getChance() const;
+        Sprite(IdPtr image, int height, int width, std::vector<SpritePoint> spritePoints);
 
         /**
          * @brief The height.
@@ -68,29 +57,26 @@ namespace frts
          */
         int getY() const;
 
+    protected:
+        /**
+         * @brief Get sprite points.
+         * @return List of sprite points.
+         */
+        std::vector<SpritePoint> getSpritePoints() const;
+
+        /**
+         * @brief Set current sprite point index. Will be used for getX() and getY().
+         * @param spritePointIndex The sprite point index.
+         */
+        void setSpritePointIndex(int spritePointIndex);
+
     private:
-        double chance;
         int height;
         IdPtr image;
+        int spritePointIndex = 0;
+        std::vector<SpritePoint> spritePoints;
         int width;
-        int x;
-        int y;
     };
-
-    /**
-     * @brief Create new Sprite.
-     * @param image ID of the image.
-     * @param height The height.
-     * @param width The width.
-     * @param x The x-coordinate.
-     * @param y The y-coordinate.
-     * @param chance The chance that this sprite is selected.
-     * @return The Sprite.
-     */
-    inline SpritePtr makeSprite(IdPtr image, int height, int width, int x, int y, double chance = 1.0)
-    {
-        return std::make_shared<Sprite>(image, height, width, x, y, chance);
-    }
 }
 
 #endif // FRTS_SPRITE_H

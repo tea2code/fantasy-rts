@@ -3,8 +3,6 @@
 
 #include <graphic/Renderable.h>
 
-#include <vector>
-
 
 namespace frts
 {
@@ -13,15 +11,14 @@ namespace frts
     public:
         RenderableImpl(IdPtr type);
 
-        void addSprite(IdPtr id) override;
         IdPtr getComponentType() const override;
-        int getNumSprites() const override;
-        IdPtr getSprite(int spriteIndex) const override;
+        IdPtr getSprite() const override;
         int getSpriteIndex() const override;
+        void setSprite(IdPtr id) override;
         void setSpriteIndex(int index) override;
 
     private:
-        std::vector<IdPtr> sprites;
+        IdPtr sprite;
         int spriteIndex;
         IdPtr type;
     };
