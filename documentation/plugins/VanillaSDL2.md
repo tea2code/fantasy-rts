@@ -218,7 +218,7 @@ Will identify itself by the name `frts::SDL2Renderer`.
 
 ### Sprite Config
 
-A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default image may be set below the `sprites` key. It will be used if no image is defined on a sprite. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same.
+A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite can be defined  below `sprites`.
 
     style:
         namespace: <string>
@@ -231,14 +231,23 @@ A complete sprite configuration consists of a list of sprite images with their p
     
         sprites:
             namespace: <string>
+            
+            fallback: <id>
+            height: <int>
             image: <string>
+            width: <int>
+            
             sprite:
                 - name: <string>
+                  height: <int>
                   image: <string>
+                  width: <int>
                   x: <int>
                   y: <int>
                   
                 - name: <string>
+                  height: <int>
+                  width: <int>
                   multiple:
                      - x: <int>
                        y: <int>

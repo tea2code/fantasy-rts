@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include <boost/format.hpp>
+
 
 frts::Sprite::Sprite(IdPtr image, int height, int width, std::vector<SpritePoint> spritePoints)
     : height{height}, image{image}, spritePoints{spritePoints}, width{width}
@@ -38,5 +40,11 @@ int frts::Sprite::getY() const
 
 void frts::Sprite::setSpritePointIndex(int spritePointIndex)
 {
-        this->spritePointIndex = spritePointIndex;
+    int size = spritePoints.size();
+    if (spritePointIndex < 0 || size <= spritePointIndex)
+    {
+        auto msg = boost::format(R"(Sprite index %1% is out of bounds [0, %2%].)") % spritePointIndex % spritePoints.size();
+        throw frts::SpriteIndexInvalidError(msg.str());
+    }
+    this->spritePointIndex = spritePointIndex;
 }

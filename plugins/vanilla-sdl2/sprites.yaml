@@ -9,7 +9,12 @@ style:
     
     sprites:
         namespace: sprite
+        
+        fallback: style.sprite.unknown
+        height: 16
         image: style.image.vanilla
+        width: 16
+        
         sprite:
             - name: unknown
               x: 0

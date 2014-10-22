@@ -11,6 +11,15 @@
 namespace frts
 {
     /**
+     * @brief Thrown if a given sprite index is out of bounds.
+     */
+    class SpriteIndexInvalidError : public std::runtime_error
+    {
+    public:
+        SpriteIndexInvalidError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
+    /**
      * @brief A sprite consists of an image, its coordinates and its size. It
      *        describes the visual representation of an entity.
      */
@@ -66,6 +75,7 @@ namespace frts
 
         /**
          * @brief Set current sprite point index. Will be used for getX() and getY().
+         * @throw SpriteIndexInvalidError if index is out of bounds.
          * @param spritePointIndex The sprite point index.
          */
         void setSpritePointIndex(int spritePointIndex);
