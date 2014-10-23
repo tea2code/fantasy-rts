@@ -192,14 +192,6 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Graphic Output
 
-### Drawer
-
-Draws and updates the screen.
-
-### Fps Manager
-
-Limits the frame rate and calculates the current frame rate.
-
 ### Renderable
 
 This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
@@ -210,7 +202,7 @@ Its config consists only of the sprite ID:
 
 ### SDL2 Renderer
 
-The renderer module manages everything graphic related. It allows to replace some parts like the fps manager and the drawer.
+The renderer module manages everything graphic related. 
 
 Load using `frts/SDL2Renderer` in the utility module section of the load file.
 
@@ -218,7 +210,7 @@ Will identify itself by the name `frts::SDL2Renderer`.
 
 ### Sprite Config
 
-A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite can be defined  below `sprites`.
+A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite must be defined  below `sprites`.
 
     style:
         namespace: <string>
