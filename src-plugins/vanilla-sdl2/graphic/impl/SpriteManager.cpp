@@ -1,9 +1,11 @@
 #include "SpriteManager.h"
 
 #include "SpritePoint.h"
+#include <frts/random.h>
 
 #include <boost/format.hpp>
 
+#include <numeric>
 #include <utility>
 #include <vector>
 
@@ -14,7 +16,44 @@ frts::SpriteManager::SpriteManager()
 
 frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable)
 {
-    return frts::Sprite(nullptr, 0, 0, {});
+    // Get sprite.
+    auto it = sprites.find(renderable->getSprite());
+    if (it == sprites.end())
+    {
+        // Get fallback.
+        it = sprites.find(fallback);
+    }
+    Sprite sprite = it->second;
+
+    // Select sprite index.
+    if (!renderable->isSpriteIndexSet())
+    {
+        auto spritePoints = sprite.getSpritePoints();
+
+        // The following little algorithm randomly selects the sprite point using the chances
+        // of all sprite points in a sum, throwing a dice and then iterating of the sprite points
+        // and checking if the dice value is int he chance interval of the current sprite point.
+        // The advantage is that it doesn't matter what values the chances are.
+        double upper = std::accumulate(spritePoints.begin(), spritePoints.end(), 0.0,
+                                       [](double sum, SpritePoint sp) { return sum + sp.getChance(); });
+        double dice = frts::randomFloat(0.0, upper);
+        double chanceFrom = 0.0;
+        int spriteIndex = 0;
+        for (auto spritePoint : spritePoints)
+        {
+            if (chanceFrom <= dice && dice <= chanceFrom + spritePoint.getChance())
+            {
+                break;
+            }
+
+            chanceFrom += spritePoint.getChance();
+            spriteIndex += 1;
+        }
+        renderable->setSpriteIndex(spriteIndex);
+    }
+    sprite.setSpritePointIndex(renderable->getSpriteIndex());
+
+    return sprite;
 }
 
 void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode)
@@ -122,5 +161,23 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
 
         Sprite sprite (image, height, width, spritePoints);
         sprites.insert(std::make_pair(id, sprite));
+    }
+
+    isConfigInitialized = true;
+}
+
+void frts::SpriteManager::validateData(SharedManagerPtr)
+{
+    // Is fallback set.
+    if (fallback == nullptr)
+    {
+        auto msg = boost::format(R"(Fallback sprite ID missing.)");
+        throw InvalidSpriteConfigError(msg.str());
+    }
+    // If so check if fallback sprite exists.
+    else if (sprites.find(fallback) == sprites.end())
+    {
+        auto msg = boost::format(R"(Fallback sprite for ID "%1%" missing.)") % fallback->toString();
+        throw InvalidSpriteConfigError(msg.str());
     }
 }

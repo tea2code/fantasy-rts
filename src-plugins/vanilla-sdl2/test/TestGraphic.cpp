@@ -17,10 +17,14 @@ TEST_CASE("Renderable.", "[graphic]")
 
     frts::RenderablePtr component = frts::makeRenderable(shared->makeId(frts::Renderable::componentType()));
     component->setSprite(shared->makeId("sprite1"));
+
+    REQUIRE_FALSE(component->isSpriteIndexSet());
+
     component->setSpriteIndex(3);
 
     REQUIRE(component->getSprite() == shared->makeId("sprite1"));
     REQUIRE(component->getSpriteIndex() == 3);
+    REQUIRE(component->isSpriteIndexSet());
 }
 
 TEST_CASE("Sprite.", "[graphic]")

@@ -14,12 +14,14 @@ namespace frts
         IdPtr getComponentType() const override;
         IdPtr getSprite() const override;
         int getSpriteIndex() const override;
+        bool isSpriteIndexSet() const override;
         void setSprite(IdPtr id) override;
         void setSpriteIndex(int index) override;
 
     private:
         IdPtr sprite;
         int spriteIndex;
+        bool spriteIndexSet;
         IdPtr type;
     };
 

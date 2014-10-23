@@ -34,18 +34,26 @@ namespace frts
         /**
          * @brief Select the correct sprite for the given renderable.
          * @param renderable The renderable.
-         * @return The selected sprite or null if no sprite is found.
+         * @return The selected sprite.
          */
         Sprite getSprite(RenderablePtr renderable);
 
         /**
-         * @brief Set configuration for sprites.
+         * @brief Set configuration for sprites. Can be called multiple times to override
+         *        existing config or add sprites.
          * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
          * @param shared The shared manager.
          * @param rootNamespace The root namespace of sprites.
          * @param spritesNode The config node.
          */
         void setConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode);
+
+        /**
+         * @brief Validate configuration. Should be called during data validation phase.
+         * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
+         * @param shared The shared manager.
+         */
+        void validateData(SharedManagerPtr shared);
 
     private:
         /**
@@ -55,6 +63,7 @@ namespace frts
 
     private:
         IdPtr fallback;
+        bool isConfigInitialized;
         SpriteMap sprites;
     };
 }

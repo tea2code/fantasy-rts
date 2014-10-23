@@ -39,11 +39,16 @@ namespace frts
         virtual IdPtr getSprite() const = 0;
 
         /**
-         * @brief Get the index of the sprite. Default 0 but may change if sprite
-         *        has multiple attribute.
+         * @brief Get the index of the sprite. Default is 0.
          * @return The index.
          */
         virtual int getSpriteIndex() const = 0;
+
+        /**
+         * @brief Indicates if sprite index was set.
+         * @return True if sprite index was set.
+         */
+        virtual bool isSpriteIndexSet() const = 0;
 
         /**
          * @brief Set the ID of the sprite to use.
