@@ -8,6 +8,21 @@
 namespace frts
 {
     /**
+     * @brief Generate a random floating point number in interval [start, end].
+     * @param start Start of interval.
+     * @param end End of interval.
+     * @return A random floating point number.
+     */
+    template<typename FloatType>
+    FloatType randomFloat(FloatType start, FloatType end)
+    {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dist(start, end);
+        return dist(gen);
+    }
+
+    /**
      * @brief Generate a random integer number in interval [start, end].
      * @param start Start of interval.
      * @param end End of interval.
