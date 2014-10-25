@@ -7,10 +7,13 @@ HEADERS += \
     shared/impl/IdImpl.h \
     shared/impl/SharedManagerImpl.h \
     shared/SharedError.h \
-    shared/SharedPtr.h
+    shared/SharedPtr.h \
+    $$PWD/impl/MainDataImpl.h \
+    $$PWD/MainData.h
 
 
 SOURCES += \ 
     shared/impl/FrameImpl.cpp \
     shared/impl/IdImpl.cpp \
-    shared/impl/SharedManagerImpl.cpp
+    shared/impl/SharedManagerImpl.cpp \
+    $$PWD/impl/MainDataImpl.cpp

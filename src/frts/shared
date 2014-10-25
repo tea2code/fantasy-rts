@@ -4,6 +4,7 @@
 #include <shared/DataValue.h>
 #include <shared/Frame.h>
 #include <shared/Id.h>
+#include <shared/MainData.h>
 #include <shared/SharedError.h>
 #include <shared/SharedManager.h>
 #include <shared/SharedPtr.h>

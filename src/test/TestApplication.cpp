@@ -10,6 +10,7 @@
 #include <shared/DataValue.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
+#include <shared/MainData.h>
 
 #include <boost/format.hpp>
 

@@ -79,6 +79,10 @@ The shared package contains the shared manager which repesents the application s
 
 Data values store all variable game state data. 
 
+#### MainData
+
+This data value contains data provided by the main program. This is mostly environment related information.
+
 ### Frame
 
 The frame object contains meta information about the current frame. This includes the time since the last frame, the frame number and the passed time since the game start. If you need to schedule something in the future you should prefer the time since game start instead of the frame number. While it may be easier to use the frame number there is no guarantee that every frame has the same length. By using the time even on the slower computer the internal game speed stays (nearly) the same.

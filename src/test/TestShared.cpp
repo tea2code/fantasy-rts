@@ -7,6 +7,7 @@
 #include <shared/impl/FrameImpl.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/SharedError.h>
+#include <shared/impl/MainDataImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
 #include <algorithm>
@@ -152,4 +153,11 @@ TEST_CASE("Create and use shared manager.", "[shared]")
     REQUIRE(shared->getDataValue(dataValueId1) == dataValue2);
     REQUIRE(shared->getDataValue(dataValueId2) == dataValue2);
     REQUIRE_THROWS_AS(shared->getDataValue(notExistId), frts::IdNotFoundError);
+}
+
+TEST_CASE("MainData", "[shared]")
+{
+    frts::MainDataPtr mainData = frts::makeMainData("plugins/");
+
+    REQUIRE(mainData->getPluginPath() == "plugins/");
 }

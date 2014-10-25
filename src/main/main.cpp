@@ -8,7 +8,8 @@
 #include <module/Tickable.h>
 #include <module/Utility.h>
 #include <shared/impl/FrameImpl.h>
-#include <shared/impl/IdImpl.h>
+#include <shared/Id.h>
+#include <shared/impl/MainDataImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
 #include <algorithm>
@@ -149,7 +150,7 @@ int main(int argc, char* argv[])
         std::vector<frts::UtilityPtr> utilityModules;
         for(const auto& moduleName : loadConfig.utilities)
         {
-            frts::IdPtr id = frts::makeId(moduleName);
+            frts::IdPtr id = shared->makeId(moduleName);
             frts::UtilityPtr utilityModule = app.findUtility(id);
             utilityModules.push_back(utilityModule);
             shared->setUtility(id, utilityModule);
@@ -176,6 +177,7 @@ int main(int argc, char* argv[])
 
         // Phase 6: Create data.
         log->info(logModule, "Phase 6: Create data.");
+        shared->setDataValue(shared->makeId(frts::MainData::identifier()), frts::makeMainData(pluginsRoot));
         app.createData(modules, shared);
 
         // Phase 7: Register main config keys.
