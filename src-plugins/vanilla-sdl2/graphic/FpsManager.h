@@ -19,20 +19,33 @@ namespace frts
     class FpsManager
     {
     public:
-        virtual ~FpsManager() {}
+        FpsManager();
 
         /**
          * @brief Calculates the current frame rate.
          * @return The frame rate per second.
          */
-        virtual double calcFps() = 0;
+        double calcFps();
 
         /**
          * @brief Limits the frame rate to the given value.
          * @param fps The target frame rate.
          */
-        virtual void limitFps(double fps) = 0;
+        void limitFps(double fps);
+
+    private:
+        unsigned int lastFps;
+        unsigned int lastTime;
     };
+
+    /**
+     * @brief Create new FpsManager.
+     * @return The FpsManager.
+     */
+    inline FpsManagerPtr makeFpsManager()
+    {
+        return std::make_shared<FpsManager>();
+    }
 }
 
 #endif // FRTS_FPSMANAGER_H

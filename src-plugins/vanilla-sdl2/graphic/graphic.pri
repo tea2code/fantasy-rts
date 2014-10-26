@@ -5,7 +5,6 @@ HEADERS += \
     graphic/FpsManager.h \
     graphic/Drawer.h \
     graphic/Sdl2Renderer.h \
-    graphic/impl/FpsManagerImpl.h \
     $$PWD/impl/Sprite.h \
     $$PWD/impl/SpriteManager.h \
     $$PWD/impl/SpritePoint.h
@@ -14,7 +13,9 @@ HEADERS += \
 SOURCES += \
     graphic/impl/RenderableImpl.cpp \
     graphic/impl/RenderableBuilder.cpp \
-    graphic/impl/FpsManagerImpl.cpp \
     $$PWD/impl/Sprite.cpp \
     $$PWD/impl/SpriteManager.cpp \
-    $$PWD/impl/SpritePoint.cpp
+    $$PWD/impl/SpritePoint.cpp \
+    $$PWD/FpsManager.cpp \
+    $$PWD/Sdl2Renderer.cpp \
+    $$PWD/Drawer.cpp

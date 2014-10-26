@@ -1,14 +1,14 @@
-#include "FpsManagerImpl.h"
+#include "FpsManager.h"
 
 #include <SDL2/SDL.h>
 
 
-frts::FpsManagerImpl::FpsManagerImpl()
+frts::FpsManager::FpsManager()
     : lastFps{0}, lastTime{SDL_GetTicks()}
 {
 }
 
-double frts::FpsManagerImpl::calcFps()
+double frts::FpsManager::calcFps()
 {
     unsigned int currentTime = SDL_GetTicks();
     unsigned int diff = currentTime - lastTime;
@@ -26,7 +26,7 @@ double frts::FpsManagerImpl::calcFps()
     }
 }
 
-void frts::FpsManagerImpl::limitFps(double)
+void frts::FpsManager::limitFps(double)
 {
     // TODO Currently do nothing.
 }
