@@ -46,10 +46,10 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr)
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr)
 {
-
+    // MainData
 }
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr)
 {
-
+    // VanillaModel
 }

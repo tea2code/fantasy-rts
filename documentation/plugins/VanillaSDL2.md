@@ -208,6 +208,22 @@ Load using `frts/SDL2Renderer` in the utility module section of the load file.
 
 Will identify itself by the name `frts::SDL2Renderer`.
 
+### Screen Config
+
+The screen config defines size of the visible screen and thus defines the windows size, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size is defined in number of tiles.
+
+    screen:
+    
+        height: <int>
+        width: <int>
+        
+        title: <string>
+    
+    tile:
+    
+        height: <int>
+        width: <int>
+
 ### Sprite Config
 
 A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite must be defined  below `sprites`.
