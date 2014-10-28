@@ -13,12 +13,6 @@ namespace frts
     class VanillaSdl2Plugin : public Plugin
     {
     public:
-        const std::string eventModule = "frts/EventHandler";
-        const std::string inputModule = "frts/InputHandler";
-
-        const std::string module = "frts/VanillaSdl2";
-
-    public:
         VanillaSdl2Plugin();
 
         ModulePtr getModule(frts::IdPtr id) override;

@@ -38,15 +38,6 @@ namespace frts
         virtual Point::value getMapSizeY() const = 0;
 
         /**
-         * @brief The default identifier for this data value.
-         * @return The id string.
-         */
-        static std::string identifier()
-        {
-            return "frts.vanillamodel.regionconfig";
-        }
-
-        /**
          * @brief Set map size in x direction.
          * @param size The size.
          */

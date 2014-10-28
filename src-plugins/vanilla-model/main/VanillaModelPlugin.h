@@ -11,10 +11,6 @@ namespace frts
     class VanillaModelPlugin : public Plugin
     {
     public:
-        const std::string modelFactory = "frts/ModelFactory";
-        const std::string modelReseter = "frts/ModelReseter";
-
-    public:
         VanillaModelPlugin();
 
         ModulePtr getModule(frts::IdPtr id) override;

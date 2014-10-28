@@ -12,6 +12,6 @@ Default path of plugin is `vanilla-demo/vanilla-demo`.
 
 Tickable which can be used as an update and render module.
 
-Include using `frts/VanillaDemo`.
+Include using `frts/VanillaDemo` in the `updateModule` section of the load file.
 
 Will identify itself by the name `frts::VanillaDemo`.

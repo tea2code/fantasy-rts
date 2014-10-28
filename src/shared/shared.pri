@@ -9,7 +9,8 @@ HEADERS += \
     shared/SharedError.h \
     shared/SharedPtr.h \
     $$PWD/impl/MainDataImpl.h \
-    $$PWD/MainData.h
+    $$PWD/MainData.h \
+    $$PWD/MainIds.h
 
 
 SOURCES += \ 

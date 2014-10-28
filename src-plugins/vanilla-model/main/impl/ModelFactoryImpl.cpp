@@ -12,6 +12,7 @@
 #include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
 #include <main/ModelError.h>
+#include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
@@ -35,7 +36,7 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
     // Create region config data.
     RegionConfigPtr regionConfig = makeRegionConfig();
-    IdPtr regionConfigId = shared->makeId(regionConfig->identifier());
+    IdPtr regionConfigId = shared->makeId(frts::ModelIds::regionConfig());
     shared->setDataValue(regionConfigId, regionConfig);
 
     return false;
@@ -136,7 +137,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     RegionManagerPtr regionManager = makeRegionManager(region, resourceManager,
                                                        resourceEntityManager,
                                                        hasResourceType, isResourceType);
-    IdPtr regionManagerId = shared->makeId(regionManager->identifier());
+    IdPtr regionManagerId = shared->makeId(frts::ModelIds::regionManager());
     shared->setDataValue(regionManagerId, regionManager);
 
     return false;
@@ -243,7 +244,7 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 
 frts::RegionConfigPtr frts::ModelFactoryImpl::getRegionConfig(SharedManagerPtr shared) const
 {
-    IdPtr id = shared->makeId(RegionConfigImpl::identifier());
+    IdPtr id = shared->makeId(frts::ModelIds::regionConfig());
     return std::static_pointer_cast<RegionConfig>(shared->getDataValue(id));
 }
 

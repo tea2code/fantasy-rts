@@ -19,6 +19,15 @@ namespace frts
     public:
         ModelReseter();
 
+        /**
+         * @brief The default identifier for this data value.
+         * @return The id string.
+         */
+        static std::string identifier()
+        {
+            return "frts/ModelReseter";
+        }
+
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;

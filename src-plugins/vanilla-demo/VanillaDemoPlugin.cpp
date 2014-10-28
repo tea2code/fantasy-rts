@@ -14,7 +14,7 @@ frts::VanillaDemoPlugin::VanillaDemoPlugin()
 frts::ModulePtr frts::VanillaDemoPlugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
-    if (id->toString() == module)
+    if (id->toString() == VanillaDemoTickable::identifier())
     {
         result = std::make_shared<VanillaDemoTickable>();
     }

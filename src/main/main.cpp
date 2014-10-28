@@ -7,8 +7,9 @@
 #include <module/ModulePtr.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
-#include <shared/impl/FrameImpl.h>
 #include <shared/Id.h>
+#include <shared/MainIds.h>
+#include <shared/impl/FrameImpl.h>
 #include <shared/impl/MainDataImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -177,7 +178,7 @@ int main(int argc, char* argv[])
 
         // Phase 6: Create data.
         log->info(logModule, "Phase 6: Create data.");
-        shared->setDataValue(shared->makeId(frts::MainData::identifier()), frts::makeMainData(pluginsRoot));
+        shared->setDataValue(shared->makeId(frts::MainIds::MainData()), frts::makeMainData(pluginsRoot));
         app.createData(modules, shared);
 
         // Phase 7: Register main config keys.

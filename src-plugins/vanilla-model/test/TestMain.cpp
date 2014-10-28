@@ -7,6 +7,7 @@
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
 #include <main/ModelError.h>
+#include <main/ModelIds.h>
 #include <main/ModelReseter.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
@@ -86,7 +87,7 @@ TEST_CASE("ModelReseter.", "[main]")
     modelFactory->init(shared);
     REQUIRE_NOTHROW(modelReseter->validateData(shared));
 
-    frts::IdPtr regionManagerId = shared->makeId(frts::RegionManager::identifier());
+    frts::IdPtr regionManagerId = shared->makeId(frts::ModelIds::regionManager());
     frts::RegionManagerPtr regionManager = std::static_pointer_cast<frts::RegionManager>(shared->getDataValue(regionManagerId));
     regionManager->addChangedPos(frts::makePoint(0, 0, 0));
     REQUIRE(regionManager->getChangedPos().size() == 1);

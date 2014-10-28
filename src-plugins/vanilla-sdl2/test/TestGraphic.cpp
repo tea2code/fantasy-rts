@@ -3,6 +3,7 @@
 #include <graphic/impl/RenderableImpl.h>
 #include <graphic/impl/Sprite.h>
 #include <graphic/impl/SpritePoint.h>
+#include <main/Sdl2Ids.h>
 
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
@@ -15,7 +16,7 @@ TEST_CASE("Renderable.", "[graphic]")
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
-    frts::RenderablePtr component = frts::makeRenderable(shared->makeId(frts::Renderable::componentType()));
+    frts::RenderablePtr component = frts::makeRenderable(shared->makeId(frts::Sdl2Ids::renderable()));
     component->setSprite(shared->makeId("sprite1"));
 
     REQUIRE_FALSE(component->isSpriteIndexSet());

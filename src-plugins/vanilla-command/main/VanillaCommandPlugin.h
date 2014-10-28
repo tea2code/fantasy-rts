@@ -11,9 +11,6 @@ namespace frts
     class VanillaCommandPlugin : public Plugin
     {
     public:
-        const std::string module = "frts/CommandFactory";
-
-    public:
         VanillaCommandPlugin();
 
         ModulePtr getModule(frts::IdPtr id) override;

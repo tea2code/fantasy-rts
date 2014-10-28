@@ -5,14 +5,14 @@ frts::Drawer::Drawer(SharedManagerPtr shared)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        shared->getLog()->error(getName(), "SDL_Init Error: " + std::string(SDL_GetError()));
+        shared->getLog()->error("SDL2 Drawer", "SDL_Init Error: " + std::string(SDL_GetError()));
         return;
     }
 
     int imageFlags = IMG_INIT_PNG;
     if (IMG_Init(imageFlags) != imageFlags)
     {
-        shared->getLog()->error(getName(), "IMG_Init Error: " + std::string(IMG_GetError()));
+        shared->getLog()->error("SDL2 Drawer", "IMG_Init Error: " + std::string(IMG_GetError()));
         return;
     }
 
@@ -22,16 +22,16 @@ frts::Drawer::Drawer(SharedManagerPtr shared)
     );
     if (window == nullptr)
     {
-        shared->getLog()->error(getName(), "SDL_CreateWindow Error: " + std::string(SDL_GetError()));
+        shared->getLog()->error("SDL2 Drawer", "SDL_CreateWindow Error: " + std::string(SDL_GetError()));
         return;
     }
 
     renderer = std::unique_ptr<SDL_Renderer>(
-        SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
+        SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
     );
     if (renderer == nullptr)
     {
-        shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
+        shared->getLog()->error("SDL2 Drawer", "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return;
     }
 

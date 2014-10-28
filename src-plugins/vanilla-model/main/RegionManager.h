@@ -105,15 +105,6 @@ namespace frts
         virtual PointPtr getPos(EntityPtr entity) = 0;
 
         /**
-         * @brief The default identifier for this data value.
-         * @return The id string.
-         */
-        static std::string identifier()
-        {
-            return "frts.vanillamodel.regionmanager";
-        }
-
-        /**
          * @brief Remove entity from region. Will update changed positions.
          * @param entity The entity.
          */

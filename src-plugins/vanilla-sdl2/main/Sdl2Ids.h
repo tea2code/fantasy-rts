@@ -1,0 +1,37 @@
+#ifndef FRTS_SDL2IDS_H
+#define FRTS_SDL2IDS_H
+
+#include <string>
+
+
+namespace frts
+{
+    /**
+     * @brief Simple collection of SDL2 ID strings.
+     */
+    class Sdl2Ids
+    {
+    public:
+        static std::string eventHandler()
+        {
+            return "frts/EventHandler";
+        }
+
+        static std::string inputHandler()
+        {
+            return "frts/InputHandler";
+        }
+
+        static std::string renderable()
+        {
+            return "frts.vanillasdl2.graphic.renderable";
+        }
+
+        static std::string sdl2Renderer()
+        {
+            return "frts/VanillaSdl2"; // TODO
+        }
+    };
+}
+
+#endif // FRTS_SDL2IDS_H

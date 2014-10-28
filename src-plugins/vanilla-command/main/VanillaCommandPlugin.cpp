@@ -1,5 +1,6 @@
 #include "VanillaCommandPlugin.h"
 
+#include "CommandIds.h"
 #include "impl/CommandFactoryImpl.h"
 
 #include <frts/shared>
@@ -14,7 +15,7 @@ frts::VanillaCommandPlugin::VanillaCommandPlugin()
 frts::ModulePtr frts::VanillaCommandPlugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
-    if (id->toString() == module)
+    if (id->toString() == CommandIds::commandFactory())
     {
         result = makeCommandFactory();
     }

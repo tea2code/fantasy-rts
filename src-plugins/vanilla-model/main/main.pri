@@ -7,7 +7,8 @@ HEADERS += \
     main/impl/RegionManagerImpl.h \
     main/RegionConfig.h \
     main/impl/RegionConfigImpl.h \
-    main/ModelReseter.h
+    main/ModelReseter.h \
+    $$PWD/ModelIds.h
 
 SOURCES += \ 
     main/main.cpp \

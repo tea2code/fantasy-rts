@@ -81,7 +81,11 @@ Data values store all variable game state data.
 
 #### MainData
 
-This data value contains data provided by the main program. This is mostly environment related information.
+This data value contains data provided by the main program. This is mostly environment related information. 
+
+Default ID can be found in the static class `MainIds`.
+
+Will identify itself by the name `frts::MainData`.
 
 ### Frame
 

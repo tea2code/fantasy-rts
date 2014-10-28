@@ -1,6 +1,7 @@
 #include "RenderableBuilder.h"
 
 #include "RenderableImpl.h"
+#include <main/Sdl2Ids.h>
 
 
 frts::RenderableBuilder::RenderableBuilder()
@@ -9,7 +10,7 @@ frts::RenderableBuilder::RenderableBuilder()
 
 frts::ComponentPtr frts::RenderableBuilder::build(SharedManagerPtr shared)
 {
-    IdPtr id = shared->makeId(Renderable::componentType());
+    IdPtr id = shared->makeId(Sdl2Ids::renderable());
     return makeRenderable(id);
 }
 

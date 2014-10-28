@@ -3,5 +3,6 @@
 
 #include <input/InputHandler.h>
 #include <input/Key.h>
+#include <main/Sdl2Ids.h>
 
 #endif // FRTS_VANILLASDL2INPUT_INCLUDE_H

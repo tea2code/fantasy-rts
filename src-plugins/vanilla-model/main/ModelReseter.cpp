@@ -1,5 +1,6 @@
 #include "ModelReseter.h"
 
+#include "ModelIds.h"
 #include "RegionManager.h"
 
 #include <boost/format.hpp>
@@ -46,7 +47,7 @@ bool frts::ModelReseter::preInit(SharedManagerPtr)
 
 void frts::ModelReseter::tick(SharedManagerPtr shared)
 {
-    IdPtr regionManagerId = shared->makeId(RegionManager::identifier());
+    IdPtr regionManagerId = shared->makeId(ModelIds::regionManager());
     RegionManagerPtr regionManager = std::static_pointer_cast<RegionManager>(shared->getDataValue(regionManagerId));
     regionManager->resetChangedPos();
 }

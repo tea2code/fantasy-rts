@@ -20,25 +20,19 @@ A block describes a certain point in the world consisting of the entities at thi
 
 ### Components
 
-Components describe the attributes, abilities... of a entity. Their default IDs can be found in the static class ComponentIds.
+Components describe the attributes, abilities... of a entity. Their default IDs can be found in the static class `ComponentIds`.
 
 #### BlockedBy
 
 Entities have the ability to block other entities. BlockedBy describes by what a entity is blocked.
 
-Default ID is `frts.vanillamodel.entity.component.blockedby`.
-
 #### Blocking
 
 Entities have the ability to block other entities. Blocking describes what a entity blocks.
 
-Default ID is `frts.vanillamodel.entity.component.blocking`.
-
 #### Drop
 
 Entities can drop other entities if they are destroyed, killed, harvested... The dropable entities are defined by this component.
-
-Default ID is `frts.vanillamodel.entity.component.drop`.
 
 #### HasResource
 
@@ -58,8 +52,6 @@ For example: `frts.vanillamodel.entity.component.isresource.wood`
 
 Entities may have a certain order in a block. The sort order component stores this attribute.
 
-Default ID is `frts.vanillamodel.entity.component.sortorder`.
-
 ### Component Builder
 
 Components are created using builders which can be registered at the model factory.
@@ -72,7 +64,7 @@ Entities represent all interactable objects in the world. They consist of compon
 
 Utility module which acts as a factory to create model related objects like points, entities...
 
-Load using `frts/ModelFactory` in the utilities section of the load file.
+Load using `frts/ModelFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `ModelIds`. 
 
 Will identify itself by the name `frts::ModelFactory`.
 
@@ -82,7 +74,7 @@ The model reseter handles model related clean up at the end of each frame. It sh
 
 - Reset changed positions.
 
-Load using `frts/ModelReseter` in the render module section of the load file.
+Load using `frts/ModelReseter` in the `renderModule` section of the load file.
 
 Will identify itself by the name `frts::ModelReseter`.
 
@@ -96,7 +88,9 @@ The region consists of blocks at certain positions and represents the game world
 
 ### Region Config
 
-Region related meta settings like the size of the map are stored in this data value. It can be accessed via the shared manager using the id `frts.vanillamodel.regionconfig`.
+Region related meta settings like the size of the map are stored in this data value. 
+
+Default ID can be found in the static class `ModelIds`.
 
 ### Region Generator
 
@@ -108,7 +102,9 @@ The region manager is the access interface to all region and resource managing r
 
 Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator. The default implementation is used if no other is set. This can be done in the Model Factory.
 
-The region manager is implemented as an data value and can be accessed via the shared manager using the id `frts.vanillamodel.regionmanager`.
+The region manager is implemented as an data value and can be accessed via the shared manager. 
+
+Default ID can be found in the static class `ModelIds`.
 
 **IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase 10 is complete. Doing so will most likely result in a crash or undefined behavior.
 

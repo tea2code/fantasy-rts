@@ -11,9 +11,6 @@ namespace frts
     class VanillaDemoPlugin : public Plugin
     {
     public:
-        const std::string module = "frts/VanillaDemo";
-
-    public:
         VanillaDemoPlugin();
 
         ModulePtr getModule(frts::IdPtr id) override;

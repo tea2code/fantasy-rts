@@ -24,7 +24,7 @@ Builder create commands and can be registered at the factory. They are identifie
 
 The command factory is implemented as a utility module. It has a couple of pre registered commands but also allows to add custom commands from other plugins.
 
-Load using `frts/CommandFactory` in the utilities section of the load file.
+Load using `frts/CommandFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `CommandIds`. 
 
 Will identify itself by the name `frts::CommandFactory`.
 
@@ -36,4 +36,4 @@ Commands are registered during execution phase 10 (module initialization). This 
 
 Quits the application. If `undo()` is during the current frame executed the command is reverted.  
 
-Default ID is `frts.vanillacommand.command.quit`.
+Default ID can be found in the static class `CommandIds`.

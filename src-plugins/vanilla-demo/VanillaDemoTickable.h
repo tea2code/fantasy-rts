@@ -11,6 +11,15 @@ namespace frts
     public:
         VanillaDemoTickable();
 
+        /**
+         * @brief The default identifier for this module.
+         * @return The id string.
+         */
+        static std::string identifier()
+        {
+            return "frts/VanillaDemo";
+        }
+
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
@@ -21,6 +30,7 @@ namespace frts
         void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
+
     };
 }
 
