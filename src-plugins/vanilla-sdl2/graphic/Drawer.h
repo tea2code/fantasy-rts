@@ -64,6 +64,18 @@ namespace frts
         void updateScreen(SharedManagerPtr shared, Point::value zLevel);
 
     private:
+        /**
+         * @brief Deleter for std::unique_ptr for SDL.
+         * @see http://stackoverflow.com/a/24252225
+         */
+        struct Sdl2Deleter
+        {
+          void operator()(SDL_Window *p) const { SDL_DestroyWindow(p); }
+          void operator()(SDL_Renderer *p) const { SDL_DestroyRenderer(p); }
+          void operator()(SDL_Texture *p) const { SDL_DestroyTexture(p); }
+        };
+
+    private:
         bool initialized;
 
         Point::value offsetX;
@@ -75,8 +87,8 @@ namespace frts
         int tileHeight;
         int tileWidth;
 
-        std::unique_ptr<SDL_Renderer> renderer;
-        std::unique_ptr<SDL_Window> window;
+        std::unique_ptr<SDL_Renderer, Sdl2Deleter> renderer;
+        std::unique_ptr<SDL_Window, Sdl2Deleter> window;
 
         SpriteManager spriteManager;
 

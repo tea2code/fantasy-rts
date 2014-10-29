@@ -1,5 +1,7 @@
 #include "Drawer.h"
 
+#include <SDL2/SDL_image.h>
+
 
 frts::Drawer::Drawer(SharedManagerPtr shared)
 {
@@ -9,16 +11,17 @@ frts::Drawer::Drawer(SharedManagerPtr shared)
         return;
     }
 
-    int imageFlags = IMG_INIT_PNG;
+    int imageFlags = IMG_INIT_PNG; // TODO
     if (IMG_Init(imageFlags) != imageFlags)
     {
         shared->getLog()->error("SDL2 Drawer", "IMG_Init Error: " + std::string(IMG_GetError()));
         return;
     }
 
-    window = std::unique_ptr<SDL_Window>(
+    window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        (tileWidth * screenWidth), (tileHeight * screenHeight), SDL_WINDOW_SHOWN)
+                        (tileWidth * screenWidth), (tileHeight * screenHeight), SDL_WINDOW_SHOWN),
+        Sdl2Deleter()
     );
     if (window == nullptr)
     {
@@ -26,8 +29,9 @@ frts::Drawer::Drawer(SharedManagerPtr shared)
         return;
     }
 
-    renderer = std::unique_ptr<SDL_Renderer>(
-        SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
+    renderer = std::unique_ptr<SDL_Renderer, Sdl2Deleter>(
+        SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
+        Sdl2Deleter()
     );
     if (renderer == nullptr)
     {
@@ -40,21 +44,24 @@ frts::Drawer::Drawer(SharedManagerPtr shared)
 
 frts::Drawer::~Drawer()
 {
-    SDL_DestroyTexture(texture.get());
-    SDL_DestroyRenderer(renderer.get());
-    SDL_DestroyWindow(window.get());
+    // TODO
+    // texture.release();
+    renderer.release();
+    window.release();
     IMG_Quit();
     SDL_Quit();
 }
 
 frts::ModelFactoryPtr frts::Drawer::modelFactory(SharedManagerPtr shared) const
 {
-    return nullptr; // TODO
+    IdPtr id = shared->makeId(ModelIds::modelFactory());
+    return std::static_pointer_cast<ModelFactory>(shared->getUtility(id));
 }
 
 frts::RegionManagerPtr frts::Drawer::regionManager(SharedManagerPtr shared) const
 {
-    return nullptr; // TODO
+    IdPtr id = shared->makeId(ModelIds::regionManager());
+    return std::static_pointer_cast<RegionManager>(shared->getDataValue(id));
 }
 
 void frts::Drawer::setOffsetX(Point::value offsetX)
@@ -67,7 +74,6 @@ void frts::Drawer::setOffsetY(Point::value offsetY)
     this->offsetY = offsetY;
 }
 
-
 void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value)
 {
     if (!initialized)
@@ -75,7 +81,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-
+    // TODO
 }
 
 void frts::Drawer::updatePositions(SharedManagerPtr shared, std::vector<PointPtr> positions, Point::value zLevel)
@@ -88,11 +94,13 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, std::vector<PointPtr
 
 void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 {
+    auto factory = modelFactory(shared);
+
     for (Point::value x = offsetX; x < (offsetX + screenWidth); ++x)
     {
         for (Point::value y = offsetY; y < (offsetY + screenHeight); ++y)
         {
-            PointPtr pos = nullptr; // TOOD
+            PointPtr pos = factory->makePoint(x, y, zLevel);
             updatePosition(shared, pos, zLevel);
         }
     }
