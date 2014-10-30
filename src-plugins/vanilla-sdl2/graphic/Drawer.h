@@ -12,21 +12,44 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 
 namespace frts
 {
+    /**
+     * @brief Thrown if the image config is invalid.
+     */
+    class InvalidImageConfigError : public std::runtime_error
+    {
+    public:
+        InvalidImageConfigError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
     /**
      * @brief The drawer updates the screen and paints everything.
      */
     class Drawer
     {
     public:
+        Drawer();
+        ~Drawer();
+
         /**
+         * @brief Initialize drawer. Any configuration must be set before.
          * @param shared The shared manager.
          */
-        Drawer(SharedManagerPtr shared);
-        ~Drawer();
+        void init(SharedManagerPtr shared);
+
+        /**
+         * @brief Set configuration for image. Can be called multiple times to override
+         *        existing config or add images.
+         * @throw InvalidImageConfigError if image node represents a invalid config.
+         * @param shared The shared manager.
+         * @param rootNamespace The root namespace of images.
+         * @param imagesNode The config node.
+         */
+        void setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode);
 
         /**
          * @brief Set screen offset in x-direction. No boundary check.
@@ -39,6 +62,16 @@ namespace frts
          * @param offsetY The offset.
          */
         void setOffsetY(Point::value offsetY);
+
+        /**
+         * @brief Set configuration for sprites. Can be called multiple times to override
+         *        existing config or add sprites.
+         * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
+         * @param shared The shared manager.
+         * @param rootNamespace The root namespace of sprites.
+         * @param spritesNode The config node.
+         */
+        void setSpriteConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode);
 
         /**
          * @brief Update given position.
@@ -63,6 +96,14 @@ namespace frts
          */
         void updateScreen(SharedManagerPtr shared, Point::value zLevel);
 
+        /**
+         * @brief Validate configuration. Should be called during data validation phase.
+         * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
+         * @throw InvalidImageConfigError if image node represents a invalid config.
+         * @param shared The shared manager.
+         */
+        void validateData(SharedManagerPtr shared);
+
     private:
         /**
          * @brief Deleter for std::unique_ptr for SDL.
@@ -76,6 +117,27 @@ namespace frts
         };
 
     private:
+        /**
+         * @brief Pointer to SDL renderer.
+         */
+        using RendererPtr = std::unique_ptr<SDL_Renderer, Sdl2Deleter>;
+
+        /**
+         * @brief Pointer to SDL texture.
+         */
+        using TexturePtr = std::unique_ptr<SDL_Texture, Sdl2Deleter>;
+
+        /**
+         * @brief Pointer to SDL window.
+         */
+        using WindowPtr = std::unique_ptr<SDL_Window, Sdl2Deleter>;
+
+        /**
+         * @brief Lookup map for textures.
+         */
+        using TextureMap = std::unordered_map<IdPtr, TexturePtr, IdHash, IdEqual>;
+
+    private:
         bool initialized;
 
         Point::value offsetX;
@@ -87,8 +149,9 @@ namespace frts
         int tileHeight;
         int tileWidth;
 
-        std::unique_ptr<SDL_Renderer, Sdl2Deleter> renderer;
-        std::unique_ptr<SDL_Window, Sdl2Deleter> window;
+        RendererPtr renderer;
+        TextureMap textures;
+        WindowPtr window;
 
         SpriteManager spriteManager;
 
