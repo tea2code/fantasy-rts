@@ -7,7 +7,9 @@ HEADERS += \
     graphic/Sdl2Renderer.h \
     $$PWD/impl/Sprite.h \
     $$PWD/impl/SpriteManager.h \
-    $$PWD/impl/SpritePoint.h
+    $$PWD/impl/SpritePoint.h \
+    $$PWD/GraphicData.h \
+    $$PWD/impl/GraphicDataImpl.h
     
 
 SOURCES += \
@@ -18,4 +20,5 @@ SOURCES += \
     $$PWD/impl/SpritePoint.cpp \
     $$PWD/FpsManager.cpp \
     $$PWD/Sdl2Renderer.cpp \
-    $$PWD/Drawer.cpp
+    $$PWD/Drawer.cpp \
+    $$PWD/impl/GraphicDataImpl.cpp

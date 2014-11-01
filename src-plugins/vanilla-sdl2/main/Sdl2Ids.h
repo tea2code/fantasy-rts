@@ -12,6 +12,11 @@ namespace frts
     class Sdl2Ids
     {
     public:
+        static std::string graphicData()
+        {
+            return "frts.vanillasdl2.graphic.graphicdata";
+        }
+
         static std::string eventHandler()
         {
             return "frts/EventHandler";

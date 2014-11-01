@@ -192,6 +192,14 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Graphic Output
 
+### GraphicData
+
+This data value contains common data related to graphic output. 
+
+Default ID can be found in the static class `Sdl2Ids`.
+
+Will identify itself by the name `frts::GraphicData`.
+
 ### Renderable
 
 This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
@@ -212,7 +220,7 @@ Will identify itself by the name `frts::SDL2Renderer`.
 
 ### Screen Config
 
-The screen config defines size of the visible screen and thus defines the windows size, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size is defined in number of tiles.
+The screen config defines size of the visible screen and thus defines the windows size, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size should be a multiple of the tile size or else it will be cropped accordingly.
 
     screen:
     

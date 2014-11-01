@@ -1,6 +1,7 @@
 #ifndef FRTS_DRAWER_H
 #define FRTS_DRAWER_H
 
+#include <graphic/GraphicData.h>
 #include <graphic/impl/SpriteManager.h>
 
 #include <frts/vanillamodel>
@@ -42,6 +43,12 @@ namespace frts
         void init(SharedManagerPtr shared);
 
         /**
+         * @brief After updating positions call this function to start the rendering.
+         * @param shared The shared manager.
+         */
+        void renderNow(SharedManagerPtr shared);
+
+        /**
          * @brief Set configuration for image. Can be called multiple times to override
          *        existing config or add images.
          * @throw InvalidImageConfigError if image node represents a invalid config.
@@ -52,13 +59,13 @@ namespace frts
         void setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode);
 
         /**
-         * @brief Set screen offset in x-direction. No boundary check.
+         * @brief Set tile offset in x-direction. No boundary check.
          * @param offsetX The offset.
          */
         void setOffsetX(Point::value offsetX);
 
         /**
-         * @brief Set screen offset in y-direction. No boundary check.
+         * @brief Set tile offset in y-direction. No boundary check.
          * @param offsetY The offset.
          */
         void setOffsetY(Point::value offsetY);
@@ -125,7 +132,7 @@ namespace frts
         /**
          * @brief Pointer to SDL texture.
          */
-        using TexturePtr = std::unique_ptr<SDL_Texture, Sdl2Deleter>;
+        using TexturePtr = std::shared_ptr<SDL_Texture>;
 
         /**
          * @brief Pointer to SDL window.
@@ -137,13 +144,32 @@ namespace frts
          */
         using TextureMap = std::unordered_map<IdPtr, TexturePtr, IdHash, IdEqual>;
 
+        /**
+         * @brief Lookup map for image paths.
+         */
+        using ImageMap = std::unordered_map<IdPtr, std::string, IdHash, IdEqual>;
+
     private:
         bool initialized;
 
+        /**
+         * @brief Offset in number of tiles in x-direction.
+         */
         Point::value offsetX;
+
+        /**
+         * @brief Offset in number of tiles in y-direction.
+         */
         Point::value offsetY;
 
+        /**
+         * @brief Screen height in number tiles.
+         */
         Point::value screenHeight;
+
+        /**
+         * @brief Screen width in number tiles.
+         */
         Point::value screenWidth;
 
         int tileHeight;
@@ -153,15 +179,36 @@ namespace frts
         TextureMap textures;
         WindowPtr window;
 
+        ImageMap images;
         SpriteManager spriteManager;
 
     private:
+        /**
+         * @brief Returns name of class for usage in logging.
+         * @return The name.
+         */
+        std::string getName() const;
+
+        /**
+         * @brief Retrieves the graphic data.
+         * @param shared The shared manager.
+         * @return The graphic data.
+         */
+        GraphicDataPtr graphicData(SharedManagerPtr shared) const;
+
         /**
          * @brief Retrieves the model factory.
          * @param shared The shared manager.
          * @return The model factory.
          */
         ModelFactoryPtr modelFactory(SharedManagerPtr shared) const;
+
+        /**
+         * @brief Retrieves the plugin path.
+         * @param shared The shared manager.
+         * @return The plugin path.
+         */
+        std::string pluginPath(SharedManagerPtr shared) const;
 
         /**
          * @brief Retrieves the region manager.

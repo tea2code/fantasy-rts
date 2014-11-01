@@ -27,7 +27,7 @@ namespace frts
     /**
      * @brief Create new MainData.
      * @param pluginPath Relative path to plugin directory.
-     * @return The SharedManager.
+     * @return The MainData.
      */
     inline MainDataPtr makeMainData(const std::string& pluginPath)
     {
