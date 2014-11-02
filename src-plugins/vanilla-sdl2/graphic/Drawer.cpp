@@ -171,6 +171,11 @@ void frts::Drawer::setSpriteConfig(SharedManagerPtr shared, const std::string& r
     spriteManager.setConfig(shared, rootNamespace, spritesNode);
 }
 
+void frts::Drawer::setWindowTitle(const std::string& windowTitle)
+{
+    SDL_SetWindowTitle(window.get(), windowTitle.c_str());
+}
+
 void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel)
 {
     if (!initialized)

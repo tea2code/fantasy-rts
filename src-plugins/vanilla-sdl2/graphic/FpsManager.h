@@ -6,13 +6,6 @@
 
 namespace frts
 {
-    class FpsManager;
-
-    /**
-     * @brief Pointer to FpsManager.
-     */
-    using FpsManagerPtr = std::shared_ptr<FpsManager>;
-
     /**
      * @brief Shows and limits current frame rate.
      */
@@ -37,15 +30,6 @@ namespace frts
         unsigned int lastFps;
         unsigned int lastTime;
     };
-
-    /**
-     * @brief Create new FpsManager.
-     * @return The FpsManager.
-     */
-    inline FpsManagerPtr makeFpsManager()
-    {
-        return std::make_shared<FpsManager>();
-    }
 }
 
 #endif // FRTS_FPSMANAGER_H

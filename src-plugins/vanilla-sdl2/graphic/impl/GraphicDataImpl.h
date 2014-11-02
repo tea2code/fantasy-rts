@@ -18,11 +18,13 @@ namespace frts
         int getScreenWidth() const override;
         int getTileHeight() const override;
         int getTileWidth() const override;
+        Point::value getZLevel() const override;
         void setScreenHeight(int screenHeight) override;
         void setScreenTitle(const std::string& screenTitle) override;
         void setScreenWidth(int screenWidth) override;
         void setTileHeight(int tileHeight) override;
         void setTileWidth(int tileWidth) override;
+        void setZLevel(Point::value zLevel) override;
 
     private:
         int screenHeight;
@@ -30,6 +32,7 @@ namespace frts
         int screenWidth;
         int tileHeight;
         int tileWidth;
+        Point::value zLevel;
     };
 
     /**

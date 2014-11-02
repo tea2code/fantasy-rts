@@ -31,6 +31,11 @@ int frts::GraphicDataImpl::getTileWidth() const
     return tileWidth;
 }
 
+frts::Point::value frts::GraphicDataImpl::getZLevel() const
+{
+    return zLevel;
+}
+
 void frts::GraphicDataImpl::setScreenHeight(int screenHeight)
 {
     this->screenHeight = screenHeight;
@@ -54,4 +59,9 @@ void frts::GraphicDataImpl::setTileHeight(int tileHeight)
 void frts::GraphicDataImpl::setTileWidth(int tileWidth)
 {
     this->tileWidth = tileWidth;
+}
+
+void frts::GraphicDataImpl::setZLevel(Point::value zLevel)
+{
+    this->zLevel = zLevel;
 }

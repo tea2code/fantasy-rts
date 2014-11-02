@@ -81,6 +81,12 @@ namespace frts
         void setSpriteConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode);
 
         /**
+         * @brief Set the window title.
+         * @param windowTitle The window title.
+         */
+        void setWindowTitle(const std::string& windowTitle);
+
+        /**
          * @brief Update given position.
          * @param shared The shared manager.
          * @param pos The position.

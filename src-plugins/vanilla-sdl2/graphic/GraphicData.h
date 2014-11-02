@@ -2,6 +2,7 @@
 #define FRTS_GRAPHICDATA_H
 
 #include <frts/shared>
+#include <frts/vanillamodel>
 
 #include <string>
 #include <memory>
@@ -50,6 +51,11 @@ namespace frts
         virtual int getTileWidth() const;
 
         /**
+         * @return The current z-level.
+         */
+        virtual Point::value getZLevel() const;
+
+        /**
          * @brief Set the screen height.
          * @param screenHeight The screen height.
          */
@@ -78,6 +84,12 @@ namespace frts
          * @param tileWidth The tile width.
          */
         virtual void setTileWidth(int tileWidth);
+
+        /**
+         * @brief Set the current z-level.
+         * @param zLevel The z-level.
+         */
+        virtual void setZLevel(Point::value zLevel);
     };
 }
 
