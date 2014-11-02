@@ -1,9 +1,11 @@
 screen:
 
+    fps: 60
+
     height: 768
     width: 1024
     
-    title: Fantasy-RTS (FPS: %1%)
+    title: "Fantasy-RTS (FPS: %1%)"
 
 tile:
 

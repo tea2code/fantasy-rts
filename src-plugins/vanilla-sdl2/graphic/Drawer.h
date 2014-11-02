@@ -21,10 +21,10 @@ namespace frts
     /**
      * @brief Thrown if the image config is invalid.
      */
-    class InvalidImageConfigError : public std::runtime_error
+    class InvalidImageConfigError : public DataViolation
     {
     public:
-        InvalidImageConfigError(const std::string& msg) : std::runtime_error(msg) {}
+        InvalidImageConfigError(const std::string& msg) : DataViolation(msg) {}
     };
 
     /**
@@ -100,7 +100,7 @@ namespace frts
          * @param positions List of positions.
          * @param zLevel The reference z-level.
          */
-        void updatePositions(SharedManagerPtr shared, std::vector<PointPtr> positions, Point::value zLevel);
+        void updatePositions(SharedManagerPtr shared, RegionManager::PointSet positions, Point::value zLevel);
 
         /**
          * @brief Update the whole screen.

@@ -1,7 +1,7 @@
 #include "VanillaSdl2Plugin.h"
 
 #include "Sdl2Ids.h"
-#include "VanillaSdl2Tickable.h"
+#include <graphic/Sdl2Renderer.h>
 #include <input/EventHandler.h>
 #include <input/impl/InputHandlerImpl.h>
 
@@ -28,7 +28,7 @@ frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
     frts::ModulePtr result = nullptr;
     if (id->toString() == Sdl2Ids::sdl2Renderer())
     {
-        result = std::make_shared<VanillaSdl2Tickable>();
+        result = makeSdl2Renderer();
     }
     else if (id->toString() == Sdl2Ids::eventHandler())
     {

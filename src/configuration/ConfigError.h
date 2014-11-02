@@ -27,6 +27,15 @@ namespace frts
     };
 
     /**
+     * @brief Thrown if a config file is not parsable.
+     */
+    class FileNotParsableError : public std::runtime_error
+    {
+    public:
+        FileNotParsableError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
+    /**
      * @brief Thrown if a config value is missing.
      */
     class MissingValueError : public std::runtime_error

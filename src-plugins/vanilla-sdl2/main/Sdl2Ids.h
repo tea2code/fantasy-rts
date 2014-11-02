@@ -29,12 +29,12 @@ namespace frts
 
         static std::string renderable()
         {
-            return "frts.vanillasdl2.graphic.renderable";
+            return "frts.vanillasdl2.entity.component.renderable";
         }
 
         static std::string sdl2Renderer()
         {
-            return "frts/VanillaSdl2"; // TODO
+            return "frts/SDL2Renderer";
         }
     };
 }

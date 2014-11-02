@@ -93,7 +93,8 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
     }
 
     // Sprites.
-    for (auto spriteNode : *spritesNode->getNode("sprite"))
+    auto node = spritesNode->getNode("sprite");
+    for (auto spriteNode : *node)
     {
         // ID.
         IdPtr id = shared->makeId(ns + "." + spriteNode->getString("name"));
@@ -138,7 +139,8 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
         std::vector<SpritePoint> spritePoints;
         if (spriteNode->has("multiple"))
         {
-            for (auto multipleNode : *spriteNode->getNode("multiple"))
+            auto multiplesNode = spriteNode->getNode("multiple");
+            for (auto multipleNode : *multiplesNode)
             {
                 int x = multipleNode->getInteger("x");
                 int y = multipleNode->getInteger("y");

@@ -16,10 +16,10 @@ namespace frts
     /**
      * @brief Thrown if the sprite config is invalid.
      */
-    class InvalidSpriteConfigError : public std::runtime_error
+    class InvalidSpriteConfigError : public DataViolation
     {
     public:
-        InvalidSpriteConfigError(const std::string& msg) : std::runtime_error(msg) {}
+        InvalidSpriteConfigError(const std::string& msg) : DataViolation(msg) {}
     };
 
     /**

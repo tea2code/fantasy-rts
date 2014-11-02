@@ -1,6 +1,9 @@
 #ifndef FRTS_SDL2RENDERER_H
 #define FRTS_SDL2RENDERER_H
 
+#include "Drawer.h"
+#include "FpsManager.h"
+
 #include <frts/module>
 
 #include <memory>
@@ -21,6 +24,18 @@ namespace frts
         void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
+
+    private:
+        Drawer drawer;
+        FpsManager fpsManager;
+
+    private:
+        /**
+         * @brief Retrieves the graphic data.
+         * @param shared The shared manager.
+         * @return The graphic data.
+         */
+        GraphicDataPtr graphicData(SharedManagerPtr shared) const;
     };
 
     /**

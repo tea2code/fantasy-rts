@@ -8,7 +8,7 @@ frts::FpsManager::FpsManager()
 {
 }
 
-double frts::FpsManager::calcFps()
+unsigned int frts::FpsManager::calcFps()
 {
     unsigned int currentTime = SDL_GetTicks();
     unsigned int diff = currentTime - lastTime;
@@ -26,7 +26,7 @@ double frts::FpsManager::calcFps()
     }
 }
 
-void frts::FpsManager::limitFps(double)
+void frts::FpsManager::limitFps(unsigned int)
 {
     // TODO Currently do nothing.
 }

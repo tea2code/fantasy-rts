@@ -18,13 +18,13 @@ namespace frts
          * @brief Calculates the current frame rate.
          * @return The frame rate per second.
          */
-        double calcFps();
+        unsigned int calcFps();
 
         /**
          * @brief Limits the frame rate to the given value.
          * @param fps The target frame rate.
          */
-        void limitFps(double fps);
+        void limitFps(unsigned int fps);
 
     private:
         unsigned int lastFps;

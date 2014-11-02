@@ -12,21 +12,24 @@ namespace frts
     class GraphicDataImpl : public GraphicData
     {
     public:
+        unsigned int getMaxFps() const override;
         std::string getName() const override;
-        int getScreenHeight() const override;
+        unsigned int getScreenHeight() const override;
         std::string getScreenTitle() const override;
-        int getScreenWidth() const override;
-        int getTileHeight() const override;
-        int getTileWidth() const override;
+        unsigned int getScreenWidth() const override;
+        unsigned int getTileHeight() const override;
+        unsigned int getTileWidth() const override;
         Point::value getZLevel() const override;
-        void setScreenHeight(int screenHeight) override;
+        void setMaxFps(unsigned int maxFps) override;
+        void setScreenHeight(unsigned int screenHeight) override;
         void setScreenTitle(const std::string& screenTitle) override;
-        void setScreenWidth(int screenWidth) override;
-        void setTileHeight(int tileHeight) override;
-        void setTileWidth(int tileWidth) override;
+        void setScreenWidth(unsigned int screenWidth) override;
+        void setTileHeight(unsigned int tileHeight) override;
+        void setTileWidth(unsigned int tileWidth) override;
         void setZLevel(Point::value zLevel) override;
 
     private:
+        unsigned int maxFps;
         int screenHeight;
         std::string screenTitle;
         int screenWidth;

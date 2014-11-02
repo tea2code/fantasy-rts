@@ -220,9 +220,11 @@ Will identify itself by the name `frts::SDL2Renderer`.
 
 ### Screen Config
 
-The screen config defines size of the visible screen and thus defines the windows size, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size should be a multiple of the tile size or else it will be cropped accordingly.
+The screen config defines size of the visible screen and thus defines the windows size, the maximum frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size should be a multiple of the tile size or else it will be cropped accordingly.
 
     screen:
+    
+        fps: <int>
     
         height: <int>
         width: <int>

@@ -26,70 +26,81 @@ namespace frts
         virtual ~GraphicData() {}
 
         /**
+         * @return The maximum frame rate.
+         */
+        virtual unsigned int getMaxFps() const = 0;
+
+        /**
          * @return The screen height in pixel.
          */
-        virtual int getScreenHeight() const;
+        virtual unsigned int getScreenHeight() const = 0;
 
         /**
          * @return The screen title.
          */
-        virtual std::string getScreenTitle() const;
+        virtual std::string getScreenTitle() const = 0;
 
         /**
          * @return The screen width in pixel.
          */
-        virtual int getScreenWidth() const;
+        virtual unsigned int getScreenWidth() const = 0;
 
         /**
          * @return The tile height in pixel.
          */
-        virtual int getTileHeight() const;
+        virtual unsigned int getTileHeight() const = 0;
 
         /**
          * @return The tile width in pixel.
          */
-        virtual int getTileWidth() const;
+        virtual unsigned int getTileWidth() const = 0;
 
         /**
          * @return The current z-level.
          */
-        virtual Point::value getZLevel() const;
+        virtual Point::value getZLevel() const = 0;
+
+        /**
+         * @brief Set the maximum frame rate.
+         * @param maxFps The maximum frame rate.
+         */
+        virtual void setMaxFps(unsigned int maxFps) = 0;
 
         /**
          * @brief Set the screen height.
          * @param screenHeight The screen height.
          */
-        virtual void setScreenHeight(int screenHeight);
+        virtual void setScreenHeight(unsigned int screenHeight) = 0;
 
         /**
          * @brief Set the screen title.
          * @param screenTitle The screen title.
          */
-        virtual void setScreenTitle(const std::string& screenTitle);
+        virtual void setScreenTitle(const std::string& screenTitle) = 0;
 
         /**
          * @brief Set the screen width.
          * @param screenWidth The screen width.
          */
-        virtual void setScreenWidth(int screenWidth);
+        virtual void setScreenWidth(unsigned int screenWidth) = 0;
 
         /**
          * @brief Set the tile height.
          * @param tileHeight The tile height.
          */
-        virtual void setTileHeight(int tileHeight);
+        virtual void setTileHeight(unsigned int tileHeight) = 0;
 
         /**
          * @brief Set the tile width.
          * @param tileWidth The tile width.
          */
-        virtual void setTileWidth(int tileWidth);
+        virtual void setTileWidth(unsigned int tileWidth) = 0;
 
         /**
          * @brief Set the current z-level.
          * @param zLevel The z-level.
          */
-        virtual void setZLevel(Point::value zLevel);
+        virtual void setZLevel(Point::value zLevel) = 0;
     };
 }
 

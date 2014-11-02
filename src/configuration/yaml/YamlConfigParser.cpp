@@ -22,9 +22,18 @@ frts::ConfigNodePtr frts::YamlConfigParser::parseFile(const std::string& filePat
         YAML::Node rawNode = YAML::LoadFile(filePath);
         return frts::ConfigNodePtr(new frts::YamlConfigNode(rawNode));
     }
-    catch(YAML::Exception)
+    catch(YAML::Exception ex)
     {
-        auto msg = boost::format(R"(File "%1%" not found.)") % filePath;
-        throw frts::FileNotFoundError(msg.str());
+        if (ex.msg == "bad file")
+        {
+            auto msg = boost::format(R"(File "%1%" not found.)") % filePath;
+            throw frts::FileNotFoundError(msg.str());
+        }
+        else
+        {
+            auto msg = boost::format(R"(File "%1%" contains the error "%2%" near line %3% and column %4%.)")
+                    % filePath % ex.msg % ex.mark.line % ex.mark.column;
+            throw frts::FileNotParsableError(msg.str());
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace frts
         /**
          * @brief Parses the given configuration file.
          * @throws FileNotFoundError if file is not found.
+         * @throws FileNotParsableError if file is not parsable aka contains an syntax error.
          * @param filePath The path to the configuration file with extension.
          * @return The config node of the root element in the config file.
          */

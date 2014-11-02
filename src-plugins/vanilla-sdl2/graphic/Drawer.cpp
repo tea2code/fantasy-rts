@@ -39,10 +39,10 @@ void frts::Drawer::init(SharedManagerPtr shared)
 {
     // Set data from config.
     auto gd = graphicData(shared);
-    screenHeight = gd->getScreenHeight();
-    screenWidth = gd->getScreenWidth();
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
+    screenHeight = gd->getScreenHeight() / tileHeight;
+    screenWidth = gd->getScreenWidth() / tileWidth;
 
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -148,7 +148,8 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     auto plugins = pluginPath(shared);
 
     // Images.
-    for (auto imageNode : *imagesNode->getNode("image"))
+    auto node = imagesNode->getNode("image");
+    for (auto imageNode : *node)
     {
         IdPtr id = shared->makeId(ns + "." + imageNode->getString("name"));
         std::string path = plugins + imageNode->getString("path");
@@ -208,7 +209,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     }
 }
 
-void frts::Drawer::updatePositions(SharedManagerPtr shared, std::vector<PointPtr> positions, Point::value zLevel)
+void frts::Drawer::updatePositions(SharedManagerPtr shared, RegionManager::PointSet positions, Point::value zLevel)
 {
     for (PointPtr pos : positions)
     {
