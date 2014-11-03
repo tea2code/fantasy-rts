@@ -51,7 +51,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         return;
     }
 
-    int imageFlags = IMG_INIT_PNG; // TODO
+    int imageFlags = IMG_INIT_PNG;
     if (IMG_Init(imageFlags) != imageFlags)
     {
         shared->getLog()->error("SDL2 Drawer", "IMG_Init Error: " + std::string(IMG_GetError()));
