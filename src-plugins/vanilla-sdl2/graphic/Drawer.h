@@ -194,34 +194,6 @@ namespace frts
          * @return The name.
          */
         std::string getName() const;
-
-        /**
-         * @brief Retrieves the graphic data.
-         * @param shared The shared manager.
-         * @return The graphic data.
-         */
-        GraphicDataPtr graphicData(SharedManagerPtr shared) const;
-
-        /**
-         * @brief Retrieves the model factory.
-         * @param shared The shared manager.
-         * @return The model factory.
-         */
-        ModelFactoryPtr modelFactory(SharedManagerPtr shared) const;
-
-        /**
-         * @brief Retrieves the plugin path.
-         * @param shared The shared manager.
-         * @return The plugin path.
-         */
-        std::string pluginPath(SharedManagerPtr shared) const;
-
-        /**
-         * @brief Retrieves the region manager.
-         * @param shared The shared manager.
-         * @return The region manager.
-         */
-        RegionManagerPtr regionManager(SharedManagerPtr shared) const;
     };
 }
 

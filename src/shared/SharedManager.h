@@ -103,6 +103,30 @@ namespace frts
          */
         virtual TickableItr updateModulesEnd() const = 0;
     };
+
+    /**
+     * @brief Get data value from shared.
+     * @param shared The shared manager.
+     * @param id The data value id.
+     * @return The data value.
+     */
+    template <typename DataValueClass>
+    std::shared_ptr<DataValueClass> getDataValue(SharedManagerPtr shared, const std::string& id)
+    {
+        return std::static_pointer_cast<DataValueClass>(shared->getDataValue(shared->makeId(id)));
+    }
+
+    /**
+     * @brief Get utility from shared.
+     * @param shared The shared manager.
+     * @param id The data value id.
+     * @return The utility.
+     */
+    template <typename UtilityClass>
+    std::shared_ptr<UtilityClass> getUtility(SharedManagerPtr shared, const std::string& id)
+    {
+        return std::static_pointer_cast<UtilityClass>(shared->getUtility(shared->makeId(id)));
+    }
 }
 
 #endif // FRTS_SHAREDMANAGER_H

@@ -18,8 +18,7 @@ bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
 
 frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) const
 {
-    auto id = shared->makeId(Sdl2Ids::graphicData());
-    return std::static_pointer_cast<GraphicData>(shared->getDataValue(id));
+    return getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 }
 
 std::string frts::Sdl2Renderer::getName() const
@@ -107,13 +106,17 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     if (gd->isRenderEverything())
     {
         drawer.updateScreen(shared, gd->getZLevel());
+        drawer.renderNow(shared);
         gd->setRenderEverything(false);
     }
     else
     {
-        auto id = shared->makeId(ModelIds::regionManager());
-        auto rm = std::static_pointer_cast<RegionManager>(shared->getDataValue(id));
-        drawer.updatePositions(shared, rm->getChangedPos(), gd->getZLevel());
+        auto changedPos = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getChangedPos();
+        if (!changedPos.empty())
+        {
+            drawer.updatePositions(shared, changedPos, gd->getZLevel());
+            drawer.renderNow(shared);
+        }
     }
 }
 

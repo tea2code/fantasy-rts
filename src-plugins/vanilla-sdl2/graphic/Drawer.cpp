@@ -29,16 +29,10 @@ std::string frts::Drawer::getName() const
     return "frts::SDL2Drawer";
 }
 
-frts::GraphicDataPtr frts::Drawer::graphicData(SharedManagerPtr shared) const
-{
-    IdPtr id = shared->makeId(Sdl2Ids::graphicData());
-    return std::static_pointer_cast<GraphicData>(shared->getDataValue(id));
-}
-
 void frts::Drawer::init(SharedManagerPtr shared)
 {
     // Set data from config.
-    auto gd = graphicData(shared);
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
     screenHeight = gd->getScreenHeight() / tileHeight;
@@ -106,24 +100,6 @@ void frts::Drawer::init(SharedManagerPtr shared)
     initialized = true;
 }
 
-frts::ModelFactoryPtr frts::Drawer::modelFactory(SharedManagerPtr shared) const
-{
-    IdPtr id = shared->makeId(ModelIds::modelFactory());
-    return std::static_pointer_cast<ModelFactory>(shared->getUtility(id));
-}
-
-std::string frts::Drawer::pluginPath(SharedManagerPtr shared) const
-{
-    IdPtr id = shared->makeId(MainIds::MainData());
-    return std::static_pointer_cast<MainData>(shared->getDataValue(id))->getPluginPath();
-}
-
-frts::RegionManagerPtr frts::Drawer::regionManager(SharedManagerPtr shared) const
-{
-    IdPtr id = shared->makeId(ModelIds::regionManager());
-    return std::static_pointer_cast<RegionManager>(shared->getDataValue(id));
-}
-
 void frts::Drawer::renderNow(SharedManagerPtr shared)
 {
     if (!initialized)
@@ -145,7 +121,7 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     }
 
     // Plugin path.
-    auto plugins = pluginPath(shared);
+    auto plugins = getDataValue<MainData>(shared, MainIds::MainData())->getPluginPath();
 
     // Images.
     auto node = imagesNode->getNode("image");
@@ -193,7 +169,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-    auto block = regionManager(shared)->getBlock(pos);
+    auto block = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getBlock(pos);
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
     auto entities = block->getByComponent(renderableId);
 
@@ -219,7 +195,7 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, RegionManager::Point
 
 void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 {
-    auto factory = modelFactory(shared);
+    auto factory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     for (Point::value x = offsetX; x < (offsetX + screenWidth); ++x)
     {

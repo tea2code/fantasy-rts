@@ -244,8 +244,7 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 
 frts::RegionConfigPtr frts::ModelFactoryImpl::getRegionConfig(SharedManagerPtr shared) const
 {
-    IdPtr id = shared->makeId(frts::ModelIds::regionConfig());
-    return std::static_pointer_cast<RegionConfig>(shared->getDataValue(id));
+    return getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
 }
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)

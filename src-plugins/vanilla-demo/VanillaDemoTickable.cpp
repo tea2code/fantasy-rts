@@ -35,7 +35,6 @@ int frts::VanillaDemoTickable::getVersion() const
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
     shared->getLog()->debug(getName(), "Demo loaded");
-
     return false;
 }
 
@@ -51,43 +50,10 @@ bool frts::VanillaDemoTickable::preInit(frts::SharedManagerPtr)
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
-    // Do not adopt this practice. Use frame number only for quick trial and error.
-    int fps = (fromMilliseconds(1000) / shared->getFrame()->getDeltaTime());
-    Frame::ticks number = shared->getFrame()->getNumber();
-
-    if (number == 0)
-    {
-        IdPtr modelFactoryId = shared->makeId("frts/ModelFactory");
-        ModelFactoryPtr modelFactory = std::static_pointer_cast<ModelFactory>(shared->getUtility(modelFactoryId));
-
-        IdPtr entityId = shared->makeId("entity.shrub.berry");
-        EntityPtr entity = modelFactory->makeEntity(entityId, shared);
-
-        IdPtr componentId = shared->makeId("frts.vanillamodel.entity.component.hasresource");
-        HasResourcePtr component = getComponent<HasResource>(componentId, entity);
-        IdPtr resourceId = shared->makeId("resource.food");
-        if (component->hasResource(resourceId))
-        {
-            shared->getLog()->debug(getName(), "Berry shrub is configured.");
-        }
-        else
-        {
-            shared->getLog()->debug(getName(), "Berry shrub not found. We must starve.");
-        }
-    }
-
-    if (number % fps == 0)
-    {
-        shared->getLog()->debug(getName(), "Frame " + std::to_string(number));
-    }
-
     if (shared->getFrame()->getRunTime() >= fromMilliseconds(5 * 1000))
     {
-        IdPtr commandFactoryId = shared->makeId("frts/CommandFactory");
-        CommandFactoryPtr commandFactory = std::static_pointer_cast<CommandFactory>(shared->getUtility(commandFactoryId));
-
-        IdPtr quitCommandId = shared->makeId(CommandIds::quit());
-        commandFactory->makeCommand(quitCommandId, shared)->execute(shared);
+        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+        commandFactory->makeCommand(shared->makeId(CommandIds::quit()), shared)->execute(shared);
     }
 }
 
@@ -100,8 +66,7 @@ void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
     try
     {
-        IdPtr id = shared->makeId("frts/ModelFactory");
-        shared->getUtility(id);
+        getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     }
     catch(const IdNotFoundError&)
     {
