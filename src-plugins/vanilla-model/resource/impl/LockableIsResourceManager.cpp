@@ -11,7 +11,7 @@ frts::LockableIsResourceManager::LockableIsResourceManager(
 
 void frts::LockableIsResourceManager::add(EntityPtr entity)
 {
-    IsResourcePtr component = getComponent<IsResource>(componentType, entity);
+    auto component = getComponent<IsResource>(componentType, entity);
     if (component == nullptr)
     {
         return;
@@ -48,7 +48,7 @@ void frts::LockableIsResourceManager::release(ResourceLockPtr lock)
 
 void frts::LockableIsResourceManager::remove(EntityPtr entity)
 {
-    IsResourcePtr component = getComponent<IsResource>(componentType, entity);
+    auto component = getComponent<IsResource>(componentType, entity);
     if (component == nullptr)
     {
         return;

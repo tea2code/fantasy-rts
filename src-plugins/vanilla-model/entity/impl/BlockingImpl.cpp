@@ -16,8 +16,8 @@ void frts::BlockingImpl::addBlock(IdPtr block)
 
 bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
 {
-    BlockedBy::BlockSet blockedByBlocks = blockedBy->getBlocks();
-    BlockedBy::BlockSet blockingBlocks = blocking.getBlocks();
+    auto blockedByBlocks = blockedBy->getBlocks();
+    auto blockingBlocks = blocking.getBlocks();
 
     BlockedBy::BlockSet intersect;
     std::set_intersection(blockedByBlocks.begin(), blockedByBlocks.end(),

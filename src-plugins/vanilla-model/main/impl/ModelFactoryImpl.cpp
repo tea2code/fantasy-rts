@@ -35,8 +35,8 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
     // Create region config data.
-    RegionConfigPtr regionConfig = makeRegionConfig();
-    IdPtr regionConfigId = shared->makeId(frts::ModelIds::regionConfig());
+    auto regionConfig = makeRegionConfig();
+    auto regionConfigId = shared->makeId(ModelIds::regionConfig());
     shared->setDataValue(regionConfigId, regionConfig);
 
     return false;
@@ -61,37 +61,37 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 {
     // Components:
     // BlockedBy.
-    IdPtr blockedById = shared->makeId(ComponentIds::blockedBy());
-    ComponentBuilderPtr componentBuilder = makeBlockedByBuilder();
+    auto blockedById = shared->makeId(ComponentIds::blockedBy());
+    auto componentBuilder = makeBlockedByBuilder();
     registerComponentBuilder(blockedById, componentBuilder);
 
     // Blocking.
-    IdPtr blockingId = shared->makeId(ComponentIds::blocking());
+    auto blockingId = shared->makeId(ComponentIds::blocking());
     componentBuilder = makeBlockingBuilder();
     registerComponentBuilder(blockingId, componentBuilder);
 
     // Drop.
-    IdPtr dropId = shared->makeId(ComponentIds::drop());
+    auto dropId = shared->makeId(ComponentIds::drop());
     componentBuilder = makeDropBuilder();
     registerComponentBuilder(dropId, componentBuilder);
 
     // HasResource.
-    IdPtr hasResourceId = shared->makeId(ComponentIds::hasResource());
+    auto hasResourceId = shared->makeId(ComponentIds::hasResource());
     componentBuilder = makeHasResourceBuilder();
     registerComponentBuilder(hasResourceId, componentBuilder);
 
     // IsResource.
-    IdPtr isResourceId = shared->makeId(ComponentIds::isResource());
+    auto isResourceId = shared->makeId(ComponentIds::isResource());
     componentBuilder = makeIsResourceBuilder();
     registerComponentBuilder(isResourceId, componentBuilder);
 
     // SortOrder.
-    IdPtr sortOrderId = shared->makeId(ComponentIds::sortOrder());
+    auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
     componentBuilder = makeSortOrderBuilder();
     registerComponentBuilder(sortOrderId, componentBuilder);
 
     // Region Manager:
-    RegionConfigPtr regionConfig = getRegionConfig(shared);
+    auto regionConfig = getRegionConfig(shared);
     if (regionGenerator == nullptr)
     {
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
@@ -134,10 +134,9 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     // Add region manager to data values. This should happen in createData() but
     // is currently not possible.
-    RegionManagerPtr regionManager = makeRegionManager(region, resourceManager,
-                                                       resourceEntityManager,
-                                                       hasResourceType, isResourceType);
-    IdPtr regionManagerId = shared->makeId(frts::ModelIds::regionManager());
+    auto regionManager = makeRegionManager(region, resourceManager, resourceEntityManager,
+                                           hasResourceType, isResourceType);
+    auto regionManagerId = shared->makeId(ModelIds::regionManager());
     shared->setDataValue(regionManagerId, regionManager);
 
     return false;
@@ -180,13 +179,13 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
 {
     try
     {
-        EntityPtr entity = makeEntity();
-        for (ConfigNodePtr componentNodes : entityConfig.at(id))
+        auto entity = makeEntity();
+        for (auto componentNodes : entityConfig.at(id))
         {
             for (auto componentNode : *componentNodes)
             {
-                IdPtr componentId = shared->makeId(componentNode->getString("component"));
-                ComponentPtr component = makeComponent(componentId, componentNode, shared);
+                auto componentId = shared->makeId(componentNode->getString("component"));
+                auto component = makeComponent(componentId, componentNode, shared);
                 entity->addComponent(component);
             }
         }
@@ -217,11 +216,11 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
 
         if (node->has("entities"))
         {
-            ConfigNodePtr entitiesNode = node->getNode("entities");
+            auto entitiesNode = node->getNode("entities");
             for (auto entityNode : *entitiesNode)
             {
-                IdPtr id = shared->makeId(namePrefix + entityNode->getString("name"));
-                ConfigNodePtr componentsNode = entityNode->getNode("components");
+                auto id = shared->makeId(namePrefix + entityNode->getString("name"));
+                auto componentsNode = entityNode->getNode("components");
                 entityConfig[id].push_back(componentsNode);
             }
         }
@@ -231,7 +230,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     }
     else if (key == regionConfigKey)
     {
-        RegionConfigPtr regionConfig = getRegionConfig(shared);
+        auto regionConfig = getRegionConfig(shared);
         regionConfig->setMapSizeX(node->getInteger("size_x"));
         regionConfig->setMapSizeY(node->getInteger("size_y"));
     }
@@ -289,7 +288,7 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
 
 void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
 {
-    RegionConfigPtr regionConfig = getRegionConfig(shared);
+    auto regionConfig = getRegionConfig(shared);
     if (regionConfig->getMapSizeX() <= 0)
     {
         throw DataViolation("Region:size_x must be greater than zero.");

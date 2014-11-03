@@ -42,14 +42,13 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     }
 
     // Initialize commands from configuration.
-    IdPtr id = shared->makeId("frts/CommandFactory");
-    CommandFactoryPtr commandFactory = std::static_pointer_cast<CommandFactory>(shared->getUtility(id));
+    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
     for (auto node : configNodes)
     {
         for (auto keyNode : *node)
         {
-            std::string key = keyNode->getString("key");
-            IdPtr id = shared->makeId(keyNode->getString("command"));
+            auto key = keyNode->getString("key");
+            auto id = shared->makeId(keyNode->getString("command"));
             eventHandler->registerCommand(stringToSdl2Key(key), commandFactory->makeCommand(id, shared));
         }
     }
@@ -84,7 +83,7 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     // CommandFactory.
     try
     {
-        IdPtr id = shared->makeId("frts/CommandFactory");
+        auto id = shared->makeId("frts/CommandFactory");
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)

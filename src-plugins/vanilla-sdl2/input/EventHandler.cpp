@@ -61,7 +61,7 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
             case SDL_KEYDOWN:
             {
                 // Check if a known key is pressed and execute the corresponding command.
-                SDL_Keycode key = event.key.keysym.sym;
+                auto key = event.key.keysym.sym;
                 auto it = keyCommands.find(key);
                 if (it != keyCommands.end())
                 {

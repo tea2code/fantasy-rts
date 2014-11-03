@@ -12,8 +12,8 @@ Tickable::Tickable()
 
 bool Tickable::createData(frts::SharedManagerPtr shared)
 {
-    frts::DataValuePtr data = std::make_shared<DataValue>();
-    frts::IdPtr id = shared->makeId(data->getName());
+    auto data = std::make_shared<DataValue>();
+    auto id = shared->makeId(data->getName());
     shared->setDataValue(id, data);
 
     return false;

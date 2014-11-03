@@ -19,8 +19,8 @@ frts::ConfigNodePtr frts::YamlConfigParser::parseFile(const std::string& filePat
 {
     try
     {
-        YAML::Node rawNode = YAML::LoadFile(filePath);
-        return frts::ConfigNodePtr(new frts::YamlConfigNode(rawNode));
+        auto rawNode = YAML::LoadFile(filePath);
+        return std::make_shared<YamlConfigNode>(rawNode);
     }
     catch(YAML::Exception ex)
     {

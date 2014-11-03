@@ -34,7 +34,7 @@ void frts::EasyloggingLog::error(const std::string& module, const std::string& m
 
 std::string frts::EasyloggingLog::formatMessage(const std::string& module, const std::string& msg)
 {
-    std::string tmpl = R"(%1% - %2%)";
+    auto tmpl = R"(%1% - %2%)";
     auto formatted = boost::format(tmpl) % module % msg;
     return formatted.str();
 }

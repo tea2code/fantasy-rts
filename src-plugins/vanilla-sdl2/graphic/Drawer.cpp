@@ -127,7 +127,7 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     auto node = imagesNode->getNode("image");
     for (auto imageNode : *node)
     {
-        IdPtr id = shared->makeId(ns + "." + imageNode->getString("name"));
+        auto id = shared->makeId(ns + "." + imageNode->getString("name"));
         std::string path = plugins + imageNode->getString("path");
         images.insert(std::make_pair(id, path));
     }
@@ -201,7 +201,7 @@ void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
     {
         for (Point::value y = offsetY; y < (offsetY + screenHeight); ++y)
         {
-            PointPtr pos = factory->makePoint(x, y, zLevel);
+            auto pos = factory->makePoint(x, y, zLevel);
             updatePosition(shared, pos, zLevel);
         }
     }

@@ -22,19 +22,19 @@ frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++()
 
 frts::ConfigNodeItr::self_type* frts::YamlConfigNodeItr::operator++(int)
 {
-    frts::ConfigNodeItr::self_type* copy = new YamlConfigNodeItr(iterator);
+    ConfigNodeItr::self_type* copy = new YamlConfigNodeItr(iterator);
     ++iterator;
     return copy;
 }
 
 frts::ConfigNodeItr::reference frts::YamlConfigNodeItr::operator*()
 {
-    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
+    return std::make_shared<YamlConfigNode>(*iterator);
 }
 
 frts::ConfigNodeItr::pointer frts::YamlConfigNodeItr::operator->()
 {
-    return frts::ConfigNodePtr(new YamlConfigNode(*iterator));
+    return std::make_shared<YamlConfigNode>(*iterator);
 }
 
 bool frts::YamlConfigNodeItr::operator==(const self_type& rhs)

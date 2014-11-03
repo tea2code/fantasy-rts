@@ -1,5 +1,6 @@
 #include "ModelReseter.h"
 
+#include "ModelFactory.h"
 #include "ModelIds.h"
 #include "RegionManager.h"
 
@@ -47,8 +48,7 @@ bool frts::ModelReseter::preInit(SharedManagerPtr)
 
 void frts::ModelReseter::tick(SharedManagerPtr shared)
 {
-    IdPtr regionManagerId = shared->makeId(ModelIds::regionManager());
-    RegionManagerPtr regionManager = std::static_pointer_cast<RegionManager>(shared->getDataValue(regionManagerId));
+    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     regionManager->resetChangedPos();
 }
 
@@ -61,8 +61,7 @@ void frts::ModelReseter::validateModules(SharedManagerPtr shared)
 {
     try
     {
-        IdPtr id = shared->makeId("frts/ModelFactory");
-        shared->getUtility(id);
+        getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     }
     catch(const IdNotFoundError&)
     {

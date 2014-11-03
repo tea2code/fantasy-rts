@@ -37,7 +37,7 @@ T frts::YamlConfigNode::get(const std::string& key, const std::string& type)
     {
         throw makeMissingValueError(key);
     }
-    YAML::Node valueNode = !key.empty() ? node[key] : node;
+    auto valueNode = !key.empty() ? node[key] : node;
     if (valueNode)
     {
         try
@@ -63,7 +63,7 @@ T frts::YamlConfigNode::getDefault(const std::string& key, T defaultValue)
     {
         throw makeMissingValueError(key);
     }
-    YAML::Node valueNode = !key.empty() ? node[key] : node;
+    auto valueNode = !key.empty() ? node[key] : node;
     if (valueNode)
     {
         try
@@ -90,7 +90,7 @@ bool frts::YamlConfigNode::getBool(const std::string& key, bool defaultValue)
 
 std::vector<bool> frts::YamlConfigNode::getBools(const std::string& key)
 {
-    frts::ConfigNodePtr listNode = getNode(key);
+    auto listNode = getNode(key);
     std::vector<bool> result;
     for(const auto& valueNode : *listNode)
     {
@@ -111,7 +111,7 @@ double frts::YamlConfigNode::getFloat(const std::string& key, double defaultValu
 
 std::vector<double> frts::YamlConfigNode::getFloats(const std::string& key)
 {
-    frts::ConfigNodePtr listNode = getNode(key);
+    auto listNode = getNode(key);
     std::vector<double> result;
     for(const auto& valueNode : *listNode)
     {
@@ -132,7 +132,7 @@ long frts::YamlConfigNode::getInteger(const std::string& key, long defaultValue)
 
 std::vector<long> frts::YamlConfigNode::getIntegers(const std::string& key)
 {
-    frts::ConfigNodePtr listNode = getNode(key);
+    auto listNode = getNode(key);
     std::vector<long> result;
     for(const auto& valueNode : *listNode)
     {
@@ -146,7 +146,7 @@ frts::ConfigNodePtr frts::YamlConfigNode::getNode(const std::string& key)
     YAML::Node rawNode = node[key];
     if (rawNode)
     {
-        return ConfigNodePtr(new YamlConfigNode(rawNode));
+        return std::make_shared<YamlConfigNode>(rawNode);
     }
     else
     {
@@ -167,7 +167,7 @@ std::string frts::YamlConfigNode::getString(const std::string& key,
 
 std::vector<std::string> frts::YamlConfigNode::getStrings(const std::string& key)
 {
-    frts::ConfigNodePtr listNode = getNode(key);
+    auto listNode = getNode(key);
     std::vector<std::string> result;
     for(const auto& valueNode : *listNode)
     {
@@ -184,7 +184,7 @@ bool frts::YamlConfigNode::has(const std::string& key)
 template<typename T>
 bool frts::YamlConfigNode::is(const std::string& key)
 {
-    YAML::Node valueNode = node[key];
+    auto valueNode = node[key];
     if (valueNode)
     {
         try

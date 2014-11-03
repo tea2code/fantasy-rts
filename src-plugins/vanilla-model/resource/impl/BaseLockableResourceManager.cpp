@@ -30,7 +30,7 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(
                 continue;
             }
 
-            Point::length currentDistance = distAlgo->distance(pos, region->getPos(entity));
+            auto currentDistance = distAlgo->distance(pos, region->getPos(entity));
             if (distance == -1 || currentDistance < distance)
             {
                 distance = currentDistance;
@@ -86,7 +86,7 @@ void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
         return;
     }
 
-    LockInfo& info = lockInfo[lock];
+    auto info = lockInfo[lock];
     entityLocks[info.entity].erase(lock);
     lockedEntities[info.entityGroup].erase(info.entity);
     lockInfo.erase(lock);

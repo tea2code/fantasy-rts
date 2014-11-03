@@ -159,7 +159,7 @@ void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
     // VanillaCommand.
     try
     {
-        IdPtr id = shared->makeId("frts/CommandFactory");
+        auto id = shared->makeId("frts/CommandFactory");
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)
@@ -170,7 +170,7 @@ void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
     // VanillaModel.
     try
     {
-        IdPtr id = shared->makeId("frts/ModelFactory");
+        auto id = shared->makeId("frts/ModelFactory");
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)

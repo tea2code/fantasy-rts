@@ -23,7 +23,7 @@ frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable)
         // Get fallback.
         it = sprites.find(fallback);
     }
-    Sprite sprite = it->second;
+    auto sprite = it->second;
 
     // Select sprite index.
     if (!renderable->isSpriteIndexSet())
@@ -97,7 +97,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
     for (auto spriteNode : *node)
     {
         // ID.
-        IdPtr id = shared->makeId(ns + "." + spriteNode->getString("name"));
+        auto id = shared->makeId(ns + "." + spriteNode->getString("name"));
 
         // Height.
         int height = defaultHeight;
@@ -112,7 +112,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
         }
 
         // Image.
-        IdPtr image = defaultImage;
+        auto image = defaultImage;
         if (spriteNode->has("image"))
         {
             image = shared->makeId(spriteNode->getString("image"));

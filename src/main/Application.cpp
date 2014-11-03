@@ -17,10 +17,9 @@ frts::Application::Application(LogPtr log)
 {
 }
 
-void frts::Application::createData(const std::vector<ModulePtr>& modules,
-                                   SharedManagerPtr shared) const
+void frts::Application::createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
-    std::vector<ModulePtr> todo = modules;
+    auto todo = modules;
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
@@ -49,8 +48,8 @@ std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vecto
     std::vector<TickablePtr> result;
     for(const auto& moduleName : moduleNames)
     {
-        IdPtr id = makeId(moduleName);
-        TickablePtr module = std::dynamic_pointer_cast<Tickable>(pluginManager.findModule(id));
+        auto id = makeId(moduleName);
+        auto module = std::dynamic_pointer_cast<Tickable>(pluginManager.findModule(id));
         result.push_back(module);
     }
     return result;
@@ -63,7 +62,7 @@ frts::UtilityPtr frts::Application::findUtility(IdPtr id)
 
 void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
-    std::vector<ModulePtr> todo = modules;
+    auto todo = modules;
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
@@ -79,18 +78,17 @@ void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManage
     }
 }
 
-void frts::Application::loadPlugins(const std::string& rootPath,
-                                    const std::vector<std::string>& pluginPaths)
+void frts::Application::loadPlugins(const std::string& rootPath, const std::vector<std::string>& pluginPaths)
 {
     for(const auto& pluginPath : pluginPaths)
     {
         // Normalize path.
-        std::string path = rootPath + pluginPath;
+        auto path = rootPath + pluginPath;
         std::replace(path.begin(), path.end(), '\\', '/');
 
         // Split path into path and library name.
         std::string name;
-        std::string::size_type index = path.find_last_of('/');
+        auto index = path.find_last_of('/');
         if (index != std::string::npos)
         {
             index += 1;
@@ -110,7 +108,7 @@ void frts::Application::loadPlugins(const std::string& rootPath,
 
 void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
-    std::vector<ModulePtr> todo = modules;
+    auto todo = modules;
     std::vector<ModulePtr> repeat;
     while (!todo.empty())
     {
@@ -136,7 +134,7 @@ void frts::Application::readConfig(const std::map<std::string, std::vector<Modul
     for (const auto& configFile : configFiles)
     {
         // Parse file.
-        ConfigNodePtr node = parser.parseFile(rootPath + configFile);
+        auto node = parser.parseFile(rootPath + configFile);
 
         // Check if config node contains supported keys.
         for (auto it = supportedKeys.begin(); it != supportedKeys.end(); ++it)
@@ -144,7 +142,7 @@ void frts::Application::readConfig(const std::map<std::string, std::vector<Modul
             // Node has key.
             if (node->has(it->first))
             {
-                ConfigNodePtr keyNode = node->getNode(it->first);
+                auto keyNode = node->getNode(it->first);
 
                 // Give every associated module chance to parse node.
                 for (auto& module : it->second)
@@ -159,7 +157,7 @@ void frts::Application::readConfig(const std::map<std::string, std::vector<Modul
 frts::Application::LoadConfiguration frts::Application::readLoadFile(const std::string& filePath) const
 {
     YamlConfigParser parser;
-    ConfigNodePtr node = parser.parseFile(filePath);
+    auto node = parser.parseFile(filePath);
 
     LoadConfiguration result;
     result.plugins = node->getStrings("plugins");
@@ -186,8 +184,7 @@ std::map<std::string, std::vector<frts::ModulePtr>> frts::Application::registerC
     return result;
 }
 
-void frts::Application::validateData(const std::vector<ModulePtr>& modules,
-                                     SharedManagerPtr shared) const
+void frts::Application::validateData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
     for (auto& module : modules)
     {
@@ -195,8 +192,7 @@ void frts::Application::validateData(const std::vector<ModulePtr>& modules,
     }
 }
 
-void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules,
-                                                SharedManagerPtr shared) const
+void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
     for (auto& module : modules)
     {

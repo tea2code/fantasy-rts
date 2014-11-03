@@ -15,10 +15,10 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 
 std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy)
 {
-    std::vector<PointPtr> result = getNeightbors(pos);
+    auto result = getNeightbors(pos);
     for (auto it = result.begin(); it != result.end(); )
     {
-        BlockPtr block = getBlock(*it);
+        auto block = getBlock(*it);
         if(block->isBlocking(blockedBy))
         {
             it = result.erase(it);
@@ -136,7 +136,7 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos)
 
 frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity)
 {
-    PointPtr pos = getPos(entity);
+    auto pos = getPos(entity);
     if (pos != nullptr)
     {
         // Remove from block.
@@ -151,7 +151,7 @@ frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity)
 frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos)
 {
     // Remove from block if exists.
-    PointPtr lastPos = removeEntity(entity);
+    auto lastPos = removeEntity(entity);
 
     // Insert in block.
     getWriteableBlock(pos)->insert(entity);

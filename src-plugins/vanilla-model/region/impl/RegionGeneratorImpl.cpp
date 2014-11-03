@@ -18,7 +18,7 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::RegionGeneratorImpl::all
     {
         for (Point::value y = 0; y < mapSizeY; ++y)
         {
-            PointPtr pos = makePoint(x, y, zLevel);
+            auto pos = makePoint(x, y, zLevel);
             result[pos] = newBlock(pos);
         }
     }

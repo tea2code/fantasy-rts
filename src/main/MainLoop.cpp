@@ -61,7 +61,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
 
         while (accumulator >= deltaTime)
         {
-            FramePtr frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
+            auto frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
             shared->setFrame(frame);
             update(shared);
             accumulator -= deltaTime;

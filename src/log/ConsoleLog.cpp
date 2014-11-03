@@ -22,7 +22,7 @@ void frts::ConsoleLog::error(const std::string& module, const std::string& msg)
 void frts::ConsoleLog::print(const std::string& level, const std::string& module,
                   const std::string& msg)
 {
-    std::string tmpl = R"(%1%: %2% - %3%)";
+    auto tmpl = R"(%1%: %2% - %3%)";
     auto formatted = boost::format(tmpl) % level % module % msg;
     std::cout << formatted.str() << std::endl;
 }

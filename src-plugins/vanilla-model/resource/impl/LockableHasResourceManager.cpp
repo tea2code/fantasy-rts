@@ -11,7 +11,7 @@ frts::LockableHasResourceManager::LockableHasResourceManager(
 
 void frts::LockableHasResourceManager::add(EntityPtr entity)
 {
-    HasResourcePtr component = getComponent<HasResource>(componentType, entity);
+    auto component = getComponent<HasResource>(componentType, entity);
     if (component == nullptr)
     {
         return;
@@ -51,7 +51,7 @@ void frts::LockableHasResourceManager::release(ResourceLockPtr lock)
 
 void frts::LockableHasResourceManager::remove(EntityPtr entity)
 {
-    HasResourcePtr component = getComponent<HasResource>(componentType, entity);
+    auto component = getComponent<HasResource>(componentType, entity);
     if (component == nullptr)
     {
         return;

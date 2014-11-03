@@ -62,7 +62,7 @@ frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity)
 
 void frts::RegionManagerImpl::removeEntity(EntityPtr entity)
 {
-    PointPtr pos = region->removeEntity(entity);
+    auto pos = region->removeEntity(entity);
     resourceEntityManager->remove(entity);
     resourceManager->remove(entity);
     addChangedPos(pos);
