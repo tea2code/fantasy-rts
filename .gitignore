@@ -47,3 +47,4 @@ dependency
 decision
 *-build
 *.autosave
+/documentation/doxygen/html
