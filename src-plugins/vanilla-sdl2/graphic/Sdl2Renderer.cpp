@@ -48,6 +48,7 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 
     // Init drawer
     drawer.init(shared);
+    graphicData(shared)->setRenderEverything();
 
     return false;
 }
@@ -103,9 +104,17 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
 
     // Drawer
     drawer.setWindowTitle(windowsTitle.str());
-    auto id = shared->makeId(ModelIds::regionManager());
-    auto rm = std::static_pointer_cast<RegionManager>(shared->getDataValue(id));
-    drawer.updatePositions(shared, rm->getChangedPos(), gd->getZLevel());
+    if (gd->isRenderEverything())
+    {
+        drawer.updateScreen(shared, gd->getZLevel());
+        gd->setRenderEverything(false);
+    }
+    else
+    {
+        auto id = shared->makeId(ModelIds::regionManager());
+        auto rm = std::static_pointer_cast<RegionManager>(shared->getDataValue(id));
+        drawer.updatePositions(shared, rm->getChangedPos(), gd->getZLevel());
+    }
 }
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)

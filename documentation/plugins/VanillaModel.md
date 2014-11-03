@@ -52,6 +52,24 @@ For example: `frts.vanillamodel.entity.component.isresource.wood`
 
 Entities may have a certain order in a block. The sort order component stores this attribute.
 
+In code are a couple of sort orders predefined:
+
+- Default: -1
+- Tile Default: 0
+- Tile Normal: 40
+- Tile Important 80
+- Static Default: 100
+- Static Normal: 140
+- Static Important: 180
+- Dynamic Default: 200
+- Dynamic Normal: 240
+- Dynamic Important: 280
+- Overlay Default: 300
+- Overlay Normal: 380
+- Overlay Important: 380
+- Bottom: -1000
+- Top: 1000
+
 ### Component Builder
 
 Components are created using builders which can be registered at the model factory.

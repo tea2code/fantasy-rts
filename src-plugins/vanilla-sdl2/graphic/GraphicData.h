@@ -61,10 +61,21 @@ namespace frts
         virtual Point::value getZLevel() const = 0;
 
         /**
+         * @return Indicates if the renderer should rerender everything.
+         */
+        virtual bool isRenderEverything() const = 0;
+
+        /**
          * @brief Set the maximum frame rate.
          * @param maxFps The maximum frame rate.
          */
         virtual void setMaxFps(unsigned int maxFps) = 0;
+
+        /**
+         * @brief Set if everything should be rerendered.
+         * @param renderEverything Indicates if the renderer should rerender everything.
+         */
+        virtual void setRenderEverything(bool renderEverything = true) = 0;
 
         /**
          * @brief Set the screen height.

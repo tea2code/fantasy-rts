@@ -41,9 +41,19 @@ frts::Point::value frts::GraphicDataImpl::getZLevel() const
     return zLevel;
 }
 
+bool frts::GraphicDataImpl::isRenderEverything() const
+{
+    return renderEverything;
+}
+
 void frts::GraphicDataImpl::setMaxFps(unsigned int maxFps)
 {
     this->maxFps = maxFps;
+}
+
+void frts::GraphicDataImpl::setRenderEverything(bool renderEverything)
+{
+    this->renderEverything = renderEverything;
 }
 
 void frts::GraphicDataImpl::setScreenHeight(unsigned int screenHeight)

@@ -35,3 +35,15 @@ entities:
               resource_type: resource.wood
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+              
+        # Ground
+        - name: grass
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.ground
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.ground
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0

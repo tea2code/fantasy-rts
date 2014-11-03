@@ -20,7 +20,9 @@ namespace frts
         unsigned int getTileHeight() const override;
         unsigned int getTileWidth() const override;
         Point::value getZLevel() const override;
+        bool isRenderEverything() const override;
         void setMaxFps(unsigned int maxFps) override;
+        void setRenderEverything(bool renderEverything = true) override;
         void setScreenHeight(unsigned int screenHeight) override;
         void setScreenTitle(const std::string& screenTitle) override;
         void setScreenWidth(unsigned int screenWidth) override;
@@ -30,6 +32,7 @@ namespace frts
 
     private:
         unsigned int maxFps;
+        bool renderEverything;
         int screenHeight;
         std::string screenTitle;
         int screenWidth;
