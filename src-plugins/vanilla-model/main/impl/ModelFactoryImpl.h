@@ -53,6 +53,7 @@ namespace frts
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distAlgo;
         EntityConfigMap entityConfig;
+        bool firstInit = true;
         IdPtr hasResourceType;
         IdPtr isResourceType;
         RegionPtr region;

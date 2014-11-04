@@ -21,9 +21,9 @@ void frts::LockableIsResourceManager::add(EntityPtr entity)
 }
 
 frts::ResourceLockPtr frts::LockableIsResourceManager::findNearest(
-        IdPtr entityGroup, IdPtr resourceType, PointPtr pos)
+        IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared)
 {
-    return resourceManager.findNearest(entityGroup, resourceType, pos, shared_from_this());
+    return resourceManager.findNearest(entityGroup, resourceType, pos, shared_from_this(), shared);
 }
 
 frts::EntityPtr frts::LockableIsResourceManager::getEntity(ResourceLockPtr lock) const

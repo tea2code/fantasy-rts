@@ -13,12 +13,17 @@
 #include <resource/impl/LockableIsResourceManager.h>
 #include <resource/impl/ResourceLockImpl.h>
 
+#include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
+#include <shared/impl/SharedManagerImpl.h>
 
 #include <memory>
 
 TEST_CASE("LockableResourceManager.", "[resource]")
 {
+    frts::LogPtr log = std::make_shared<frts::NoLog>();
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+
     frts::IdPtr entityType1 = frts::makeId("entityType1");
     frts::IdPtr entityType2 = frts::makeId("entityType2");
 
@@ -44,10 +49,10 @@ TEST_CASE("LockableResourceManager.", "[resource]")
                                                                          sizeX, sizeY);
     frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
-    region->setPos(entity1, pos1);
-    region->setPos(entity2, pos2);
-    region->setPos(entity3, pos3);
-    region->setPos(entity4, pos4);
+    region->setPos(entity1, pos1, shared);
+    region->setPos(entity2, pos2, shared);
+    region->setPos(entity3, pos3, shared);
+    region->setPos(entity4, pos4, shared);
 
     frts::DistanceAlgorithmPtr distAlgo = frts::makeDistanceAlgorithm();
 
@@ -72,44 +77,44 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         resourceManager->add(entity3);
         resourceManager->add(entity4);
 
-        frts::ResourceLockPtr lock1 = resourceManager->findNearest(entityType1, resourceId3, pos5);
+        frts::ResourceLockPtr lock1 = resourceManager->findNearest(entityType1, resourceId3, pos5, shared);
         REQUIRE(lock1 == nullptr);
 
-        frts::ResourceLockPtr lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 != nullptr);
         REQUIRE(lock2->getEntity() == entity1);
         REQUIRE(lock2->getResourceType() == resourceId1);
         REQUIRE(lock2->isValid());
-        REQUIRE(region->getPos(lock2->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock2->getEntity(), shared) == pos1);
 
-        frts::ResourceLockPtr lock3 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock3 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock3 != nullptr);
         REQUIRE(lock3->getEntity() == entity4);
         REQUIRE(lock3->getResourceType() == resourceId1);
         REQUIRE(lock3->isValid());
-        REQUIRE(region->getPos(lock3->getEntity()) == pos4);
+        REQUIRE(region->getPos(lock3->getEntity(), shared) == pos4);
 
-        frts::ResourceLockPtr lock4 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock4 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock4 == nullptr);
 
-        frts::ResourceLockPtr lock5 = resourceManager->findNearest(entityType2, resourceId1, pos5);
+        frts::ResourceLockPtr lock5 = resourceManager->findNearest(entityType2, resourceId1, pos5, shared);
         REQUIRE(lock5 != nullptr);
         REQUIRE(lock5->getEntity() == entity1);
         REQUIRE(lock5->getResourceType() == resourceId1);
         REQUIRE(lock5->isValid());
-        REQUIRE(region->getPos(lock5->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock5->getEntity(), shared) == pos1);
 
         lock2->release();
         REQUIRE(lock2->getEntity() == nullptr);
         REQUIRE(lock2->getResourceType() == nullptr);
         REQUIRE_FALSE(lock2->isValid());
 
-        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 != nullptr);
         REQUIRE(lock2->getEntity() == entity1);
         REQUIRE(lock2->getResourceType() == resourceId1);
         REQUIRE(lock2->isValid());
-        REQUIRE(region->getPos(lock2->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock2->getEntity(), shared) == pos1);
 
         resourceManager->remove(entity1);
         REQUIRE(lock2->getEntity() == nullptr);
@@ -119,15 +124,15 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(lock5->getResourceType() == nullptr);
         REQUIRE_FALSE(lock5->isValid());
 
-        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 == nullptr);
 
-        frts::ResourceLockPtr lock6 = resourceManager->findNearest(entityType1, resourceId2, pos5);
+        frts::ResourceLockPtr lock6 = resourceManager->findNearest(entityType1, resourceId2, pos5, shared);
         REQUIRE(lock6 != nullptr);
         REQUIRE(lock6->getEntity() == entity2);
         REQUIRE(lock6->getResourceType() == resourceId2);
         REQUIRE(lock6->isValid());
-        REQUIRE(region->getPos(lock6->getEntity()) == pos2);
+        REQUIRE(region->getPos(lock6->getEntity(), shared) == pos2);
     }
 
     SECTION("With IsResource.")
@@ -151,44 +156,44 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         resourceManager->add(entity3);
         resourceManager->add(entity4);
 
-        frts::ResourceLockPtr lock1 = resourceManager->findNearest(entityType1, resourceId3, pos5);
+        frts::ResourceLockPtr lock1 = resourceManager->findNearest(entityType1, resourceId3, pos5, shared);
         REQUIRE(lock1 == nullptr);
 
-        frts::ResourceLockPtr lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 != nullptr);
         REQUIRE(lock2->getEntity() == entity1);
         REQUIRE(lock2->getResourceType() == resourceId1);
         REQUIRE(lock2->isValid());
-        REQUIRE(region->getPos(lock2->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock2->getEntity(), shared) == pos1);
 
-        frts::ResourceLockPtr lock3 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock3 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock3 != nullptr);
         REQUIRE(lock3->getEntity() == entity4);
         REQUIRE(lock3->getResourceType() == resourceId1);
         REQUIRE(lock3->isValid());
-        REQUIRE(region->getPos(lock3->getEntity()) == pos4);
+        REQUIRE(region->getPos(lock3->getEntity(), shared) == pos4);
 
-        frts::ResourceLockPtr lock4 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        frts::ResourceLockPtr lock4 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock4 == nullptr);
 
-        frts::ResourceLockPtr lock5 = resourceManager->findNearest(entityType2, resourceId1, pos5);
+        frts::ResourceLockPtr lock5 = resourceManager->findNearest(entityType2, resourceId1, pos5, shared);
         REQUIRE(lock5 != nullptr);
         REQUIRE(lock5->getEntity() == entity1);
         REQUIRE(lock5->getResourceType() == resourceId1);
         REQUIRE(lock5->isValid());
-        REQUIRE(region->getPos(lock5->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock5->getEntity(), shared) == pos1);
 
         lock2->release();
         REQUIRE(lock2->getEntity() == nullptr);
         REQUIRE(lock2->getResourceType() == nullptr);
         REQUIRE_FALSE(lock2->isValid());
 
-        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 != nullptr);
         REQUIRE(lock2->getEntity() == entity1);
         REQUIRE(lock2->getResourceType() == resourceId1);
         REQUIRE(lock2->isValid());
-        REQUIRE(region->getPos(lock2->getEntity()) == pos1);
+        REQUIRE(region->getPos(lock2->getEntity(), shared) == pos1);
 
         resourceManager->remove(entity1);
         REQUIRE(lock2->getEntity() == nullptr);
@@ -198,14 +203,14 @@ TEST_CASE("LockableResourceManager.", "[resource]")
         REQUIRE(lock5->getResourceType() == nullptr);
         REQUIRE_FALSE(lock5->isValid());
 
-        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5);
+        lock2 = resourceManager->findNearest(entityType1, resourceId1, pos5, shared);
         REQUIRE(lock2 == nullptr);
 
-        frts::ResourceLockPtr lock6 = resourceManager->findNearest(entityType1, resourceId2, pos5);
+        frts::ResourceLockPtr lock6 = resourceManager->findNearest(entityType1, resourceId2, pos5, shared);
         REQUIRE(lock6 != nullptr);
         REQUIRE(lock6->getEntity() == entity2);
         REQUIRE(lock6->getResourceType() == resourceId2);
         REQUIRE(lock6->isValid());
-        REQUIRE(region->getPos(lock6->getEntity()) == pos2);
+        REQUIRE(region->getPos(lock6->getEntity(), shared) == pos2);
     }
 }

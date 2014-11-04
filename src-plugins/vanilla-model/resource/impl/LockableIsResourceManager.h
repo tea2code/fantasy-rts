@@ -16,7 +16,7 @@ namespace frts
         LockableIsResourceManager(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo);
 
         void add(EntityPtr entity) override;
-        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
+        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
         EntityPtr getEntity(ResourceLockPtr lock) const override;
         IdPtr getResourceType(ResourceLockPtr lock) const override;
         bool isValid(ResourceLockPtr lock) const override;

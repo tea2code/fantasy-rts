@@ -22,8 +22,8 @@ namespace frts
         BaseLockableResourceManager(DistanceAlgorithmPtr distAlgo, RegionPtr region);
 
         void add(IdPtr resourceType, EntityPtr entity);
-        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType,
-                                    PointPtr pos, LockableResourceManagerPtr parent);
+        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos,
+                                    LockableResourceManagerPtr parent, SharedManagerPtr shared);
         EntityPtr getEntity(ResourceLockPtr lock) const;
         IdPtr getResourceType(ResourceLockPtr lock) const;
         bool isValid(ResourceLockPtr lock) const;

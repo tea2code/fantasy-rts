@@ -128,7 +128,7 @@ TEST_CASE("RegionManager.", "[main]")
 
         frts::EntityPtr entity = frts::makeEntity();
         pos = frts::makePoint(0, 1, 0);
-        regionManager->setPos(entity, pos);
+        regionManager->setPos(entity, pos, shared);
         REQUIRE(regionManager->getChangedPos().size() == 2);
 
         pos = frts::makePoint(0, 0, 0);
@@ -138,7 +138,7 @@ TEST_CASE("RegionManager.", "[main]")
         regionManager->resetChangedPos();
         REQUIRE(regionManager->getChangedPos().empty());
 
-        regionManager->removeEntity(entity);
+        regionManager->removeEntity(entity, shared);
         REQUIRE(regionManager->getChangedPos().size() == 1);
     }
 
@@ -154,14 +154,14 @@ TEST_CASE("RegionManager.", "[main]")
         component->setResourceType(resourceId);
 
         entity->addComponent(component);
-        regionManager->setPos(entity, pos);
+        regionManager->setPos(entity, pos, shared);
 
-        frts::ResourceLockPtr lock = regionManager->findNearestResource(entityType, resourceId, pos);
+        frts::ResourceLockPtr lock = regionManager->findNearestResource(entityType, resourceId, pos, shared);
         REQUIRE(lock != nullptr);
         REQUIRE(lock->getEntity() == entity);
         REQUIRE(lock->getResourceType() == resourceId);
         REQUIRE(lock->isValid());
-        REQUIRE(regionManager->getPos(lock->getEntity()) == pos);
+        REQUIRE(regionManager->getPos(lock->getEntity(), shared) == pos);
     }
 
     SECTION("Find resource entity.")
@@ -176,13 +176,13 @@ TEST_CASE("RegionManager.", "[main]")
         component->addResource(resourceId);
 
         entity->addComponent(component);
-        regionManager->setPos(entity, pos);
+        regionManager->setPos(entity, pos, shared);
 
-        frts::ResourceLockPtr lock = regionManager->findNearestResourceEntity(entityType, resourceId, pos);
+        frts::ResourceLockPtr lock = regionManager->findNearestResourceEntity(entityType, resourceId, pos, shared);
         REQUIRE(lock != nullptr);
         REQUIRE(lock->getEntity() == entity);
         REQUIRE(lock->getResourceType() == resourceId);
         REQUIRE(lock->isValid());
-        REQUIRE(regionManager->getPos(lock->getEntity()) == pos);
+        REQUIRE(regionManager->getPos(lock->getEntity(), shared) == pos);
     }
 }

@@ -14,8 +14,9 @@ void frts::BaseLockableResourceManager::add(IdPtr resourceType, EntityPtr entity
     resources[resourceType].insert(entity);
 }
 
-frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(
-        IdPtr entityGroup, IdPtr resourceType, PointPtr pos, LockableResourceManagerPtr parent)
+frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entityGroup, IdPtr resourceType,
+                                                                     PointPtr pos, LockableResourceManagerPtr parent,
+                                                                     SharedManagerPtr shared)
 {
     EntityPtr foundEntity = nullptr;
     Point::length distance = -1;
@@ -30,7 +31,7 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(
                 continue;
             }
 
-            auto currentDistance = distAlgo->distance(pos, region->getPos(entity));
+            auto currentDistance = distAlgo->distance(pos, region->getPos(entity, shared));
             if (distance == -1 || currentDistance < distance)
             {
                 distance = currentDistance;

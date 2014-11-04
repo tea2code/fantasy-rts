@@ -13,12 +13,12 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 {
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy)
+std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
-    auto result = getNeightbors(pos);
+    auto result = getNeightbors(pos, shared);
     for (auto it = result.begin(); it != result.end(); )
     {
-        auto block = getBlock(*it);
+        auto block = getBlock(*it, shared);
         if(block->isBlocking(blockedBy))
         {
             it = result.erase(it);
@@ -31,7 +31,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value> &zLevels, BlockedByPtr blockedBy)
+frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value> &zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
     // TODO Current implementation may not find a random position.
 
@@ -46,7 +46,7 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
         Point::value z = *frts::selectRandomly(zLevels.begin(), zLevels.end());
 
         result = makePoint(x, y, z);
-        if (!getBlock(result)->isBlocking(blockedBy))
+        if (!getBlock(result, shared)->isBlocking(blockedBy))
         {
             break;
         }
@@ -59,12 +59,12 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
     return result;
 }
 
-frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos)
+frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
 {
-    return getWriteableBlock(pos);
+    return getWriteableBlock(pos, shared);
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos)
+std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, SharedManagerPtr)
 {
     int x = pos->getX();
     int y = pos->getY();
@@ -105,7 +105,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos)
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity)
+frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity, SharedManagerPtr)
 {
     auto found = entityPos.find(entity);
     if (found != entityPos.end())
@@ -118,7 +118,7 @@ frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity)
     }
 }
 
-frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos)
+frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, SharedManagerPtr shared)
 {
     frts::WriteableBlockPtr result = nullptr;
     auto it = posBlock.find(pos);
@@ -128,19 +128,19 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos)
     }
     else
     {
-        result = regionGenerator->newBlock(pos);
+        result = regionGenerator->newBlock(pos, shared);
         posBlock[pos] = result;
     }
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity)
+frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
 {
-    auto pos = getPos(entity);
+    auto pos = getPos(entity, shared);
     if (pos != nullptr)
     {
         // Remove from block.
-        getWriteableBlock(pos)->remove(entity);
+        getWriteableBlock(pos, shared)->remove(entity);
 
         // Remove from entity pos map.
         entityPos.erase(entity);
@@ -148,13 +148,13 @@ frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity)
     return pos;
 }
 
-frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos)
+frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
 {
     // Remove from block if exists.
-    auto lastPos = removeEntity(entity);
+    auto lastPos = removeEntity(entity, shared);
 
     // Insert in block.
-    getWriteableBlock(pos)->insert(entity);
+    getWriteableBlock(pos, shared)->insert(entity);
 
     // Insert in entity pos map.
     entityPos[entity] = pos;

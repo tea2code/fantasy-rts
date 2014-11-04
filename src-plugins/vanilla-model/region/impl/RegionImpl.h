@@ -22,13 +22,13 @@ namespace frts
         RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                    RegionGeneratorPtr regionGenerator);
 
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy) override;
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy) override;
-        BlockPtr getBlock(PointPtr pos) override;
-        std::vector<PointPtr> getNeightbors(PointPtr pos) override;
-        PointPtr getPos(EntityPtr entity) override;
-        PointPtr removeEntity(EntityPtr entity) override;
-        PointPtr setPos(EntityPtr entity, PointPtr pos) override;
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
+        std::vector<PointPtr> getNeightbors(PointPtr pos, SharedManagerPtr shared) override;
+        PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
+        PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
+        PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
 
     private:
         using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,
@@ -43,7 +43,7 @@ namespace frts
         RegionGeneratorPtr regionGenerator;
 
     private:
-        WriteableBlockPtr getWriteableBlock(PointPtr pos);
+        WriteableBlockPtr getWriteableBlock(PointPtr pos, SharedManagerPtr shared);
     };
 
     /**

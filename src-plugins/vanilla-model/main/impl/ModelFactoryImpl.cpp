@@ -59,6 +59,12 @@ int frts::ModelFactoryImpl::getVersion() const
 
 bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 {
+    if (firstInit)
+    {
+        firstInit = false;
+        return true;
+    }
+
     // Components:
     // BlockedBy.
     auto blockedById = shared->makeId(ComponentIds::blockedBy());

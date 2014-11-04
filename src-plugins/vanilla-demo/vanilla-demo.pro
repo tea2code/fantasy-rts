@@ -29,14 +29,17 @@ INCLUDEPATH += $$PWD/../vanilla-model
 INCLUDEPATH += $$PWD/../vanilla-command
 
 # Headers and sources.
-#UNIT_TEST {
-#    include(test/test.pri)
-#}
+# Important this plugin needs a block implementation and takes the one provided
+# by VanillaModel.
 SOURCES += \
     main.cpp \
     VanillaDemoTickable.cpp \
-    VanillaDemoPlugin.cpp
+    VanillaDemoPlugin.cpp \
+    DemoRegionGenerator.cpp \
+    $$PWD/../vanilla-model/region/impl/BlockImpl.cpp
 
 HEADERS += \
     VanillaDemoTickable.h \
-    VanillaDemoPlugin.h
+    VanillaDemoPlugin.h \
+    DemoRegionGenerator.h \
+    $$PWD/../vanilla-model/region/impl/BlockImpl.h

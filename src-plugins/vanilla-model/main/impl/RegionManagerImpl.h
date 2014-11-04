@@ -17,19 +17,19 @@ namespace frts
                           IdPtr hasResourceType, IdPtr isResourceType);
 
         void addChangedPos(PointPtr pos) override;
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy) override;
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy) override;
-        ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
-        ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) override;
-        BlockPtr getBlock(PointPtr pos) override;
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
+        ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
+        BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
         PointSet getChangedPos() override;
         std::string getName() const override;
-        std::vector<PointPtr> getNeightbors(PointPtr pos) override;
-        PointPtr getPos(EntityPtr entity) override;
-        void removeEntity(EntityPtr entity) override;
+        std::vector<PointPtr> getNeightbors(PointPtr pos, SharedManagerPtr shared) override;
+        PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
+        void removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
         void resetChangedPos() override;
-        void setPos(EntityPtr entity, PointPtr pos) override;
-        void updateResources(EntityPtr entity) override;
+        void setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
+        void updateResources(EntityPtr entity, SharedManagerPtr shared) override;
 
     private:
         PointSet changedPos;

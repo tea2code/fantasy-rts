@@ -11,6 +11,7 @@
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 
+#include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -180,6 +181,9 @@ TEST_CASE("Point.", "[region]")
 
 TEST_CASE("Region.", "[region]")
 {
+    frts::LogPtr log = std::make_shared<frts::NoLog>();
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+
     frts::IdPtr block1 = frts::makeId("block1");
     frts::IdPtr block2 = frts::makeId("block2");
 
@@ -212,14 +216,14 @@ TEST_CASE("Region.", "[region]")
                                                                          sizeX, sizeY);
     frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
-    region->setPos(entity1, point1);
-    region->setPos(entity2, point3);
+    region->setPos(entity1, point1, shared);
+    region->setPos(entity2, point3, shared);
 
     SECTION("Find free random position.")
     {
         for (int i = 0; i < 100; ++i)
         {
-            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1);
+            frts::PointPtr point = region->findFreeRandomPos({-1}, blockedBy1, shared);
             REQUIRE(point != point1);
         }
     }
@@ -229,7 +233,7 @@ TEST_CASE("Region.", "[region]")
         std::vector<frts::PointPtr> correctPositions = {
             frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
         };
-        auto positions = region->findFreeNeighbors(point2, blockedBy1);
+        auto positions = region->findFreeNeighbors(point2, blockedBy1, shared);
         REQUIRE(positions.size() == correctPositions.size());
         for(auto pos : positions)
         {
@@ -243,7 +247,7 @@ TEST_CASE("Region.", "[region]")
         std::vector<frts::PointPtr> correctPositions = {
             frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
         };
-        auto positions = region->getNeightbors(point2);
+        auto positions = region->getNeightbors(point2, shared);
         REQUIRE(positions.size() == correctPositions.size());
         for(auto pos : positions)
         {
@@ -254,21 +258,21 @@ TEST_CASE("Region.", "[region]")
 
     SECTION("Get block.")
     {
-        auto block = region->getBlock(point1);
+        auto block = region->getBlock(point1, shared);
         auto foundEntity = *block->getByComponent(sort).begin();
         REQUIRE(foundEntity == entity1);
     }
 
     SECTION("Get/set/remove entities.")
     {
-        REQUIRE(region->getPos(entity1) == point1);
-        REQUIRE(region->getPos(entity1) != point2);
-        frts::PointPtr lastPos = region->setPos(entity1, point2);
+        REQUIRE(region->getPos(entity1, shared) == point1);
+        REQUIRE(region->getPos(entity1, shared) != point2);
+        frts::PointPtr lastPos = region->setPos(entity1, point2, shared);
         REQUIRE(lastPos == point1);
-        REQUIRE(region->getPos(entity1) != point1);
-        REQUIRE(region->getPos(entity1) == point2);
-        lastPos = region->removeEntity(entity1);
+        REQUIRE(region->getPos(entity1, shared) != point1);
+        REQUIRE(region->getPos(entity1, shared) == point2);
+        lastPos = region->removeEntity(entity1, shared);
         REQUIRE(lastPos == point2);
-        REQUIRE(region->getPos(entity1) == nullptr);
+        REQUIRE(region->getPos(entity1, shared) == nullptr);
     }
 }

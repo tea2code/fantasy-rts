@@ -169,7 +169,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-    auto block = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getBlock(pos);
+    auto block = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getBlock(pos, shared);
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
     auto entities = block->getByComponent(renderableId);
 

@@ -41,9 +41,10 @@ namespace frts
          * @param entityGroup The entity group for which this resource is locked.
          * @param resourceType The resource type.
          * @param pos The start position.
+         * @param shared The shared manager.
          * @return Lock to nearest resource or null.
          */
-        virtual ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos) = 0;
+        virtual ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Get entity of lock.
