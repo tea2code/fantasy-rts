@@ -26,6 +26,9 @@ namespace frts
         std::string getName() const override;
         std::vector<PointPtr> getNeightbors(PointPtr pos, SharedManagerPtr shared) override;
         PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
+        std::string getTypeName() const override;
+        int getTypeVersion() const override;
+        int getVersion() const override;
         void removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
         void resetChangedPos() override;
         void setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;

@@ -18,12 +18,22 @@ bool frts::CommandFactoryImpl::createData(SharedManagerPtr)
 
 std::string frts::CommandFactoryImpl::getName() const
 {
-    return "frts::CommandFactory";
+    return CommandIds::commandFactory();
 }
 
 std::vector<std::string> frts::CommandFactoryImpl::getSupportedConfig()
 {
     return {};
+}
+
+std::string frts::CommandFactoryImpl::getTypeName() const
+{
+    return getName();
+}
+
+int frts::CommandFactoryImpl::getTypeVersion() const
+{
+    return 1;
 }
 
 int frts::CommandFactoryImpl::getVersion() const

@@ -44,12 +44,22 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 
 std::string frts::ModelFactoryImpl::getName() const
 {
-    return "frts::ModelFactory";
+    return ModelIds::modelFactory();
 }
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
     return {entitiesConfigKey, regionConfigKey};
+}
+
+std::string frts::ModelFactoryImpl::getTypeName() const
+{
+    return getName();
+}
+
+int frts::ModelFactoryImpl::getTypeVersion() const
+{
+    return 1;
 }
 
 int frts::ModelFactoryImpl::getVersion() const

@@ -1,6 +1,5 @@
 #include "VanillaModelPlugin.h"
 
-#include "ModelIds.h"
 #include "ModelReseter.h"
 #include "impl/ModelFactoryImpl.h"
 
@@ -16,7 +15,7 @@ frts::VanillaModelPlugin::VanillaModelPlugin()
 frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
-    if (id->toString() == ModelIds::modelFactory())
+    if (id->toString() == ModelFactoryImpl::identifier())
     {
         result = makeModelFactory();
     }

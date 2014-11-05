@@ -14,6 +14,9 @@ namespace frts
         std::string getName() const override;
         Point::value getMapSizeX() const override;
         Point::value getMapSizeY() const override;
+        std::string getTypeName() const override;
+        int getTypeVersion() const override;
+        int getVersion() const override;
         void setMapSizeX(Point::value size) override;
         void setMapSizeY(Point::value size) override;
 

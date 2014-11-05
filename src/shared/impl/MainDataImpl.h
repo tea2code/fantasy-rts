@@ -19,6 +19,9 @@ namespace frts
 
         std::string getName() const override;
         std::string getPluginPath() const override;
+        std::string getTypeName() const override;
+        int getTypeVersion() const override;
+        int getVersion() const override;
 
     private:
         std::string pluginPath;

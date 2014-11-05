@@ -20,6 +20,16 @@ std::vector<std::string> frts::EventHandler::getSupportedConfig()
     return {};
 }
 
+std::string frts::EventHandler::getTypeName() const
+{
+    return getName();
+}
+
+int frts::EventHandler::getTypeVersion() const
+{
+    return 1;
+}
+
 int frts::EventHandler::getVersion() const
 {
     return 1;

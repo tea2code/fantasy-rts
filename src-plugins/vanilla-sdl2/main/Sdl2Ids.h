@@ -14,27 +14,17 @@ namespace frts
     public:
         static std::string graphicData()
         {
-            return "frts.vanillasdl2.graphic.graphicdata";
-        }
-
-        static std::string eventHandler()
-        {
-            return "frts/EventHandler";
+            return "frts::GraphicData";
         }
 
         static std::string inputHandler()
         {
-            return "frts/InputHandler";
+            return "frts::InputHandler";
         }
 
         static std::string renderable()
         {
             return "frts.vanillasdl2.entity.component.renderable";
-        }
-
-        static std::string sdl2Renderer()
-        {
-            return "frts/SDL2Renderer";
         }
     };
 }

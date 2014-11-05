@@ -20,7 +20,7 @@ namespace frts
         ModelReseter();
 
         /**
-         * @brief The default identifier for this data value.
+         * @brief The identifier.
          * @return The id string.
          */
         static std::string identifier()
@@ -31,6 +31,8 @@ namespace frts
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
+        std::string getTypeName() const override;
+        int getTypeVersion() const override;
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;

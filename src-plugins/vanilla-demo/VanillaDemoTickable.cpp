@@ -21,12 +21,22 @@ bool frts::VanillaDemoTickable::createData(frts::SharedManagerPtr)
 
 std::string frts::VanillaDemoTickable::getName() const
 {
-    return "frts::VanillaDemoTickable";
+    return "frts::VanillaDemo";
 }
 
 std::vector<std::string> frts::VanillaDemoTickable::getSupportedConfig()
 {
     return {};
+}
+
+std::string frts::VanillaDemoTickable::getTypeName() const
+{
+    return getName();
+}
+
+int frts::VanillaDemoTickable::getTypeVersion() const
+{
+    return 1;
 }
 
 int frts::VanillaDemoTickable::getVersion() const
@@ -76,7 +86,11 @@ void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
     try
     {
-        getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+        UtilityPtr module = getUtility<Utility>(shared, CommandIds::commandFactory());
+        if (module->getVersion() != 1)
+        {
+            throw ModuleViolation("Utility CommandFactory has the wrong version.");
+        }
     }
     catch(const IdNotFoundError&)
     {

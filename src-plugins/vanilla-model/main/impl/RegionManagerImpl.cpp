@@ -1,5 +1,7 @@
 #include "RegionManagerImpl.h"
 
+#include <main/ModelIds.h>
+
 
 frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
                                            LockableResourceManagerPtr resourceManager,
@@ -47,7 +49,7 @@ frts::RegionManager::PointSet frts::RegionManagerImpl::getChangedPos()
 
 std::string frts::RegionManagerImpl::getName() const
 {
-    return "frts::RegionManager";
+    return ModelIds::regionManager();
 }
 
 std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos, SharedManagerPtr shared)
@@ -58,6 +60,21 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos,
 frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPtr shared)
 {
     return region->getPos(entity, shared);
+}
+
+std::string frts::RegionManagerImpl::getTypeName() const
+{
+    return getName();
+}
+
+int frts::RegionManagerImpl::getTypeVersion() const
+{
+    return getVersion();
+}
+
+int frts::RegionManagerImpl::getVersion() const
+{
+    return 1;
 }
 
 void frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)

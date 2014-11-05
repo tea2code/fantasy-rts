@@ -1,5 +1,7 @@
 #include "GraphicDataImpl.h"
 
+#include <main/Sdl2Ids.h>
+
 
 unsigned int frts::GraphicDataImpl::getMaxFps() const
 {
@@ -8,7 +10,7 @@ unsigned int frts::GraphicDataImpl::getMaxFps() const
 
 std::string frts::GraphicDataImpl::getName() const
 {
-    return "frts::GraphicData";
+    return Sdl2Ids::graphicData();
 }
 
 unsigned int frts::GraphicDataImpl::getScreenHeight() const
@@ -34,6 +36,21 @@ unsigned int frts::GraphicDataImpl::getTileHeight() const
 unsigned int frts::GraphicDataImpl::getTileWidth() const
 {
     return tileWidth;
+}
+
+std::string frts::GraphicDataImpl::getTypeName() const
+{
+    return getName();
+}
+
+int frts::GraphicDataImpl::getTypeVersion() const
+{
+    return getVersion();
+}
+
+int frts::GraphicDataImpl::getVersion() const
+{
+    return 1;
 }
 
 frts::Point::value frts::GraphicDataImpl::getZLevel() const

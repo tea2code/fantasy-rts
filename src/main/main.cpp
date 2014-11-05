@@ -151,10 +151,11 @@ int main(int argc, char* argv[])
         std::vector<frts::UtilityPtr> utilityModules;
         for(const auto& moduleName : loadConfig.utilities)
         {
-            frts::IdPtr id = shared->makeId(moduleName);
-            frts::UtilityPtr utilityModule = app.findUtility(id);
+            auto loadId = shared->makeId(moduleName);
+            auto utilityModule = app.findUtility(loadId);
             utilityModules.push_back(utilityModule);
-            shared->setUtility(id, utilityModule);
+            auto moduleId = shared->makeId(utilityModule->getTypeName());
+            shared->setUtility(moduleId, utilityModule);
         }
 
         // Phase 4: Check required modules.

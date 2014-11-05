@@ -37,17 +37,17 @@ For tests it is necessary to copy the SDL2_image library to the executable:
 
 The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. 
 
-Load using `frts/EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file. This is also the utility ID. It can be found in the static class `Sdl2Ids`. 
+Load using `frts/EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
 
-Will identify itself by the name `frts::EventHandler`.
+Will identify itself by the name and type `frts::EventHandler`.
 
 ### Input Handler
 
 The input handler module allows to register commands to certain keys by using the configuration or the interface.  
 
-Load using `frts/InputHandler` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `Sdl2Ids`. 
+Load using `frts/InputHandler` in the `utilities` section of the load file.
 
-Will identify itself by the name `frts::InputHandler`.
+Will identify itself by the name and type `frts::InputHandler`. It can be also found in the static class `Sdl2Ids`. 
 
 ### Configuration
 
@@ -198,7 +198,7 @@ This data value contains common data related to graphic output.
 
 Default ID can be found in the static class `Sdl2Ids`.
 
-Will identify itself by the name `frts::GraphicData`.
+Will identify itself by the name and type `frts::GraphicData`.
 
 ### Renderable
 
@@ -214,9 +214,9 @@ Its config consists only of the sprite ID:
 
 The renderer module manages everything graphic related. 
 
-Load using `frts/SDL2Renderer` in the `renderModules` section of the load file. This is also the utility ID. It can be found in the static class `Sdl2Ids`. 
+Load using `frts/SDL2Renderer` in the `renderModules` section of the load file.
 
-Will identify itself by the name `frts::SDL2Renderer`.
+Will identify itself by the name and type `frts::SDL2Renderer`.
 
 ### Screen Config
 

@@ -1,6 +1,5 @@
 #include "VanillaSdl2Plugin.h"
 
-#include "Sdl2Ids.h"
 #include <graphic/Sdl2Renderer.h>
 #include <input/EventHandler.h>
 #include <input/impl/InputHandlerImpl.h>
@@ -26,15 +25,15 @@ frts::EventHandlerPtr frts::VanillaSdl2Plugin::getEventHandler()
 frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
 {
     frts::ModulePtr result = nullptr;
-    if (id->toString() == Sdl2Ids::sdl2Renderer())
+    if (id->toString() == Sdl2Renderer::identifier())
     {
         result = makeSdl2Renderer();
     }
-    else if (id->toString() == Sdl2Ids::eventHandler())
+    else if (id->toString() == EventHandler::identifier())
     {
         result = getEventHandler();
     }
-    else if (id->toString() == Sdl2Ids::inputHandler())
+    else if (id->toString() == InputHandlerImpl::identifier())
     {
         result = makeInputHandler(getEventHandler());
     }

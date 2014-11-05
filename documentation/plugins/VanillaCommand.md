@@ -24,9 +24,9 @@ Builder create commands and can be registered at the factory. They are identifie
 
 The command factory is implemented as a utility module. It has a couple of pre registered commands but also allows to add custom commands from other plugins.
 
-Load using `frts/CommandFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `CommandIds`. 
+Load using `frts/CommandFactory` in the `utilities` section of the load file. 
 
-Will identify itself by the name `frts::CommandFactory`.
+Will identify itself by the name and type `frts::CommandFactory`. It can be also found in the static class `CommandIds`. 
 
 ## Commands
 

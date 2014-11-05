@@ -4,6 +4,8 @@
 #include "impl/RenderableBuilder.h"
 #include <main/Sdl2Ids.h>
 
+#include <frts/vanillacommand>
+
 #include <boost/format.hpp>
 
 
@@ -29,6 +31,16 @@ std::string frts::Sdl2Renderer::getName() const
 std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
 {
     return {"style", "screen", "tile"};
+}
+
+std::string frts::Sdl2Renderer::getTypeName() const
+{
+    return getName();
+}
+
+int frts::Sdl2Renderer::getTypeVersion() const
+{
+    return 1;
 }
 
 int frts::Sdl2Renderer::getVersion() const
@@ -159,7 +171,7 @@ void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
     // VanillaCommand.
     try
     {
-        auto id = shared->makeId("frts/CommandFactory");
+        auto id = shared->makeId(CommandIds::commandFactory());
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)
@@ -170,7 +182,7 @@ void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
     // VanillaModel.
     try
     {
-        auto id = shared->makeId("frts/ModelFactory");
+        auto id = shared->makeId(ModelIds::modelFactory());
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)

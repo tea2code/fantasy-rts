@@ -14,17 +14,17 @@ namespace frts
     public:
         static std::string modelFactory()
         {
-            return "frts/ModelFactory";
+            return "frts::ModelFactory";
         }
 
         static std::string regionConfig()
         {
-            return "frts.vanillamodel.regionconfig";
+            return "frts::RegionConfig";
         }
 
         static std::string regionManager()
         {
-            return "frts.vanillamodel.regionmanager";
+            return "frts::RegionManager";
         }
     };
 }

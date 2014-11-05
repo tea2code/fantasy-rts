@@ -14,7 +14,7 @@ namespace frts
     public:
         static std::string commandFactory()
         {
-            return "frts/CommandFactory";
+            return "frts::CommandFactory";
         }
 
         static std::string quit()

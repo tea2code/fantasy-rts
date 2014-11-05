@@ -84,7 +84,7 @@ Utility module which acts as a factory to create model related objects like poin
 
 Load using `frts/ModelFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `ModelIds`. 
 
-Will identify itself by the name `frts::ModelFactory`.
+Will identify itself by the name and type `frts::ModelFactory`. It can be also found in the static class `ModelIds`. 
 
 ### Model Reseter
 
@@ -94,7 +94,7 @@ The model reseter handles model related clean up at the end of each frame. It sh
 
 Load using `frts/ModelReseter` in the `renderModule` section of the load file.
 
-Will identify itself by the name `frts::ModelReseter`.
+Will identify itself by the name and type `frts::ModelReseter`.
 
 ### Point
 
@@ -110,6 +110,8 @@ Region related meta settings like the size of the map are stored in this data va
 
 Default ID can be found in the static class `ModelIds`.
 
+Will identify itself by the name and type `frts::RegionConfig`.
+
 ### Region Generator
 
 The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
@@ -123,6 +125,8 @@ Until phase 10 it is possible to set and change the used implementation of diffe
 The region manager is implemented as an data value and can be accessed via the shared manager. 
 
 Default ID can be found in the static class `ModelIds`.
+
+Will identify itself by the name and type `frts::RegionManager`.
 
 **IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase 10 is complete. Doing so will most likely result in a crash or undefined behavior.
 

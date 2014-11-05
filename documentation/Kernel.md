@@ -51,7 +51,7 @@ Simple wrapper for iterator pointer which alows usage of interfaces in iterators
 
 ## Module
 
-The module package contains all module related interfaces and some additional classes like for error handling related to modules. Every module has a name. If it is necessary that a module is associated with an id the id is created from this name (for example utility modules).
+The module package contains all module related interfaces and some additional classes like for error handling related to modules. 
 
 ### Interface "Module"
 
@@ -65,6 +65,32 @@ A module which implements this interface can be called every frame with the curr
 
 Utility modules aren't automatically called but can be called by other modules. They represent common functions offered by plugins.
 
+### Module Identification
+
+To identify if a certain module is available there are four useful methods which every module must implement:
+
+- **getName:** The name of an individual implementation of a certain module.
+- **getVersion:** The version of an individual implementation of a certain module.
+- **getTypeName:** The type of an module describes it public interface. There may be several implementation of an module type. In most cases it is recommended to check for the type name. 
+- **getTypeVersion:** The type version of an module. This number should change if the interface is changed.
+
+Following is an minimal example for checking if a utility is available.
+
+    try
+    {
+        UtilityPtr module = getUtility<Utility>(shared, CommandIds::commandFactory());
+        if (module->getTypeVersion() != 1)
+        {
+            throw ModuleViolation("Utility CommandFactory has the wrong version.");
+        }
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw ModuleViolation("Utility CommandFactory not found.");
+    }
+
+Note that it doesn't cast to `CommandFactory` but to general `Utility` type to prevent a possible problem with an incompatible cast. Checking update or render modules can be done by iterating over them and checking for the correct type name and version.
+
 ## Plugin
 
 The plugin package consists of two parts. First is the interface and API for individual plugins. Every plugin library must have one class which implements the plugin interface. Additionally in some place in the library the plugin API must be included and the implemented plugin class must be registered using the method `REGISTER_PLUGIN(<Name-Of-Plugin-Class>)`. This is all to create a plugin. Of course every plugin library should implement modules or else the plugin will nevery do anything. Every plugin library contains also a version method (defined in the plugin API) which returns the implemented plugin API version. In the unlikely case that the plugin API will change somedays this version is used to determine incompatibilities. 
@@ -77,7 +103,7 @@ The shared package contains the shared manager which repesents the application s
 
 ### Data Values
 
-Data values store all variable game state data. 
+Data values store all variable game state data. They implement the same identifaction methods as modules.
 
 #### MainData
 
@@ -85,7 +111,7 @@ This data value contains data provided by the main program. This is mostly envir
 
 Default ID can be found in the static class `MainIds`.
 
-Will identify itself by the name `frts::MainData`.
+Will identify itself by the name and type `frts::MainData`.
 
 ### Frame
 

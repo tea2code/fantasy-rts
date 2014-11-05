@@ -2,6 +2,7 @@
 
 #include <input/KeyToSdl2Key.h>
 #include <input/StringToSdl2Key.h>
+#include <main/Sdl2Ids.h>
 
 #include <frts/configuration>
 
@@ -18,12 +19,22 @@ bool frts::InputHandlerImpl::createData(SharedManagerPtr)
 
 std::string frts::InputHandlerImpl::getName() const
 {
-    return "frts::InputHandler";
+    return Sdl2Ids::inputHandler();
 }
 
 std::vector<std::string> frts::InputHandlerImpl::getSupportedConfig()
 {
     return {configKey};
+}
+
+std::string frts::InputHandlerImpl::getTypeName() const
+{
+    return getName();
+}
+
+int frts::InputHandlerImpl::getTypeVersion() const
+{
+    return 1;
 }
 
 int frts::InputHandlerImpl::getVersion() const
@@ -83,7 +94,7 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     // CommandFactory.
     try
     {
-        auto id = shared->makeId("frts/CommandFactory");
+        auto id = shared->makeId(CommandIds::commandFactory());
         shared->getUtility(id);
     }
     catch(const IdNotFoundError&)
@@ -92,11 +103,11 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     }
 
     // EventHandler.
-    const std::string eventHandlerName = "frts::EventHandler";
+    const std::string eventHandlerType = "frts::EventHandler";
     bool found = false;
     for (auto it = shared->updateModulesBegin(); it != shared->updateModulesEnd(); ++it)
     {
-        if ((*it)->getName() == eventHandlerName)
+        if ((*it)->getTypeName() == eventHandlerType)
         {
             found = true;
             break;
@@ -104,7 +115,7 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     }
     for (auto it = shared->renderModulesBegin(); it != shared->renderModulesEnd(); ++it)
     {
-        if ((*it)->getName() == eventHandlerName)
+        if ((*it)->getTypeName() == eventHandlerType)
         {
             found = true;
             break;

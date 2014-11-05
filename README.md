@@ -25,6 +25,8 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 14: Design graphic support with SDL2.
 - Version 15: Graphic support with SDL2.
 - Version 16: Maintenance & Demo Region Generator
+- Version 17: Mouse and keyboard control of map.
+- Version 18: Controlable entities.
 
 Major goals:
 

@@ -63,6 +63,9 @@ namespace frts
     {
     public:
         std::string getName() const override { return "TestDataValue"; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
+        int getVersion() const override { return 1; }
     };
 
     class TestTickable : public Tickable
@@ -71,7 +74,9 @@ namespace frts
         TestTickable() {}
         bool createData(SharedManagerPtr) override { return false; }
         std::string getName() const override { return "TestTickable"; }
-        std::vector<std::string> getSupportedConfig() override { return std::vector<std::string>(); }
+        std::vector<std::string> getSupportedConfig() override { return {}; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
         bool init(SharedManagerPtr) override { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
@@ -87,7 +92,9 @@ namespace frts
         TestUtility() {}
         bool createData(SharedManagerPtr) override { return false; }
         std::string getName() const override { return "TestUtility"; }
-        std::vector<std::string> getSupportedConfig() override { return std::vector<std::string>(); }
+        std::vector<std::string> getSupportedConfig() override { return {}; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
         bool init(SharedManagerPtr) override { return false; }
         void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}

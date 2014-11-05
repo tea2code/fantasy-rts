@@ -2,8 +2,8 @@ screen:
 
     fps: 60
 
-    height: 900
-    width: 1600
+    height: 768
+    width: 1024
     
     title: "Fantasy-RTS (FPS: %1%)"
 

@@ -26,6 +26,16 @@ std::vector<std::string> frts::ModelReseter::getSupportedConfig()
     return {};
 }
 
+std::string frts::ModelReseter::getTypeName() const
+{
+    return getName();
+}
+
+int frts::ModelReseter::getTypeVersion() const
+{
+    return 1;
+}
+
 int frts::ModelReseter::getVersion() const
 {
     return 1;

@@ -14,7 +14,7 @@ namespace frts
     public:
         static std::string MainData()
         {
-            return "frts.maindata";
+            return "frts::MainData";
         }
     };
 }

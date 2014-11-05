@@ -19,6 +19,9 @@ namespace frts
         unsigned int getScreenWidth() const override;
         unsigned int getTileHeight() const override;
         unsigned int getTileWidth() const override;
+        std::string getTypeName() const override;
+        int getTypeVersion() const override;
+        int getVersion() const override;
         Point::value getZLevel() const override;
         bool isRenderEverything() const override;
         void setMaxFps(unsigned int maxFps) override;
