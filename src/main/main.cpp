@@ -13,6 +13,8 @@
 #include <shared/impl/MainDataImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
+#include <boost/format.hpp>
+
 #include <algorithm>
 #include <cstdlib>
 #include <iterator>
@@ -158,8 +160,7 @@ int main(int argc, char* argv[])
             shared->setUtility(moduleId, utilityModule);
         }
 
-        // Phase 4: Check required modules.
-        log->info(logModule, "Phase 4: Check required modules.");
+        // Collect all modules in one list for more convenient use.
         std::vector<frts::ModulePtr> modules;
         std::copy(startupModules.begin(), startupModules.end(),
                   std::back_insert_iterator<decltype(modules)>(modules));
@@ -171,6 +172,19 @@ int main(int argc, char* argv[])
                   std::back_insert_iterator<decltype(modules)>(modules));
         std::copy(utilityModules.begin(), utilityModules.end(),
                   std::back_insert_iterator<decltype(modules)>(modules));
+
+        // Log all modules with name, type and version.
+        log->warning(logModule, "Following modules were loaded:");
+        for (auto module : modules)
+        {
+            auto msg = boost::format(R"(-Module "%1%" (Version %4%) of type "%2%" (Version %3%).)")
+                    % module->getName() % module->getTypeName()
+                    % module->getTypeVersion() % module->getVersion();
+            log->warning(logModule, "\t" + msg.str());
+        }
+
+        // Phase 4: Check required modules.
+        log->info(logModule, "Phase 4: Check required modules.");
         app.validateRequiredModules(modules, shared);
 
         // Phase 5: Preinitialize modules.
@@ -181,6 +195,16 @@ int main(int argc, char* argv[])
         log->info(logModule, "Phase 6: Create data.");
         shared->setDataValue(shared->makeId(frts::MainIds::MainData()), frts::makeMainData(pluginsRoot));
         app.createData(modules, shared);
+
+        // Log all data values with name, type and version.
+        log->warning(logModule, "Following data values were loaded:");
+        for (auto dataValue : shared->getDataValues())
+        {
+            auto msg = boost::format(R"(-Data value "%1%" (Version %4%) of type "%2%" (Version %3%).)")
+                    % dataValue->getName() % dataValue->getTypeName()
+                    % dataValue->getTypeVersion() % dataValue->getVersion();
+            log->warning(logModule, "\t" + msg.str());
+        }
 
         // Phase 7: Register main config keys.
         log->info(logModule, "Phase 7: Register main config keys.");

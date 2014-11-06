@@ -36,6 +36,16 @@ frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
     }
 }
 
+std::vector<frts::DataValuePtr> frts::SharedManagerImpl::getDataValues() const
+{
+    std::vector<frts::DataValuePtr> result;
+    for(auto it : dataValues)
+    {
+        result.push_back(it.second);
+    }
+    return result;
+}
+
 const frts::FramePtr frts::SharedManagerImpl::getFrame() const
 {
     return frame;

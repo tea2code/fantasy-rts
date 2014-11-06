@@ -155,6 +155,12 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto regionManagerId = shared->makeId(ModelIds::regionManager());
     shared->setDataValue(regionManagerId, regionManager);
 
+    // Log region manager because this is not possible in the kernel.
+    auto msg = boost::format(R"(Data value "%1%" (Version %4%) of type "%2%" (Version %3%) loaded.)")
+            % regionManager->getName() % regionManager->getTypeName()
+            % regionManager->getTypeVersion() % regionManager->getVersion();
+    shared->getLog()->warning(getName(), msg.str());
+
     return false;
 }
 

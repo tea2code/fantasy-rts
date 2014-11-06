@@ -31,6 +31,12 @@ namespace frts
         ~SharedManagerImpl() override;
 
         /**
+         * @brief Get a list of all data values.
+         * @return List of data values.
+         */
+        std::vector<DataValuePtr> getDataValues() const;
+
+        /**
          * @brief Set current frame.
          * @param frame The frame.
          */
