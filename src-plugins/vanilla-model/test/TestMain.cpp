@@ -32,7 +32,9 @@ TEST_CASE("ModelFactory.", "[main]")
 
     SECTION("Build components.")
     {
+        // Execute init() twice because it waits one run.
         modelFactory->createData(shared);
+        modelFactory->init(shared);
         modelFactory->init(shared);
 
         frts::IdPtr id = shared->makeId(frts::ComponentIds::blockedBy());
@@ -82,8 +84,10 @@ TEST_CASE("ModelReseter.", "[main]")
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
 
+    // Execute init() twice because it waits one run.
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
     modelFactory->createData(shared);
+    modelFactory->init(shared);
     modelFactory->init(shared);
     REQUIRE_NOTHROW(modelReseter->validateData(shared));
 
