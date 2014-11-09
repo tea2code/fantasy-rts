@@ -8,6 +8,11 @@ unsigned int frts::GraphicDataImpl::getMaxFps() const
     return maxFps;
 }
 
+unsigned int frts::GraphicDataImpl::getNumFpsAvg() const
+{
+    return numFpsAvg;
+}
+
 std::string frts::GraphicDataImpl::getName() const
 {
     return Sdl2Ids::graphicData();
@@ -66,6 +71,11 @@ bool frts::GraphicDataImpl::isRenderEverything() const
 void frts::GraphicDataImpl::setMaxFps(unsigned int maxFps)
 {
     this->maxFps = maxFps;
+}
+
+void frts::GraphicDataImpl::setNumFpsAvg(unsigned int numFpsAvg)
+{
+    this->numFpsAvg = numFpsAvg;
 }
 
 void frts::GraphicDataImpl::setRenderEverything(bool renderEverything)

@@ -1,6 +1,7 @@
 screen:
 
-    fps: 60
+    fps: 100
+    num_fps_avg: 1000
 
     height: 768
     width: 1024

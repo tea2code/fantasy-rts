@@ -31,6 +31,11 @@ namespace frts
         virtual unsigned int getMaxFps() const = 0;
 
         /**
+         * @return The number of fps measures for average calculation.
+         */
+        virtual unsigned int getNumFpsAvg() const = 0;
+
+        /**
          * @return The screen height in pixel.
          */
         virtual unsigned int getScreenHeight() const = 0;
@@ -70,6 +75,12 @@ namespace frts
          * @param maxFps The maximum frame rate.
          */
         virtual void setMaxFps(unsigned int maxFps) = 0;
+
+        /**
+         * @brief Set the number of fps measures for average calculation.
+         * @param maxFps The number of fps measures.
+         */
+        virtual void setNumFpsAvg(unsigned int numFpsAvg) = 0;
 
         /**
          * @brief Set if everything should be rerendered.

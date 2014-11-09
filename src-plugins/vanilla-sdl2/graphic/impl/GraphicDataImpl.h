@@ -13,6 +13,7 @@ namespace frts
     {
     public:
         unsigned int getMaxFps() const override;
+        unsigned int getNumFpsAvg() const override;
         std::string getName() const override;
         unsigned int getScreenHeight() const override;
         std::string getScreenTitle() const override;
@@ -25,6 +26,7 @@ namespace frts
         Point::value getZLevel() const override;
         bool isRenderEverything() const override;
         void setMaxFps(unsigned int maxFps) override;
+        void setNumFpsAvg(unsigned int numFpsAvg) override;
         void setRenderEverything(bool renderEverything = true) override;
         void setScreenHeight(unsigned int screenHeight) override;
         void setScreenTitle(const std::string& screenTitle) override;
@@ -35,6 +37,7 @@ namespace frts
 
     private:
         unsigned int maxFps;
+        unsigned int numFpsAvg;
         bool renderEverything;
         int screenHeight;
         std::string screenTitle;

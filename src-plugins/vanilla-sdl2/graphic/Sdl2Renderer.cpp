@@ -50,6 +50,11 @@ int frts::Sdl2Renderer::getVersion() const
 
 bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 {
+    auto gd = graphicData(shared);
+
+    // Init fps manager.
+    fpsManager.setNumFpsAvg(gd->getNumFpsAvg());
+
     // Register renderable.
     auto id = shared->makeId(ModelIds::modelFactory());
     auto modelFactory = std::static_pointer_cast<ModelFactory>(shared->getUtility(id));
@@ -59,7 +64,7 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 
     // Init drawer
     drawer.init(shared);
-    graphicData(shared)->setRenderEverything();
+    gd->setRenderEverything();
 
     return false;
 }
@@ -71,6 +76,7 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     if (key == "screen")
     {
         gd->setMaxFps(node->getInteger("fps", gd->getMaxFps()));
+        gd->setNumFpsAvg(node->getInteger("num_fps_avg", gd->getNumFpsAvg()));
         gd->setScreenHeight(node->getInteger("height", gd->getScreenHeight()));
         gd->setScreenTitle(node->getString("title", gd->getScreenTitle()));
         gd->setScreenWidth(node->getInteger("width", gd->getScreenWidth()));
@@ -140,6 +146,11 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
     if (gd->getMaxFps() == 0)
     {
         throw DataViolation("Maximal frames per second must be greater than zero.");
+    }
+
+    if (gd->getNumFpsAvg() == 0)
+    {
+        throw DataViolation("Number of frames per second measures for average calculation must be greater than zero.");
     }
 
     if (gd->getScreenHeight() == 0)
