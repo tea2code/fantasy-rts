@@ -6,7 +6,6 @@
 // Define before includes to get internal easylogging errors.
 #define _ELPP_ENABLE_ERRORS
 
-#include <boost/format.hpp>
 #include <easylogging++.h>
 
 _INITIALIZE_EASYLOGGINGPP
@@ -34,9 +33,7 @@ void frts::EasyloggingLog::error(const std::string& module, const std::string& m
 
 std::string frts::EasyloggingLog::formatMessage(const std::string& module, const std::string& msg)
 {
-    auto tmpl = R"(%1% - %2%)";
-    auto formatted = boost::format(tmpl) % module % msg;
-    return formatted.str();
+    return module + " - " + msg;
 }
 
 void frts::EasyloggingLog::info(const std::string& module, const std::string& msg)
