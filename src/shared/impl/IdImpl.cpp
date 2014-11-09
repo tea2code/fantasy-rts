@@ -1,5 +1,10 @@
 #include "IdImpl.h"
 
+#ifdef FRTS_FAST_ID
+    #include <map>
+    #include <mutex>
+#endif
+
 
 frts::IdImpl::IdImpl(const std::string& str)
     : str{str}
@@ -17,30 +22,41 @@ std::string frts::IdImpl::toString() const
 
 bool frts::IdImpl::operator==(const Id& rhs)
 {
-    return str == dynamic_cast<const IdImpl&>(rhs).str;
+#ifdef FRTS_FAST_ID
+    return this == &rhs;
+#else
+    return str == rhs.toString();
+#endif
 }
 
 bool frts::IdImpl::operator!=(const Id& rhs)
 {
-    return str != dynamic_cast<const IdImpl&>(rhs).str;
+#ifdef FRTS_FAST_ID
+    return this != &rhs;
+#else
+   return str != rhs.toString();
+#endif
 }
 
 frts::IdPtr frts::makeId(const std::string& str)
 {
-    // The following commented code is a example implementation of a cached
-    // solution which would allow the direct usage of IdPtr for maps...
-    // It is not yet usable because it's missing thread safety (for example a
-    // mutex around the check and insert.
-//    static std::map<std::string, IdPtr> cache;
+#ifdef FRTS_FAST_ID
+    static std::mutex mutex;
+    static std::map<std::string, IdPtr> cache;
 
-//    auto it = cache.find(str);
-//    if(it == cache.end())
-//    {
-//        IdPtr id = std::make_shared<frts::IdImpl>(str);
-//        cache[str] = id;
-//    }
-
-//    return cache.at(str);
-
+    std::lock_guard<std::mutex> lock(mutex);
+    auto it = cache.find(str);
+    if(it == cache.end())
+    {
+        IdPtr id = std::make_shared<frts::IdImpl>(str);
+        cache[str] = id;
+        return id;
+    }
+    else
+    {
+        return it->second;
+    }
+#else
     return std::make_shared<frts::IdImpl>(str);
+#endif
 }

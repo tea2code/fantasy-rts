@@ -119,7 +119,9 @@ The frame object contains meta information about the current frame. This include
 
 ### ID Generator
 
-The function *makeId()* generates a new id with the given string. This function may implement optimizations like caches and similar functions.
+The function *makeId()* generates a new id with the given string. 
+
+A possible faster implementation can be activated using `DEFINES+=FRTS_FAST_ID` in the additional arguments of qmake. Performance advantage is untested. Currently not activated.
 
 ### Log
 
