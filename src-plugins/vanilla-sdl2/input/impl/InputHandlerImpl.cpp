@@ -24,7 +24,7 @@ std::string frts::InputHandlerImpl::getName() const
 
 std::vector<std::string> frts::InputHandlerImpl::getSupportedConfig()
 {
-    return {configKey};
+    return {"keys"};
 }
 
 std::string frts::InputHandlerImpl::getTypeName() const
@@ -94,8 +94,7 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     // CommandFactory.
     try
     {
-        auto id = shared->makeId(CommandIds::commandFactory());
-        shared->getUtility(id);
+        getUtility<CommandFactory>(shared, CommandIds::commandFactory());
     }
     catch(const IdNotFoundError&)
     {

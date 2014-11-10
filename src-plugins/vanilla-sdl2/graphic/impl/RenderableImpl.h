@@ -20,8 +20,8 @@ namespace frts
 
     private:
         IdPtr sprite;
-        int spriteIndex;
-        bool spriteIndexSet;
+        int spriteIndex = 0;
+        bool spriteIndexSet = false;
         IdPtr type;
     };
 

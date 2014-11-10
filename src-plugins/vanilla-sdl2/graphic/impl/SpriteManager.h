@@ -63,7 +63,7 @@ namespace frts
 
     private:
         IdPtr fallback;
-        bool isConfigInitialized;
+        bool isConfigInitialized = false;
         SpriteMap sprites;
     };
 }

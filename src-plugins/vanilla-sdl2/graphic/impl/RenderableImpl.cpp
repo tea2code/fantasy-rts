@@ -2,7 +2,7 @@
 
 
 frts::RenderableImpl::RenderableImpl(IdPtr type)
-    : spriteIndex{0}, type{type}
+    : type{type}
 {}
 
 frts::IdPtr frts::RenderableImpl::getComponentType() const

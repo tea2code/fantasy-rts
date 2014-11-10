@@ -42,8 +42,6 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
-        const std::string configKey = "keys";
-
         std::vector<ConfigNodePtr> configNodes;
         EventHandlerPtr eventHandler;
         bool firstInit = true;

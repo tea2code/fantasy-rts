@@ -16,6 +16,63 @@
 #include <vector>
 
 
+namespace TestShared
+{
+    class TestLog : public frts::Log
+    {
+    public:
+        TestLog() {}
+        void debug(const std::string&, const std::string&) override {}
+        void error(const std::string&, const std::string&) override {}
+        void info(const std::string&, const std::string&) override {}
+        void warning(const std::string&, const std::string&) override {}
+    };
+
+    class TestDataValue : public frts::DataValue
+    {
+    public:
+        std::string getName() const override { return "TestDataValue"; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
+        int getVersion() const override { return 1; }
+    };
+
+    class TestTickable : public frts::Tickable
+    {
+    public:
+        TestTickable() {}
+        bool createData(frts::SharedManagerPtr) override { return false; }
+        std::string getName() const override { return "TestTickable"; }
+        std::vector<std::string> getSupportedConfig() override { return {}; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
+        int getVersion() const override { return 1; }
+        bool init(frts::SharedManagerPtr) override { return false; }
+        void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
+        bool preInit(frts::SharedManagerPtr) override { return false; }
+        void tick(frts::SharedManagerPtr) override {}
+        void validateData(frts::SharedManagerPtr) override {}
+        void validateModules(frts::SharedManagerPtr) override {}
+    };
+
+    class TestUtility : public frts::Utility
+    {
+    public:
+        TestUtility() {}
+        bool createData(frts::SharedManagerPtr) override { return false; }
+        std::string getName() const override { return "TestUtility"; }
+        std::vector<std::string> getSupportedConfig() override { return {}; }
+        std::string getTypeName() const override { return getName(); }
+        int getTypeVersion() const override { return getVersion(); }
+        int getVersion() const override { return 1; }
+        bool init(frts::SharedManagerPtr) override { return false; }
+        void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
+        bool preInit(frts::SharedManagerPtr) override { return false; }
+        void validateData(frts::SharedManagerPtr) override {}
+        void validateModules(frts::SharedManagerPtr) override {}
+    };
+}
+
 TEST_CASE("Create and use frame data.", "[shared]")
 {
     frts::Frame::time deltaTime = frts::fromMilliseconds(2);
@@ -27,7 +84,6 @@ TEST_CASE("Create and use frame data.", "[shared]")
     REQUIRE(frame->getNumber() == number);
     REQUIRE(frame->getRunTime() == runTime);
 }
-
 
 TEST_CASE("Create and use id.", "[shared]")
 {
@@ -46,67 +102,9 @@ TEST_CASE("Create and use id.", "[shared]")
     REQUIRE(*id2 != *id3);
 }
 
-
-namespace frts
-{
-    class TestLog : public Log
-    {
-    public:
-        TestLog() {}
-        void debug(const std::string&, const std::string&) override {}
-        void error(const std::string&, const std::string&) override {}
-        void info(const std::string&, const std::string&) override {}
-        void warning(const std::string&, const std::string&) override {}
-    };
-
-    class TestDataValue : public DataValue
-    {
-    public:
-        std::string getName() const override { return "TestDataValue"; }
-        std::string getTypeName() const override { return getName(); }
-        int getTypeVersion() const override { return getVersion(); }
-        int getVersion() const override { return 1; }
-    };
-
-    class TestTickable : public Tickable
-    {
-    public:
-        TestTickable() {}
-        bool createData(SharedManagerPtr) override { return false; }
-        std::string getName() const override { return "TestTickable"; }
-        std::vector<std::string> getSupportedConfig() override { return {}; }
-        std::string getTypeName() const override { return getName(); }
-        int getTypeVersion() const override { return getVersion(); }
-        int getVersion() const override { return 1; }
-        bool init(SharedManagerPtr) override { return false; }
-        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
-        bool preInit(frts::SharedManagerPtr) override { return false; }
-        void tick(SharedManagerPtr) override {}
-        void validateData(SharedManagerPtr) override {}
-        void validateModules(SharedManagerPtr) override {}
-    };
-
-    class TestUtility : public Utility
-    {
-    public:
-        TestUtility() {}
-        bool createData(SharedManagerPtr) override { return false; }
-        std::string getName() const override { return "TestUtility"; }
-        std::vector<std::string> getSupportedConfig() override { return {}; }
-        std::string getTypeName() const override { return getName(); }
-        int getTypeVersion() const override { return getVersion(); }
-        int getVersion() const override { return 1; }
-        bool init(SharedManagerPtr) override { return false; }
-        void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override {}
-        bool preInit(frts::SharedManagerPtr) override { return false; }
-        void validateData(SharedManagerPtr) override {}
-        void validateModules(SharedManagerPtr) override {}
-    };
-}
-
 TEST_CASE("Create and use shared manager.", "[shared]")
 {
-    frts::LogPtr log = std::make_shared<frts::TestLog>();
+    frts::LogPtr log = std::make_shared<TestShared::TestLog>();
 
     frts::SharedManagerImplPtr sharedImpl = frts::makeSharedManager(log);
 
@@ -119,19 +117,19 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
     frts::IdPtr dataValueId1 = frts::makeId("dataValueId");
     frts::IdPtr dataValueId2 = frts::makeId("dataValueId");
-    frts::DataValuePtr dataValue1 = std::make_shared<frts::TestDataValue>();
-    frts::DataValuePtr dataValue2 = std::make_shared<frts::TestDataValue>();
+    frts::DataValuePtr dataValue1 = std::make_shared<TestShared::TestDataValue>();
+    frts::DataValuePtr dataValue2 = std::make_shared<TestShared::TestDataValue>();
     sharedImpl->setDataValue(dataValueId1, dataValue1);
 
-    frts::TickablePtr tickable1 = std::make_shared<frts::TestTickable>();
-    frts::TickablePtr tickable2 = std::make_shared<frts::TestTickable>();
-    frts::TickablePtr tickable3 = std::make_shared<frts::TestTickable>();
+    frts::TickablePtr tickable1 = std::make_shared<TestShared::TestTickable>();
+    frts::TickablePtr tickable2 = std::make_shared<TestShared::TestTickable>();
+    frts::TickablePtr tickable3 = std::make_shared<TestShared::TestTickable>();
     std::vector<frts::TickablePtr> renderModules = {tickable1, tickable2};
     std::vector<frts::TickablePtr> updateModules = {tickable3};
     sharedImpl->setRenderModules(renderModules);
     sharedImpl->setUpdateModules(updateModules);
 
-    frts::UtilityPtr utility = std::make_shared<frts::TestUtility>();
+    frts::UtilityPtr utility = std::make_shared<TestShared::TestUtility>();
     frts::IdPtr utilityId = frts::makeId(utility->getName());
     sharedImpl->setUtility(utilityId, utility);
 
