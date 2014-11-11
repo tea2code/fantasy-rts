@@ -17,7 +17,7 @@
 
 namespace TestGraphic
 {
-    class TestGraphicRenderableConfig : public frts::ConfigNode
+    class RenderableConfig : public frts::ConfigNode
     {
     public:
         Iterator begin() { return Iterator(nullptr); }
@@ -107,7 +107,7 @@ TEST_CASE("Renderable Builder.", "[graphic]")
     auto component = builder->build(shared);
     REQUIRE(component != nullptr);
 
-    component = builder->build(shared, std::make_shared<TestGraphic::TestGraphicRenderableConfig>());
+    component = builder->build(shared, std::make_shared<TestGraphic::RenderableConfig>());
     REQUIRE(component != nullptr);
     auto renderable = std::static_pointer_cast<frts::Renderable>(component);
     REQUIRE(renderable->getSprite() == shared->makeId("id.sprite"));

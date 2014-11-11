@@ -2,31 +2,190 @@
 
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
+#include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingImpl.h>
+#include <entity/impl/BlockingBuilder.h>
 #include <entity/impl/DropImpl.h>
+#include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
+#include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceImpl.h>
+#include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/SortOrderImpl.h>
+#include <entity/impl/SortOrderBuilder.h>
 #include <region/impl/BlockImpl.h>
 
+#include <frts/configuration>
+#include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
+#include <shared/impl/SharedManagerImpl.h>
 
+#include <string>
+#include <vector>
+
+
+
+namespace TestEntity
+{
+    class StringListConfig : public frts::ConfigNode
+    {
+    public:
+        StringListConfig(const std::string& key, const std::vector<std::string>& values)
+            : key{key}, values{values}
+        {}
+
+        Iterator begin() { return Iterator(nullptr); }
+        Iterator end() { return Iterator(nullptr); }
+
+        bool getBool(const std::string&) { return false; }
+        bool getBool(const std::string&, bool) { return false; }
+        std::vector<bool> getBools(const std::string&) { return {}; }
+
+        double getFloat(const std::string&) { return 0.0; }
+        double getFloat(const std::string&, double) { return 0.0; }
+        std::vector<double> getFloats(const std::string&) { return {}; }
+
+        long getInteger(const std::string&) { return 0; }
+        long getInteger(const std::string&, long) { return 0; }
+        std::vector<long> getIntegers(const std::string&) { return {}; }
+
+        frts::ConfigNodePtr getNode(const std::string&) { return nullptr; }
+
+        std::string getString(const std::string&) { return ""; }
+        std::string getString(const std::string&, const std::string&) { return ""; }
+        std::vector<std::string> getStrings(const std::string& key) { return key == this->key ? values : std::vector<std::string>(); }
+
+        bool has(const std::string&) { return false; }
+
+        bool isBool(const std::string&) { return false; }
+        bool isFloat(const std::string&) { return false; }
+        bool isInteger(const std::string&) { return false; }
+        bool isString(const std::string&) { return false; }
+
+    private:
+        std::string key;
+        std::vector<std::string> values;
+    };
+
+    class IsResourceConfig : public frts::ConfigNode
+    {
+    public:
+        Iterator begin() { return Iterator(nullptr); }
+        Iterator end() { return Iterator(nullptr); }
+
+        bool getBool(const std::string&) { return false; }
+        bool getBool(const std::string&, bool) { return false; }
+        std::vector<bool> getBools(const std::string&) { return {}; }
+
+        double getFloat(const std::string&) { return 0.0; }
+        double getFloat(const std::string&, double) { return 0.0; }
+        std::vector<double> getFloats(const std::string&) { return {}; }
+
+        long getInteger(const std::string&) { return 0; }
+        long getInteger(const std::string&, long) { return 0; }
+        std::vector<long> getIntegers(const std::string&) { return {}; }
+
+        frts::ConfigNodePtr getNode(const std::string&) { return nullptr; }
+
+        std::string getString(const std::string& key) { return key == "resource_type" ? "id.resource" : ""; }
+        std::string getString(const std::string&, const std::string&) { return ""; }
+        std::vector<std::string> getStrings(const std::string&) { return {}; }
+
+        bool has(const std::string&) { return false; }
+
+        bool isBool(const std::string&) { return false; }
+        bool isFloat(const std::string&) { return false; }
+        bool isInteger(const std::string&) { return false; }
+        bool isString(const std::string&) { return false; }
+    };
+
+    class SortOrderConfig : public frts::ConfigNode
+    {
+    public:
+        Iterator begin() { return Iterator(nullptr); }
+        Iterator end() { return Iterator(nullptr); }
+
+        bool getBool(const std::string&) { return false; }
+        bool getBool(const std::string&, bool) { return false; }
+        std::vector<bool> getBools(const std::string&) { return {}; }
+
+        double getFloat(const std::string&) { return 0.0; }
+        double getFloat(const std::string&, double) { return 0.0; }
+        std::vector<double> getFloats(const std::string&) { return {}; }
+
+        long getInteger(const std::string& key) { return key == "sort_order" ? 123 : 0; }
+        long getInteger(const std::string&, long) { return 0; }
+        std::vector<long> getIntegers(const std::string&) { return {}; }
+
+        frts::ConfigNodePtr getNode(const std::string&) { return nullptr; }
+
+        std::string getString(const std::string&) { return ""; }
+        std::string getString(const std::string&, const std::string&) { return ""; }
+        std::vector<std::string> getStrings(const std::string&) { return {}; }
+
+        bool has(const std::string&) { return false; }
+
+        bool isBool(const std::string&) { return false; }
+        bool isFloat(const std::string&) { return false; }
+        bool isInteger(const std::string&) { return false; }
+        bool isString(const std::string&) { return false; }
+    };
+}
 
 TEST_CASE("Blocking/BlockedBy.", "[entity]")
 {
-    frts::IdPtr block1 = frts::makeId("block1");
-    frts::IdPtr block2 = frts::makeId("block2");
+    auto block1a = frts::makeId("block1");
+    auto block1b = frts::makeId("block1");
+    auto block2 = frts::makeId("block2");
 
-    frts::BlockedByPtr blockedBy1 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
-    blockedBy1->addBlock(block1);
-    frts::BlockedByPtr blockedBy2 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
+    auto blockedBy1 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
+    blockedBy1->addBlock(block1a);
+    auto blockedBy2 = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
     blockedBy2->addBlock(block2);
-    frts::BlockingPtr blocking = frts::makeBlocking(frts::makeId(frts::ComponentIds::blocking()));
-    blocking->addBlock(block1);
+    auto blocking = frts::makeBlocking(frts::makeId(frts::ComponentIds::blocking()));
+    blocking->addBlock(block1b);
 
     REQUIRE(blocking->blocks(blockedBy1));
     REQUIRE_FALSE(blocking->blocks(blockedBy2));
+}
+
+TEST_CASE("BlockedBy Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeBlockedByBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::StringListConfig>("blocks", std::vector<std::string> {"block1", "block2"});
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+    auto castComponent = std::static_pointer_cast<frts::BlockedBy>(component);
+    REQUIRE(castComponent->getBlocks().size() == 2);
+}
+
+TEST_CASE("Blocking Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeBlockingBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::StringListConfig>("blocks", std::vector<std::string> {"block1", "block2"});
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+
+    auto blockedBy = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
+    blockedBy->addBlock(frts::makeId("block1"));
+
+    auto castComponent = std::static_pointer_cast<frts::Blocking>(component);
+    //REQUIRE(castComponent->blocks(blockedBy));
 }
 
 TEST_CASE("Drop.", "[entity]")
@@ -57,6 +216,26 @@ TEST_CASE("Drop.", "[entity]")
     REQUIRE_FALSE(foundDrop->hasDrop(resourceId1));
     REQUIRE(foundDrop->hasDrop(resourceId2));
     REQUIRE(foundDrop->getDrops().size() == 1);
+}
+
+TEST_CASE("Drop Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeDropBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::StringListConfig>("drops", std::vector<std::string> {"drop1", "drop2"});
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+    auto castComponent = std::static_pointer_cast<frts::Drop>(component);
+    REQUIRE(castComponent->getDrops().size() == 2);
+    REQUIRE(castComponent->hasDrop(frts::makeId("drop1")));
+    REQUIRE(castComponent->hasDrop(frts::makeId("drop2")));
+    REQUIRE_FALSE(castComponent->hasDrop(frts::makeId("drop3")));
 }
 
 TEST_CASE("Entity.", "[entity]")
@@ -123,6 +302,43 @@ TEST_CASE("Resource.", "[entity]")
     REQUIRE(foundIsResource->getResourceType() == resourceId1);
 }
 
+TEST_CASE("HasResource Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeHasResourceBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::StringListConfig>("resources", std::vector<std::string> {"resource1", "resource2"});
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+    auto castComponent = std::static_pointer_cast<frts::HasResource>(component);
+    REQUIRE(castComponent->getResources().size() == 2);
+    REQUIRE(castComponent->hasResource(frts::makeId("resource1")));
+    REQUIRE(castComponent->hasResource(frts::makeId("resource2")));
+    REQUIRE_FALSE(castComponent->hasResource(frts::makeId("resource3")));
+}
+
+TEST_CASE("IsResource Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeIsResourceBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::IsResourceConfig>();
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+    auto castComponent = std::static_pointer_cast<frts::IsResource>(component);
+    REQUIRE(castComponent->getResourceType() == frts::makeId("id.resource"));
+}
+
 TEST_CASE("SortOrder.", "[entity]")
 {
     frts::IdPtr sort = frts::makeId(frts::ComponentIds::sortOrder());
@@ -155,4 +371,21 @@ TEST_CASE("SortOrder.", "[entity]")
     REQUIRE(*it == entity1);
     std::advance(it, 1);
     REQUIRE(*it == entity2);
+}
+
+TEST_CASE("Sort Order Builder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeSortOrderBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto configNode = std::make_shared<TestEntity::SortOrderConfig>();
+    component = builder->build(shared, configNode);
+    REQUIRE(component != nullptr);
+    auto castComponent = std::static_pointer_cast<frts::SortOrder>(component);
+    REQUIRE(castComponent->getSortOrder() == 123);
 }

@@ -36,17 +36,11 @@ Entities can drop other entities if they are destroyed, killed, harvested... The
 
 #### HasResource
 
-Entities may contain resources which can be harvested. The type of this component is also the resource type.
-
-Default ID is `frts.vanillamodel.entity.component.hasresource.<resource-name>`.    
-For example: `frts.vanillamodel.entity.component.hasresource.wood`
+Entities may contain resources which can be harvested.
 
 #### IsResource
 
-Entities with this component represent a resource. The type of this component is also the resource type.
-
-Default ID is `frts.vanillamodel.entity.component.isresource.<resource-name>`.    
-For example: `frts.vanillamodel.entity.component.isresource.wood`
+Entities with this component represent a resource.
 
 #### SortOrder
 
