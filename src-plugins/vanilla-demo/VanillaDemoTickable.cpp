@@ -46,11 +46,13 @@ int frts::VanillaDemoTickable::getVersion() const
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
+    Point::value surfaceZLevel = 0;
     auto blockingType = shared->makeId(ComponentIds::blocking());
     auto sortOrderType = shared->makeId(ComponentIds::blocking());
     auto regionConfig = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
     auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
-                                                   regionConfig->getMapSizeX(), regionConfig->getMapSizeY());
+                                                   regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
+                                                   surfaceZLevel);
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     modelFactory->setRegionGenerator(regionGenerator);
 

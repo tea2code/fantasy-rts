@@ -5,8 +5,10 @@
 
 
 frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
-                                               Point::value mapSizeX, Point::value mapSizeY)
-    : blockingType{blockingType}, mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, sortOrderType{sortOrderType}
+                                               Point::value mapSizeX, Point::value mapSizeY,
+                                               Point::value surfaceZLevel)
+    : blockingType{blockingType}, mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, sortOrderType{sortOrderType},
+      surfaceZLevel{surfaceZLevel}
 {
 }
 
@@ -26,13 +28,23 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::all
     return result;
 }
 
-frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    std::string idStr = "entity.grass";
+    if (pos->getZ() < surfaceZLevel)
+    {
+        idStr = "entity.dirt";
+    }
+    else if (pos->getZ() > surfaceZLevel)
+    {
+        idStr = "entity.air";
+    }
+
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto grassId = shared->makeId("entity.grass");
-    auto grassEntity = modelFactory->makeEntity(grassId, shared);
+    auto id = shared->makeId(idStr);
+    auto entity = modelFactory->makeEntity(id, shared);
 
     auto block = makeBlock(blockingType, sortOrderType);
-    block->insert(grassEntity);
+    block->insert(entity);
     return block;
 }

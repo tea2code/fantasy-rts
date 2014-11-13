@@ -7,6 +7,7 @@ entities:
           components:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
+                - blocking.air
                 - blocking.surface
                 - blocking.wall
                 - blocking.water
@@ -36,8 +37,28 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
               
-        # Ground
+        # Background
         - name: grass
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.ground
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks:
+                - blocking.ground
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0
+        - name: air
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.air
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.air
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0
+        - name: dirt
           components:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
@@ -47,3 +68,13 @@ entities:
                 - blocking.ground
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+        - name: wall
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1000

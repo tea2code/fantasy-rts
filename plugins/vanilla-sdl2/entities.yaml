@@ -18,8 +18,20 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.wood
               
-        # Ground
+        # Background
         - name: grass
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.grass
+        - name: air
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.air
+        - name: dirt
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.dirt
+        - name: wall
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.wall

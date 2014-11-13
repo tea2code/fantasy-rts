@@ -17,9 +17,11 @@ namespace frts
          * @param sortOrderType The component type id of the sort order component.
          * @param mapSizeX The map size in x direction.
          * @param mapSizeY The map size in y direction.
+         * @param surfaceZLevel The z-level of the surface.
          */
         DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
-                            Point::value mapSizeX, Point::value mapSizeY);
+                            Point::value mapSizeX, Point::value mapSizeY,
+                            Point::value surfaceZLevel);
 
         std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel, SharedManagerPtr shared) override;
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
@@ -29,6 +31,7 @@ namespace frts
         Point::value mapSizeX;
         Point::value mapSizeY;
         IdPtr sortOrderType;
+        Point::value surfaceZLevel;
     };
 
     /**
@@ -37,12 +40,16 @@ namespace frts
      * @param sortOrderType The component type id of the sort order component.
      * @param mapSizeX The map size in x direction.
      * @param mapSizeY The map size in y direction.
+     * @param surfaceZLevel The z-level of the surface.
      * @return The region generator.
      */
     inline RegionGeneratorPtr makeDemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
-                                                      Point::value mapSizeX, Point::value mapSizeY)
+                                                      Point::value mapSizeX, Point::value mapSizeY,
+                                                      Point::value surfaceZLevel)
     {
-        return std::make_shared<DemoRegionGenerator>(blockingType, sortOrderType, mapSizeX, mapSizeY);
+        return std::make_shared<DemoRegionGenerator>(blockingType, sortOrderType,
+                                                     mapSizeX, mapSizeY,
+                                                     surfaceZLevel);
     }
 }
 
