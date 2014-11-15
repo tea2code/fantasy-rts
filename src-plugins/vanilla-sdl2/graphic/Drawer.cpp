@@ -185,8 +185,18 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         auto sprite = spriteManager.getSprite(renderable);
         auto texture = textures.at(sprite.getImage());
 
-        SDL_Rect clip = {sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()};
-        SDL_Rect rectToRender = {pos->getX() * tileWidth, pos->getY() * tileHeight, tileWidth, tileHeight};
+        SDL_Rect clip = {
+            sprite.getX(),
+            sprite.getY(),
+            sprite.getWidth(),
+            sprite.getHeight()
+        };
+        SDL_Rect rectToRender = {
+            (pos->getX() - offsetX) * tileWidth,
+            (pos->getY() - offsetY) * tileHeight,
+            tileWidth,
+            tileHeight
+        };
         SDL_RenderCopy(renderer.get(), texture.get(), &clip, &rectToRender);
     }
 }

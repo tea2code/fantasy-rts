@@ -9,7 +9,9 @@ HEADERS += \
     $$PWD/impl/SpriteManager.h \
     $$PWD/impl/SpritePoint.h \
     $$PWD/GraphicData.h \
-    $$PWD/impl/GraphicDataImpl.h
+    $$PWD/impl/GraphicDataImpl.h \
+    $$PWD/impl/MoveScreenCommand.h \
+    $$PWD/impl/MoveScreenCommandBuilder.h
     
 
 SOURCES += \
@@ -21,4 +23,6 @@ SOURCES += \
     $$PWD/FpsManager.cpp \
     $$PWD/Sdl2Renderer.cpp \
     $$PWD/Drawer.cpp \
-    $$PWD/impl/GraphicDataImpl.cpp
+    $$PWD/impl/GraphicDataImpl.cpp \
+    $$PWD/impl/MoveScreenCommand.cpp \
+    $$PWD/impl/MoveScreenCommandBuilder.cpp

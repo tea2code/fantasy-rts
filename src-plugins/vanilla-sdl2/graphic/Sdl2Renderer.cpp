@@ -2,6 +2,7 @@
 
 #include "impl/GraphicDataImpl.h"
 #include "impl/RenderableBuilder.h"
+#include "impl/MoveScreenCommandBuilder.h"
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillacommand>
@@ -66,6 +67,16 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     drawer.init(shared);
     gd->setRenderEverything();
 
+    // Add commands.
+    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+    const int offsetStep = 5;
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandWest()), makeMoveScreenCommandBuilder(offsetStep, 0, 0));
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandEast()), makeMoveScreenCommandBuilder(-offsetStep, 0, 0));
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorth()), makeMoveScreenCommandBuilder(0, offsetStep, 0));
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouth()), makeMoveScreenCommandBuilder(0, -offsetStep, 0));
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandUp()), makeMoveScreenCommandBuilder(0, 0, 1));
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandDown()), makeMoveScreenCommandBuilder(0, 0, -1));
+
     return false;
 }
 
@@ -117,10 +128,12 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     // FpsManager
     fpsManager.limitFps(gd->getMaxFps());
     auto fps = fpsManager.calcFps();
-    auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
 
     // Drawer
+    auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
     drawer.setWindowTitle(windowsTitle.str());
+    drawer.setOffsetX(gd->getScreenOffsetX());
+    drawer.setOffsetY(gd->getScreenOffsetY());
     if (gd->isRenderEverything())
     {
         shared->getLog()->debug(getName(), "Beginning to render everything.");

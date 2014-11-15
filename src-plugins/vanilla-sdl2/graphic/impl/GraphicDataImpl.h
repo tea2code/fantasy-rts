@@ -16,6 +16,8 @@ namespace frts
         unsigned int getNumFpsAvg() const override;
         std::string getName() const override;
         unsigned int getScreenHeight() const override;
+        Point::value getScreenOffsetX() const override;
+        Point::value getScreenOffsetY() const override;
         std::string getScreenTitle() const override;
         unsigned int getScreenWidth() const override;
         unsigned int getTileHeight() const override;
@@ -29,6 +31,8 @@ namespace frts
         void setNumFpsAvg(unsigned int numFpsAvg) override;
         void setRenderEverything(bool renderEverything = true) override;
         void setScreenHeight(unsigned int screenHeight) override;
+        void setScreenOffsetX(Point::value offset) override;
+        void setScreenOffsetY(Point::value offset) override;
         void setScreenTitle(const std::string& screenTitle) override;
         void setScreenWidth(unsigned int screenWidth) override;
         void setTileHeight(unsigned int tileHeight) override;
@@ -40,6 +44,8 @@ namespace frts
         unsigned int numFpsAvg;
         bool renderEverything;
         int screenHeight;
+        Point::value screenOffsetX;
+        Point::value screenOffsetY;
         std::string screenTitle;
         int screenWidth;
         int tileHeight;

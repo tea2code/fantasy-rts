@@ -34,9 +34,6 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::all
 
 frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
-    auto msg = boost::format(R"(Generating block for position (%1%, %2%, %3%).)") % pos->getX() % pos->getY() % pos->getZ();
-    shared->getLog()->debug("frts::DemoRegionGenerator", msg.str());
-
     std::string idStr = "entity.grass";
     if (pos->getZ() == surfaceZLevel &&
         (pos->getX() + 1) % 10 == 0 &&

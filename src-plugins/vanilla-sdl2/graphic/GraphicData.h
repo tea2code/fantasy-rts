@@ -41,6 +41,16 @@ namespace frts
         virtual unsigned int getScreenHeight() const = 0;
 
         /**
+         * @return The current screen offset in x direction.
+         */
+        virtual Point::value getScreenOffsetX() const = 0;
+
+        /**
+         * @return The current screen offset in y direction.
+         */
+        virtual Point::value getScreenOffsetY() const = 0;
+
+        /**
          * @return The screen title.
          */
         virtual std::string getScreenTitle() const = 0;
@@ -93,6 +103,18 @@ namespace frts
          * @param screenHeight The screen height.
          */
         virtual void setScreenHeight(unsigned int screenHeight) = 0;
+
+        /**
+         * @brief Set the current screen offset in x direction.
+         * @param offset The offset.
+         */
+        virtual void setScreenOffsetX(Point::value offset) = 0;
+
+        /**
+         * @brief Set the current screen offset in y direction.
+         * @param offset The offset.
+         */
+        virtual void setScreenOffsetY(Point::value offset) = 0;
 
         /**
          * @brief Set the screen title.
