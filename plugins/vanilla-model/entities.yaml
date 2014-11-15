@@ -1,7 +1,13 @@
 entities:
     namespace: entity
-    
+
     entities:
+        # Dev
+        - name: grid
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1000
+    
         # Has Resource
         - name: shrub.berry
           components:
@@ -40,9 +46,6 @@ entities:
         # Background
         - name: grass
           components:
-            - component: frts.vanillamodel.entity.component.blockedby
-              blocks:
-                - blocking.ground
             - component: frts.vanillamodel.entity.component.blocking
               blocks:
                 - blocking.ground
@@ -50,9 +53,6 @@ entities:
               sort_order: 0
         - name: air
           components:
-            - component: frts.vanillamodel.entity.component.blockedby
-              blocks:
-                - blocking.air
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.air
@@ -60,9 +60,6 @@ entities:
               sort_order: 0
         - name: dirt
           components:
-            - component: frts.vanillamodel.entity.component.blockedby
-              blocks:
-                - blocking.ground
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.ground
@@ -73,8 +70,11 @@ entities:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
                 - blocking.wall
+                - blocking.water
+                - blocking.air
+                - blocking.surface
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.wall
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1000
+              sort_order: 180

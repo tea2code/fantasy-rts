@@ -123,17 +123,26 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     drawer.setWindowTitle(windowsTitle.str());
     if (gd->isRenderEverything())
     {
+        shared->getLog()->debug(getName(), "Beginning to render everything.");
+
         drawer.updateScreen(shared, gd->getZLevel());
         drawer.renderNow(shared);
         gd->setRenderEverything(false);
+
+        shared->getLog()->debug(getName(), "Finished rendering.");
     }
     else
     {
         auto changedPos = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getChangedPos();
         if (!changedPos.empty())
         {
+            auto msg = boost::format("Beginning to render %1% positions.") % changedPos.size();
+            shared->getLog()->debug(getName(), msg.str());
+
             drawer.updatePositions(shared, changedPos, gd->getZLevel());
             drawer.renderNow(shared);
+
+            shared->getLog()->debug(getName(), "Finished rendering.");
         }
     }
 }

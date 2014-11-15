@@ -5,9 +5,7 @@
 #include <frts/shared>
 #include <frts/vanillacommand>
 #include <frts/vanillamodel>
-
-#include <chrono>
-#include <thread>
+#include <frts/vanillasdl2graphic>
 
 
 frts::VanillaDemoTickable::VanillaDemoTickable()
@@ -48,7 +46,7 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
     Point::value surfaceZLevel = 0;
     auto blockingType = shared->makeId(ComponentIds::blocking());
-    auto sortOrderType = shared->makeId(ComponentIds::blocking());
+    auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
     auto regionConfig = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
     auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
                                                    regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
@@ -72,11 +70,7 @@ bool frts::VanillaDemoTickable::preInit(frts::SharedManagerPtr)
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
-    if (shared->getFrame()->getRunTime() >= fromMilliseconds(60 * 1000))
-    {
-        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-        commandFactory->makeCommand(shared->makeId(CommandIds::quit()), shared)->execute(shared);
-    }
+    //getDataValue<GraphicData>(shared, Sdl2Ids::graphicData())->setRenderEverything();
 }
 
 void frts::VanillaDemoTickable::validateData(frts::SharedManagerPtr)

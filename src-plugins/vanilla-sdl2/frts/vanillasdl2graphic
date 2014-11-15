@@ -1,6 +1,7 @@
 #ifndef FRTS_VANILLASDL2GRAPHIC_INCLUDE_H
 #define FRTS_VANILLASDL2GRAPHIC_INCLUDE_H
 
+#include <graphic/GraphicData.h>
 #include <graphic/Renderable.h>
 #include <main/Sdl2Ids.h>
 

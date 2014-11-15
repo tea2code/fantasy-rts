@@ -2,6 +2,12 @@ entities:
     namespace: entity
     
     entities:
+        # Dev
+        - name: grid
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.grid
+            
         # Has Resource
         - name: shrub.berry
           components:

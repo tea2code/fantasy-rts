@@ -27,6 +27,7 @@ INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../vanilla-model
 INCLUDEPATH += $$PWD/../vanilla-command
+INCLUDEPATH += $$PWD/../vanilla-sdl2
 
 # Headers and sources.
 # Important this plugin needs a block implementation and takes the one provided

@@ -1,7 +1,8 @@
 #include "DemoRegionGenerator.h"
 
-#include <frts/vanillamodel>
 #include <region/impl/BlockImpl.h>
+
+#include <boost/format.hpp>
 
 
 frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
@@ -14,6 +15,9 @@ frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrd
 
 std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::allBlocks(Point::value zLevel, SharedManagerPtr shared)
 {
+    auto msg = boost::format(R"(Generating map for z-level %1%.)") % zLevel;
+    shared->getLog()->debug("frts::DemoRegionGenerator", msg.str());
+
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     std::map<PointPtr, WriteableBlockPtr> result;
@@ -30,8 +34,17 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::all
 
 frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    auto msg = boost::format(R"(Generating block for position (%1%, %2%, %3%).)") % pos->getX() % pos->getY() % pos->getZ();
+    shared->getLog()->debug("frts::DemoRegionGenerator", msg.str());
+
     std::string idStr = "entity.grass";
-    if (pos->getZ() < surfaceZLevel)
+    if (pos->getZ() == surfaceZLevel &&
+        (pos->getX() + 1) % 10 == 0 &&
+        10 < pos->getY() && pos->getY() < mapSizeY - 10)
+    {
+        idStr = "entity.wall";
+    }
+    else if (pos->getZ() < surfaceZLevel)
     {
         idStr = "entity.dirt";
     }
@@ -41,10 +54,9 @@ frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, Shared
     }
 
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto id = shared->makeId(idStr);
-    auto entity = modelFactory->makeEntity(id, shared);
 
     auto block = makeBlock(blockingType, sortOrderType);
-    block->insert(entity);
+    block->insert(modelFactory->makeEntity(shared->makeId(idStr), shared));
+    block->insert(modelFactory->makeEntity(shared->makeId("entity.grid"), shared));
     return block;
 }

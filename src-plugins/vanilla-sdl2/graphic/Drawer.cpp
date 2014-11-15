@@ -2,9 +2,12 @@
 
 #include <main/Sdl2Ids.h>
 
+#include <frts/vanillamodel>
+
 #include <boost/format.hpp>
 #include <SDL2/SDL_image.h>
 
+#include <algorithm>
 #include <fstream>
 #include <utility>
 
@@ -33,10 +36,13 @@ void frts::Drawer::init(SharedManagerPtr shared)
 {
     // Set data from config.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
     screenHeight = gd->getScreenHeight() / tileHeight;
+    screenHeight = std::min(screenHeight, rc->getMapSizeY());
     screenWidth = gd->getScreenWidth() / tileWidth;
+    screenWidth = std::min(screenWidth, rc->getMapSizeX());
 
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -197,9 +203,12 @@ void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 {
     auto factory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
-    for (Point::value x = offsetX; x < (offsetX + screenWidth); ++x)
+    Point::value width = offsetX + screenWidth;
+    Point::value height = offsetY + screenHeight;
+
+    for (Point::value x = offsetX; x < width; ++x)
     {
-        for (Point::value y = offsetY; y < (offsetY + screenHeight); ++y)
+        for (Point::value y = offsetY; y < height; ++y)
         {
             auto pos = factory->makePoint(x, y, zLevel);
             updatePosition(shared, pos, zLevel);
