@@ -41,12 +41,22 @@ namespace frts
         virtual unsigned int getScreenHeight() const = 0;
 
         /**
-         * @return The current screen offset in x direction.
+         * @return The screen offset step width in x direction in pixel.
+         */
+        virtual unsigned int getScreenOffsetStepX() const = 0;
+
+        /**
+         * @return The screen offset step width in y direction in pixel.
+         */
+        virtual unsigned int getScreenOffsetStepY() const = 0;
+
+        /**
+         * @return The current screen offset in x direction in number tiles.
          */
         virtual Point::value getScreenOffsetX() const = 0;
 
         /**
-         * @return The current screen offset in y direction.
+         * @return The current screen offset in y direction in number tiles.
          */
         virtual Point::value getScreenOffsetY() const = 0;
 
@@ -103,6 +113,18 @@ namespace frts
          * @param screenHeight The screen height.
          */
         virtual void setScreenHeight(unsigned int screenHeight) = 0;
+
+        /**
+         * @brief Set the screen offset step width in x direction.
+         * @param offset The offset.
+         */
+        virtual void setScreenOffsetStepX(unsigned int offsetStep) = 0;
+
+        /**
+         * @brief Set the screen offset step width in y direction.
+         * @param offset The offset.
+         */
+        virtual void setScreenOffsetStepY(unsigned int offsetStep) = 0;
 
         /**
          * @brief Set the current screen offset in x direction.

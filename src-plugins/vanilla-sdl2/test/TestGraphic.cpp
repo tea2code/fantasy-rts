@@ -1,5 +1,7 @@
 #include <catch.hpp>
 
+#include <graphic/impl/MoveScreenCommand.h>
+#include <graphic/impl/MoveScreenCommandBuilder.h>
 #include <graphic/impl/GraphicDataImpl.h>
 #include <graphic/impl/RenderableBuilder.h>
 #include <graphic/impl/RenderableImpl.h>
@@ -10,6 +12,7 @@
 #include <frts/configuration>
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
+#include <main/impl/RegionConfigImpl.h>
 
 #include <vector>
 #include <unordered_map>
@@ -63,6 +66,10 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setTileHeight(5);
     gd->setTileWidth(6);
     gd->setZLevel(7);
+    gd->setScreenOffsetX(8);
+    gd->setScreenOffsetY(9);
+    gd->setScreenOffsetStepX(10);
+    gd->setScreenOffsetStepY(11);
 
     REQUIRE_FALSE(gd->isRenderEverything());
     gd->setRenderEverything();
@@ -78,6 +85,10 @@ TEST_CASE("Graphic Data.", "[graphic]")
     REQUIRE(gd->getTileWidth() == 6);
     REQUIRE(gd->getZLevel() == 7);
     REQUIRE(gd->getScreenTitle() == "a");
+    REQUIRE(gd->getScreenOffsetX() == 8);
+    REQUIRE(gd->getScreenOffsetY() == 9);
+    REQUIRE(gd->getScreenOffsetStepX() == 10);
+    REQUIRE(gd->getScreenOffsetStepY() == 11);
 }
 
 TEST_CASE("Renderable.", "[graphic]")
@@ -127,4 +138,240 @@ TEST_CASE("Sprite.", "[graphic]")
     REQUIRE(sprite.getWidth() == 20);
     REQUIRE(sprite.getX() == 1);
     REQUIRE(sprite.getY() == 2);
+}
+
+
+TEST_CASE("MoveScreenCommand.", "[graphic]")
+{
+    frts::LogPtr log = frts::makeNoLog();
+    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+
+    auto gd = frts::makeGraphicData();
+    shared->setDataValue(shared->makeId(frts::Sdl2Ids::graphicData()), gd);
+    auto rc = frts::makeRegionConfig();
+    shared->setDataValue(shared->makeId(frts::ModelIds::regionConfig()), rc);
+
+    gd->setRenderEverything(false);
+    gd->setScreenHeight(20);
+    gd->setScreenOffsetX(0);
+    gd->setScreenOffsetY(0);
+    gd->setScreenWidth(20);
+    gd->setTileHeight(10);
+    gd->setTileWidth(10);
+    gd->setZLevel(0);
+    rc->setMapSizeX(3);
+    rc->setMapSizeY(4);
+
+    auto builderWest = frts::makeMoveScreenCommandBuilder(2, 0, 0);
+    auto commandWest = builderWest->build(shared);
+    REQUIRE(commandWest != nullptr);
+
+    auto builderEast = frts::makeMoveScreenCommandBuilder(-2, 0, 0);
+    auto commandEast = builderEast->build(shared);
+    REQUIRE(commandEast != nullptr);
+
+    auto builderNorth = frts::makeMoveScreenCommandBuilder(0, 2, 0);
+    auto commandNorth = builderNorth->build(shared);
+    REQUIRE(commandNorth != nullptr);
+
+    auto builderSouth= frts::makeMoveScreenCommandBuilder(0, -2, 0);
+    auto commandSouth = builderSouth->build(shared);
+    REQUIRE(commandSouth != nullptr);
+
+    auto builderUp = frts::makeMoveScreenCommandBuilder(0, 0, 1);
+    auto commandUp = builderUp->build(shared);
+    REQUIRE(commandUp != nullptr);
+
+    auto builderDown = frts::makeMoveScreenCommandBuilder(0, 0, -1);
+    auto commandDown = builderDown->build(shared);
+    REQUIRE(commandDown != nullptr);
+
+    commandWest->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandWest->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandNorth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandEast->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandEast->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandEast->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandEast->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandNorth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandSouth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandSouth->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandSouth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandSouth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE_FALSE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandUp->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandUp->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 2);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandUp->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandUp->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 2);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandDown->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandDown->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 2);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandDown->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandDown->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == 0);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandDown->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandWest->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandWest->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 1);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandWest->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandNorth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandNorth->undo(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 2);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
+
+    commandNorth->execute(shared);
+    REQUIRE(gd->getScreenOffsetX() == 0);
+    REQUIRE(gd->getScreenOffsetY() == 0);
+    REQUIRE(gd->getZLevel() == -1);
+    REQUIRE(gd->isRenderEverything());
+    gd->setRenderEverything(false);
 }

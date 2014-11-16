@@ -210,6 +210,23 @@ Its config consists only of the sprite ID:
 
     sprite: <string representing an id>
 
+### MoveScreenCommand
+
+This command (using the *VanillaCommand* plugin) allows movement of the visible screen over the map. Following directions are implemented:
+
+- **North:** Using command id `frts.vanillasdl2.command.movescreen.north`.
+- **East:** Using command id `frts.vanillasdl2.command.movescreen.east`.
+- **South:** Using command id `frts.vanillasdl2.command.movescreen.south`.
+- **West:** Using command id `frts.vanillasdl2.command.movescreen.west`.
+- **Up:** Using command id `frts.vanillasdl2.command.movescreen.up`.
+- **Down:** Using command id `frts.vanillasdl2.command.movescreen.down`.
+- **North East:** Using command id `frts.vanillasdl2.command.movescreen.northeast`.
+- **South East:** Using command id `frts.vanillasdl2.command.movescreen.southeast`.
+- **South West:** Using command id `frts.vanillasdl2.command.movescreen.southwest`.
+- **North West:** Using command id `frts.vanillasdl2.command.movescreen.northwest`.
+
+Step width is configured in the `screen` configuration (see **Screen Config**).
+
 ### SDL2 Renderer
 
 The renderer module manages everything graphic related. 
@@ -220,7 +237,7 @@ Will identify itself by the name and type `frts::SDL2Renderer`.
 
 ### Screen Config
 
-The screen config defines size of the visible screen and thus defines the windows size, the maximum frame rate,  the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size should be a multiple of the tile size or else it will be cropped accordingly.
+The screen config defines size of the visible screen and thus defines the windows size, the screen movement size, the maximum frame rate, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
 
     screen:
     
@@ -229,6 +246,9 @@ The screen config defines size of the visible screen and thus defines the window
     
         height: <int>
         width: <int>
+        
+        screen_move_x: <int>
+        screen_move_y: <int>
         
         title: <string>
     

@@ -69,13 +69,31 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 
     // Add commands.
     auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-    const int offsetStep = 5;
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandWest()), makeMoveScreenCommandBuilder(offsetStep, 0, 0));
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandEast()), makeMoveScreenCommandBuilder(-offsetStep, 0, 0));
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorth()), makeMoveScreenCommandBuilder(0, offsetStep, 0));
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouth()), makeMoveScreenCommandBuilder(0, -offsetStep, 0));
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandUp()), makeMoveScreenCommandBuilder(0, 0, 1));
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandDown()), makeMoveScreenCommandBuilder(0, 0, -1));
+
+    const int offsetStepX = (gd->getScreenOffsetStepX() / gd->getTileWidth());
+    const int offsetStepY = (gd->getScreenOffsetStepY() / gd->getTileHeight());
+    const int offsetStepZ = 1;
+
+    // West
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandWest()), makeMoveScreenCommandBuilder(offsetStepX, 0, 0));
+    // East
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandEast()), makeMoveScreenCommandBuilder(-offsetStepX, 0, 0));
+    // North
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorth()), makeMoveScreenCommandBuilder(0, offsetStepY, 0));
+    // South
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouth()), makeMoveScreenCommandBuilder(0, -offsetStepY, 0));
+    // Up
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandUp()), makeMoveScreenCommandBuilder(0, 0, offsetStepZ));
+    // Down
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandDown()), makeMoveScreenCommandBuilder(0, 0, -offsetStepZ));
+    // North West
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorthWest()), makeMoveScreenCommandBuilder(offsetStepX, offsetStepY, 0));
+    // North East
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorthEast()), makeMoveScreenCommandBuilder(-offsetStepX, offsetStepY, 0));
+    // South East
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouthEast()), makeMoveScreenCommandBuilder(-offsetStepX, -offsetStepY, 0));
+    // South West
+    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouthWest()), makeMoveScreenCommandBuilder(offsetStepX, -offsetStepY, 0));
 
     return false;
 }
@@ -91,6 +109,8 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
         gd->setScreenHeight(node->getInteger("height", gd->getScreenHeight()));
         gd->setScreenTitle(node->getString("title", gd->getScreenTitle()));
         gd->setScreenWidth(node->getInteger("width", gd->getScreenWidth()));
+        gd->setScreenOffsetStepX(node->getInteger("screen_move_x", gd->getScreenOffsetStepX()));
+        gd->setScreenOffsetStepY(node->getInteger("screen_move_y", gd->getScreenOffsetStepY()));
     }
 
     if (key == "tile")
@@ -183,6 +203,16 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
     if (gd->getScreenWidth() == 0)
     {
         throw DataViolation("Screen width must be greater than zero.");
+    }
+
+    if (gd->getScreenOffsetStepX() == 0)
+    {
+        throw DataViolation("Screen move width in x-direction must be greater than zero.");
+    }
+
+    if (gd->getScreenOffsetStepY() == 0)
+    {
+        throw DataViolation("Screen move width in y-direction must be greater than zero.");
     }
 
     if (gd->getTileHeight() == 0)

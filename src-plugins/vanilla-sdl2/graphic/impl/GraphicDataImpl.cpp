@@ -23,6 +23,16 @@ unsigned int frts::GraphicDataImpl::getScreenHeight() const
     return screenHeight;
 }
 
+unsigned int frts::GraphicDataImpl::getScreenOffsetStepX() const
+{
+    return screenOffsetStepX;
+}
+
+unsigned int frts::GraphicDataImpl::getScreenOffsetStepY() const
+{
+    return screenOffsetStepY;
+}
+
 frts::Point::value frts::GraphicDataImpl::getScreenOffsetX() const
 {
     return screenOffsetX;
@@ -96,6 +106,16 @@ void frts::GraphicDataImpl::setRenderEverything(bool renderEverything)
 void frts::GraphicDataImpl::setScreenHeight(unsigned int screenHeight)
 {
     this->screenHeight = screenHeight;
+}
+
+void frts::GraphicDataImpl::setScreenOffsetStepX(unsigned int offsetStep)
+{
+    this->screenOffsetStepX = offsetStep;
+}
+
+void frts::GraphicDataImpl::setScreenOffsetStepY(unsigned int offsetStep)
+{
+    this->screenOffsetStepY = offsetStep;
 }
 
 void frts::GraphicDataImpl::setScreenOffsetX(Point::value offset)

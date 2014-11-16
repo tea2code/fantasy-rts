@@ -42,6 +42,26 @@ namespace frts
             return "frts.vanillasdl2.command.movescreen.south";
         }
 
+        static std::string moveCommandNorthWest()
+        {
+            return "frts.vanillasdl2.command.movescreen.northwest";
+        }
+
+        static std::string moveCommandNorthEast()
+        {
+            return "frts.vanillasdl2.command.movescreen.northeast";
+        }
+
+        static std::string moveCommandSouthWest()
+        {
+            return "frts.vanillasdl2.command.movescreen.southwest";
+        }
+
+        static std::string moveCommandSouthEast()
+        {
+            return "frts.vanillasdl2.command.movescreen.southeast";
+        }
+
         static std::string moveCommandUp()
         {
             return "frts.vanillasdl2.command.movescreen.up";
