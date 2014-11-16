@@ -253,8 +253,8 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     else if (key == regionConfigKey)
     {
         auto regionConfig = getRegionConfig(shared);
-        regionConfig->setMapSizeX(node->getInteger("size_x"));
-        regionConfig->setMapSizeY(node->getInteger("size_y"));
+        regionConfig->setMapSizeX(node->getInteger("width"));
+        regionConfig->setMapSizeY(node->getInteger("height"));
     }
 }
 
@@ -313,11 +313,11 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     auto regionConfig = getRegionConfig(shared);
     if (regionConfig->getMapSizeX() <= 0)
     {
-        throw DataViolation("Region:size_x must be greater than zero.");
+        throw DataViolation("Region width must be greater than zero.");
     }
     if (regionConfig->getMapSizeY() <= 0)
     {
-        throw DataViolation("Region:size_y must be greater than zero.");
+        throw DataViolation("Region height must be greater than zero.");
     }
 }
 

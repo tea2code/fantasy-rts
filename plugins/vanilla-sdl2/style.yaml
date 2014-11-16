@@ -1,6 +1,7 @@
 style:
     namespace: style
     
+    # List of all images. Currently on png format is supported.
     images:
         namespace: image
         image:
@@ -10,6 +11,7 @@ style:
     sprites:
         namespace: sprite
         
+        # Fallback will be used if no sprite for an entity is found.
         fallback: style.sprite.unknown
         height: 16
         image: style.image.vanilla

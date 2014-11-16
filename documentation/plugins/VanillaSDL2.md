@@ -241,21 +241,21 @@ The screen config defines size of the visible screen and thus defines the window
 
     screen:
     
-        fps: <int>
-        num_fps_avg: <int>
+        fps: <integer greater 0>
+        num_fps_avg: <integer greater 0>
     
-        height: <int>
-        width: <int>
+        height: <integer greater 0>
+        width: <integer greater 0>
         
-        screen_move_x: <int>
-        screen_move_y: <int>
+        screen_move_x: <integer greater 0>
+        screen_move_y: <integer greater 0>
         
         title: <string>
     
     tile:
     
-        height: <int>
-        width: <int>
+        height: <integer greater 0>
+        width: <integer greater 0>
 
 ### Sprite Config
 
@@ -274,25 +274,25 @@ A complete sprite configuration consists of a list of sprite images with their p
             namespace: <string>
             
             fallback: <id>
-            height: <int>
+            height: <integer greater 0>
             image: <string>
-            width: <int>
+            width: <integer greater 0>
             
             sprite:
                 - name: <string>
-                  height: <int>
+                  height: <integer greater 0>
                   image: <string>
-                  width: <int>
-                  x: <int>
-                  y: <int>
+                  width: <integer greater 0>
+                  x: <integer greater 0>
+                  y: <integer greater 0>
                   
                 - name: <string>
-                  height: <int>
-                  width: <int>
+                  height: <integer greater 0>
+                  width: <integer greater 0>
                   multiple:
-                     - x: <int>
-                       y: <int>
+                     - x: <integer greater 0>
+                       y: <integer greater 0>
                        chance: <float, optional>
-                     - x: <int>
-                       y: <int>
+                     - x: <integer greater 0>
+                       y: <integer greater 0>
                        chance: <float, optional>

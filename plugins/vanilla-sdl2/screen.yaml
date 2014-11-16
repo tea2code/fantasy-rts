@@ -1,18 +1,23 @@
 screen:
 
+    # Frames per second limit.
     fps: 100
+    # Number of FPS measures used for average calculation. The average will be shown in the title.
     num_fps_avg: 1000
 
+    # Height and width of screen (in pixel). Should be multiple of tile.height and tile.width.
     height: 768
     width: 1024
     
-    # The screen movement size should be around 25% of height and width.
+    # The screen movement size should be around 25% of height and width (in pixel).
     screen_move_x: 256
     screen_move_y: 192
     
+    # The window title. Use %1% as placeholder for FPS.
     title: "Fantasy-RTS (FPS: %1%)"
 
 tile:
 
+    # Height and width of an tile.
     height: 16
     width: 16

@@ -185,7 +185,7 @@ The main key is `entities`.
 
 The region config allows to set the size of the map in x and y direction. Use the following keys to do so:
 
-    size_x: <integer greater 0>
-    size_y: <integer greater 0>
-
-The main key is `region`.
+    region:
+        
+        width: <integer greater 0>
+        height: <integer greater 0>
