@@ -2,6 +2,10 @@ keys:
 
     - key: escape
       command: frts.vanillacommand.command.quit
+    - key: z
+      command: frts.vanillacommand.command.undo
+      
+    # Screen movement
     - key: d
       command: frts.vanillasdl2.command.movescreen.east
     - key: a

@@ -28,6 +28,7 @@ utilities:
     - frts/ModelFactory
     
 configurations:
+    - vanilla-command/command.yaml
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
     - vanilla-sdl2/keys.yaml

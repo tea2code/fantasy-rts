@@ -1,5 +1,7 @@
 #include "EventHandler.h"
 
+#include <frts/vanillacommand>
+
 
 frts::EventHandler::EventHandler()
 {
@@ -40,9 +42,9 @@ bool frts::EventHandler::init(SharedManagerPtr)
     return false;
 }
 
-void frts::EventHandler::registerCommand(SDL_Keycode key, CommandPtr command)
+void frts::EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
 {
-    keyCommands[key] = command;
+    keyCommands[key] = commandId;
 }
 
 void frts::EventHandler::parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr)
@@ -75,7 +77,10 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
                 auto it = keyCommands.find(key);
                 if (it != keyCommands.end())
                 {
-                    it->second->execute(shared);
+                    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+                    auto command = commandFactory->makeCommand(it->second, shared);
+                    command->execute(shared);
+                    commandFactory->addToUndo(command, shared);
                 }
             }
             break;

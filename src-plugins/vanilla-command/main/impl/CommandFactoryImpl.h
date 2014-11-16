@@ -3,6 +3,7 @@
 
 #include <main/CommandFactory.h>
 
+#include <list>
 #include <memory>
 #include <unordered_map>
 
@@ -23,6 +24,7 @@ namespace frts
             return "frts/CommandFactory";
         }
 
+        void addToUndo(CommandPtr command, SharedManagerPtr shared) override;
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
@@ -34,6 +36,7 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder) override;
+        void undoLastCommand(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
@@ -42,6 +45,7 @@ namespace frts
 
     private:
         CommandBuilderMap commandBuilders;
+        std::list<CommandPtr> undoQueue;
     };
 
     /**

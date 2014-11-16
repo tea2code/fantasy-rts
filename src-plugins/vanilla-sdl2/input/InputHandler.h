@@ -20,9 +20,9 @@ namespace frts
         /**
          * @brief Register a custom command with an key.
          * @param key The key.
-         * @param command The command.
+         * @param commandId The command id.
          */
-        virtual void registerCommand(Key key, CommandPtr command) = 0;
+        virtual void registerCommand(Key key, IdPtr commandId) = 0;
     };
 }
 

@@ -3,11 +3,12 @@
 #include <command/QuitCommand.h>
 
 
-frts::QuitCommandBuilder::QuitCommandBuilder()
+frts::QuitCommandBuilder::QuitCommandBuilder(IdPtr commandType)
+    : commandType{commandType}
 {
 }
 
 frts::CommandPtr frts::QuitCommandBuilder::build(SharedManagerPtr)
 {
-    return makeQuitCommand();
+    return makeQuitCommand(commandType);
 }

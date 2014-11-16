@@ -162,27 +162,29 @@ TEST_CASE("MoveScreenCommand.", "[graphic]")
     rc->setMapSizeX(3);
     rc->setMapSizeY(4);
 
-    auto builderWest = frts::makeMoveScreenCommandBuilder(2, 0, 0);
+    auto commandId = shared->makeId("command.id");
+
+    auto builderWest = frts::makeMoveScreenCommandBuilder(commandId, 2, 0, 0);
     auto commandWest = builderWest->build(shared);
     REQUIRE(commandWest != nullptr);
 
-    auto builderEast = frts::makeMoveScreenCommandBuilder(-2, 0, 0);
+    auto builderEast = frts::makeMoveScreenCommandBuilder(commandId, -2, 0, 0);
     auto commandEast = builderEast->build(shared);
     REQUIRE(commandEast != nullptr);
 
-    auto builderNorth = frts::makeMoveScreenCommandBuilder(0, 2, 0);
+    auto builderNorth = frts::makeMoveScreenCommandBuilder(commandId, 0, 2, 0);
     auto commandNorth = builderNorth->build(shared);
     REQUIRE(commandNorth != nullptr);
 
-    auto builderSouth= frts::makeMoveScreenCommandBuilder(0, -2, 0);
+    auto builderSouth= frts::makeMoveScreenCommandBuilder(commandId, 0, -2, 0);
     auto commandSouth = builderSouth->build(shared);
     REQUIRE(commandSouth != nullptr);
 
-    auto builderUp = frts::makeMoveScreenCommandBuilder(0, 0, 1);
+    auto builderUp = frts::makeMoveScreenCommandBuilder(commandId, 0, 0, 1);
     auto commandUp = builderUp->build(shared);
     REQUIRE(commandUp != nullptr);
 
-    auto builderDown = frts::makeMoveScreenCommandBuilder(0, 0, -1);
+    auto builderDown = frts::makeMoveScreenCommandBuilder(commandId, 0, 0, -1);
     auto commandDown = builderDown->build(shared);
     REQUIRE(commandDown != nullptr);
 

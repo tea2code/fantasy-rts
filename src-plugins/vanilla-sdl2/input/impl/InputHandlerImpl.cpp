@@ -53,14 +53,13 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     }
 
     // Initialize commands from configuration.
-    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
     for (auto node : configNodes)
     {
         for (auto keyNode : *node)
         {
             auto key = keyNode->getString("key");
             auto id = shared->makeId(keyNode->getString("command"));
-            eventHandler->registerCommand(stringToSdl2Key(key), commandFactory->makeCommand(id, shared));
+            eventHandler->registerCommand(stringToSdl2Key(key), id);
         }
     }
     configNodes.clear();
@@ -68,9 +67,9 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     return false;
 }
 
-void frts::InputHandlerImpl::registerCommand(Key key, CommandPtr command)
+void frts::InputHandlerImpl::registerCommand(Key key, IdPtr commandId)
 {
-    eventHandler->registerCommand(keyToSdl2Key(key), command);
+    eventHandler->registerCommand(keyToSdl2Key(key), commandId);
 }
 
 void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)

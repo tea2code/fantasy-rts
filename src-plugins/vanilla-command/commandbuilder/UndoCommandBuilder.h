@@ -1,5 +1,5 @@
-#ifndef FRTS_QUITCOMMANDBUILDER_H
-#define FRTS_QUITCOMMANDBUILDER_H
+#ifndef FRTS_UNDOCOMMANDBUILDER_H
+#define FRTS_UNDOCOMMANDBUILDER_H
 
 #include <main/CommandBuilder.h>
 
@@ -9,15 +9,15 @@
 namespace frts
 {
     /**
-     * @brief Builder for quit command
+     * @brief Builder for undo command
      */
-    class QuitCommandBuilder : public CommandBuilder
+    class UndoCommandBuilder : public CommandBuilder
     {
     public:
         /**
          * @param commandType The command type.
          */
-        QuitCommandBuilder(IdPtr commandType);
+        UndoCommandBuilder(IdPtr commandType);
 
         CommandPtr build(SharedManagerPtr shared) override;
 
@@ -30,10 +30,10 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeQuitCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeUndoCommandBuilder(IdPtr commandType)
     {
-        return std::make_shared<QuitCommandBuilder>(commandType);
+        return std::make_shared<UndoCommandBuilder>(commandType);
     }
 }
 
-#endif // FRTS_QUITCOMMANDBUILDER_H
+#endif // FRTS_UNDOCOMMANDBUILDER_H

@@ -29,6 +29,13 @@ namespace frts
         virtual ~CommandFactory() {}
 
         /**
+         * @brief Add a command to the undo list.
+         * @param command The command.
+         * @param shared The shared manager.
+         */
+        virtual void addToUndo(CommandPtr command, SharedManagerPtr shared) = 0;
+
+        /**
          * @brief Create a new command.
          * @throws UnknownCommandBuilderError if command builder id is not registered.
          * @param id The id of the command builder.
@@ -43,6 +50,12 @@ namespace frts
          * @param commandBuilder The command builder.
          */
         virtual void registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder) = 0;
+
+        /**
+         * @brief Executes undo for the last command.
+         * @param shared The shared manager.
+         */
+        virtual void undoLastCommand(SharedManagerPtr shared) = 0;
     };
 }
 

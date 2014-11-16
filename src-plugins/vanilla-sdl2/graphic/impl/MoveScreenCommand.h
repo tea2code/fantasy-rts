@@ -16,16 +16,20 @@ namespace frts
     {
     public:
         /**
+         * @param commandType The command type.
          * @param x Move this many steps in x direction. West is positive.
          * @param y Move this many steps in y direction. North is positive.
          * @param z Move this many steps in z direction. Up is positive.
          */
-        MoveScreenCommand(Point::value x, Point::value y, Point::value z);
+        MoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z);
 
         void execute(SharedManagerPtr shared) override;
+        IdPtr getCommandType() const override;
         void undo(SharedManagerPtr shared) override;
 
     private:
+        IdPtr commandType;
+
         bool lastX = false;
         bool lastY = false;
         bool lastZ = false;
@@ -37,14 +41,15 @@ namespace frts
 
     /**
      * @brief Create new move screen command.
+     * @param commandType The command type.
      * @param x Move this many steps in x direction. West is positive.
      * @param y Move this many steps in y direction. North is positive.
      * @param z Move this many steps in z direction. Up is positive.
      * @return The command.
      */
-    inline CommandPtr makeMoveScreenCommand(Point::value x, Point::value y, Point::value z)
+    inline CommandPtr makeMoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
     {
-        return std::make_shared<MoveScreenCommand>(x, y, z);
+        return std::make_shared<MoveScreenCommand>(commandType, x, y, z);
     }
 }
 

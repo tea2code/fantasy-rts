@@ -1,5 +1,6 @@
 #include <catch.hpp>
 
+#include <main/impl/CommandConfigImpl.h>
 #include <main/impl/CommandFactoryImpl.h>
 #include <main/CommandIds.h>
 
@@ -9,13 +10,31 @@
 
 TEST_CASE("CommandFactory.", "[main]")
 {
-    frts::LogPtr log = frts::makeNoLog();
-    frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
 
-    frts::CommandFactoryPtr commandFactory = frts::makeCommandFactory();
+    auto commandFactory = frts::makeCommandFactory();
     commandFactory->createData(shared);
     commandFactory->init(shared);
 
-    frts::IdPtr id = shared->makeId(frts::CommandIds::quit());
+    auto id = shared->makeId(frts::CommandIds::quit());
     REQUIRE(commandFactory->makeCommand(id, shared) != nullptr);
+}
+
+TEST_CASE("CommandConfig.", "[main]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto commandConfig = frts::makeCommandConfig();
+
+    frts::CommandConfig::IdSet commands {
+        shared->makeId("command.id.1"),
+        shared->makeId("command.id.2")
+    };
+    commandConfig->setNotUndoableCommands(commands);
+    commandConfig->setNumUndo(1);
+
+    REQUIRE(commandConfig->getNotUndoableCommands().size() == 2);
+    REQUIRE(commandConfig->getNumUndo() == 1);
 }

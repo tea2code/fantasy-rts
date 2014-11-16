@@ -2,7 +2,6 @@
 #define FRTS_EVENTHANDLER_H
 
 #include <frts/module>
-#include <frts/vanillacommand>
 
 #include <SDL2/SDL.h>
 
@@ -49,12 +48,12 @@ namespace frts
         /**
          * @brief Register a custom command with an key.
          * @param key The key.
-         * @param command The command.
+         * @param commandId The command id.
          */
-        void registerCommand(SDL_Keycode key, CommandPtr command);
+        void registerCommand(SDL_Keycode key, IdPtr commandId);
 
     private:
-        std::unordered_map<SDL_Keycode, CommandPtr, std::hash<char>> keyCommands;
+        std::unordered_map<SDL_Keycode, IdPtr, std::hash<char>> keyCommands;
     };
 
     /**

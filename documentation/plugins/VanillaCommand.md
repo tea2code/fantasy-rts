@@ -16,17 +16,36 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 A command represents an action which can be executed and in some cases also undone. Their default IDs can be found in the static class CommandIds.
 
-### CommandBuilder
+### Command Config
+
+Command plugin related configuration. 
+
+Default ID can be found in the static class `CommandIds`.
+
+Will identify itself by the name and type `frts::CommandConfig`.
+
+### Command Builder
 
 Builder create commands and can be registered at the factory. They are identified by an ID and it is possible to create variants of commands by registering the same builder with different settings.
 
-### CommandFactory
+### Command Factory
 
 The command factory is implemented as a utility module. It has a couple of pre registered commands but also allows to add custom commands from other plugins.
 
 Load using `frts/CommandFactory` in the `utilities` section of the load file. 
 
 Will identify itself by the name and type `frts::CommandFactory`. It can be also found in the static class `CommandIds`. 
+
+## Configuration
+
+The command config currently allows the configuration of undo related settings. 
+
+    command:
+
+        num_undo: <integer>
+        
+        undo_blacklist:
+            - <string>
 
 ## Commands
 
@@ -35,5 +54,11 @@ Commands are registered during execution phase 10 (module initialization). This 
 ### QuitCommand
 
 Quits the application. If `undo()` is during the current frame executed the command is reverted.  
+
+Default ID can be found in the static class `CommandIds`.
+
+### UndoCommand
+
+Undos the last executed command. 
 
 Default ID can be found in the static class `CommandIds`.

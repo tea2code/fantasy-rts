@@ -1,5 +1,5 @@
-#ifndef FRTS_QUITCOMMAND_H
-#define FRTS_QUITCOMMAND_H
+#ifndef FRTS_UNDOCOMMAND_H
+#define FRTS_UNDOCOMMAND_H
 
 #include <main/Command.h>
 
@@ -9,15 +9,15 @@
 namespace frts
 {
     /**
-     * @brief This command quits the application.
+     * @brief This command undos the last executed command.
      */
-    class QuitCommand : public Command
+    class UndoCommand : public Command
     {
     public:
         /**
          * @param commandType The command type.
          */
-        QuitCommand(IdPtr commandType);
+        UndoCommand(IdPtr commandType);
 
         void execute(SharedManagerPtr shared) override;
         IdPtr getCommandType() const override;
@@ -28,14 +28,14 @@ namespace frts
     };
 
     /**
-     * @brief Create new quit command.
+     * @brief Create new undo command.
      * @param commandType The command type.
      * @return The command.
      */
-    inline CommandPtr makeQuitCommand(IdPtr commandType)
+    inline CommandPtr makeUndoCommand(IdPtr commandType)
     {
-        return std::make_shared<QuitCommand>(commandType);
+        return std::make_shared<UndoCommand>(commandType);
     }
 }
 
-#endif // FRTS_QUITCOMMAND_H
+#endif // FRTS_UNDOCOMMAND_H

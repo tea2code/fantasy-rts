@@ -31,6 +31,12 @@ namespace frts
         virtual void execute(SharedManagerPtr shared) = 0;
 
         /**
+         * @brief Get type of command.
+         * @return The command type.
+         */
+        virtual IdPtr getCommandType() const = 0;
+
+        /**
          * @brief Undo the execution of this command.
          * @param shared The shared manager.
          */

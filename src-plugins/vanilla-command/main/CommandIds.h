@@ -12,6 +12,11 @@ namespace frts
     class CommandIds
     {
     public:
+        static std::string commandConfig()
+        {
+            return "frts::CommandConfig";
+        }
+
         static std::string commandFactory()
         {
             return "frts::CommandFactory";
@@ -20,6 +25,11 @@ namespace frts
         static std::string quit()
         {
             return "frts.vanillacommand.command.quit";
+        }
+
+        static std::string undo()
+        {
+            return "frts.vanillacommand.command.undo";
         }
     };
 }

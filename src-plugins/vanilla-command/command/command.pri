@@ -1,6 +1,8 @@
 HEADERS += \
-    command/QuitCommand.h
+    command/QuitCommand.h \
+    $$PWD/UndoCommand.h
 
 
 SOURCES += \ 
-    command/QuitCommand.cpp
+    command/QuitCommand.cpp \
+    $$PWD/UndoCommand.cpp

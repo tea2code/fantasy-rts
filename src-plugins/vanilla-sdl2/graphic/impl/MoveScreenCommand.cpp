@@ -6,8 +6,8 @@
 #include <algorithm>
 
 
-frts::MoveScreenCommand::MoveScreenCommand(Point::value x, Point::value y, Point::value z)
-    : x{x}, y{y}, z{z}
+frts::MoveScreenCommand::MoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
+    : commandType{commandType}, x{x}, y{y}, z{z}
 {}
 
 void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
@@ -62,6 +62,11 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
     {
         gd->setRenderEverything(true);
     }
+}
+
+frts::IdPtr frts::MoveScreenCommand::getCommandType() const
+{
+    return commandType;
 }
 
 void frts::MoveScreenCommand::undo(SharedManagerPtr shared)

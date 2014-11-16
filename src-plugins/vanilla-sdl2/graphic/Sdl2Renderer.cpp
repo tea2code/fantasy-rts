@@ -75,25 +75,44 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     const int offsetStepZ = 1;
 
     // West
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandWest()), makeMoveScreenCommandBuilder(offsetStepX, 0, 0));
+    IdPtr commandId = shared->makeId(Sdl2Ids::moveCommandWest());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, 0, 0));
+
     // East
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandEast()), makeMoveScreenCommandBuilder(-offsetStepX, 0, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandEast());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, 0, 0));
+
     // North
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorth()), makeMoveScreenCommandBuilder(0, offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandNorth());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, offsetStepY, 0));
+
     // South
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouth()), makeMoveScreenCommandBuilder(0, -offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandSouth());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, -offsetStepY, 0));
+
     // Up
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandUp()), makeMoveScreenCommandBuilder(0, 0, offsetStepZ));
+    commandId = shared->makeId(Sdl2Ids::moveCommandUp());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, offsetStepZ));
+
     // Down
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandDown()), makeMoveScreenCommandBuilder(0, 0, -offsetStepZ));
+    commandId = shared->makeId(Sdl2Ids::moveCommandDown());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, -offsetStepZ));
+
     // North West
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorthWest()), makeMoveScreenCommandBuilder(offsetStepX, offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandNorthWest());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, offsetStepY, 0));
+
     // North East
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandNorthEast()), makeMoveScreenCommandBuilder(-offsetStepX, offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandNorthEast());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, offsetStepY, 0));
+
     // South East
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouthEast()), makeMoveScreenCommandBuilder(-offsetStepX, -offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandSouthEast());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, -offsetStepY, 0));
+
     // South West
-    commandFactory->registerCommandBuilder(shared->makeId(Sdl2Ids::moveCommandSouthWest()), makeMoveScreenCommandBuilder(offsetStepX, -offsetStepY, 0));
+    commandId = shared->makeId(Sdl2Ids::moveCommandSouthWest());
+    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, -offsetStepY, 0));
 
     return false;
 }
