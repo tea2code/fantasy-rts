@@ -1,12 +1,32 @@
 #ifndef FRTS_RANDOM_H
 #define FRTS_RANDOM_H
 
-#include  <random>
-#include  <iterator>
+#if defined(__GNUC__) && (defined(WIN32) || defined(_WIN32))
+#include <ctime>
+#endif
+
+#include <random>
+#include <iterator>
 
 
 namespace frts
 {
+    /**
+     * @brief Generates an default generator for random numbers.
+     * @warning Using windows with gcc will use std::time as a
+     *          seed. See http://sourceforge.net/p/mingw-w64/bugs/338/
+     */
+    auto defaultGenerator()
+    {
+#if defined(__GNUC__) && (defined(WIN32) || defined(_WIN32))
+        std::mt19937 gen(std::time(nullptr));
+#else
+        std::random_device rd;
+        std::mt19937 gen(rd());
+#endif
+        return gen;
+    }
+
     /**
      * @brief Generate a random floating point number in interval [start, end].
      * @param start Start of interval.
@@ -16,8 +36,7 @@ namespace frts
     template<typename FloatType>
     FloatType randomFloat(FloatType start, FloatType end)
     {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
+        static thread_local auto gen = defaultGenerator();
         std::uniform_real_distribution<> dist(start, end);
         return dist(gen);
     }
@@ -31,8 +50,7 @@ namespace frts
     template<typename IntegerType>
     IntegerType randomInteger(IntegerType start, IntegerType end)
     {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
+        static thread_local auto gen = defaultGenerator();
         std::uniform_int_distribution<> dist(start, end);
         return dist(gen);
     }
@@ -63,8 +81,7 @@ namespace frts
     template<typename Iter>
     Iter selectRandomly(Iter start, Iter end)
     {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
+        static thread_local auto gen = defaultGenerator();
         return selectRandomly(start, end, gen);
     }
 }

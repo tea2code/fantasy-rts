@@ -8,6 +8,12 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.grid
             
+        # Units
+        - name: dwarf
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.dwarf
+            
         # Has Resource
         - name: shrub.berry
           components:

@@ -1,7 +1,7 @@
 style:
     namespace: style
     
-    # List of all images. Currently on png format is supported.
+    # List of all images. Currently only png format is supported.
     images:
         namespace: image
         image:
@@ -64,7 +64,7 @@ style:
               x: 0
               y: 176
                 
-            - name: dwarf-north
+            - name: dwarf.north
               multiple:
                   - x: 0
                     y: 96
@@ -75,7 +75,7 @@ style:
                   - x: 48
                     y: 96
                 
-            - name: dwarf-east
+            - name: dwarf.east
               multiple:
                   - x: 0
                     y: 128
@@ -86,7 +86,7 @@ style:
                   - x: 48
                     y: 128
                 
-            - name: dwarf-west
+            - name: dwarf.west
               multiple:
                   - x: 0
                     y: 112
@@ -97,7 +97,18 @@ style:
                   - x: 48
                     y: 112
                 
-            - name: dwarf-south
+            - name: dwarf
+              multiple:
+                  - x: 0
+                    y: 80
+                  - x: 16
+                    y: 80
+                  - x: 32
+                    y: 80
+                  - x: 48
+                    y: 80
+                
+            - name: dwarf.south
               multiple:
                   - x: 0
                     y: 80

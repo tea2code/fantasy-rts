@@ -55,5 +55,11 @@ frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, Shared
     auto block = makeBlock(blockingType, sortOrderType);
     block->insert(modelFactory->makeEntity(shared->makeId(idStr), shared));
     block->insert(modelFactory->makeEntity(shared->makeId("entity.grid"), shared));
+
+    if (pos == modelFactory->makePoint(0, 0, 0))
+    {
+        block->insert(modelFactory->makeEntity(shared->makeId("entity.dwarf"), shared));
+    }
+
     return block;
 }

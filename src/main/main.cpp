@@ -13,6 +13,8 @@
 #include <shared/impl/MainDataImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
 
+#include <frts/random.h>
+
 #include <boost/format.hpp>
 
 #include <algorithm>

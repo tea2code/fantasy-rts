@@ -23,6 +23,7 @@ INCLUDEPATH += $$PWD/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/dependency/boost
 INCLUDEPATH += $$PWD/dependency/yaml-cpp/include
 INCLUDEPATH += $$PWD/dependency/easyloggingpp/src
+INCLUDEPATH += $$PWD/../src-helper
 
 # Libs.
 LIBS += -L$$PWD/dependency/yaml-cpp/build -lyaml-cpp

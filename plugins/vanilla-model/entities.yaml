@@ -7,6 +7,17 @@ entities:
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1000
+              
+        # Units
+        - name: dwarf
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.air
+                - blocking.wall
+                - blocking.water
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 240
     
         # Has Resource
         - name: shrub.berry
