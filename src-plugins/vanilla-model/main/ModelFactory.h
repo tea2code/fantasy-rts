@@ -7,7 +7,7 @@
 #include <region/Point.h>
 #include <region/Region.h>
 #include <region/RegionGenerator.h>
-#include <resource/DistanceAlgorithm.h>
+#include <pathfinding/DistanceAlgorithm.h>
 #include <resource/LockableResourceManager.h>
 
 #include <frts/module>

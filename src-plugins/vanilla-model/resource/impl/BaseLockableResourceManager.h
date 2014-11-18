@@ -4,7 +4,7 @@
 #include <entity/Entity.h>
 #include <region/Point.h>
 #include <region/Region.h>
-#include <resource/DistanceAlgorithm.h>
+#include <pathfinding/DistanceAlgorithm.h>
 #include <resource/LockableResourceManager.h>
 #include <resource/ResourceLock.h>
 

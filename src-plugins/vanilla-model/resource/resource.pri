@@ -1,6 +1,5 @@
 SOURCES += \
     resource/impl/ResourceLockImpl.cpp \
-    resource/impl/DistanceAlgorithmImpl.cpp \
     resource/impl/BaseLockableResourceManager.cpp \
     resource/impl/LockableIsResourceManager.cpp \
     resource/impl/LockableHasResourceManager.cpp

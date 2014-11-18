@@ -1,7 +1,7 @@
 #ifndef FRTS_DISTANCEALGORITHMIMPL_H
 #define FRTS_DISTANCEALGORITHMIMPL_H
 
-#include <resource/DistanceAlgorithm.h>
+#include <pathfinding/DistanceAlgorithm.h>
 
 
 namespace frts
