@@ -43,5 +43,6 @@ UNIT_TEST {
 include(entity/entity.pri)
 include(frts/frts.pri)
 include(main/main.pri)
+include(pathfinding/pathfinding.pri)
 include(region/region.pri)
 include(resource/resource.pri)
