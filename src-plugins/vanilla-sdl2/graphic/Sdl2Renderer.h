@@ -4,16 +4,18 @@
 #include "Drawer.h"
 #include "FpsManager.h"
 
-#include <frts/module>
+#include <frts/BaseTickable.h>
 
 #include <memory>
 
 
 namespace frts
 {
-    class Sdl2Renderer : public Tickable
+    class Sdl2Renderer : public BaseTickable
     {
     public:
+        Sdl2Renderer();
+
         /**
          * @brief The identifier.
          * @return The id string.
@@ -24,14 +26,9 @@ namespace frts
         }
 
         bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;

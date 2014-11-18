@@ -9,37 +9,8 @@
 
 
 frts::VanillaDemoTickable::VanillaDemoTickable()
+    : BaseTickable("frts::VanillaDemo", 1, "frts::VanillaDemo", 1)
 {
-}
-
-bool frts::VanillaDemoTickable::createData(frts::SharedManagerPtr)
-{
-    return false;
-}
-
-std::string frts::VanillaDemoTickable::getName() const
-{
-    return "frts::VanillaDemo";
-}
-
-std::vector<std::string> frts::VanillaDemoTickable::getSupportedConfig()
-{
-    return {};
-}
-
-std::string frts::VanillaDemoTickable::getTypeName() const
-{
-    return getName();
-}
-
-int frts::VanillaDemoTickable::getTypeVersion() const
-{
-    return 1;
-}
-
-int frts::VanillaDemoTickable::getVersion() const
-{
-    return 1;
 }
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
@@ -58,24 +29,9 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     return false;
 }
 
-void frts::VanillaDemoTickable::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
-{
-
-}
-
-bool frts::VanillaDemoTickable::preInit(frts::SharedManagerPtr)
-{
-    return false;
-}
-
-void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
+void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr)
 {
     //getDataValue<GraphicData>(shared, Sdl2Ids::graphicData())->setRenderEverything();
-}
-
-void frts::VanillaDemoTickable::validateData(frts::SharedManagerPtr)
-{
-    // Everything is ok.
 }
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)

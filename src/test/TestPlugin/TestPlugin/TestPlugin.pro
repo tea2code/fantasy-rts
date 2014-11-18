@@ -14,6 +14,7 @@ QMAKE_CXXFLAGS += -Wno-error=unused-parameter
 
 # Includes.
 INCLUDEPATH += $$PWD/../../..
+INCLUDEPATH += $$PWD/../../../../src-helper
 
 # Headers and sources.
 SOURCES += \

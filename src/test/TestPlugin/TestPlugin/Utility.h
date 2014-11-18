@@ -1,6 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include <frts/BaseUtility.h>
 #include <frts/module>
 #include <frts/shared>
 

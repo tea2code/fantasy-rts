@@ -34,6 +34,14 @@ namespace frts
     public:
         virtual ~PathFinder() {}
 
+        /**
+         * @brief Tries to find a path between start and goal.
+         * @param start The start position.
+         * @param goal The goal.
+         * @param blockedBy Indicates which entities block the path.
+         * @param shared The shared manager.
+         * @return A path if possible or empty if no path is found.
+         */
         virtual Path findPath(PointPtr start, PointPtr goal, BlockedBy blockedBy, SharedManagerPtr shared) = 0;
     };
 }

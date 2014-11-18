@@ -10,6 +10,10 @@
 #include <boost/format.hpp>
 
 
+frts::Sdl2Renderer::Sdl2Renderer()
+    : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1)
+{}
+
 bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
 {
     auto gd = makeGraphicData();
@@ -24,29 +28,9 @@ frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) co
     return getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 }
 
-std::string frts::Sdl2Renderer::getName() const
-{
-    return "frts::SDL2Renderer";
-}
-
 std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
 {
     return {"style", "screen", "tile"};
-}
-
-std::string frts::Sdl2Renderer::getTypeName() const
-{
-    return getName();
-}
-
-int frts::Sdl2Renderer::getTypeVersion() const
-{
-    return 1;
-}
-
-int frts::Sdl2Renderer::getVersion() const
-{
-    return 1;
 }
 
 bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
@@ -153,11 +137,6 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
             drawer.setSpriteConfig(shared, rootNamespace, node->getNode("sprites"));
         }
     }
-}
-
-bool frts::Sdl2Renderer::preInit(SharedManagerPtr)
-{
-    return false;
 }
 
 void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
