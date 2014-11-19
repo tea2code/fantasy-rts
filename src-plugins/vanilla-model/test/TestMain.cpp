@@ -12,7 +12,7 @@
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
-#include <pathfinding/impl/DistanceAlgorithmImpl.h>
+#include <pathfinding/impl/EuclideanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 
@@ -112,7 +112,7 @@ TEST_CASE("RegionManager.", "[main]")
                                                                          sizeX, sizeY);
     frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
-    frts::DistanceAlgorithmPtr distAlgo = frts::makeDistanceAlgorithm();
+    frts::DistanceAlgorithmPtr distAlgo = frts::makeEuclideanDistance();
     frts::IdPtr hasResourceType = frts::makeId(frts::ComponentIds::hasResource());
     frts::LockableResourceManagerPtr resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
     frts::IdPtr isResourceType = frts::makeId(frts::ComponentIds::isResource());

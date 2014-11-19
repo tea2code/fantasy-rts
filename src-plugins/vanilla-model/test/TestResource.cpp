@@ -8,7 +8,7 @@
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
-#include <pathfinding/impl/DistanceAlgorithmImpl.h>
+#include <pathfinding/impl/EuclideanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 #include <resource/impl/ResourceLockImpl.h>
@@ -54,7 +54,7 @@ TEST_CASE("LockableResourceManager.", "[resource]")
     region->setPos(entity3, pos3, shared);
     region->setPos(entity4, pos4, shared);
 
-    frts::DistanceAlgorithmPtr distAlgo = frts::makeDistanceAlgorithm();
+    frts::DistanceAlgorithmPtr distAlgo = frts::makeEuclideanDistance();
 
     SECTION("With HasResource")
     {

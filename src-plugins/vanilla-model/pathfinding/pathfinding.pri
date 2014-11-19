@@ -1,7 +1,7 @@
 HEADERS += \
     $$PWD/PathFinder.h \
     $$PWD/DistanceAlgorithm.h \
-    $$PWD/impl/DistanceAlgorithmImpl.h
+    $$PWD/impl/EuclideanDistance.h
     
 SOURCES += \
-    $$PWD/impl/DistanceAlgorithmImpl.cpp
+    $$PWD/impl/EuclideanDistance.cpp
