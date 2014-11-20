@@ -42,7 +42,7 @@ namespace frts
          * @param shared The shared manager.
          * @return A path if possible or empty if no path is found.
          */
-        virtual Path findPath(PointPtr start, PointPtr goal, BlockedBy blockedBy, SharedManagerPtr shared) = 0;
+        virtual Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
     };
 }
 
