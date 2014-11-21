@@ -1,5 +1,6 @@
 #include <catch.hpp>
 
+#include <entity/impl/BlockingImpl.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/EntityImpl.h>
 #include <region/impl/PointImpl.h>
@@ -60,17 +61,11 @@ namespace test
             auto entity = frts::makeEntity();
 
             auto id = maps.at(pos->getZ()).at(pos->getX()).at(pos->getY());
-            if (id == "g")
+            if (id == "w")
             {
-
-            }
-            else if (id == "w")
-            {
-
-            }
-            else
-            {
-                throw std::runtime_error("Unknown map id: " + id);
+                auto blocking = frts::makeBlocking(blockingType);
+                blocking->addBlock(shared->makeId(id));
+                entity->addComponent(blocking);
             }
 
             auto block = frts::makeBlock(blockingType, sortOrderType);
