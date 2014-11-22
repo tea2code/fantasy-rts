@@ -12,7 +12,8 @@
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 #include <pathfinding/impl/EuclideanDistance.h>
-#include <pathfinding/PathFinder.h>
+#include <pathfinding/impl/ManhattanDistance.h>
+#include <pathfinding/impl/AStar.h>
 
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
@@ -137,7 +138,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = nullptr;
+        frts::PathFinderPtr pathFinder = frts::makeAStar();
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
@@ -208,7 +209,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = nullptr;
+        frts::PathFinderPtr pathFinder = frts::makeAStar();
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
@@ -277,4 +278,25 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.at(52) == frts::makePoint(8, 9, 0));
         REQUIRE(path.at(53) == frts::makePoint(9, 9, 0));
     }
+}
+
+TEST_CASE("Euclidean distance.", "[pathfinding]")
+{
+    auto ed = frts::makeEuclideanDistance();
+    REQUIRE(ed->distance(frts::makePoint(0, 0, 0), frts::makePoint(1, 1, 0)) == Approx(1.4142));
+    REQUIRE(ed->distance(frts::makePoint(2, -1, 0), frts::makePoint(-2, 2, 0)) == Approx(5));
+    REQUIRE(ed->distance(frts::makePoint(0, 3, 4), frts::makePoint(7, 6, 3)) == Approx(7.6811));
+}
+
+TEST_CASE("Manhattan distance.", "[pathfinding]")
+{
+    auto md = frts::makeManhattanDistance();
+    REQUIRE(md->distance(frts::makePoint(0, 0, 0), frts::makePoint(1, 1, 0)) == Approx(2));
+    REQUIRE(md->distance(frts::makePoint(2, -1, 0), frts::makePoint(-2, 2, 0)) == Approx(7));
+    REQUIRE(md->distance(frts::makePoint(0, 3, 4), frts::makePoint(7, 6, 3)) == Approx(11));
+
+    md = frts::makeManhattanDistance(2.5);
+    REQUIRE(md->distance(frts::makePoint(0, 0, 0), frts::makePoint(1, 1, 0)) == Approx(5));
+    REQUIRE(md->distance(frts::makePoint(2, -1, 0), frts::makePoint(-2, 2, 0)) == Approx(17.5));
+    REQUIRE(md->distance(frts::makePoint(0, 3, 4), frts::makePoint(7, 6, 3)) == Approx(27.5));
 }

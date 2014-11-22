@@ -15,7 +15,7 @@ namespace frts
     };
 
     /**
-     * @brief Create new distance algorithm.
+     * @brief Create new distance algorithm based on euclidean distance.
      * @return The distance algorithm.
      */
     inline DistanceAlgorithmPtr makeEuclideanDistance()
