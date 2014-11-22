@@ -56,6 +56,16 @@ TEST_CASE("ModelFactory.", "[main]")
         REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
     }
 
+    SECTION("Get path finder.")
+    {
+        // Execute init() twice because it waits one run.
+        modelFactory->createData(shared);
+        modelFactory->init(shared);
+        modelFactory->init(shared);
+
+        REQUIRE(modelFactory->getPathFinder() != nullptr);
+    }
+
     SECTION("Build empty entity.")
     {
         frts::EntityPtr entity = modelFactory->makeEntity();

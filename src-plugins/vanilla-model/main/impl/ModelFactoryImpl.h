@@ -30,6 +30,7 @@ namespace frts
 
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
+        PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
@@ -45,6 +46,7 @@ namespace frts
         void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) override;
         void setHasResourceType(IdPtr hasResourceType) override;
         void setIsResourceType(IdPtr isResourceType) override;
+        void setPathFinder(PathFinderPtr pathFinder) override;
         void setRegion(RegionPtr region) override;
         void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
         void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) override;
@@ -67,6 +69,7 @@ namespace frts
         bool firstInit = true;
         IdPtr hasResourceType;
         IdPtr isResourceType;
+        PathFinderPtr pathFinder;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;

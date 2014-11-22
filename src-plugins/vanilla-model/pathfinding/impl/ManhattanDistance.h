@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Calculate distance using manhattan distance.
+     */
     class ManhattanDistance : public DistanceAlgorithm
     {
     public:

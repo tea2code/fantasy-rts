@@ -90,6 +90,10 @@ Load using `frts/ModelReseter` in the `renderModule` section of the load file.
 
 Will identify itself by the name and type `frts::ModelReseter`.
 
+### Path Finder
+
+The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with euclidean distance.
+
 ### Point
 
 A Point represents a 3D coordinate in the current region. It consists of x, y and z. It allows different mathematical operations.

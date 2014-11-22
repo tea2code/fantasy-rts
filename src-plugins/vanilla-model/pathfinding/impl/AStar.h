@@ -1,6 +1,7 @@
 #ifndef FRTS_ASTAR_H
 #define FRTS_ASTAR_H
 
+#include <pathfinding/DistanceAlgorithm.h>
 #include <pathfinding/PathFinder.h>
 
 #include <memory>
@@ -19,22 +20,27 @@ namespace frts
      * @brief Implementation of path finding using
      *        the A* algorithm.
      * @see http://theory.stanford.edu/~amitp/GameProgramming/
+     * @param distanceAlgorithm The distance algorithm to use.
      */
     class AStar : public PathFinder
     {
     public:
-        AStar();
+        AStar(DistanceAlgorithmPtr distanceAlgorithm);
 
         Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+
+    private:
+        DistanceAlgorithmPtr distanceAlgorithm;
     };
 
     /**
      * @brief Create a new AStar.
+     * @param distanceAlgorithm The distance algorithm to use.
      * @return The path finder.
      */
-    inline PathFinderPtr makeAStar()
+    inline PathFinderPtr makeAStar(DistanceAlgorithmPtr distanceAlgorithm)
     {
-        return std::make_shared<AStar>();
+        return std::make_shared<AStar>(distanceAlgorithm);
     }
 }
 

@@ -8,6 +8,7 @@
 #include <region/Region.h>
 #include <region/RegionGenerator.h>
 #include <pathfinding/DistanceAlgorithm.h>
+#include <pathfinding/PathFinder.h>
 #include <resource/LockableResourceManager.h>
 
 #include <frts/module>
@@ -33,6 +34,12 @@ namespace frts
     {
     public:
         virtual ~ModelFactory() {}
+
+        /**
+         * @brief Get the path finder. The result is undefined before init() is called.
+         * @return The path finder.
+         */
+        virtual PathFinderPtr getPathFinder() const = 0;
 
         /**
          * @brief Make a component using the specified builder.
@@ -79,9 +86,9 @@ namespace frts
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
 
         /**
-         * @brief Set distance algorithm for resource managers. Only used for the
-         *        build in resource managers. This method has only an effect
-         *        if it is used before init().
+         * @brief Set distance algorithm for resource managers and path finder.
+         *        Only used for the build in resource managers and path finder.
+         *        This method has only an effect if it is used before init().
          * @param distAlgo The distance algorithm.
          */
         virtual void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) = 0;
@@ -103,6 +110,13 @@ namespace frts
         virtual void setIsResourceType(IdPtr isResourceType) = 0;
 
         /**
+         * @brief Set the path finder. This method has only an effect
+         *        if it is used before init().
+         * @param pathFinder The path finder.
+         */
+        virtual void setPathFinder(PathFinderPtr pathFinder) = 0;
+
+        /**
          * @brief Set region. This method has only an effect if it is used
          *        before init().
          * @param region The region.
@@ -117,7 +131,7 @@ namespace frts
         virtual void setRegionGenerator(RegionGeneratorPtr regionGenerator) = 0;
 
         /**
-         * @brief Set resource entity manager.  This method has only an effect
+         * @brief Set resource entity manager. This method has only an effect
          *        if it is used before init().
          * @param resourceEntityManager The resource manager.
          */

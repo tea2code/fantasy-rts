@@ -16,6 +16,7 @@
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
+#include <pathfinding/impl/AStar.h>
 #include <pathfinding/impl/EuclideanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
@@ -45,6 +46,11 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 std::string frts::ModelFactoryImpl::getName() const
 {
     return ModelIds::modelFactory();
+}
+
+frts::PathFinderPtr frts::ModelFactoryImpl::getPathFinder() const
+{
+    return pathFinder;
 }
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
@@ -134,6 +140,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     if (isResourceType == nullptr)
     {
         isResourceType = shared->makeId(ComponentIds::isResource());
+    }
+
+    if (pathFinder == nullptr)
+    {
+        pathFinder = makeAStar(distAlgo);
     }
 
     if (resourceEntityManager == nullptr)
@@ -256,6 +267,11 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         regionConfig->setMapSizeX(node->getInteger("width"));
         regionConfig->setMapSizeY(node->getInteger("height"));
     }
+}
+
+void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
+{
+    this->pathFinder = pathFinder;
 }
 
 bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)

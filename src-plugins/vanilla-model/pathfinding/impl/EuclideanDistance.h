@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Calculate distance using euclidean distance.
+     */
     class EuclideanDistance : public DistanceAlgorithm
     {
     public:
