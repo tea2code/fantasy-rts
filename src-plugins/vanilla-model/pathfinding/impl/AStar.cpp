@@ -65,10 +65,6 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     while (current != start)
     {
         current = cameFrom[current];
-        if (current == start)
-        {
-            break;
-        }
         path.push_back(current);
     }
     std::reverse(path.begin(), path.end());

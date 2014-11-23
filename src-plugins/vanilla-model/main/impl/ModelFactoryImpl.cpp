@@ -10,6 +10,7 @@
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceBuilder.h>
+#include <entity/impl/MovableBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
@@ -106,6 +107,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto isResourceId = shared->makeId(ComponentIds::isResource());
     componentBuilder = makeIsResourceBuilder();
     registerComponentBuilder(isResourceId, componentBuilder);
+
+    // Movable.
+    auto movableId = shared->makeId(ComponentIds::movable());
+    componentBuilder = makeMovableBuilder();
+    registerComponentBuilder(movableId, componentBuilder);
 
     // SortOrder.
     auto sortOrderId = shared->makeId(ComponentIds::sortOrder());

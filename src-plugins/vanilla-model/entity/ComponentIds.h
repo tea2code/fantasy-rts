@@ -36,6 +36,11 @@ namespace frts
             return "frts.vanillamodel.entity.component.isresource";
         }
 
+        static std::string movable()
+        {
+            return "frts.vanillamodel.entity.component.movable";
+        }
+
         static std::string sortOrder()
         {
             return "frts.vanillamodel.entity.component.sortorder";

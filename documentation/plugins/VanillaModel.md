@@ -42,6 +42,10 @@ Entities may contain resources which can be harvested.
 
 Entities with this component represent a resource.
 
+#### Movable
+
+Entities with this component can move and may change the direction they are looking.
+
 #### SortOrder
 
 Entities may have a certain order in a block. The sort order component stores this attribute.

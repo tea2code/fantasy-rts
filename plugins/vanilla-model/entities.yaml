@@ -22,6 +22,7 @@ entities:
                 - blocking.air
                 - blocking.wall
                 - blocking.water
+            - component: frts.vanillamodel.entity.component.movable
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 240
     

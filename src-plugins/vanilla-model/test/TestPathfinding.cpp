@@ -145,28 +145,29 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
 
         auto goal = frts::makePoint(9, 0, 0);
         auto path = pathFinder->findPath(start, goal, blockedBy, shared);
-        REQUIRE(path.size() == 9);
-        for (int i = 1; i <= 9; ++i)
+        REQUIRE(path.size() == 10);
+        for (int i = 0; i < 10; ++i)
         {
-            REQUIRE(path.at(i-1) == frts::makePoint(i, 0, 0));
+            REQUIRE(path.at(i) == frts::makePoint(i, 0, 0));
         }
 
         goal = frts::makePoint(0, 9, 0);
         path = pathFinder->findPath(start, goal, blockedBy, shared);
-        REQUIRE(path.size() == 9);
-        for (int i = 1; i <= 9; ++i)
+        REQUIRE(path.size() == 10);
+        for (int i = 0; i < 10; ++i)
         {
-            REQUIRE(path.at(i-1) == frts::makePoint(0, i, 0));
+            REQUIRE(path.at(i) == frts::makePoint(0, i, 0));
         }
 
         goal = frts::makePoint(9, 9, 0);
         path = pathFinder->findPath(start, goal, blockedBy, shared);
 
-        REQUIRE(path.size() == 18);
+        REQUIRE(path.size() == 19);
 
         // Based on floating point inaccuracy the result may differ. So lets just check start and goal.
-        REQUIRE(path.at(0) == frts::makePoint(1, 0, 0));
-        REQUIRE(path.at(17) == frts::makePoint(9, 9, 0));
+        REQUIRE(path.at(0) == frts::makePoint(0, 0, 0));
+        REQUIRE(path.at(1) == frts::makePoint(1, 0, 0));
+        REQUIRE(path.at(18) == frts::makePoint(9, 9, 0));
     }
 
     SECTION("Snake path from (0, 0) to (9, 9).")
@@ -204,66 +205,67 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto goal = frts::makePoint(9, 9, 0);
         auto path = pathFinder->findPath(start, goal, blockedBy, shared);
 
-        REQUIRE(path.size() == 54);
+        REQUIRE(path.size() == 55);
 
-        REQUIRE(path.at(0) == frts::makePoint(0, 1, 0));
-        REQUIRE(path.at(1) == frts::makePoint(0, 2, 0));
-        REQUIRE(path.at(2) == frts::makePoint(0, 3, 0));
-        REQUIRE(path.at(3) == frts::makePoint(0, 4, 0));
-        REQUIRE(path.at(4) == frts::makePoint(0, 5, 0));
-        REQUIRE(path.at(5) == frts::makePoint(0, 6, 0));
-        REQUIRE(path.at(6) == frts::makePoint(0, 7, 0));
-        REQUIRE(path.at(7) == frts::makePoint(0, 8, 0));
-        REQUIRE(path.at(8) == frts::makePoint(0, 9, 0));
-        REQUIRE(path.at(9) == frts::makePoint(1, 9, 0));
+        REQUIRE(path.at(0) == frts::makePoint(0, 0, 0));
+        REQUIRE(path.at(1) == frts::makePoint(0, 1, 0));
+        REQUIRE(path.at(2) == frts::makePoint(0, 2, 0));
+        REQUIRE(path.at(3) == frts::makePoint(0, 3, 0));
+        REQUIRE(path.at(4) == frts::makePoint(0, 4, 0));
+        REQUIRE(path.at(5) == frts::makePoint(0, 5, 0));
+        REQUIRE(path.at(6) == frts::makePoint(0, 6, 0));
+        REQUIRE(path.at(7) == frts::makePoint(0, 7, 0));
+        REQUIRE(path.at(8) == frts::makePoint(0, 8, 0));
+        REQUIRE(path.at(9) == frts::makePoint(0, 9, 0));
+        REQUIRE(path.at(10) == frts::makePoint(1, 9, 0));
 
-        REQUIRE(path.at(10) == frts::makePoint(2, 9, 0));
-        REQUIRE(path.at(11) == frts::makePoint(2, 8, 0));
-        REQUIRE(path.at(12) == frts::makePoint(2, 7, 0));
-        REQUIRE(path.at(13) == frts::makePoint(2, 6, 0));
-        REQUIRE(path.at(14) == frts::makePoint(2, 5, 0));
-        REQUIRE(path.at(15) == frts::makePoint(2, 4, 0));
-        REQUIRE(path.at(16) == frts::makePoint(2, 3, 0));
-        REQUIRE(path.at(17) == frts::makePoint(2, 2, 0));
-        REQUIRE(path.at(18) == frts::makePoint(2, 1, 0));
-        REQUIRE(path.at(19) == frts::makePoint(2, 0, 0));
-        REQUIRE(path.at(20) == frts::makePoint(3, 0, 0));
+        REQUIRE(path.at(11) == frts::makePoint(2, 9, 0));
+        REQUIRE(path.at(12) == frts::makePoint(2, 8, 0));
+        REQUIRE(path.at(13) == frts::makePoint(2, 7, 0));
+        REQUIRE(path.at(14) == frts::makePoint(2, 6, 0));
+        REQUIRE(path.at(15) == frts::makePoint(2, 5, 0));
+        REQUIRE(path.at(16) == frts::makePoint(2, 4, 0));
+        REQUIRE(path.at(17) == frts::makePoint(2, 3, 0));
+        REQUIRE(path.at(18) == frts::makePoint(2, 2, 0));
+        REQUIRE(path.at(19) == frts::makePoint(2, 1, 0));
+        REQUIRE(path.at(20) == frts::makePoint(2, 0, 0));
+        REQUIRE(path.at(21) == frts::makePoint(3, 0, 0));
 
-        REQUIRE(path.at(21) == frts::makePoint(4, 0, 0));
-        REQUIRE(path.at(22) == frts::makePoint(4, 1, 0));
-        REQUIRE(path.at(23) == frts::makePoint(4, 2, 0));
-        REQUIRE(path.at(24) == frts::makePoint(4, 3, 0));
-        REQUIRE(path.at(25) == frts::makePoint(4, 4, 0));
-        REQUIRE(path.at(26) == frts::makePoint(4, 5, 0));
-        REQUIRE(path.at(27) == frts::makePoint(4, 6, 0));
-        REQUIRE(path.at(28) == frts::makePoint(4, 7, 0));
-        REQUIRE(path.at(29) == frts::makePoint(4, 8, 0));
-        REQUIRE(path.at(30) == frts::makePoint(4, 9, 0));
-        REQUIRE(path.at(31) == frts::makePoint(5, 9, 0));
+        REQUIRE(path.at(22) == frts::makePoint(4, 0, 0));
+        REQUIRE(path.at(23) == frts::makePoint(4, 1, 0));
+        REQUIRE(path.at(24) == frts::makePoint(4, 2, 0));
+        REQUIRE(path.at(25) == frts::makePoint(4, 3, 0));
+        REQUIRE(path.at(26) == frts::makePoint(4, 4, 0));
+        REQUIRE(path.at(27) == frts::makePoint(4, 5, 0));
+        REQUIRE(path.at(28) == frts::makePoint(4, 6, 0));
+        REQUIRE(path.at(29) == frts::makePoint(4, 7, 0));
+        REQUIRE(path.at(30) == frts::makePoint(4, 8, 0));
+        REQUIRE(path.at(31) == frts::makePoint(4, 9, 0));
+        REQUIRE(path.at(32) == frts::makePoint(5, 9, 0));
 
-        REQUIRE(path.at(32) == frts::makePoint(6, 9, 0));
-        REQUIRE(path.at(33) == frts::makePoint(6, 8, 0));
-        REQUIRE(path.at(34) == frts::makePoint(6, 7, 0));
-        REQUIRE(path.at(35) == frts::makePoint(6, 6, 0));
-        REQUIRE(path.at(36) == frts::makePoint(6, 5, 0));
-        REQUIRE(path.at(37) == frts::makePoint(6, 4, 0));
-        REQUIRE(path.at(38) == frts::makePoint(6, 3, 0));
-        REQUIRE(path.at(39) == frts::makePoint(6, 2, 0));
-        REQUIRE(path.at(40) == frts::makePoint(6, 1, 0));
-        REQUIRE(path.at(41) == frts::makePoint(6, 0, 0));
-        REQUIRE(path.at(42) == frts::makePoint(7, 0, 0));
+        REQUIRE(path.at(33) == frts::makePoint(6, 9, 0));
+        REQUIRE(path.at(34) == frts::makePoint(6, 8, 0));
+        REQUIRE(path.at(35) == frts::makePoint(6, 7, 0));
+        REQUIRE(path.at(36) == frts::makePoint(6, 6, 0));
+        REQUIRE(path.at(37) == frts::makePoint(6, 5, 0));
+        REQUIRE(path.at(38) == frts::makePoint(6, 4, 0));
+        REQUIRE(path.at(39) == frts::makePoint(6, 3, 0));
+        REQUIRE(path.at(40) == frts::makePoint(6, 2, 0));
+        REQUIRE(path.at(41) == frts::makePoint(6, 1, 0));
+        REQUIRE(path.at(42) == frts::makePoint(6, 0, 0));
+        REQUIRE(path.at(43) == frts::makePoint(7, 0, 0));
 
-        REQUIRE(path.at(43) == frts::makePoint(8, 0, 0));
-        REQUIRE(path.at(44) == frts::makePoint(8, 1, 0));
-        REQUIRE(path.at(45) == frts::makePoint(8, 2, 0));
-        REQUIRE(path.at(46) == frts::makePoint(8, 3, 0));
-        REQUIRE(path.at(47) == frts::makePoint(8, 4, 0));
-        REQUIRE(path.at(48) == frts::makePoint(8, 5, 0));
-        REQUIRE(path.at(49) == frts::makePoint(8, 6, 0));
-        REQUIRE(path.at(50) == frts::makePoint(8, 7, 0));
-        REQUIRE(path.at(51) == frts::makePoint(8, 8, 0));
-        REQUIRE(path.at(52) == frts::makePoint(8, 9, 0));
-        REQUIRE(path.at(53) == frts::makePoint(9, 9, 0));
+        REQUIRE(path.at(44) == frts::makePoint(8, 0, 0));
+        REQUIRE(path.at(45) == frts::makePoint(8, 1, 0));
+        REQUIRE(path.at(46) == frts::makePoint(8, 2, 0));
+        REQUIRE(path.at(47) == frts::makePoint(8, 3, 0));
+        REQUIRE(path.at(48) == frts::makePoint(8, 4, 0));
+        REQUIRE(path.at(49) == frts::makePoint(8, 5, 0));
+        REQUIRE(path.at(50) == frts::makePoint(8, 6, 0));
+        REQUIRE(path.at(51) == frts::makePoint(8, 7, 0));
+        REQUIRE(path.at(52) == frts::makePoint(8, 8, 0));
+        REQUIRE(path.at(53) == frts::makePoint(8, 9, 0));
+        REQUIRE(path.at(54) == frts::makePoint(9, 9, 0));
     }
 }
 

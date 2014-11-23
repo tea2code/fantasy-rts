@@ -12,7 +12,9 @@ SOURCES += \
     entity/impl/HasResourceBuilder.cpp \
     entity/impl/IsResourceBuilder.cpp \
     entity/impl/DropImpl.cpp \
-    entity/impl/DropBuilder.cpp
+    entity/impl/DropBuilder.cpp \
+    $$PWD/impl/MovableImpl.cpp \
+    $$PWD/impl/MovableBuilder.cpp
     
 
 HEADERS += \
@@ -39,4 +41,7 @@ HEADERS += \
     entity/impl/IsResourceBuilder.h \
     entity/Drop.h \
     entity/impl/DropImpl.h \
-    entity/impl/DropBuilder.h
+    entity/impl/DropBuilder.h \
+    $$PWD/Movable.h \
+    $$PWD/impl/MovableImpl.h \
+    $$PWD/impl/MovableBuilder.h

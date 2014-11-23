@@ -40,7 +40,7 @@ namespace frts
          * @param goal The goal.
          * @param blockedBy Indicates which entities block the path.
          * @param shared The shared manager.
-         * @return A path if possible or empty if no path is found.
+         * @return A path if possible or empty if no path is found. The path includes start and goal.
          */
         virtual Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
     };
