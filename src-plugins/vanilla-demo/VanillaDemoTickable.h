@@ -2,6 +2,7 @@
 #define FRTS_VANILLADEMOTICKABLE_H
 
 #include <frts/BaseTickable.h>
+#include <frts/vanillamodel>
 
 
 namespace frts
@@ -23,6 +24,10 @@ namespace frts
         bool init(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
+
+    private:
+        PointPtr lastCursorPos;
+        EntityPtr player;
     };
 }
 

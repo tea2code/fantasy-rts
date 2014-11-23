@@ -1,6 +1,7 @@
 #include "MoveScreenCommand.h"
 
 #include <graphic/GraphicData.h>
+#include "GraphicUtility.h"
 #include <main/Sdl2Ids.h>
 
 #include <algorithm>
@@ -16,6 +17,14 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+
+    // Old cursor position without offset.
+    auto cursorPos = rm->getPos(gd->getCursor(), shared);
+    cursorPos = mf->makePoint(cursorPos->getX() - gd->getScreenOffsetX(),
+                              cursorPos->getY() - gd->getScreenOffsetY(),
+                              cursorPos->getZ());
 
     // X -> West
     if (x > 0 && gd->getScreenOffsetX() > 0)
@@ -26,7 +35,7 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
     }
 
     // X -> East
-    Point::value maxX = rc->getMapSizeX() - (gd->getScreenWidth() / gd->getTileWidth());
+    Point::value maxX = rc->getMapSizeX() - screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
     if (x < 0 && gd->getScreenOffsetX() < maxX)
     {
         auto offset = std::min(gd->getScreenOffsetX() - x, maxX);
@@ -43,7 +52,7 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
     }
 
     // Y -> South
-    Point::value maxY = rc->getMapSizeY() - (gd->getScreenHeight() / gd->getTileHeight());
+    Point::value maxY = rc->getMapSizeY() - screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
     if (y < 0 && gd->getScreenOffsetY() < maxY)
     {
         auto offset = std::min(gd->getScreenOffsetY() - y, maxY);
@@ -61,6 +70,12 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
     if (lastX || lastY || lastZ)
     {
         gd->setRenderEverything(true);
+
+        // Update cursor.
+        cursorPos = mf->makePoint(cursorPos->getX() + gd->getScreenOffsetX(),
+                                  cursorPos->getY() + gd->getScreenOffsetY(),
+                                  gd->getZLevel());
+        rm->setPos(gd->getCursor(), cursorPos, shared);
     }
 }
 
@@ -73,6 +88,14 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
 {
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+
+    // Old cursor position without offset.
+    auto cursorPos = rm->getPos(gd->getCursor(), shared);
+    cursorPos = mf->makePoint(cursorPos->getX() - gd->getScreenOffsetX(),
+                              cursorPos->getY() - gd->getScreenOffsetY(),
+                              cursorPos->getZ());
 
     Point::value undoX = -x;
     Point::value undoY = -y;
@@ -85,16 +108,14 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
         {
             auto offset = std::max(gd->getScreenOffsetX() - undoX, 0);
             gd->setScreenOffsetX(offset);
-            gd->setRenderEverything(true);
         }
 
         // X -> East
-        Point::value maxX = rc->getMapSizeX() - (gd->getScreenWidth() / gd->getTileWidth());
+        Point::value maxX = rc->getMapSizeX() - screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
         if (undoX < 0 && gd->getScreenOffsetX() < maxX)
         {
             auto offset = std::min(gd->getScreenOffsetX() - undoX, maxX);
             gd->setScreenOffsetX(offset);
-            gd->setRenderEverything(true);
         }
     }
 
@@ -105,16 +126,14 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
         {
             auto offset = std::max(gd->getScreenOffsetY() - undoY, 0);
             gd->setScreenOffsetY(offset);
-            gd->setRenderEverything(true);
         }
 
         // Y -> South
-        Point::value maxY = rc->getMapSizeY() - (gd->getScreenHeight() / gd->getTileHeight());
+        Point::value maxY = rc->getMapSizeY() - screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
         if (undoY < 0 && gd->getScreenOffsetY() < maxY)
         {
             auto offset = std::min(gd->getScreenOffsetY() - undoY, maxY);
             gd->setScreenOffsetY(offset);
-            gd->setRenderEverything(true);
         }
     }
 
@@ -124,9 +143,16 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
         if (undoZ != 0)
         {
             gd->setZLevel(gd->getZLevel() + undoZ);
-            gd->setRenderEverything(true);
         }
     }
 
     lastX = lastY = lastZ = false;
+
+    gd->setRenderEverything(true);
+
+    // Update cursor.
+    cursorPos = mf->makePoint(cursorPos->getX() + gd->getScreenOffsetX(),
+                              cursorPos->getY() + gd->getScreenOffsetY(),
+                              gd->getZLevel());
+    rm->setPos(gd->getCursor(), cursorPos, shared);
 }

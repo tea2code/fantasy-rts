@@ -15,6 +15,7 @@ frts::VanillaDemoTickable::VanillaDemoTickable()
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
+    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     Point::value surfaceZLevel = 0;
     auto blockingType = shared->makeId(ComponentIds::blocking());
     auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
@@ -22,16 +23,32 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
                                                    regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
                                                    surfaceZLevel);
-    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     modelFactory->setRegionGenerator(regionGenerator);
 
     shared->getLog()->debug(getName(), "Demo loaded");
     return false;
 }
 
-void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr)
+void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
-    //getDataValue<GraphicData>(shared, Sdl2Ids::graphicData())->setRenderEverything();
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+
+    if (shared->getFrame()->getNumber() == 0)
+    {
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
+        rm->setPos(player, mf->makePoint(0, 0, 0), shared);
+
+        lastCursorPos = rm->getPos(gd->getCursor(), shared);
+    }
+
+    auto cursorPos = rm->getPos(gd->getCursor(), shared);
+    if (lastCursorPos != cursorPos)
+    {
+        shared->getLog()->debug(getName(), "Cursor has moved.");
+        lastCursorPos = cursorPos;
+    }
 }
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)

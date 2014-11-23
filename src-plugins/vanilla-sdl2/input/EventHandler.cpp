@@ -1,6 +1,10 @@
 #include "EventHandler.h"
 
+#include <graphic/impl/GraphicUtility.h>
+#include <graphic/GraphicData.h>
+#include <main/Sdl2Ids.h>
 #include <frts/vanillacommand>
+#include <frts/vanillamodel>
 
 
 frts::EventHandler::EventHandler()
@@ -38,6 +42,21 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
                     command->execute(shared);
                     commandFactory->addToUndo(command, shared);
                 }
+            }
+            break;
+
+            case SDL_MOUSEMOTION:
+            {
+                // Set cursor position based on mouse event then update region and screen.
+                auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+                auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+                auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+                Point::value x = screenToRegion(event.motion.x, gd->getTileWidth()) + gd->getScreenOffsetX();
+                Point::value y = screenToRegion(event.motion.y, gd->getTileHeight()) + gd->getScreenOffsetY();
+                auto newPos = mf->makePoint(x, y, gd->getZLevel());
+                auto oldPos = rm->getPos(gd->getCursor(), shared);
+                rm->setPos(gd->getCursor(), newPos, shared);
+                rm->addChangedPos(oldPos);
             }
             break;
         }

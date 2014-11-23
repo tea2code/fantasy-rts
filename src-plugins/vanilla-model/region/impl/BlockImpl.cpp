@@ -43,6 +43,7 @@ void frts::BlockImpl::remove(EntityPtr entity)
         if (*it == entity)
         {
             entities->erase(it);
+            break;
         }
     }
 }

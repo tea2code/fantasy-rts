@@ -22,54 +22,94 @@ namespace frts
             return "frts::InputHandler";
         }
 
-        static std::string moveCommandWest()
+        static std::string moveScreenCommandWest()
         {
             return "frts.vanillasdl2.command.movescreen.west";
         }
 
-        static std::string moveCommandEast()
+        static std::string moveScreenCommandEast()
         {
             return "frts.vanillasdl2.command.movescreen.east";
         }
 
-        static std::string moveCommandNorth()
+        static std::string moveScreenCommandNorth()
         {
             return "frts.vanillasdl2.command.movescreen.north";
         }
 
-        static std::string moveCommandSouth()
+        static std::string moveScreenCommandSouth()
         {
             return "frts.vanillasdl2.command.movescreen.south";
         }
 
-        static std::string moveCommandNorthWest()
+        static std::string moveScreenCommandNorthWest()
         {
             return "frts.vanillasdl2.command.movescreen.northwest";
         }
 
-        static std::string moveCommandNorthEast()
+        static std::string moveScreenCommandNorthEast()
         {
             return "frts.vanillasdl2.command.movescreen.northeast";
         }
 
-        static std::string moveCommandSouthWest()
+        static std::string moveScreenCommandSouthWest()
         {
             return "frts.vanillasdl2.command.movescreen.southwest";
         }
 
-        static std::string moveCommandSouthEast()
+        static std::string moveScreenCommandSouthEast()
         {
             return "frts.vanillasdl2.command.movescreen.southeast";
         }
 
-        static std::string moveCommandUp()
+        static std::string moveScreenCommandUp()
         {
             return "frts.vanillasdl2.command.movescreen.up";
         }
 
-        static std::string moveCommandDown()
+        static std::string moveScreenCommandDown()
         {
             return "frts.vanillasdl2.command.movescreen.down";
+        }
+
+        static std::string moveCursorCommandWest()
+        {
+            return "frts.vanillasdl2.command.movecursor.west";
+        }
+
+        static std::string moveCursorCommandEast()
+        {
+            return "frts.vanillasdl2.command.movecursor.east";
+        }
+
+        static std::string moveCursorCommandNorth()
+        {
+            return "frts.vanillasdl2.command.movecursor.north";
+        }
+
+        static std::string moveCursorCommandSouth()
+        {
+            return "frts.vanillasdl2.command.movecursor.south";
+        }
+
+        static std::string moveCursorCommandNorthWest()
+        {
+            return "frts.vanillasdl2.command.movecursor.northwest";
+        }
+
+        static std::string moveCursorCommandNorthEast()
+        {
+            return "frts.vanillasdl2.command.movecursor.northeast";
+        }
+
+        static std::string moveCursorCommandSouthWest()
+        {
+            return "frts.vanillasdl2.command.movecursor.southwest";
+        }
+
+        static std::string moveCursorCommandSouthEast()
+        {
+            return "frts.vanillasdl2.command.movecursor.southeast";
         }
 
         static std::string renderable()

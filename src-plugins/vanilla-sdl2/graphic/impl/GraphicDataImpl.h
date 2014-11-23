@@ -12,6 +12,7 @@ namespace frts
     class GraphicDataImpl : public GraphicData
     {
     public:
+        EntityPtr getCursor() const override;
         unsigned int getMaxFps() const override;
         unsigned int getNumFpsAvg() const override;
         std::string getName() const override;
@@ -29,6 +30,7 @@ namespace frts
         int getVersion() const override;
         Point::value getZLevel() const override;
         bool isRenderEverything() const override;
+        void setCursor(EntityPtr cursor) override;
         void setMaxFps(unsigned int maxFps) override;
         void setNumFpsAvg(unsigned int numFpsAvg) override;
         void setRenderEverything(bool renderEverything = true) override;
@@ -44,6 +46,7 @@ namespace frts
         void setZLevel(Point::value zLevel) override;
 
     private:
+        EntityPtr cursor;
         unsigned int maxFps;
         unsigned int numFpsAvg;
         bool renderEverything;

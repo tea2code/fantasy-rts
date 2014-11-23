@@ -7,6 +7,7 @@
 #include <frts/BaseTickable.h>
 
 #include <memory>
+#include <string>
 
 
 namespace frts
@@ -34,10 +35,12 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
+        std::string cursorId;
         Drawer drawer;
+        bool firstInit = true;
         FpsManager fpsManager;
 
-    private:
+    private:     
         /**
          * @brief Retrieves the graphic data.
          * @param shared The shared manager.

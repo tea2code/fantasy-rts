@@ -1,5 +1,7 @@
 #include <catch.hpp>
 
+#include <graphic/impl/MoveCursorCommand.h>
+#include <graphic/impl/MoveCursorCommandBuilder.h>
 #include <graphic/impl/MoveScreenCommand.h>
 #include <graphic/impl/MoveScreenCommandBuilder.h>
 #include <graphic/impl/GraphicDataImpl.h>
@@ -139,7 +141,6 @@ TEST_CASE("Sprite.", "[graphic]")
     REQUIRE(sprite.getX() == 1);
     REQUIRE(sprite.getY() == 2);
 }
-
 
 TEST_CASE("MoveScreenCommand.", "[graphic]")
 {

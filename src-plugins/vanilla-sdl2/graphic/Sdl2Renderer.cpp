@@ -3,6 +3,7 @@
 #include "impl/GraphicDataImpl.h"
 #include "impl/RenderableBuilder.h"
 #include "impl/MoveScreenCommandBuilder.h"
+#include "impl/MoveCursorCommandBuilder.h"
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillacommand>
@@ -37,68 +38,133 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 {
     auto gd = graphicData(shared);
 
-    // Init fps manager.
-    fpsManager.setNumFpsAvg(gd->getNumFpsAvg());
+    if (firstInit)
+    {
+        firstInit = false;
 
-    // Register renderable.
-    auto id = shared->makeId(ModelIds::modelFactory());
-    auto modelFactory = std::static_pointer_cast<ModelFactory>(shared->getUtility(id));
-    auto componentId = shared->makeId(Sdl2Ids::renderable());
-    auto componentBuilder = makeRenderableBuilder();
-    modelFactory->registerComponentBuilder(componentId, componentBuilder);
+        // Init fps manager.
+        fpsManager.setNumFpsAvg(gd->getNumFpsAvg());
 
-    // Init drawer
-    drawer.init(shared);
-    gd->setRenderEverything();
+        // Register renderable.
+        auto id = shared->makeId(ModelIds::modelFactory());
+        auto modelFactory = std::static_pointer_cast<ModelFactory>(shared->getUtility(id));
+        auto componentId = shared->makeId(Sdl2Ids::renderable());
+        auto componentBuilder = makeRenderableBuilder();
+        modelFactory->registerComponentBuilder(componentId, componentBuilder);
 
-    // Add commands.
-    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+        // Init drawer
+        drawer.init(shared);
+        gd->setRenderEverything();
 
-    const int offsetStepX = (gd->getScreenOffsetStepX() / gd->getTileWidth());
-    const int offsetStepY = (gd->getScreenOffsetStepY() / gd->getTileHeight());
-    const int offsetStepZ = 1;
+        // Add commands.
+        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
 
-    // West
-    IdPtr commandId = shared->makeId(Sdl2Ids::moveCommandWest());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, 0, 0));
+        // Move screen.
+        {
+            const int offsetStepX = (gd->getScreenOffsetStepX() / gd->getTileWidth());
+            const int offsetStepY = (gd->getScreenOffsetStepY() / gd->getTileHeight());
+            const int offsetStepZ = 1;
 
-    // East
-    commandId = shared->makeId(Sdl2Ids::moveCommandEast());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, 0, 0));
+            // West
+            IdPtr commandId = shared->makeId(Sdl2Ids::moveScreenCommandWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, 0, 0));
 
-    // North
-    commandId = shared->makeId(Sdl2Ids::moveCommandNorth());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, offsetStepY, 0));
+            // East
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, 0, 0));
 
-    // South
-    commandId = shared->makeId(Sdl2Ids::moveCommandSouth());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, -offsetStepY, 0));
+            // North
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandNorth());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, offsetStepY, 0));
 
-    // Up
-    commandId = shared->makeId(Sdl2Ids::moveCommandUp());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, offsetStepZ));
+            // South
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandSouth());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, -offsetStepY, 0));
 
-    // Down
-    commandId = shared->makeId(Sdl2Ids::moveCommandDown());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, -offsetStepZ));
+            // Up
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandUp());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, offsetStepZ));
 
-    // North West
-    commandId = shared->makeId(Sdl2Ids::moveCommandNorthWest());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, offsetStepY, 0));
+            // Down
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandDown());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, 0, 0, -offsetStepZ));
 
-    // North East
-    commandId = shared->makeId(Sdl2Ids::moveCommandNorthEast());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, offsetStepY, 0));
+            // North West
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandNorthWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, offsetStepY, 0));
 
-    // South East
-    commandId = shared->makeId(Sdl2Ids::moveCommandSouthEast());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, -offsetStepY, 0));
+            // North East
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandNorthEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, offsetStepY, 0));
 
-    // South West
-    commandId = shared->makeId(Sdl2Ids::moveCommandSouthWest());
-    commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, -offsetStepY, 0));
+            // South East
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandSouthEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, -offsetStepX, -offsetStepY, 0));
 
-    return false;
+            // South West
+            commandId = shared->makeId(Sdl2Ids::moveScreenCommandSouthWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveScreenCommandBuilder(commandId, offsetStepX, -offsetStepY, 0));
+        }
+
+        // Move cursor.
+        {
+            const int cursorStepX = 1;
+            const int cursorStepY = 1;
+
+            // West
+            IdPtr commandId = shared->makeId(Sdl2Ids::moveCursorCommandWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, cursorStepX, 0, 0));
+
+            // East
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, -cursorStepX, 0, 0));
+
+            // North
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandNorth());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, 0, cursorStepY, 0));
+
+            // South
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandSouth());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, 0, -cursorStepY, 0));
+
+            // North West
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandNorthWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, cursorStepX, cursorStepY, 0));
+
+            // North East
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandNorthEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, -cursorStepX, cursorStepY, 0));
+
+            // South East
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandSouthEast());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, -cursorStepX, -cursorStepY, 0));
+
+            // South West
+            commandId = shared->makeId(Sdl2Ids::moveCursorCommandSouthWest());
+            commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, cursorStepX, -cursorStepY, 0));
+        }
+
+        return true;
+    }
+    else
+    {
+        try
+        {
+            // This will probably throw an exception the first time so lets repeat until it doesn't.
+            auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+            auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+            auto pos = mf->makePoint(0, 0, 0);
+            auto entity = mf->makeEntity(shared->makeId(cursorId), shared);
+            gd->setCursor(entity);
+            rm->setPos(entity, pos, shared);
+            return false;
+        }
+        catch (const IdNotFoundError&)
+        {
+            // Try again.
+            return true;
+        }
+    }
 }
 
 void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
@@ -107,6 +173,7 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     auto gd = graphicData(shared);
     if (key == "screen")
     {
+        cursorId = node->getString("cursor", cursorId);
         gd->setMaxFps(node->getInteger("fps", gd->getMaxFps()));
         gd->setNumFpsAvg(node->getInteger("num_fps_avg", gd->getNumFpsAvg()));
         gd->setScreenHeight(node->getInteger("height", gd->getScreenHeight()));
@@ -154,26 +221,26 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     drawer.setOffsetY(gd->getScreenOffsetY());
     if (gd->isRenderEverything())
     {
-        shared->getLog()->debug(getName(), "Beginning to render everything.");
+//        shared->getLog()->debug(getName(), "Beginning to render everything.");
 
         drawer.updateScreen(shared, gd->getZLevel());
         drawer.renderNow(shared);
         gd->setRenderEverything(false);
 
-        shared->getLog()->debug(getName(), "Finished rendering.");
+//        shared->getLog()->debug(getName(), "Finished rendering.");
     }
     else
     {
         auto changedPos = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getChangedPos();
         if (!changedPos.empty())
         {
-            auto msg = boost::format("Beginning to render %1% positions.") % changedPos.size();
-            shared->getLog()->debug(getName(), msg.str());
+//            auto msg = boost::format("Beginning to render %1% positions.") % changedPos.size();
+//            shared->getLog()->debug(getName(), msg.str());
 
             drawer.updatePositions(shared, changedPos, gd->getZLevel());
             drawer.renderNow(shared);
 
-            shared->getLog()->debug(getName(), "Finished rendering.");
+//            shared->getLog()->debug(getName(), "Finished rendering.");
         }
     }
 }
@@ -182,6 +249,11 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 {
     // Graphic Data
     auto gd = graphicData(shared);
+
+    if (cursorId.empty())
+    {
+        throw DataViolation("Cursor entity is not set.");
+    }
 
     if (gd->getMaxFps() == 0)
     {

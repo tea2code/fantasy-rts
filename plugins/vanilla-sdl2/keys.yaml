@@ -10,19 +10,22 @@ keys:
       command: frts.vanillasdl2.command.movescreen.east
     - key: a
       command: frts.vanillasdl2.command.movescreen.west
-    - key: right
-      command: frts.vanillasdl2.command.movescreen.east
-    - key: left
-      command: frts.vanillasdl2.command.movescreen.west
     - key: w
       command: frts.vanillasdl2.command.movescreen.north
     - key: s
-      command: frts.vanillasdl2.command.movescreen.south
-    - key: up
-      command: frts.vanillasdl2.command.movescreen.north
-    - key: down
       command: frts.vanillasdl2.command.movescreen.south
     - key: e
       command: frts.vanillasdl2.command.movescreen.up
     - key: q
       command: frts.vanillasdl2.command.movescreen.down
+      
+    # Cursor movement
+    - key: right
+      command: frts.vanillasdl2.command.movecursor.east
+    - key: left
+      command: frts.vanillasdl2.command.movecursor.west
+    - key: up
+      command: frts.vanillasdl2.command.movecursor.north
+    - key: down
+      command: frts.vanillasdl2.command.movecursor.south
+    

@@ -210,6 +210,19 @@ Its config consists only of the sprite ID:
 
     sprite: <string representing an id>
 
+### MoveCursorCommand
+
+This command (using the *VanillaCommand* plugin) allows movement of the cursor over the map. Following directions are implemented:
+
+- **North:** Using command id `frts.vanillasdl2.command.movecursor.north`.
+- **East:** Using command id `frts.vanillasdl2.command.movecursor.east`.
+- **South:** Using command id `frts.vanillasdl2.command.movecursor.south`.
+- **West:** Using command id `frts.vanillasdl2.command.movecursor.west`.
+- **North East:** Using command id `frts.vanillasdl2.command.movecursor.northeast`.
+- **South East:** Using command id `frts.vanillasdl2.command.movecursor.southeast`.
+- **South West:** Using command id `frts.vanillasdl2.command.movecursor.southwest`.
+- **North West:** Using command id `frts.vanillasdl2.command.movecursor.northwest`.
+
 ### MoveScreenCommand
 
 This command (using the *VanillaCommand* plugin) allows movement of the visible screen over the map. Following directions are implemented:
@@ -237,9 +250,11 @@ Will identify itself by the name and type `frts::SDL2Renderer`.
 
 ### Screen Config
 
-The screen config defines size of the visible screen and thus defines the windows size, the screen movement size, the maximum frame rate, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
+The screen config defines the cursor entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the maximum frame rate, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
 
     screen:
+    
+        cursor: <string>
     
         fps: <integer greater 0>
         num_fps_avg: <integer greater 0>

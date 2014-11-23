@@ -3,6 +3,11 @@
 #include <main/Sdl2Ids.h>
 
 
+frts::EntityPtr frts::GraphicDataImpl::getCursor() const
+{
+    return cursor;
+}
+
 unsigned int frts::GraphicDataImpl::getMaxFps() const
 {
     return maxFps;
@@ -86,6 +91,11 @@ frts::Point::value frts::GraphicDataImpl::getZLevel() const
 bool frts::GraphicDataImpl::isRenderEverything() const
 {
     return renderEverything;
+}
+
+void frts::GraphicDataImpl::setCursor(EntityPtr cursor)
+{
+    this->cursor = cursor;
 }
 
 void frts::GraphicDataImpl::setMaxFps(unsigned int maxFps)

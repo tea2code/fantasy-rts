@@ -1,5 +1,6 @@
 #include "Drawer.h"
 
+#include "impl/GraphicUtility.h"
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillamodel>
@@ -39,10 +40,12 @@ void frts::Drawer::init(SharedManagerPtr shared)
     auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
-    screenHeight = gd->getScreenHeight() / tileHeight;
+    screenHeight = screenToRegion(gd->getScreenHeight(), tileHeight);
     screenHeight = std::min(screenHeight, rc->getMapSizeY());
-    screenWidth = gd->getScreenWidth() / tileWidth;
+    gd->setScreenHeight(regionToScreen(screenHeight, tileHeight));
+    screenWidth = screenToRegion(gd->getScreenWidth(), tileWidth);
     screenWidth = std::min(screenWidth, rc->getMapSizeX());
+    gd->setScreenWidth(regionToScreen(screenWidth, tileWidth));
 
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -60,7 +63,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
 
     window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        (tileWidth * screenWidth), (tileHeight * screenHeight), SDL_WINDOW_SHOWN),
+                        regionToScreen(screenWidth, tileWidth), regionToScreen(screenHeight, tileHeight),
+                        SDL_WINDOW_SHOWN),
         Sdl2Deleter()
     );
     if (window == nullptr)
@@ -70,7 +74,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
     }
 
     renderer = std::unique_ptr<SDL_Renderer, Sdl2Deleter>(
-        SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
+        SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED),
         Sdl2Deleter()
     );
     if (renderer == nullptr)
@@ -192,8 +196,8 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
             sprite.getHeight()
         };
         SDL_Rect rectToRender = {
-            (pos->getX() - offsetX) * tileWidth,
-            (pos->getY() - offsetY) * tileHeight,
+            static_cast<int>(regionToScreen(pos->getX() - offsetX, tileWidth)),
+            static_cast<int>(regionToScreen(pos->getY() - offsetY, tileHeight)),
             tileWidth,
             tileHeight
         };

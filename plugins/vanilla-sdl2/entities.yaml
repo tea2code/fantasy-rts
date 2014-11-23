@@ -8,6 +8,12 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.grid
             
+        # Meta
+        - name: cursor
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.cursor
+            
         # Units
         - name: dwarf
           components:

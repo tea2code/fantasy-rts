@@ -26,6 +26,11 @@ namespace frts
         virtual ~GraphicData() {}
 
         /**
+         * @return The cursor entity.
+         */
+        virtual EntityPtr getCursor() const = 0;
+
+        /**
          * @return The maximum frame rate.
          */
         virtual unsigned int getMaxFps() const = 0;
@@ -89,6 +94,12 @@ namespace frts
          * @return Indicates if the renderer should rerender everything.
          */
         virtual bool isRenderEverything() const = 0;
+
+        /**
+         * @brief Set the cursor entity.
+         * @param cursor The cursor.
+         */
+        virtual void setCursor(EntityPtr cursor) = 0;
 
         /**
          * @brief Set the maximum frame rate.
