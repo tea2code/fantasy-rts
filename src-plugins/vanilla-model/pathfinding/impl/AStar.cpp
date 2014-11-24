@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <functional>
 #include <queue>
-#include <unordered_map>
 #include <utility>
 
 
@@ -28,7 +27,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
     cameFrom[start] = start;
 
-    std::unordered_map<PointPtr, Point::length, PointHash, PointEqual> costSoFar;
+    costSoFar.clear();
     costSoFar[start] = 0.0;
 
     bool found = false;
@@ -74,4 +73,9 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
         std::reverse(path.begin(), path.end());
     }
     return path;
+}
+
+frts::AStar::CostMap frts::AStar::getLastCosts() const
+{
+    return costSoFar;
 }

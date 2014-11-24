@@ -5,6 +5,7 @@
 #include <pathfinding/PathFinder.h>
 
 #include <memory>
+#include <unordered_map>
 
 
 namespace frts
@@ -29,7 +30,10 @@ namespace frts
 
         Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
 
+        CostMap getLastCosts() const override;
+
     private:
+        CostMap costSoFar;
         DistanceAlgorithmPtr distanceAlgorithm;
     };
 

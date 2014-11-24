@@ -44,7 +44,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     }
 
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (lastCursorPos != cursorPos)
+    if (shared->getFrame()->getNumber() % 50 == 0 && lastCursorPos != cursorPos)
     {
         lastCursorPos = cursorPos;
 
@@ -57,6 +57,18 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         {
             auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
             movable->setPath(path);
+
+            for (auto entity : highlights)
+            {
+                rm->removeEntity(entity, shared);
+            }
+            highlights.clear();
+            for (auto it : pathFinder->getLastCosts())
+            {
+                auto entity = mf->makeEntity(shared->makeId("entity.highlight"), shared);
+                rm->setPos(entity, it.first, shared);
+                highlights.push_back(entity);
+            }
         }
     }
 

@@ -4,6 +4,8 @@
 #include <frts/BaseTickable.h>
 #include <frts/vanillamodel>
 
+#include <vector>
+
 
 namespace frts
 {
@@ -26,6 +28,7 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
+        std::vector<EntityPtr> highlights;
         PointPtr lastCursorPos;
         EntityPtr player;
     };

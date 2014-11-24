@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 
 namespace frts
@@ -43,6 +44,10 @@ namespace frts
          * @return A path if possible or empty if no path is found. The path includes start and goal.
          */
         virtual Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
+
+        // TODO REMOVE
+        using CostMap = std::unordered_map<PointPtr, Point::length, PointHash, PointEqual>;
+        virtual CostMap getLastCosts() const = 0;
     };
 }
 

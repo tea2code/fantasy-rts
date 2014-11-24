@@ -138,3 +138,7 @@ style:
             - name: grid
               x: 0
               y: 240
+            - name: highlight
+              x: 16
+              y: 240
+            
