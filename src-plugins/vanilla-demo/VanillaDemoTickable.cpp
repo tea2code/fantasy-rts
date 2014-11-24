@@ -46,8 +46,29 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
     if (lastCursorPos != cursorPos)
     {
-        shared->getLog()->debug(getName(), "Cursor has moved.");
         lastCursorPos = cursorPos;
+
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto pathFinder = mf->getPathFinder();
+        auto start = rm->getPos(player, shared);
+        auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
+        auto path = pathFinder->findPath(start, cursorPos, blockedBy, shared);
+        if (!path.empty())
+        {
+            auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
+            movable->setPath(path);
+        }
+    }
+
+    if (shared->getFrame()->getNumber() % 20 == 0)
+    {
+        auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
+        auto nextPos = movable->getNextPathPos();
+        if (nextPos != nullptr)
+        {
+            rm->removeEntity(player, shared);
+            rm->setPos(player, nextPos, shared);
+        }
     }
 }
 

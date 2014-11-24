@@ -49,7 +49,13 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.dirt
+              
+        # Massive blocks (walls...)
         - name: wall
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.wall
+        - name: earth
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.dirt

@@ -32,12 +32,12 @@ entities:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
                 - blocking.air
-                - blocking.surface
+                - blocking.vegetation
                 - blocking.wall
                 - blocking.water
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
-                - blocking.surface
+                - blocking.vegetation
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.berry
@@ -83,14 +83,23 @@ entities:
                 - blocking.ground
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+              
+        # Massive blocks (walls...)
         - name: wall
           components:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
-                - blocking.wall
-                - blocking.water
                 - blocking.air
                 - blocking.surface
+                - blocking.wall
+                - blocking.water
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        - name: earth
+          components:
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.wall

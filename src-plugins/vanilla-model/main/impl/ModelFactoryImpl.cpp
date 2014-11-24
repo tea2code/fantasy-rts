@@ -19,6 +19,7 @@
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/AStar.h>
 #include <pathfinding/impl/EuclideanDistance.h>
+#include <pathfinding/impl/ManhattanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
 
@@ -135,7 +136,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     if (distAlgo == nullptr)
     {
-        distAlgo = makeEuclideanDistance();
+        distAlgo = makeManhattanDistance();
     }
 
     if (hasResourceType == nullptr)

@@ -31,6 +31,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     std::unordered_map<PointPtr, Point::length, PointHash, PointEqual> costSoFar;
     costSoFar[start] = 0.0;
 
+    bool found = false;
     while (!frontier.empty())
     {
         auto current = frontier.top().second;
@@ -38,6 +39,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
 
         if (current == goal)
         {
+            found = true;
             break;
         }
 
@@ -60,13 +62,16 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
 
     // Reconstruct path.
     PathFinder::Path path;
-    auto current = goal;
-    path.push_back(current);
-    while (current != start)
+    if (found)
     {
-        current = cameFrom[current];
+        auto current = goal;
         path.push_back(current);
+        while (current != start)
+        {
+            current = cameFrom[current];
+            path.push_back(current);
+        }
+        std::reverse(path.begin(), path.end());
     }
-    std::reverse(path.begin(), path.end());
     return path;
 }

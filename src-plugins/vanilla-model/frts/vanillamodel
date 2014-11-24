@@ -8,6 +8,7 @@
 #include <entity/Entity.h>
 #include <entity/HasResource.h>
 #include <entity/IsResource.h>
+#include <entity/Movable.h>
 #include <entity/SortOrder.h>
 #include <main/ModelError.h>
 #include <main/ModelFactory.h>

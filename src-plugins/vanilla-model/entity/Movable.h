@@ -54,7 +54,7 @@ namespace frts
          *        the direction.
          * @return The position or null if path is complete.
          */
-        virtual PointPtr getNextPathPos() const = 0;
+        virtual PointPtr getNextPathPos() = 0;
 
         /**
          * @brief Get the previous position of this path.

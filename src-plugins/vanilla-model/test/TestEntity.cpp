@@ -12,9 +12,12 @@
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceImpl.h>
 #include <entity/impl/IsResourceBuilder.h>
+#include <entity/impl/MovableBuilder.h>
+#include <entity/impl/MovableImpl.h>
 #include <entity/impl/SortOrderImpl.h>
 #include <entity/impl/SortOrderBuilder.h>
 #include <region/impl/BlockImpl.h>
+#include <region/impl/PointImpl.h>
 
 #include <frts/configuration>
 #include <log/NoLog.h>
@@ -324,7 +327,7 @@ TEST_CASE("HasResource Builder.", "[entity]")
 
 TEST_CASE("IsResource Builder.", "[entity]")
 {
-    auto log = std::make_shared<frts::NoLog>();
+    auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
     auto builder = frts::makeIsResourceBuilder();
@@ -337,6 +340,42 @@ TEST_CASE("IsResource Builder.", "[entity]")
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::IsResource>(component);
     REQUIRE(castComponent->getResourceType() == frts::makeId("id.resource"));
+}
+
+TEST_CASE("Movable.", "[entity]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeMovableBuilder();
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    // Without path.
+    auto movable = std::static_pointer_cast<frts::Movable>(component);
+    REQUIRE(movable->getNextPathPos() == nullptr);
+    REQUIRE(movable->getPath().empty());
+    REQUIRE(movable->getPreviousPathPos() == nullptr);
+
+    // With path.
+    frts::PathFinder::Path path = {
+        frts::makePoint(0, 0, 0),
+        frts::makePoint(1, 0, 0),
+        frts::makePoint(1, 1, 0),
+        frts::makePoint(1, 0, 0)
+    };
+    movable->setPath(path);
+    REQUIRE(movable->getPath() == path);
+    REQUIRE(movable->getPreviousPathPos() == nullptr);
+    REQUIRE(movable->getNextPathPos() == frts::makePoint(1, 0, 0));
+    REQUIRE(movable->getDirection() == frts::Movable::Direction::East);
+    REQUIRE(movable->getPreviousPathPos() == frts::makePoint(0, 0, 0));
+    REQUIRE(movable->getNextPathPos() == frts::makePoint(1, 1, 0));
+    REQUIRE(movable->getDirection() == frts::Movable::Direction::South);
+    REQUIRE(movable->getNextPathPos() == frts::makePoint(1, 0, 0));
+    REQUIRE(movable->getDirection() == frts::Movable::Direction::North);
+    REQUIRE(movable->getNextPathPos() == nullptr);
+    REQUIRE(movable->getDirection() == frts::Movable::Direction::North);
 }
 
 TEST_CASE("SortOrder.", "[entity]")

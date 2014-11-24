@@ -43,7 +43,7 @@ frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, Shared
     }
     else if (pos->getZ() < surfaceZLevel)
     {
-        idStr = "entity.dirt";
+        idStr = "entity.earth";
     }
     else if (pos->getZ() > surfaceZLevel)
     {
