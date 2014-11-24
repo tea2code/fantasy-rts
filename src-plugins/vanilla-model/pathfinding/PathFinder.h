@@ -27,6 +27,12 @@ namespace frts
     class PathFinder
     {
     public:
+
+        /**
+         * @brief For debugging purpose. A mapping of points and their associated costs.
+         */
+        using CostMap = std::unordered_map<PointPtr, Point::length, PointHash, PointEqual>;
+
         /**
          * @brief A path consisting of individual positions.
          */
@@ -45,8 +51,10 @@ namespace frts
          */
         virtual Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
 
-        // TODO REMOVE
-        using CostMap = std::unordered_map<PointPtr, Point::length, PointHash, PointEqual>;
+        /**
+         * For debugging purpose. The costs of the last path finding search.
+         * @return The costs of the last path finding search.
+         */
         virtual CostMap getLastCosts() const = 0;
     };
 }

@@ -7,10 +7,26 @@ entities:
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1000
-        - name: highlight
+        - name: highlight.green
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1050
+        - name: highlight.yellow
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1050
+        - name: highlight.orange
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1050
+        - name: highlight.red
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1050
+        - name: dot
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1100
             
         # Meta 
         - name: cursor

@@ -4,6 +4,7 @@
 #include <frts/BaseTickable.h>
 #include <frts/vanillamodel>
 
+#include <string>
 #include <vector>
 
 
@@ -31,6 +32,11 @@ namespace frts
         std::vector<EntityPtr> highlights;
         PointPtr lastCursorPos;
         EntityPtr player;
+
+    private:
+        void addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,
+                          SharedManagerPtr shared, PointPtr pos, const std::string& id);
+        void resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared);
     };
 }
 

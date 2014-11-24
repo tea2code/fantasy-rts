@@ -46,13 +46,13 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
         for (auto next : neighbors)
         {
             // Currently there are no costs associated with moving so lets simply add one.
-            auto newCost = costSoFar[current] + 1.0;
+            Point::length newCost = costSoFar[current] + 1.0;
 
             // Is this point new or are the new costs cheaper?
             if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next])
             {
                 costSoFar[next] = newCost;
-                auto priority = newCost + distanceAlgorithm->distance(next, goal);
+                Point::length priority = newCost + distanceAlgorithm->distance(next, goal);
                 frontier.emplace(priority, next);
                 cameFrom[next] = current;
             }

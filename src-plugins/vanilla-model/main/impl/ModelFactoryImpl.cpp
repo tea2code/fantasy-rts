@@ -136,7 +136,8 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     if (distAlgo == nullptr)
     {
-        distAlgo = makeManhattanDistance();
+        distAlgo = makeManhattanDistance(1.01);
+//        distAlgo = makeEuclideanDistance();
     }
 
     if (hasResourceType == nullptr)

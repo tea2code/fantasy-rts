@@ -138,7 +138,18 @@ style:
             - name: grid
               x: 0
               y: 240
-            - name: highlight
+            - name: highlight.green
               x: 16
               y: 240
-            
+            - name: highlight.yellow
+              x: 32
+              y: 240
+            - name: highlight.orange
+              x: 48
+              y: 240
+            - name: highlight.red
+              x: 64
+              y: 240
+            - name: dot
+              x: 80
+              y: 240

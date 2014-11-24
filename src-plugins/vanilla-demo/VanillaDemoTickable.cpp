@@ -7,10 +7,20 @@
 #include <frts/vanillamodel>
 #include <frts/vanillasdl2graphic>
 
+#include <algorithm>
+
 
 frts::VanillaDemoTickable::VanillaDemoTickable()
     : BaseTickable("frts::VanillaDemo", 1, "frts::VanillaDemo", 1)
 {
+}
+
+void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,
+                                             SharedManagerPtr shared, PointPtr pos, const std::string& id)
+{
+    auto entity = modelFactory->makeEntity(shared->makeId(id), shared);
+    regionManager->setPos(entity, pos, shared);
+    highlights.push_back(entity);
 }
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
@@ -27,6 +37,15 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 
     shared->getLog()->debug(getName(), "Demo loaded");
     return false;
+}
+
+void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared)
+{
+    for (auto entity : highlights)
+    {
+        regionManager->removeEntity(entity, shared);
+    }
+    highlights.clear();
 }
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
@@ -58,21 +77,38 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
             auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
             movable->setPath(path);
 
-            for (auto entity : highlights)
+            resetHighlights(rm, shared);
+            auto lastCosts = pathFinder->getLastCosts();
+            double highestCost = 0.0;
+            for (auto it : lastCosts)
             {
-                rm->removeEntity(entity, shared);
+                highestCost = std::max(highestCost, it.second);
             }
-            highlights.clear();
-            for (auto it : pathFinder->getLastCosts())
+            for (auto it : lastCosts)
             {
-                auto entity = mf->makeEntity(shared->makeId("entity.highlight"), shared);
-                rm->setPos(entity, it.first, shared);
-                highlights.push_back(entity);
+                std::string id = "entity.highlight.red";
+                if (it.second > highestCost * 0.75)
+                {
+                    id = "entity.highlight.green";
+                }
+                else if (it.second > highestCost * 0.5)
+                {
+                    id = "entity.highlight.yellow";
+                }
+                else if (it.second > highestCost * 0.25)
+                {
+                    id = "entity.highlight.orange";
+                }
+                addHighlight(mf, rm, shared, it.first, id);
+            }
+            for (auto pos : path)
+            {
+                addHighlight(mf, rm, shared, pos, "entity.dot");
             }
         }
     }
 
-    if (shared->getFrame()->getNumber() % 20 == 0)
+    if (shared->getFrame()->getNumber() % 5 == 0)
     {
         auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
         auto nextPos = movable->getNextPathPos();

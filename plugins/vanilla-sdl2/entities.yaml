@@ -7,10 +7,26 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.grid
-        - name: highlight
+        - name: highlight.green
           components:
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.highlight
+              sprite: style.sprite.highlight.green
+        - name: highlight.yellow
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.highlight.yellow
+        - name: highlight.orange
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.highlight.orange
+        - name: highlight.red
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.highlight.red
+        - name: dot
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.dot
             
         # Meta
         - name: cursor
