@@ -12,6 +12,7 @@
 #include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/MovableBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
+#include <entity/impl/TeleportBuilder.h>
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
@@ -118,6 +119,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
     componentBuilder = makeSortOrderBuilder();
     registerComponentBuilder(sortOrderId, componentBuilder);
+
+    // Teleport.
+    auto teleportId = shared->makeId(ComponentIds::teleport());
+    componentBuilder = makeTeleportBuilder();
+    registerComponentBuilder(teleportId, componentBuilder);
 
     // Region Manager:
     auto regionConfig = getRegionConfig(shared);

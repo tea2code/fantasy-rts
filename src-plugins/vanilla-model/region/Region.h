@@ -34,10 +34,11 @@ namespace frts
          * @brief Find free neightbors of given position.
          * @param pos The position.
          * @param blockedBy Description of what can block.
+         * @param sameZLevel If true neightbors are only searched on the same z-level.
          * @param shared The shared manager.
          * @return List of free neightbors.
          */
-        virtual std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
+        virtual std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Find random position.
@@ -59,10 +60,11 @@ namespace frts
         /**
          * @brief Get all neightbors (north, east, south, west, up, down) of position.
          * @param pos The position.
+         * @param sameZLevel If true neightbors are only searched on the same z-level.
          * @param shared The shared manager.
          * @return List of neightbors.
          */
-        virtual std::vector<PointPtr> getNeightbors(PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual std::vector<PointPtr> getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Get position of entity.

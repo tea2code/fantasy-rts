@@ -45,6 +45,11 @@ namespace frts
         {
             return "frts.vanillamodel.entity.component.sortorder";
         }
+
+        static std::string teleport()
+        {
+            return "frts.vanillamodel.entity.component.teleport";
+        }
     };
 }
 

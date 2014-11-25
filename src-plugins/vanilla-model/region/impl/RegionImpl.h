@@ -22,10 +22,10 @@ namespace frts
         RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                    RegionGeneratorPtr regionGenerator);
 
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) override;
         PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
         BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
-        std::vector<PointPtr> getNeightbors(PointPtr pos, SharedManagerPtr shared) override;
+        std::vector<PointPtr> getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) override;
         PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
         PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
         PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;

@@ -14,7 +14,9 @@ SOURCES += \
     entity/impl/DropImpl.cpp \
     entity/impl/DropBuilder.cpp \
     $$PWD/impl/MovableImpl.cpp \
-    $$PWD/impl/MovableBuilder.cpp
+    $$PWD/impl/MovableBuilder.cpp \
+    $$PWD/impl/TeleportImpl.cpp \
+    $$PWD/impl/TeleportBuilder.cpp
     
 
 HEADERS += \
@@ -44,4 +46,7 @@ HEADERS += \
     entity/impl/DropBuilder.h \
     $$PWD/Movable.h \
     $$PWD/impl/MovableImpl.h \
-    $$PWD/impl/MovableBuilder.h
+    $$PWD/impl/MovableBuilder.h \
+    $$PWD/Teleport.h \
+    $$PWD/impl/TeleportImpl.h \
+    $$PWD/impl/TeleportBuilder.h

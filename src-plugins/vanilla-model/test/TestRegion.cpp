@@ -233,7 +233,7 @@ TEST_CASE("Region.", "[region]")
         std::vector<frts::PointPtr> correctPositions = {
             frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0)
         };
-        auto positions = region->findFreeNeighbors(point2, blockedBy1, shared);
+        auto positions = region->findFreeNeighbors(point2, blockedBy1, false, shared);
         REQUIRE(positions.size() == correctPositions.size());
         for(auto pos : positions)
         {
@@ -247,7 +247,7 @@ TEST_CASE("Region.", "[region]")
         std::vector<frts::PointPtr> correctPositions = {
             frts::makePoint(0, 1, 0), frts::makePoint(1, 0, 0), point1, point3
         };
-        auto positions = region->getNeightbors(point2, shared);
+        auto positions = region->getNeightbors(point2, false, shared);
         REQUIRE(positions.size() == correctPositions.size());
         for(auto pos : positions)
         {

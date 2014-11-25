@@ -16,6 +16,8 @@
 #include <entity/impl/MovableImpl.h>
 #include <entity/impl/SortOrderImpl.h>
 #include <entity/impl/SortOrderBuilder.h>
+#include <entity/impl/TeleportBuilder.h>
+#include <entity/impl/TeleportImpl.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
 
@@ -427,4 +429,19 @@ TEST_CASE("Sort Order Builder.", "[entity]")
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::SortOrder>(component);
     REQUIRE(castComponent->getSortOrder() == 123);
+}
+
+TEST_CASE("Teleport.", "[entity]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeTeleportBuilder();
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto teleport = std::static_pointer_cast<frts::Teleport>(component);
+    auto entity = frts::makeEntity();
+    teleport->setTarget(entity);
+    REQUIRE(teleport->getTarget() == entity);
 }

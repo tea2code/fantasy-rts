@@ -42,7 +42,12 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
             break;
         }
 
-        auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, shared);
+        // Get neighbors from same z-level.
+        auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, true, shared);
+
+        // Check for entities with teleport.
+        // TODO
+
         for (auto next : neighbors)
         {
             // Currently there are no costs associated with moving so lets simply add one.

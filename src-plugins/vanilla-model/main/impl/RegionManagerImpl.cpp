@@ -17,9 +17,9 @@ void frts::RegionManagerImpl::addChangedPos(PointPtr pos)
     changedPos.insert(pos);
 }
 
-std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
 {
-    return region->findFreeNeighbors(pos, blockedBy, shared);
+    return region->findFreeNeighbors(pos, blockedBy, sameZLevel, shared);
 }
 
 frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
@@ -52,9 +52,9 @@ std::string frts::RegionManagerImpl::getName() const
     return ModelIds::regionManager();
 }
 
-std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared)
 {
-    return region->getNeightbors(pos, shared);
+    return region->getNeightbors(pos, sameZLevel, shared);
 }
 
 frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPtr shared)

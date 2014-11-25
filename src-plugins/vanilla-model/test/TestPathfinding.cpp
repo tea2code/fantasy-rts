@@ -146,7 +146,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto goal = frts::makePoint(9, 0, 0);
         auto path = pathFinder->findPath(start, goal, blockedBy, shared);
         REQUIRE(path.size() == 10);
-        for (int i = 0; i < 10; ++i)
+        for (unsigned int i = 0; i < path.size(); ++i)
         {
             REQUIRE(path.at(i) == frts::makePoint(i, 0, 0));
         }
@@ -154,7 +154,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         goal = frts::makePoint(0, 9, 0);
         path = pathFinder->findPath(start, goal, blockedBy, shared);
         REQUIRE(path.size() == 10);
-        for (int i = 0; i < 10; ++i)
+        for (unsigned int i = 0; i < path.size(); ++i)
         {
             REQUIRE(path.at(i) == frts::makePoint(0, i, 0));
         }
@@ -266,6 +266,151 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.at(52) == frts::makePoint(8, 8, 0));
         REQUIRE(path.at(53) == frts::makePoint(8, 9, 0));
         REQUIRE(path.at(54) == frts::makePoint(9, 9, 0));
+    }
+
+    SECTION("Changing z-level from (0, 0, 0) to (9, 0, 1).")
+    {
+        auto map1 = test::TestRegionGenerator::Map {
+            "g", "g", "g", "g", "s", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w",
+            "g", "g", "g", "g", "g", "w", "w", "w", "w", "w"
+        };
+        auto map2 = test::TestRegionGenerator::Map {
+            "w", "w", "w", "w", "w", "s", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
+            "w", "w", "w", "w", "w", "g", "g", "g", "g", "g"
+        };
+        auto maps = std::unordered_map<int, test::TestRegionGenerator::Map> {
+            {-1, walls},
+            {0, map1},
+            {1, map2},
+            {2, walls}
+        };
+
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
+        auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
+        auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
+        shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
+
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        REQUIRE(pathFinder != nullptr);
+
+        auto start = frts::makePoint(0, 0, 0);
+
+        auto goal = frts::makePoint(9, 0, 1);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        REQUIRE(path.size() == 10);
+        int z = 0;
+        for (unsigned int i = 0; i < path.size(); ++i)
+        {
+            if (i == 5)
+            {
+                z = 1;
+            }
+            REQUIRE(path.at(i) == frts::makePoint(i, 0, z));
+        }
+    }
+
+    SECTION("Through wall from (0, 0, 0) to (9, 0, 0).")
+    {
+        auto map = test::TestRegionGenerator::Map {
+            "g", "g", "g", "g", "s", "w", "s", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "w", "g", "g", "g", "g"
+        };
+        auto maps = std::unordered_map<int, test::TestRegionGenerator::Map> {
+            {-1, walls},
+            {0, map},
+            {1, walls}
+        };
+
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
+        auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
+        auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
+        shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
+
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        REQUIRE(pathFinder != nullptr);
+
+        auto start = frts::makePoint(0, 0, 0);
+
+        auto goal = frts::makePoint(9, 0, 0);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        REQUIRE(path.size() == 9);
+        for (unsigned int i = 0; i < path.size(); ++i)
+        {
+            if (i > 5)
+            {
+                REQUIRE(path.at(i) == frts::makePoint(i + 1, 0, 0));
+            }
+            else
+            {
+                REQUIRE(path.at(i) == frts::makePoint(i, 0, 0));
+            }
+        }
+    }
+
+    SECTION("Don't jump z-levels from (0, 0, 0) to (9, 0, 1).")
+    {
+        auto map = test::TestRegionGenerator::Map {
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+            "g", "g", "g", "g", "g", "g", "g", "g", "g", "g"
+        };
+        auto maps = std::unordered_map<int, test::TestRegionGenerator::Map> {
+            {-1, walls},
+            {0, map},
+            {1, map},
+            {2, walls}
+        };
+
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
+        auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
+        auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
+        shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
+
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        REQUIRE(pathFinder != nullptr);
+
+        auto start = frts::makePoint(0, 0, 0);
+
+        auto goal = frts::makePoint(9, 0, 1);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        REQUIRE(path.size() == 0);
     }
 }
 

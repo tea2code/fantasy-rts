@@ -13,9 +13,9 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 {
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
 {
-    auto result = getNeightbors(pos, shared);
+    auto result = getNeightbors(pos, sameZLevel, shared);
     for (auto it = result.begin(); it != result.end(); )
     {
         auto block = getBlock(*it, shared);
@@ -64,7 +64,7 @@ frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
     return getWriteableBlock(pos, shared);
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, SharedManagerPtr)
+std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr)
 {
     int x = pos->getX();
     int y = pos->getY();
@@ -96,11 +96,14 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, Shared
         result.push_back(makePoint(x - 1, y, z));
     }
 
-    // Up
-    result.push_back(makePoint(x, y, z + 1));
+    if (!sameZLevel)
+    {
+        // Up
+        result.push_back(makePoint(x, y, z + 1));
 
-    // Down
-    result.push_back(makePoint(x, y, z - 1));
+        // Down
+        result.push_back(makePoint(x, y, z - 1));
+    }
 
     return result;
 }

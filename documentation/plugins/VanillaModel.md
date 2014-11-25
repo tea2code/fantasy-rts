@@ -68,6 +68,10 @@ In code are a couple of sort orders predefined:
 - Bottom: -1000
 - Top: 1000
 
+#### Teleport
+
+This component indicates a connection between its entity and another entity. For example can be used for portals or slopes.
+
 ### Component Builder
 
 Components are created using builders which can be registered at the model factory.
