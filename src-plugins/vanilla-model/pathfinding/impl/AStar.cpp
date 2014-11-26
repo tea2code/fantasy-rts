@@ -32,58 +32,64 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     costSoFar[start] = 0.0;
 
     bool found = false;
-    while (!frontier.empty())
+
+    // Check if the goal itself is blocking.
+    auto block = regionManager->getBlock(goal, shared);
+    if (!block->isBlocking(blockedBy))
     {
-        auto current = frontier.top().second;
-        frontier.pop();
-
-        if (current == goal)
+        while (!frontier.empty())
         {
-            found = true;
-            break;
-        }
+            auto current = frontier.top().second;
+            frontier.pop();
 
-        // Get neighbors from same z-level.
-        auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, true, shared);
-
-        // Does an entity at the current position have a teleport component?
-        auto block = regionManager->getBlock(current, shared);
-        auto teleportEntities = block->getByComponent(teleportType);
-        for (auto entity : teleportEntities)
-        {
-            auto teleport = getComponent<Teleport>(teleportType, entity);
-            auto target = teleport->getTarget();
-            if (target == nullptr)
+            if (current == goal)
             {
-                continue;
+                found = true;
+                break;
             }
 
-            auto teleportPos = regionManager->getPos(target, shared);
-            if (teleportPos == nullptr)
+            // Get neighbors from same z-level.
+            auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, true, shared);
+
+            // Does an entity at the current position have a teleport component?
+            auto block = regionManager->getBlock(current, shared);
+            auto teleportEntities = block->getByComponent(teleportType);
+            for (auto entity : teleportEntities)
             {
-                continue;
+                auto teleport = getComponent<Teleport>(teleportType, entity);
+                auto target = teleport->getTarget();
+                if (target == nullptr)
+                {
+                    continue;
+                }
+
+                auto teleportPos = regionManager->getPos(target, shared);
+                if (teleportPos == nullptr)
+                {
+                    continue;
+                }
+
+                block = regionManager->getBlock(teleportPos, shared);
+                if (!block->isBlocking(blockedBy))
+                {
+                    neighbors.push_back(teleportPos);
+                }
             }
 
-            auto block = regionManager->getBlock(teleportPos, shared);
-            if (!block->isBlocking(blockedBy))
+            // "Walk" neighbors.
+            for (auto next : neighbors)
             {
-                neighbors.push_back(teleportPos);
-            }
-        }
+                // Currently there are no costs associated with moving so lets simply add one.
+                Point::length newCost = costSoFar[current] + 1.0;
 
-        // "Walk" neighbors.
-        for (auto next : neighbors)
-        {
-            // Currently there are no costs associated with moving so lets simply add one.
-            Point::length newCost = costSoFar[current] + 1.0;
-
-            // Is this point new or are the new costs cheaper?
-            if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next])
-            {
-                costSoFar[next] = newCost;
-                Point::length priority = newCost + distanceAlgorithm->distance(next, goal);
-                frontier.emplace(priority, next);
-                cameFrom[next] = current;
+                // Is this point new or are the new costs cheaper?
+                if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next])
+                {
+                    costSoFar[next] = newCost;
+                    Point::length priority = newCost + distanceAlgorithm->distance(next, goal);
+                    frontier.emplace(priority, next);
+                    cameFrom[next] = current;
+                }
             }
         }
     }

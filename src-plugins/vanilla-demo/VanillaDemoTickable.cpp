@@ -56,14 +56,28 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     if (shared->getFrame()->getNumber() == 0)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+
+        // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
         rm->setPos(player, mf->makePoint(0, 0, 0), shared);
 
+        // Initialize position of cursor.
         lastCursorPos = rm->getPos(gd->getCursor(), shared);
+
+        // Pregenerate map.
+        for (auto x = 0; x < rc->getMapSizeX(); ++x)
+        {
+            for (auto y = 0; y < rc->getMapSizeY(); ++y)
+            {
+                auto pos = mf->makePoint(x, y, gd->getZLevel());
+                rm->getBlock(pos, shared);
+            }
+        }
     }
 
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (shared->getFrame()->getNumber() % 50 == 0 && lastCursorPos != cursorPos)
+    if (shared->getFrame()->getNumber() % 1 == 0 && lastCursorPos != cursorPos)
     {
         lastCursorPos = cursorPos;
 

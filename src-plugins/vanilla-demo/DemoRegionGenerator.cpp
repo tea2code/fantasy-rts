@@ -1,6 +1,7 @@
 #include "DemoRegionGenerator.h"
 
 #include <region/impl/BlockImpl.h>
+#include <frts/random.h>
 
 #include <boost/format.hpp>
 
@@ -35,9 +36,10 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::all
 frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
     std::string idStr = "entity.grass";
-    if (pos->getZ() == surfaceZLevel &&
-        (pos->getX() + 1) % 10 == 0 &&
-        10 < pos->getY() && pos->getY() < mapSizeY - 10)
+//    if (pos->getZ() == surfaceZLevel &&
+//        (pos->getX() + 1) % 10 == 0 &&
+//        10 < pos->getY() && pos->getY() < mapSizeY - 10)
+    if (randomFloat(0.0, 1.0) > 0.8)
     {
         idStr = "entity.wall";
     }
