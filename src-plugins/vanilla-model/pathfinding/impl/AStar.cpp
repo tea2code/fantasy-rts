@@ -1,5 +1,6 @@
 #include "AStar.h"
 
+#include <entity/Teleport.h>
 #include <main/ModelIds.h>
 #include <main/RegionManager.h>
 
@@ -9,8 +10,8 @@
 #include <utility>
 
 
-frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm)
-    : distanceAlgorithm{distanceAlgorithm}
+frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
+    : distanceAlgorithm{distanceAlgorithm}, teleportType{teleportType}
 {
 }
 
@@ -45,9 +46,32 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
         // Get neighbors from same z-level.
         auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, true, shared);
 
-        // Check for entities with teleport.
-        // TODO
+        // Does an entity at the current position have a teleport component?
+        auto block = regionManager->getBlock(current, shared);
+        auto teleportEntities = block->getByComponent(teleportType);
+        for (auto entity : teleportEntities)
+        {
+            auto teleport = getComponent<Teleport>(teleportType, entity);
+            auto target = teleport->getTarget();
+            if (target == nullptr)
+            {
+                continue;
+            }
 
+            auto teleportPos = regionManager->getPos(target, shared);
+            if (teleportPos == nullptr)
+            {
+                continue;
+            }
+
+            auto block = regionManager->getBlock(teleportPos, shared);
+            if (!block->isBlocking(blockedBy))
+            {
+                neighbors.push_back(teleportPos);
+            }
+        }
+
+        // "Walk" neighbors.
         for (auto next : neighbors)
         {
             // Currently there are no costs associated with moving so lets simply add one.

@@ -70,7 +70,7 @@ In code are a couple of sort orders predefined:
 
 #### Teleport
 
-This component indicates a connection between its entity and another entity. For example can be used for portals or slopes.
+This component indicates a connection between its entity and another entity. For example can be used for portals or slopes. 
 
 ### Component Builder
 
@@ -100,7 +100,7 @@ Will identify itself by the name and type `frts::ModelReseter`.
 
 ### Path Finder
 
-The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with euclidean distance.
+The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
 
 ### Point
 

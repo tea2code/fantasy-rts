@@ -3,6 +3,7 @@
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/TeleportImpl.h>
 #include <region/impl/PointImpl.h>
 #include <region/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
@@ -39,8 +40,8 @@ namespace test
          * @param maps Collection of maps for several z-levels.
          */
         TestRegionGenerator(frts::IdPtr blockingType, frts::IdPtr sortOrderType,
-                            std::unordered_map<int, Map> maps)
-            : blockingType{blockingType}, sortOrderType{sortOrderType}, maps{maps}
+                            std::unordered_map<int, Map> maps, frts::IdPtr teleportType)
+            : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}, maps{maps}
         {}
 
         std::map<frts::PointPtr, frts::WriteableBlockPtr> allBlocks(frts::Point::value zLevel, frts::SharedManagerPtr shared) override
@@ -68,6 +69,21 @@ namespace test
                 blocking->addBlock(shared->makeId(id));
                 entity->addComponent(blocking);
             }
+            else if (id == "s")
+            {
+                auto teleport = frts::makeTeleport(teleportType);
+                if (firstTeleportEntity != nullptr)
+                {
+                    teleport->setTarget(firstTeleportEntity);
+                    auto otherTeleport = frts::getComponent<frts::Teleport>(teleportType, firstTeleportEntity);
+                    otherTeleport->setTarget(entity);
+                }
+                else
+                {
+                    firstTeleportEntity = entity;
+                }
+                entity->addComponent(teleport);
+            }
 
             auto block = frts::makeBlock(blockingType, sortOrderType);
             block->insert(entity);
@@ -77,7 +93,10 @@ namespace test
     private:
         frts::IdPtr blockingType;
         frts::IdPtr sortOrderType;
+        frts::IdPtr teleportType;
         std::unordered_map<int, Map> maps;
+
+        frts::EntityPtr firstTeleportEntity;
     };
 }
 
@@ -92,6 +111,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
     auto sortOrderType = shared->makeId("component.sortorder");
     auto hasResourceType = shared->makeId("component.hasresource");
     auto isResourceType = shared->makeId("component.isresource");
+    auto teleportType = shared->makeId("component.teleport");
 
     auto blockedBy = frts::makeBlockedBy(blockedByType);
     blockedBy->addBlock(shared->makeId("w"));
@@ -131,14 +151,14 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             {1, walls}
         };
 
-        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
         auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo, teleportType);
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
@@ -190,14 +210,14 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             {1, walls}
         };
 
-        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
         auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo, teleportType);
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
@@ -283,7 +303,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             "g", "g", "g", "g", "g", "w", "w", "w", "w", "w"
         };
         auto map2 = test::TestRegionGenerator::Map {
-            "w", "w", "w", "w", "w", "s", "g", "g", "g", "g",
+            "w", "w", "w", "w", "s", "g", "g", "g", "g", "g",
             "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
             "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
             "w", "w", "w", "w", "w", "g", "g", "g", "g", "g",
@@ -301,29 +321,43 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             {2, walls}
         };
 
-        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);     
         auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        // Before using teleport we must initialize them.
+        for (frts::Point::value x = 0; x < MAP_SIZE; ++x)
+        {
+            for (frts::Point::value y = 0; y < MAP_SIZE; ++y)
+            {
+                auto pos = frts::makePoint(x, y, 0);
+                rm->getBlock(pos, shared);
+                pos = frts::makePoint(x, y, 1);
+                rm->getBlock(pos, shared);
+            }
+        }
+
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo, teleportType);
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
 
         auto goal = frts::makePoint(9, 0, 1);
         auto path = pathFinder->findPath(start, goal, blockedBy, shared);
-        REQUIRE(path.size() == 10);
+        REQUIRE(path.size() == 11);
         int z = 0;
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            if (i == 5)
+            auto x = i;
+            if (i >= 5)
             {
                 z = 1;
+                x -= 1;
             }
-            REQUIRE(path.at(i) == frts::makePoint(i, 0, z));
+            REQUIRE(path.at(i) == frts::makePoint(x, 0, z));
         }
     }
 
@@ -347,14 +381,24 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             {1, walls}
         };
 
-        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
         auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        // Before using teleport we must initialize them.
+        for (frts::Point::value x = 0; x < MAP_SIZE; ++x)
+        {
+            for (frts::Point::value y = 0; y < MAP_SIZE; ++y)
+            {
+                auto pos = frts::makePoint(x, y, 0);
+                rm->getBlock(pos, shared);
+            }
+        }
+
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo, teleportType);
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);
@@ -364,14 +408,12 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 9);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            if (i > 5)
+            auto x = i;
+            if (i > 4)
             {
-                REQUIRE(path.at(i) == frts::makePoint(i + 1, 0, 0));
+                x += 1;
             }
-            else
-            {
-                REQUIRE(path.at(i) == frts::makePoint(i, 0, 0));
-            }
+            REQUIRE(path.at(i) == frts::makePoint(x, 0, 0));
         }
     }
 
@@ -396,14 +438,14 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
             {2, walls}
         };
 
-        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps);
+        auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
         auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
         shared->setDataValue(shared->makeId(frts::ModelIds::regionManager()), rm);
 
-        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo);
+        frts::PathFinderPtr pathFinder = frts::makeAStar(distAlgo, teleportType);
         REQUIRE(pathFinder != nullptr);
 
         auto start = frts::makePoint(0, 0, 0);

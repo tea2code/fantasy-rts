@@ -142,6 +142,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     if (distAlgo == nullptr)
     {
+        // Use a scale slightly greater 1.0 to tie break between similar costing positions.
         distAlgo = makeManhattanDistance(1.01);
 //        distAlgo = makeEuclideanDistance();
     }
@@ -158,7 +159,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     if (pathFinder == nullptr)
     {
-        pathFinder = makeAStar(distAlgo);
+        pathFinder = makeAStar(distAlgo, shared->makeId(ComponentIds::teleport()));
     }
 
     if (resourceEntityManager == nullptr)

@@ -132,6 +132,10 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
     else
     {
         result = regionGenerator->newBlock(pos, shared);
+        for (auto entity : result->getEntities())
+        {
+            entityPos[entity] = pos;
+        }
         posBlock[pos] = result;
     }
     return result;

@@ -19,6 +19,13 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(IdPtr componentType
     return result;
 }
 
+std::vector<frts::EntityPtr> frts::BlockImpl::getEntities() const
+{
+    std::vector<EntityPtr> result;
+    std::copy(entities->begin(), entities->end(), std::back_inserter(result));
+    return result;
+}
+
 bool frts::BlockImpl::has(EntityPtr entity) const
 {
     auto itPair = entities->equal_range(entity);
