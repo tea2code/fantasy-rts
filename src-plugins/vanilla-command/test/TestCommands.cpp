@@ -44,7 +44,7 @@ TEST_CASE("UndoCommand.", "[command]")
     REQUIRE_FALSE(shared->isQuitApplication());
 
     quitCommand->execute(shared);
-    commandFactory->addToUndo(quitCommand);
+    commandFactory->addToUndo(quitCommand, shared);
     REQUIRE(shared->isQuitApplication());
 
     auto undoCommand = commandFactory->makeCommand(shared->makeId(frts::CommandIds::undo()), shared);
