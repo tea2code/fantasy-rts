@@ -4,6 +4,10 @@
 #include <main/ModelIds.h>
 #include <main/RegionManager.h>
 
+//#include <easylogging++.h>
+
+//_INITIALIZE_EASYLOGGINGPP
+
 #include <algorithm>
 #include <functional>
 #include <queue>
@@ -17,6 +21,8 @@ frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
 
 frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
+//    TIMED_FUNC(pathfinding);
+
     // For this exact implementation see http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-2-4
 
     auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
@@ -49,7 +55,9 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
             }
 
             // Get neighbors from same z-level.
+//            PERFORMANCE_CHECKPOINT_WITH_ID(pathfinding, "before neighbors");
             auto neighbors = regionManager->findFreeNeighbors(current, blockedBy, true, shared);
+//            PERFORMANCE_CHECKPOINT_WITH_ID(pathfinding, "after neighbors");
 
             // Does an entity at the current position have a teleport component?
             auto block = regionManager->getBlock(current, shared);
@@ -77,6 +85,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
             }
 
             // "Walk" neighbors.
+//            PERFORMANCE_CHECKPOINT_WITH_ID(pathfinding, "before walk");
             for (auto next : neighbors)
             {
                 // Currently there are no costs associated with moving so lets simply add one.
@@ -91,6 +100,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
                     cameFrom[next] = current;
                 }
             }
+//            PERFORMANCE_CHECKPOINT_WITH_ID(pathfinding, "after walk");
         }
     }
 
