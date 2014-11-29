@@ -6,7 +6,7 @@ screen:
     # Frames per second limit.
     fps: 100
     # Number of FPS measures used for average calculation. The average will be shown in the title.
-    num_fps_avg: 1000
+    num_fps_avg: 10000
 
     # Height and width of screen (in pixel). Should be multiple of tile.height and tile.width.
     height: 1024

@@ -17,11 +17,14 @@ unsigned int frts::FpsManager::calcFps()
     unsigned int diff = currentTime - lastTime;
     if (diff > 0)
     {
-        fpsQueue.push_back(1000 / diff);
+        unsigned int newFps = 1000 / diff;
+        fpsTotal += newFps;
+        fpsQueue.push_back(newFps);
         lastTime = currentTime;   
     }
     while (fpsQueue.size() > numFpsAvg)
     {
+        fpsTotal -= fpsQueue.front();
         fpsQueue.pop_front();
     }
     if (fpsQueue.empty())
@@ -29,7 +32,8 @@ unsigned int frts::FpsManager::calcFps()
         // Default fps if no value is inserted.
         return 9999;
     }
-    return std::accumulate(fpsQueue.begin(), fpsQueue.end(), 0) / fpsQueue.size();
+//    return std::accumulate(fpsQueue.begin(), fpsQueue.end(), 0) / fpsQueue.size();
+    return fpsTotal / fpsQueue.size();
 }
 
 void frts::FpsManager::limitFps(unsigned int fps)

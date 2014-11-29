@@ -35,6 +35,7 @@ namespace frts
 
     private:
         std::list<unsigned int> fpsQueue;
+        unsigned int fpsTotal = 0;
         unsigned int lastLimitTime;
         unsigned int lastTime;
         unsigned int numFpsAvg;
