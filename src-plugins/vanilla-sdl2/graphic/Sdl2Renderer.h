@@ -1,8 +1,8 @@
 #ifndef FRTS_SDL2RENDERER_H
 #define FRTS_SDL2RENDERER_H
 
-#include "Drawer.h"
-#include "FpsManager.h"
+#include "impl/Drawer.h"
+#include "impl/FpsManager.h"
 
 #include <frts/BaseTickable.h>
 

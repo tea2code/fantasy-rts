@@ -1,6 +1,6 @@
 #include "Drawer.h"
 
-#include "impl/GraphicUtility.h"
+#include "GraphicUtility.h"
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillamodel>

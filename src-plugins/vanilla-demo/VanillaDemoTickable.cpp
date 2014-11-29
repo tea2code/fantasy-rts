@@ -97,7 +97,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     shared->setQuitApplication(true);
     #else
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (shared->getFrame()->getNumber() % 1 == 0 && lastCursorPos != cursorPos)
+    if (shared->getFrame()->getNumber() % 10 == 0 && lastCursorPos != cursorPos)
     {
         lastCursorPos = cursorPos;
 
