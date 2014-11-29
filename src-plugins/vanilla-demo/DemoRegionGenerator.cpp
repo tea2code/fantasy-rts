@@ -36,10 +36,14 @@ std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::all
 frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
     std::string idStr = "entity.grass";
-//    if (pos->getZ() == surfaceZLevel &&
-//        (pos->getX() + 1) % 10 == 0 &&
-//        10 < pos->getY() && pos->getY() < mapSizeY - 10)
+
+    #ifdef A_STAR_BENCHMARK
+    if (pos->getZ() == surfaceZLevel &&
+        (pos->getX() + 1) % 10 == 0 &&
+        10 < pos->getY() && pos->getY() < mapSizeY - 10)
+    #else
     if (randomFloat(0.0, 1.0) > 0.8)
+    #endif
     {
         idStr = "entity.wall";
     }

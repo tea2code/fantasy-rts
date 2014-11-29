@@ -2,6 +2,7 @@
 
 #include <module/Tickable.h>
 #include <shared/impl/FrameImpl.h>
+#include <frts/timer.h>
 
 #include <boost/format.hpp>
 
@@ -15,13 +16,6 @@ frts::MainLoop::MainLoop(Frame::time deltaTime, Frame::time maxFrameTime)
 {
 }
 
-frts::Frame::time frts::MainLoop::highResTime() const
-{
-    auto now = std::chrono::high_resolution_clock::now();
-    auto timeSinceEpoch = now.time_since_epoch();
-    return std::chrono::duration_cast<Frame::time>(timeSinceEpoch);
-}
-
 void frts::MainLoop::render(SharedManagerPtr shared) const
 {
     for (auto it = shared->renderModulesBegin(); it != shared->renderModulesEnd(); ++it)
@@ -29,7 +23,6 @@ void frts::MainLoop::render(SharedManagerPtr shared) const
         (*it)->tick(shared);
     }
 }
-
 
 void frts::MainLoop::start(SharedManagerImplPtr shared) const
 {

@@ -53,6 +53,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
+    // Place entities on map.
     if (shared->getFrame()->getNumber() == 0)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
@@ -74,10 +75,29 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
                 rm->getBlock(pos, shared);
             }
         }
+        return;
     }
 
+    #ifdef A_STAR_BENCHMARK
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    auto pathFinder = mf->getPathFinder();
+    auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
+
+    auto leftTop = mf->makePoint(5, 5, 0);
+    auto rightTop = mf->makePoint(95, 5, 0);
+    auto leftBottom = mf->makePoint(5, 95, 0);
+    auto rightBottom = mf->makePoint(95, 95, 0);
+    for (int i = 0; i < 100; ++i)
+    {
+        pathFinder->findPath(leftTop, rightBottom, blockedBy, shared);
+        pathFinder->findPath(rightBottom, rightTop, blockedBy, shared);
+        pathFinder->findPath(rightTop, leftBottom, blockedBy, shared);
+        pathFinder->findPath(leftBottom, leftTop, blockedBy, shared);
+    }
+    shared->setQuitApplication(true);
+    #else
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (shared->getFrame()->getNumber() % 100 == 0 && lastCursorPos != cursorPos)
+    if (shared->getFrame()->getNumber() % 1 == 0 && lastCursorPos != cursorPos)
     {
         lastCursorPos = cursorPos;
 
@@ -91,34 +111,34 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
             auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
             movable->setPath(path);
 
-            resetHighlights(rm, shared);
-            auto lastCosts = pathFinder->getLastCosts();
-            double highestCost = 0.0;
-            for (auto it : lastCosts)
-            {
-                highestCost = std::max(highestCost, it.second);
-            }
-            for (auto it : lastCosts)
-            {
-                std::string id = "entity.highlight.red";
-                if (it.second > highestCost * 0.75)
-                {
-                    id = "entity.highlight.green";
-                }
-                else if (it.second > highestCost * 0.5)
-                {
-                    id = "entity.highlight.yellow";
-                }
-                else if (it.second > highestCost * 0.25)
-                {
-                    id = "entity.highlight.orange";
-                }
-                addHighlight(mf, rm, shared, it.first, id);
-            }
-            for (auto pos : path)
-            {
-                addHighlight(mf, rm, shared, pos, "entity.dot");
-            }
+//            resetHighlights(rm, shared);
+//            auto lastCosts = pathFinder->getLastCosts();
+//            double highestCost = 0.0;
+//            for (auto it : lastCosts)
+//            {
+//                highestCost = std::max(highestCost, it.second);
+//            }
+//            for (auto it : lastCosts)
+//            {
+//                std::string id = "entity.highlight.red";
+//                if (it.second > highestCost * 0.75)
+//                {
+//                    id = "entity.highlight.green";
+//                }
+//                else if (it.second > highestCost * 0.5)
+//                {
+//                    id = "entity.highlight.yellow";
+//                }
+//                else if (it.second > highestCost * 0.25)
+//                {
+//                    id = "entity.highlight.orange";
+//                }
+//                addHighlight(mf, rm, shared, it.first, id);
+//            }
+//            for (auto pos : path)
+//            {
+//                addHighlight(mf, rm, shared, pos, "entity.dot");
+//            }
         }
     }
 
@@ -132,6 +152,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
             rm->setPos(player, nextPos, shared);
         }
     }
+    #endif
 }
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)

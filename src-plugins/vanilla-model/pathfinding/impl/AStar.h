@@ -1,10 +1,13 @@
 #ifndef FRTS_ASTAR_H
 #define FRTS_ASTAR_H
 
+#include <main/RegionManager.h>
 #include <pathfinding/DistanceAlgorithm.h>
 #include <pathfinding/PathFinder.h>
 
+#include <chrono>
 #include <memory>
+#include <vector>
 
 
 namespace frts
@@ -35,6 +38,16 @@ namespace frts
         CostMap costSoFar;
         DistanceAlgorithmPtr distanceAlgorithm;
         IdPtr teleportType;
+
+        std::chrono::milliseconds findNeighborsTime;
+        std::chrono::milliseconds loopTime;
+        std::chrono::milliseconds teleportTime;
+        std::chrono::milliseconds totalTime;
+        std::chrono::milliseconds walkTime;
+
+    private:
+        std::vector<PointPtr> findNeighbors(PointPtr current, BlockedByPtr blockedBy,
+                                            RegionManagerPtr regionManager, SharedManagerPtr shared);
     };
 
     /**

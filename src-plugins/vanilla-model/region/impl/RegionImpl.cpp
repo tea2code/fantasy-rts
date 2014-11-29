@@ -16,9 +16,14 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
 {
     auto result = getNeightbors(pos, sameZLevel, shared);
-    for (auto it = result.begin(); it != result.end(); )
+
+    // Because erase() returns an iterator to the next element the following
+    // loop is possible. Only important detail is to increment it inside the
+    // else case and not in the loop header.
+    // See http://stackoverflow.com/a/8628963/1931663
+    for (auto it = result.begin(); it != result.end();)
     {
-        auto block = getBlock(*it, shared);
+        auto block = getWriteableBlock(*it, shared);
         if(block->isBlocking(blockedBy))
         {
             it = result.erase(it);
@@ -27,7 +32,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
         {
             ++it;
         }
-     }
+    }
     return result;
 }
 
@@ -46,7 +51,7 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
         Point::value z = *frts::selectRandomly(zLevels.begin(), zLevels.end());
 
         result = makePoint(x, y, z);
-        if (!getBlock(result, shared)->isBlocking(blockedBy))
+        if (!getWriteableBlock(result, shared)->isBlocking(blockedBy))
         {
             break;
         }

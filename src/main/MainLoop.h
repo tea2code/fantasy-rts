@@ -6,7 +6,6 @@
 #include <shared/SharedPtr.h>
 #include <shared/impl/SharedManagerImpl.h>
 
-#include <chrono>
 #include <vector>
 
 
@@ -48,12 +47,6 @@ namespace frts
          * @brief The module name for log.
          */
         static const std::string logModule;
-
-        /**
-         * @brief Get the current time in high resolution.
-         * @return The time in milliseconds.
-         */
-        std::chrono::milliseconds highResTime() const;
 
         /**
          * @brief Execute the render modules of the shared manager.
