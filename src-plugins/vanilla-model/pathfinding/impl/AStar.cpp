@@ -24,28 +24,28 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     auto startTotal = highResTime();
     #endif
 
-    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-
-    using Node = std::pair<Point::length, PointPtr>;
-    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
-    frontier.emplace(0.0, start);
-
-    std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
-    cameFrom[start] = start;
-
-    costSoFar.clear();
-    costSoFar[start] = 0.0;
-
-    bool found = false;
-
-    #ifdef A_STAR_BENCHMARK
-    auto startLoop = highResTime();
-    #endif
+    PathFinder::Path path;
 
     // Check if the goal itself is blocking.
+    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto block = regionManager->getBlock(goal, shared);
     if (!block->isBlocking(blockedBy))
     {
+        using Node = std::pair<Point::length, PointPtr>;
+        std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
+        frontier.emplace(0.0, start);
+
+        std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
+        cameFrom[start] = start;
+
+        costSoFar.clear();
+        costSoFar[start] = 0.0;
+
+        #ifdef A_STAR_BENCHMARK
+        auto startLoop = highResTime();
+        #endif
+
+        bool found = false;
         while (!frontier.empty())
         {
             // Get next position.
@@ -86,24 +86,23 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
             walkTime += (highResTime() - startWalk);
             #endif
         }
-    }
 
-    #ifdef A_STAR_BENCHMARK
-    loopTime += (highResTime() - startLoop);
-    #endif
+        #ifdef A_STAR_BENCHMARK
+        loopTime += (highResTime() - startLoop);
+        #endif
 
-    // Reconstruct path.
-    PathFinder::Path path;
-    if (found)
-    {
-        auto current = goal;
-        path.push_back(current);
-        while (current != start)
+        // Reconstruct path.
+        if (found)
         {
-            current = cameFrom[current];
+            auto current = goal;
             path.push_back(current);
+            while (current != start)
+            {
+                current = cameFrom[current];
+                path.push_back(current);
+            }
+            std::reverse(path.begin(), path.end());
         }
-        std::reverse(path.begin(), path.end());
     }
 
     #ifdef A_STAR_BENCHMARK

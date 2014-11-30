@@ -121,7 +121,7 @@ The frame object contains meta information about the current frame. This include
 
 The function *makeId()* generates a new id with the given string. 
 
-A possible faster implementation can be activated using `DEFINES+=FRTS_FAST_ID` in the additional arguments of qmake. Performance advantage is untested. Currently not activated.
+A possible faster implementation can be activated using `DEFINES+=FRTS_FAST_ID` in the additional arguments of qmake. Performance advantage is tested using the *A\* Benchmark* (see **A-Star Benchmark.md**). The difference in the benchmark was not much but it was measurable and will be much larger in other cases.
 
 ### Log
 

@@ -102,6 +102,17 @@ Will identify itself by the name and type `frts::ModelReseter`.
 
 The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
 
+#### Possible ideas for tuning the default implementation
+
+- Before calculating a path from start to goal, try to calculate a path with limited number of iterations from goal to start. If a path is found use it. If goal is in a small room we see that there is no possible path and can stop the whole algorithm. This may prevent some "flooding the whole map" cases and even is realistic because start and goal are often blocked if they are in rooms with closed doors.
+- [Near-Optimal Hierarchical Pathfinding (HPA*)](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/)
+- Another priority queue like a heap. For example Boost provides a heap implementation with support for priority updates.
+
+##### Tested and discarded
+
+- A faster variant of makePoint() similar to makeId(). This failed because calculating a key was way to slow. Tested with string key and pairing function.
+- Calculate path from goal to start which removes the need for std::reverse(). Not much difference.
+
 ### Point
 
 A Point represents a 3D coordinate in the current region. It consists of x, y and z. It allows different mathematical operations.
