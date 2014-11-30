@@ -1,9 +1,9 @@
 #ifndef FRTS_PATHFINDER_H
 #define FRTS_PATHFINDER_H
 
+#include "Path.h"
 #include <entity/BlockedBy.h>
 #include <region/Point.h>
-
 #include <frts/shared>
 
 #include <memory>
@@ -27,18 +27,6 @@ namespace frts
     class PathFinder
     {
     public:
-
-        /**
-         * @brief For debugging purpose. A mapping of points and their associated costs.
-         */
-        using CostMap = std::unordered_map<PointPtr, Point::length, PointHash, PointEqual>;
-
-        /**
-         * @brief A path consisting of individual positions.
-         */
-        using Path = std::vector<PointPtr>;
-
-    public:
         virtual ~PathFinder() {}
 
         /**
@@ -47,15 +35,9 @@ namespace frts
          * @param goal The goal.
          * @param blockedBy Indicates which entities block the path.
          * @param shared The shared manager.
-         * @return A path if possible or empty if no path is found. The path includes start and goal.
+         * @return The path result.
          */
-        virtual Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
-
-        /**
-         * For debugging purpose. The costs of the last path finding search.
-         * @return The costs of the last path finding search.
-         */
-        virtual CostMap getLastCosts() const = 0;
+        virtual PathPtr findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
     };
 }
 

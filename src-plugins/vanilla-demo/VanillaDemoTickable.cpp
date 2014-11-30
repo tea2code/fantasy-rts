@@ -106,7 +106,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         auto start = rm->getPos(player, shared);
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
         auto path = pathFinder->findPath(start, cursorPos, blockedBy, shared);
-        if (!path.empty())
+        if (path->pathExists())
         {
             auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
             movable->setPath(path);

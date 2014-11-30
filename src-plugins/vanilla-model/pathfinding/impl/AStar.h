@@ -31,11 +31,10 @@ namespace frts
     public:
         AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType);
 
-        Path findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
-        CostMap getLastCosts() const override;
+        PathPtr findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
 
     private:
-        CostMap costSoFar;
+        Path::CostMap costSoFar;
         DistanceAlgorithmPtr distanceAlgorithm;
         IdPtr teleportType;
 

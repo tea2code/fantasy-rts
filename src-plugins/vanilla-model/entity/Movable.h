@@ -2,7 +2,7 @@
 #define FRTS_MOVABLE_H
 
 #include <entity/Component.h>
-#include <pathfinding/PathFinder.h>
+#include <pathfinding/Path.h>
 #include <region/Point.h>
 
 #include <memory>
@@ -44,14 +44,15 @@ namespace frts
         virtual Direction getDirection() const = 0;
 
         /**
-         * @brief Get the path from start and goal (both included).
+         * @brief Get the path.
          * @return The path.
          */
-        virtual PathFinder::Path getPath() const = 0;
+        virtual PathPtr getPath() const = 0;
 
         /**
          * @brief Get the next position of this path. Will update
-         *        the direction.
+         *        the direction and move the internal current position
+         *        a step forward.
          * @return The position or null if path is complete.
          */
         virtual PointPtr getNextPathPos() = 0;
@@ -63,10 +64,10 @@ namespace frts
         virtual PointPtr getPreviousPathPos() const = 0;
 
         /**
-         * @brief Set the path.
+         * @brief Set the path. This will reset this component.
          * @param path The path.
          */
-        virtual void setPath(PathFinder::Path path) = 0;
+        virtual void setPath(PathPtr path) = 0;
     };
 }
 

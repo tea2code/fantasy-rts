@@ -34,15 +34,11 @@ Major goals:
 
 - Spring 2015: Playable demo. Including basic economy, support for liquids, animals, digging, some enemies and a simple combat system.
 
-## Coming Soon
-
-Following features are planned for the near future.
+## Ideas
 
 - Sidebar with info about selected entity, commands and some kind of global info.
-- Mouse and Keyboard commands.
-- Build walls.
-- Direct control of creatures.
 - Mobile Support (Android and iOS).
+- Feelings plugin (every x + random seconds, update based on emotional attributes and handlers)
 
 ## Documentation
 

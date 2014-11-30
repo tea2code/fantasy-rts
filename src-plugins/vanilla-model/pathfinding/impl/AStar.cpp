@@ -1,5 +1,6 @@
 #include "AStar.h"
 
+#include "PathImpl.h"
 #include <entity/Teleport.h>
 #include <main/ModelIds.h>
 #include <frts/timer.h>
@@ -17,35 +18,36 @@ frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
       findNeighborsTime{0}, loopTime{0}, teleportTime{0}, totalTime{0}, walkTime{0}
 {}
 
-frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
+frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
     // For this exact implementation see http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-2-4
     #ifdef A_STAR_BENCHMARK
     auto startTotal = highResTime();
     #endif
 
-    PathFinder::Path path;
+    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+
+    using Node = std::pair<Point::length, PointPtr>;
+    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
+    frontier.emplace(0.0, start);
+
+    std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
+    cameFrom[start] = start;
+
+    costSoFar.clear();
+    costSoFar[start] = 0.0;
+
+    #ifdef A_STAR_BENCHMARK
+    auto startLoop = highResTime();
+    #endif
+
+    PathPtr result = nullptr;
+    bool found = false;
 
     // Check if the goal itself is blocking.
-    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto block = regionManager->getBlock(goal, shared);
     if (!block->isBlocking(blockedBy))
     {
-        using Node = std::pair<Point::length, PointPtr>;
-        std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
-        frontier.emplace(0.0, start);
-
-        std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
-        cameFrom[start] = start;
-
-        costSoFar.clear();
-        costSoFar[start] = 0.0;
-
-        #ifdef A_STAR_BENCHMARK
-        auto startLoop = highResTime();
-        #endif
-
-        bool found = false;
         while (!frontier.empty())
         {
             // Get next position.
@@ -86,23 +88,30 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
             walkTime += (highResTime() - startWalk);
             #endif
         }
+    }
 
-        #ifdef A_STAR_BENCHMARK
-        loopTime += (highResTime() - startLoop);
-        #endif
+    #ifdef A_STAR_BENCHMARK
+    loopTime += (highResTime() - startLoop);
+    #endif
 
-        // Reconstruct path.
-        if (found)
+    // Reconstruct path.
+    if (found)
+    {
+        Path::PathPart path;
+        auto current = goal;
+        path.push_back(current);
+        while (current != start)
         {
-            auto current = goal;
+            current = cameFrom[current];
             path.push_back(current);
-            while (current != start)
-            {
-                current = cameFrom[current];
-                path.push_back(current);
-            }
-            std::reverse(path.begin(), path.end());
         }
+        std::reverse(path.begin(), path.end());
+
+        result = makePath(path, true, costSoFar);
+    }
+    else
+    {
+        result = makePath({}, false, costSoFar);
     }
 
     #ifdef A_STAR_BENCHMARK
@@ -112,7 +121,7 @@ frts::PathFinder::Path frts::AStar::findPath(PointPtr start, PointPtr goal, Bloc
     shared->getLog()->debug("A*", msg.str());
     #endif
 
-    return path;
+    return result;
 }
 
 std::vector<frts::PointPtr> frts::AStar::findNeighbors(PointPtr current, BlockedByPtr blockedBy, RegionManagerPtr regionManager, SharedManagerPtr shared)
@@ -162,9 +171,4 @@ std::vector<frts::PointPtr> frts::AStar::findNeighbors(PointPtr current, Blocked
     #endif
 
     return neighbors;
-}
-
-frts::AStar::CostMap frts::AStar::getLastCosts() const
-{
-    return costSoFar;
 }

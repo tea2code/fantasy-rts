@@ -18,15 +18,15 @@ namespace frts
 
         IdPtr getComponentType() const override;
         Direction getDirection() const override;
-        PathFinder::Path getPath() const override;
+        PathPtr getPath() const override;
         PointPtr getNextPathPos() override;
         PointPtr getPreviousPathPos() const override;
-        void setPath(PathFinder::Path path) override;
+        void setPath(PathPtr path) override;
 
     private:
-        PathFinder::Path::size_type pathIndex = 0;
-        Direction direction;
-        PathFinder::Path path;
+        PointPtr current;
+        PathPtr path;
+        PointPtr previous;
         IdPtr type;
     };
 

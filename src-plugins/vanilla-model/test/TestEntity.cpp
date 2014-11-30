@@ -20,6 +20,7 @@
 #include <entity/impl/TeleportImpl.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
+#include <pathfinding/impl/PathImpl.h>
 
 #include <frts/configuration>
 #include <log/NoLog.h>
@@ -356,18 +357,18 @@ TEST_CASE("Movable.", "[entity]")
     // Without path.
     auto movable = std::static_pointer_cast<frts::Movable>(component);
     REQUIRE(movable->getNextPathPos() == nullptr);
-    REQUIRE(movable->getPath().empty());
     REQUIRE(movable->getPreviousPathPos() == nullptr);
 
     // With path.
-    frts::PathFinder::Path path = {
+    frts::Path::PathPart pathPart = {
         frts::makePoint(0, 0, 0),
         frts::makePoint(1, 0, 0),
         frts::makePoint(1, 1, 0),
         frts::makePoint(1, 0, 0)
     };
+   auto path = frts::makePath(pathPart, true);
     movable->setPath(path);
-    REQUIRE(movable->getPath() == path);
+    REQUIRE(movable->getPath()->getCompletePath() == pathPart);
     REQUIRE(movable->getPreviousPathPos() == nullptr);
     REQUIRE(movable->getNextPathPos() == frts::makePoint(1, 0, 0));
     REQUIRE(movable->getDirection() == frts::Movable::Direction::East);
@@ -377,7 +378,7 @@ TEST_CASE("Movable.", "[entity]")
     REQUIRE(movable->getNextPathPos() == frts::makePoint(1, 0, 0));
     REQUIRE(movable->getDirection() == frts::Movable::Direction::North);
     REQUIRE(movable->getNextPathPos() == nullptr);
-    REQUIRE(movable->getDirection() == frts::Movable::Direction::North);
+    REQUIRE(movable->getDirection() == frts::Movable::Direction::South);
 }
 
 TEST_CASE("SortOrder.", "[entity]")

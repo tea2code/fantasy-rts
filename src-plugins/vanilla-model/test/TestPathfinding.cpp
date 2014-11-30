@@ -164,7 +164,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto start = frts::makePoint(0, 0, 0);
 
         auto goal = frts::makePoint(9, 0, 0);
-        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
@@ -172,7 +172,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         }
 
         goal = frts::makePoint(0, 9, 0);
-        path = pathFinder->findPath(start, goal, blockedBy, shared);
+        path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
@@ -180,7 +180,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         }
 
         goal = frts::makePoint(9, 9, 0);
-        path = pathFinder->findPath(start, goal, blockedBy, shared);
+        path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
 
         REQUIRE(path.size() == 19);
 
@@ -223,7 +223,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto start = frts::makePoint(0, 0, 0);
 
         auto goal = frts::makePoint(9, 9, 0);
-        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
 
         REQUIRE(path.size() == 55);
 
@@ -346,7 +346,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto start = frts::makePoint(0, 0, 0);
 
         auto goal = frts::makePoint(9, 0, 1);
-        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
         REQUIRE(path.size() == 11);
         int z = 0;
         for (unsigned int i = 0; i < path.size(); ++i)
@@ -404,7 +404,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         auto start = frts::makePoint(0, 0, 0);
 
         auto goal = frts::makePoint(9, 0, 0);
-        auto path = pathFinder->findPath(start, goal, blockedBy, shared);
+        auto path = pathFinder->findPath(start, goal, blockedBy, shared)->getCompletePath();
         REQUIRE(path.size() == 9);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
@@ -452,7 +452,8 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
 
         auto goal = frts::makePoint(9, 0, 1);
         auto path = pathFinder->findPath(start, goal, blockedBy, shared);
-        REQUIRE(path.size() == 0);
+        REQUIRE_FALSE(path->pathExists());
+        REQUIRE(path->getCompletePath().size() == 0);
     }
 }
 

@@ -12,12 +12,10 @@ frts::IdPtr frts::MovableImpl::getComponentType() const
 frts::Movable::Direction frts::MovableImpl::getDirection() const
 {
     auto result = Direction::South;
-    if (!path.empty() && pathIndex > 0)
+    if (previous != nullptr && current != nullptr)
     {
-        auto posPrevious = path.at(pathIndex - 1);
-        auto pos = path.at(pathIndex);
-        auto dx = pos->getX() - posPrevious->getX();
-        auto dy = pos->getY() - posPrevious->getY();
+        auto dx = current->getX() - previous->getX();
+        auto dy = current->getY() - previous->getY();
 
         if (dx > 0)
         {
@@ -35,38 +33,30 @@ frts::Movable::Direction frts::MovableImpl::getDirection() const
     return result;
 }
 
-frts::PathFinder::Path frts::MovableImpl::getPath() const
+frts::PathPtr frts::MovableImpl::getPath() const
 {
     return path;
 }
 
 frts::PointPtr frts::MovableImpl::getNextPathPos()
 {
-    if (path.empty() || pathIndex + 1 == path.size())
+    if (path == nullptr)
     {
         return nullptr;
     }
-    else
-    {
-        pathIndex += 1;
-        return path.at(pathIndex);
-    }
+    current = path->getNextPathPos();
+    previous = path->getPreviousPathPos();
+    return current;
 }
 
 frts::PointPtr frts::MovableImpl::getPreviousPathPos() const
 {
-    if (path.empty() || pathIndex == 0)
-    {
-        return nullptr;
-    }
-    else
-    {
-        return path.at(pathIndex - 1);
-    }
+    return previous;
 }
 
-void frts::MovableImpl::setPath(PathFinder::Path path)
+void frts::MovableImpl::setPath(PathPtr path)
 {
     this->path = path;
-    pathIndex = 0;
+    previous = nullptr;
+    current = nullptr;
 }

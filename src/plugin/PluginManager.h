@@ -37,8 +37,6 @@ namespace frts
          */
         virtual void loadPlugin(const std::string& path, const std::string& name);
 
-        // TODO Deactivate copy and move constructors for PluginManager?
-
     private:
         typedef frts::PluginPtr GetPluginFunction();
         typedef int GetVersionFunction();
