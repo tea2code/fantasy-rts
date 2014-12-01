@@ -100,7 +100,7 @@ namespace frts
          * @param positions List of positions.
          * @param zLevel The reference z-level.
          */
-        void updatePositions(SharedManagerPtr shared, RegionManager::PointSet positions, Point::value zLevel);
+        void updatePositions(SharedManagerPtr shared, const RegionManager::PointSet& positions, Point::value zLevel);
 
         /**
          * @brief Update the whole screen.
