@@ -154,7 +154,7 @@ TEST_CASE("Sprite.", "[graphic]")
 //    mf->init(shared);
 //    mf->init(shared);
 //    shared->setUtility(shared->makeId(frts::ModelIds::modelFactory()), mf);
-//    auto rc = frts::getDataValue<frts::RegionConfig>(shared, frts::ModelIds::regionConfig());
+//    auto rc = frts::getDataValue<frts::ModelData>(shared, frts::ModelIds::modelData());
 
 //    gd->setRenderEverything(false);
 //    gd->setScreenHeight(20);

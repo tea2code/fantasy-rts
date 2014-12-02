@@ -80,6 +80,14 @@ Components are created using builders which can be registered at the model facto
 
 Entities represent all interactable objects in the world. They consist of components representing their abilities, attributes...
 
+### Model Data
+
+Model related meta settings like the size of the map are stored in this data value. 
+
+Default ID can be found in the static class `ModelIds`.
+
+Will identify itself by the name and type `frts::ModelData`.
+
 ### Model Factory
 
 Utility module which acts as a factory to create model related objects like points, entities...
@@ -120,14 +128,6 @@ A Point represents a 3D coordinate in the current region. It consists of x, y an
 ### Region
 
 The region consists of blocks at certain positions and represents the game world. It allows to set the position of entities in the world and retrieve them or whole blocks. 
-
-### Region Config
-
-Region related meta settings like the size of the map are stored in this data value. 
-
-Default ID can be found in the static class `ModelIds`.
-
-Will identify itself by the name and type `frts::RegionConfig`.
 
 ### Region Generator
 

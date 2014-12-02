@@ -1,6 +1,5 @@
 #include "ModelFactoryImpl.h"
 
-#include "RegionConfigImpl.h"
 #include "RegionManagerImpl.h"
 
 #include <entity/ComponentIds.h>
@@ -39,11 +38,16 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
     // Create region config data.
-    auto regionConfig = makeRegionConfig();
-    auto regionConfigId = shared->makeId(ModelIds::regionConfig());
-    shared->setDataValue(regionConfigId, regionConfig);
+    auto modelData = makeModelData();
+    auto modelDataId = shared->makeId(ModelIds::modelData());
+    shared->setDataValue(modelDataId, modelData);
 
     return false;
+}
+
+frts::ModelDataPtr frts::ModelFactoryImpl::getModelData(SharedManagerPtr shared) const
+{
+    return getDataValue<ModelData>(shared, ModelIds::modelData());
 }
 
 std::string frts::ModelFactoryImpl::getName() const
@@ -58,7 +62,7 @@ frts::PathFinderPtr frts::ModelFactoryImpl::getPathFinder() const
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
-    return {entitiesConfigKey, regionConfigKey};
+    return {entitiesConfigKey, modelDataKey};
 }
 
 std::string frts::ModelFactoryImpl::getTypeName() const
@@ -126,17 +130,17 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     registerComponentBuilder(teleportId, componentBuilder);
 
     // Region Manager:
-    auto regionConfig = getRegionConfig(shared);
+    auto modelData = getModelData(shared);
     if (regionGenerator == nullptr)
     {
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
-                                              regionConfig->getMapSizeX(),
-                                              regionConfig->getMapSizeY());
+                                              modelData->getMapSizeX(),
+                                              modelData->getMapSizeY());
     }
 
     if (region == nullptr)
     {
-        region = makeRegion(regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
+        region = makeRegion(modelData->getMapSizeX(), modelData->getMapSizeY(),
                             regionGenerator);
     }
 
@@ -276,11 +280,11 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         auto msg = boost::format(R"(Read %1% entity configurations.)") % entityConfig.size();
         shared->getLog()->debug(getName(), msg.str());
     }
-    else if (key == regionConfigKey)
+    else if (key == modelDataKey)
     {
-        auto regionConfig = getRegionConfig(shared);
-        regionConfig->setMapSizeX(node->getInteger("width"));
-        regionConfig->setMapSizeY(node->getInteger("height"));
+        auto modelData = getModelData(shared);
+        modelData->setMapSizeX(node->getInteger("width"));
+        modelData->setMapSizeY(node->getInteger("height"));
     }
 }
 
@@ -292,11 +296,6 @@ void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
 bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 {
     return false;
-}
-
-frts::RegionConfigPtr frts::ModelFactoryImpl::getRegionConfig(SharedManagerPtr shared) const
-{
-    return getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
 }
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
@@ -341,12 +340,12 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
 
 void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
 {
-    auto regionConfig = getRegionConfig(shared);
-    if (regionConfig->getMapSizeX() <= 0)
+    auto modelData = getModelData(shared);
+    if (modelData->getMapSizeX() <= 0)
     {
         throw DataViolation("Region width must be greater than zero.");
     }
-    if (regionConfig->getMapSizeY() <= 0)
+    if (modelData->getMapSizeY() <= 0)
     {
         throw DataViolation("Region height must be greater than zero.");
     }

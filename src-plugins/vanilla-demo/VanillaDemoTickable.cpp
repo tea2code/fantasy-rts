@@ -29,9 +29,9 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     Point::value surfaceZLevel = 0;
     auto blockingType = shared->makeId(ComponentIds::blocking());
     auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
-    auto regionConfig = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
-                                                   regionConfig->getMapSizeX(), regionConfig->getMapSizeY(),
+                                                   modelData->getMapSizeX(), modelData->getMapSizeY(),
                                                    surfaceZLevel);
     modelFactory->setRegionGenerator(regionGenerator);
 
@@ -57,7 +57,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     if (shared->getFrame()->getNumber() == 0)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-        auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+        auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
 
         // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
@@ -67,9 +67,9 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         lastCursorPos = rm->getPos(gd->getCursor(), shared);
 
         // Pregenerate map.
-        for (auto x = 0; x < rc->getMapSizeX(); ++x)
+        for (auto x = 0; x < md->getMapSizeX(); ++x)
         {
-            for (auto y = 0; y < rc->getMapSizeY(); ++y)
+            for (auto y = 0; y < md->getMapSizeY(); ++y)
             {
                 auto pos = mf->makePoint(x, y, gd->getZLevel());
                 rm->getBlock(pos, shared);

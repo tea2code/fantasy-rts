@@ -37,14 +37,14 @@ void frts::Drawer::init(SharedManagerPtr shared)
 {
     // Set data from config.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    auto rc = getDataValue<RegionConfig>(shared, ModelIds::regionConfig());
+    auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
     screenHeight = screenToRegion(gd->getScreenHeight(), tileHeight);
-    screenHeight = std::min(screenHeight, rc->getMapSizeY());
+    screenHeight = std::min(screenHeight, md->getMapSizeY());
     gd->setScreenHeight(regionToScreen(screenHeight, tileHeight));
     screenWidth = screenToRegion(gd->getScreenWidth(), tileWidth);
-    screenWidth = std::min(screenWidth, rc->getMapSizeX());
+    screenWidth = std::min(screenWidth, md->getMapSizeX());
     gd->setScreenWidth(regionToScreen(screenWidth, tileWidth));
 
     // Initialize SDL2.

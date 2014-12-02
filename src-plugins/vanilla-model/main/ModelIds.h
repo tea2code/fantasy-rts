@@ -17,9 +17,9 @@ namespace frts
             return "frts::ModelFactory";
         }
 
-        static std::string regionConfig()
+        static std::string modelData()
         {
-            return "frts::RegionConfig";
+            return "frts::ModelData";
         }
 
         static std::string regionManager()

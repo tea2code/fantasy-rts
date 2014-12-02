@@ -2,7 +2,7 @@
 #define FRTS_MODELFACTORYIMPL_H
 
 #include <main/ModelFactory.h>
-#include <main/RegionConfig.h>
+#include "ModelDataImpl.h"
 #include <region/Region.h>
 #include <region/RegionGenerator.h>
 #include <pathfinding/DistanceAlgorithm.h>
@@ -60,7 +60,7 @@ namespace frts
 
     private:
         const std::string entitiesConfigKey = "entities";
-        const std::string regionConfigKey = "region";
+        const std::string modelDataKey = "region";
         const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
@@ -76,7 +76,7 @@ namespace frts
         LockableResourceManagerPtr resourceManager;
 
     private:
-        RegionConfigPtr getRegionConfig(SharedManagerPtr shared) const;
+        ModelDataPtr getModelData(SharedManagerPtr shared) const;
         ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);
     };
 

@@ -1,15 +1,15 @@
 #ifndef FRTS_REGIONCONFIGIMPL_H
 #define FRTS_REGIONCONFIGIMPL_H
 
-#include <main/RegionConfig.h>
+#include <main/ModelData.h>
 
 
 namespace frts
 {
-    class RegionConfigImpl : public RegionConfig
+    class ModelDataImpl : public ModelData
     {
     public:
-        RegionConfigImpl();
+        ModelDataImpl();
 
         std::string getName() const override;
         Point::value getMapSizeX() const override;
@@ -26,12 +26,12 @@ namespace frts
     };
 
     /**
-     * @brief Create new RegionConfig.
+     * @brief Create new ModelData.
      * @return The RegionConfig.
      */
-    inline RegionConfigPtr makeRegionConfig()
+    inline ModelDataPtr makeModelData()
     {
-        return std::make_shared<RegionConfigImpl>();
+        return std::make_shared<ModelDataImpl>();
     }
 }
 

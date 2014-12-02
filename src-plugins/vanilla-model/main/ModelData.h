@@ -1,5 +1,5 @@
-#ifndef FRTS_REGIONCONFIG_H
-#define FRTS_REGIONCONFIG_H
+#ifndef FRTS_MODELDATA_H
+#define FRTS_MODELDATA_H
 
 #include <region/Point.h>
 
@@ -10,20 +10,20 @@
 
 namespace frts
 {
-    class RegionConfig;
+    class ModelData;
 
     /**
-     * @brief Pointer to RegionConfig.
+     * @brief Pointer to ModelData.
      */
-    using RegionConfigPtr = std::shared_ptr<RegionConfig>;
+    using ModelDataPtr = std::shared_ptr<ModelData>;
 
     /**
-     * @brief Stores settings of region.
+     * @brief Stores settings of model.
      */
-    class RegionConfig : public DataValue
+    class ModelData : public DataValue
     {
     public:
-        virtual ~RegionConfig() {}
+        virtual ~ModelData() {}
 
         /**
          * @brief Get map size in x direction.
@@ -51,4 +51,4 @@ namespace frts
     };
 }
 
-#endif // FRTS_REGIONCONFIG_H
+#endif // FRTS_MODELDATA_H
