@@ -134,9 +134,20 @@ void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
     }
 }
 
-void frts::CommandFactoryImpl::validateData(SharedManagerPtr)
+void frts::CommandFactoryImpl::validateData(SharedManagerPtr shared)
 {
-
+    try
+    {
+        auto dataValue = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
+        if (dataValue->getTypeVersion() != 1)
+        {
+            throw DataViolation("DataValue CommandConfig has the wrong version.");
+        }
+    }
+    catch(const IdNotFoundError&)
+    {
+        throw DataViolation("DataValue CommandConfig not found.");
+    }
 }
 
 void frts::CommandFactoryImpl::validateModules(SharedManagerPtr)
