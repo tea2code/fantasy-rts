@@ -117,8 +117,9 @@ namespace frts
          * @brief Remove entity from region. Will update changed positions.
          * @param entity The entity.
          * @param shared The shared manager.
+         * @return The last position of the entity or null if entity was not in region.
          */
-        virtual void removeEntity(EntityPtr entity, SharedManagerPtr shared) = 0;
+        virtual PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Reset changed positions.
@@ -131,8 +132,9 @@ namespace frts
          * @param entity The entity.
          * @param pos The position.
          * @param shared The shared manager.
+         * @return The previous position of the entity or null if entity was not in region.
          */
-        virtual void setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) = 0;
 
         /**
          * @brief If resource components of a entity change it is necessary to

@@ -80,12 +80,13 @@ int frts::RegionManagerImpl::getVersion() const
     return 1;
 }
 
-void frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
 {
     auto pos = region->removeEntity(entity, shared);
     resourceEntityManager->remove(entity);
     resourceManager->remove(entity);
     addChangedPos(pos);
+    return pos;
 }
 
 void frts::RegionManagerImpl::resetChangedPos()
@@ -93,12 +94,13 @@ void frts::RegionManagerImpl::resetChangedPos()
     changedPos.clear();
 }
 
-void frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
 {
     auto oldPos = region->setPos(entity, pos, shared);
     updateResources(entity, shared);
     addChangedPos(pos);
     addChangedPos(oldPos);
+    return oldPos;
 }
 
 void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr)

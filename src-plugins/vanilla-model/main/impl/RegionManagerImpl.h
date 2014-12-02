@@ -29,9 +29,9 @@ namespace frts
         std::string getTypeName() const override;
         int getTypeVersion() const override;
         int getVersion() const override;
-        void removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
+        PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
         void resetChangedPos() override;
-        void setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
+        PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
         void updateResources(EntityPtr entity, SharedManagerPtr shared) override;
 
     private:
