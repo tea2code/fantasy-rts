@@ -43,9 +43,6 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
-        void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) override;
-        void setHasResourceType(IdPtr hasResourceType) override;
-        void setIsResourceType(IdPtr isResourceType) override;
         void setPathFinder(PathFinderPtr pathFinder) override;
         void setRegion(RegionPtr region) override;
         void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
@@ -64,11 +61,8 @@ namespace frts
         const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
-        DistanceAlgorithmPtr distAlgo;
         EntityConfigMap entityConfig;
         bool firstInit = true;
-        IdPtr hasResourceType;
-        IdPtr isResourceType;
         PathFinderPtr pathFinder;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;

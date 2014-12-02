@@ -86,30 +86,6 @@ namespace frts
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
 
         /**
-         * @brief Set distance algorithm for resource managers and path finder.
-         *        Only used for the build in resource managers and path finder.
-         *        This method has only an effect if it is used before init().
-         * @param distAlgo The distance algorithm.
-         */
-        virtual void setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo) = 0;
-
-        /**
-         * @brief Set has resource type. Only used for the build in resource
-         *        managers. This method has only an effect if it is used before
-         *        init().
-         * @param hasResourceType The resource type.
-         */
-        virtual void setHasResourceType(IdPtr hasResourceType) = 0;
-
-        /**
-         * @brief Set is resource type. Only used for the build in resource
-         *        managers. This method has only an effect if it is used before
-         *        init().
-         * @param isResourceType The resource type.
-         */
-        virtual void setIsResourceType(IdPtr isResourceType) = 0;
-
-        /**
          * @brief Set the path finder. This method has only an effect
          *        if it is used before init().
          * @param pathFinder The path finder.

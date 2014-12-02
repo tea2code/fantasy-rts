@@ -14,7 +14,7 @@ namespace frts
     class BaseDataValue : public DataValue
     {
     public:
-        BaseTickable(const std::string& name, int version, const std::string& typeName, int typeVersion)
+        BaseDataValue(const std::string& name, int version, const std::string& typeName, int typeVersion)
             : name{name}, version{version}, typeName{typeName}, typeVersion{typeVersion}
         {}
 

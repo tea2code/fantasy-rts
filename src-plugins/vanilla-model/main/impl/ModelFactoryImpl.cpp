@@ -37,10 +37,16 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
-    // Create region config data.
+    // Create model data.
     auto modelData = makeModelData();
     auto modelDataId = shared->makeId(ModelIds::modelData());
     shared->setDataValue(modelDataId, modelData);
+
+    // Initialize model data with default values.
+    // Use a scale slightly greater 1.0 to tie break between similar costing positions.
+    modelData->setDistanceAlgorithm(makeManhattanDistance(1.01));
+    modelData->setHasResourceType(shared->makeId(ComponentIds::hasResource()));
+    modelData->setIsResourceType(shared->makeId(ComponentIds::isResource()));
 
     return false;
 }
@@ -144,44 +150,29 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
                             regionGenerator);
     }
 
-    if (distAlgo == nullptr)
-    {
-        // Use a scale slightly greater 1.0 to tie break between similar costing positions.
-        distAlgo = makeManhattanDistance(1.01);
-//        distAlgo = makeEuclideanDistance();
-    }
-
-    if (hasResourceType == nullptr)
-    {
-        hasResourceType = shared->makeId(ComponentIds::hasResource());
-    }
-
-    if (isResourceType == nullptr)
-    {
-        isResourceType = shared->makeId(ComponentIds::isResource());
-    }
-
     if (pathFinder == nullptr)
     {
-        pathFinder = makeAStar(distAlgo, shared->makeId(ComponentIds::teleport()));
+        pathFinder = makeAStar(modelData->getDistanceAlgorithm(), shared->makeId(ComponentIds::teleport()));
     }
 
     if (resourceEntityManager == nullptr)
     {
-        resourceEntityManager = makeLockableHasResourceManager(hasResourceType,
-                                                               region, distAlgo);
+        resourceEntityManager = makeLockableHasResourceManager(modelData->getHasResourceType(),
+                                                               region,
+                                                               modelData->getDistanceAlgorithm());
     }
 
     if (resourceManager == nullptr)
     {
-        resourceManager = makeLockableIsResourceManager(isResourceType, region,
-                                                        distAlgo);
+        resourceManager = makeLockableIsResourceManager(modelData->getIsResourceType(),
+                                                        region,
+                                                        modelData->getDistanceAlgorithm());
     }
 
     // Add region manager to data values. This should happen in createData() but
     // is currently not possible.
     auto regionManager = makeRegionManager(region, resourceManager, resourceEntityManager,
-                                           hasResourceType, isResourceType);
+                                           modelData->getHasResourceType(), modelData->getIsResourceType());
     auto regionManagerId = shared->makeId(ModelIds::regionManager());
     shared->setDataValue(regionManagerId, regionManager);
 
@@ -301,21 +292,6 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
 {
     componentBuilders[builderId] = builder;
-}
-
-void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distAlgo)
-{
-    this->distAlgo = distAlgo;
-}
-
-void frts::ModelFactoryImpl::setHasResourceType(IdPtr hasResourceType)
-{
-    this->hasResourceType = hasResourceType;
-}
-
-void frts::ModelFactoryImpl::setIsResourceType(IdPtr isResourceType)
-{
-    this->isResourceType = isResourceType;
 }
 
 void frts::ModelFactoryImpl::setRegion(RegionPtr region)
