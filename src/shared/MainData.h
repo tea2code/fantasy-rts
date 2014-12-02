@@ -30,6 +30,8 @@ namespace frts
          * @return The plugin path.
          */
         virtual std::string getPluginPath() const = 0;
+
+
     };
 }
 

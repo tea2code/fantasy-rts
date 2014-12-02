@@ -138,7 +138,7 @@ void frts::CommandFactoryImpl::validateData(SharedManagerPtr shared)
 {
     try
     {
-        auto dataValue = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
+        auto dataValue = getDataValue<DataValue>(shared, CommandIds::commandConfig());
         if (dataValue->getTypeVersion() != 1)
         {
             throw DataViolation("DataValue CommandConfig has the wrong version.");

@@ -30,7 +30,6 @@ namespace frts
 
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
-        PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
@@ -43,7 +42,6 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
-        void setPathFinder(PathFinderPtr pathFinder) override;
         void setRegion(RegionPtr region) override;
         void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
         void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) override;
@@ -63,7 +61,6 @@ namespace frts
         ComponentBuilderMap componentBuilders;
         EntityConfigMap entityConfig;
         bool firstInit = true;
-        PathFinderPtr pathFinder;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;

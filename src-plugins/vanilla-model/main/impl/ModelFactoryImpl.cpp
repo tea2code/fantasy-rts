@@ -61,11 +61,6 @@ std::string frts::ModelFactoryImpl::getName() const
     return ModelIds::modelFactory();
 }
 
-frts::PathFinderPtr frts::ModelFactoryImpl::getPathFinder() const
-{
-    return pathFinder;
-}
-
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
     return {entitiesConfigKey, modelDataKey};
@@ -150,9 +145,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
                             regionGenerator);
     }
 
-    if (pathFinder == nullptr)
+    if (modelData->getPathFinder() == nullptr)
     {
-        pathFinder = makeAStar(modelData->getDistanceAlgorithm(), shared->makeId(ComponentIds::teleport()));
+        auto pathFinder = makeAStar(modelData->getDistanceAlgorithm(),
+                                    shared->makeId(ComponentIds::teleport()));
+        modelData->setPathFinder(pathFinder);
     }
 
     if (resourceEntityManager == nullptr)
@@ -277,11 +274,6 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
     }
-}
-
-void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
-{
-    this->pathFinder = pathFinder;
 }
 
 bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)

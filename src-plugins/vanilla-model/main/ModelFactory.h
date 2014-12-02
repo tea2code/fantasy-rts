@@ -36,12 +36,6 @@ namespace frts
         virtual ~ModelFactory() {}
 
         /**
-         * @brief Get the path finder. The result is undefined before init() is called.
-         * @return The path finder.
-         */
-        virtual PathFinderPtr getPathFinder() const = 0;
-
-        /**
          * @brief Make a component using the specified builder.
          * @throws UnknownComponentBuilderError if there is not builder registered for the
          *         given ID.
@@ -84,13 +78,6 @@ namespace frts
          * @param builder The builder to register.
          */
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
-
-        /**
-         * @brief Set the path finder. This method has only an effect
-         *        if it is used before init().
-         * @param pathFinder The path finder.
-         */
-        virtual void setPathFinder(PathFinderPtr pathFinder) = 0;
 
         /**
          * @brief Set region. This method has only an effect if it is used

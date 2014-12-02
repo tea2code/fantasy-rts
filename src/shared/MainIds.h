@@ -12,7 +12,7 @@ namespace frts
     class MainIds
     {
     public:
-        static std::string MainData()
+        static std::string mainData()
         {
             return "frts::MainData";
         }

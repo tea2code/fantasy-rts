@@ -3,6 +3,7 @@
 
 #include <region/Point.h>
 #include <pathfinding/DistanceAlgorithm.h>
+#include <pathfinding/PathFinder.h>
 
 #include <frts/shared>
 
@@ -57,6 +58,12 @@ namespace frts
         virtual Point::value getMapSizeY() const = 0;
 
         /**
+         * @brief Get the path finder. The result is undefined before init() is called.
+         * @return The path finder.
+         */
+        virtual PathFinderPtr getPathFinder() const = 0;
+
+        /**
          * @brief Set default distance algorithm. Can be used for example for
          *        resource managers and path finder. Should be initialized
          *        before phase 10.
@@ -91,6 +98,12 @@ namespace frts
          * @param size The size.
          */
         virtual void setMapSizeY(Point::value size) = 0;
+
+        /**
+         * @brief Set the path finder.
+         * @param pathFinder The path finder.
+         */
+        virtual void setPathFinder(PathFinderPtr pathFinder) = 0;
     };
 }
 

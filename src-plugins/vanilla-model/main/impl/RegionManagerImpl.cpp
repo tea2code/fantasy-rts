@@ -14,7 +14,10 @@ frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
 
 void frts::RegionManagerImpl::addChangedPos(PointPtr pos)
 {
-    changedPos.insert(pos);
+    if (pos != nullptr)
+    {
+        changedPos.insert(pos);
+    }
 }
 
 std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
@@ -92,9 +95,10 @@ void frts::RegionManagerImpl::resetChangedPos()
 
 void frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
 {
-    region->setPos(entity, pos, shared);
+    auto oldPos = region->setPos(entity, pos, shared);
     updateResources(entity, shared);
     addChangedPos(pos);
+    addChangedPos(oldPos);
 }
 
 void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr)
