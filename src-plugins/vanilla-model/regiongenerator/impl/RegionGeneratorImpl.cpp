@@ -10,20 +10,6 @@ frts::RegionGeneratorImpl::RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrd
 {
 }
 
-std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::RegionGeneratorImpl::allBlocks(Point::value zLevel, SharedManagerPtr shared)
-{
-    std::map<PointPtr, WriteableBlockPtr> result;
-    for (Point::value x = 0; x < mapSizeX; ++x)
-    {
-        for (Point::value y = 0; y < mapSizeY; ++y)
-        {
-            auto pos = makePoint(x, y, zLevel);
-            result[pos] = newBlock(pos, shared);
-        }
-    }
-    return result;
-}
-
 frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr, SharedManagerPtr)
 {
     return makeBlock(blockingType, sortOrderType);

@@ -44,20 +44,6 @@ namespace test
             : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}, maps{maps}
         {}
 
-        std::map<frts::PointPtr, frts::WriteableBlockPtr> allBlocks(frts::Point::value zLevel, frts::SharedManagerPtr shared) override
-        {
-            std::map<frts::PointPtr, frts::WriteableBlockPtr> result;
-            for (frts::Point::value x = 0; x < MAP_SIZE; ++x)
-            {
-                for (frts::Point::value y = 0; y < MAP_SIZE; ++y)
-                {
-                    auto pos = frts::makePoint(x, y, zLevel);
-                    result[pos] = newBlock(pos, shared);
-                }
-            }
-            return result;
-        }
-
         frts::WriteableBlockPtr newBlock(frts::PointPtr pos, frts::SharedManagerPtr shared) override
         {
             auto entity = frts::makeEntity();

@@ -23,7 +23,6 @@ namespace frts
                             Point::value mapSizeX, Point::value mapSizeY,
                             Point::value surfaceZLevel);
 
-        std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel, SharedManagerPtr shared) override;
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
 
     private:

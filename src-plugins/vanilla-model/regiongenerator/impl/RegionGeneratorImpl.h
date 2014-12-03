@@ -20,7 +20,6 @@ namespace frts
         RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType,
                             Point::value mapSizeX, Point::value mapSizeY);
 
-        std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel, SharedManagerPtr shared);
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared);
 
     private:

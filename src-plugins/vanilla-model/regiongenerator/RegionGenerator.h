@@ -27,14 +27,6 @@ namespace frts
         virtual ~RegionGenerator() {}
 
         /**
-         * @brief Get all blocks of a certain z-level.
-         * @param zLevel The z-level.
-         * @param shared The shared manager.
-         * @return Mapping of points to block.
-         */
-        virtual std::map<PointPtr, WriteableBlockPtr> allBlocks(Point::value zLevel, SharedManagerPtr shared) = 0;
-
-        /**
          * @brief Get a new point for given position.
          * @param pos The position.
          * @param shared The shared manager.

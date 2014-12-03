@@ -14,25 +14,6 @@ frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrd
 {
 }
 
-std::map<frts::PointPtr, frts::WriteableBlockPtr> frts::DemoRegionGenerator::allBlocks(Point::value zLevel, SharedManagerPtr shared)
-{
-    auto msg = boost::format(R"(Generating map for z-level %1%.)") % zLevel;
-    shared->getLog()->debug("frts::DemoRegionGenerator", msg.str());
-
-    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-
-    std::map<PointPtr, WriteableBlockPtr> result;
-    for (Point::value x = 0; x < mapSizeX; ++x)
-    {
-        for (Point::value y = 0; y < mapSizeY; ++y)
-        {
-            auto pos = modelFactory->makePoint(x, y, zLevel);
-            result[pos] = newBlock(pos, shared);
-        }
-    }
-    return result;
-}
-
 frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
     std::string idStr = "entity.grass";

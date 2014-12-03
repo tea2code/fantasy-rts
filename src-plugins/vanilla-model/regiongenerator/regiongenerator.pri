@@ -4,4 +4,5 @@ SOURCES += \
 
 HEADERS += \
     regiongenerator/RegionGenerator.h \
-    regiongenerator/impl/RegionGeneratorImpl.h
+    regiongenerator/impl/RegionGeneratorImpl.h \
+    $$PWD/MapParser.h
