@@ -10,7 +10,7 @@ frts::MainDataImpl::MainDataImpl(const std::string& pluginPath)
 
 std::string frts::MainDataImpl::getName() const
 {
-    return MainIds::mainData();
+    return MainIds::MainData();
 }
 
 std::string frts::MainDataImpl::getPluginPath() const

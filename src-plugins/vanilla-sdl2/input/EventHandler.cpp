@@ -54,6 +54,7 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
                 Point::value x = screenToRegion(event.motion.x, gd->getTileWidth()) + gd->getScreenOffsetX();
                 Point::value y = screenToRegion(event.motion.y, gd->getTileHeight()) + gd->getScreenOffsetY();
                 auto newPos = mf->makePoint(x, y, gd->getZLevel());
+                rm->removeEntity(gd->getCursor(), shared);
                 rm->setPos(gd->getCursor(), newPos, shared);
             }
             break;

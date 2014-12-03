@@ -17,7 +17,6 @@ namespace frts
         std::string getName() const override;
         Point::value getMapSizeX() const override;
         Point::value getMapSizeY() const override;
-        PathFinderPtr getPathFinder() const override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
         int getVersion() const override;
@@ -26,13 +25,11 @@ namespace frts
         void setIsResourceType(IdPtr isResourceType) override;
         void setMapSizeX(Point::value size) override;
         void setMapSizeY(Point::value size) override;
-        void setPathFinder(PathFinderPtr pathFinder) override;
 
     private:
         DistanceAlgorithmPtr distanceAlgorithm;
         IdPtr hasResourceType;
         IdPtr isResourceType;
-        PathFinderPtr pathFinder;
         Point::value sizeX;
         Point::value sizeY;
     };

@@ -78,7 +78,7 @@ Following is an minimal example for checking if a utility is available.
 
     try
     {
-        auto module = getUtility<Utility>(shared, CommandIds::commandFactory());
+        UtilityPtr module = getUtility<Utility>(shared, CommandIds::commandFactory());
         if (module->getTypeVersion() != 1)
         {
             throw ModuleViolation("Utility CommandFactory has the wrong version.");
@@ -90,8 +90,6 @@ Following is an minimal example for checking if a utility is available.
     }
 
 Note that it doesn't cast to `CommandFactory` but to general `Utility` type to prevent a possible problem with an incompatible cast. Checking update or render modules can be done by iterating over them and checking for the correct type name and version.
-
-It is also recommended to employ the same technic on data values.
 
 ## Plugin
 

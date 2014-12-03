@@ -247,20 +247,6 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 {
-    // Main data
-    try
-    {
-        auto dataValue = getDataValue<DataValue>(shared, MainIds::mainData());
-        if (dataValue->getTypeVersion() != 1)
-        {
-            throw DataViolation("DataValue MainData has the wrong version.");
-        }
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw DataViolation("DataValue MainData not found.");
-    }
-
     // Graphic Data
     auto gd = graphicData(shared);
 

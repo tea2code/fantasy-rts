@@ -22,11 +22,6 @@ frts::IdPtr frts::ModelDataImpl::getIsResourceType() const
     return isResourceType;
 }
 
-frts::PathFinderPtr frts::ModelDataImpl::getPathFinder() const
-{
-    return pathFinder;
-}
-
 std::string frts::ModelDataImpl::getName() const
 {
     return ModelIds::modelData();
@@ -80,9 +75,4 @@ void frts::ModelDataImpl::setMapSizeX(Point::value size)
 void frts::ModelDataImpl::setMapSizeY(Point::value size)
 {
     sizeY = size;
-}
-
-void frts::ModelDataImpl::setPathFinder(PathFinderPtr pathFinder)
-{
-    this->pathFinder = pathFinder;
 }

@@ -38,7 +38,7 @@ namespace frts
         virtual ~RegionManager() {}
 
         /**
-         * @brief Add changed positions. This function will check for nullpointer.
+         * @brief Add changed positions.
          * @param pos The position.
          */
         virtual void addChangedPos(PointPtr pos) = 0;

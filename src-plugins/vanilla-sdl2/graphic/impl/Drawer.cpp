@@ -131,7 +131,7 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     }
 
     // Plugin path.
-    auto plugins = getDataValue<MainData>(shared, MainIds::mainData())->getPluginPath();
+    auto plugins = getDataValue<MainData>(shared, MainIds::MainData())->getPluginPath();
 
     // Images.
     auto node = imagesNode->getNode("image");

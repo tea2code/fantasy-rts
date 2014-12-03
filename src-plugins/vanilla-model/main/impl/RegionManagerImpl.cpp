@@ -98,8 +98,8 @@ frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, S
 {
     auto oldPos = region->setPos(entity, pos, shared);
     updateResources(entity, shared);
-    addChangedPos(pos);
     addChangedPos(oldPos);
+    addChangedPos(pos);
     return oldPos;
 }
 

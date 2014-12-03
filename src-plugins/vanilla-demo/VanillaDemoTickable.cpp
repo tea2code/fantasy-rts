@@ -52,12 +52,13 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-    auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
-    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     // Place entities on map.
     if (shared->getFrame()->getNumber() == 0)
     {
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
+
         // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
         rm->setPos(player, mf->makePoint(0, 0, 0), shared);
@@ -78,6 +79,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     }
 
     #ifdef A_STAR_BENCHMARK
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     auto pathFinder = mf->getPathFinder();
     auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
 
@@ -99,7 +101,8 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     {
         lastCursorPos = cursorPos;
 
-        auto pathFinder = md->getPathFinder();
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto pathFinder = mf->getPathFinder();
         auto start = rm->getPos(player, shared);
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
         auto path = pathFinder->findPath(start, cursorPos, blockedBy, shared);
@@ -145,6 +148,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         auto nextPos = movable->getNextPathPos();
         if (nextPos != nullptr)
         {
+            rm->removeEntity(player, shared);
             rm->setPos(player, nextPos, shared);
         }
     }
