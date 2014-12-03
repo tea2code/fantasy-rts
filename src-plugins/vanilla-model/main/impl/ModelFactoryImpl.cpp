@@ -15,7 +15,7 @@
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
-#include <region/impl/RegionGeneratorImpl.h>
+#include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/AStar.h>
 #include <pathfinding/impl/ManhattanDistance.h>

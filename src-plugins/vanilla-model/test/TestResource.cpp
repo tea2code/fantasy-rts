@@ -6,7 +6,7 @@
 #include <entity/impl/IsResourceImpl.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
-#include <region/impl/RegionGeneratorImpl.h>
+#include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/EuclideanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>

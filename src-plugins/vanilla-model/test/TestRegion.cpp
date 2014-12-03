@@ -5,10 +5,10 @@
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/SortOrderImpl.h>
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
-#include <region/impl/RegionGeneratorImpl.h>
+#include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 
 #include <log/NoLog.h>

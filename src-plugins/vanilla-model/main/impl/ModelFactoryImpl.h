@@ -4,7 +4,7 @@
 #include <main/ModelFactory.h>
 #include "ModelDataImpl.h"
 #include <region/Region.h>
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 #include <pathfinding/DistanceAlgorithm.h>
 #include <resource/LockableResourceManager.h>
 

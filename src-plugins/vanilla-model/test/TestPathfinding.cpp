@@ -5,7 +5,7 @@
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/TeleportImpl.h>
 #include <region/impl/PointImpl.h>
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <main/ModelIds.h>

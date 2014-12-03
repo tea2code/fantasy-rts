@@ -1,7 +1,7 @@
 #ifndef FRTS_REGIONGENERATORIMPL_H
 #define FRTS_REGIONGENERATORIMPL_H
 
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 
 #include <memory>
 

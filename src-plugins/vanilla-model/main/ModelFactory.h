@@ -6,7 +6,7 @@
 #include <entity/Entity.h>
 #include <region/Point.h>
 #include <region/Region.h>
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 #include <pathfinding/DistanceAlgorithm.h>
 #include <pathfinding/PathFinder.h>
 #include <resource/LockableResourceManager.h>

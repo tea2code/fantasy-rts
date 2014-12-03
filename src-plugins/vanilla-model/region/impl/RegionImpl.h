@@ -3,7 +3,7 @@
 
 #include <region/Point.h>
 #include <region/Region.h>
-#include <region/RegionGenerator.h>
+#include <regiongenerator/RegionGenerator.h>
 #include <region/WriteableBlock.h>
 
 #include <unordered_map>

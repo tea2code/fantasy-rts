@@ -1,8 +1,8 @@
 #ifndef FRTS_REGIONGENERATOR_H
 #define FRTS_REGIONGENERATOR_H
 
-#include "Point.h"
-#include "WriteableBlock.h"
+#include <region/Point.h>
+#include <region/WriteableBlock.h>
 
 #include <map>
 #include <memory>

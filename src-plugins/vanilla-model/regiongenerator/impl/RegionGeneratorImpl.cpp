@@ -1,7 +1,7 @@
 #include "RegionGeneratorImpl.h"
 
-#include "BlockImpl.h"
-#include "PointImpl.h"
+#include <region/impl/BlockImpl.h>
+#include <region/impl/PointImpl.h>
 
 
 frts::RegionGeneratorImpl::RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType,
