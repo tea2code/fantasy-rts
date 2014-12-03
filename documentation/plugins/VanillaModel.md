@@ -110,9 +110,9 @@ Will identify itself by the name and type `frts::ModelReseter`.
 
 The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
 
-#### Possible ideas for tuning the default implementation
+#### Possible ideas for optimization of default implementation
 
-- Before calculating a path from start to goal, try to calculate a path with limited number of iterations from goal to start. If a path is found use it. If goal is in a small room we see that there is no possible path and can stop the whole algorithm. This may prevent some "flooding the whole map" cases and even is realistic because start and goal are often blocked if they are in rooms with closed doors.
+- Before calculating a path from start to goal, try to calculate a path with limited number of iterations from goal to start. If a path is found use it. If goal is in a small room we see that there is no possible path and can stop the whole algorithm. This may prevent some "flooding the whole map" cases and even is realistic because start and goal are often blocked if they are in rooms with closed doors. Maybe it's even possible to use the already calculated values.
 - [Near-Optimal Hierarchical Pathfinding (HPA*)](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/)
 - Another priority queue like a heap. For example Boost provides a heap implementation with support for priority updates.
 
@@ -137,7 +137,7 @@ The blocks of a region are created by a region generator. At the beginning a reg
 
 The region manager is the access interface to all region and resource managing related methods. It represents a data value containing the region. It also manages a list of changed positions since last reset. The will mostly be set automatically but can be also set by hand.
 
-Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementation is used if no other is set.
+Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementations are used if no others are set.
 
 The region manager is implemented as an data value and can be accessed via the shared manager. 
 

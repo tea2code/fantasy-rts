@@ -18,7 +18,6 @@
 #include <region/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/AStar.h>
-#include <pathfinding/impl/EuclideanDistance.h>
 #include <pathfinding/impl/ManhattanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
@@ -42,13 +41,12 @@ bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
     auto modelDataId = shared->makeId(ModelIds::modelData());
     shared->setDataValue(modelDataId, modelData);
 
-    // Initialize model data with default values.
-    // Use a scale slightly greater 1.0 to tie break between similar costing positions.
-    modelData->setDistanceAlgorithm(makeManhattanDistance(1.01));
-    modelData->setHasResourceType(shared->makeId(ComponentIds::hasResource()));
-    modelData->setIsResourceType(shared->makeId(ComponentIds::isResource()));
-
     return false;
+}
+
+frts::DistanceAlgorithmPtr frts::ModelFactoryImpl::getDistanceAlgorithm() const
+{
+    return distanceAlgorithm;
 }
 
 frts::ModelDataPtr frts::ModelFactoryImpl::getModelData(SharedManagerPtr shared) const
@@ -135,8 +133,23 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     componentBuilder = makeTeleportBuilder();
     registerComponentBuilder(teleportId, componentBuilder);
 
+    // Distance algorithm
+    if (distanceAlgorithm == nullptr)
+    {
+        // Use a scale slightly greater 1.0 to tie break between similar costing positions.
+        distanceAlgorithm = makeManhattanDistance(1.01);
+    }
+
+    // Path finder.
+    if (pathFinder == nullptr)
+    {
+        pathFinder = makeAStar(distanceAlgorithm, teleportId);
+    }
+
     // Region Manager:
     auto modelData = getModelData(shared);
+    auto hasResourceTyp = shared->makeId(ComponentIds::hasResource());
+    auto isResourceType = shared->makeId(ComponentIds::isResource());
     if (regionGenerator == nullptr)
     {
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
@@ -150,29 +163,24 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
                             regionGenerator);
     }
 
-    if (pathFinder == nullptr)
-    {
-        pathFinder = makeAStar(modelData->getDistanceAlgorithm(), shared->makeId(ComponentIds::teleport()));
-    }
-
     if (resourceEntityManager == nullptr)
     {
-        resourceEntityManager = makeLockableHasResourceManager(modelData->getHasResourceType(),
+        resourceEntityManager = makeLockableHasResourceManager(hasResourceTyp,
                                                                region,
-                                                               modelData->getDistanceAlgorithm());
+                                                               distanceAlgorithm);
     }
 
     if (resourceManager == nullptr)
     {
-        resourceManager = makeLockableIsResourceManager(modelData->getIsResourceType(),
+        resourceManager = makeLockableIsResourceManager(isResourceType,
                                                         region,
-                                                        modelData->getDistanceAlgorithm());
+                                                        distanceAlgorithm);
     }
 
     // Add region manager to data values. This should happen in createData() but
     // is currently not possible.
     auto regionManager = makeRegionManager(region, resourceManager, resourceEntityManager,
-                                           modelData->getHasResourceType(), modelData->getIsResourceType());
+                                           hasResourceTyp, isResourceType);
     auto regionManagerId = shared->makeId(ModelIds::regionManager());
     shared->setDataValue(regionManagerId, regionManager);
 
@@ -277,6 +285,11 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
     }
+}
+
+void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm)
+{
+    this->distanceAlgorithm = distanceAlgorithm;
 }
 
 void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)

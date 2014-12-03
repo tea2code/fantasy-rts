@@ -29,6 +29,7 @@ namespace frts
         }
 
         bool createData(SharedManagerPtr shared) override;
+        DistanceAlgorithmPtr getDistanceAlgorithm() const override;
         std::string getName() const override;
         PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
@@ -43,6 +44,7 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
+        void setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm) override;
         void setPathFinder(PathFinderPtr pathFinder) override;
         void setRegion(RegionPtr region) override;
         void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
@@ -61,6 +63,7 @@ namespace frts
         const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
+        DistanceAlgorithmPtr distanceAlgorithm;
         EntityConfigMap entityConfig;
         bool firstInit = true;
         PathFinderPtr pathFinder;

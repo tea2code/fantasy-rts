@@ -36,6 +36,12 @@ namespace frts
         virtual ~ModelFactory() {}
 
         /**
+         * @brief Get default distance algorithm.
+         * @return The distance algorithm.
+         */
+        virtual DistanceAlgorithmPtr getDistanceAlgorithm() const = 0;
+
+        /**
          * @brief Get the path finder. The result is undefined before init() is called.
          * @return The path finder.
          */
@@ -86,8 +92,14 @@ namespace frts
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
 
         /**
-         * @brief Set the path finder. This method has only an effect
-         *        if it is used before init().
+         * @brief Set default distance algorithm. Can be used for example for
+         *        resource managers and path finder.
+         * @param distanceAlgorithm The distance algorithm.
+         */
+        virtual void setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm) = 0;
+
+        /**
+         * @brief Set the path finder.
          * @param pathFinder The path finder.
          */
         virtual void setPathFinder(PathFinderPtr pathFinder) = 0;
