@@ -30,6 +30,7 @@ namespace frts
 
         bool createData(SharedManagerPtr shared) override;
         DistanceAlgorithmPtr getDistanceAlgorithm() const override;
+        MapParserPtr getMapParser(IdPtr id) const override;
         std::string getName() const override;
         PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
@@ -44,6 +45,7 @@ namespace frts
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
+        void registerMapParser(IdPtr id, MapParserPtr mapParser) override;
         void setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm) override;
         void setPathFinder(PathFinderPtr pathFinder) override;
         void setRegion(RegionPtr region) override;
@@ -56,16 +58,19 @@ namespace frts
     private:
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr, IdHash, IdEqual>;
         using EntityConfigMap = std::unordered_map<IdPtr, std::vector<ConfigNodePtr>, IdHash, IdEqual>;
+        using MapParserMap = std::unordered_map<IdPtr, MapParserPtr, IdHash, IdEqual>;
 
     private:
         const std::string entitiesConfigKey = "entities";
         const std::string modelDataKey = "region";
         const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
+        const std::string unknownMapParserError = R"(No map parser is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distanceAlgorithm;
         EntityConfigMap entityConfig;
         bool firstInit = true;
+        MapParserMap mapParsers;
         PathFinderPtr pathFinder;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;

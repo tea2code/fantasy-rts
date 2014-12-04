@@ -49,6 +49,20 @@ frts::DistanceAlgorithmPtr frts::ModelFactoryImpl::getDistanceAlgorithm() const
     return distanceAlgorithm;
 }
 
+frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
+{
+    auto it = mapParsers.find(id);
+    if(it != mapParsers.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        auto msg = boost::format(unknownMapParserError) % id->toString();
+        throw UnknownMapParserError(msg.str());
+    }
+}
+
 frts::ModelDataPtr frts::ModelFactoryImpl::getModelData(SharedManagerPtr shared) const
 {
     return getDataValue<ModelData>(shared, ModelIds::modelData());
@@ -305,6 +319,11 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
 {
     componentBuilders[builderId] = builder;
+}
+
+void frts::ModelFactoryImpl::registerMapParser(IdPtr id, MapParserPtr mapParser)
+{
+    mapParsers[id] = mapParser;
 }
 
 void frts::ModelFactoryImpl::setRegion(RegionPtr region)

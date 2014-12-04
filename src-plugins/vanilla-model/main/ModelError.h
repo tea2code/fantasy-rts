@@ -24,6 +24,15 @@ namespace frts
     public:
         UnknownEntityError(const std::string& msg) : std::runtime_error(msg) {}
     };
+
+    /**
+     * @brief Thrown if a map parser is unknown/not registered.
+     */
+    class UnknownMapParserError : public std::runtime_error
+    {
+    public:
+        UnknownMapParserError(const std::string& msg) : std::runtime_error(msg) {}
+    };
 }
 
 #endif // FRTS_MODELERROR_H

@@ -7,6 +7,7 @@
 #include <region/Point.h>
 #include <region/Region.h>
 #include <regiongenerator/RegionGenerator.h>
+#include <regiongenerator/MapParser.h>
 #include <pathfinding/DistanceAlgorithm.h>
 #include <pathfinding/PathFinder.h>
 #include <resource/LockableResourceManager.h>
@@ -40,6 +41,15 @@ namespace frts
          * @return The distance algorithm.
          */
         virtual DistanceAlgorithmPtr getDistanceAlgorithm() const = 0;
+
+        /**
+         * @brief Get a map parser for given ID.
+         * @throws UnknownMapParserError if there is no map parser registered for the
+         *         given ID.
+         * @param id The map parser ID.
+         * @return The map parser.
+         */
+        virtual MapParserPtr getMapParser(IdPtr id) const = 0;
 
         /**
          * @brief Get the path finder. The result is undefined before init() is called.
@@ -90,6 +100,13 @@ namespace frts
          * @param builder The builder to register.
          */
         virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
+
+        /**
+         * @brief Register a map parser.
+         * @param id The map parser id.
+         * @param mapParser The map parser to register.
+         */
+        virtual void registerMapParser(IdPtr id, MapParserPtr mapParser) = 0;
 
         /**
          * @brief Set default distance algorithm. Can be used for example for
