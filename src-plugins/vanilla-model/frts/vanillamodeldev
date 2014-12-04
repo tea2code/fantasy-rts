@@ -5,8 +5,9 @@
 
 #include <entity/ComponentBuilder.h>
 #include <region/Region.h>
-#include <regiongenerator/RegionGenerator.h>
 #include <region/WriteableBlock.h>
+#include <regiongenerator/RegionGenerator.h>
+#include <regiongenerator/MapParser.h>
 #include <resource/LockableResourceManager.h>
 #include <pathfinding/DistanceAlgorithm.h>
 

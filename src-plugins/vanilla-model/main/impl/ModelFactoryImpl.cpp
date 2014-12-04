@@ -16,6 +16,9 @@
 #include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
 #include <regiongenerator/impl/RegionGeneratorImpl.h>
+#include <regiongenerator/impl/BmpMapParser.h>
+#include <regiongenerator/impl/TextMapParser.h>
+#include <regiongenerator/RegionGeneratorIds.h>
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/AStar.h>
 #include <pathfinding/impl/ManhattanDistance.h>
@@ -147,14 +150,23 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     componentBuilder = makeTeleportBuilder();
     registerComponentBuilder(teleportId, componentBuilder);
 
-    // Distance algorithm
+    // Map parser:
+    // BMP.
+    auto bmpMapParserId = shared->makeId(RegionGeneratorIds::bmpMapParser());
+    registerMapParser(bmpMapParserId, makeBmpMapParser());
+
+    // Text.
+    auto textMapParserId = shared->makeId(RegionGeneratorIds::textMapParser());
+    registerMapParser(textMapParserId, makeTextMapParser());
+
+    // Distance algorithm:
     if (distanceAlgorithm == nullptr)
     {
         // Use a scale slightly greater 1.0 to tie break between similar costing positions.
         distanceAlgorithm = makeManhattanDistance(1.01);
     }
 
-    // Path finder.
+    // Path finder:
     if (pathFinder == nullptr)
     {
         pathFinder = makeAStar(distanceAlgorithm, teleportId);
