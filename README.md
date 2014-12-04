@@ -37,10 +37,13 @@ Major goals:
 ## Ideas
 
 - Sidebar with info about selected entity, commands and some kind of global info.
-- Mobile Support (Android and iOS).
+- Mobile Support
 - Feelings plugin (every x + random seconds, update based on emotional attributes and handlers)
 - Fluids
 - Fog of War / Unknown tiles should be blacked out
+- Battle system
+- Thread safety
+- Decision tree for AI.
 
 ## Documentation
 
