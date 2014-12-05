@@ -35,3 +35,4 @@ configurations:
     - vanilla-sdl2/entities.yaml
     - vanilla-sdl2/screen.yaml
     - vanilla-sdl2/style.yaml
+    - maps/demo1/demo1.yaml

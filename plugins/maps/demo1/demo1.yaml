@@ -1,0 +1,45 @@
+bmpmap:
+
+    namespace: map.demo
+
+    map:
+        name: Demo1
+        height: 100
+        width: 100
+    
+    levels:
+        - level: 0
+          image: map.demo.image.walls.rect
+    
+    images:
+        namespace: image
+        
+        images:
+            - name: walls.rect
+              path: maps/demo/wallsrect.bmp
+    
+    colors:
+        neutral:
+            r: 255
+            g: 255
+            b: 255
+    
+        colors:
+            - r: 127
+              g: 127
+              b: 127
+              entities:  
+                - entity.wall
+                
+            - r: 0
+              g: 127
+              b: 0
+              entities: 
+                - entity.grass
+    
+            - r: 127
+              g: 45
+              b: 45
+              entities: 
+                - entity.grass
+                - entity.shrub.berry
