@@ -133,6 +133,8 @@ The region consists of blocks at certain positions and represents the game world
 
 The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
 
+See [RegionGenerator.md](RegionGenerator.md) for more information.
+
 ### Region Manager
 
 The region manager is the access interface to all region and resource managing related methods. It represents a data value containing the region. It also manages a list of changed positions since last reset. The will mostly be set automatically but can be also set by hand.
