@@ -2,21 +2,23 @@ bmpmap:
 
     namespace: map.demo
 
-    map:
-        name: Demo1
-        height: 100
-        width: 100
+    height: 100
+    width: 100
     
     levels:
         - level: 0
           image: map.demo.image.walls.rect
+        - level: 1
+          image: map.demo.image.hilltop
     
     images:
         namespace: image
         
         images:
             - name: walls.rect
-              path: maps/demo/wallsrect.bmp
+              path: maps/demo1/wallsrect.bmp
+            - name: hilltop
+              path: maps/demo1/hilltop.bmp
     
     colors:
         neutral:
@@ -43,3 +45,9 @@ bmpmap:
               entities: 
                 - entity.grass
                 - entity.shrub.berry
+                
+            - r: 0
+              g: 0
+              b: 0
+              entities: 
+                - entity.earth
