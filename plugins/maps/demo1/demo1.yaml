@@ -38,6 +38,22 @@ bmpmap:
               b: 0
               entities: 
                 - entity.grass
+                
+            # Teleport Up
+            - r: 0
+              g: 255
+              b: 0
+              teleport_up: true
+              entities: 
+                - entity.grass
+                
+            # Teleport Down
+            - r: 0
+              g: 255
+              b: 255
+              teleport_down: true
+              entities: 
+                - entity.grass
     
             - r: 127
               g: 45

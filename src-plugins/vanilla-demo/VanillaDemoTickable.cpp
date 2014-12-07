@@ -25,15 +25,15 @@ void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, Regio
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
-    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    Point::value surfaceZLevel = 0;
-    auto blockingType = shared->makeId(ComponentIds::blocking());
-    auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
-    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
-    auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
-                                                   modelData->getMapSizeX(), modelData->getMapSizeY(),
-                                                   surfaceZLevel);
-    modelFactory->setRegionGenerator(regionGenerator);
+//    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+//    Point::value surfaceZLevel = 0;
+//    auto blockingType = shared->makeId(ComponentIds::blocking());
+//    auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
+//    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+//    auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
+//                                                   modelData->getMapSizeX(), modelData->getMapSizeY(),
+//                                                   surfaceZLevel);
+//    modelFactory->setRegionGenerator(regionGenerator);
 
     shared->getLog()->debug(getName(), "Demo loaded");
     return false;
@@ -97,7 +97,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     shared->setQuitApplication(true);
     #else
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (shared->getFrame()->getNumber() % 10 == 0 && lastCursorPos != cursorPos)
+    if (shared->getFrame()->getNumber() % 50 == 0 && lastCursorPos != cursorPos)
     {
         lastCursorPos = cursorPos;
 

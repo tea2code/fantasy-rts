@@ -14,19 +14,16 @@ namespace frts
         /**
          * @param blockingType The component type id of the blocking component.
          * @param sortOrderType The component type id of the sort order component.
-         * @param mapSizeX The map size in x direction.
-         * @param mapSizeY The map size in y direction.
          */
-        RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType,
-                            Point::value mapSizeX, Point::value mapSizeY);
+        RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType);
 
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared);
 
     private:
         IdPtr blockingType;
-        Point::value mapSizeX;
-        Point::value mapSizeY;
         IdPtr sortOrderType;
+
+        Point::value surfaceZLevel = 0; // TODO Remove
     };
 
     /**
@@ -37,10 +34,9 @@ namespace frts
      * @param mapSizeY The map size in y direction.
      * @return The region generator.
      */
-    inline RegionGeneratorPtr makeRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
-                                                  Point::value mapSizeX, Point::value mapSizeY)
+    inline RegionGeneratorPtr makeRegionGenerator(IdPtr blockingType, IdPtr sortOrderType)
     {
-        return std::make_shared<RegionGeneratorImpl>(blockingType, sortOrderType, mapSizeX, mapSizeY);
+        return std::make_shared<RegionGeneratorImpl>(blockingType, sortOrderType);
     }
 }
 

@@ -5,6 +5,16 @@ frts::TextMapParser::TextMapParser()
 {
 }
 
+std::string frts::TextMapParser::getSupportedConfig()
+{
+    return "textmap";
+}
+
+void frts::TextMapParser::init(SharedManagerPtr shared)
+{
+
+}
+
 frts::WriteableBlockPtr frts::TextMapParser::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
     return nullptr;

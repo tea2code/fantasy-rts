@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
 
         // Phase 6: Create data.
         log->info(logModule, "Phase 6: Create data.");
-        shared->setDataValue(shared->makeId(frts::MainIds::MainData()), frts::makeMainData(pluginsRoot));
+        shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData(pluginsRoot));
         app.createData(modules, shared);
 
         // Log all data values with name, type and version.

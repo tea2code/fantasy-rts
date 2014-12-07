@@ -83,7 +83,15 @@ frts::PathFinderPtr frts::ModelFactoryImpl::getPathFinder() const
 
 std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
 {
-    return {entitiesConfigKey, modelDataKey};
+    std::vector<std::string> result = {entitiesConfigKey, modelDataKey};
+
+    // Map parser.
+    for (auto& mapParser : mapParsers)
+    {
+        result.push_back(mapParser.second->getSupportedConfig());
+    }
+
+    return result;
 }
 
 std::string frts::ModelFactoryImpl::getTypeName() const
@@ -150,14 +158,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     componentBuilder = makeTeleportBuilder();
     registerComponentBuilder(teleportId, componentBuilder);
 
-    // Map parser:
-    // BMP.
-    auto bmpMapParserId = shared->makeId(RegionGeneratorIds::bmpMapParser());
-    registerMapParser(bmpMapParserId, makeBmpMapParser());
-
-    // Text.
-    auto textMapParserId = shared->makeId(RegionGeneratorIds::textMapParser());
-    registerMapParser(textMapParserId, makeTextMapParser());
+    // Map parser.
+    for (auto& mapParser : mapParsers)
+    {
+        mapParser.second->init(shared);
+    }
 
     // Distance algorithm:
     if (distanceAlgorithm == nullptr)
@@ -178,9 +183,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto isResourceType = shared->makeId(ComponentIds::isResource());
     if (regionGenerator == nullptr)
     {
-        regionGenerator = makeRegionGenerator(blockingId, sortOrderId,
-                                              modelData->getMapSizeX(),
-                                              modelData->getMapSizeY());
+        regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
     }
 
     if (region == nullptr)
@@ -311,6 +314,35 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
     }
+    else
+    {
+        // Map parser.
+        for (auto& mapParser : mapParsers)
+        {
+            if (mapParser.second->getSupportedConfig() == key)
+            {
+                mapParser.second->parseConfig(node, shared);
+            }
+        }
+    }
+}
+
+bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
+{
+    auto blockingId = shared->makeId(ComponentIds::blocking());
+    auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
+
+    // Map parser:
+    // BMP.
+    auto bmpMapParserId = shared->makeId(RegionGeneratorIds::bmpMapParser());
+    registerMapParser(bmpMapParserId, makeBmpMapParser(blockingId, sortOrderId));
+
+    // Text.
+    // TODO Implement text map parser.
+//    auto textMapParserId = shared->makeId(RegionGeneratorIds::textMapParser());
+//    registerMapParser(textMapParserId, makeTextMapParser());
+
+    return false;
 }
 
 void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm)
@@ -321,11 +353,6 @@ void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distanceA
 void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
 {
     this->pathFinder = pathFinder;
-}
-
-bool frts::ModelFactoryImpl::preInit(SharedManagerPtr)
-{
-    return false;
 }
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
@@ -368,6 +395,12 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     if (modelData->getMapSizeY() <= 0)
     {
         throw DataViolation("Region height must be greater than zero.");
+    }
+
+    // Map parser.
+    for (auto& mapParser : mapParsers)
+    {
+        mapParser.second->validateData(shared);
     }
 }
 

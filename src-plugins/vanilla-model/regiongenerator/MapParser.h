@@ -20,6 +20,15 @@ namespace frts
     using MapParserPtr = std::shared_ptr<MapParser>;
 
     /**
+     * @brief Thrown if a static map file is not found.
+     */
+    class MapFileNotFoundError : public std::runtime_error
+    {
+    public:
+        MapFileNotFoundError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
+    /**
      * @brief The map parser reads static map files and
      *        allows them to be used in region generators.
      */
@@ -27,6 +36,18 @@ namespace frts
     {
     public:
         virtual ~MapParser() {}
+
+        /**
+         * @brief Get the supported config key.
+         * @return The key.
+         */
+        virtual std::string getSupportedConfig() = 0;
+
+        /**
+         * @brief Initialize the module.
+         * @param shared The shared manager.
+         */
+        virtual void init(SharedManagerPtr shared) = 0;
 
         /**
          * @brief Get the block for given position if available.

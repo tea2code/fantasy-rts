@@ -11,9 +11,11 @@ namespace frts
     public:
         TextMapParser();
 
-        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared);
-        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared);
-        void validateData(SharedManagerPtr shared);
+        std::string getSupportedConfig() override;
+        void init(SharedManagerPtr shared) override;
+        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
+        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;
+        void validateData(SharedManagerPtr shared) override;
     };
 
     /**

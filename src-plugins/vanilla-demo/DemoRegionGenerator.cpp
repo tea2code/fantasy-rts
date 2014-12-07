@@ -3,8 +3,6 @@
 #include <region/impl/BlockImpl.h>
 #include <frts/random.h>
 
-#include <boost/format.hpp>
-
 
 frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
                                                Point::value mapSizeX, Point::value mapSizeY,

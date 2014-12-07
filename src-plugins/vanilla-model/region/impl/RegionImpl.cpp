@@ -36,11 +36,9 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value> &zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
+frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
-    // TODO Current implementation may not find a random position.
-
-    const int numTries = 100;
+    const int numTries = mapSizeX * mapSizeY * zLevels.size();
 
     PointPtr result = nullptr;
 

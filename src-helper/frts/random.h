@@ -16,7 +16,7 @@ namespace frts
      * @warning Using windows with gcc will use std::time as a
      *          seed. See http://sourceforge.net/p/mingw-w64/bugs/338/
      */
-    auto defaultGenerator()
+    auto inline defaultGenerator()
     {
 #if defined(__GNUC__) && (defined(WIN32) || defined(_WIN32))
         std::mt19937 gen(std::time(nullptr));
