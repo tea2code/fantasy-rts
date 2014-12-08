@@ -10,12 +10,46 @@
 
 #include <boost/format.hpp>
 
+#include <algorithm>
 #include <cmath>
 
 
-frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType)
-    : blockingType{blockingType}, sortOrderType{sortOrderType}
+frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType)
+    : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}
 {
+}
+
+frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManagerPtr shared)
+{
+    frts::WriteableBlockPtr block;
+
+    auto bIt = blocks.find(pos);
+    if (bIt != blocks.end())
+    {
+        block = bIt->second;
+    }
+    else
+    {
+        auto mpIt = mapPoints.find(pos);
+        if (mpIt != mapPoints.end())
+        {
+            block = makeBlock(blockingType, sortOrderType);
+
+            auto cIt = colors.find(mpIt->second);
+            if (cIt != colors.end())
+            {
+                auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+                for (auto& entityId : cIt->second)
+                {
+                    block->insert(mf->makeEntity(entityId, shared));
+                }
+            }
+
+            blocks[pos] = block;
+        }
+    }
+
+    return block;
 }
 
 std::string frts::BmpMapParser::getSupportedConfig()
@@ -34,49 +68,13 @@ void frts::BmpMapParser::init(SharedManagerPtr shared)
 
 frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
-    frts::WriteableBlockPtr block;
+    frts::WriteableBlockPtr block = getBlock(pos, shared);
 
-    auto mpIt = mapPoints.find(pos);
-    if (mpIt != mapPoints.end())
+    // Teleport.
+    if (block != nullptr)
     {
-        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-
-        block = makeBlock(blockingType, sortOrderType);
-
-        // Teleport.
-        auto tIt = teleportUp.find(mpIt->second);
-        if (tIt != teleportUp.end())
-        {
-            auto posUp = mf->makePoint(pos->getX(), pos->getY(), pos->getZ() + 1);
-            auto neighbors = rm->getNeightbors(posUp, true, shared);
-            for (auto& neighbor : neighbors)
-            {
-                auto mptIt = mapPoints.find(neighbor);
-                if (mptIt != mapPoints.end())
-                {
-                    tIt = teleportDown.find(mptIt->second);
-                    if (tIt != teleportDown.end())
-                    {
-                        auto tpIt = teleportDownPositions.find(neighbor);
-                        if (tpIt != teleportDownPositions.end() && tpIt->second.find(pos) != tpIt->second.end())
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-        // TODO Down
-
-        auto cIt = colors.find(mpIt->second);
-        if (cIt != colors.end())
-        {
-            for (auto& entityId : cIt->second)
-            {
-                block->insert(mf->makeEntity(entityId, shared));
-            }
-        }
+        tryConnectTeleport(pos, block, teleportUp, teleportDown, +1, shared);
+        tryConnectTeleport(pos, block, teleportDown, teleportUp, -1, shared);
     }
 
     return block;
@@ -216,6 +214,80 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
     delete[] data;
 
     fclose(file);
+}
+
+void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
+                                            const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared)
+{
+    // Not really proud of this solution. But it was the most clear solution i found. I'm open to better implementations or complete
+    // replacements of the teleport component.
+
+    auto mpIt = mapPoints.find(pos);
+    if (mpIt != mapPoints.end() && teleportColorsBlock.find(mpIt->second) != teleportColorsBlock.end())
+    {
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+
+        // Do we already have teleport components in this block?
+        std::vector<EntityPtr> targets;
+        for (auto& entity : block->getByComponent(teleportType))
+        {
+            auto teleport = getComponent<Teleport>(teleportType, entity);
+            targets.push_back(teleport->getTarget());
+        }
+
+        // This is a teleport up block. Check for matching teleport blocks.
+        auto posDown = mf->makePoint(pos->getX(), pos->getY(), pos->getZ() + zLevelChange);
+        auto neighbors = rm->getNeightbors(posDown, true, shared);
+        for (auto& neighborPos : neighbors)
+        {
+            // Is this a teleport block?
+            auto nMpIt = mapPoints.find(neighborPos);
+            if (nMpIt == mapPoints.end() || teleportColorsOther.find(nMpIt->second) == teleportColorsOther.end())
+            {
+                // Nope it isn't :(
+                continue;
+            }
+
+            // Are we already connected?
+            bool alreadyConnected = false;
+            auto neighbor = getBlock(neighborPos, shared);
+            for (auto& entity : neighbor->getByComponent(teleportType))
+            {
+                if (std::find(targets.begin(), targets.end(), entity) != targets.end())
+                {
+                    alreadyConnected = true;
+                    break;
+                }
+            }
+            if (alreadyConnected)
+            {
+                break;
+            }
+
+            // Not yet connected so let's do that.
+            auto target = mf->makeEntity();
+            auto otherTarget = mf->makeEntity();
+
+            auto teleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+            teleport->setTarget(otherTarget);
+            target->addComponent(teleport);
+
+            auto otherTeleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+            otherTeleport->setTarget(target);
+            otherTarget->addComponent(otherTeleport);
+
+            block->insert(target);
+            neighbor->insert(otherTarget);
+
+            // Register other target in region manager. This may seem like a recursive call but
+            // at this point
+            // 1. the relevant information for the current block and the new target is already setup
+            // 2. because there is no diagonal movement possible it's quite hard to construct a
+            //    chain of target block initialization
+            rm->setPos(otherTarget, neighborPos, shared);
+        }
+    }
 }
 
 void frts::BmpMapParser::validateData(SharedManagerPtr)

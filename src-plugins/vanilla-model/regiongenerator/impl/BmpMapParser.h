@@ -1,6 +1,7 @@
 #ifndef FRTS_BMPMAPPARSER_H
 #define FRTS_BMPMAPPARSER_H
 
+#include <entity/Teleport.h>
 #include <regiongenerator/MapParser.h>
 
 #include <tuple>
@@ -16,8 +17,9 @@ namespace frts
         /**
          * @param blockingType The component type id of the blocking component.
          * @param sortOrderType The component type id of the sort order component.
+         * @param teleportType The component type id of the teleport component.
          */
-        BmpMapParser(IdPtr blockingType, IdPtr sortOrderType);
+        BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType);
 
         std::string getSupportedConfig() override;
         void init(SharedManagerPtr shared) override;
@@ -39,11 +41,6 @@ namespace frts
         using TeleportColors = std::unordered_set<Rgb, RgbHash>;
 
         /**
-         * @brief Map of targets for teleports.
-         */
-        using TeleportPointsMap = std::unordered_map<PointPtr, std::unordered_set<PointPtr, PointHash, PointEqual>, PointHash, PointEqual>;
-
-        /**
          * @brief Hash function for rgb values.
          */
         struct RgbHash
@@ -62,10 +59,12 @@ namespace frts
     private:
         IdPtr blockingType;
         IdPtr sortOrderType;
+        IdPtr teleportType;
 
         unsigned int height = 0;
         unsigned int width = 0;
 
+        std::unordered_map<PointPtr, WriteableBlockPtr, PointHash, PointEqual> blocks;
         std::unordered_map<Rgb, std::vector<IdPtr>, RgbHash> colors;
         std::unordered_map<IdPtr, std::string, IdHash, IdEqual> images;
         std::unordered_map<Point::value, IdPtr> levels;
@@ -74,10 +73,16 @@ namespace frts
 
         TeleportColors teleportUp;
         TeleportColors teleportDown;
-        TeleportPointsMap teleportUpPositions;
-        TeleportPointsMap teleportDownPositions;
 
     private:
+        /**
+         * @brief Get block at given position.
+         * @param pos The position.
+         * @param shared The shared manager.
+         * @return The block.
+         */
+        WriteableBlockPtr getBlock(PointPtr pos, SharedManagerPtr shared);
+
         /**
          * @brief Parse the map image. Will store result in mapPoints.
          * @param path THe image path.
@@ -85,17 +90,30 @@ namespace frts
          * @param shared The shared manager.
          */
         void parseMap(const std::string& path, Point::value zLevel, SharedManagerPtr shared);
+
+        /**
+         * @brief Try to connect given block using teleport.
+         * @param pos The position of this block.
+         * @param block The block to connect.
+         * @param teleportColorsBlock The teleport color which should be tried for this block.
+         * @param teleportColorsOther The teleport color of the neightbors.
+         * @param zLevelChange The change in z level to try.
+         * @param shared The shared manager.
+         */
+        void tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
+                                const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared);
     };
 
     /**
      * @brief Create new BmpMapParser.
      * @param blockingType The component type id of the blocking component.
      * @param sortOrderType The component type id of the sort order component.
+     * @param teleportType The component type id of the teleport component.
      * @return The map parser.
      */
-    inline MapParserPtr makeBmpMapParser(IdPtr blockingType, IdPtr sortOrderType)
+    inline MapParserPtr makeBmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType)
     {
-        return std::make_shared<BmpMapParser>(blockingType, sortOrderType);
+        return std::make_shared<BmpMapParser>(blockingType, sortOrderType, teleportType);
     }
 }
 

@@ -331,11 +331,12 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
 {
     auto blockingId = shared->makeId(ComponentIds::blocking());
     auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
+    auto teleportId = shared->makeId(ComponentIds::teleport());
 
     // Map parser:
     // BMP.
     auto bmpMapParserId = shared->makeId(RegionGeneratorIds::bmpMapParser());
-    registerMapParser(bmpMapParserId, makeBmpMapParser(blockingId, sortOrderId));
+    registerMapParser(bmpMapParserId, makeBmpMapParser(blockingId, sortOrderId, teleportId));
 
     // Text.
     // TODO Implement text map parser.

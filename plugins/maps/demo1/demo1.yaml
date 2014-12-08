@@ -46,6 +46,7 @@ bmpmap:
               teleport_up: true
               entities: 
                 - entity.grass
+                - entity.shrub.berry
                 
             # Teleport Down
             - r: 0
@@ -54,6 +55,7 @@ bmpmap:
               teleport_down: true
               entities: 
                 - entity.grass
+                - entity.shrub.berry
     
             - r: 127
               g: 45
