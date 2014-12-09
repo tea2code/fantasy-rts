@@ -58,10 +58,13 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
         auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
+        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
         // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
-        rm->setPos(player, mf->makePoint(0, 0, 0), shared);
+        auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
+        auto pos = rm->findFreeRandomPos({0}, blockedBy, shared);
+        rm->setPos(player, pos, shared);
 
         // Initialize position of cursor.
         lastCursorPos = rm->getPos(gd->getCursor(), shared);

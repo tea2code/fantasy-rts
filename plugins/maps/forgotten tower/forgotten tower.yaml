@@ -24,11 +24,11 @@ bmpmap:
         
         images:
             - name: level.0
-              path: maps/forgottentower/level0.bmp
+              path: maps/forgotten tower/level0.bmp
             - name: level.1
-              path: maps/forgottentower/level1.bmp
+              path: maps/forgotten tower/level1.bmp
             - name: level.2
-              path: maps/forgottentower/level2.bmp
+              path: maps/forgotten tower/level2.bmp
             
     colors:
         neutral:

@@ -118,7 +118,7 @@ entities:
               sort_order: 0
         - name: ramp
           components:
-          - component: frts.vanillamodel.entity.component.sortorder
+            - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 10
               
         # Massive blocks (walls...)
