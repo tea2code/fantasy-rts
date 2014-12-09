@@ -12,6 +12,8 @@ Generates static maps of certain z-levels based on a bitmap and a mapping betwee
 
 Teleport for slopes is supported by using the optional values `teleport_up` and/or `teleport_down`. If set the parser tries to find the another corresponding block and connects both.
 
+General teleport is also supported using the optional `teleport`. A color with the same teleport ID should only exists twice. Both points will represent a portal to the other point.
+
 #### Configuration
 
     bmpmap:
@@ -44,6 +46,7 @@ Teleport for slopes is supported by using the optional values `teleport_up` and/
                   b: <integer between 0 and 255>
                   teleport_up: <boolean, optional>
                   teleport_down: <boolean, optional>
+                  teleport: <string representing an id, optional>
                   entities:  
                     - <string representing an id>
 

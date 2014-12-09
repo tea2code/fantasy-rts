@@ -19,6 +19,39 @@ frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr 
 {
 }
 
+frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
+                                                    const std::vector<EntityPtr>& targets, SharedManagerPtr shared)
+{
+    auto otherBlock = getBlock(otherPos, shared);
+
+    // Are we already connected?
+    for (auto& entity : otherBlock->getByComponent(teleportType))
+    {
+        if (std::find(targets.begin(), targets.end(), entity) != targets.end())
+        {
+            return nullptr;
+        }
+    }
+
+    // Not yet connected so let's do that.
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    auto target = mf->makeEntity();
+    auto otherTarget = mf->makeEntity();
+
+    auto teleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+    teleport->setTarget(otherTarget);
+    target->addComponent(teleport);
+
+    auto otherTeleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+    otherTeleport->setTarget(target);
+    otherTarget->addComponent(otherTeleport);
+
+    block->insert(target);
+    otherBlock->insert(otherTarget);
+
+    return otherTarget;
+}
+
 frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManagerPtr shared)
 {
     frts::WriteableBlockPtr block;
@@ -35,7 +68,8 @@ frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManager
         {
             block = makeBlock(blockingType, sortOrderType);
 
-            auto cIt = colors.find(mpIt->second);
+            auto& rgb = mpIt->second;
+            auto cIt = colors.find(rgb);
             if (cIt != colors.end())
             {
                 auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
@@ -43,6 +77,13 @@ frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManager
                 {
                     block->insert(mf->makeEntity(entityId, shared));
                 }
+            }
+            else
+            {
+                auto msg = boost::format(R"(Unknown color (%1%, %2%, %3%) at position (%4%, %5%, %6%).)")
+                        % std::get<0>(rgb) % std::get<1>(rgb) % std::get<2>(rgb)
+                        % pos->getX() % pos->getY() % pos->getZ();
+                shared->getLog()->warning("frts::BmpMapParser", msg.str());
             }
 
             blocks[pos] = block;
@@ -70,11 +111,46 @@ frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManager
 {
     frts::WriteableBlockPtr block = getBlock(pos, shared);
 
-    // Teleport.
     if (block != nullptr)
     {
+        // Teleport slopes.
         tryConnectTeleport(pos, block, teleportUp, teleportDown, +1, shared);
         tryConnectTeleport(pos, block, teleportDown, teleportUp, -1, shared);
+
+        // Teleport portals.
+        auto mpIt = mapPoints.find(pos);
+        if (mpIt != mapPoints.end())
+        {
+            auto tIt = teleporters.find(mpIt->second);
+            if (tIt != teleporters.end())
+            {
+                // Do we already have teleport components in this block?
+                std::vector<EntityPtr> targets;
+                for (auto& entity : block->getByComponent(teleportType))
+                {
+                    auto teleport = getComponent<Teleport>(teleportType, entity);
+                    targets.push_back(teleport->getTarget());
+                }
+
+                auto tpIt = teleporterPoints.find(tIt->second);
+                if (tpIt != teleporterPoints.end())
+                {
+                    for (auto& teleportPos : tpIt->second)
+                    {
+                        if (teleportPos == pos)
+                        {
+                            continue;
+                        }
+
+                        // Connect if not already happened.
+                        connectIfNotYet(block, teleportPos, targets, shared);
+
+                        // Portals only exist between two points so break after the first other block.
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     return block;
@@ -151,6 +227,11 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
                     teleportDown.insert(rgb);
                 }
 
+                if (colorNode->has("teleport"))
+                {
+                    teleporters[rgb] = shared->makeId(colorNode->getString("teleport"));
+                }
+
                 std::vector<IdPtr> entities;
                 for (auto& entity : colorNode->getStrings("entities"))
                 {
@@ -208,7 +289,17 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
             }
 
             // Because the y axis in bitmap images is reversed we must invert the value.
-            mapPoints[mf->makePoint(x, height - 1 - y, zLevel)] = rgb;
+            auto pos = mf->makePoint(x, height - 1 - y, zLevel);
+
+            // Is this a teleporter?
+            auto it = teleporters.find(rgb);
+            if (it != teleporters.end())
+            {
+                teleporterPoints[it->second].push_back(pos);
+            }
+
+            // Store map point.
+            mapPoints[pos] = rgb;
         }
     }
     delete[] data;
@@ -219,7 +310,7 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
                                             const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared)
 {
-    // Not really proud of this solution. But it was the most clear solution i found. I'm open to better implementations or complete
+    // Not really proud of this. But it was the most clear solution i found. I'm open to better implementations or complete
     // replacements of the teleport component.
 
     auto mpIt = mapPoints.find(pos);
@@ -249,36 +340,14 @@ void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr bloc
                 continue;
             }
 
-            // Are we already connected?
-            bool alreadyConnected = false;
-            auto neighbor = getBlock(neighborPos, shared);
-            for (auto& entity : neighbor->getByComponent(teleportType))
-            {
-                if (std::find(targets.begin(), targets.end(), entity) != targets.end())
-                {
-                    alreadyConnected = true;
-                    break;
-                }
-            }
-            if (alreadyConnected)
+            // Connect if not already happened.
+            auto otherTarget = connectIfNotYet(block, neighborPos, targets, shared);
+
+            // Did we connect to another target?
+            if (otherTarget == nullptr)
             {
                 break;
             }
-
-            // Not yet connected so let's do that.
-            auto target = mf->makeEntity();
-            auto otherTarget = mf->makeEntity();
-
-            auto teleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
-            teleport->setTarget(otherTarget);
-            target->addComponent(teleport);
-
-            auto otherTeleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
-            otherTeleport->setTarget(target);
-            otherTarget->addComponent(otherTeleport);
-
-            block->insert(target);
-            neighbor->insert(otherTarget);
 
             // Register other target in region manager. This may seem like a recursive call but
             // at this point

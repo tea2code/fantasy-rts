@@ -74,7 +74,21 @@ namespace frts
         TeleportColors teleportUp;
         TeleportColors teleportDown;
 
+        std::unordered_map<Rgb, IdPtr, RgbHash> teleporters;
+        std::unordered_map<IdPtr, std::vector<PointPtr>, IdHash, IdEqual> teleporterPoints;
+
     private:
+        /**
+         * @brief Connect two blocks if not already connected.
+         * @param block The first block.
+         * @param otherPos The position of the other block.
+         * @param targets A list of already connected targets.
+         * @param shared The shared manager.
+         * @return The other teleport entity if a connection has happened.
+         */
+        EntityPtr connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
+                                  const std::vector<EntityPtr>& targets, SharedManagerPtr shared);
+
         /**
          * @brief Get block at given position.
          * @param pos The position.

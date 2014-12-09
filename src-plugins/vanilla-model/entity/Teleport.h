@@ -18,7 +18,7 @@ namespace frts
 
     /**
      * @brief Component creates virtualle connected entities which represent for example
-     *        a portal or a slope.
+     *        a portal, a ramp or a slope.
      */
     class Teleport : public Component
     {
