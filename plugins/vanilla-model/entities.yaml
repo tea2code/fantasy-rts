@@ -66,6 +66,25 @@ entities:
                 - resource.food
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 100
+        - name: tree
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.air
+                - blocking.vegetation
+                - blocking.wall
+                - blocking.water
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.vegetation
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.wood.log
+            - component: frts.vanillamodel.entity.component.hasresource
+              resources:
+                - resource.wood
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 100
         
         # Is Resource
         - name: berry
@@ -97,6 +116,10 @@ entities:
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+        - name: ramp
+          components:
+          - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 10
               
         # Massive blocks (walls...)
         - name: wall
@@ -117,5 +140,8 @@ entities:
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.dirt
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180

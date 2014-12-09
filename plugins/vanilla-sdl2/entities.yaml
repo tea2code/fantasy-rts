@@ -44,7 +44,11 @@ entities:
         - name: shrub.berry
           components:
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.shrub
+              sprite: style.sprite.shrub.berry
+        - name: tree
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.tree
         
         # Is Resource
         - name: berry
@@ -69,6 +73,10 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.dirt
+        - name: ramp
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.ramp
               
         # Massive blocks (walls...)
         - name: wall
@@ -78,4 +86,4 @@ entities:
         - name: earth
           components:
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.dirt
+              sprite: style.sprite.earth

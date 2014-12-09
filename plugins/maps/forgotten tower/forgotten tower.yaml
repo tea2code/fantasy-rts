@@ -6,26 +6,30 @@ region:
 
 bmpmap:
 
-    namespace: map.demo
+    namespace: map.forgottentower
 
     height: 100
     width: 100
     
     levels:
         - level: 0
-          image: map.demo.image.walls.rect
+          image: map.forgottentower.image.level.0
         - level: 1
-          image: map.demo.image.hilltop
+          image: map.forgottentower.image.level.1
+        - level: 2
+          image: map.forgottentower.image.level.2
     
     images:
         namespace: image
         
         images:
-            - name: walls.rect
-              path: maps/demo1/wallsrect.bmp
-            - name: hilltop
-              path: maps/demo1/hilltop.bmp
-    
+            - name: level.0
+              path: maps/forgottentower/level0.bmp
+            - name: level.1
+              path: maps/forgottentower/level1.bmp
+            - name: level.2
+              path: maps/forgottentower/level2.bmp
+            
     colors:
         neutral:
             r: 255
@@ -55,6 +59,13 @@ bmpmap:
                 - entity.grass
                 - entity.tree
                 
+            # Dirt
+            - r: 127
+              g: 0
+              b: 0
+              entities: 
+                - entity.dirt
+                
             # Earth
             - r: 0
               g: 0
@@ -69,7 +80,7 @@ bmpmap:
               teleport_up: true
               entities: 
                 - entity.grass
-                - entity.highlight.yellow
+                - entity.ramp
                 
             # Teleport Down
             - r: 0
@@ -78,13 +89,3 @@ bmpmap:
               teleport_down: true
               entities: 
                 - entity.grass
-                - entity.highlight.orange
-                
-            # Portal 1
-            - r: 255
-              g: 0
-              b: 255
-              teleport: portal.1
-              entities: 
-                - entity.grass
-                - entity.highlight.red

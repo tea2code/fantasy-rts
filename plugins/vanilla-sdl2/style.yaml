@@ -18,6 +18,32 @@ style:
         width: 16
         
         sprite:
+            # Dev
+            - name: grid
+              x: 0
+              y: 240
+              
+            - name: highlight.green
+              x: 16
+              y: 240
+              
+            - name: highlight.yellow
+              x: 32
+              y: 240
+              
+            - name: highlight.orange
+              x: 48
+              y: 240
+              
+            - name: highlight.red
+              x: 64
+              y: 240
+              
+            - name: dot
+              x: 80
+              y: 240
+        
+            # Meta
             - name: unknown
               x: 0
               y: 16
@@ -25,45 +51,8 @@ style:
             - name: cursor
               x: 0
               y: 192
-            
-            - name: grass
-              multiple:
-                 - x: 0
-                   y: 32
-                   chance: 0.25
-                 - x: 16
-                   y: 32
-                   chance: 0.5
-                 - x: 32
-                   y: 32
-                   chance: 0.25
-            
-            - name: wall
-              x: 0
-              y: 48
-                
-            - name: shrub
-              multiple:
-                  - x: 0
-                    y: 144
-                  - x: 16
-                    y: 144
-                    
-            - name: berry
-              multiple:
-                  - x: 0
-                    y: 160
-                  - x: 16
-                    y: 160
               
-            - name: tree
-              x: 0
-              y: 64
-              
-            - name: wood
-              x: 0
-              y: 176
-                
+            # Units
             - name: dwarf.north
               multiple:
                   - x: 0
@@ -118,12 +107,70 @@ style:
                     y: 80
                   - x: 48
                     y: 80
-                    
+            
+            # Has Resource
+            - name: shrub.berry
+              multiple:
+                  - x: 0
+                    y: 144
+                  - x: 16
+                    y: 144
+            
+            - name: tree
+              x: 0
+              y: 64
+            
+            # Is Resource
+            - name: berry
+              multiple:
+                  - x: 0
+                    y: 160
+                  - x: 16
+                    y: 160
+              
+            - name: wood
+              x: 0
+              y: 176
+            
+            # Background
+            - name: grass
+              multiple:
+                 - x: 0
+                   y: 32
+                   chance: 0.25
+                 - x: 16
+                   y: 32
+                   chance: 0.5
+                 - x: 32
+                   y: 32
+                   chance: 0.25
+            
             - name: air
               x: 0
               y: 208
-              
+            
             - name: dirt
+              multiple:
+                 - x: 64
+                   y: 224
+                   chance: 0.5
+                 - x: 80
+                   y: 224
+                   chance: 0.25
+                 - x: 96
+                   y: 224
+                   chance: 0.25
+                   
+            - name: ramp
+              x: 0
+              y: 240
+            
+            # Massive blocks (walls...)
+            - name: wall
+              x: 0
+              y: 48
+              
+            - name: earth
               multiple:
                  - x: 0
                    y: 224
@@ -134,22 +181,3 @@ style:
                  - x: 32
                    y: 224
                    chance: 0.25
-                   
-            - name: grid
-              x: 0
-              y: 240
-            - name: highlight.green
-              x: 16
-              y: 240
-            - name: highlight.yellow
-              x: 32
-              y: 240
-            - name: highlight.orange
-              x: 48
-              y: 240
-            - name: highlight.red
-              x: 64
-              y: 240
-            - name: dot
-              x: 80
-              y: 240
