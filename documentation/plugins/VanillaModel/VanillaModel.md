@@ -67,6 +67,7 @@ The path finder optained by the model factory allowes to calculate the shortest 
 - Before calculating a path from start to goal, try to calculate a path with limited number of iterations from goal to start. If a path is found use it. If goal is in a small room we see that there is no possible path and can stop the whole algorithm. This may prevent some "flooding the whole map" cases and even is realistic because start and goal are often blocked if they are in rooms with closed doors. Maybe it's even possible to use the already calculated values.
 - [Near-Optimal Hierarchical Pathfinding (HPA*)](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/)
 - Another priority queue like a heap. For example Boost provides a heap implementation with support for priority updates.
+- Simplify grid graph with something like a navigation mesh. It's probably possible to connect positions inside of rooms and handle them as a "single" waypoint.
 
 ##### Tested and discarded
 
