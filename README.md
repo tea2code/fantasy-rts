@@ -29,6 +29,8 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 18: Controlable entities.
 - Version 19: Perlin noise for hills, surface stuff and minerals.
 - Version 20: Precalculated z-levels using parallel thread.
+- Version 21: Sidebar ui.
+- Version 22: Event system.
 
 Major goals:
 
