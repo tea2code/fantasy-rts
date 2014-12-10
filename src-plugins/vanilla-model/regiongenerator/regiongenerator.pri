@@ -1,7 +1,8 @@
 SOURCES += \
     regiongenerator/impl/RegionGeneratorImpl.cpp \
     $$PWD/impl/BmpMapParser.cpp \
-    $$PWD/impl/TextMapParser.cpp
+    $$PWD/impl/TextMapParser.cpp \
+    $$PWD/impl/OpenSimplexNoise.cpp
     
 
 HEADERS += \
@@ -10,4 +11,5 @@ HEADERS += \
     $$PWD/MapParser.h \
     $$PWD/impl/BmpMapParser.h \
     $$PWD/impl/TextMapParser.h \
-    $$PWD/RegionGeneratorIds.h
+    $$PWD/RegionGeneratorIds.h \
+    $$PWD/impl/OpenSimplexNoise.h
