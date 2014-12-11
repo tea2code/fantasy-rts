@@ -25,13 +25,14 @@ TEST_CASE("3D, Seed 0, Size 10x10, Feature 1.", "[opensimplexnoise]")
     int height = 10;
     int feature = 1;
 
+    Approx approx = Approx::custom().epsilon(0.00001);
     frts::OpenSimplexNoise noise(seed);
     for (int x = 0; x < width; ++x)
     {
         for (int y = 0; y < height; ++y)
         {
             double value = noise.eval(static_cast<double>(x) / feature, static_cast<double>(y) / feature, 0.0);
-            REQUIRE(control.at(x * height + y) == Approx(value));
+            REQUIRE(control.at(x * height + y) == approx(value));
         }
     }
 }
@@ -76,13 +77,14 @@ TEST_CASE("2D, Seed 42, Size 30x20, Feature 1.", "[opensimplexnoise]")
     int height = 20;
     int feature = 1;
 
+    Approx approx = Approx::custom().epsilon(0.00001);
     frts::OpenSimplexNoise noise(seed);
     for (int x = 0; x < width; ++x)
     {
         for (int y = 0; y < height; ++y)
         {
             double value = noise.eval(static_cast<double>(x) / feature, static_cast<double>(y) / feature);
-            REQUIRE(control.at(x * height + y) == Approx(value));
+            REQUIRE(control.at(x * height + y) == approx(value));
         }
     }
 }
@@ -127,13 +129,14 @@ TEST_CASE("3D, Seed 45645, Size 30x20, Feature 10.", "[opensimplexnoise]")
     int height = 20;
     int feature = 10;
 
+    Approx approx = Approx::custom().epsilon(0.001);
     frts::OpenSimplexNoise noise(seed);
     for (int x = 0; x < width; ++x)
     {
         for (int y = 0; y < height; ++y)
         {
             double value = noise.eval(static_cast<double>(x) / feature, static_cast<double>(y) / feature, 0.0);
-            REQUIRE(control.at(x * height + y) == Approx(value));
+            REQUIRE(control.at(x * height + y) == approx(value));
         }
     }
 }

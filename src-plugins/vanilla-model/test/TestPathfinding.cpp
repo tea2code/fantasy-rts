@@ -172,8 +172,12 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
 
         // Based on floating point inaccuracy the result may differ. So lets just check start and goal.
         REQUIRE(path.at(0) == frts::makePoint(0, 0, 0));
-        REQUIRE(path.at(1) == frts::makePoint(1, 0, 0));
         REQUIRE(path.at(18) == frts::makePoint(9, 9, 0));
+
+        // It seems in release build accessing path.at(1) twice would result in a crush.
+        auto point = path.at(1);
+        bool secondPointOk = (point == frts::makePoint(1, 0, 0)) || (point == frts::makePoint(0, 1, 0));
+        REQUIRE(secondPointOk);
     }
 
     SECTION("Snake path from (0, 0) to (9, 9).")
