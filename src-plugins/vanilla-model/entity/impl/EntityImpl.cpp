@@ -5,6 +5,7 @@
 
 
 frts::EntityImpl::EntityImpl()
+    : components {}
 {
 }
 

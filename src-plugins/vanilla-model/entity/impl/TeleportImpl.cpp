@@ -2,7 +2,7 @@
 
 
 frts::TeleportImpl::TeleportImpl(IdPtr type)
-    : type{type}
+    : target{nullptr}, type{type}
 {}
 
 frts::IdPtr frts::TeleportImpl::getComponentType() const

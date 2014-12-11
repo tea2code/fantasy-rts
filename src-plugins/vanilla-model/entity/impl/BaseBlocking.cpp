@@ -2,6 +2,7 @@
 
 
 frts::BaseBlocking::BaseBlocking()
+    : blocks{}
 {
 }
 

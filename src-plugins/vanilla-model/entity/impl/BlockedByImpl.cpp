@@ -2,7 +2,7 @@
 
 
 frts::BlockedByImpl::BlockedByImpl(IdPtr type)
-    : type{type}
+    : blocking{}, type{type}
 {
 }
 

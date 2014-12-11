@@ -1,5 +1,7 @@
 #include <catch.hpp>
 
+#include "TestRegionGenerator.h"
+
 #include <entity/ComponentIds.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
@@ -10,7 +12,6 @@
 #include <main/ModelIds.h>
 #include <main/ModelReseter.h>
 #include <region/impl/PointImpl.h>
-#include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <pathfinding/impl/EuclideanDistance.h>
 #include <resource/impl/LockableHasResourceManager.h>
@@ -117,9 +118,8 @@ TEST_CASE("RegionManager.", "[main]")
 
     frts::Point::value sizeX = 10;
     frts::Point::value sizeY = 10;
-    frts::RegionGeneratorPtr regionGenerator = frts::makeRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
-                                                                         frts::makeId(frts::ComponentIds::sortOrder()),
-                                                                         sizeX, sizeY);
+    auto regionGenerator = test::makeSimpleTestRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
+                                                               frts::makeId(frts::ComponentIds::sortOrder()));
     frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
     frts::DistanceAlgorithmPtr distAlgo = frts::makeEuclideanDistance();

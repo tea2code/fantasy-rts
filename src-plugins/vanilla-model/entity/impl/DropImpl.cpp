@@ -4,7 +4,7 @@
 
 
 frts::DropImpl::DropImpl(IdPtr type)
-    : type{type}
+    : drops{}, type{type}
 {
 }
 

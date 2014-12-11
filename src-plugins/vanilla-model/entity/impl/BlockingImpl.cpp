@@ -5,7 +5,7 @@
 
 
 frts::BlockingImpl::BlockingImpl(IdPtr type)
-    : type{type}
+    : blocking{}, type{type}
 {
 }
 

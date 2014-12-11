@@ -2,7 +2,7 @@
 
 
 frts::HasResourceImpl::HasResourceImpl(IdPtr type)
-    : type{type}
+    : resources{}, type{type}
 {
 }
 

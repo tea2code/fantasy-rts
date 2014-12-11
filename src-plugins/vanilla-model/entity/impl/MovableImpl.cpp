@@ -1,7 +1,7 @@
 #include "MovableImpl.h"
 
 frts::MovableImpl::MovableImpl(IdPtr type)
-    : type{type}
+    : current{nullptr}, path{nullptr}, previous{nullptr}, type{type}
 {}
 
 frts::IdPtr frts::MovableImpl::getComponentType() const

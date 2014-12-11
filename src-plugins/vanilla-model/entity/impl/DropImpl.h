@@ -23,9 +23,8 @@ namespace frts
         struct IdComparison
         {
             IdComparison(IdPtr id)
-            {
-                this->id = id;
-            }
+                : id{id}
+            {}
 
             bool operator()(IdPtr other)
             {

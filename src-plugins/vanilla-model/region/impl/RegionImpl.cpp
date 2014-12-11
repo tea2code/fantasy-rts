@@ -38,7 +38,8 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
 
 frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
-    const int numTries = mapSizeX * mapSizeY * zLevels.size();
+    // Let's try at least 100 times. Still might not find a free position.
+    const int numTries = std::min(mapSizeX * mapSizeY * static_cast<Point::value>(zLevels.size()), 100);
 
     PointPtr result = nullptr;
 

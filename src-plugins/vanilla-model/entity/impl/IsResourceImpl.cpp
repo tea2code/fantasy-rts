@@ -2,7 +2,7 @@
 
 
 frts::IsResourceImpl::IsResourceImpl(IdPtr componentType)
-    : componentType{componentType}
+    : componentType{componentType}, resourceType{}
 {
 }
 

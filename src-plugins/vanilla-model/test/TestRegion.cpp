@@ -1,5 +1,7 @@
 #include <catch.hpp>
 
+#include "TestRegionGenerator.h"
+
 #include <entity/ComponentIds.h>
 #include <entity/impl/BlockedByImpl.h>
 #include <entity/impl/BlockingImpl.h>
@@ -8,7 +10,6 @@
 #include <regiongenerator/RegionGenerator.h>
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
-#include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <region/impl/RegionImpl.h>
 
 #include <log/NoLog.h>
@@ -211,9 +212,8 @@ TEST_CASE("Region.", "[region]")
 
     frts::Point::value sizeX = 2;
     frts::Point::value sizeY = 2;
-    frts::RegionGeneratorPtr regionGenerator = frts::makeRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
-                                                                         frts::makeId(frts::ComponentIds::sortOrder()),
-                                                                         sizeX, sizeY);
+    auto regionGenerator = test::makeSimpleTestRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
+                                                               frts::makeId(frts::ComponentIds::sortOrder()));
     frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
 
     region->setPos(entity1, point1, shared);

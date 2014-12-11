@@ -1,7 +1,7 @@
 #include "SortOrderImpl.h"
 
 frts::SortOrderImpl::SortOrderImpl(IdPtr type)
-    : type{type}
+    : sortOrder{0}, type{type}
 {
 
 }

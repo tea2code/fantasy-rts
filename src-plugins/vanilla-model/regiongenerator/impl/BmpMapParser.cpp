@@ -262,8 +262,8 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     // Extract image height and width from header.
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
-    int width = std::min(*(int*)&info[18], md->getMapSizeX());
-    int height = std::min(*(int*)&info[22], md->getMapSizeY());
+    int width = std::min(static_cast<int>(info[18]), md->getMapSizeX());
+    int height = std::min(static_cast<int>(info[22]), md->getMapSizeY());
     int rgbWidth = width * 3;
 
     // Precalculate padding.

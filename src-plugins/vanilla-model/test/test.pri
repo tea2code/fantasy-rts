@@ -3,7 +3,9 @@ SOURCES += \
     test/TestMain.cpp \
     test/TestEntity.cpp \
     test/TestResource.cpp \
-    $$PWD/TestPathfinding.cpp
+    $$PWD/TestPathfinding.cpp \
+    $$PWD/TestOpenSimplexNoise.cpp
     
 
-HEADERS +=
+HEADERS += \
+    $$PWD/TestRegionGenerator.h

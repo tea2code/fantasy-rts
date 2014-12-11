@@ -24,7 +24,7 @@ namespace frts
 
         explicit IteratorWrapper(IteratorImpl *iterator) : iterator(std::shared_ptr<IteratorImpl>(iterator)) {}
 
-        self_type operator++() { ++(*iterator); return *this; }
+        self_type& operator++() { ++(*iterator); return *this; }
         self_type operator++(int) { self_type i = *this; (*iterator)++; return i; }
         reference operator*() { return *(*iterator); }
         pointer operator->() { return &(*(*iterator)); }
