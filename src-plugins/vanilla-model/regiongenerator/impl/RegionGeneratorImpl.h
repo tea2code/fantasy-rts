@@ -1,6 +1,7 @@
 #ifndef FRTS_REGIONGENERATORIMPL_H
 #define FRTS_REGIONGENERATORIMPL_H
 
+#include "OpenSimplexNoise.h"
 #include <regiongenerator/RegionGenerator.h>
 
 #include <memory>
@@ -24,6 +25,8 @@ namespace frts
         IdPtr sortOrderType;
 
         Point::value surfaceZLevel = 0; // TODO Remove
+
+        OpenSimplexNoise noise;
     };
 
     /**

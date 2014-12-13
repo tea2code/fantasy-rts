@@ -53,7 +53,6 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
-    // Place entities on map.
     if (shared->getFrame()->getNumber() == 0)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
@@ -70,14 +69,17 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         lastCursorPos = rm->getPos(gd->getCursor(), shared);
 
         // Pregenerate map.
-        for (auto x = 0; x < md->getMapSizeX(); ++x)
-        {
-            for (auto y = 0; y < md->getMapSizeY(); ++y)
-            {
-                auto pos = mf->makePoint(x, y, gd->getZLevel());
-                rm->getBlock(pos, shared);
-            }
-        }
+//        for (Point::value x = 0; x < md->getMapSizeX(); ++x)
+//        {
+//            for (Point::value y = 0; y < md->getMapSizeY(); ++y)
+//            {
+//                for (Point::value z = 0; z > -10; --z)
+//                {
+//                    auto pos = mf->makePoint(x, y, z);
+//                    rm->getBlock(pos, shared);
+//                }
+//            }
+//        }
         return;
     }
 

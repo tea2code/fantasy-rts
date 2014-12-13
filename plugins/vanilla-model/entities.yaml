@@ -46,7 +46,7 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 240
     
-        # Has Resource
+        # Vegetation
         - name: shrub.berry
           components:
             - component: frts.vanillamodel.entity.component.blockedby
@@ -86,7 +86,7 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 100
         
-        # Is Resource
+        # Resource
         - name: berry
           components:
             - component: frts.vanillamodel.entity.component.isresource
@@ -99,6 +99,25 @@ entities:
               resource_type: resource.wood
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+        - name: ore.iron
+          components:
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.iron
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 140
+        - name: coal
+          components:
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.coal
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 140
+        - name: diamond
+          components:
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.diamond
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 140
+        
               
         # Background
         - name: grass
@@ -113,6 +132,10 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
         - name: dirt
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0
+        - name: rock.floor
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
@@ -143,5 +166,48 @@ entities:
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.dirt
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        - name: rock
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.rock.floor
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        - name: rock.iron
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.rock.floor
+                - entity.ore.iron
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        - name: rock.coal
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.rock.floor
+                - entity.coal
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        - name: rock.diamond
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.rock.floor
+                - entity.diamond
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180

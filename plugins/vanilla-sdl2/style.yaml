@@ -108,7 +108,7 @@ style:
                   - x: 48
                     y: 80
             
-            # Has Resource
+            # Vegetation
             - name: shrub.berry
               multiple:
                   - x: 0
@@ -120,7 +120,7 @@ style:
               x: 0
               y: 64
             
-            # Is Resource
+            # Resource
             - name: berry
               multiple:
                   - x: 0
@@ -131,6 +131,18 @@ style:
             - name: wood
               x: 0
               y: 176
+              
+            - name: ore.iron
+              x: 0
+              y: 288
+              
+            - name: coal
+              x: 16
+              y: 288
+            
+            - name: diamond
+              x: 32
+              y: 288
             
             # Background
             - name: grass
@@ -161,6 +173,18 @@ style:
                    y: 224
                    chance: 0.25
                    
+            - name: rock.floor
+              multiple:
+                 - x: 192
+                   y: 224
+                   chance: 0.5
+                 - x: 208
+                   y: 224
+                   chance: 0.25
+                 - x: 224
+                   y: 224
+                   chance: 0.25
+                   
             - name: ramp
               x: 0
               y: 256
@@ -181,3 +205,43 @@ style:
                  - x: 32
                    y: 224
                    chance: 0.25
+                   
+            - name: rock
+              multiple:
+                 - x: 128
+                   y: 224
+                   chance: 0.7
+                 - x: 144
+                   y: 224
+                   chance: 0.2
+                 - x: 160
+                   y: 224
+                   chance: 0.1
+                   
+            - name: rock.iron
+              multiple:
+                 - x: 0
+                   y: 272
+                   chance: 0.5
+                 - x: 16
+                   y: 272
+                   chance: 0.25
+                 - x: 32
+                   y: 272
+                   chance: 0.25
+                   
+            - name: rock.coal
+              multiple:
+                 - x: 64
+                   y: 272
+                   chance: 0.5
+                 - x: 80
+                   y: 272
+                   chance: 0.25
+                 - x: 96
+                   y: 272
+                   chance: 0.25
+                   
+            - name: rock.diamond
+              x: 128
+              y: 272

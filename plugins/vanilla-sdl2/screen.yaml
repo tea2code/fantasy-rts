@@ -13,8 +13,8 @@ screen:
     width: 1280
     
     # The screen movement size should be around 25% of height and width (in pixel).
-    screen_move_x: 256
-    screen_move_y: 192
+    screen_move_x: 384
+    screen_move_y: 320
     
     # The window title. Use %1% as placeholder for FPS.
     title: "Fantasy-RTS (FPS: %1%)"

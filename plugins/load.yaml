@@ -37,5 +37,5 @@ configurations:
     - vanilla-sdl2/style.yaml
     
     # Maps
-    - maps/demo1/demo1.yaml
-    #- maps/forgotten tower/forgotten tower.yaml
+    #- maps/demo1/demo1.yaml
+    - maps/forgotten tower/forgotten tower.yaml

@@ -40,7 +40,7 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.dwarf
             
-        # Has Resource
+        # Vegetation
         - name: shrub.berry
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -50,7 +50,7 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.tree
         
-        # Is Resource
+        # Resource
         - name: berry
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -59,6 +59,18 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.wood
+        - name: ore.iron
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.ore.iron
+        - name: coal
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.coal
+        - name: diamond
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.diamond
               
         # Background
         - name: grass
@@ -73,6 +85,10 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.dirt
+        - name: rock.floor
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock.floor
         - name: ramp
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -87,3 +103,20 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.earth
+        - name: rock
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock
+        - name: rock.iron
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock.iron
+        - name: rock.coal
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock.coal
+        - name: rock.diamond
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock.diamond
+        

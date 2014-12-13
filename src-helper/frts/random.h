@@ -37,7 +37,7 @@ namespace frts
     FloatType randomFloat(FloatType start, FloatType end)
     {
         static thread_local auto gen = defaultGenerator();
-        std::uniform_real_distribution<> dist(start, end);
+        std::uniform_real_distribution<FloatType> dist(start, end);
         return dist(gen);
     }
 
@@ -51,7 +51,7 @@ namespace frts
     IntegerType randomInteger(IntegerType start, IntegerType end)
     {
         static thread_local auto gen = defaultGenerator();
-        std::uniform_int_distribution<> dist(start, end);
+        std::uniform_int_distribution<IntegerType> dist(start, end);
         return dist(gen);
     }
 
