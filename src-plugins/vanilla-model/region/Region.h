@@ -45,7 +45,7 @@ namespace frts
          * @param zLevels List of z-levels on which should be searched.
          * @param blockedBy Description of what can block.
          * @param shared The shared manager.
-         * @return A single position.
+         * @return A single position or nullptr if no is found.
          */
         virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
 

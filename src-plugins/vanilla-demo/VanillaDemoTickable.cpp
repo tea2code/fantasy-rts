@@ -49,7 +49,10 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
         auto pos = rm->findFreeRandomPos({0}, blockedBy, shared);
-        rm->setPos(player, pos, shared);
+        if (pos != nullptr)
+        {
+            rm->setPos(player, pos, shared);
+        }
 
         // Initialize position of cursor.
         lastCursorPos = rm->getPos(gd->getCursor(), shared);
@@ -83,6 +86,10 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
         auto pathFinder = mf->getPathFinder();
         auto start = rm->getPos(player, shared);
+        if (start == nullptr)
+        {
+            return;
+        }
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
         auto path = pathFinder->findPath(start, cursorPos, blockedBy, shared);
         if (path->pathExists())

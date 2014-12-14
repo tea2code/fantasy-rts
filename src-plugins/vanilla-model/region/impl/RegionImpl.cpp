@@ -60,7 +60,7 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
         }
     }
     
-    return nullptr;
+    return result;
 }
 
 frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
