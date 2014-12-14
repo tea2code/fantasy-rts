@@ -139,3 +139,11 @@ Separate functions, classes... by one line. The only exception are `#include` wh
 Unit tests are implemented using Catch which allows fast and easy creation of a huge number of test cases. To prevent problems with normal builds the directory *test* is only included into the build if qmake was executed with the parameters `DEFINES+=UNIT_TEST CONFIG+=UNIT_TEST`.
 
 This principle can be also applied to plugins. Additionally it is necessary to build the plugins in test mode as applications instead of libraries.
+
+## Code Quality
+
+Use static analysis tools like [cppcheck](http://cppcheck.sourceforge.net/) to find obvious errors and problems not found by compiler checks. 
+
+Example execution of cppcheck in root:
+
+    cppcheck --enable=all -ipython-prototype -isrc/dependency -isrc-plugins/vanilla-sdl2/dependency . 2> cppcheck.log

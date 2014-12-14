@@ -20,6 +20,7 @@
 #include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
 #include <shared/impl/SharedManagerImpl.h>
+#include <shared/impl/MainDataImpl.h>
 
 #include <memory>
 
@@ -28,12 +29,14 @@ TEST_CASE("ModelFactory.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/"));
 
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
 
     SECTION("Build components.")
     {
         // Execute init() twice because it waits one run.
+        modelFactory->preInit(shared);
         modelFactory->createData(shared);
         modelFactory->init(shared);
         modelFactory->init(shared);
@@ -60,6 +63,7 @@ TEST_CASE("ModelFactory.", "[main]")
     SECTION("Get path finder.")
     {
         // Execute init() twice because it waits one run.
+        modelFactory->preInit(shared);
         modelFactory->createData(shared);
         modelFactory->init(shared);
         modelFactory->init(shared);
@@ -92,11 +96,13 @@ TEST_CASE("ModelReseter.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
+    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/"));
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
 
     // Execute init() twice because it waits one run.
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
+    modelFactory->preInit(shared);
     modelFactory->createData(shared);
     modelFactory->init(shared);
     modelFactory->init(shared);

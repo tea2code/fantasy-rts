@@ -174,7 +174,9 @@ namespace frts
      */
     inline bool operator==(PointPtr lhs, PointPtr rhs)
     {
-        return *lhs == *rhs;
+        bool lhsNull = (lhs == nullptr);
+        bool rhsNull = (rhs == nullptr);
+        return (lhsNull && rhsNull) || (!lhsNull && !rhsNull && *lhs == *rhs);
     }
 
     /**
@@ -185,7 +187,7 @@ namespace frts
      */
     inline bool operator!=(PointPtr lhs, PointPtr rhs)
     {
-        return *lhs != *rhs;
+        return !(lhs == rhs);
     }
 
     /**

@@ -12,6 +12,8 @@ namespace frts
     class GraphicDataImpl : public GraphicData
     {
     public:
+        GraphicDataImpl();
+
         EntityPtr getCursor() const override;
         unsigned int getMaxFps() const override;
         unsigned int getNumFpsAvg() const override;
@@ -47,19 +49,19 @@ namespace frts
 
     private:
         EntityPtr cursor;
-        unsigned int maxFps;
-        unsigned int numFpsAvg;
-        bool renderEverything;
-        unsigned int screenHeight;
-        unsigned int screenOffsetStepX;
-        unsigned int screenOffsetStepY;
-        Point::value screenOffsetX;
-        Point::value screenOffsetY;
+        unsigned int maxFps = 0;
+        unsigned int numFpsAvg = 0;
+        bool renderEverything = false;
+        unsigned int screenHeight = 0;
+        unsigned int screenOffsetStepX = 0;
+        unsigned int screenOffsetStepY = 0;
+        Point::value screenOffsetX = 0;
+        Point::value screenOffsetY = 0;
         std::string screenTitle;
-        unsigned int screenWidth;
-        unsigned int tileHeight;
-        unsigned int tileWidth;
-        Point::value zLevel;
+        unsigned int screenWidth = 0;
+        unsigned int tileHeight = 0;
+        unsigned int tileWidth = 0;
+        Point::value zLevel = 0;
     };
 
     /**

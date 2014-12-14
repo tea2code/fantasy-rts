@@ -252,7 +252,7 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     if(file == NULL)
     {
-        auto msg = boost::format(R"(Map file with path "%1% not found.)") % path;
+        auto msg = boost::format(R"(Map file with path "%1%" not found.)") % path;
         throw MapFileNotFoundError(msg.str());
     }
 

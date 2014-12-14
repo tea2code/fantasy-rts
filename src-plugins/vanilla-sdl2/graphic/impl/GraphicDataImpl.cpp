@@ -3,6 +3,9 @@
 #include <main/Sdl2Ids.h>
 
 
+frts::GraphicDataImpl::GraphicDataImpl()
+{}
+
 frts::EntityPtr frts::GraphicDataImpl::getCursor() const
 {
     return cursor;

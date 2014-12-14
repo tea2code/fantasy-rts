@@ -193,7 +193,7 @@ bool frts::YamlConfigNode::is(const std::string& key)
             T value = valueNode.as<T>();
             return value == value;
         }
-        catch(YAML::BadConversion)
+        catch(const YAML::BadConversion&)
         {
             return false;
         }

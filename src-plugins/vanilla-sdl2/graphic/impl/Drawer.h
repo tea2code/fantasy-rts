@@ -156,30 +156,30 @@ namespace frts
         using ImageMap = std::unordered_map<IdPtr, std::string, IdHash, IdEqual>;
 
     private:
-        bool initialized;
+        bool initialized = false;
 
         /**
          * @brief Offset in number of tiles in x-direction.
          */
-        Point::value offsetX;
+        Point::value offsetX = 0;
 
         /**
          * @brief Offset in number of tiles in y-direction.
          */
-        Point::value offsetY;
+        Point::value offsetY = 0;
 
         /**
          * @brief Screen height in number tiles.
          */
-        Point::value screenHeight;
+        Point::value screenHeight = 0;
 
         /**
          * @brief Screen width in number tiles.
          */
-        Point::value screenWidth;
+        Point::value screenWidth = 0;
 
-        int tileHeight;
-        int tileWidth;
+        int tileHeight = 0;
+        int tileWidth = 0;
 
         RendererPtr renderer;
         TextureMap textures;

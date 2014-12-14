@@ -22,7 +22,7 @@ frts::ConfigNodePtr frts::YamlConfigParser::parseFile(const std::string& filePat
         auto rawNode = YAML::LoadFile(filePath);
         return std::make_shared<YamlConfigNode>(rawNode);
     }
-    catch(YAML::Exception ex)
+    catch(const YAML::Exception& ex)
     {
         if (ex.msg == "bad file")
         {

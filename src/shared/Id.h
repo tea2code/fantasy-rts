@@ -35,7 +35,9 @@ namespace frts
      */
     inline bool operator==(IdPtr lhs, IdPtr rhs)
     {
-        return *lhs == *rhs;
+        bool lhsNull = (lhs == nullptr);
+        bool rhsNull = (rhs == nullptr);
+        return (lhsNull && rhsNull) || (!lhsNull && !rhsNull && *lhs == *rhs);
     }
 
     /**
@@ -46,7 +48,7 @@ namespace frts
      */
     inline bool operator!=(IdPtr lhs, IdPtr rhs)
     {
-        return *lhs != *rhs;
+        return !(lhs == rhs);
     }
 
     /**
