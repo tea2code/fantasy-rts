@@ -197,6 +197,10 @@ namespace frts
     {
         std::hash<int>::result_type operator() (PointPtr point) const
         {
+            if (point == nullptr)
+            {
+                return 0;
+            }
             return intHash(point->getX() + point->getY() + point->getZ());
         }
 

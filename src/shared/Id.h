@@ -58,6 +58,10 @@ namespace frts
     {
         std::size_t operator() (IdPtr id) const
         {
+            if (id == nullptr)
+            {
+                return 0;
+            }
             return stringHash(id->toString());
         }
 
