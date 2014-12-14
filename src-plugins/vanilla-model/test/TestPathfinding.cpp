@@ -44,6 +44,14 @@ namespace test
             : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}, maps{maps}
         {}
 
+        std::string getSupportedConfig() const override
+        {
+            return {};
+        }
+
+        void init(frts::SharedManagerPtr) override
+        {}
+
         frts::WriteableBlockPtr newBlock(frts::PointPtr pos, frts::SharedManagerPtr shared) override
         {
             auto entity = frts::makeEntity();
@@ -75,6 +83,12 @@ namespace test
             block->insert(entity);
             return block;
         }
+
+        void parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr) override
+        {}
+
+        void validateData(frts::SharedManagerPtr) override
+        {}
 
     private:
         frts::IdPtr blockingType;

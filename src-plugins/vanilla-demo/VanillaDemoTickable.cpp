@@ -1,7 +1,5 @@
 #include "VanillaDemoTickable.h"
 
-#include "DemoRegionGenerator.h"
-
 #include <frts/shared>
 #include <frts/vanillacommand>
 #include <frts/vanillamodel>
@@ -25,16 +23,6 @@ void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, Regio
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
-//    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-//    Point::value surfaceZLevel = 0;
-//    auto blockingType = shared->makeId(ComponentIds::blocking());
-//    auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
-//    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
-//    auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
-//                                                   modelData->getMapSizeX(), modelData->getMapSizeY(),
-//                                                   surfaceZLevel);
-//    modelFactory->setRegionGenerator(regionGenerator);
-
     shared->getLog()->debug(getName(), "Demo loaded");
     return false;
 }
@@ -56,8 +44,6 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     if (shared->getFrame()->getNumber() == 0)
     {
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-        auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
-        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
         // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
@@ -68,18 +54,6 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         // Initialize position of cursor.
         lastCursorPos = rm->getPos(gd->getCursor(), shared);
 
-        // Pregenerate map.
-//        for (Point::value x = 0; x < md->getMapSizeX(); ++x)
-//        {
-//            for (Point::value y = 0; y < md->getMapSizeY(); ++y)
-//            {
-//                for (Point::value z = 0; z > -10; --z)
-//                {
-//                    auto pos = mf->makePoint(x, y, z);
-//                    rm->getBlock(pos, shared);
-//                }
-//            }
-//        }
         return;
     }
 

@@ -16,7 +16,7 @@ General teleport is also supported using the optional `teleport`. A color with t
 
 #### Configuration
 
-    bmpmap:
+    bmp_map:
 
         namespace: <string>
     
@@ -54,6 +54,48 @@ General teleport is also supported using the optional `teleport`. A color with t
 
 TODO
 
-## Dynamic Region Generation
+#### Configuration
 
 TODO
+
+    text_map:
+
+## Dynamic Region Generation
+
+The current region generator uses a combination of default entities for the surface, below and above, a static map parser for surface structures and a noise based dynamic generation of structures below the surface. It has no intentation to be realistic in any way and is more of a prove of concept.
+
+#### Configuration
+
+    region_generator:
+    
+        surface_level: <integer, optional, default 0>
+        
+        default_above: <string representing an id>
+        default_surface: <string representing an id>
+        default_below: <string representing an id>
+    
+        noise_map:
+    
+            namespace: <string>
+            
+            levels:
+            
+                default_below:
+                    - <string representing an id>
+            
+                levels:
+                    - level: <integer>
+                      generators: 
+                        - <string representing an id>
+                        
+            generators:
+                namespace: generator
+                
+                generators:
+                    - name: <string>
+                      feature_size: <float bigger 0>
+                      ranges:
+                        - start: <float between -1 and 1>
+                          end: <float between -1 and 1>
+                      entities:
+                        - <string representing an id>

@@ -37,11 +37,9 @@ SOURCES += \
     main.cpp \
     VanillaDemoTickable.cpp \
     VanillaDemoPlugin.cpp \
-    DemoRegionGenerator.cpp \
     $$PWD/../vanilla-model/region/impl/BlockImpl.cpp
 
 HEADERS += \
     VanillaDemoTickable.h \
     VanillaDemoPlugin.h \
-    DemoRegionGenerator.h \
     $$PWD/../vanilla-model/region/impl/BlockImpl.h

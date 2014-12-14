@@ -41,10 +41,10 @@ namespace frts
          * @brief Get the supported config key.
          * @return The key.
          */
-        virtual std::string getSupportedConfig() = 0;
+        virtual std::string getSupportedConfig() const = 0;
 
         /**
-         * @brief Initialize the module.
+         * @brief Initialize the map parser.
          * @param shared The shared manager.
          */
         virtual void init(SharedManagerPtr shared) = 0;

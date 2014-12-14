@@ -3,6 +3,7 @@
 
 #include "OpenSimplexNoise.h"
 #include <regiongenerator/RegionGenerator.h>
+#include <main/ModelFactory.h>
 
 #include <frts/shared>
 
@@ -23,28 +24,54 @@ namespace frts
          */
         RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType);
 
-        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared);
+        std::string getSupportedConfig() const override;
+        void init(SharedManagerPtr shared) override;
+        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
+        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;
+        void validateData(SharedManagerPtr shared) override;
 
     private:
-        struct NoiseConfig
+        /**
+         * @brief Simple struct containing all necessary data defining and generator.
+         */
+        struct Generator
         {
-            NoiseConfig(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, std::string id)
-                : featureSize{featureSize}, noise{noise}, ranges{ranges}, id{id}
+            Generator(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, std::vector<IdPtr> entities)
+                : featureSize{featureSize}, noise{noise}, ranges{ranges}, entities{entities}
             {}
+
             double featureSize;
             OpenSimplexNoise noise;
             std::vector<std::pair<double, double>> ranges;
-            std::string id;
+            std::vector<IdPtr> entities;
         };
 
     private:
         IdPtr blockingType;
         IdPtr sortOrderType;
 
-        Point::value surfaceZLevel = 0; // TODO Remove
+        Point::value surfaceZLevel = 0;
 
-        std::unordered_map<Point::value, std::vector<std::string>> levels;
-        std::unordered_map<std::string, NoiseConfig> noises;
+        IdPtr defaultAboveSurfaceEntity;
+        IdPtr defaultSurfaceEntity;
+        IdPtr defaultBelowSurfaceEntity;
+
+        std::vector<IdPtr> defaultBelowSurfaceLevels;
+        std::unordered_map<Point::value, std::vector<IdPtr>> levels;
+        std::unordered_map<IdPtr, Generator> generators;
+
+    private:
+        /**
+         * @brief Initialize given block with generators.
+         * @param block The block.
+         * @param pos The position.
+         * @param generatorIds List of generator IDs to use.
+         * @param modelFactory The model factory.
+         * @param shared The shared manager.
+         * @return True if was initialized by generators.
+         */
+        bool initializeWithGenerators(WriteableBlockPtr block, PointPtr pos, const std::vector<IdPtr>& generatorIds,
+                                      ModelFactoryPtr modelFactory, SharedManagerPtr shared) const;
     };
 
     /**

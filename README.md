@@ -44,6 +44,7 @@ Major goals:
 - Fluids.
 - Fog of War / Unknown tiles should be blacked out.
 - Multilanguage support.
+- Better, realistic and more complex region generator.
 
 ## Documentation
 

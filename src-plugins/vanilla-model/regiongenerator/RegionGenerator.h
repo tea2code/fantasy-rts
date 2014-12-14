@@ -3,6 +3,7 @@
 
 #include <region/Point.h>
 #include <region/WriteableBlock.h>
+#include <frts/configuration>
 
 #include <map>
 #include <memory>
@@ -27,12 +28,38 @@ namespace frts
         virtual ~RegionGenerator() {}
 
         /**
+         * @brief Get the supported config key.
+         * @return The key.
+         */
+        virtual std::string getSupportedConfig() const = 0;
+
+        /**
+         * @brief Initialize the map parser.
+         * @param shared The shared manager.
+         */
+        virtual void init(SharedManagerPtr shared) = 0;
+
+        /**
          * @brief Get a new point for given position.
          * @param pos The position.
          * @param shared The shared manager.
          * @return The generated block.
          */
         virtual WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) = 0;
+
+        /**
+         * @brief Parse the map parser config.
+         * @param node The configuration node.
+         * @param shared The shared manager.
+         */
+        virtual void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) = 0;
+
+        /**
+         * @brief Validate the parsed config.
+         * @throws DataViolation if a data value is invalid.
+         * @param shared The shared manager.
+         */
+        virtual void validateData(SharedManagerPtr shared) = 0;
     };
 }
 

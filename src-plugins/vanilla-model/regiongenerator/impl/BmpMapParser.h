@@ -21,7 +21,7 @@ namespace frts
          */
         BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType);
 
-        std::string getSupportedConfig() override;
+        std::string getSupportedConfig() const override;
         void init(SharedManagerPtr shared) override;
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
         void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;

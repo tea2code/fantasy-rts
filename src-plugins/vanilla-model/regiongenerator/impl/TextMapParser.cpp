@@ -5,9 +5,9 @@ frts::TextMapParser::TextMapParser()
 {
 }
 
-std::string frts::TextMapParser::getSupportedConfig()
+std::string frts::TextMapParser::getSupportedConfig() const
 {
-    return "textmap";
+    return "text_map";
 }
 
 void frts::TextMapParser::init(SharedManagerPtr shared)

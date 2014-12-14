@@ -93,9 +93,9 @@ frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManager
     return block;
 }
 
-std::string frts::BmpMapParser::getSupportedConfig()
+std::string frts::BmpMapParser::getSupportedConfig() const
 {
-    return "bmpmap";
+    return "bmp_map";
 }
 
 void frts::BmpMapParser::init(SharedManagerPtr shared)

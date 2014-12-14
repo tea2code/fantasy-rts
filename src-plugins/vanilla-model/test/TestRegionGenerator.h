@@ -16,10 +16,24 @@ namespace test
             : blockingType{blockingType}, sortOrderType{sortOrderType}
         {}
 
-        frts::WriteableBlockPtr newBlock(frts::PointPtr, frts::SharedManagerPtr)
+        std::string getSupportedConfig() const override
+        {
+            return {};
+        }
+
+        void init(frts::SharedManagerPtr) override
+        { }
+
+        frts::WriteableBlockPtr newBlock(frts::PointPtr, frts::SharedManagerPtr) override
         {
             return frts::makeBlock(blockingType, sortOrderType);
         }
+
+        void parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr) override
+        {}
+
+        void validateData(frts::SharedManagerPtr) override
+        {}
 
     private:
         frts::IdPtr blockingType;

@@ -91,6 +91,9 @@ std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
         result.push_back(mapParser.second->getSupportedConfig());
     }
 
+    // Region generator.
+    result.push_back(regionGenerator->getSupportedConfig());
+
     return result;
 }
 
@@ -177,14 +180,13 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
         pathFinder = makeAStar(distanceAlgorithm, teleportId);
     }
 
+    // Region generator.
+    regionGenerator->init(shared);
+
     // Region Manager:
     auto modelData = getModelData(shared);
     auto hasResourceTyp = shared->makeId(ComponentIds::hasResource());
     auto isResourceType = shared->makeId(ComponentIds::isResource());
-    if (regionGenerator == nullptr)
-    {
-        regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
-    }
 
     if (region == nullptr)
     {
@@ -314,6 +316,10 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
     }
+    else if (key == regionGenerator->getSupportedConfig())
+    {
+        regionGenerator->parseConfig(node, shared);
+    }
     else
     {
         // Map parser.
@@ -342,6 +348,12 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
     // TODO Implement text map parser.
 //    auto textMapParserId = shared->makeId(RegionGeneratorIds::textMapParser());
 //    registerMapParser(textMapParserId, makeTextMapParser());
+
+    // Region generator:
+    if (regionGenerator == nullptr)
+    {
+        regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
+    }
 
     return false;
 }
@@ -403,6 +415,9 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     {
         mapParser.second->validateData(shared);
     }
+
+    // Region generator.
+    regionGenerator->validateData(shared);
 }
 
 void frts::ModelFactoryImpl::validateModules(SharedManagerPtr)
