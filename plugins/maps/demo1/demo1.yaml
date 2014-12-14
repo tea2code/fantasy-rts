@@ -3,55 +3,6 @@ region:
     # Size of the map.
     width: 100
     height: 100
-
-noisemap:
-
-    namespace: map.demo
-    
-    noise:
-        namespace: noise
-        
-        generators:
-            - name: underground.1
-              # seed: 123
-              feature_size: 2
-        
-    levels:
-        - level: -1
-          noise: map.demo.noise.underground.1
-          
-          default: entity.earth
-
-          values: 
-            - start: 900
-              end: 1000
-              entity: entity.rock
-              
-        - level: -2
-          noise: map.demo.noise.underground.1
-          
-          default: entity.earth
-
-          values: 
-            - start: 700
-              end: 1000
-              entity: entity.rock
-              
-        - level: -3
-          noise: map.demo.noise.underground.1
-          
-          default: entity.earth
-
-          values: 
-            - start: 400
-              end: 1000
-              entity: entity.rock
-              
-        - level_start: -4
-          level_end: min
-          noise: map.demo.noise.underground.1
-          
-          default: entity.rock
     
 bmpmap:
 

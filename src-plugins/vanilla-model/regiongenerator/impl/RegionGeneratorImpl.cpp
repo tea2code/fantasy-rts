@@ -10,10 +10,27 @@
 #include <limits>
 
 
+namespace {
+    frts::OpenSimplexNoise makeOpenSimplexNoise()
+    {
+        return frts::OpenSimplexNoise(frts::randomInteger(std::numeric_limits<long long>::min(), std::numeric_limits<long long>::max()));
+    }
+}
+
 frts::RegionGeneratorImpl::RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType)
-    : blockingType{blockingType}, sortOrderType{sortOrderType},
-      noise{randomInteger(std::numeric_limits<long long>::min(), std::numeric_limits<long long>::max())}
+    : blockingType{blockingType}, sortOrderType{sortOrderType}
 {
+    levels.emplace(-1, std::vector<std::string>{"frts.vanillamodel.noise.rock.1"});
+    levels.emplace(-2, std::vector<std::string>{"frts.vanillamodel.noise.rock.2"});
+    levels.emplace(-3, std::vector<std::string>{"frts.vanillamodel.noise.rock.3", "frts.vanillamodel.noise.coal"});
+    levels.emplace(-4, std::vector<std::string>{"frts.vanillamodel.noise.rock.3", "frts.vanillamodel.noise.coal", "frts.vanillamodel.noise.iron", "frts.vanillamodel.noise.diamond"});
+
+    noises.emplace("frts.vanillamodel.noise.coal", NoiseConfig(15.0, makeOpenSimplexNoise(), {{-1.0, -0.5}, {0.5, 1.0}}, "entity.rock.coal"));
+    noises.emplace("frts.vanillamodel.noise.iron", NoiseConfig(10.0, makeOpenSimplexNoise(), {{-1.0, -0.6}, {0.6, 1.0}}, "entity.rock.iron"));
+    noises.emplace("frts.vanillamodel.noise.diamond", NoiseConfig(3.0, makeOpenSimplexNoise(), {{-1.0, -0.8}, {0.8, 1.0}}, "entity.rock.diamond"));
+    noises.emplace("frts.vanillamodel.noise.rock.1", NoiseConfig(30.0, makeOpenSimplexNoise(), {{-1.0, -0.8}, {0.8, 1.0}}, "entity.rock"));
+    noises.emplace("frts.vanillamodel.noise.rock.2", NoiseConfig(30.0, makeOpenSimplexNoise(), {{-1.0, -0.4}, {0.4, 1.0}}, "entity.rock"));
+    noises.emplace("frts.vanillamodel.noise.rock.3", NoiseConfig(30.0, makeOpenSimplexNoise(), {{-1.0, 1.0}}, "entity.rock"));
 }
 
 frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, SharedManagerPtr shared)
@@ -28,49 +45,22 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
 
         if (pos->getZ() < surfaceZLevel)
         {
-            double featureSize = 10;
-//            if (pos->getZ() <= -3)
-//            {
-//                featureSize = 10;
-//            }
-//            else if (pos->getZ() <= -4)
-//            {
-//                featureSize = 5;
-//            }
-
-            double value = noise.eval(static_cast<double>(pos->getX()) / featureSize,
-                                      static_cast<double>(pos->getY()) / featureSize,
-                                      static_cast<double>(pos->getZ()) / featureSize);
-
-            // This will create a nearly uniform distribution by sliding the negativ values over the positives.
-//            if (value < 0.0)
-//            {
-//                value += 1.0;
-//            }
-//            long lookup = std::lround(value * 1000.0);
-            long lookup = std::lround((value + 1.0) * 500.0);
-
             id = "entity.earth";
-            if ((pos->getZ() == -1 && lookup >= 800) ||
-                (pos->getZ() <= -2 && lookup >= 500) ||
-                (pos->getZ() == -3 && lookup >= 200) ||
-                (pos->getZ() <= -4))
+            for (auto& noise : levels.at(pos->getZ()))
             {
-                if (pos->getZ() < -3 && 750 <= lookup && lookup <= 850)
+                auto nc = noises.at(noise);
+
+                double value = nc.noise.eval(static_cast<double>(pos->getX()) / nc.featureSize,
+                                             static_cast<double>(pos->getY()) / nc.featureSize,
+                                             static_cast<double>(pos->getZ()) / nc.featureSize);
+
+                for (auto& range : nc.ranges)
                 {
-                    id = "entity.rock.iron";
-                }
-                else if (pos->getZ() < -2 && 150 <= lookup && lookup <= 250)
-                {
-                    id = "entity.rock.coal";
-                }
-                else if (pos->getZ() < -4 && 450 <= lookup && lookup <= 460)
-                {
-                    id = "entity.rock.diamond";
-                }
-                else
-                {
-                    id = "entity.rock";
+                    if (range.first <= value && value <= range.second)
+                    {
+                        id = nc.id;
+                        break;
+                    }
                 }
             }
         }

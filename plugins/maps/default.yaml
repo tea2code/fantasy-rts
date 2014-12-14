@@ -1,0 +1,92 @@
+region_generator:
+
+    surface: 0
+    default_above: entity.air
+    default_ground: entity.earth
+    default_below: entity.earth
+
+noisemap:
+
+    namespace: map.underground
+    
+    levels:
+    
+        default:
+            - map.underground.generator.rock.3
+            - map.underground.generator.coal
+            - map.underground.generator.iron
+            - map.underground.generator.diamond
+    
+        levels:
+            - level: -1
+              generators: 
+                - map.underground.generator.rock.1
+            - level: -2
+              generators: 
+                - map.underground.generator.rock.2
+            - level: -3
+              generators: 
+                - map.underground.generator.rock.3
+                - map.underground.generator.coal
+                
+        generators:
+            namespace: generator
+            
+            generators:
+                - name: rock.1
+                  feature_size: 30
+                  ranges:
+                    - start: -1.0
+                      end: -0.7
+                    - start: 0.7
+                      end: 1.0
+                  entities:
+                    - entity.rock
+                    
+                - name: rock.2
+                  feature_size: 30
+                  ranges:
+                    - start: -1.0
+                      end: -0.4
+                    - start: 0.4
+                      end: 1.0
+                  entities:
+                    - entity.rock
+                    
+                - name: rock.3
+                  feature_size: 30
+                  ranges:
+                    - start: -1.0
+                      end: 1.0
+                  entities:
+                    - entity.rock
+                    
+                - name: coal
+                  feature_size: 15
+                  ranges:
+                    - start: -1.0
+                      end: -0.5
+                    - start: 0.5
+                      end: 1.0
+                  entities:
+                    - entity.rock.coal
+                    
+                - name: iron
+                  feature_size: 10
+                  ranges:
+                    - start: -1.0
+                      end: -0.6
+                    - start: 0.6
+                      end: 1.0
+                  entities:
+                    - entity.rock.iron
+                    
+                - name: diamond
+                  feature_size: 3
+                  ranges:
+                    - start: -1.0
+                      end: -0.8
+                    - start: 0.8
+                      end: 1.0
+                  entities:
+                    - entity.rock.diamond

@@ -4,7 +4,12 @@
 #include "OpenSimplexNoise.h"
 #include <regiongenerator/RegionGenerator.h>
 
+#include <frts/shared>
+
 #include <memory>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 
 namespace frts
@@ -21,12 +26,25 @@ namespace frts
         WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared);
 
     private:
+        struct NoiseConfig
+        {
+            NoiseConfig(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, std::string id)
+                : featureSize{featureSize}, noise{noise}, ranges{ranges}, id{id}
+            {}
+            double featureSize;
+            OpenSimplexNoise noise;
+            std::vector<std::pair<double, double>> ranges;
+            std::string id;
+        };
+
+    private:
         IdPtr blockingType;
         IdPtr sortOrderType;
 
         Point::value surfaceZLevel = 0; // TODO Remove
 
-        OpenSimplexNoise noise;
+        std::unordered_map<Point::value, std::vector<std::string>> levels;
+        std::unordered_map<std::string, NoiseConfig> noises;
     };
 
     /**

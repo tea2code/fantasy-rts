@@ -12,7 +12,7 @@ screen:
     height: 1024
     width: 1280
     
-    # The screen movement size should be around 25% of height and width (in pixel).
+    # The screen movement size should be around 30% of height and width (in pixel).
     screen_move_x: 384
     screen_move_y: 320
     
