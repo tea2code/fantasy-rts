@@ -17,7 +17,7 @@ frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared)
 frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
     auto component = std::static_pointer_cast<Drop>(build(shared));
-    for (auto drop : node->getStrings("drops"))
+    for (auto& drop : node->getStrings("drops"))
     {
         auto id = shared->makeId(drop);
         component->addDrop(id);

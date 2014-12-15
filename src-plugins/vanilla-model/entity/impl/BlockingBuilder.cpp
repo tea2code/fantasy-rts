@@ -17,7 +17,7 @@ frts::ComponentPtr frts::BlockingBuilder::build(SharedManagerPtr shared)
 frts::ComponentPtr frts::BlockingBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
     auto component = std::static_pointer_cast<Blocking>(build(shared));
-    for (auto block : node->getStrings("blocks"))
+    for (auto& block : node->getStrings("blocks"))
     {
         auto id = shared->makeId(block);
         component->addBlock(id);

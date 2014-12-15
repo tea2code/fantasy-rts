@@ -69,7 +69,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
             #endif
 
             // "Walk" neighbors.
-            for (auto next : neighbors)
+            for (auto& next : neighbors)
             {
                 // Currently there are no costs associated with moving so lets simply add one.
                 Point::length newCost = costSoFar[current] + 1.0;
@@ -144,7 +144,7 @@ std::vector<frts::PointPtr> frts::AStar::findNeighbors(PointPtr current, Blocked
     // Does an entity at the current position have a teleport component?
     auto block = regionManager->getBlock(current, shared);
     auto teleportEntities = block->getByComponent(teleportType);
-    for (auto entity : teleportEntities)
+    for (auto& entity : teleportEntities)
     {
         auto teleport = getComponent<Teleport>(teleportType, entity);
         auto target = teleport->getTarget();

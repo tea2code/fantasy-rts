@@ -83,7 +83,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         return;
     }
 
-    for (auto image : images)
+    for (auto& image : images)
     {
         SDL_Surface *surface = IMG_Load(image.second.c_str());
         if (surface == nullptr)
@@ -183,7 +183,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
     auto entities = block->getByComponent(renderableId);
 
-    for (auto entity : entities)
+    for (auto& entity : entities)
     {
         auto renderable = getComponent<Renderable>(renderableId, entity);
         auto sprite = spriteManager.getSprite(renderable);
@@ -234,7 +234,7 @@ void frts::Drawer::validateData(SharedManagerPtr shared)
 {
     spriteManager.validateData(shared);
 
-    for (auto image : images)
+    for (auto& image : images)
     {
         // Check if file exists. See http://stackoverflow.com/a/17195806/1931663.
         // TODO Move into src-helper.

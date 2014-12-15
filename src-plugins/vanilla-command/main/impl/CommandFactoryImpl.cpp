@@ -105,7 +105,7 @@ void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr nod
     if (node->has("undo_blacklist"))
     {
         auto commands = cc->getNotUndoableCommands();
-        for (auto idStr : node->getStrings("undo_blacklist"))
+        for (auto& idStr : node->getStrings("undo_blacklist"))
         {
             auto command = shared->makeId(idStr);
             commands.insert(command);

@@ -47,7 +47,7 @@ namespace frts
     inline EntityPtr makeEntity(std::vector<ComponentPtr> components)
     {
         EntityPtr entity = makeEntity();
-        for (auto component : components)
+        for (auto& component : components)
         {
             entity->addComponent(component);
         }

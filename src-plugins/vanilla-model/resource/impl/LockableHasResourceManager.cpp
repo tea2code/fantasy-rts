@@ -17,7 +17,7 @@ void frts::LockableHasResourceManager::add(EntityPtr entity)
         return;
     }
 
-    for (auto resourceType : component->getResources())
+    for (auto& resourceType : component->getResources())
     {
         resourceManager.add(resourceType, entity);
     }
@@ -57,7 +57,7 @@ void frts::LockableHasResourceManager::remove(EntityPtr entity)
         return;
     }
 
-    for (auto resourceType : component->getResources())
+    for (auto& resourceType : component->getResources())
     {
         resourceManager.remove(resourceType, entity);
     }

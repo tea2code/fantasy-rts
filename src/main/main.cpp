@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 
         // Log all modules with name, type and version.
         log->warning(logModule, "Following modules were loaded:");
-        for (auto module : modules)
+        for (auto& module : modules)
         {
             auto msg = boost::format(R"(-Module "%1%" (Version %4%) of type "%2%" (Version %3%).)")
                     % module->getName() % module->getTypeName()
@@ -200,7 +200,7 @@ int main(int argc, char* argv[])
 
         // Log all data values with name, type and version.
         log->warning(logModule, "Following data values were loaded:");
-        for (auto dataValue : shared->getDataValues())
+        for (auto& dataValue : shared->getDataValues())
         {
             auto msg = boost::format(R"(-Data value "%1%" (Version %4%) of type "%2%" (Version %3%).)")
                     % dataValue->getName() % dataValue->getTypeName()

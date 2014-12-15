@@ -53,7 +53,7 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     }
 
     // Initialize commands from configuration.
-    for (auto node : configNodes)
+    for (auto& node : configNodes)
     {
         for (auto keyNode : *node)
         {

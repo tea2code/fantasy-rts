@@ -262,7 +262,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
     try
     {
         auto entity = makeEntity();
-        for (auto componentNodes : entityConfig.at(id))
+        for (auto& componentNodes : entityConfig.at(id))
         {
             for (auto componentNode : *componentNodes)
             {

@@ -24,7 +24,7 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entit
     auto resourceIt = resources.find(resourceType);
     if (resourceIt != resources.end())
     {
-        for (auto entity : resourceIt->second)
+        for (auto& entity : resourceIt->second)
         {
             if (lockedEntities[entityGroup].find(entity) != lockedEntities[entityGroup].end())
             {
@@ -100,7 +100,7 @@ void frts::BaseLockableResourceManager::remove(IdPtr resourceType, EntityPtr ent
     if (it != entityLocks.end())
     {
         auto locks = it->second;
-        for (auto lock : locks)
+        for (auto& lock : locks)
         {
             lock->release();
         }

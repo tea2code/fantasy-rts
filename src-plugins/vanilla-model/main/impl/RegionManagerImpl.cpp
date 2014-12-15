@@ -107,7 +107,7 @@ void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr
 {
     bool hasResourceSet = false;
     bool isResourceSet = false;
-    for (auto component : entity->getComponents())
+    for (auto& component : entity->getComponents())
     {
         if (!hasResourceSet && component->getComponentType() == hasResourceType)
         {

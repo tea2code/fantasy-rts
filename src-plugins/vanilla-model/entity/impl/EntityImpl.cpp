@@ -33,7 +33,7 @@ frts::ComponentPtr frts::EntityImpl::getComponent(IdPtr type) const
 std::vector<frts::ComponentPtr> frts::EntityImpl::getComponents() const
 {
     std::vector<ComponentPtr> result;
-    for (auto pair : components)
+    for (auto& pair : components)
     {
         result.push_back(pair.second);
     }

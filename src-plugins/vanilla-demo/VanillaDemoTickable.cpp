@@ -29,7 +29,7 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 
 void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared)
 {
-    for (auto entity : highlights)
+    for (auto& entity : highlights)
     {
         regionManager->removeEntity(entity, shared);
     }

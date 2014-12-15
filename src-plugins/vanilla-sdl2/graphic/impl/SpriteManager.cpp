@@ -39,7 +39,7 @@ frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable)
         double dice = frts::randomFloat(0.0, upper);
         double chanceFrom = 0.0;
         int spriteIndex = 0;
-        for (auto spritePoint : spritePoints)
+        for (auto& spritePoint : spritePoints)
         {
             if (chanceFrom <= dice && dice <= chanceFrom + spritePoint.getChance())
             {

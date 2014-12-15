@@ -27,7 +27,7 @@ bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
 //    return !intersect.empty();
 
     // TODO Replace naive implementation with something more smart and faster.
-    for (auto block : blockingBlocks)
+    for (auto& block : blockingBlocks)
     {
         if (blockedByBlocks.find(block) != blockedByBlocks.end())
         {

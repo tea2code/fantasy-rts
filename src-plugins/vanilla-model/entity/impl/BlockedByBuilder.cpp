@@ -17,7 +17,7 @@ frts::ComponentPtr frts::BlockedByBuilder::build(SharedManagerPtr shared)
 frts::ComponentPtr frts::BlockedByBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
     auto component = std::static_pointer_cast<BlockedBy>(build(shared));
-    for (auto block : node->getStrings("blocks"))
+    for (auto& block : node->getStrings("blocks"))
     {
         auto id = shared->makeId(block);
         component->addBlock(id);

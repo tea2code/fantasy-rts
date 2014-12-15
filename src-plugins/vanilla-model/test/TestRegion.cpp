@@ -235,7 +235,7 @@ TEST_CASE("Region.", "[region]")
         };
         auto positions = region->findFreeNeighbors(point2, blockedBy1, false, shared);
         REQUIRE(positions.size() == correctPositions.size());
-        for(auto pos : positions)
+        for(auto& pos : positions)
         {
             REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
                     correctPositions.end());
@@ -249,7 +249,7 @@ TEST_CASE("Region.", "[region]")
         };
         auto positions = region->getNeightbors(point2, false, shared);
         REQUIRE(positions.size() == correctPositions.size());
-        for(auto pos : positions)
+        for(auto& pos : positions)
         {
             REQUIRE(std::find(correctPositions.begin(), correctPositions.end(), pos) !=
                     correctPositions.end());
