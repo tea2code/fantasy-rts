@@ -232,7 +232,7 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
                     teleporters[rgb] = shared->makeId(colorNode->getString("teleport"));
                 }
 
-                std::vector<IdPtr> entities;
+                IdVector entities;
                 for (auto& entity : colorNode->getStrings("entities"))
                 {
                     entities.push_back(shared->makeId(entity));

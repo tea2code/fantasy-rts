@@ -12,16 +12,16 @@ namespace frts
         CommandConfigImpl();
 
         std::string getName() const override;
-        IdSet getNotUndoableCommands() const override;
+        IdUnorderedSet getNotUndoableCommands() const override;
         unsigned int getNumUndo() const override;
-        void setNotUndoableCommands(IdSet commands) override;
+        void setNotUndoableCommands(IdUnorderedSet commands) override;
         void setNumUndo(unsigned int numUndo) override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
         int getVersion() const override;
 
     private:
-        IdSet notUndoableCommands;
+        IdUnorderedSet notUndoableCommands;
         int numUndo = 0;
     };
 

@@ -6,7 +6,6 @@
 #include <frts/shared>
 
 #include <memory>
-#include <unordered_set>
 
 
 namespace frts
@@ -24,7 +23,7 @@ namespace frts
     class BlockedBy : public Component
     {
     public:
-        using BlockSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
+        using BlockSet = IdUnorderedSet;
 
     public:
         virtual ~BlockedBy() {}

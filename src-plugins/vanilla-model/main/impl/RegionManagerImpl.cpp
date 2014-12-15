@@ -45,7 +45,7 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr 
     return region->getBlock(pos, shared);
 }
 
-frts::RegionManager::PointSet frts::RegionManagerImpl::getChangedPos()
+frts::PointUnorderedSet frts::RegionManagerImpl::getChangedPos()
 {
     return changedPos;
 }

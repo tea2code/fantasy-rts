@@ -36,14 +36,14 @@ namespace frts
          */
         struct Generator
         {
-            Generator(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, std::vector<IdPtr> entities)
+            Generator(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, IdVector entities)
                 : featureSize{featureSize}, noise{noise}, ranges{ranges}, entities{entities}
             {}
 
             double featureSize;
             OpenSimplexNoise noise;
             std::vector<std::pair<double, double>> ranges;
-            std::vector<IdPtr> entities;
+            IdVector entities;
         };
 
     private:
@@ -56,8 +56,8 @@ namespace frts
         IdPtr defaultSurfaceEntity;
         IdPtr defaultBelowSurfaceEntity;
 
-        std::vector<IdPtr> defaultBelowSurfaceLevels;
-        std::unordered_map<Point::value, std::vector<IdPtr>> levels;
+        IdVector defaultBelowSurfaceLevels;
+        std::unordered_map<Point::value, IdVector> levels;
         std::unordered_map<IdPtr, Generator> generators;
 
     private:
@@ -70,7 +70,7 @@ namespace frts
          * @param shared The shared manager.
          * @return True if was initialized by generators.
          */
-        bool initializeWithGenerators(WriteableBlockPtr block, PointPtr pos, const std::vector<IdPtr>& generatorIds,
+        bool initializeWithGenerators(WriteableBlockPtr block, PointPtr pos, const IdVector& generatorIds,
                                       ModelFactoryPtr modelFactory, SharedManagerPtr shared) const;
     };
 

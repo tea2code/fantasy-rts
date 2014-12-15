@@ -4,7 +4,6 @@
 #include "Component.h"
 
 #include <memory>
-#include <vector>
 
 
 namespace frts
@@ -35,7 +34,7 @@ namespace frts
          * @brief Get all drops.
          * @return The entities.
          */
-        virtual std::vector<IdPtr> getDrops() const = 0;
+        virtual IdVector getDrops() const = 0;
 
         /**
          * @brief Check if entity has a certain drop.

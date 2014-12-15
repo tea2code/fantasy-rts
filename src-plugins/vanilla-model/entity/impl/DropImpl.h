@@ -15,7 +15,7 @@ namespace frts
 
         void addDrop(IdPtr entityId) override;
         IdPtr getComponentType() const override;
-        std::vector<IdPtr> getDrops() const override;
+        IdVector getDrops() const override;
         bool hasDrop(IdPtr entityId) const override;
         void removeDrop(IdPtr entityId) override;
 
@@ -35,7 +35,7 @@ namespace frts
         };
 
     private:
-        std::vector<IdPtr> drops;
+        IdVector drops;
         IdPtr type;
     };
 

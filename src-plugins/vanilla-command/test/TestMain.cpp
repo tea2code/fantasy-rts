@@ -4,6 +4,8 @@
 #include <main/impl/CommandFactoryImpl.h>
 #include <main/CommandIds.h>
 
+#include <frts/shared>
+
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
 
@@ -28,7 +30,7 @@ TEST_CASE("CommandConfig.", "[main]")
 
     auto commandConfig = frts::makeCommandConfig();
 
-    frts::CommandConfig::IdSet commands {
+    frts::IdUnorderedSet commands {
         shared->makeId("command.id.1"),
         shared->makeId("command.id.2")
     };

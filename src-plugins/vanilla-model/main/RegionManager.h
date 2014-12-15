@@ -9,8 +9,6 @@
 #include <frts/shared>
 
 #include <memory>
-#include <unordered_set>
-#include <vector>
 
 
 namespace frts
@@ -32,9 +30,6 @@ namespace frts
     class RegionManager : public DataValue
     {
     public:
-        using PointSet = std::unordered_set<PointPtr, PointHash, PointEqual>;
-
-    public:
         virtual ~RegionManager() {}
 
         /**
@@ -51,7 +46,7 @@ namespace frts
          * @param shared The shared manager.
          * @return List of free neightbors.
          */
-        virtual std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) = 0;
+        virtual PointVector findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Find random position.
@@ -94,7 +89,7 @@ namespace frts
          * @brief Get list of all changed positions.
          * @return The changed positions.
          */
-        virtual PointSet getChangedPos() = 0;
+        virtual PointUnorderedSet getChangedPos() = 0;
 
         /**
          * @brief Get all neightbors (north, east, south, west, up, down) of position.
@@ -103,7 +98,7 @@ namespace frts
          * @param shared The shared manager.
          * @return List of neightbors.
          */
-        virtual std::vector<PointPtr> getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) = 0;
+        virtual PointVector getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Get position of entity.

@@ -45,7 +45,7 @@ namespace frts
         std::chrono::milliseconds walkTime;
 
     private:
-        std::vector<PointPtr> findNeighbors(PointPtr current, BlockedByPtr blockedBy,
+        PointVector findNeighbors(PointPtr current, BlockedByPtr blockedBy,
                                             RegionManagerPtr regionManager, SharedManagerPtr shared);
     };
 

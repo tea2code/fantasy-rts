@@ -4,7 +4,6 @@
 #include <frts/shared>
 
 #include <memory>
-#include <unordered_set>
 
 
 namespace frts
@@ -22,19 +21,13 @@ namespace frts
     class CommandConfig : public DataValue
     {
     public:
-        /**
-         * @brief Set of ids.
-         */
-        using IdSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
-
-    public:
         virtual ~CommandConfig() {}
 
         /**
          * @brief Get a list of commands which should not be undone.
          * @return The command ids.
          */
-        virtual IdSet getNotUndoableCommands() const = 0;
+        virtual IdUnorderedSet getNotUndoableCommands() const = 0;
 
         /**
          * @brief Get number of commands which can be undone.
@@ -46,7 +39,7 @@ namespace frts
          * @brief Set the list of commands which should not be undone.
          * @param commands The command ids.
          */
-        virtual void setNotUndoableCommands(IdSet commands) = 0;
+        virtual void setNotUndoableCommands(IdUnorderedSet commands) = 0;
 
         /**
          * @brief Set the number of commands which can be undone.

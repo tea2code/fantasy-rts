@@ -37,7 +37,7 @@ namespace frts
         /**
          * @brief A part or the complete path as a list of points.
          */
-        using PathPart = std::vector<PointPtr>;
+        using PathPart = PointVector;
 
     public:
         virtual ~Path() {}

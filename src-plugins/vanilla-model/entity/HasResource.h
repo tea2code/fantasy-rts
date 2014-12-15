@@ -4,7 +4,6 @@
 #include "Component.h"
 
 #include <memory>
-#include <unordered_set>
 
 
 namespace frts
@@ -22,7 +21,7 @@ namespace frts
     class HasResource : public Component
     {
     public:
-        using ResourceSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
+        using ResourceSet = IdUnorderedSet;
 
     public:
         virtual ~HasResource() {}

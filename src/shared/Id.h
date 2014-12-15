@@ -5,6 +5,8 @@
 
 #include <functional>
 #include <string>
+#include <unordered_set>
+#include <vector>
 
 
 namespace frts
@@ -79,6 +81,16 @@ namespace frts
             return lhs == rhs;
         }
     };
+
+    /**
+     * @brief Unordered set of IDs.
+     */
+    using IdUnorderedSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
+
+    /**
+     * @brief Vector of IDs.
+     */
+    using IdVector = std::vector<IdPtr>;
 }
 
 #endif // FRTS_ID_H

@@ -3,6 +3,8 @@
 
 #include <functional>
 #include <memory>
+#include <unordered_set>
+#include <vector>
 
 
 namespace frts
@@ -218,6 +220,16 @@ namespace frts
             return lhs == rhs;
         }
     };
+
+    /**
+     * @brief Unordered set of points.
+     */
+    using PointUnorderedSet = std::unordered_set<PointPtr, PointHash, PointEqual>;
+
+    /**
+     * @brief Vector of points.
+     */
+    using PointVector = std::vector<PointPtr>;
 }
 
 #endif // FRTS_POINT_H

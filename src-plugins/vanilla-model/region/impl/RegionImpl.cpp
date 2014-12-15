@@ -74,7 +74,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool s
     int y = pos->getY();
     int z = pos->getZ();
 
-    std::vector<PointPtr> result;
+    PointVector result;
 
     // North
     if (y - 1 >= 0)

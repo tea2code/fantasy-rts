@@ -17,14 +17,14 @@ namespace frts
                           IdPtr hasResourceType, IdPtr isResourceType);
 
         void addChangedPos(PointPtr pos) override;
-        std::vector<PointPtr> findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) override;
+        PointVector findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) override;
         PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
         ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
         ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
         BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
-        PointSet getChangedPos() override;
+        PointUnorderedSet getChangedPos() override;
         std::string getName() const override;
-        std::vector<PointPtr> getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) override;
+        PointVector getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) override;
         PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
@@ -35,7 +35,7 @@ namespace frts
         void updateResources(EntityPtr entity, SharedManagerPtr shared) override;
 
     private:
-        PointSet changedPos;
+        PointUnorderedSet changedPos;
         IdPtr hasResourceType;
         IdPtr isResourceType;
         RegionPtr region;

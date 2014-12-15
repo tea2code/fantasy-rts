@@ -205,7 +205,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     }
 }
 
-void frts::Drawer::updatePositions(SharedManagerPtr shared, const RegionManager::PointSet& positions, Point::value zLevel)
+void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel)
 {
     for (PointPtr pos : positions)
     {

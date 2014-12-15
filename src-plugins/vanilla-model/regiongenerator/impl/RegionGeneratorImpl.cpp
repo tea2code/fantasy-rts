@@ -32,7 +32,7 @@ void frts::RegionGeneratorImpl::init(SharedManagerPtr)
 {}
 
 bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block, PointPtr pos,
-                                                         const std::vector<IdPtr>& generatorIds,
+                                                         const IdVector& generatorIds,
                                                          ModelFactoryPtr modelFactory,
                                                          SharedManagerPtr shared) const
 {
@@ -156,7 +156,7 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
             for (ConfigNodePtr levelNode : *levelsNode)
             {
                 int level = levelNode->getInteger("level");
-                std::vector<IdPtr> generators;
+                IdVector generators;
                 for (auto& id : levelNode->getStrings("generators"))
                 {
                     generators.push_back(shared->makeId(id));
@@ -190,7 +190,7 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
                    ranges.emplace_back(rangeNode->getFloat("start"), rangeNode->getFloat("end"));
                 }
 
-                std::vector<IdPtr> entities;
+                IdVector entities;
                 for (auto& id : generatorNode->getStrings("entities"))
                 {
                     entities.push_back(shared->makeId(id));

@@ -11,7 +11,7 @@ std::string frts::CommandConfigImpl::getName() const
     return CommandIds::commandConfig();
 }
 
-frts::CommandConfig::IdSet frts::CommandConfigImpl::getNotUndoableCommands() const
+frts::IdUnorderedSet frts::CommandConfigImpl::getNotUndoableCommands() const
 {
     return notUndoableCommands;
 }
@@ -21,7 +21,7 @@ unsigned int frts::CommandConfigImpl::getNumUndo() const
     return numUndo;
 }
 
-void frts::CommandConfigImpl::setNotUndoableCommands(IdSet commands)
+void frts::CommandConfigImpl::setNotUndoableCommands(IdUnorderedSet commands)
 {
     this->notUndoableCommands = commands;
 }
