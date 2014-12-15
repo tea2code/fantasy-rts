@@ -2,6 +2,7 @@
 
 #include "SpritePoint.h"
 #include <frts/random.h>
+#include <frts/vanillamodel>
 
 #include <boost/format.hpp>
 
@@ -14,14 +15,45 @@ frts::SpriteManager::SpriteManager()
 {
 }
 
-frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable)
+frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr entity, SharedManagerPtr shared)
 {
-    // Get sprite.
-    auto it = sprites.find(renderable->getSprite());
-    if (it == sprites.end())
+    // Get sprite with support of movable for direction.
+    auto spriteId = renderable->getSprite();
+    SpriteMap::iterator it;
+    bool foundSprite = false;
+
+    auto movableId = shared->makeId(ComponentIds::movable());
+    if (entity->hasComponent(movableId))
     {
-        // Get fallback.
-        it = sprites.find(fallback);
+        auto movable = std::static_pointer_cast<Movable>(entity->getComponent(movableId));
+        auto direction = movable->getDirection();
+        std::string spriteDirection = "south";
+        if (direction == Movable::Direction::North)
+        {
+            spriteDirection = "north";
+        }
+        else if (direction == Movable::Direction::West)
+        {
+            spriteDirection = "west";
+        }
+        else if (direction == Movable::Direction::East)
+        {
+            spriteDirection = "east";
+        }
+
+        auto movableSpriteId = shared->makeId(spriteId->toString() + "." + spriteDirection);
+        it = sprites.find(movableSpriteId);
+        foundSprite = (it != sprites.end());
+    }
+
+    if (!foundSprite)
+    {
+        it = sprites.find(spriteId);
+        if (it == sprites.end())
+        {
+            // Get fallback.
+            it = sprites.find(fallback);
+        }
     }
     auto sprite = it->second;
 

@@ -34,9 +34,11 @@ namespace frts
         /**
          * @brief Select the correct sprite for the given renderable.
          * @param renderable The renderable.
+         * @param entity The entity of this renderable.
+         * @param shared The shared manager.
          * @return The selected sprite.
          */
-        Sprite getSprite(RenderablePtr renderable);
+        Sprite getSprite(RenderablePtr renderable, EntityPtr entity, SharedManagerPtr shared);
 
         /**
          * @brief Set configuration for sprites. Can be called multiple times to override

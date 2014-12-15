@@ -186,7 +186,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     for (auto& entity : entities)
     {
         auto renderable = getComponent<Renderable>(renderableId, entity);
-        auto sprite = spriteManager.getSprite(renderable);
+        auto sprite = spriteManager.getSprite(renderable, entity, shared);
         auto texture = textures.at(sprite.getImage());
 
         SDL_Rect clip = {
