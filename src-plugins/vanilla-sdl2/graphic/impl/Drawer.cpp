@@ -3,13 +3,13 @@
 #include "GraphicUtility.h"
 #include <main/Sdl2Ids.h>
 
+#include <frts/file.h>
 #include <frts/vanillamodel>
 
 #include <boost/format.hpp>
 #include <SDL2/SDL_image.h>
 
 #include <algorithm>
-#include <fstream>
 #include <utility>
 
 
@@ -236,10 +236,7 @@ void frts::Drawer::validateData(SharedManagerPtr shared)
 
     for (auto& image : images)
     {
-        // Check if file exists. See http://stackoverflow.com/a/17195806/1931663.
-        // TODO Move into src-helper.
-        std::ifstream file(image.second);
-        if (!file.good())
+        if (!fileExists(image.second))
         {
             auto msg = boost::format(R"(Image "%1%" with path "%2%" not found.)") % image.first->toString() % image.second;
             throw InvalidImageConfigError(msg.str());
