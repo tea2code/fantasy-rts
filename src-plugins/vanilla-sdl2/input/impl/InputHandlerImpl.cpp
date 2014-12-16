@@ -90,6 +90,6 @@ void frts::InputHandlerImpl::validateData(SharedManagerPtr)
 
 void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
 {
-    validateUtility(CommandIds::commandFactory(), 1, shared);
-    validateTickable("frts::EventHandler", 1, shared);
+    validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
+    validateTickable(getName(), "frts::EventHandler", 1, shared);
 }

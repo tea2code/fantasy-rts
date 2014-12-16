@@ -301,6 +301,6 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
 {
-    validateUtility(CommandIds::commandFactory(), 1, shared);
-    validateUtility(ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
 }

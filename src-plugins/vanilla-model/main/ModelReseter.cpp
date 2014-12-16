@@ -69,5 +69,5 @@ void frts::ModelReseter::validateData(SharedManagerPtr)
 
 void frts::ModelReseter::validateModules(SharedManagerPtr shared)
 {
-    validateUtility(ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
 }

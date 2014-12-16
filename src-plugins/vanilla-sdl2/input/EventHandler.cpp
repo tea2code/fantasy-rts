@@ -64,5 +64,5 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
 
 void frts::EventHandler::validateModules(frts::SharedManagerPtr shared)
 {
-    validateUtility(ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
 }

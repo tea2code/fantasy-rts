@@ -143,7 +143,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
-    validateUtility(CommandIds::commandFactory(), 1, shared);
-    validateUtility(ModelIds::modelFactory(), 1, shared);
-    validateTickable("frts::SDL2Renderer", 1, shared);
+    validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
+    validateTickable(getName(), "frts::SDL2Renderer", 1, shared);
 }
