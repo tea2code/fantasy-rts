@@ -301,25 +301,6 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
 {
-    // VanillaCommand.
-    try
-    {
-        auto id = shared->makeId(CommandIds::commandFactory());
-        shared->getUtility(id);
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility CommandFactory not found.");
-    }
-
-    // VanillaModel.
-    try
-    {
-        auto id = shared->makeId(ModelIds::modelFactory());
-        shared->getUtility(id);
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility ModelFactory not found.");
-    }
+    validateUtility(CommandIds::commandFactory(), 1, shared);
+    validateUtility(ModelIds::modelFactory(), 1, shared);
 }

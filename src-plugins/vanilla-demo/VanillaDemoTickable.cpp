@@ -143,25 +143,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
-    try
-    {
-        UtilityPtr module = getUtility<Utility>(shared, CommandIds::commandFactory());
-        if (module->getVersion() != 1)
-        {
-            throw ModuleViolation("Utility CommandFactory has the wrong version.");
-        }
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility CommandFactory not found.");
-    }
-
-    try
-    {
-        getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility ModelFactory not found.");
-    }
+    validateUtility(CommandIds::commandFactory(), 1, shared);
+    validateUtility(ModelIds::modelFactory(), 1, shared);
+    validateTickable("frts::SDL2Renderer", 1, shared);
 }

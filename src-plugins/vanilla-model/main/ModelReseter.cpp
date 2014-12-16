@@ -69,12 +69,5 @@ void frts::ModelReseter::validateData(SharedManagerPtr)
 
 void frts::ModelReseter::validateModules(SharedManagerPtr shared)
 {
-    try
-    {
-        getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility ModelFactory not found.");
-    }
+    validateUtility(ModelIds::modelFactory(), 1, shared);
 }

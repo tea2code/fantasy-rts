@@ -91,6 +91,8 @@ Following is an minimal example for checking if a utility is available.
 
 Note that it doesn't cast to `CommandFactory` but to general `Utility` type to prevent a possible problem with an incompatible cast. Checking update or render modules can be done by iterating over them and checking for the correct type name and version.
 
+For much easier use the functions `frts::validateUtility()` and `frts::validateTickable()` where definied in the kernel and are accessible using `#include <frts/module>`. It is recommended to use these.
+
 ## Plugin
 
 The plugin package consists of two parts. First is the interface and API for individual plugins. Every plugin library must have one class which implements the plugin interface. Additionally in some place in the library the plugin API must be included and the implemented plugin class must be registered using the method `REGISTER_PLUGIN(<Name-Of-Plugin-Class>)`. This is all to create a plugin. Of course every plugin library should implement modules or else the plugin will nevery do anything. Every plugin library contains also a version method (defined in the plugin API) which returns the implemented plugin API version. In the unlikely case that the plugin API will change somedays this version is used to determine incompatibilities. 

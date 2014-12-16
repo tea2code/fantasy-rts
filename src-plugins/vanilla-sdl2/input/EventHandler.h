@@ -33,6 +33,7 @@ namespace frts
         }
 
         void tick(SharedManagerPtr shared) override;
+        void validateModules(SharedManagerPtr shared) override;
 
         /**
          * @brief Register a custom command with an key.

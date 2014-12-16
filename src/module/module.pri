@@ -3,6 +3,7 @@ HEADERS += \
     module/Module.h \
     module/Tickable.h \
     module/Utility.h \
-    module/ModulePtr.h
+    module/ModulePtr.h \
+    $$PWD/ModuleValidation.h
 
 SOURCES += \ 

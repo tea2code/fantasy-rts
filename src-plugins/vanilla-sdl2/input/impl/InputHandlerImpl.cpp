@@ -90,37 +90,6 @@ void frts::InputHandlerImpl::validateData(SharedManagerPtr)
 
 void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
 {
-    // CommandFactory.
-    try
-    {
-        getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw ModuleViolation("Utility CommandFactory not found.");
-    }
-
-    // EventHandler.
-    const std::string eventHandlerType = "frts::EventHandler";
-    bool found = false;
-    for (auto it = shared->updateModulesBegin(); it != shared->updateModulesEnd(); ++it)
-    {
-        if ((*it)->getTypeName() == eventHandlerType)
-        {
-            found = true;
-            break;
-        }
-    }
-    for (auto it = shared->renderModulesBegin(); it != shared->renderModulesEnd(); ++it)
-    {
-        if ((*it)->getTypeName() == eventHandlerType)
-        {
-            found = true;
-            break;
-        }
-    }
-    if (!found)
-    {
-        throw ModuleViolation("Tickable EventHandler not found.");
-    }
+    validateUtility(CommandIds::commandFactory(), 1, shared);
+    validateTickable("frts::EventHandler", 1, shared);
 }

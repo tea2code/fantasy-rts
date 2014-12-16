@@ -3,6 +3,8 @@
 
 #include "Module.h"
 
+#include <string>
+
 
 namespace frts
 {

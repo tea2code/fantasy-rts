@@ -4,6 +4,7 @@
 #include <module/Module.h>
 #include <module/ModuleError.h>
 #include <module/ModulePtr.h>
+#include <module/ModuleValidation.h>
 #include <module/Tickable.h>
 #include <module/Utility.h>
 
