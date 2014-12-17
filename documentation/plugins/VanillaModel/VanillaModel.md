@@ -92,7 +92,7 @@ See [RegionGenerator.md](RegionGenerator.md) for more information.
 
 The region manager is the access interface to all region and resource managing related methods. It represents a data value containing the region. It also manages a list of changed positions since last reset. The will mostly be set automatically but can be also set by hand.
 
-Until phase 10 it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementations are used if no others are set.
+Until phase **Initialize Modules** it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementations are used if no others are set.
 
 The region manager is implemented as an data value and can be accessed via the shared manager. 
 
@@ -100,7 +100,7 @@ Default ID can be found in the static class `ModelIds`.
 
 Will identify itself by the name and type `frts::RegionManager`.
 
-**IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase 10 is complete. Doing so will most likely result in a crash or undefined behavior.
+**IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase **Initialize Modules** is complete. Doing so will most likely result in a crash or undefined behavior.
 
 ### Resource Lock
 

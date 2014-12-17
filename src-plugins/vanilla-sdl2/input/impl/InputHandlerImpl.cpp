@@ -12,6 +12,9 @@ frts::InputHandlerImpl::InputHandlerImpl(EventHandlerPtr eventHandler)
 {
 }
 
+void frts::InputHandlerImpl::checkRequiredData(SharedManagerPtr)
+{}
+
 bool frts::InputHandlerImpl::createData(SharedManagerPtr)
 {
     return false;

@@ -10,6 +10,11 @@ Tickable::Tickable()
 {
 }
 
+void Tickable::checkRequiredData(frts::SharedManagerPtr)
+{
+
+}
+
 bool Tickable::createData(frts::SharedManagerPtr shared)
 {
     auto data = std::make_shared<DataValue>();

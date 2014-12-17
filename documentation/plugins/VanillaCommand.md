@@ -49,7 +49,7 @@ The command config currently allows the configuration of undo related settings.
 
 ## Commands
 
-Commands are registered during execution phase 10 (module initialization). This means they are not accessible earlier. Trying so will result in an exception stating the command builder is not found with the given ID.
+Commands are registered during execution phase **Initialize Modules**. This means they are not accessible earlier. Trying so will result in an exception stating the command builder is not found with the given ID.
 
 ### QuitCommand
 

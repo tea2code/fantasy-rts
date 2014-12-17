@@ -17,6 +17,9 @@ namespace frts
         BaseTickable(const std::string& name, int version, const std::string& typeName, int typeVersion)
             : name{name}, version{version}, typeName{typeName}, typeVersion{typeVersion}
         {}
+        
+        virtual void checkRequiredData(SharedManagerPtr) override
+        {}
 
         virtual bool createData(SharedManagerPtr) override
         {

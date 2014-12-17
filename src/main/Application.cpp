@@ -17,6 +17,14 @@ frts::Application::Application(LogPtr log)
 {
 }
 
+void frts::Application::checkRequiredDataValues(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+{
+    for (auto& module : modules)
+    {
+        module->checkRequiredData(shared);
+    }
+}
+
 void frts::Application::createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
     auto todo = modules;

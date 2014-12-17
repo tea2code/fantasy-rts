@@ -208,24 +208,28 @@ int main(int argc, char* argv[])
             log->warning(logModule, "\t" + msg.str());
         }
 
-        // Phase 7: Register main config keys.
-        log->info(logModule, "Phase 7: Register main config keys.");
+        // Phase 7: Check required data values.
+        log->info(logModule, "Phase 7: Check required data values.");
+        app.checkRequiredDataValues(modules, shared);
+
+        // Phase 8: Register main config keys.
+        log->info(logModule, "Phase 8: Register main config keys.");
         auto supportedKeys = app.registerConfigKeys(modules);
 
-        // Phase 8: Read config.
-        log->info(logModule, "Phase 8: Read config.");
+        // Phase 9: Read config.
+        log->info(logModule, "Phase 9: Read config.");
         app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
 
-        // Phase 9: Validate data.
-        log->info(logModule, "Phase 9: Validate data.");
+        // Phase 10: Validate data.
+        log->info(logModule, "Phase 10: Validate data.");
         app.validateData(modules, shared);
 
-        // Phase 10: Initialize modules.
-        log->info(logModule, "Phase 10: Initialize modules.");
+        // Phase 11: Initialize modules.
+        log->info(logModule, "Phase 11: Initialize modules.");
         app.init(modules, shared);
 
-        // Phase 11: Startup.
-        log->info(logModule, "Phase 11: Startup");
+        // Phase 12: Startup.
+        log->info(logModule, "Phase 12: Startup");
         app.executeModules(startupModules, shared);
 
         // Clean up no longer needed lists of modules.
@@ -235,20 +239,20 @@ int main(int argc, char* argv[])
         utilityModules.clear();
         modules.clear();
 
-        // Phase 12: Run game.
-        log->info(logModule, "Phase 12: Run game.");
+        // Phase 13: Run game.
+        log->info(logModule, "Phase 13: Run game.");
         frts::MainLoop mainLoop(deltaTime, maxFrameTime);
         mainLoop.start(shared);
 
-        // Phase 13: Shutdown.
-        log->info(logModule, "Phase 13: Shutdown");
+        // Phase 14: Shutdown.
+        log->info(logModule, "Phase 14: Shutdown");
         app.executeModules(shutdownModules, shared);
 
         // Clean up no longer needed lists of modules.
         shutdownModules.clear();
 
-        // Phase 14: All done. Good night.
-        log->info(logModule, "Phase 14: Application finished.");
+        // Phase 15: All done. Good night.
+        log->info(logModule, "Phase 15: Application finished.");
         return 0;
     }
     catch(const std::exception& ex)

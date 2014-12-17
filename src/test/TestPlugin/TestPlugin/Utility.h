@@ -10,6 +10,7 @@ class Utility : public frts::Utility
 public:
     Utility();
 
+    void checkRequiredData(frts::SharedManagerPtr shared) override;
     bool createData(frts::SharedManagerPtr shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;

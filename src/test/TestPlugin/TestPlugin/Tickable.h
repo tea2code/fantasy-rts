@@ -9,6 +9,7 @@ class Tickable : public frts::Tickable
 public:
     Tickable();
 
+    void checkRequiredData(frts::SharedManagerPtr shared) override;
     bool createData(frts::SharedManagerPtr shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;

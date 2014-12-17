@@ -24,6 +24,7 @@ namespace frts
             return "frts/VanillaDemo";
         }
 
+        void checkRequiredData(SharedManagerPtr shared) override;
         bool init(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;

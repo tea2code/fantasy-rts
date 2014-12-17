@@ -31,6 +31,9 @@ void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr sh
     }
 }
 
+void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr)
+{}
+
 bool frts::CommandFactoryImpl::createData(SharedManagerPtr shared)
 {
     auto cc = makeCommandConfig();

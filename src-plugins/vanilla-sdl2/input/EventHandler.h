@@ -32,6 +32,7 @@ namespace frts
             return "frts/EventHandler";
         }
 
+        void checkRequiredData(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 

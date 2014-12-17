@@ -12,6 +12,11 @@ frts::EventHandler::EventHandler()
 {
 }
 
+void frts::EventHandler::checkRequiredData(SharedManagerPtr shared)
+{
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
+}
+
 void frts::EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
 {
     keyCommands[key] = commandId;

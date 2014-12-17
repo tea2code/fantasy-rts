@@ -28,6 +28,7 @@ namespace frts
             return "frts/ModelFactory";
         }
 
+        void checkRequiredData(SharedManagerPtr shared) override;
         bool createData(SharedManagerPtr shared) override;
         DistanceAlgorithmPtr getDistanceAlgorithm() const override;
         MapParserPtr getMapParser(IdPtr id) const override;

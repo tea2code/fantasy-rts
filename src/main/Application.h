@@ -37,6 +37,14 @@ namespace frts
         explicit Application(LogPtr log);
 
         /**
+         * @brief Validate that all required data values are available.
+         * @param modules The modules which should validate.
+         * @param shared The shared manager.
+         */
+        void checkRequiredDataValues(const std::vector<ModulePtr>& modules,
+                                     SharedManagerPtr shared) const;
+
+        /**
          * @brief Create data objects for modules.
          * @param modules The modules.
          * @param shared The shared manager.

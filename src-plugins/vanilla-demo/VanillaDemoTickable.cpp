@@ -1,7 +1,6 @@
 #include "VanillaDemoTickable.h"
 
 #include <frts/shared>
-#include <frts/vanillacommand>
 #include <frts/vanillamodel>
 #include <frts/vanillasdl2graphic>
 
@@ -19,6 +18,11 @@ void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, Regio
     auto entity = modelFactory->makeEntity(shared->makeId(id), shared);
     regionManager->setPos(entity, pos, shared);
     highlights.push_back(entity);
+}
+
+void frts::VanillaDemoTickable::checkRequiredData(SharedManagerPtr shared)
+{
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
 }
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
@@ -143,7 +147,6 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
-    validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
     validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
     validateTickable(getName(), "frts::SDL2Renderer", 1, shared);
 }

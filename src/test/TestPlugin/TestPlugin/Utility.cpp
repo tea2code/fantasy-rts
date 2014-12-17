@@ -4,6 +4,11 @@ Utility::Utility()
 {
 }
 
+void Utility::checkRequiredData(frts::SharedManagerPtr)
+{
+
+}
+
 bool Utility::createData(frts::SharedManagerPtr)
 {
     return false;

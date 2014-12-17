@@ -27,7 +27,6 @@ INCLUDEPATH += $$PWD/../../src-helper
 INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../vanilla-model
-INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-sdl2
 
 # Headers and sources.

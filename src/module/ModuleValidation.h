@@ -4,6 +4,7 @@
 #include "ModuleError.h"
 #include "ModulePtr.h"
 #include "Tickable.h"
+#include <shared/DataValue.h>
 #include <shared/SharedError.h>
 #include <shared/SharedManager.h>
 
@@ -14,6 +15,33 @@
 
 namespace frts
 {
+    /**
+     * @brief Validate data values.
+     * @throws DataViolation if no module matches.
+     * @param validator Name of the module... executing the validation.
+     * @param dataValueId ID of the data value.
+     * @param typeVersion The type version of the data value.
+     * @param shared The shared manager.
+     */
+    inline void validateDataValue(const std::string& validator, const std::string& dataValueId, int typeVersion, SharedManagerPtr shared)
+    {
+        try
+        {
+            auto dataValue = getDataValue<DataValue>(shared, dataValueId);
+            if (dataValue->getTypeVersion() != typeVersion)
+            {
+                auto msg = boost::format(R"(Data value "%1%" has the wrong version %2%. Version %3% is required. Required by "%4%".)")
+                        % dataValueId % typeVersion % dataValue->getTypeVersion() % validator;
+                throw DataViolation(msg.str());
+            }
+        }
+        catch(const IdNotFoundError&)
+        {
+            auto msg = boost::format(R"(Data value "%1%" not found. Required by "%2%".)") % dataValueId % validator;
+            throw DataViolation(msg.str());
+        }
+    }
+
     /**
      * @brief Validate tickable modules.
      * @throws ModuleViolation if no module matches.

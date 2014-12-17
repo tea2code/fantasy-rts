@@ -15,6 +15,11 @@ frts::Sdl2Renderer::Sdl2Renderer()
     : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1)
 {}
 
+void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
+{
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
+}
+
 bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
 {
     auto gd = makeGraphicData();

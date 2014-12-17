@@ -37,6 +37,11 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 {
 }
 
+void frts::ModelFactoryImpl::checkRequiredData(SharedManagerPtr shared)
+{
+    validateDataValue(getName(), ModelIds::modelData(), 2, shared);
+}
+
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
     // Create model data.

@@ -28,6 +28,7 @@ namespace frts
             return "frts/InputHandler";
         }
 
+        void checkRequiredData(SharedManagerPtr shared) override;
         bool createData(SharedManagerPtr shared) override;
         std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;

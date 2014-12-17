@@ -22,6 +22,14 @@ namespace frts
         virtual ~Module() {}
 
         /**
+         * @brief Check for required data values. Executed during "Check Required
+         *        Data" phase.
+         * @throws DataViolation if a data value is missing or invalid.
+         * @param shared The shared manager.
+         */
+        virtual void checkRequiredData(SharedManagerPtr shared) = 0;
+
+        /**
          * @brief Create data value objects. Executed during "Create Data" phase.
          * @param shared The shared manager.
          * @return True if another execution of this method is requested else false.

@@ -26,6 +26,7 @@ namespace frts
             return "frts/SDL2Renderer";
         }
 
+        void checkRequiredData(SharedManagerPtr shared) override;
         bool createData(SharedManagerPtr shared) override;
         std::vector<std::string> getSupportedConfig() override;
         bool init(SharedManagerPtr shared) override;

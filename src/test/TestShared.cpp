@@ -41,6 +41,7 @@ namespace TestShared
     {
     public:
         TestTickable() {}
+        void checkRequiredData(frts::SharedManagerPtr) override {}
         bool createData(frts::SharedManagerPtr) override { return false; }
         std::string getName() const override { return "TestTickable"; }
         std::vector<std::string> getSupportedConfig() override { return {}; }
@@ -59,6 +60,7 @@ namespace TestShared
     {
     public:
         TestUtility() {}
+        void checkRequiredData(frts::SharedManagerPtr) override {}
         bool createData(frts::SharedManagerPtr) override { return false; }
         std::string getName() const override { return "TestUtility"; }
         std::vector<std::string> getSupportedConfig() override { return {}; }
