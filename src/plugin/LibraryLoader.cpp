@@ -14,7 +14,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     HandleType moduleHandle = ::LoadLibraryA(pathWithExtension.c_str());
     if(moduleHandle == NULL)
     {
-        auto msg = boost::format(R"(Could not load DLL "%1%".)") % pathWithExtension;
+        auto msg = boost::format(R"(LibraryLoader: Could not load DLL "%1%".)") % pathWithExtension;
         throw std::runtime_error(msg.str());
     }
     return moduleHandle;
@@ -25,7 +25,7 @@ void frts::LibraryLoader::unload(HandleType library) const
     BOOL result = ::FreeLibrary(library);
     if(result == FALSE)
     {
-        throw std::runtime_error("Could not unload DLL.");
+        throw std::runtime_error("LibraryLoader: Could not unload DLL.");
     }
 }
 
@@ -39,7 +39,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     void* sharedObject = ::dlopen(pathWithExtension.c_str(), RTLD_NOW);
     if(sharedObject == NULL)
     {
-        auto msg = boost::format(R"(Could not load shared library "%1%".)") % pathWithExtension;
+        auto msg = boost::format(R"(LibraryLoader: Could not load shared library "%1%".)") % pathWithExtension;
         throw std::runtime_error(msg.str());
     }
     return sharedObject;
@@ -50,7 +50,7 @@ void frts::LibraryLoader::unload(HandleType library) const
     int result = ::dlclose(library);
     if(result != 0)
     {
-        throw std::runtime_error("Could not unload shared object.");
+        throw std::runtime_error("LibraryLoader: Could not unload shared object.");
     }
 }
 

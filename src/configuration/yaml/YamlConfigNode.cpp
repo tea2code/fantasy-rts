@@ -44,7 +44,7 @@ T frts::YamlConfigNode::get(const std::string& key, const std::string& type)
         {
             return valueNode.as<T>();
         }
-        catch(YAML::BadConversion)
+        catch(const YAML::BadConversion&)
         {
             throw makeConversionError(key, type);
         }
@@ -70,7 +70,7 @@ T frts::YamlConfigNode::getDefault(const std::string& key, T defaultValue)
         {
             result = valueNode.as<T>();
         }
-        catch(YAML::BadConversion)
+        catch(const YAML::BadConversion&)
         {
             // We can ignore it. Using the default value.
         }
@@ -226,12 +226,12 @@ bool frts::YamlConfigNode::isString(const std::string& key)
 
 frts::ConversionError frts::YamlConfigNode::makeConversionError(const std::string& key, const std::string& type)
 {
-    auto msg = boost::format(R"(Value "%1%" is not a %2%.)") % key % type;
+    auto msg = boost::format(R"(YamlConfigNode: Value "%1%" is not a %2%.)") % key % type;
     return frts::ConversionError(msg.str());
 }
 
 frts::MissingValueError frts::YamlConfigNode::makeMissingValueError(const std::string& key)
 {
-    auto msg = boost::format(R"(Value "%1%" does not exist.)") % key;
+    auto msg = boost::format(R"(YamlConfigNode: Value "%1%" does not exist.)") % key;
     return frts::MissingValueError(msg.str());
 }

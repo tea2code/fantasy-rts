@@ -32,7 +32,9 @@ void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr sh
 }
 
 void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr)
-{}
+{
+    validateDataValue(getName(), CommandIds::commandConfig(), 1, shared);
+}
 
 bool frts::CommandFactoryImpl::createData(SharedManagerPtr shared)
 {
@@ -91,7 +93,7 @@ frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedMa
     }
     else
     {
-        auto msg = boost::format(R"(No command builder is registered for ID "%1%".)") % builderId->toString();
+        auto msg = boost::format(R"(%2%: No command builder is registered for ID "%1%".)") % builderId->toString() % getName();
         throw UnknownCommandBuilderError(msg.str());
     }
 }
@@ -139,18 +141,6 @@ void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
 
 void frts::CommandFactoryImpl::validateData(SharedManagerPtr shared)
 {
-    try
-    {
-        auto dataValue = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
-        if (dataValue->getTypeVersion() != 1)
-        {
-            throw DataViolation("DataValue CommandConfig has the wrong version.");
-        }
-    }
-    catch(const IdNotFoundError&)
-    {
-        throw DataViolation("DataValue CommandConfig not found.");
-    }
 }
 
 void frts::CommandFactoryImpl::validateModules(SharedManagerPtr)

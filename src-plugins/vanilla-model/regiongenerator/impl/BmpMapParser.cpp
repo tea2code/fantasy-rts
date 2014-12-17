@@ -252,7 +252,7 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     if(file == NULL)
     {
-        auto msg = boost::format(R"(Map file with path "%1%" not found.)") % path;
+        auto msg = boost::format(R"(BmpMapParser: Map file with path "%1%" not found.)") % path;
         throw MapFileNotFoundError(msg.str());
     }
 
@@ -363,11 +363,11 @@ void frts::BmpMapParser::validateData(SharedManagerPtr)
 {
     if (height == 0)
     {
-        throw DataViolation("Height in bitmap map configuration must be greater than zero.");
+        throw DataViolation("BmpMapParser: Height in bitmap map configuration must be greater than zero.");
     }
 
     if (width == 0)
     {
-        throw DataViolation("Width in bitmap map configuration must be greater than zero.");
+        throw DataViolation("BmpMapParser: Width in bitmap map configuration must be greater than zero.");
     }
 }

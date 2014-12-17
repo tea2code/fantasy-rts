@@ -15,7 +15,7 @@ frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
 {
     if (log == nullptr)
     {
-        throw std::invalid_argument("Log must not be null.");
+        throw std::invalid_argument("SharedManager: Log must not be null.");
     }
 }
 
@@ -81,7 +81,7 @@ frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
 
 frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const
 {
-    auto msg = boost::format(R"(Id "%1%" could not be found.)") % id->toString();
+    auto msg = boost::format(R"(SharedManager: Id "%1%" could not be found.)") % id->toString();
     return IdNotFoundError(msg.str());
 }
 
@@ -99,7 +99,7 @@ void frts::SharedManagerImpl::setFrame(FramePtr frame)
 {
     if (frame == nullptr)
     {
-        throw std::invalid_argument("Frame must not be null.");
+        throw std::invalid_argument("SharedManager: Frame must not be null.");
     }
 
     this->frame = frame;
@@ -124,7 +124,7 @@ void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
 {
     if (utility == nullptr)
     {
-        throw std::invalid_argument("Utility must not be null.");
+        throw std::invalid_argument("SharedManager: Utility must not be null.");
     }
 
     utilityModules[id] = utility;
@@ -134,7 +134,7 @@ void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
 {
     if (value == nullptr)
     {
-        throw std::invalid_argument("Data value must not be null.");
+        throw std::invalid_argument("SharedManager: Data value must not be null.");
     }
 
     dataValues[id] = value;

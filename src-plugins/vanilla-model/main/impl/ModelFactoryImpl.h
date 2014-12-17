@@ -64,8 +64,8 @@ namespace frts
     private:
         const std::string entitiesConfigKey = "entities";
         const std::string modelDataKey = "region";
-        const std::string unknownComponentBuilderError = R"(No component builder is registered for ID "%1%".)";
-        const std::string unknownMapParserError = R"(No map parser is registered for ID "%1%".)";
+        const std::string unknownComponentBuilderError = R"(%2%: No component builder is registered for ID "%1%".)";
+        const std::string unknownMapParserError = R"(%2%: No map parser is registered for ID "%1%".)";
 
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distanceAlgorithm;

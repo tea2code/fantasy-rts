@@ -13,7 +13,7 @@ void frts::EntityImpl::addComponent(ComponentPtr component)
 {
     if (component == nullptr)
     {
-        throw std::invalid_argument("Component must not be null.");
+        throw std::invalid_argument("Entity->addComponent(): Component must not be null.");
     }
 
     components[component->getComponentType()] = component;

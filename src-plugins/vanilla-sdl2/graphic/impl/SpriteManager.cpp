@@ -139,7 +139,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
         }
         if (height < 0)
         {
-            auto msg = boost::format(R"(Height missing for sprite "%1%".)") % id->toString();
+            auto msg = boost::format(R"(SpriteManager: Height missing for sprite "%1%".)") % id->toString();
             throw InvalidSpriteConfigError(msg.str());
         }
 
@@ -151,7 +151,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
         }
         if (image == nullptr)
         {
-            auto msg = boost::format(R"(Image missing for sprite "%1%".)") % id->toString();
+            auto msg = boost::format(R"(SpriteManager: Image missing for sprite "%1%".)") % id->toString();
             throw InvalidSpriteConfigError(msg.str());
         }
 
@@ -163,7 +163,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
         }
         if (width < 0)
         {
-            auto msg = boost::format(R"(Width missing for sprite "%1%".)") % id->toString();
+            auto msg = boost::format(R"(SpriteManager: Width missing for sprite "%1%".)") % id->toString();
             throw InvalidSpriteConfigError(msg.str());
         }
 
@@ -205,13 +205,13 @@ void frts::SpriteManager::validateData(SharedManagerPtr)
     // Is fallback set.
     if (fallback == nullptr)
     {
-        auto msg = boost::format(R"(Fallback sprite ID missing.)");
+        auto msg = boost::format(R"(SpriteManager: Fallback sprite ID missing.)");
         throw InvalidSpriteConfigError(msg.str());
     }
     // If so check if fallback sprite exists.
     else if (sprites.find(fallback) == sprites.end())
     {
-        auto msg = boost::format(R"(Fallback sprite for ID "%1%" missing.)") % fallback->toString();
+        auto msg = boost::format(R"(SpriteManager: Fallback sprite for ID "%1%" missing.)") % fallback->toString();
         throw InvalidSpriteConfigError(msg.str());
     }
 }

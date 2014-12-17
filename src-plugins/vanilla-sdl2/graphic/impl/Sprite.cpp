@@ -43,7 +43,7 @@ void frts::Sprite::setSpritePointIndex(int spritePointIndex)
     int size = spritePoints.size();
     if (spritePointIndex < 0 || size <= spritePointIndex)
     {
-        auto msg = boost::format(R"(Sprite index %1% is out of bounds [0, %2%].)") % spritePointIndex % spritePoints.size();
+        auto msg = boost::format(R"(Sprite: Sprite index %1% is out of bounds [0, %2%].)") % spritePointIndex % spritePoints.size();
         throw frts::SpriteIndexInvalidError(msg.str());
     }
     this->spritePointIndex = spritePointIndex;

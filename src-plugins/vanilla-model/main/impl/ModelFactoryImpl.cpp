@@ -66,7 +66,7 @@ frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
     }
     else
     {
-        auto msg = boost::format(unknownMapParserError) % id->toString();
+        auto msg = boost::format(unknownMapParserError) % id->toString() % getName();
         throw UnknownMapParserError(msg.str());
     }
 }
@@ -238,7 +238,7 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
     }
     else
     {
-        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString();
+        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString() % getName();
         throw UnknownComponentBuilderError(msg.str());
     }
 }
@@ -252,7 +252,7 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Config
     }
     else
     {
-        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString();
+        auto msg = boost::format(unknownComponentBuilderError) % builderId->toString() % getName();
         throw UnknownComponentBuilderError(msg.str());
     }
 }
@@ -280,7 +280,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
     }
     catch(const std::out_of_range&)
     {
-        auto msg = boost::format(R"(Entity "%1%" has no configuration.)") % id->toString();
+        auto msg = boost::format(R"(%2%: Entity "%1%" has no configuration.)") % id->toString() % getName();
         throw UnknownEntityError(msg.str());
     }
 }
@@ -408,11 +408,13 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     auto modelData = getModelData(shared);
     if (modelData->getMapSizeX() <= 0)
     {
-        throw DataViolation("Region width must be greater than zero.");
+        auto msg = boost::format(R"(%1%: Region width must be greater than zero.)") % getName();
+        throw DataViolation(msg.str());
     }
     if (modelData->getMapSizeY() <= 0)
     {
-        throw DataViolation("Region height must be greater than zero.");
+        auto msg = boost::format(R"(%1%: Region height must be greater than zero.)") % getName();
+        throw DataViolation(msg.str());
     }
 
     // Map parser.

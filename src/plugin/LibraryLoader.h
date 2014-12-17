@@ -66,7 +66,7 @@ Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std:
     FARPROC functionAddress = ::GetProcAddress(library, name.c_str());
     if(functionAddress == NULL)
     {
-        auto msg = boost::format(R"(Could not find exported function "%1%".)") % name;
+        auto msg = boost::format(R"(LibraryLoader: Could not find exported function "%1%".)") % name;
         throw std::runtime_error(msg.str());
     }
     return reinterpret_cast<Function *>(functionAddress);
@@ -84,7 +84,7 @@ Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std:
     const char *error = ::dlerror(); // check for error
     if(error != NULL)
     {
-        auto msg = boost::format(R"(Could not find exported function "%1%".)") % name;
+        auto msg = boost::format(R"(LibraryLoader: Could not find exported function "%1%".)") % name;
         throw std::runtime_error(msg.str());
     }
 

@@ -206,24 +206,24 @@ void frts::RegionGeneratorImpl::validateData(SharedManagerPtr)
 {
     if (defaultAboveSurfaceEntity == nullptr)
     {
-        throw DataViolation("Config region_generator requires default_above.");
+        throw DataViolation("RegionGenerator: Config region_generator requires default_above.");
     }
 
     if (defaultBelowSurfaceEntity == nullptr)
     {
-        throw DataViolation("Config region_generator requires default_below.");
+        throw DataViolation("RegionGenerator: Config region_generator requires default_below.");
     }
 
     if (defaultSurfaceEntity == nullptr)
     {
-        throw DataViolation("Config region_generator requires default_surface.");
+        throw DataViolation("RegionGenerator: Config region_generator requires default_surface.");
     }
 
     for (auto& id : defaultBelowSurfaceLevels)
     {
         if (generators.find(id) == generators.end())
         {
-            auto msg = boost::format(R"(Generator "%1%" not found in config region_generator->noise_map->generators.)")
+            auto msg = boost::format(R"(RegionGenerator: Generator "%1%" not found in config region_generator->noise_map->generators.)")
                     % id->toString();
             throw DataViolation(msg.str());
         }
@@ -235,7 +235,7 @@ void frts::RegionGeneratorImpl::validateData(SharedManagerPtr)
         {
             if (generators.find(id) == generators.end())
             {
-                auto msg = boost::format(R"(Generator "%1%" not found in config region_generator->noise_map->generators.)")
+                auto msg = boost::format(R"(RegionGenerator: Generator "%1%" not found in config region_generator->noise_map->generators.)")
                         % id->toString();
                 throw DataViolation(msg.str());
             }

@@ -257,47 +257,47 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 
     if (cursorId.empty())
     {
-        throw DataViolation("Cursor entity is not set.");
+        throw DataViolation("Sdl2Renderer: Cursor entity is not set.");
     }
 
     if (gd->getMaxFps() == 0)
     {
-        throw DataViolation("Maximal frames per second must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Maximal frames per second must be greater than zero.");
     }
 
     if (gd->getNumFpsAvg() == 0)
     {
-        throw DataViolation("Number of frames per second measures for average calculation must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Number of frames per second measures for average calculation must be greater than zero.");
     }
 
     if (gd->getScreenHeight() == 0)
     {
-        throw DataViolation("Screen height must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Screen height must be greater than zero.");
     }
 
     if (gd->getScreenWidth() == 0)
     {
-        throw DataViolation("Screen width must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Screen width must be greater than zero.");
     }
 
     if (gd->getScreenOffsetStepX() == 0)
     {
-        throw DataViolation("Screen move width in x-direction must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Screen move width in x-direction must be greater than zero.");
     }
 
     if (gd->getScreenOffsetStepY() == 0)
     {
-        throw DataViolation("Screen move width in y-direction must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Screen move width in y-direction must be greater than zero.");
     }
 
     if (gd->getTileHeight() == 0)
     {
-        throw DataViolation("Tile height must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Tile height must be greater than zero.");
     }
 
     if (gd->getTileWidth() == 0)
     {
-        throw DataViolation("Tile width must be greater than zero.");
+        throw DataViolation("Sdl2Renderer: Tile width must be greater than zero.");
     }
 
     // Drawer

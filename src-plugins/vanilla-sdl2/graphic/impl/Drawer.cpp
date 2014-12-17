@@ -238,7 +238,7 @@ void frts::Drawer::validateData(SharedManagerPtr shared)
     {
         if (!fileExists(image.second))
         {
-            auto msg = boost::format(R"(Image "%1%" with path "%2%" not found.)") % image.first->toString() % image.second;
+            auto msg = boost::format(R"(Drawer: Image "%1%" with path "%2%" not found.)") % image.first->toString() % image.second;
             throw InvalidImageConfigError(msg.str());
         }
     }

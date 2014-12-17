@@ -49,7 +49,7 @@ frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
     }
     if (result == nullptr)
     {
-        auto msg = boost::format(R"(Module "%1%" not found.)")
+        auto msg = boost::format(R"(PluginManager: Module "%1%" not found.)")
                 % id->toString();
         throw ModuleNotFound(msg.str());
     }
@@ -69,7 +69,8 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
     catch(std::runtime_error& e)
     {
         // Library doesn't exist.
-        throw LibraryNotFound(e.what());
+        auto msg = boost::format(R"(PluginManager: %1%)") % e.what();
+        throw LibraryNotFound(msg.str());
     }
 
     // Try get plugin version and check it.
@@ -79,7 +80,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
         if (supportedVersion != pluginVersion())
         {
             loader.unload(handle);
-            auto msg = boost::format(R"(Library "%1%" in path "%2%" implements an out-dated version of the plugin API.)")
+            auto msg = boost::format(R"(PluginManager: Library "%1%" in path "%2%" implements an out-dated version of the plugin API.)")
                     % name % path;
             throw LibraryOutDated(msg.str());
         }
