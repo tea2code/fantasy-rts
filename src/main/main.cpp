@@ -25,6 +25,10 @@
 #include <string>
 #include <vector>
 
+#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
+#include <execinfo.h>
+#endif
+
 
 /**
  * @brief Check if command line options exist. See http://stackoverflow.com/a/868894/1931663.
@@ -258,7 +262,17 @@ int main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         // Something bad happened.
+#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
+        const size_t maxSize = 10;
+        void *stackTrace[maxSize];
+        size_t size = backtrace(stackTrace, maxSize);
+        auto symbols = backtrace_symbols (stackTrace, size);
+        auto msg = boost::format(R"(Exception: %1%\nStack Trace: %2%)")
+                % ex.what() % symbols;
+        log->error(logModule, msg.str());
+#else
         log->error(logModule, ex.what());
+#endif
         return 1;
     }
 }
