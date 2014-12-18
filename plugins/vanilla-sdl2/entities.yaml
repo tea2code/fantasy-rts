@@ -81,6 +81,7 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.air
+              transparency: 2
         - name: dirt
           components:
             - component: frts.vanillasdl2.entity.component.renderable

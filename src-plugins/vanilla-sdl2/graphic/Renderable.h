@@ -36,6 +36,12 @@ namespace frts
         virtual int getSpriteIndex() const = 0;
 
         /**
+         * @brief Get the number of visible levels below. Default is 0.
+         * @return The transparencey.
+         */
+        virtual unsigned int getTransparency() const = 0;
+
+        /**
          * @brief Indicates if sprite index was set.
          * @return True if sprite index was set.
          */
@@ -52,6 +58,12 @@ namespace frts
          * @param index The index.
          */
         virtual void setSpriteIndex(int index) = 0;
+
+        /**
+         * @brief Set the number of visible levels below.
+         * @param transparency The transparency.
+         */
+        virtual void setTransparency(unsigned int transparency) = 0;
     };
 }
 

@@ -71,11 +71,6 @@ frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
     }
 }
 
-frts::ModelDataPtr frts::ModelFactoryImpl::getModelData(SharedManagerPtr shared) const
-{
-    return getDataValue<ModelData>(shared, ModelIds::modelData());
-}
-
 std::string frts::ModelFactoryImpl::getName() const
 {
     return ModelIds::modelFactory();
@@ -189,7 +184,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     regionGenerator->init(shared);
 
     // Region Manager:
-    auto modelData = getModelData(shared);
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto hasResourceTyp = shared->makeId(ComponentIds::hasResource());
     auto isResourceType = shared->makeId(ComponentIds::isResource());
 
@@ -317,7 +312,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     }
     else if (key == modelDataKey)
     {
-        auto modelData = getModelData(shared);
+        auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
     }
@@ -405,7 +400,7 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
 
 void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
 {
-    auto modelData = getModelData(shared);
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     if (modelData->getMapSizeX() <= 0)
     {
         auto msg = boost::format(R"(%1%: Region width must be greater than zero.)") % getName();

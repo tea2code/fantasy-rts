@@ -20,6 +20,11 @@ int frts::RenderableImpl::getSpriteIndex() const
     return spriteIndex;
 }
 
+unsigned int frts::RenderableImpl::getTransparency() const
+{
+    return transparency;
+}
+
 bool frts::RenderableImpl::isSpriteIndexSet() const
 {
     return spriteIndexSet;
@@ -34,4 +39,9 @@ void frts::RenderableImpl::setSpriteIndex(int index)
 {
     spriteIndex = index;
     spriteIndexSet = true;
+}
+
+void frts::RenderableImpl::setTransparency(unsigned int transparency)
+{
+    this->transparency = transparency;
 }

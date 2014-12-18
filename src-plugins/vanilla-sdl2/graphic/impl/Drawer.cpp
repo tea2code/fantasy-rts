@@ -82,6 +82,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return;
     }
+    SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 0);
 
     for (auto& image : images)
     {
@@ -108,6 +109,25 @@ void frts::Drawer::init(SharedManagerPtr shared)
     images.clear();
 
     initialized = true;
+}
+
+void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
+                                  const SDL_Rect& rectToRender, SharedManagerPtr shared)
+{
+    for (auto& entity : entities)
+    {
+        auto renderable = getComponent<Renderable>(renderableId, entity);
+        auto sprite = spriteManager.getSprite(renderable, entity, shared);
+        auto texture = textures.at(sprite.getImage());
+
+        SDL_Rect clip = {
+            sprite.getX(),
+            sprite.getY(),
+            sprite.getWidth(),
+            sprite.getHeight()
+        };
+        SDL_RenderCopy(renderer.get(), texture.get(), &clip, &rectToRender);
+    }
 }
 
 void frts::Drawer::renderNow(SharedManagerPtr shared)
@@ -171,37 +191,58 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-    // Currently we only render on the same z-level.
-    // Idea for future implementation: Render lower levels
-    // with an partial transparent overlay to indicate depth.
-    if (pos->getZ() != zLevel)
+    // Currently we only render on the same z-level or levels below.
+    if (pos->getZ() > zLevel)
     {
         return;
     }
 
-    auto block = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getBlock(pos, shared);
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+
+    // Change pos if it is below because we render always relative to the current zLevel.
+    // Also we check if it is necessary to render (this may change later depending on transparency).
+    bool renderPos = (pos->getZ() == zLevel);
+    if (pos->getZ() < zLevel)
+    {
+        pos = mf->makePoint(pos->getX(), pos->getY(), zLevel);
+    }
+
+    // Clear background.
+    SDL_Rect rectToRender = {
+        static_cast<int>(regionToScreen(pos->getX() - offsetX, tileWidth)),
+        static_cast<int>(regionToScreen(pos->getY() - offsetY, tileHeight)),
+        tileWidth,
+        tileHeight
+    };
+    SDL_RenderFillRect(renderer.get(), &rectToRender);
+
+    // Get block.
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
+    auto block = rm->getBlock(pos, shared);
     auto entities = block->getByComponent(renderableId);
 
-    for (auto& entity : entities)
+    // Check for transparency. Currently we only render blocks below if the first entity (the assumed background) has it.
+    if (entities.size() > 0)
     {
+        auto entity = entities.at(0);
         auto renderable = getComponent<Renderable>(renderableId, entity);
-        auto sprite = spriteManager.getSprite(renderable, entity, shared);
-        auto texture = textures.at(sprite.getImage());
+        auto transparency = renderable->getTransparency();
 
-        SDL_Rect clip = {
-            sprite.getX(),
-            sprite.getY(),
-            sprite.getWidth(),
-            sprite.getHeight()
-        };
-        SDL_Rect rectToRender = {
-            static_cast<int>(regionToScreen(pos->getX() - offsetX, tileWidth)),
-            static_cast<int>(regionToScreen(pos->getY() - offsetY, tileHeight)),
-            tileWidth,
-            tileHeight
-        };
-        SDL_RenderCopy(renderer.get(), texture.get(), &clip, &rectToRender);
+        while (transparency > 0)
+        {
+            auto posBelow = mf->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
+            auto blockBelow = rm->getBlock(posBelow, shared);
+            auto entitiesBelow = blockBelow->getByComponent(renderableId);
+            renderEntities(entitiesBelow, renderableId, rectToRender, shared);
+            transparency -= 1;
+            renderPos = true;
+        }
+    }
+
+    if (renderPos)
+    {
+        renderEntities(entities, renderableId, rectToRender, shared);
     }
 }
 

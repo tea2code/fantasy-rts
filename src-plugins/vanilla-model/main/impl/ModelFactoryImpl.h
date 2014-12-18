@@ -79,7 +79,6 @@ namespace frts
         LockableResourceManagerPtr resourceManager;
 
     private:
-        ModelDataPtr getModelData(SharedManagerPtr shared) const;
         ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);
     };
 

@@ -103,10 +103,12 @@ TEST_CASE("Renderable.", "[graphic]")
     REQUIRE_FALSE(component->isSpriteIndexSet());
 
     component->setSpriteIndex(3);
+    component->setTransparency(4);
 
     REQUIRE(component->getSprite() == shared->makeId("sprite1"));
     REQUIRE(component->getSpriteIndex() == 3);
     REQUIRE(component->isSpriteIndexSet());
+    REQUIRE(component->getTransparency() == 4);
 }
 
 TEST_CASE("Renderable Builder.", "[graphic]")

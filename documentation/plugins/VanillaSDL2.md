@@ -206,9 +206,12 @@ This component describes with which sprite a entity is rendered. If a sprite has
 
 Default ID can be found in the static class `Sdl2Ids`.
 
-Its config consists only of the sprite ID:
+Its config consists of the sprite ID and a optional transparency value:
 
     sprite: <string representing an id>
+    transparency: <integer greater or equal 0, optional>
+
+If `transparency` is given the defined number of blocks below the current one are rendered. This is currently only for the background (the lowest) entity supported. It only works if the sprites have a alpha channel with at least some transparency.
 
 ### MoveCursorCommand
 

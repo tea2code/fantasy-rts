@@ -158,7 +158,8 @@ style:
                    chance: 0.25
             
             - name: air
-              x: 0
+              #x: 0
+              x: 16
               y: 208
             
             - name: dirt

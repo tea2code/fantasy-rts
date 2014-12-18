@@ -15,6 +15,7 @@ frts::EasyloggingLog::EasyloggingLog(const std::string& configFilePath)
 {
     el::Configurations conf(configFilePath);
     el::Loggers::reconfigureAllLoggers(conf);
+    el::Loggers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
 }
 
 frts::EasyloggingLog::~EasyloggingLog()

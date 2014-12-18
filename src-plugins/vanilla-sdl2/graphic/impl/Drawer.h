@@ -194,6 +194,9 @@ namespace frts
          * @return The name.
          */
         std::string getName() const;
+
+        void renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
+                            const SDL_Rect& rectToRender, SharedManagerPtr shared);
     };
 }
 
