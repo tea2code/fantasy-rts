@@ -61,10 +61,15 @@ namespace frts
         {
             SortOrdered(IdPtr componentType)
                 : componentType{componentType}
-            {}
+            {
+                assert(componentType != nullptr);
+            }
 
             bool operator() (EntityPtr lhs, EntityPtr rhs) const
             {
+                assert(lhs != nullptr);
+                assert(rhs != nullptr);
+
                 int sortOrderLhs = Position::DEFAULT;
                 SortOrderPtr componentLhs = getComponent<SortOrder>(componentType, lhs);
                 if (componentLhs != nullptr)

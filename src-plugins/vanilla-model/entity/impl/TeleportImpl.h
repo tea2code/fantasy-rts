@@ -29,6 +29,8 @@ namespace frts
      */
     inline TeleportPtr makeTeleport(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<TeleportImpl>(type);
     }
 }

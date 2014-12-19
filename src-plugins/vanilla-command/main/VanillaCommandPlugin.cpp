@@ -13,6 +13,8 @@ frts::VanillaCommandPlugin::VanillaCommandPlugin()
 
 frts::ModulePtr frts::VanillaCommandPlugin::getModule(frts::IdPtr id)
 {
+    assert(id != nullptr);
+
     frts::ModulePtr result = nullptr;
     if (id->toString() == CommandFactoryImpl::identifier())
     {

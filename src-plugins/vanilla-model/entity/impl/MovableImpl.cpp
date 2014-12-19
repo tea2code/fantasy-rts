@@ -56,6 +56,8 @@ frts::PointPtr frts::MovableImpl::getPreviousPathPos() const
 
 void frts::MovableImpl::setPath(PathPtr path)
 {
+    assert(path != nullptr);
+
     this->path = path;
     previous = nullptr;
     current = nullptr;

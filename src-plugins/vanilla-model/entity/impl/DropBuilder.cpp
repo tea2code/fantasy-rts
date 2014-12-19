@@ -10,12 +10,17 @@ frts::DropBuilder::DropBuilder()
 
 frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto id = shared->makeId(ComponentIds::drop());
     return makeDrop(id);
 }
 
 frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
+    assert(shared != nullptr);
+    assert(node != nullptr);
+
     auto component = std::static_pointer_cast<Drop>(build(shared));
     for (auto& drop : node->getStrings("drops"))
     {

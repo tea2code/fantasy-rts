@@ -29,6 +29,8 @@ namespace frts
      */
     inline HasResourcePtr makeHasResource(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<HasResourceImpl>(type);
     }
 }

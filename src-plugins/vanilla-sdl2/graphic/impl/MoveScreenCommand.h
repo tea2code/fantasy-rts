@@ -49,6 +49,8 @@ namespace frts
      */
     inline CommandPtr makeMoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
     {
+        assert(commandType != nullptr);
+
         return std::make_shared<MoveScreenCommand>(commandType, x, y, z);
     }
 }

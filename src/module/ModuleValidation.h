@@ -25,6 +25,8 @@ namespace frts
      */
     inline void validateDataValue(const std::string& validator, const std::string& dataValueId, int typeVersion, SharedManagerPtr shared)
     {
+        assert(shared != nullptr);
+
         try
         {
             auto dataValue = getDataValue<DataValue>(shared, dataValueId);
@@ -52,6 +54,8 @@ namespace frts
      */
     inline void validateTickable(const std::string& validator, const std::string& typeName, int typeVersion, SharedManagerPtr shared)
     {
+        assert(shared != nullptr);
+
         auto func = [&](TickableItr begin, TickableItr end)
         {
             bool found = false;
@@ -91,6 +95,8 @@ namespace frts
      */
     inline void validateUtility(const std::string& validator, const std::string& utilityId, int typeVersion, SharedManagerPtr shared)
     {
+        assert(shared != nullptr);
+
         try
         {
             auto module = getUtility<Module>(shared, utilityId);

@@ -71,6 +71,9 @@ namespace frts
     template<typename ComponentClass>
     inline std::shared_ptr<ComponentClass> getComponent(IdPtr type, EntityPtr entity)
     {
+        assert(type != nullptr);
+        assert(entity != nullptr);
+
         return castComponent<ComponentClass>(type, entity->getComponent(type));
     }
 }

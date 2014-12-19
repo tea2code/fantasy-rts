@@ -47,6 +47,8 @@ int frts::InputHandlerImpl::getVersion() const
 
 bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Request another initalization round to allow initialization of command factory
     // happen first.
     if (firstInit)
@@ -77,6 +79,8 @@ void frts::InputHandlerImpl::registerCommand(Key key, IdPtr commandId)
 
 void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)
 {
+    assert(node != nullptr);
+
     // Store for initialization.
     configNodes.push_back(node);
 }
@@ -93,6 +97,8 @@ void frts::InputHandlerImpl::validateData(SharedManagerPtr)
 
 void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
     validateTickable(getName(), "frts::EventHandler", 1, shared);
 }

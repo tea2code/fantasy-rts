@@ -137,6 +137,8 @@ void frts::Application::readConfig(const std::map<std::string, std::vector<Modul
                                    const std::string& rootPath,
                                    const std::vector<std::string>& configFiles) const
 {
+    assert(shared != nullptr);
+
     YamlConfigParser parser;
 
     for (const auto& configFile : configFiles)
@@ -194,6 +196,8 @@ std::map<std::string, std::vector<frts::ModulePtr>> frts::Application::registerC
 
 void frts::Application::validateData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
+    assert(shared != nullptr);
+
     for (auto& module : modules)
     {
         module->validateData(shared);
@@ -202,6 +206,8 @@ void frts::Application::validateData(const std::vector<ModulePtr>& modules, Shar
 
 void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
 {
+    assert(shared != nullptr);
+
     for (auto& module : modules)
     {
         module->validateModules(shared);

@@ -13,6 +13,8 @@ frts::VanillaDemoPlugin::VanillaDemoPlugin()
 
 frts::ModulePtr frts::VanillaDemoPlugin::getModule(frts::IdPtr id)
 {
+    assert(id != nullptr);
+
     frts::ModulePtr result = nullptr;
     if (id->toString() == VanillaDemoTickable::identifier())
     {

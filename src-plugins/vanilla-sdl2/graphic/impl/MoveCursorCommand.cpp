@@ -9,10 +9,13 @@
 
 frts::MoveCursorCommand::MoveCursorCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
     : commandType{commandType}, x{x}, y{y}, z{z}
-{}
+{
+}
 
 void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     lastX = lastY = lastZ = false;
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
@@ -74,6 +77,8 @@ frts::IdPtr frts::MoveCursorCommand::getCommandType() const
 
 void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());

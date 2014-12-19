@@ -31,6 +31,8 @@ namespace frts
      */
     inline BlockingPtr makeBlocking(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<BlockingImpl>(type);
     }
 }

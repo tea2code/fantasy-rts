@@ -17,5 +17,7 @@ frts::EntityPtr frts::TeleportImpl::getTarget() const
 
 void frts::TeleportImpl::setTarget(EntityPtr target)
 {
+    assert(target != nullptr);
+
     this->target = target;
 }

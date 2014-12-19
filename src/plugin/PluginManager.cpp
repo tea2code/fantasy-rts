@@ -7,6 +7,7 @@
 #include <boost/format.hpp>
 
 
+// Also update in PluginApi.h.
 const int frts::PluginManager::supportedVersion = 1;
 
 frts::PluginManager::PluginManager()
@@ -29,7 +30,7 @@ frts::PluginManager::~PluginManager()
         {
             loader.unload(handle);
         }
-        catch(std::runtime_error)
+        catch(const std::runtime_error& ex)
         {
             // Shit. Hopefully the rest can be unloaded.
         }
@@ -38,6 +39,8 @@ frts::PluginManager::~PluginManager()
 
 frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
 {
+    assert(id != nullptr);
+
     ModulePtr result = nullptr;
     for (auto& plugin : plugins)
     {
@@ -66,7 +69,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
     {
         handle = loader.load(path, name);
     }
-    catch(std::runtime_error& e)
+    catch(const std::runtime_error& e)
     {
         // Library doesn't exist.
         auto msg = boost::format(R"(PluginManager: %1%)") % e.what();
@@ -85,7 +88,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
             throw LibraryOutDated(msg.str());
         }
     }
-    catch(std::runtime_error)
+    catch(const std::runtime_error&)
     {
         // This is not a plugin library.
         return;
@@ -98,7 +101,7 @@ void frts::PluginManager::loadPlugin(const std::string& path, const std::string&
         plugins.push_back(getPlugin());
         libraryHandles.push_back(handle);
     }
-    catch(std::runtime_error)
+    catch(const std::runtime_error&)
     {
         // This is not a plugin library.
         return;

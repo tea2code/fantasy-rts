@@ -55,6 +55,8 @@ namespace frts
      */
     inline ModulePtr makeInputHandler(EventHandlerPtr eventHandler)
     {
+        assert(eventHandler != nullptr);
+
         return std::make_shared<InputHandlerImpl>(eventHandler);
     }
 }

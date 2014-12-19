@@ -32,6 +32,7 @@ namespace frts
      */
     inline CommandBuilderPtr makeQuitCommandBuilder(IdPtr commandType)
     {
+        assert(commandType != nullptr);
         return std::make_shared<QuitCommandBuilder>(commandType);
     }
 }

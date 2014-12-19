@@ -35,6 +35,8 @@ std::string frts::Drawer::getName() const
 
 void frts::Drawer::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Set data from config.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
@@ -114,6 +116,9 @@ void frts::Drawer::init(SharedManagerPtr shared)
 void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
                                   const SDL_Rect& rectToRender, SharedManagerPtr shared)
 {
+    assert(renderableId != nullptr);
+    assert(shared != nullptr);
+
     for (auto& entity : entities)
     {
         auto renderable = getComponent<Renderable>(renderableId, entity);
@@ -132,6 +137,8 @@ void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr 
 
 void frts::Drawer::renderNow(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     if (!initialized)
     {
         shared->getLog()->warning(getName(), "Tried to call renderNow() without init().");
@@ -143,6 +150,9 @@ void frts::Drawer::renderNow(SharedManagerPtr shared)
 
 void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode)
 {
+    assert(shared != nullptr);
+    assert(imagesNode != nullptr);
+
     // Namepspace.
     std::string ns = rootNamespace;
     if (imagesNode->has("namespace"))
@@ -175,6 +185,9 @@ void frts::Drawer::setOffsetY(Point::value offsetY)
 
 void frts::Drawer::setSpriteConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode)
 {
+    assert(shared != nullptr);
+    assert(spritesNode != nullptr);
+
     spriteManager.setConfig(shared, rootNamespace, spritesNode);
 }
 
@@ -185,6 +198,9 @@ void frts::Drawer::setWindowTitle(const std::string& windowTitle)
 
 void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel)
 {
+    assert(shared != nullptr);
+    assert(pos != nullptr);
+
     if (!initialized)
     {
         shared->getLog()->warning(getName(), "Tried to call updatePosition() without init().");
@@ -248,6 +264,8 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
 
 void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel)
 {
+    assert(shared != nullptr);
+
     for (PointPtr pos : positions)
     {
         updatePosition(shared, pos, zLevel);
@@ -256,6 +274,8 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnordered
 
 void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 {
+    assert(shared != nullptr);
+
     auto factory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     Point::value width = offsetX + screenWidth;
@@ -273,6 +293,8 @@ void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 
 void frts::Drawer::validateData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     spriteManager.validateData(shared);
 
     for (auto& image : images)

@@ -10,12 +10,17 @@ frts::HasResourceBuilder::HasResourceBuilder()
 
 frts::ComponentPtr frts::HasResourceBuilder::build(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto id = shared->makeId(ComponentIds::hasResource());
     return makeHasResource(id);
 }
 
 frts::ComponentPtr frts::HasResourceBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
+    assert(shared != nullptr);
+    assert(node != nullptr);
+
     auto component = std::static_pointer_cast<HasResource>(build(shared));
     for (auto& resource : node->getStrings("resources"))
     {

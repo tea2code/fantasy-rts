@@ -69,6 +69,8 @@ char* getCmdOption(char** begin, char** end, const std::string& option)
 void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
                        const std::string& key, const std::vector<std::string>& values)
 {
+    assert(log != nullptr);
+
     log->warning(logModule, "\t" + key);
     for(const auto& value : values)
     {
@@ -112,6 +114,7 @@ int main(int argc, char* argv[])
 
     // Create logger.
     frts::LogPtr log = frts::makeEasyloggingLog(logConfigFile);
+    assert(log != nullptr);
 
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");
@@ -146,6 +149,7 @@ int main(int argc, char* argv[])
         // Create shared manager.
         log->info(logModule, "Create shared manager.");
         frts::SharedManagerImplPtr shared = frts::makeSharedManager(log);
+        assert(shared != nullptr);
 
         // Phase 3: Get modules.
         log->info(logModule, "Phase 3: Get modules.");

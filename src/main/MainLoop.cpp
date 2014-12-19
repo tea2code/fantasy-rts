@@ -18,6 +18,8 @@ frts::MainLoop::MainLoop(Frame::time deltaTime, Frame::time maxFrameTime)
 
 void frts::MainLoop::render(SharedManagerPtr shared) const
 {
+    assert(shared != nullptr);
+
     for (auto it = shared->renderModulesBegin(); it != shared->renderModulesEnd(); ++it)
     {
         (*it)->tick(shared);
@@ -26,6 +28,8 @@ void frts::MainLoop::render(SharedManagerPtr shared) const
 
 void frts::MainLoop::start(SharedManagerImplPtr shared) const
 {
+    assert(shared != nullptr);
+
     Frame::time runTime = fromMilliseconds(0);
     Frame::time currentTime = highResTime();
     Frame::time accumulator = fromMilliseconds(0);
@@ -68,6 +72,8 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
 
 void frts::MainLoop::update(SharedManagerPtr shared) const
 {
+    assert(shared != nullptr);
+
     for (auto it = shared->updateModulesBegin(); it != shared->updateModulesEnd(); ++it)
     {
         (*it)->tick(shared);

@@ -100,6 +100,8 @@ namespace frts
      */
     inline SharedManagerImplPtr makeSharedManager(LogPtr log)
     {
+        assert(log != nullptr);
+
         return std::make_shared<SharedManagerImpl>(log);
     }
 }

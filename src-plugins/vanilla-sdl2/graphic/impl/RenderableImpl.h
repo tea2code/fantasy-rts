@@ -34,6 +34,8 @@ namespace frts
      */
     inline RenderablePtr makeRenderable(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<RenderableImpl>(type);
     }
 }

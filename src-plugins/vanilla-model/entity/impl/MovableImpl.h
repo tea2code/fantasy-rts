@@ -37,6 +37,8 @@ namespace frts
      */
     inline MovablePtr makeMovable(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<MovableImpl>(type);
     }
 }

@@ -14,16 +14,22 @@ frts::EventHandler::EventHandler()
 
 void frts::EventHandler::checkRequiredData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
 }
 
 void frts::EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
 {
+    assert(commandId != nullptr);
+
     keyCommands[key] = commandId;
 }
 
 void frts::EventHandler::tick(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -69,5 +75,7 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
 
 void frts::EventHandler::validateModules(frts::SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
 }

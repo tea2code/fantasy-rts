@@ -4,12 +4,14 @@
 
 
 frts::DropImpl::DropImpl(IdPtr type)
-    : drops{}, type{type}
+    : type{type}
 {
 }
 
 void frts::DropImpl::addDrop(IdPtr entityId)
 {
+    assert(entityId != nullptr);
+
     drops.push_back(entityId);
 }
 
@@ -25,12 +27,16 @@ std::vector<frts::IdPtr> frts::DropImpl::getDrops() const
 
 bool frts::DropImpl::hasDrop(IdPtr entityId) const
 {
+    assert(entityId != nullptr);
+
     auto it = std::find_if(drops.begin(), drops.end(), IdComparison(entityId));
     return it != drops.end();
 }
 
 void frts::DropImpl::removeDrop(IdPtr entityId)
 {
+    assert(entityId != nullptr);
+
     auto it = std::find_if(drops.begin(), drops.end(), IdComparison(entityId));
     if (it == drops.end())
     {

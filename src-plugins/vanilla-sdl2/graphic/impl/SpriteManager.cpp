@@ -17,6 +17,10 @@ frts::SpriteManager::SpriteManager()
 
 frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr entity, SharedManagerPtr shared)
 {
+    assert(renderable != nullptr);
+    assert(entity != nullptr);
+    assert(shared != nullptr);
+
     // Get sprite with support of movable for direction.
     auto spriteId = renderable->getSprite();
     SpriteMap::iterator it;
@@ -90,6 +94,9 @@ frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr 
 
 void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode)
 {
+    assert(shared != nullptr);
+    assert(spritesNode != nullptr);
+
     // Namepspace.
     std::string ns = rootNamespace;
     if (spritesNode->has("namespace"))

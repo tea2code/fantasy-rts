@@ -24,6 +24,8 @@ frts::EventHandlerPtr frts::VanillaSdl2Plugin::getEventHandler()
 
 frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
 {
+    assert(id != nullptr);
+
     frts::ModulePtr result = nullptr;
     if (id->toString() == Sdl2Renderer::identifier())
     {

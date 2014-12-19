@@ -8,6 +8,8 @@ frts::BlockedByImpl::BlockedByImpl(IdPtr type)
 
 void frts::BlockedByImpl::addBlock(IdPtr block)
 {
+    assert(block != nullptr);
+
     blocking.addBlock(block);
 }
 
@@ -23,5 +25,7 @@ frts::IdPtr frts::BlockedByImpl::getComponentType() const
 
 void frts::BlockedByImpl::removeBlock(IdPtr block)
 {
+    assert(block != nullptr);
+
     blocking.removeBlock(block);
 }

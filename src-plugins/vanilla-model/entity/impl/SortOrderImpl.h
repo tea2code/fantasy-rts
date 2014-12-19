@@ -29,6 +29,8 @@ namespace frts
      */
     inline SortOrderPtr makeSortOrder(IdPtr type, int sortOrder = SortOrder::Position::DEFAULT)
     {
+        assert(type != nullptr);
+
         SortOrderPtr component = std::make_shared<SortOrderImpl>(type);
         component->setSortOrder(sortOrder);
         return component;

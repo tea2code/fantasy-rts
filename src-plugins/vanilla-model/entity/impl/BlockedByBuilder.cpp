@@ -10,12 +10,17 @@ frts::BlockedByBuilder::BlockedByBuilder()
 
 frts::ComponentPtr frts::BlockedByBuilder::build(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto id = shared->makeId(ComponentIds::blockedBy());
     return makeBlockedBy(id);
 }
 
 frts::ComponentPtr frts::BlockedByBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
+    assert(shared != nullptr);
+    assert(node != nullptr);
+
     auto component = std::static_pointer_cast<BlockedBy>(build(shared));
     for (auto& block : node->getStrings("blocks"))
     {

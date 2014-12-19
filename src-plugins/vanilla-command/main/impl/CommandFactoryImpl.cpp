@@ -17,6 +17,9 @@ frts::CommandFactoryImpl::CommandFactoryImpl()
 
 void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr shared)
 {
+    assert(command != nullptr);
+    assert(shared != nullptr);
+
     auto cc = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
     auto notUndoableCommands = cc->getNotUndoableCommands();
     if (notUndoableCommands.find(command->getCommandType()) != notUndoableCommands.end())
@@ -38,6 +41,8 @@ void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr)
 
 bool frts::CommandFactoryImpl::createData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto cc = makeCommandConfig();
     shared->setDataValue(shared->makeId(CommandIds::commandConfig()), cc);
     cc->setNumUndo(10); // Default value.
@@ -72,6 +77,8 @@ int frts::CommandFactoryImpl::getVersion() const
 
 bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Commands:
     // Quit.
     auto commandId = shared->makeId(CommandIds::quit());
@@ -86,6 +93,9 @@ bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
 
 frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedManagerPtr shared)
 {
+    assert(builderId != nullptr);
+    assert(shared != nullptr);
+
     auto it = commandBuilders.find(builderId);
     if(it != commandBuilders.end())
     {
@@ -100,6 +110,9 @@ frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedMa
 
 void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     auto cc = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
 
     if (node->has("num_undo"))
@@ -127,11 +140,16 @@ bool frts::CommandFactoryImpl::preInit(SharedManagerPtr)
 
 void frts::CommandFactoryImpl::registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder)
 {
+    assert(builderId != nullptr);
+    assert(builder != nullptr);
+
     commandBuilders[builderId] = builder;
 }
 
 void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     if (!undoQueue.empty())
     {
         undoQueue.back()->undo(shared);
@@ -139,7 +157,7 @@ void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
     }
 }
 
-void frts::CommandFactoryImpl::validateData(SharedManagerPtr shared)
+void frts::CommandFactoryImpl::validateData(SharedManagerPtr)
 {
 }
 

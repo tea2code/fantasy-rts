@@ -34,6 +34,7 @@ namespace frts
      */
     inline CommandPtr makeUndoCommand(IdPtr commandType)
     {
+        assert(commandType != nullptr);
         return std::make_shared<UndoCommand>(commandType);
     }
 }

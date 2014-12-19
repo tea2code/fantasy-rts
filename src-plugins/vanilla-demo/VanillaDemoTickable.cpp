@@ -15,6 +15,11 @@ frts::VanillaDemoTickable::VanillaDemoTickable()
 void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,
                                              SharedManagerPtr shared, PointPtr pos, const std::string& id)
 {
+    assert(modelFactory != nullptr);
+    assert(regionManager != nullptr);
+    assert(shared != nullptr);
+    assert(pos != nullptr);
+
     auto entity = modelFactory->makeEntity(shared->makeId(id), shared);
     regionManager->setPos(entity, pos, shared);
     highlights.push_back(entity);
@@ -22,17 +27,24 @@ void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, Regio
 
 void frts::VanillaDemoTickable::checkRequiredData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
 }
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     shared->getLog()->debug(getName(), "Demo loaded");
     return false;
 }
 
 void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared)
 {
+    assert(regionManager != nullptr);
+    assert(shared != nullptr);
+
     for (auto& entity : highlights)
     {
         regionManager->removeEntity(entity, shared);
@@ -42,6 +54,8 @@ void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, 
 
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
@@ -147,6 +161,8 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
     validateTickable(getName(), "frts::SDL2Renderer", 1, shared);
 }

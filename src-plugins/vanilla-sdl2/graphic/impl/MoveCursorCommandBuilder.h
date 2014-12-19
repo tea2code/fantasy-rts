@@ -40,6 +40,8 @@ namespace frts
      */
     inline CommandBuilderPtr makeMoveCursorCommandBuilder(IdPtr commandType, Point::value x, Point::value y, Point::value z)
     {
+        assert(commandType != nullptr);
+
         return std::make_shared<MoveCursorCommandBuilder>(commandType, x, y, z);
     }
 }

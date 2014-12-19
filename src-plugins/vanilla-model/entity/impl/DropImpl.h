@@ -46,6 +46,8 @@ namespace frts
      */
     inline DropPtr makeDrop(IdPtr type)
     {
+        assert(type != nullptr);
+
         return std::make_shared<DropImpl>(type);
     }
 }

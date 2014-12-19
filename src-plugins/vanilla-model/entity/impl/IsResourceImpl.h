@@ -27,6 +27,8 @@ namespace frts
      */
     inline IsResourcePtr makeIsResource(IdPtr componentType)
     {
+        assert(componentType != nullptr);
+
         return std::make_shared<IsResourceImpl>(componentType);
     }
 }

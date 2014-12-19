@@ -13,6 +13,8 @@ frts::MoveScreenCommand::MoveScreenCommand(IdPtr commandType, Point::value x, Po
 
 void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     lastX = lastY = lastZ = false;
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
@@ -86,6 +88,8 @@ frts::IdPtr frts::MoveScreenCommand::getCommandType() const
 
 void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());

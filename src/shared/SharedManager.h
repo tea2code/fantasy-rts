@@ -113,6 +113,8 @@ namespace frts
     template <typename DataValueClass>
     std::shared_ptr<DataValueClass> getDataValue(SharedManagerPtr shared, const std::string& id)
     {
+        assert(shared != nullptr);
+
         return std::static_pointer_cast<DataValueClass>(shared->getDataValue(shared->makeId(id)));
     }
 
@@ -125,6 +127,8 @@ namespace frts
     template <typename UtilityClass>
     std::shared_ptr<UtilityClass> getUtility(SharedManagerPtr shared, const std::string& id)
     {
+        assert(shared != nullptr);
+
         return std::static_pointer_cast<UtilityClass>(shared->getUtility(shared->makeId(id)));
     }
 }

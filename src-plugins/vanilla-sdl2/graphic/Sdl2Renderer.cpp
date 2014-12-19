@@ -17,11 +17,15 @@ frts::Sdl2Renderer::Sdl2Renderer()
 
 void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
 }
 
 bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = makeGraphicData();
     auto id = shared->makeId(Sdl2Ids::graphicData());
     shared->setDataValue(id, gd);
@@ -31,6 +35,8 @@ bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
 
 frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) const
 {
+    assert(shared != nullptr);
+
     return getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 }
 
@@ -41,6 +47,8 @@ std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
 
 bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = graphicData(shared);
 
     if (firstInit)
@@ -174,6 +182,9 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     // Graphic Data
     auto gd = graphicData(shared);
     if (key == "screen")
@@ -213,6 +224,8 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
 
 void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto gd = graphicData(shared);
 
     // FpsManager
@@ -252,6 +265,8 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Graphic Data
     auto gd = graphicData(shared);
 
@@ -306,6 +321,8 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
     validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
 }
