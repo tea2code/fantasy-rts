@@ -2,7 +2,7 @@
 
 
 frts::IsResourceImpl::IsResourceImpl(IdPtr componentType)
-    : componentType{componentType}, resourceType{}
+    : componentType{componentType}
 {
 }
 
@@ -18,5 +18,7 @@ frts::IdPtr frts::IsResourceImpl::getResourceType() const
 
 void frts::IsResourceImpl::setResourceType(IdPtr resourceType)
 {
+    assert(resourceType != nullptr);
+
     this->resourceType = resourceType;
 }
