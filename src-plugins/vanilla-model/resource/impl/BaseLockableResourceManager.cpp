@@ -10,6 +10,9 @@ frts::BaseLockableResourceManager::BaseLockableResourceManager(DistanceAlgorithm
 
 void frts::BaseLockableResourceManager::add(IdPtr resourceType, EntityPtr entity)
 {
+    assert(resourceType != nullptr);
+    assert(entity != nullptr);
+
     // Using a set allows to dismiss any contains check.
     resources[resourceType].insert(entity);
 }
@@ -18,6 +21,12 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entit
                                                                      PointPtr pos, LockableResourceManagerPtr parent,
                                                                      SharedManagerPtr shared)
 {
+    assert(entityGroup != nullptr);
+    assert(resourceType != nullptr);
+    assert(pos != nullptr);
+    assert(parent != nullptr);
+    assert(shared != nullptr);
+
     EntityPtr foundEntity = nullptr;
     Point::length distance = -1;
 
@@ -55,6 +64,8 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entit
 
 frts::EntityPtr frts::BaseLockableResourceManager::getEntity(ResourceLockPtr lock) const
 {
+    assert(lock != nullptr);
+
     EntityPtr result;
     auto it = lockInfo.find(lock);
     if (it != lockInfo.end())
@@ -66,6 +77,8 @@ frts::EntityPtr frts::BaseLockableResourceManager::getEntity(ResourceLockPtr loc
 
 frts::IdPtr frts::BaseLockableResourceManager::getResourceType(ResourceLockPtr lock) const
 {
+    assert(lock != nullptr);
+
     IdPtr result;
     auto it = lockInfo.find(lock);
     if (it != lockInfo.end())
@@ -77,11 +90,15 @@ frts::IdPtr frts::BaseLockableResourceManager::getResourceType(ResourceLockPtr l
 
 bool frts::BaseLockableResourceManager::isValid(ResourceLockPtr lock) const
 {
+    assert(lock != nullptr);
+
     return lockInfo.find(lock) != lockInfo.end();
 }
 
 void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
 {
+    assert(lock != nullptr);
+
     if (!isValid(lock))
     {
         return;
@@ -95,6 +112,9 @@ void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
 
 void frts::BaseLockableResourceManager::remove(IdPtr resourceType, EntityPtr entity)
 {
+    assert(resourceType != nullptr);
+    assert(entity != nullptr);
+
     resources[resourceType].erase(entity);
     auto it = entityLocks.find(entity);
     if (it != entityLocks.end())

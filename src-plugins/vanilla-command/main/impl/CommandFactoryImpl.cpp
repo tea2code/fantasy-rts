@@ -5,10 +5,11 @@
 #include <main/CommandError.h>
 #include <main/CommandIds.h>
 #include <main/impl/CommandConfigImpl.h>
-
 #include <frts/configuration>
 
 #include <boost/format.hpp>
+
+#include <cassert>
 
 
 frts::CommandFactoryImpl::CommandFactoryImpl()
@@ -34,8 +35,10 @@ void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr sh
     }
 }
 
-void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr)
+void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateDataValue(getName(), CommandIds::commandConfig(), 1, shared);
 }
 

@@ -127,6 +127,10 @@ namespace frts
      */
     inline MapParserPtr makeBmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType)
     {
+        assert(blockingType != nullptr);
+        assert(sortOrderType != nullptr);
+        assert(teleportType != nullptr);
+
         return std::make_shared<BmpMapParser>(blockingType, sortOrderType, teleportType);
     }
 }

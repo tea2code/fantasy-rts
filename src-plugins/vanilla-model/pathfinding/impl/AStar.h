@@ -57,6 +57,9 @@ namespace frts
      */
     inline PathFinderPtr makeAStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
     {
+        assert(distanceAlgorithm != nullptr);
+        assert(teleportType != nullptr);
+
         return std::make_shared<AStar>(distanceAlgorithm, teleportType);
     }
 }

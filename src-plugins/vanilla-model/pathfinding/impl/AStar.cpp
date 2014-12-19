@@ -20,6 +20,11 @@ frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
 
 frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
+    assert(start != nullptr);
+    assert(goal != nullptr);
+    assert(blockedBy != nullptr);
+    assert(shared != nullptr);
+
     // For this exact implementation see http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-2-4
     #ifdef A_STAR_BENCHMARK
     auto startTotal = highResTime();
@@ -126,6 +131,11 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
 
 std::vector<frts::PointPtr> frts::AStar::findNeighbors(PointPtr current, BlockedByPtr blockedBy, RegionManagerPtr regionManager, SharedManagerPtr shared)
 {
+    assert(current != nullptr);
+    assert(blockedBy != nullptr);
+    assert(regionManager != nullptr);
+    assert(shared != nullptr);
+
     #ifdef A_STAR_BENCHMARK
     auto startFindNeighbors = highResTime();
     #endif

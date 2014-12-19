@@ -15,6 +15,10 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 
 std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(blockedBy != nullptr);
+    assert(shared != nullptr);
+
     auto result = getNeightbors(pos, sameZLevel, shared);
 
     // Because erase() returns an iterator to the next element the following
@@ -38,6 +42,9 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
 
 frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
 {
+    assert(blockedBy != nullptr);
+    assert(shared != nullptr);
+
     // Let's try at least 100 times. Still might not find a free position.
     const int numTries = std::min(mapSizeX * mapSizeY * static_cast<Point::value>(zLevels.size()), 100);
 
@@ -65,11 +72,16 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
 
 frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     return getWriteableBlock(pos, shared);
 }
 
 std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr)
 {
+    assert(pos != nullptr);
+
     int x = pos->getX();
     int y = pos->getY();
     int z = pos->getZ();
@@ -114,6 +126,8 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool s
 
 frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity, SharedManagerPtr)
 {
+    assert(entity != nullptr);
+
     auto found = entityPos.find(entity);
     if (found != entityPos.end())
     {
@@ -127,6 +141,9 @@ frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity, SharedManagerPtr)
 
 frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     frts::WriteableBlockPtr result = nullptr;
     auto it = posBlock.find(pos);
     if (it != posBlock.end())
@@ -147,6 +164,9 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
 
 frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
 {
+    assert(entity != nullptr);
+    assert(shared != nullptr);
+
     auto pos = getPos(entity, shared);
     if (pos != nullptr)
     {
@@ -161,6 +181,10 @@ frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity, SharedManagerPtr
 
 frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
 {
+    assert(entity != nullptr);
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     // Remove from block if exists.
     auto lastPos = removeEntity(entity, shared);
 

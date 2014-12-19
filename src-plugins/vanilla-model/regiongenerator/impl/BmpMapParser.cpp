@@ -22,6 +22,10 @@ frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr 
 frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
                                                     const std::vector<EntityPtr>& targets, SharedManagerPtr shared)
 {
+    assert(block != nullptr);
+    assert(otherPos != nullptr);
+    assert(shared != nullptr);
+
     auto otherBlock = getBlock(otherPos, shared);
 
     // Are we already connected?
@@ -54,6 +58,9 @@ frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, Poi
 
 frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     frts::WriteableBlockPtr block;
 
     auto bIt = blocks.find(pos);
@@ -100,6 +107,8 @@ std::string frts::BmpMapParser::getSupportedConfig() const
 
 void frts::BmpMapParser::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto md = getDataValue<MainData>(shared, MainIds::mainData());
     for (auto& level : levels)
     {
@@ -109,6 +118,9 @@ void frts::BmpMapParser::init(SharedManagerPtr shared)
 
 frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     frts::WriteableBlockPtr block = getBlock(pos, shared);
 
     if (block != nullptr)
@@ -158,6 +170,9 @@ frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManager
 
 void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     std::string ns = node->getString("namespace", "");
     height = node->getInteger("height", height);
     width = node->getInteger("width", width);
@@ -245,6 +260,8 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
 
 void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Following BMP parsing is based on http://stackoverflow.com/a/17040962/1931663
     // Supports 24bit color BMP with padding.
 
@@ -310,6 +327,10 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
                                             const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(block != nullptr);
+    assert(shared != nullptr);
+
     // Not really proud of this. But it was the most clear solution i found. I'm open to better implementations or complete
     // replacements of the teleport component.
 

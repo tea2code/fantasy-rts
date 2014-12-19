@@ -84,7 +84,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return;
     }
-    SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 0);
+    SDL_SetRenderDrawColor(renderer.get(), 100, 100, 100, 0);
 
     for (auto& image : images)
     {
@@ -231,7 +231,6 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         tileWidth,
         tileHeight
     };
-    SDL_RenderFillRect(renderer.get(), &rectToRender);
 
     // Get block.
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
@@ -239,12 +238,18 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     auto entities = block->getByComponent(renderableId);
 
     // Check for transparency. Currently we only render blocks below if the first entity (the assumed background) has it.
+    auto filledBackground = false;
     if (entities.size() > 0)
     {
         auto entity = entities.at(0);
         auto renderable = getComponent<Renderable>(renderableId, entity);
         auto transparency = renderable->getTransparency();
 
+        if (transparency > 0)
+        {
+            SDL_RenderFillRect(renderer.get(), &rectToRender);
+            filledBackground = true;
+        }
         while (transparency > 0)
         {
             auto posBelow = mf->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
@@ -258,6 +263,11 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
 
     if (renderPos)
     {
+        if (!filledBackground)
+        {
+            SDL_RenderFillRect(renderer.get(), &rectToRender);
+        }
+
         renderEntities(entities, renderableId, rectToRender, shared);
     }
 }

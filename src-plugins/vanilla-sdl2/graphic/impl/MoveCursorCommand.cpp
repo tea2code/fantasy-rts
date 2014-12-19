@@ -27,7 +27,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     rm->addChangedPos(cursorPos);
 
     // X -> West
-    if (x > 0 && cursorPos->getX() > 0)
+    if (x > 0 && cursorPos->getX() > gd->getScreenOffsetX())
     {
         auto newX = std::max(cursorPos->getX() - x, 0);
         cursorPos = mf->makePoint(newX, cursorPos->getY(), cursorPos->getZ());
@@ -35,7 +35,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     }
 
     // X -> East
-    Point::value maxX = screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
+    Point::value maxX = gd->getScreenOffsetX() + screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
     if (x < 0 && cursorPos->getX() < maxX)
     {
         auto newX = std::min(cursorPos->getX() - x, maxX - 1);
@@ -44,7 +44,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     }
 
     // Y -> North
-    if (y > 0 && cursorPos->getY() > 0)
+    if (y > 0 && cursorPos->getY() > gd->getScreenOffsetY())
     {
         auto newY = std::max(cursorPos->getY() - y, 0);
         cursorPos = mf->makePoint(cursorPos->getX(), newY, cursorPos->getZ());
@@ -52,7 +52,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     }
 
     // Y -> South
-    Point::value maxY = screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
+    Point::value maxY = gd->getScreenOffsetY() + screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
     if (y < 0 && cursorPos->getY() < maxY)
     {
         auto newY = std::min(cursorPos->getY() - y, maxY - 1);
@@ -94,14 +94,14 @@ void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
     if (lastX)
     {
         // X -> West
-        if (undoX > 0 && cursorPos->getX() > 0)
+        if (undoX > 0 && cursorPos->getX() > gd->getScreenOffsetX())
         {
             auto newX = std::max(cursorPos->getX() - undoX, 0);
             cursorPos = mf->makePoint(newX, cursorPos->getY(), cursorPos->getZ());
         }
 
         // X -> East
-        Point::value maxX = screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
+        Point::value maxX = gd->getScreenOffsetX() + screenToRegion(gd->getScreenWidth(), gd->getTileWidth());
         if (undoX < 0 && cursorPos->getX() < maxX)
         {
             auto newX = std::min(cursorPos->getX() - undoX, maxX - 1);
@@ -112,14 +112,14 @@ void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
     if (lastY)
     {
         // Y -> North
-        if (undoY > 0 && cursorPos->getY() > 0)
+        if (undoY > 0 && cursorPos->getY() > gd->getScreenOffsetY())
         {
             auto newY = std::max(cursorPos->getY() - undoY, 0);
             cursorPos = mf->makePoint(cursorPos->getX(), newY, cursorPos->getZ());
         }
 
         // Y -> South
-        Point::value maxY = screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
+        Point::value maxY = gd->getScreenOffsetY() + screenToRegion(gd->getScreenHeight(), gd->getTileHeight());
         if (undoY < 0 && cursorPos->getY() < maxY)
         {
             auto newY = std::min(cursorPos->getY() - undoY, maxY - 1);

@@ -42,7 +42,9 @@ namespace frts
         {
             HasComponentPred(IdPtr componentType)
                 : componentType{componentType}
-            {}
+            {
+                assert(componentType != nullptr);
+            }
 
             bool operator()(EntityPtr entity)
             {
@@ -59,10 +61,15 @@ namespace frts
         {
             IsBlockingPred(IdPtr blockingType, BlockedByPtr blockedBy)
                 : blockedBy{blockedBy}, blockingType{blockingType}
-            {}
+            {
+                assert(blockedBy != nullptr);
+                assert(blockingType != nullptr);
+            }
 
             bool operator()(EntityPtr entity)
             {
+                assert(entity != nullptr);
+
                 bool result = false;
                 BlockingPtr blocking = getComponent<Blocking>(blockingType, entity);
                 if (blocking != nullptr)
@@ -94,6 +101,9 @@ namespace frts
      */
     inline BlockImplPtr makeBlock(IdPtr blockingType, IdPtr sortOrderType)
     {
+        assert(blockingType != nullptr);
+        assert(sortOrderType != nullptr);
+
         return std::make_shared<BlockImpl>(blockingType, sortOrderType);
     }
 }

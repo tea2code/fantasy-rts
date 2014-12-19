@@ -56,6 +56,8 @@ namespace frts
     inline RegionPtr makeRegion(Point::value mapSizeX, Point::value mapSizeY,
                                 RegionGeneratorPtr regionGenerator)
     {
+        assert(regionGenerator != nullptr);
+
         return std::make_shared<RegionImpl>(mapSizeX, mapSizeY, regionGenerator);
     }
 }

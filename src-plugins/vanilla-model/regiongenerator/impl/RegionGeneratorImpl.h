@@ -84,6 +84,9 @@ namespace frts
      */
     inline RegionGeneratorPtr makeRegionGenerator(IdPtr blockingType, IdPtr sortOrderType)
     {
+        assert(blockingType != nullptr);
+        assert(sortOrderType != nullptr);
+
         return std::make_shared<RegionGeneratorImpl>(blockingType, sortOrderType);
     }
 }

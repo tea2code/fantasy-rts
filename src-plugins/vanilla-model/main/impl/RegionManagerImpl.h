@@ -52,6 +52,8 @@ namespace frts
                                               LockableResourceManagerPtr resourceEntityManager,
                                               IdPtr hasResourceType, IdPtr isResourceType)
     {
+        assert(region != nullptr);
+
         return std::make_shared<RegionManagerImpl>(region, resourceManager, resourceEntityManager,
                                                    hasResourceType, isResourceType);
     }

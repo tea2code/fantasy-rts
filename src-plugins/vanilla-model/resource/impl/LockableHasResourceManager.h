@@ -38,6 +38,10 @@ namespace frts
     inline LockableResourceManagerPtr makeLockableHasResourceManager(
             IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
     {
+        assert(componentType != nullptr);
+        assert(region != nullptr);
+        assert(distAlgo != nullptr);
+
         return std::make_shared<LockableHasResourceManager>(componentType, region, distAlgo);
     }
 }

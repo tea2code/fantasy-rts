@@ -14,6 +14,8 @@ frts::VanillaModelPlugin::VanillaModelPlugin()
 
 frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
 {
+    assert(id != nullptr);
+
     frts::ModulePtr result = nullptr;
     if (id->toString() == ModelFactoryImpl::identifier())
     {

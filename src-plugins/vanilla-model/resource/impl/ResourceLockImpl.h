@@ -43,7 +43,8 @@ namespace frts
      */
     inline ResourceLockPtr makeResourceLock(LockableResourceManagerPtr manager)
     {
-        //return std::make_shared<ResourceLockImpl>(manager);
+        assert(manager != nullptr);
+
         return std::shared_ptr<ResourceLockImpl>(new ResourceLockImpl(manager), ResourceLockDeleter());
     }
 }

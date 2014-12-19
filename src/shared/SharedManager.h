@@ -5,6 +5,7 @@
 #include <log/Log.h>
 #include <module/ModulePtr.h>
 
+#include <cassert>
 #include <string>
 #include <vector>
 

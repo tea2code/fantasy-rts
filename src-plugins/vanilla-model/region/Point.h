@@ -1,6 +1,7 @@
 #ifndef FRTS_POINT_H
 #define FRTS_POINT_H
 
+#include <cassert>
 #include <functional>
 #include <memory>
 #include <unordered_set>
@@ -121,6 +122,9 @@ namespace frts
      */
     inline PointPtr operator+(PointPtr lhs, PointPtr rhs)
     {
+        assert(lhs != nullptr);
+        assert(rhs != nullptr);
+
         return *lhs + *rhs;
     }
 
@@ -132,6 +136,9 @@ namespace frts
      */
     inline PointPtr operator-(PointPtr lhs, PointPtr rhs)
     {
+        assert(lhs != nullptr);
+        assert(rhs != nullptr);
+
         return *lhs - *rhs;
     }
 
@@ -143,6 +150,9 @@ namespace frts
      */
     inline PointPtr operator*(PointPtr lhs, PointPtr rhs)
     {
+        assert(lhs != nullptr);
+        assert(rhs != nullptr);
+
         return *lhs * *rhs;
     }
 
@@ -154,6 +164,8 @@ namespace frts
      */
     inline PointPtr operator*(PointPtr point, Point::value scalar)
     {
+        assert(point != nullptr);
+
         return *point * scalar;
     }
 
@@ -165,6 +177,8 @@ namespace frts
      */
     inline PointPtr operator*(Point::value scalar, PointPtr point)
     {
+        assert(point != nullptr);
+
         return *point * scalar;
     }
 

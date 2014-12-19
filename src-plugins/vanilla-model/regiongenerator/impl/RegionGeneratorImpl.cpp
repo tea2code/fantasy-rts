@@ -36,6 +36,11 @@ bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block
                                                          ModelFactoryPtr modelFactory,
                                                          SharedManagerPtr shared) const
 {
+    assert(block != nullptr);
+    assert(pos != nullptr);
+    assert(modelFactory != nullptr);
+    assert(shared != nullptr);
+
     bool initialized = false;
     for (auto& generatorId : generatorIds)
     {
@@ -64,6 +69,9 @@ bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block
 
 frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, SharedManagerPtr shared)
 {
+    assert(pos != nullptr);
+    assert(shared != nullptr);
+
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     WriteableBlockPtr block = mf->getMapParser(shared->makeId(RegionGeneratorIds::bmpMapParser()))->newBlock(pos, shared);
@@ -108,6 +116,9 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
 
 void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     if (node->has("surface_level"))
     {
         surfaceZLevel = node->getInteger("surface_level");

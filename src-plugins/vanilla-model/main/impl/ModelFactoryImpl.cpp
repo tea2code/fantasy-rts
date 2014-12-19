@@ -39,11 +39,15 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 
 void frts::ModelFactoryImpl::checkRequiredData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     validateDataValue(getName(), ModelIds::modelData(), 2, shared);
 }
 
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     // Create model data.
     auto modelData = makeModelData();
     auto modelDataId = shared->makeId(ModelIds::modelData());
@@ -59,6 +63,8 @@ frts::DistanceAlgorithmPtr frts::ModelFactoryImpl::getDistanceAlgorithm() const
 
 frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
 {
+    assert(id != nullptr);
+
     auto it = mapParsers.find(id);
     if(it != mapParsers.end())
     {
@@ -114,6 +120,8 @@ int frts::ModelFactoryImpl::getVersion() const
 
 bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     if (firstInit)
     {
         firstInit = false;
@@ -181,6 +189,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     }
 
     // Region generator.
+    assert(regionGenerator != nullptr);
     regionGenerator->init(shared);
 
     // Region Manager:
@@ -208,6 +217,13 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
                                                         distanceAlgorithm);
     }
 
+    // Check if everything is set.
+    assert(distanceAlgorithm != nullptr);
+    assert(pathFinder != nullptr);
+    assert(region != nullptr);
+    assert(resourceEntityManager != nullptr);
+    assert(resourceManager != nullptr);
+
     // Add region manager to data values. This should happen in createData() but
     // is currently not possible.
     auto regionManager = makeRegionManager(region, resourceManager, resourceEntityManager,
@@ -221,11 +237,16 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
             % regionManager->getTypeVersion() % regionManager->getVersion();
     shared->getLog()->warning(getName(), msg.str());
 
+
+
     return false;
 }
 
 frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
 {
+    assert(builderId != nullptr);
+    assert(shared != nullptr);
+
     auto it = componentBuilders.find(builderId);
     if(it != componentBuilders.end())
     {
@@ -240,6 +261,10 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
 
 frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(builderId != nullptr);
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     auto it = componentBuilders.find(builderId);
     if(it != componentBuilders.end())
     {
@@ -259,6 +284,9 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity()
 
 frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr shared)
 {
+    assert(id != nullptr);
+    assert(shared != nullptr);
+
     try
     {
         auto entity = makeEntity();
@@ -287,6 +315,9 @@ frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y,
 
 void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
 {
+    assert(node != nullptr);
+    assert(shared != nullptr);
+
     if (key == entitiesConfigKey)
     {
         std::string namePrefix = "";
@@ -335,6 +366,8 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
 
 bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto blockingId = shared->makeId(ComponentIds::blocking());
     auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
     auto teleportId = shared->makeId(ComponentIds::teleport());
@@ -370,11 +403,17 @@ void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
 
 void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
 {
+    assert(builderId != nullptr);
+    assert(builder != nullptr);
+
     componentBuilders[builderId] = builder;
 }
 
 void frts::ModelFactoryImpl::registerMapParser(IdPtr id, MapParserPtr mapParser)
 {
+    assert(id != nullptr);
+    assert(mapParser != nullptr);
+
     mapParsers[id] = mapParser;
 }
 
@@ -400,6 +439,8 @@ void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resou
 
 void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
     auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     if (modelData->getMapSizeX() <= 0)
     {
