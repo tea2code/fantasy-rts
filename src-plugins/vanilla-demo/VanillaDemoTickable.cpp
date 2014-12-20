@@ -88,7 +88,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     auto rightTop = mf->makePoint(95, 5, 0);
     auto leftBottom = mf->makePoint(5, 95, 0);
     auto rightBottom = mf->makePoint(95, 95, 0);
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 300; ++i)
     {
         pathFinder->findPath(leftTop, rightBottom, blockedBy, shared);
         pathFinder->findPath(rightBottom, rightTop, blockedBy, shared);
