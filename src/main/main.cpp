@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
         std::cout << "help - Produce this help message." << std::endl;
         std::cout << "deadLock - Number of extra executions for modules before a dead lock is assumed." << std::endl;
         std::cout << "deltaTime - Set length of one frame in milliseconds." << std::endl;
-        std::cout << "loadFile - File name of load file." << std::endl;
+        std::cout << "loadFile - File name of load file relative to plugins root." << std::endl;
         std::cout << "logConfigFile - Path to log config file." << std::endl;
         std::cout << "maxFrameTime - Maximum length of a frame in milliseconds." << std::endl;
         std::cout << "pluginsRoot - Path to plugins root directory." << std::endl;
