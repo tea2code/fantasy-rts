@@ -38,11 +38,13 @@ namespace frts
         DistanceAlgorithmPtr distanceAlgorithm;
         IdPtr teleportType;
 
+        #ifdef A_STAR_BENCHMARK
         std::chrono::milliseconds findNeighborsTime;
         std::chrono::milliseconds loopTime;
         std::chrono::milliseconds teleportTime;
         std::chrono::milliseconds totalTime;
         std::chrono::milliseconds walkTime;
+        #endif
 
     private:
         PointVector findNeighbors(PointPtr current, BlockedByPtr blockedBy,

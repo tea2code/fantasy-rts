@@ -48,6 +48,13 @@ Load using `frts/ModelFactory` in the `utilities` section of the load file. This
 
 Will identify itself by the name and type `frts::ModelFactory`. It can be also found in the static class `ModelIds`. 
 
+The model factory contains following types of methods:
+
+- Getter to access different special purpose helper classes. Currently getter exist for distance algorithm, path finder and map parser.
+- Maker/Builder methods to create components, entities (empty and preconfigurated) and points.
+- Map parser and component builders (for creating components) can be registered.
+- While all of the above methods have already predefined classes/objects they can be replaced using the setters. Most of the setters must be called before `init()`. A couple of setters are also for replacing internal values like the region manager.
+
 ### Model Reseter
 
 The model reseter handles model related clean up at the end of each frame. It should be placed as the last render module. Currently the following resets are done:

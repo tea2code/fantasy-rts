@@ -14,8 +14,10 @@
 
 
 frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
-    : distanceAlgorithm{distanceAlgorithm}, teleportType{teleportType},
-      findNeighborsTime{0}, loopTime{0}, teleportTime{0}, totalTime{0}, walkTime{0}
+    : distanceAlgorithm{distanceAlgorithm}, teleportType{teleportType}
+    #ifdef A_STAR_BENCHMARK
+    ,findNeighborsTime{0}, loopTime{0}, teleportTime{0}, totalTime{0}, walkTime{0}
+    #endif
 {}
 
 frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
@@ -26,16 +28,14 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     assert(shared != nullptr);
 
     // For this exact implementation see http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-2-4
-    #ifdef A_STAR_BENCHMARK
+
     auto startTotal = highResTime();
-    #endif
 
     auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
     using Node = std::pair<Point::length, PointPtr>;
     std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
     frontier.emplace(0.0, start);
-    //frontier.push(std::make_pair(0.0, start));
 
     std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
     cameFrom[start] = start;
@@ -86,7 +86,6 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
                     costSoFar[next] = newCost;
                     Point::length priority = newCost + distanceAlgorithm->distance(next, goal);
                     frontier.emplace(priority, next);
-                    //frontier.push(std::make_pair(priority, next));
                     cameFrom[next] = current;
                 }
             }
@@ -102,9 +101,9 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     #endif
 
     // Reconstruct path.
+    Path::PathPart path;
     if (found)
     {
-        Path::PathPart path;
         auto current = goal;
         path.push_back(current);
         while (current != start)
@@ -126,6 +125,17 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     auto msg = boost::format(R"(findNeighborsTime = %1%ms, loopTime = %2%ms, teleportTime = %3%ms, totalTime = %4%ms, walkTime = %5%ms)")
             % findNeighborsTime.count() % loopTime.count() % teleportTime.count() % totalTime.count() % walkTime.count();
     shared->getLog()->debug("A*", msg.str());
+    #else
+    if (found)
+    {
+        auto totalTime = (highResTime() - startTotal);
+        auto msg = boost::format(R"(Path finding in  %1%ms from (%2%, %3%, %4%) to (%5%, %6%, %7%) with a path length of %8%.)")
+                % totalTime.count()
+                % start->getX() % start->getY() % start->getZ()
+                % goal->getX() % goal->getY() % goal->getZ()
+                % path.size();
+        shared->getLog()->info("A*", msg.str());
+    }
     #endif
 
     return result;

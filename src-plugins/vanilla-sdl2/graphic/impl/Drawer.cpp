@@ -220,7 +220,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-    // Currently we only render on the same z-level or levels below.
+    // We only render on the same z-level or levels below.
     if (pos->getZ() > zLevel)
     {
         return;
