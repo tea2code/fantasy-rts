@@ -1,6 +1,13 @@
 style:
     namespace: style
     
+    # Optional color for background (behind sprites) filling of screen.
+    # Current color is same as air sprite.
+    background:
+        r: 101
+        g: 98
+        b: 222
+    
     # List of all images. Currently only png format is supported.
     images:
         namespace: image

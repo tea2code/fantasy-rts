@@ -56,6 +56,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         return;
     }
 
+    // Image support.
     int imageFlags = IMG_INIT_PNG;
     if (IMG_Init(imageFlags) != imageFlags)
     {
@@ -63,6 +64,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         return;
     }
 
+    // Create window.
     window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                         regionToScreen(screenWidth, tileWidth), regionToScreen(screenHeight, tileHeight),
@@ -75,6 +77,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
         return;
     }
 
+    // Create renderer.
     renderer = std::unique_ptr<SDL_Renderer, Sdl2Deleter>(
         SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED),
         Sdl2Deleter()
@@ -84,8 +87,11 @@ void frts::Drawer::init(SharedManagerPtr shared)
         shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return;
     }
-    SDL_SetRenderDrawColor(renderer.get(), 100, 100, 100, 0);
 
+    // Non-transparent background color for filling tiles.
+    SDL_SetRenderDrawColor(renderer.get(), backgroundR, backgroundG, backgroundB, 0);
+
+    // Read images.
     for (auto& image : images)
     {
         SDL_Surface *surface = IMG_Load(image.second.c_str());
@@ -146,6 +152,13 @@ void frts::Drawer::renderNow(SharedManagerPtr shared)
     }
 
     SDL_RenderPresent(renderer.get());
+}
+
+void frts::Drawer::setBackground(int r, int g, int b)
+{
+    backgroundR = r;
+    backgroundG = g;
+    backgroundB = b;
 }
 
 void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode)
@@ -304,6 +317,13 @@ void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
 void frts::Drawer::validateData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
+
+    if (backgroundR < 0 || 255 < backgroundR ||
+        backgroundG < 0 || 255 < backgroundG ||
+        backgroundB < 0 || 255 < backgroundB)
+    {
+        throw DataViolation("Drawer: Background color must be a valid rgb color with values between 0 and 255.");
+    }
 
     spriteManager.validateData(shared);
 

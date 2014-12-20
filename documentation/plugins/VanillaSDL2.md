@@ -275,12 +275,19 @@ The screen config defines the cursor entity, the size of the visible screen (and
         height: <integer greater 0>
         width: <integer greater 0>
 
-### Sprite Config
+### Style Config
 
-A complete sprite configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite must be defined  below `sprites`.
+A complete style configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite must be defined  below `sprites`.
+
+It is possible to define a background color on the `style` node. This is used for background aka. behind the sprites filling of the screen. By default black is used.
 
     style:
         namespace: <string>
+        
+        background:
+            r: <integer between 0 and 255, optional>
+            g: <integer between 0 and 255, optional>
+            b: <integer between 0 and 255, optional>
         
         images:
             namespace: <string>

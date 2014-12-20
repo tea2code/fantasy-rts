@@ -210,6 +210,12 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     {
         auto rootNamespace = node->getString("namespace");
 
+        if (node->has("background"))
+        {
+            auto bgNode = node->getNode("background");
+            drawer.setBackground(bgNode->getInteger("r"), bgNode->getInteger("g"), bgNode->getInteger("b"));
+        }
+
         if (node->has("images"))
         {
             drawer.setImageConfig(shared, rootNamespace, node->getNode("images"));
