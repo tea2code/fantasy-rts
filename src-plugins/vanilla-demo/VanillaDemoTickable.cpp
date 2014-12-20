@@ -37,6 +37,7 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     assert(shared != nullptr);
 
     shared->getLog()->debug(getName(), "Demo loaded");
+    isInit = true;
     return false;
 }
 

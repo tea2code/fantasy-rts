@@ -42,7 +42,7 @@ Will identify itself by the name and type `frts::ModelData`.
 
 ### Model Factory
 
-Utility module which acts as a factory to create model related objects like points, entities...
+Utility module which acts as a factory to create model related objects like points, entities... The method `init()` will wait one execution to allow other modules to override implementations (for example replacing the original region with another using `setRegion()`).
 
 Load using `frts/ModelFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `ModelIds`. 
 

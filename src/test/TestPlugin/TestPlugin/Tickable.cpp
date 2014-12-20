@@ -54,6 +54,16 @@ bool Tickable::init(frts::SharedManagerPtr)
     return false;
 }
 
+bool Tickable::isInitialized() const
+{
+    return false;
+}
+
+bool Tickable::isPreInitialized() const
+{
+    return false;
+}
+
 void Tickable::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
 {
 

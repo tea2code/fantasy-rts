@@ -49,11 +49,9 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    // Request another initalization round to allow initialization of command factory
-    // happen first.
-    if (firstInit)
+    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+    if (!commandFactory->isInitialized())
     {
-        firstInit = false;
         return true;
     }
 
@@ -72,6 +70,16 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     return false;
 }
 
+bool frts::InputHandlerImpl::isInitialized() const
+{
+    return isInit;
+}
+
+bool frts::InputHandlerImpl::isPreInitialized() const
+{
+    return isPreInit;
+}
+
 void frts::InputHandlerImpl::registerCommand(Key key, IdPtr commandId)
 {
     eventHandler->registerCommand(keyToSdl2Key(key), commandId);
@@ -87,6 +95,7 @@ void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node,
 
 bool frts::InputHandlerImpl::preInit(SharedManagerPtr)
 {
+    isPreInit = true;
     return false;
 }
 

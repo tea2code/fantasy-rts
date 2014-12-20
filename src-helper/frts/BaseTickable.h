@@ -53,7 +53,18 @@ namespace frts
 
         virtual bool init(SharedManagerPtr) override
         {
+            isInit = true;
             return false;
+        }
+
+        bool isInitialized() const override
+        {
+            return isInit;
+        }
+
+        bool isPreInitialized() const override
+        {
+            return isPreInit;
         }
 
         virtual void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override
@@ -61,6 +72,7 @@ namespace frts
 
         virtual bool preInit(SharedManagerPtr) override
         {
+            isPreInit = true;
             return false;
         }
 
@@ -75,6 +87,10 @@ namespace frts
         int version;
         std::string typeName;
         int typeVersion;
+
+    protected:
+        bool isInit = false;
+        bool isPreInit = false;
     };
 }
 

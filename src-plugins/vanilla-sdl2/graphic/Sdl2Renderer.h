@@ -38,7 +38,6 @@ namespace frts
     private:
         std::string cursorId;
         Drawer drawer;
-        bool firstInit = true;
         FpsManager fpsManager;
 
     private:     

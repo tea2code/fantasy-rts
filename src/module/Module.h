@@ -75,6 +75,20 @@ namespace frts
         virtual bool init(SharedManagerPtr shared) = 0;
 
         /**
+         * @brief Indicates if module is initialized. Must return true after init()
+         *        is successfully finished.
+         * @return True if init() is finished else false.
+         */
+        virtual bool isInitialized() const = 0;
+
+        /**
+         * @brief Indicates if module is preinitialized. Must return true after init()
+         *        is successfully finished.
+         * @return True if preInit() is finished else false.
+         */
+        virtual bool isPreInitialized() const = 0;
+
+        /**
          * @brief Parse the given configuration node. Executed during "Read Config"
          *        phase.
          * @param key The key of this node.

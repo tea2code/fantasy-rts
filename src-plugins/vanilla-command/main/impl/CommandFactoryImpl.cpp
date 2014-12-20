@@ -91,7 +91,18 @@ bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
     commandId = shared->makeId(CommandIds::undo());
     registerCommandBuilder(commandId, makeUndoCommandBuilder(commandId));
 
+    isInit = true;
     return false;
+}
+
+bool frts::CommandFactoryImpl::isInitialized() const
+{
+    return isInit;
+}
+
+bool frts::CommandFactoryImpl::isPreInitialized() const
+{
+    return isPreInit;
 }
 
 frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedManagerPtr shared)
@@ -137,6 +148,7 @@ void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr nod
 
 bool frts::CommandFactoryImpl::preInit(SharedManagerPtr)
 {
+    isPreInit = true;
     return false;
 }
 

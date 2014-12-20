@@ -39,6 +39,8 @@ namespace frts
         int getTypeVersion() const override;
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
+        bool isInitialized() const override;
+        bool isPreInitialized() const override;
         ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
         EntityPtr makeEntity() override;
         EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) override;
@@ -70,13 +72,16 @@ namespace frts
         ComponentBuilderMap componentBuilders;
         DistanceAlgorithmPtr distanceAlgorithm;
         EntityConfigMap entityConfig;
-        bool firstInit = true;
         MapParserMap mapParsers;
         PathFinderPtr pathFinder;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;
         LockableResourceManagerPtr resourceManager;
+
+        bool firstInit = true;
+        bool isInit = false;
+        bool isPreInit = false;
 
     private:
         ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);

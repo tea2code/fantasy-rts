@@ -36,6 +36,8 @@ namespace frts
         int getTypeVersion() const override;
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
+        bool isInitialized() const override;
+        bool isPreInitialized() const override;
         void registerCommand(Key key, IdPtr commandId) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
@@ -45,7 +47,9 @@ namespace frts
     private:
         std::vector<ConfigNodePtr> configNodes;
         EventHandlerPtr eventHandler;
-        bool firstInit = true;
+
+        bool isInit = false;
+        bool isPreInit = false;
     };
 
     /**

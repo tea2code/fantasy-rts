@@ -18,6 +18,8 @@ public:
     int getTypeVersion() const override;
     int getVersion() const override;
     bool init(frts::SharedManagerPtr shared) override;
+    bool isInitialized() const override;
+    bool isPreInitialized() const override;
     void parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared) override;
     bool preInit(frts::SharedManagerPtr shared) override;
     void validateData(frts::SharedManagerPtr shared) override;

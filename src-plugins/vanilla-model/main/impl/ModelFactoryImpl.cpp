@@ -122,6 +122,8 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
+    // Wait one execution to allow other modules to override implementations
+    // (for example replacing the original region with another using setRegion()).
     if (firstInit)
     {
         firstInit = false;
@@ -237,9 +239,18 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
             % regionManager->getTypeVersion() % regionManager->getVersion();
     shared->getLog()->warning(getName(), msg.str());
 
-
-
+    isInit = true;
     return false;
+}
+
+bool frts::ModelFactoryImpl::isInitialized() const
+{
+    return isInit;
+}
+
+bool frts::ModelFactoryImpl::isPreInitialized() const
+{
+    return isPreInit;
 }
 
 frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
@@ -388,6 +399,7 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
     }
 
+    isPreInit = true;
     return false;
 }
 

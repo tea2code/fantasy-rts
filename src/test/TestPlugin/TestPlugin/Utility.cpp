@@ -44,6 +44,16 @@ bool Utility::init(frts::SharedManagerPtr)
     return false;
 }
 
+bool Utility::isInitialized() const
+{
+    return false;
+}
+
+bool Utility::isPreInitialized() const
+{
+    return false;
+}
+
 void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
 {
 

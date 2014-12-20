@@ -33,6 +33,8 @@ namespace frts
         int getTypeVersion() const override;
         int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
+        bool isInitialized() const override;
+        bool isPreInitialized() const override;
         CommandPtr makeCommand(IdPtr builderId, SharedManagerPtr shared) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
@@ -47,6 +49,9 @@ namespace frts
     private:
         CommandBuilderMap commandBuilders;
         std::list<CommandPtr> undoQueue;
+
+        bool isInit = false;
+        bool isPreInit = false;
     };
 
     /**

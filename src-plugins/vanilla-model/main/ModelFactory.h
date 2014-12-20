@@ -29,7 +29,7 @@ namespace frts
 
     /**
      * @brief Model factory is a utility which allows creation of several
-     * model types like pointer or entities.
+     *        model types like pointer or entities.
      */
     class ModelFactory : public Utility
     {

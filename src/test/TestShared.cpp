@@ -49,6 +49,8 @@ namespace TestShared
         int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
         bool init(frts::SharedManagerPtr) override { return false; }
+        bool isInitialized() const override { return false; }
+        bool isPreInitialized() const override { return false; }
         void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
         bool preInit(frts::SharedManagerPtr) override { return false; }
         void tick(frts::SharedManagerPtr) override {}
@@ -68,6 +70,8 @@ namespace TestShared
         int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
         bool init(frts::SharedManagerPtr) override { return false; }
+        bool isInitialized() const override { return false; }
+        bool isPreInitialized() const override { return false; }
         void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
         bool preInit(frts::SharedManagerPtr) override { return false; }
         void validateData(frts::SharedManagerPtr) override {}
