@@ -4,6 +4,7 @@
 #include "SharedPtr.h"
 
 #include <functional>
+#include <set>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -27,6 +28,7 @@ namespace frts
 
         virtual bool operator==(const Id& rhs) = 0;
         virtual bool operator!=(const Id& rhs) = 0;
+        virtual bool operator<(const Id& rhs) = 0;
     };
 
     /**
@@ -51,6 +53,23 @@ namespace frts
     inline bool operator!=(IdPtr lhs, IdPtr rhs)
     {
         return !(lhs == rhs);
+    }
+
+    /**
+     * @brief Compare less.
+     * @param lhs First id.
+     * @param rhs Second id.
+     * @return True if lhs is less than rhs.
+     */
+    inline bool operator<(IdPtr lhs, IdPtr rhs)
+    {
+        bool lhsNull = (lhs == nullptr);
+        bool rhsNull = (rhs == nullptr);
+        if (!lhsNull && rhsNull)
+        {
+            return false;
+        }
+        return (lhsNull && !rhsNull) || (!lhsNull && !rhsNull && *lhs < *rhs);
     }
 
     /**
@@ -81,6 +100,22 @@ namespace frts
             return lhs == rhs;
         }
     };
+
+    /**
+     * @brief Less to function object for Ids.
+     */
+    struct IdLess
+    {
+        bool operator() (IdPtr lhs, IdPtr rhs) const
+        {
+            return lhs < rhs;
+        }
+    };
+
+    /**
+     * @brief set of IDs.
+     */
+    using IdSet = std::set<IdPtr, IdLess>;
 
     /**
      * @brief Unordered set of IDs.

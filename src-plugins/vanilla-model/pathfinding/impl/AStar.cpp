@@ -35,6 +35,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     using Node = std::pair<Point::length, PointPtr>;
     std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
     frontier.emplace(0.0, start);
+    //frontier.push(std::make_pair(0.0, start));
 
     std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
     cameFrom[start] = start;
@@ -85,6 +86,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
                     costSoFar[next] = newCost;
                     Point::length priority = newCost + distanceAlgorithm->distance(next, goal);
                     frontier.emplace(priority, next);
+                    //frontier.push(std::make_pair(priority, next));
                     cameFrom[next] = current;
                 }
             }

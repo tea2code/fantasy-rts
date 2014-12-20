@@ -58,7 +58,7 @@ namespace frts
 
         IdVector defaultBelowSurfaceLevels;
         std::unordered_map<Point::value, IdVector> levels;
-        std::unordered_map<IdPtr, Generator> generators;
+        std::unordered_map<IdPtr, Generator, IdHash, IdEqual> generators;
 
     private:
         /**

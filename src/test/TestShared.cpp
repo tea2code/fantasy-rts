@@ -103,9 +103,15 @@ TEST_CASE("Create and use id.", "[shared]")
     REQUIRE(id1->toString() == str1);
     REQUIRE(id2->toString() == str1);
     REQUIRE(id3->toString() == str2);
-    REQUIRE(*id1 == *id2);
-    REQUIRE(*id1 != *id3);
-    REQUIRE(*id2 != *id3);
+    REQUIRE(id1 == id2);
+    REQUIRE(id1 != id3);
+    REQUIRE(id2 != id3);
+    REQUIRE_FALSE(id1 < id2);
+    REQUIRE_FALSE(id2 < id1);
+    REQUIRE(id1 < id3);
+    REQUIRE(id2 < id3);
+    REQUIRE_FALSE(id3 < id1);
+    REQUIRE_FALSE(id3 < id2);
 }
 
 TEST_CASE("Create and use shared manager.", "[shared]")

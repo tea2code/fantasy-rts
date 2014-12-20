@@ -34,6 +34,11 @@ bool frts::IdImpl::operator!=(const Id& rhs)
     return !(*this == rhs);
 }
 
+bool frts::IdImpl::operator<(const Id& rhs)
+{
+    return str < rhs.toString();
+}
+
 frts::IdPtr frts::makeId(const std::string& str)
 {
 #ifdef FRTS_FAST_ID

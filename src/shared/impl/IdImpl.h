@@ -20,6 +20,7 @@ namespace frts
 
         bool operator==(const Id& rhs) override;
         bool operator!=(const Id& rhs) override;
+        bool operator<(const Id& rhs) override;
 
     private:
         std::string str;
