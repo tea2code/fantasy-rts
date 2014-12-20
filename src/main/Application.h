@@ -13,6 +13,16 @@
 
 namespace frts
 {
+    /**
+     * @brief Thrown if maximum number of extra executions is reached and a
+     *        possible dead locking was detected.
+     */
+    class DeadLockError : public std::runtime_error
+    {
+    public:
+        explicit DeadLockError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
     class Application
     {
     public:
@@ -46,6 +56,7 @@ namespace frts
 
         /**
          * @brief Create data objects for modules.
+         * @throw DeadLockError if maximum number of extra executions was reached.
          * @param modules The modules.
          * @param shared The shared manager.
          */
@@ -74,6 +85,7 @@ namespace frts
 
         /**
          * @brief Initialize given modules with the shared manager.
+         * @throw DeadLockError if maximum number of extra executions was reached.
          * @param modules The modules to initialize.
          * @param shared The shared manager.
          */
@@ -90,6 +102,7 @@ namespace frts
 
         /**
          * @brief Preinitialize given modules with the shared manager.
+         * @throw DeadLockError if maximum number of extra executions was reached.
          * @param modules The modules to initialize.
          * @param shared The shared manager.
          */
@@ -123,6 +136,13 @@ namespace frts
         std::map<std::string, std::vector<ModulePtr>> registerConfigKeys(const std::vector<ModulePtr>& modules) const;
 
         /**
+         * @brief Set maximum number of extra executions (for example in init())
+         *        before it is considered a dead lock.
+         * @param num Number of executions.
+         */
+        void setMaxNumberExtraExecutions(unsigned int num = 1000);
+
+        /**
          * @brief Validate that all necessary configuration is loaded (represented
          *        by data values.
          * @param modules The modules which should validate the current config.
@@ -142,6 +162,7 @@ namespace frts
 
     private:
         LogPtr log;
+        unsigned int maxNumberExtraExecutions = 1000;
         PluginManager pluginManager;
     };
 }

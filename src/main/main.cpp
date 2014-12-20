@@ -31,7 +31,8 @@
 
 
 /**
- * @brief Check if command line options exist. See http://stackoverflow.com/a/868894/1931663.
+ * @brief Check if command line options exist.
+ * @see http://stackoverflow.com/a/868894/1931663
  * @param begin Begin of options.
  * @param end End of options.
  * @param option The option key.
@@ -43,7 +44,8 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
 }
 
 /**
- * @brief Get command line options. See http://stackoverflow.com/a/868894/1931663.
+ * @brief Get command line options.
+ * @see http://stackoverflow.com/a/868894/1931663
  * @param begin Begin of options.
  * @param end End of options.
  * @param option The option key.
@@ -85,16 +87,21 @@ int main(int argc, char* argv[])
     {
         std::cout << "Command line options:" << std::endl;
         std::cout << "help - Produce this help message." << std::endl;
-        std::cout << "deltaTime - Set length of one frame." << std::endl;
+        std::cout << "deadLock - Number of extra executions for modules before a dead lock is assumed." << std::endl;
+        std::cout << "deltaTime - Set length of one frame in milliseconds." << std::endl;
         std::cout << "loadFile - File name of load file." << std::endl;
         std::cout << "logConfigFile - Path to log config file." << std::endl;
-        std::cout << "maxFrameTime - Maximum length of a frame." << std::endl;
+        std::cout << "maxFrameTime - Maximum length of a frame in milliseconds." << std::endl;
         std::cout << "pluginsRoot - Path to plugins root directory." << std::endl;
         std::cout << "Example: deltaTime 10 loadFile load.yaml" << std::endl;
         return 0;
     }
 
     // Most basic configuration.
+    const unsigned int deadLock = static_cast<unsigned int>(
+                cmdOptionExists(argv, argv+argc, "deadLock") ?
+                std::atoi(getCmdOption(argv, argv+argc, "deadLock")) : 1000
+    );
     const frts::Frame::time deltaTime = frts::fromMilliseconds(
                 cmdOptionExists(argv, argv+argc, "deltaTime") ?
                 std::atoi(getCmdOption(argv, argv+argc, "deltaTime")) : 10
@@ -118,6 +125,7 @@ int main(int argc, char* argv[])
 
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");
+    log->warning(logModule, "\tdeadLock = " + std::to_string(deadLock));
     log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
     log->warning(logModule, "\tloadFile = " + loadFile);
     log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
@@ -127,6 +135,7 @@ int main(int argc, char* argv[])
     // Start application.
     log->info(logModule, "Start application");
     frts::Application app(log);
+    app.setMaxNumberExtraExecutions(deadLock);
 
     try
     {

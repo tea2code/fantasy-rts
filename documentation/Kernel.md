@@ -39,7 +39,15 @@ The supported log levels are in order of their verbosity:
 
 ### main.cpp
 
-Puts everything together. You can manipulate the base settings using command line arguments. For example `fantasy-rts.exe help` will print the command line options help. To reset the length of one frame to 42 use `fantasy-rts.exe deltaTime 42`.
+Puts everything together. You can manipulate the base settings using command line arguments. For example `fantasy-rts.exe help` will print the command line options help. To reset the length of one frame to 42 milliseconds use `fantasy-rts.exe deltaTime 42`. Following are all supported arguments:
+
+- **help:** Produce command line argument help message.                   
+- **deadLock:** Number of extra executions for modules before a dead lock is assumed.
+- **deltaTime:** Set length of one frame in milliseconds.                          
+- **loadFile:** File name of load file relative to plugins root.                               
+- **logConfigFile:** Path to log config file.                       
+- **maxFrameTime:** Maximum length of a frame in milliseconds.                    
+- **pluginsRoot:** Path to plugins root directory.                        
 
 ### Application
 

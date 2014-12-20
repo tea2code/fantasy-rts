@@ -29,6 +29,7 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules, Shared
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
+    unsigned int count = 1;
     while (!todo.empty())
     {
         for(auto& module : todo)
@@ -40,6 +41,12 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules, Shared
         }
         todo = repeat;
         repeat.clear();
+
+        if (count >= maxNumberExtraExecutions)
+        {
+            throw DeadLockError("Application: Possible dead lock while executing createData() was detected.");
+        }
+        count += 1;
     }
 }
 
@@ -72,6 +79,7 @@ void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManage
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
+    unsigned int count = 1;
     while (!todo.empty())
     {
         for(auto& module : todo)
@@ -83,6 +91,12 @@ void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManage
         }
         todo = repeat;
         repeat.clear();
+
+        if (count >= maxNumberExtraExecutions)
+        {
+            throw DeadLockError("Application: Possible dead lock while executing init() was detected.");
+        }
+        count += 1;
     }
 }
 
@@ -118,6 +132,7 @@ void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedMan
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
+    unsigned int count = 1;
     while (!todo.empty())
     {
         for(auto& module : todo)
@@ -129,6 +144,12 @@ void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedMan
         }
         todo = repeat;
         repeat.clear();
+
+        if (count >= maxNumberExtraExecutions)
+        {
+            throw DeadLockError("Application: Possible dead lock while executing preInit() was detected.");
+        }
+        count += 1;
     }
 }
 
@@ -192,6 +213,11 @@ std::map<std::string, std::vector<frts::ModulePtr>> frts::Application::registerC
         }
     }
     return result;
+}
+
+void frts::Application::setMaxNumberExtraExecutions(unsigned int num)
+{
+    maxNumberExtraExecutions = num;
 }
 
 void frts::Application::validateData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
