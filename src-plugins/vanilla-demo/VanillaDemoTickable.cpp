@@ -1,5 +1,6 @@
 #include "VanillaDemoTickable.h"
 
+#include "DemoRegionGenerator.h"
 #include <frts/shared>
 #include <frts/vanillamodel>
 #include <frts/vanillasdl2graphic>
@@ -36,6 +37,17 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
+    #ifdef A_STAR_BENCHMARK
+    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    auto blockingType = shared->makeId(ComponentIds::blocking());
+    auto sortOrderType = shared->makeId(ComponentIds::sortOrder());
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+    auto regionGenerator = makeDemoRegionGenerator(blockingType, sortOrderType,
+                                                   modelData->getMapSizeX(), modelData->getMapSizeY(),
+                                                   0);
+    modelFactory->setRegionGenerator(regionGenerator);
+    #endif
+
     shared->getLog()->debug(getName(), "Demo loaded");
     isInit = true;
     return false;
@@ -59,11 +71,10 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     if (shared->getFrame()->getNumber() == 0)
     {
-        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-
         // Add dwarf at start position.
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
@@ -80,7 +91,17 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     }
 
     #ifdef A_STAR_BENCHMARK
-    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    // Pregenerate map.
+    auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
+    for (Point::value x = 0; x < md->getMapSizeX(); ++x)
+    {
+        for (Point::value y = 0; y < md->getMapSizeY(); ++y)
+        {
+            auto pos = mf->makePoint(x, y, 0);
+            rm->getBlock(pos, shared);
+        }
+    }
+
     auto pathFinder = mf->getPathFinder();
     auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
 
