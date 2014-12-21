@@ -44,7 +44,7 @@ namespace frts
         LockableResourceManagerPtr resourceManager;
         LockableResourceManagerPtr resourceEntityManager;
 
-        std::mutex lockAllMutex;
+        std::recursive_mutex lockAllMutex;
 
     private:
         /**
