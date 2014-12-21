@@ -4,8 +4,6 @@
 #include "ModelIds.h"
 #include "RegionManager.h"
 
-#include <boost/format.hpp>
-
 
 frts::ModelReseter::ModelReseter()
     : BaseTickable("frts::ModelReseter", 1, "frts::ModelReseter", 1)

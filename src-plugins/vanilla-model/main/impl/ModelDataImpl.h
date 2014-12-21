@@ -14,15 +14,24 @@ namespace frts
         std::string getName() const override;
         Point::value getMapSizeX() const override;
         Point::value getMapSizeY() const override;
+        unsigned int getPrecalculateDown() const override;
+        unsigned int getPrecalculateUp() const override;
+        Point::value getSurfaceZLevel() const override;
         std::string getTypeName() const override;
         int getTypeVersion() const override;
         int getVersion() const override;
         void setMapSizeX(Point::value size) override;
         void setMapSizeY(Point::value size) override;
+        void setPrecalculateDown(unsigned int zLevels) override;
+        void setPrecalculateUp(unsigned int zLevels) override;
+        void setSurfaceZLevel(Point::value zLevel) override;
 
     private:
-        Point::value sizeX;
-        Point::value sizeY;
+        unsigned int precalculateDown = 0;
+        unsigned int precalculateUp = 0;
+        Point::value sizeX = 0;
+        Point::value sizeY = 0;
+        Point::value surfaceZLevel = 0;
     };
 
     /**

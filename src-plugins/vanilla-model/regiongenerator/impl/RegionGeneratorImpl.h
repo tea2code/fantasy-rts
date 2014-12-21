@@ -50,8 +50,6 @@ namespace frts
         IdPtr blockingType;
         IdPtr sortOrderType;
 
-        Point::value surfaceZLevel = 0;
-
         IdPtr defaultAboveSurfaceEntity;
         IdPtr defaultSurfaceEntity;
         IdPtr defaultBelowSurfaceEntity;

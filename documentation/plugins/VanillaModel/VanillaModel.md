@@ -65,6 +65,16 @@ Load using `frts/ModelReseter` in the `renderModule` section of the load file.
 
 Will identify itself by the name and type `frts::ModelReseter`.
 
+### Model Startup
+
+The model startup handles model related startup code. It should be executed as a startup module. Currently the following tasks are executed:
+
+- Precalculated configured z-levels.
+
+Load using `frts/ModelStartup` in the `startupModules` section of the load file.
+
+Will identify itself by the name and type `frts::ModelStartup`.
+
 ### Path Finder
 
 The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
@@ -140,9 +150,14 @@ The main key is `entities`.
 
 ### Region
 
-The region config allows to set the size of the map in x and y direction. Use the following keys to do so:
+The region config allows to set the size of the map in x and y direction. Additionally it is possible to precalculate several z-levels up and down from the start. This allows a better performance because these z-levels will be already existing if accessed. Use the following keys to do so:
 
     region:
         
+        surface_level: <integer, optional, default 0>
+        
         width: <integer greater 0>
         height: <integer greater 0>
+        
+        precalculate_up: <integer greater/equal 0, optional>
+        precalculate_down: <integer greater/equal 0, optional>

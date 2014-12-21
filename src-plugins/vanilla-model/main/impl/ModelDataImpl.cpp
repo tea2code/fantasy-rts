@@ -22,6 +22,21 @@ frts::Point::value frts::ModelDataImpl::getMapSizeY() const
     return sizeY;
 }
 
+unsigned int frts::ModelDataImpl::getPrecalculateDown() const
+{
+    return precalculateDown;
+}
+
+unsigned int frts::ModelDataImpl::getPrecalculateUp() const
+{
+    return precalculateUp;
+}
+
+frts::Point::value frts::ModelDataImpl::getSurfaceZLevel() const
+{
+    return surfaceZLevel;
+}
+
 std::string frts::ModelDataImpl::getTypeName() const
 {
     return getName();
@@ -45,4 +60,19 @@ void frts::ModelDataImpl::setMapSizeX(Point::value size)
 void frts::ModelDataImpl::setMapSizeY(Point::value size)
 {
     sizeY = size;
+}
+
+void frts::ModelDataImpl::setPrecalculateDown(unsigned int zLevels)
+{
+    precalculateDown = zLevels;
+}
+
+void frts::ModelDataImpl::setPrecalculateUp(unsigned int zLevels)
+{
+    precalculateUp = zLevels;
+}
+
+void frts::ModelDataImpl::setSurfaceZLevel(Point::value zLevel)
+{
+    surfaceZLevel = zLevel;
 }

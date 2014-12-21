@@ -1,6 +1,7 @@
 #include "VanillaModelPlugin.h"
 
 #include "ModelReseter.h"
+#include "ModelStartup.h"
 #include "impl/ModelFactoryImpl.h"
 
 #include <frts/shared>
@@ -24,6 +25,10 @@ frts::ModulePtr frts::VanillaModelPlugin::getModule(frts::IdPtr id)
     else if (id->toString() == ModelReseter::identifier())
     {
         result = makeModelReseter();
+    }
+    else if (id->toString() == ModelStartup::identifier())
+    {
+        result = makeModelStartup();
     }
     return result;
 }

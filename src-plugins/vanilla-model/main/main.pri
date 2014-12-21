@@ -8,7 +8,8 @@ HEADERS += \
     main/ModelReseter.h \
     $$PWD/ModelIds.h \
     $$PWD/ModelData.h \
-    $$PWD/impl/ModelDataImpl.h
+    $$PWD/impl/ModelDataImpl.h \
+    $$PWD/ModelStartup.h
 
 SOURCES += \ 
     main/main.cpp \
@@ -16,4 +17,5 @@ SOURCES += \
     main/impl/ModelFactoryImpl.cpp \
     main/impl/RegionManagerImpl.cpp \
     main/ModelReseter.cpp \
-    $$PWD/impl/ModelDataImpl.cpp
+    $$PWD/impl/ModelDataImpl.cpp \
+    $$PWD/ModelStartup.cpp

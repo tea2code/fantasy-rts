@@ -355,8 +355,12 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     else if (key == modelDataKey)
     {
         auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+
         modelData->setMapSizeX(node->getInteger("width"));
         modelData->setMapSizeY(node->getInteger("height"));
+        modelData->setPrecalculateDown(node->getInteger("precalculate_down", modelData->getPrecalculateDown()));
+        modelData->setPrecalculateUp(node->getInteger("precalculate_up", modelData->getPrecalculateUp()));
+        modelData->setSurfaceZLevel(node->getInteger("surface_level", modelData->getSurfaceZLevel()));
     }
     else if (key == regionGenerator->getSupportedConfig())
     {

@@ -67,8 +67,6 @@ The current region generator uses a combination of default entities for the surf
 #### Configuration
 
     region_generator:
-    
-        surface_level: <integer, optional, default 0>
         
         default_above: <string representing an id>
         default_surface: <string representing an id>

@@ -6,6 +6,7 @@
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceImpl.h>
 #include <entity/impl/IsResourceImpl.h>
+#include <main/impl/ModelDataImpl.h>
 #include <main/impl/ModelFactoryImpl.h>
 #include <main/impl/RegionManagerImpl.h>
 #include <main/ModelError.h>
@@ -25,6 +26,24 @@
 #include <memory>
 #include <thread>
 
+
+
+TEST_CASE("ModelData.", "[main]")
+{
+    frts::ModelDataPtr modelData = frts::makeModelData();
+
+    modelData->setMapSizeX(1);
+    modelData->setMapSizeY(2);
+    modelData->setPrecalculateDown(3);
+    modelData->setPrecalculateUp(4);
+    modelData->setSurfaceZLevel(5);
+
+    REQUIRE(modelData->getMapSizeX() == 1);
+    REQUIRE(modelData->getMapSizeY() == 2);
+    REQUIRE(modelData->getPrecalculateDown() == 3);
+    REQUIRE(modelData->getPrecalculateUp() == 4);
+    REQUIRE(modelData->getSurfaceZLevel() == 5);
+}
 
 TEST_CASE("ModelFactory.", "[main]")
 {

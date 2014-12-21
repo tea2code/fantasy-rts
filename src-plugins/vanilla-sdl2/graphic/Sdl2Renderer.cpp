@@ -42,7 +42,7 @@ frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) co
 
 std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
 {
-    return {"style", "screen", "tile"};
+    return {"style", "screen", "tile", "region"};
 }
 
 bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
@@ -195,6 +195,11 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     {
         gd->setTileHeight(node->getInteger("height", gd->getTileHeight()));
         gd->setTileWidth(node->getInteger("width", gd->getTileWidth()));
+    }
+
+    if (key == "region")
+    {
+        gd->setZLevel(node->getInteger("surface_level", gd->getZLevel()));
     }
 
     // Drawer

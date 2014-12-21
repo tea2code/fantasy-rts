@@ -1,6 +1,7 @@
 #include "RegionGeneratorImpl.h"
 
 #include <regiongenerator/RegionGeneratorIds.h>
+#include <main/ModelData.h>
 #include <main/ModelIds.h>
 #include <main/ModelFactory.h>
 #include <region/impl/BlockImpl.h>
@@ -73,6 +74,7 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
     assert(shared != nullptr);
 
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
 
     WriteableBlockPtr block = mf->getMapParser(shared->makeId(RegionGeneratorIds::bmpMapParser()))->newBlock(pos, shared);
 
@@ -80,7 +82,7 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
     {
         block = makeBlock(blockingType, sortOrderType);
 
-        if (pos->getZ() < surfaceZLevel)
+        if (pos->getZ() < md->getSurfaceZLevel())
         {
             bool initializedWithGenerators = false;
 
@@ -99,7 +101,7 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
                 block->insert(mf->makeEntity(defaultBelowSurfaceEntity, shared));
             }
         }
-        else if (pos->getZ() > surfaceZLevel)
+        else if (pos->getZ() > md->getSurfaceZLevel())
         {
             block->insert(mf->makeEntity(defaultAboveSurfaceEntity, shared));
         }
@@ -118,11 +120,6 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
 {
     assert(node != nullptr);
     assert(shared != nullptr);
-
-    if (node->has("surface_level"))
-    {
-        surfaceZLevel = node->getInteger("surface_level");
-    }
 
     if (node->has("default_above"))
     {

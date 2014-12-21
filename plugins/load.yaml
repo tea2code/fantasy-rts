@@ -9,7 +9,7 @@ plugins:
     - vanilla-sdl2/vanilla-sdl2
     
 startupModules:
-    # Nothing yet.
+    - frts/ModelStartup
     
 shutdownModules:
     # Nothing yet.

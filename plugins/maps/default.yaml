@@ -1,6 +1,4 @@
 region_generator:
-
-    surface_level: 0
     
     default_above: entity.air
     default_surface: entity.grass
