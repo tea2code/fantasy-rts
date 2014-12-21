@@ -224,7 +224,7 @@ namespace frts
 
             // See "Effective Java 2nd Edition" page 49
             // Result: ~5.5s
-            int result = 17;
+            unsigned int result = 17;
             result = 31 * result + point->getX();
             result = 31 * result + point->getY();
             result = 31 * result + point->getZ();
