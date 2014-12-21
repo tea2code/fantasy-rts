@@ -8,6 +8,6 @@ region:
     height: 100
     
     # Caching of map.
-    precalculate_up: 5
-    precalculate_down: 10
+    precalculate_up: 3
+    precalculate_down: 5
     #precalculate_starting: 2

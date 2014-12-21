@@ -97,8 +97,11 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     {
         for (Point::value y = 0; y < md->getMapSizeY(); ++y)
         {
-            auto pos = mf->makePoint(x, y, 0);
-            rm->getBlock(pos, shared);
+            for (Point::value z = 0; z < 20; ++z)
+            {
+                auto pos = mf->makePoint(x, y, 0);
+                rm->getBlock(pos, shared);
+            }
         }
     }
 

@@ -77,7 +77,7 @@ namespace frts
      */
     struct IdHash
     {
-        std::size_t operator() (IdPtr id) const
+        std::hash<std::string>::result_type operator() (IdPtr id) const
         {
             if (id == nullptr)
             {
