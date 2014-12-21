@@ -31,8 +31,7 @@ namespace frts
         PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
 
     private:
-        using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr,
-            PointHash, PointEqual>;
+        using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr, PointHash, PointEqual>;
         using EntityPosMap = std::unordered_map<EntityPtr, PointPtr>;
 
     private:

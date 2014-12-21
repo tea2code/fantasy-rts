@@ -157,7 +157,7 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
         {
             entityPos[entity] = pos;
         }
-        posBlock[pos] = result;
+        posBlock.insert(std::make_pair(pos, result));
     }
     return result;
 }

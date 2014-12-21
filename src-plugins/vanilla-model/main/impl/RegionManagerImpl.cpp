@@ -14,7 +14,7 @@ frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
 
 void frts::RegionManagerImpl::addChangedPos(PointPtr pos)
 {
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     addChangedPosLockFree(pos);
 }
@@ -33,7 +33,7 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr 
     assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return region->findFreeNeighbors(pos, blockedBy, sameZLevel, shared);
 }
@@ -43,7 +43,7 @@ frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Poin
     assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return region->findFreeRandomPos(zLevels, blockedBy, shared);
 }
@@ -55,7 +55,7 @@ frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResource(IdPtr entityG
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return resourceManager->findNearest(entityGroup, resourceType, pos, shared);
 }
@@ -67,7 +67,7 @@ frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResourceEntity(IdPtr e
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return resourceEntityManager->findNearest(entityGroup, resourceType, pos, shared);
 }
@@ -77,14 +77,12 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr 
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
-
     return region->getBlock(pos, shared);
 }
 
 frts::PointUnorderedSet frts::RegionManagerImpl::getChangedPos()
 {
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return changedPos;
 }
@@ -99,7 +97,7 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos,
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return region->getNeightbors(pos, sameZLevel, shared);
 }
@@ -109,7 +107,7 @@ frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPt
     assert(entity != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return region->getPos(entity, shared);
 }
@@ -134,7 +132,7 @@ frts::PointPtr frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedMan
     assert(entity != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     auto pos = region->removeEntity(entity, shared);
     resourceEntityManager->remove(entity);
@@ -145,7 +143,7 @@ frts::PointPtr frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedMan
 
 void frts::RegionManagerImpl::resetChangedPos()
 {
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     changedPos.clear();
 }
@@ -156,7 +154,7 @@ frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, S
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     auto oldPos = region->setPos(entity, pos, shared);
     updateResourcesLockFree(entity, shared);
@@ -169,7 +167,7 @@ void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr
 {
     assert(entity != nullptr);
 
-    std::lock_guard<std::recursive_mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     updateResourcesLockFree(entity, shared);
 }

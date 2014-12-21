@@ -12,11 +12,20 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 An additional include `frts/vanillamodeldev` exists if you need to develope your own components... It contains the normal include and some additional headers like for component builder or the region interface.
 
+## Thread safety
+
+Currently following parts are thread safe:
+
+- Block
+- Region Manager
+
+By thread safety is aquired using a mutex. Normaly a `std::recursive_mutex` is used. But it can be replaced by a lightweight spin lock implementation by adding `DEFINES+=SPIN_LOCK` to the additional arguments of qmake. Spin lock is [implemented using a simple atomic boolean](http://stackoverflow.com/a/8115400/1931663).
+
 ## Interfaces
 
 ### Block
 
-A block describes a certain point in the world consisting of the entities at this point. The default block interface only allows read access. For the purpose of developing custom block implementations there is a variant with write access. The later should never be used to change blocks outside the plugin. It is thread safe.
+A block describes a certain point in the world consisting of the entities at this point. The default block interface only allows read access. For the purpose of developing custom block implementations there is a variant with write access. The later should never be used to change blocks outside the plugin. 
 
 ### Components
 
@@ -111,7 +120,7 @@ The region manager is the access interface to all region and resource managing r
 
 Until phase **Initialize Modules** it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementations are used if no others are set.
 
-The region manager is implemented as an data value and can be accessed via the shared manager. It is thread safe.
+The region manager is implemented as an data value and can be accessed via the shared manager. 
 
 Default ID can be found in the static class `ModelIds`.
 

@@ -6,7 +6,7 @@
 #include <region/Region.h>
 #include <resource/LockableResourceManager.h>
 
-#include <mutex>
+#include <frts/RecursiveLock.h>
 
 
 namespace frts
@@ -44,7 +44,7 @@ namespace frts
         LockableResourceManagerPtr resourceManager;
         LockableResourceManagerPtr resourceEntityManager;
 
-        std::recursive_mutex lockAllMutex;
+        RecursiveLock locker;
 
     private:
         /**

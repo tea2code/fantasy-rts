@@ -5,8 +5,9 @@
 #include <entity/Entity.h>
 #include <region/WriteableBlock.h>
 
+#include <frts/RecursiveLock.h>
+
 #include <memory>
-#include <mutex>
 #include <set>
 #include <stdexcept>
 
@@ -96,7 +97,7 @@ namespace frts
         // Needs to be mutable because of its usage in const methods.
         // This is ok because the mutex doesn't represent a public visible
         // state of this class.
-        mutable std::mutex lockAllMutex;
+        mutable RecursiveLock locker;
     };
 
     /**

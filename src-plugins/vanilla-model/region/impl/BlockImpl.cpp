@@ -14,7 +14,7 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(IdPtr componentType
 {
     assert(componentType != nullptr);
 
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     std::vector<EntityPtr> result;
     std::copy_if(entities->begin(), entities->end(),
@@ -25,7 +25,7 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(IdPtr componentType
 
 std::vector<frts::EntityPtr> frts::BlockImpl::getEntities() const
 {
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     std::vector<EntityPtr> result;
     std::copy(entities->begin(), entities->end(), std::back_inserter(result));
@@ -36,7 +36,7 @@ bool frts::BlockImpl::has(EntityPtr entity) const
 {
     assert(entity != nullptr);
 
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     auto itPair = entities->equal_range(entity);
     return (std::find(itPair.first, itPair.second, entity) != itPair.second);
@@ -46,7 +46,7 @@ void frts::BlockImpl::insert(EntityPtr entity)
 {
     assert(entity != nullptr);
 
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     entities->insert(entity);
 }
@@ -55,7 +55,7 @@ bool frts::BlockImpl::isBlocking(BlockedByPtr blockedBy) const
 {
     assert(blockedBy != nullptr);
 
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     return std::any_of(entities->begin(), entities->end(), IsBlockingPred(blockingType, blockedBy));
 }
@@ -64,7 +64,7 @@ void frts::BlockImpl::remove(EntityPtr entity)
 {
     assert(entity != nullptr);
 
-    std::lock_guard<std::mutex> lock(lockAllMutex);
+    std::lock_guard<RecursiveLock> lock(locker);
 
     auto itPair = entities->equal_range(entity);
     for (auto it = itPair.first; it != itPair.second; ++it)

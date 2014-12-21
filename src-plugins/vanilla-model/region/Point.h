@@ -217,7 +217,9 @@ namespace frts
             {
                 return 0;
             }
-            return intHash(point->getX() + point->getY() + point->getZ());
+
+            // See http://stackoverflow.com/a/2634715/1931663
+            return intHash(51 + point->getX() * 51 + point->getY() * 51 + point->getZ());
         }
 
     private:
@@ -232,6 +234,22 @@ namespace frts
         bool operator() (PointPtr lhs, PointPtr rhs) const
         {
             return lhs == rhs;
+        }
+    };
+
+    /**
+     * @brief Less to function object for points.
+     */
+    struct PointLess
+    {
+        bool operator() (PointPtr lhs, PointPtr rhs) const
+        {
+            assert(lhs != nullptr);
+            assert(rhs != nullptr);
+
+            return lhs->getX() < rhs->getX() ||
+                   lhs->getY() < rhs->getY() ||
+                   lhs->getZ() < rhs->getZ();
         }
     };
 
