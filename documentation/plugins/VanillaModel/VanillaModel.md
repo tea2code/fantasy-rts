@@ -16,7 +16,7 @@ An additional include `frts/vanillamodeldev` exists if you need to develope your
 
 ### Block
 
-A block describes a certain point in the world consisting of the entities at this point. The default block interface only allows read access. For the purpose of developing custom block implementations there is a variant with write access. The later should never be used to change blocks outside the plugin.
+A block describes a certain point in the world consisting of the entities at this point. The default block interface only allows read access. For the purpose of developing custom block implementations there is a variant with write access. The later should never be used to change blocks outside the plugin. It is thread safe.
 
 ### Components
 
@@ -115,7 +115,7 @@ A resource lock prevents other entities from claiming a certain resource until i
 
 ### Resource Manager
 
-The resource manager uses locks to manage access to resources by different entity groups. A entity group is only a fancy name for an id which is associated with a certain type of entities like a certain civilization. To find the nearest resource or entity with a certain resource it uses an algorithm to calculate the distance between the given position and the position of the resource. Currently this is the euclidian distance.  
+The resource manager uses locks to manage access to resources by different entity groups. A entity group is only a fancy name for an id which is associated with a certain type of entities like a certain civilization. To find the nearest resource or entity with a certain resource it uses an algorithm to calculate the distance between the given position and the position of the resource. 
 
 ## Configuration
 
