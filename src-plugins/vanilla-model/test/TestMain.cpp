@@ -23,6 +23,7 @@
 #include <shared/impl/MainDataImpl.h>
 
 #include <memory>
+#include <thread>
 
 
 TEST_CASE("ModelFactory.", "[main]")
@@ -204,5 +205,38 @@ TEST_CASE("RegionManager.", "[main]")
         REQUIRE(lock->getResourceType() == resourceId);
         REQUIRE(lock->isValid());
         REQUIRE(regionManager->getPos(lock->getEntity(), shared) == pos);
+    }
+
+    SECTION("Thread safety.")
+    {
+        std::vector<frts::BlockPtr> thread1Blocks;
+        std::vector<frts::BlockPtr> thread2Blocks;
+
+        auto func = [&](std::vector<frts::BlockPtr>& blocks)
+        {
+            for (int x = 0; x < sizeX; ++x)
+            {
+                for (int y = 0; y < sizeY; ++y)
+                {
+                    blocks.push_back(regionManager->getBlock(frts::makePoint(x, y, 0), shared));
+                }
+            }
+        };
+
+        std::thread thread1(func, std::ref(thread1Blocks));
+        std::thread thread2(func, std::ref(thread2Blocks));
+
+        thread1.join();
+        thread2.join();
+
+        auto size = sizeX * sizeY;
+
+        REQUIRE(thread1Blocks.size() == size);
+        REQUIRE(thread2Blocks.size() == size);
+
+        for (int i = 0; i < size; ++i)
+        {
+            REQUIRE(thread1Blocks.at(i) == thread2Blocks.at(i));
+        }
     }
 }

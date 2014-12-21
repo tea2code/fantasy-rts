@@ -101,7 +101,7 @@ The region manager is the access interface to all region and resource managing r
 
 Until phase **Initialize Modules** it is possible to set and change the used implementation of different sub systems like the resource managers or the region generator in the model factory. The model factory will even wait a first iteration of `init()` before initializing. The default implementations are used if no others are set.
 
-The region manager is implemented as an data value and can be accessed via the shared manager. 
+The region manager is implemented as an data value and can be accessed via the shared manager. It is thread safe.
 
 Default ID can be found in the static class `ModelIds`.
 

@@ -6,6 +6,8 @@
 #include <region/Region.h>
 #include <resource/LockableResourceManager.h>
 
+#include <mutex>
+
 
 namespace frts
 {
@@ -41,6 +43,22 @@ namespace frts
         RegionPtr region;
         LockableResourceManagerPtr resourceManager;
         LockableResourceManagerPtr resourceEntityManager;
+
+        std::mutex lockAllMutex;
+
+    private:
+        /**
+         * @brief Lock free implementation of addChangedPos().
+         * @param pos The position.
+         */
+        void addChangedPosLockFree(PointPtr pos);
+
+        /**
+         * @brief Lock free implementation of updateResource().
+         * @param entity The entity.
+         * @param shared The shared manager.
+         */
+        void updateResourcesLockFree(EntityPtr entity, SharedManagerPtr shared);
     };
 
     /**
