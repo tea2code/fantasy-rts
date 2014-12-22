@@ -77,6 +77,8 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr 
     assert(pos != nullptr);
     assert(shared != nullptr);
 
+    std::lock_guard<RecursiveLock> lock(locker);
+
     return region->getBlock(pos, shared);
 }
 
