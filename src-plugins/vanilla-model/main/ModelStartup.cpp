@@ -27,8 +27,9 @@ void frts::ModelStartup::tick(SharedManagerPtr shared)
     auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
-    // Precalculate levels.
-    shared->getLog()->info(getName(), "Precalculating z-levels. This will take some time.");
+    // Precalculate levels. The following code was tested in a variant with std::async and multiple
+    // threads. It didn't make any difference because of the heavy (but necessary) locking in RegionManager.
+    shared->getLog()->info(getName(), "Precalculating z-levels...");
     Point::value zMin = static_cast<Point::value>(modelData->getSurfaceZLevel() - modelData->getPrecalculateDown());
     Point::value zMax = static_cast<Point::value>(modelData->getSurfaceZLevel() + modelData->getPrecalculateUp());
     for (Point::value x = 0; x < modelData->getMapSizeX(); ++x)
