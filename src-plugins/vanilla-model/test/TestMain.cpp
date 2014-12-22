@@ -37,12 +37,14 @@ TEST_CASE("ModelData.", "[main]")
     modelData->setPrecalculateDown(3);
     modelData->setPrecalculateUp(4);
     modelData->setSurfaceZLevel(5);
+    modelData->setPrecalculatedRange(std::make_pair(6, 7));
 
     REQUIRE(modelData->getMapSizeX() == 1);
     REQUIRE(modelData->getMapSizeY() == 2);
     REQUIRE(modelData->getPrecalculateDown() == 3);
     REQUIRE(modelData->getPrecalculateUp() == 4);
     REQUIRE(modelData->getSurfaceZLevel() == 5);
+    REQUIRE(modelData->getPrecalculatedRange() == std::make_pair(6, 7));
 }
 
 TEST_CASE("ModelFactory.", "[main]")

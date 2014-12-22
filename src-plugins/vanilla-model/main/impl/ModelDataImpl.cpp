@@ -4,6 +4,7 @@
 
 
 frts::ModelDataImpl::ModelDataImpl()
+    : precalculatedRange{0, 0}
 {
 }
 
@@ -30,6 +31,11 @@ unsigned int frts::ModelDataImpl::getPrecalculateDown() const
 unsigned int frts::ModelDataImpl::getPrecalculateUp() const
 {
     return precalculateUp;
+}
+
+frts::ModelData::ZLevelRange frts::ModelDataImpl::getPrecalculatedRange() const
+{
+    return precalculatedRange;
 }
 
 frts::Point::value frts::ModelDataImpl::getSurfaceZLevel() const
@@ -70,6 +76,11 @@ void frts::ModelDataImpl::setPrecalculateDown(unsigned int zLevels)
 void frts::ModelDataImpl::setPrecalculateUp(unsigned int zLevels)
 {
     precalculateUp = zLevels;
+}
+
+void frts::ModelDataImpl::setPrecalculatedRange(ZLevelRange range)
+{
+    precalculatedRange = range;
 }
 
 void frts::ModelDataImpl::setSurfaceZLevel(Point::value zLevel)

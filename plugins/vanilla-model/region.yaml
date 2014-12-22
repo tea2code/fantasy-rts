@@ -10,4 +10,3 @@ region:
     # Caching of map.
     precalculate_up: 3
     precalculate_down: 5
-    #precalculate_starting: 2

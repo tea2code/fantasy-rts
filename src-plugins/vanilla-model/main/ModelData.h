@@ -7,6 +7,7 @@
 #include <frts/shared>
 
 #include <memory>
+#include <utility>
 
 
 namespace frts
@@ -23,6 +24,12 @@ namespace frts
      */
     class ModelData : public DataValue
     {
+    public:
+        /**
+         * @brief Range of z-levels.
+         */
+        using ZLevelRange = std::pair<Point::value, Point::value>;
+
     public:
         virtual ~ModelData() {}
 
@@ -49,6 +56,12 @@ namespace frts
          * @return Number of z-levels.
          */
         virtual unsigned int getPrecalculateUp() const = 0;
+
+        /**
+         * @brief Get the precalculated range of z-levels.
+         * @return The range.
+         */
+        virtual ZLevelRange getPrecalculatedRange() const = 0;
 
         /**
          * @brief Get the base z-level for the surface.
@@ -79,6 +92,12 @@ namespace frts
          * @param zLevels Number of z-levels.
          */
         virtual void setPrecalculateUp(unsigned int zLevels) = 0;
+
+        /**
+         * @brief Set the precalculated range of z-levels.
+         * @param range The range.
+         */
+        virtual void setPrecalculatedRange(ZLevelRange range) = 0;
 
         /**
          * @brief Set the base z-level for the surface.

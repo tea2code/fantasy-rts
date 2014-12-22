@@ -1,6 +1,11 @@
 #include "RegionManagerImpl.h"
 
+#include <main/ModelData.h>
 #include <main/ModelIds.h>
+#include <main/ModelFactory.h>
+
+#include <future>
+#include <thread>
 
 
 frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
@@ -79,6 +84,37 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr 
 
     std::lock_guard<RecursiveLock> lock(locker);
 
+    // Seems to result in a dead lock. Further testing is necessary. Currently the block generation speed
+    // is more than fast enough.
+//    auto func = [](Point::value zLevel, Point::value sizeX, Point::value sizeY, SharedManagerPtr shared)
+//    {
+//        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+//        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+//        std::chrono::milliseconds sleepTime(1);
+//        for (int x = 0; x < sizeX; ++x)
+//        {
+//            for (int y = 0; y < sizeY; ++y)
+//            {
+//                auto pos = mf->makePoint(x, y, zLevel);
+//                rm->getBlock(pos, shared);
+//                std::this_thread::sleep_for(sleepTime);
+//            }
+//        }
+//    };
+
+//    auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
+//    auto range = md->getPrecalculatedRange();
+//    if (pos->getZ() < range.first + 3)
+//    {
+//        md->setPrecalculatedRange(std::make_pair(range.first - 1, range.second));
+//        std::async(std::launch::async, func, range.first - 1, md->getMapSizeX(), md->getMapSizeY(), shared);
+//    }
+//    else if (range.second - 3 < pos->getZ())
+//    {
+//        md->setPrecalculatedRange(std::make_pair(range.first, range.second + 1));
+//        std::async(std::launch::async, func, range.second + 1, md->getMapSizeX(), md->getMapSizeY(), shared);
+//    }
+
     return region->getBlock(pos, shared);
 }
 
@@ -99,7 +135,7 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos,
     assert(pos != nullptr);
     assert(shared != nullptr);
 
-    std::lock_guard<RecursiveLock> lock(locker);
+    // Doesn't need locking because it doesn't access any data.
 
     return region->getNeightbors(pos, sameZLevel, shared);
 }
@@ -168,6 +204,7 @@ frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, S
 void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr shared)
 {
     assert(entity != nullptr);
+    assert(shared != nullptr);
 
     std::lock_guard<RecursiveLock> lock(locker);
 

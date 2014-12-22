@@ -44,6 +44,7 @@ void frts::ModelStartup::tick(SharedManagerPtr shared)
         }
     }
     regionManager->resetChangedPos();
+    modelData->setPrecalculatedRange(std::make_pair(zMin, zMax));
     shared->getLog()->info(getName(), "Precalculation complete.");
 }
 
