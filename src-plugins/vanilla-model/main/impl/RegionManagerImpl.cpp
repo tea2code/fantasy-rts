@@ -85,7 +85,7 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr 
     std::lock_guard<RecursiveLock> lock(locker);
 
     // Seems to result in a dead lock. Further testing is necessary. Currently the block generation speed
-    // is more than fast enough.
+    // is more than fast enough so we will leave it for now.
 //    auto func = [](Point::value zLevel, Point::value sizeX, Point::value sizeY, SharedManagerPtr shared)
 //    {
 //        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
