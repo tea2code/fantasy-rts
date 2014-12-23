@@ -6,10 +6,10 @@
 
 namespace frts
 {
-    class VanillaCommandPlugin : public Plugin
+    class VanillaEventPlugin : public Plugin
     {
     public:
-        VanillaCommandPlugin();
+        VanillaEventPlugin();
 
         ModulePtr getModule(frts::IdPtr id) override;
     };

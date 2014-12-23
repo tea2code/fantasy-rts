@@ -4,8 +4,6 @@
 
 #include <frts/shared>
 
-#include <memory>
-
 
 frts::VanillaCommandPlugin::VanillaCommandPlugin()
 {
