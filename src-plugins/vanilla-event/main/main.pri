@@ -1,5 +1,6 @@
 HEADERS += \
-    main/VanillaEventPlugin.h
+    main/VanillaEventPlugin.h \
+    $$PWD/EventManager.h
 
 SOURCES += \ 
     main/main.cpp \
