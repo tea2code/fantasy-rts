@@ -39,4 +39,5 @@ UNIT_TEST {
 
     include(test/test.pri)
 }
+include(frts/frts.pri)
 include(main/main.pri)

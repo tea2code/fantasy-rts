@@ -1,5 +1,5 @@
-#ifndef FRTS_VANILLACOMMANDPLUGIN_H
-#define FRTS_VANILLACOMMANDPLUGIN_H
+#ifndef FRTS_VANILLAEVENTPLUGIN_H
+#define FRTS_VANILLAEVENTPLUGIN_H
 
 #include <frts/plugin>
 
@@ -15,4 +15,4 @@ namespace frts
     };
 }
 
-#endif // FRTS_VANILLACOMMANDPLUGIN_H
+#endif // FRTS_VANILLAEVENTPLUGIN_H

@@ -1,5 +1,7 @@
 #include "VanillaEventPlugin.h"
 
+#include "impl/EventManagerImpl.h"
+
 #include <frts/shared>
 
 
@@ -12,10 +14,10 @@ frts::ModulePtr frts::VanillaEventPlugin::getModule(frts::IdPtr id)
     assert(id != nullptr);
 
     frts::ModulePtr result = nullptr;
-//    if (id->toString() == CommandFactoryImpl::identifier())
-//    {
-//        result = makeCommandFactory();
-//    }
+    if (id->toString() == EventManagerImpl::identifier())
+    {
+        result = makeEventManager();
+    }
     return result;
 }
 

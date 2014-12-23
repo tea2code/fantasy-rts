@@ -124,7 +124,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     totalTime += (highResTime() - startTotal);
     auto msg = boost::format(R"(findNeighborsTime = %1%ms, loopTime = %2%ms, teleportTime = %3%ms, totalTime = %4%ms, walkTime = %5%ms)")
             % findNeighborsTime.count() % loopTime.count() % teleportTime.count() % totalTime.count() % walkTime.count();
-    shared->getLog()->debug("A*", msg.str());
+    shared->getLog()->debug("frts::A*-Benchmark", msg.str());
     #else
     if (found)
     {
@@ -134,7 +134,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
                 % start->getX() % start->getY() % start->getZ()
                 % goal->getX() % goal->getY() % goal->getZ()
                 % path.size();
-        shared->getLog()->info("A*", msg.str());
+        shared->getLog()->debug("frts::A*", msg.str());
     }
     #endif
 

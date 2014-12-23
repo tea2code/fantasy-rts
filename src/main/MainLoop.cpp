@@ -9,7 +9,7 @@
 #include <memory>
 
 
-const std::string frts::MainLoop::logModule = "MainLoop";
+const std::string frts::MainLoop::logModule = "frts::MainLoop";
 
 frts::MainLoop::MainLoop(Frame::time deltaTime, Frame::time maxFrameTime)
     : deltaTime{deltaTime}, maxFrameTime{maxFrameTime}
@@ -48,7 +48,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
             auto msg = boost::format(msgTemplate)
                     % std::chrono::duration_cast<std::chrono::milliseconds>(frameTime).count()
                     % std::chrono::duration_cast<std::chrono::milliseconds>(maxFrameTime).count();
-            shared->getLog()->warning(logModule, msg.str());
+            shared->getLog()->info(logModule, msg.str());
 
             frameTime = maxFrameTime;
         }

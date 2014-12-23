@@ -27,6 +27,7 @@ utilities:
     - frts/CommandFactory
     - frts/InputHandler
     - frts/ModelFactory
+    - frts/EventManager
     
 configurations:
     - vanilla-command/command.yaml

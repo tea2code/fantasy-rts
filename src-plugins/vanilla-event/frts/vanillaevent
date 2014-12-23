@@ -1,0 +1,6 @@
+#ifndef FRTS_VANILLAEVENT_INCLUDE_H
+#define FRTS_VANILLAEVENT_INCLUDE_H
+
+#include <main/EventManager.h>
+
+#endif // FRTS_VANILLAEVENT_INCLUDE_H
