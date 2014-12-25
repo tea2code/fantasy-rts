@@ -11,6 +11,20 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                              RegionGeneratorPtr regionGenerator)
     : mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, regionGenerator{regionGenerator}
 {
+//    for (int z = 0; z <= std::abs(fastLookupHigh - fastLookupLow); ++z)
+//    {
+//        fastPosBlock.push_back(std::vector<std::vector<WriteableBlockPtr>>());
+//        fastPosBlock.at(z).reserve(mapSizeX);
+//        for (int x = 0; x < mapSizeX; ++x)
+//        {
+//            fastPosBlock.at(z).push_back(std::vector<WriteableBlockPtr>());
+//            fastPosBlock.at(z).at(x).reserve(mapSizeY);
+//            for (int y = 0; y < mapSizeY; ++y)
+//            {
+//                fastPosBlock.at(z).at(x).push_back(nullptr);
+//            }
+//        }
+//    }
 }
 
 std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
@@ -145,20 +159,41 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
     assert(shared != nullptr);
 
     frts::WriteableBlockPtr result = nullptr;
-    auto it = posBlock.find(pos);
-    if (it != posBlock.end())
-    {
-        result = it->second;
-    }
-    else
+
+//    bool useFastLookup = (fastLookupLow <= pos->getZ() && pos->getZ() <= fastLookupHigh);
+//    int fastZ = (pos->getZ() - fastLookupLow);
+//    if (useFastLookup)
+//    {
+//        // No bounds check for better performance.
+//        result = fastPosBlock[fastZ][pos->getX()][pos->getY()];
+//    }
+//    else
+//    {
+        auto it = posBlock.find(pos);
+        if (it != posBlock.end())
+        {
+            result = it->second;
+        }
+//    }
+
+    if (result == nullptr)
     {
         result = regionGenerator->newBlock(pos, shared);
         for (auto& entity : result->getEntities())
         {
             entityPos[entity] = pos;
         }
-        posBlock.insert(std::make_pair(pos, result));
+
+//        if (useFastLookup)
+//        {
+//            fastPosBlock.at(fastZ).at(pos->getX()).at(pos->getY()) = result;
+//        }
+//        else
+//        {
+            posBlock.insert(std::make_pair(pos, result));
+//        }
     }
+
     return result;
 }
 

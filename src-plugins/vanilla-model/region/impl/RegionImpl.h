@@ -7,6 +7,7 @@
 #include <region/WriteableBlock.h>
 
 #include <unordered_map>
+//#include <vector>
 
 
 namespace frts
@@ -31,15 +32,29 @@ namespace frts
         PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
 
     private:
+        using PosBlockVector = std::vector<std::vector<std::vector<WriteableBlockPtr>>>;
         using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr, PointHash, PointEqual>;
         using EntityPosMap = std::unordered_map<EntityPtr, PointPtr>;
 
     private:
         EntityPosMap entityPos;
-        PosBlockMap posBlock;
         Point::value mapSizeX;
         Point::value mapSizeY;
         RegionGeneratorPtr regionGenerator;
+
+        /**
+         * @brief General lookup of blocks.
+         */
+        PosBlockMap posBlock;
+
+//        /**
+//         * @brief Faster lookup of blocks using vectors and the coordinate values in order z, x and y. Works
+//         *        only on certain z-levels.
+//         */
+//        PosBlockVector fastPosBlock;
+
+//        Point::value fastLookupLow = -10;
+//        Point::value fastLookupHigh = 5;
 
     private:
         WriteableBlockPtr getWriteableBlock(PointPtr pos, SharedManagerPtr shared);

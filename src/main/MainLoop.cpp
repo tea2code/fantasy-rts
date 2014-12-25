@@ -36,6 +36,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
     Frame::ticks tick = 0;
 
     std::string msgTemplate = R"(Frame time of %1%ms exceeded max frame time of %2%ms.)";
+    std::string debugMsgTemplate = R"(Frame time of %1%ms exceeded delta frame time of %2%ms.)";
 
     while (!shared->isQuitApplication())
     {
@@ -51,6 +52,14 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
             shared->getLog()->info(logModule, msg.str());
 
             frameTime = maxFrameTime;
+        }
+        // For debugging.
+        else if (frameTime > deltaTime)
+        {
+            auto msg = boost::format(debugMsgTemplate)
+                    % std::chrono::duration_cast<std::chrono::milliseconds>(frameTime).count()
+                    % std::chrono::duration_cast<std::chrono::milliseconds>(deltaTime).count();
+            shared->getLog()->debug(logModule, msg.str());
         }
 
         currentTime = newTime;
