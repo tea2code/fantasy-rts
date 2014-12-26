@@ -1,6 +1,15 @@
 #ifndef FRTS_VANILLAEVENT_INCLUDE_H
 #define FRTS_VANILLAEVENT_INCLUDE_H
 
+#include <main/BooleanEventValue.h>
+#include <main/EventError.h>
+#include <main/EventIds.h>
 #include <main/EventManager.h>
+#include <main/EventValue.h>
+#include <main/EventValueBuilder.h>
+#include <main/FloatEventValue.h>
+#include <main/IdEventValue.h>
+#include <main/IntegerEventValue.h>
+#include <main/StringEventValue.h>
 
 #endif // FRTS_VANILLAEVENT_INCLUDE_H

@@ -19,3 +19,17 @@ The event manager is implemented as a utility module.
 Load using `frts/EventManager` in the `utilities` section of the load file. 
 
 Will identify itself by the name and type `frts::EventManager`. It can be also found in the static class `EventIds`. 
+
+### Event Value
+
+An event value stores data associated with an event. Every event value has a type which allows to identify what underlying variable type is used. The type is also used to create these values using the appropriate make methods in event manager. Following event values are provided others can be registered in the event manager. The ids can be also found in the static class `EventIds`.
+
+- **StringEventValue:** An event value for strings. Has type `frts.vanillaevent.value.string`.
+- **IntegerEventValue:** An event value for integers (implemented as `long`). Has type `frts.vanillaevent.value.integer`.
+- **FloatEventValue:** An event value for floating point numbers (implemented as `double`). Has type `frts.vanillaevent.value.float`.
+- **BooleanEventValue:** An event value for booleans. Has type `frts.vanillaevent.value.boolean`.
+- **IdEventValue:** An event value for ids. Has type `frts.vanillaevent.value.id`.
+
+### Event Value Builder
+
+Builder create event values and can be registered at the factory. They are identified by an ID and it is possible to create variants of event values by registering the same builder with different settings.

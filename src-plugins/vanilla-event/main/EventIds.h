@@ -12,9 +12,34 @@ namespace frts
     class EventIds
     {
     public:
+        static std::string booleanEventValue()
+        {
+            return "frts.vanillaevent.value.boolean";
+        }
+
         static std::string eventManager()
         {
             return "frts::EventManager";
+        }
+
+        static std::string floatEventValue()
+        {
+            return "frts.vanillaevent.value.float";
+        }
+
+        static std::string idEventValue()
+        {
+            return "frts.vanillaevent.value.id";
+        }
+
+        static std::string integerEventValue()
+        {
+            return "frts.vanillaevent.value.integer";
+        }
+
+        static std::string stringEventValue()
+        {
+            return "frts.vanillaevent.value.string";
         }
     };
 }

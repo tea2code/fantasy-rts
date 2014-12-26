@@ -1,6 +1,14 @@
 #include "EventManagerImpl.h"
 
+#include "StringEventValueBuilder.h"
+#include "IntegerEventValueBuilder.h"
+#include "FloatEventValueBuilder.h"
+#include "BooleanEventValueBuilder.h"
+#include "IdEventValueBuilder.h"
+#include <main/EventError.h>
 #include <main/EventIds.h>
+
+#include <utility>
 
 
 frts::EventManagerImpl::EventManagerImpl()
@@ -44,7 +52,28 @@ int frts::EventManagerImpl::getVersion() const
 
 bool frts::EventManagerImpl::init(SharedManagerPtr shared)
 {
-    // TODO Implement frts::EventManagerImpl::init().
+    assert(shared != nullptr);
+
+    // Event values:
+    // String.
+    auto eventValueType = shared->makeId(EventIds::stringEventValue());
+    registerEventValueBuilder(eventValueType, makeStringEventValueBuilder(eventValueType));
+
+    // Integer.
+    eventValueType = shared->makeId(EventIds::integerEventValue());
+    registerEventValueBuilder(eventValueType, makeIntegerEventValueBuilder(eventValueType));
+
+    // Float.
+    eventValueType = shared->makeId(EventIds::floatEventValue());
+    registerEventValueBuilder(eventValueType, makeFloatEventValueBuilder(eventValueType));
+
+    // Boolean.
+    eventValueType = shared->makeId(EventIds::booleanEventValue());
+    registerEventValueBuilder(eventValueType, makeBooleanEventValueBuilder(eventValueType));
+
+    // Id.
+    eventValueType = shared->makeId(EventIds::idEventValue());
+    registerEventValueBuilder(eventValueType, makeIdEventValueBuilder(eventValueType));
 
     isInit = true;
     return false;
@@ -60,6 +89,23 @@ bool frts::EventManagerImpl::isPreInitialized() const
     return isPreInit;
 }
 
+frts::EventValuePtr frts::EventManagerImpl::makeEventValue(IdPtr type, SharedManagerPtr shared)
+{
+    assert(type != nullptr);
+    assert(shared != nullptr);
+
+    auto it = eventValueBuilders.find(type);
+    if(it != eventValueBuilders.end())
+    {
+        return it->second->build(shared);
+    }
+    else
+    {
+        auto msg = boost::format(R"(%2%: No event value builder is registered for ID "%1%".)") % type->toString() % getName();
+        throw UnknownEventValueBuilderError(msg.str());
+    }
+}
+
 void frts::EventManagerImpl::parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr)
 {}
 
@@ -67,6 +113,14 @@ bool frts::EventManagerImpl::preInit(SharedManagerPtr)
 {
     isPreInit = true;
     return false;
+}
+
+void frts::EventManagerImpl::registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder)
+{
+    assert(type != nullptr);
+    assert(builder != nullptr);
+
+    eventValueBuilders.insert(std::make_pair(type, builder));
 }
 
 void frts::EventManagerImpl::validateData(SharedManagerPtr)

@@ -10,6 +10,7 @@
 #include <boost/format.hpp>
 
 #include <cassert>
+#include <utility>
 
 
 frts::CommandFactoryImpl::CommandFactoryImpl()
@@ -158,7 +159,7 @@ void frts::CommandFactoryImpl::registerCommandBuilder(IdPtr builderId, CommandBu
     assert(builderId != nullptr);
     assert(builder != nullptr);
 
-    commandBuilders[builderId] = builder;
+    commandBuilders.insert(std::make_pair(builderId, builder));
 }
 
 void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)

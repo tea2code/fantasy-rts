@@ -1,6 +1,8 @@
 #ifndef FRTS_EVENTMANAGER
 #define FRTS_EVENTMANAGER
 
+#include "EventValue.h"
+#include "EventValueBuilder.h"
 #include <frts/shared>
 #include <frts/module>
 
@@ -25,8 +27,28 @@ namespace frts
     public:
         virtual ~EventManager() {}
 
+        /**
+         * @brief Create a new event value.
+         * @param type The event value type.
+         * @param shared The shared manager.
+         * @return The event value.
+         */
+        virtual EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) = 0;
 
+        /**
+         * @brief Register an event value builder.
+         * @param type The event value type for which this builder is registered.
+         * @param builder The event value builder.
+         */
+        virtual void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) = 0;
     };
+
+    template<class EventValue>
+    inline std::shared_ptr<EventValue> makeEventValue(EventManagerPtr eventManager, const std::string& type, SharedManagerPtr shared)
+    {
+        auto typeId = shared->makeId(type);
+        return std::static_pointer_cast<EventValue>(eventManager->makeEventValue(typeId, shared));
+    }
 }
 
 #endif // FRTS_EVENTMANAGER

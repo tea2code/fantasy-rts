@@ -3,6 +3,8 @@
 
 #include <main/EventManager.h>
 
+#include <unordered_map>
+
 
 namespace frts
 {
@@ -36,7 +38,15 @@ namespace frts
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
+        EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
+        void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) override;
+
     private:
+        using EventValueBuilderMap = std::unordered_map<IdPtr, EventValueBuilderPtr, IdHash, IdEqual>;
+
+    private:
+        EventValueBuilderMap eventValueBuilders;
+
         bool isInit = false;
         bool isPreInit = false;
     };
