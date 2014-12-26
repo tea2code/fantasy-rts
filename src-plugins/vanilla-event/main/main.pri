@@ -22,7 +22,9 @@ HEADERS += \
     $$PWD/impl/BooleanEventValueBuilder.h \
     $$PWD/impl/FloatEventValueBuilder.h \
     $$PWD/impl/IdEventValueBuilder.h \
-    $$PWD/impl/IntegerEventValueBuilder.h
+    $$PWD/impl/IntegerEventValueBuilder.h \
+    $$PWD/Event.h \
+    $$PWD/impl/EventImpl.h
 
 SOURCES += \ 
     main/main.cpp \
@@ -37,4 +39,5 @@ SOURCES += \
     $$PWD/impl/BooleanEventValueBuilder.cpp \
     $$PWD/impl/FloatEventValueBuilder.cpp \
     $$PWD/impl/IdEventValueBuilder.cpp \
-    $$PWD/impl/IntegerEventValueBuilder.cpp
+    $$PWD/impl/IntegerEventValueBuilder.cpp \
+    $$PWD/impl/EventImpl.cpp

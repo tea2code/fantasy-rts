@@ -12,6 +12,10 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ## Interfaces
 
+### Event
+
+Events are simple containers which consists of their type id and a couple of event values. The type id is the same as the one used in the `subscribe()` method of the event manager. An observer can check this id to decide what to do with an event. 
+
 ### Event Manager
 
 The event manager is implemented as a utility module. 

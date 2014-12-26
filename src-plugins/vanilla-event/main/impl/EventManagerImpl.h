@@ -38,6 +38,7 @@ namespace frts
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
+        EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) override;
         EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
         void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) override;
 

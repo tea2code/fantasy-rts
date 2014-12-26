@@ -8,6 +8,15 @@
 namespace frts
 {
     /**
+     * @brief Thrown if a event value is not found.
+     */
+    class EventValueNotFoundError : public std::runtime_error
+    {
+    public:
+        EventValueNotFoundError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
+    /**
      * @brief Thrown if a event value builder is unknown/not registered.
      */
     class UnknownEventValueBuilderError : public std::runtime_error

@@ -1,5 +1,6 @@
 #include "EventManagerImpl.h"
 
+#include "EventImpl.h"
 #include "StringEventValueBuilder.h"
 #include "IntegerEventValueBuilder.h"
 #include "FloatEventValueBuilder.h"
@@ -87,6 +88,13 @@ bool frts::EventManagerImpl::isInitialized() const
 bool frts::EventManagerImpl::isPreInitialized() const
 {
     return isPreInit;
+}
+
+frts::EventPtr frts::EventManagerImpl::makeEvent(IdPtr type, SharedManagerPtr)
+{
+    assert(type != nullptr);
+
+    return frts::makeEvent(type);
 }
 
 frts::EventValuePtr frts::EventManagerImpl::makeEventValue(IdPtr type, SharedManagerPtr shared)
