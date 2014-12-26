@@ -12,6 +12,9 @@
 #include <entity/impl/MovableBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
 #include <entity/impl/TeleportBuilder.h>
+#include <event/ModelEventIds.h>
+#include <event/impl/EntityEventValueBuilder.h>
+#include <event/impl/PointEventValueBuilder.h>
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
@@ -27,6 +30,7 @@
 
 #include <frts/configuration>
 #include <frts/shared>
+#include <frts/vanillaevent>
 
 #include <boost/format.hpp>
 
@@ -131,6 +135,8 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     }
 
     // Components:
+    shared->getLog()->info(getName(), "ModelFactory->init(): Components.");
+
     // BlockedBy.
     auto blockedById = shared->makeId(ComponentIds::blockedBy());
     auto componentBuilder = makeBlockedByBuilder();
@@ -172,51 +178,82 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     registerComponentBuilder(teleportId, componentBuilder);
 
     // Map parser.
+    shared->getLog()->info(getName(), "ModelFactory->init(): MapParser.");
     for (auto& mapParser : mapParsers)
     {
         mapParser.second->init(shared);
     }
 
     // Distance algorithm:
+    shared->getLog()->info(getName(), "ModelFactory->init(): DistanceAlgorithm.");
     if (distanceAlgorithm == nullptr)
     {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Default distance algorithm.");
+
         // Use a scale slightly greater 1.0 to tie break between similar costing positions.
         distanceAlgorithm = makeManhattanDistance(1.01);
     }
+    else
+    {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Custom distance algorithm.");
+    }
 
     // Path finder:
+    shared->getLog()->info(getName(), "ModelFactory->init(): PathFinder.");
     if (pathFinder == nullptr)
     {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Default path finder.");
         pathFinder = makeAStar(distanceAlgorithm, teleportId);
+    }
+    else
+    {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Custom path finder.");
     }
 
     // Region generator.
+    shared->getLog()->info(getName(), "ModelFactory->init(): RegionGenerator.");
     assert(regionGenerator != nullptr);
     regionGenerator->init(shared);
 
     // Region Manager:
+    shared->getLog()->info(getName(), "ModelFactory->init(): RegionManager.");
     auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto hasResourceTyp = shared->makeId(ComponentIds::hasResource());
     auto isResourceType = shared->makeId(ComponentIds::isResource());
 
     if (region == nullptr)
     {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Default region.");
         region = makeRegion(modelData->getMapSizeX(), modelData->getMapSizeY(),
                             regionGenerator);
+    }
+    else
+    {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Custom region.");
     }
 
     if (resourceEntityManager == nullptr)
     {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Default resource entity manager.");
         resourceEntityManager = makeLockableHasResourceManager(hasResourceTyp,
                                                                region,
                                                                distanceAlgorithm);
     }
+    else
+    {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Custom resource entity manager.");
+    }
 
     if (resourceManager == nullptr)
     {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Default resource manager.");
         resourceManager = makeLockableIsResourceManager(isResourceType,
                                                         region,
                                                         distanceAlgorithm);
+    }
+    else
+    {
+        shared->getLog()->info(getName(), "ModelFactory->init(): Custom resource manager.");
     }
 
     // Check if everything is set.
@@ -239,6 +276,22 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
             % regionManager->getTypeVersion() % regionManager->getVersion();
     shared->getLog()->warning(getName(), msg.str());
 
+    // Event values.
+#ifndef UNIT_TEST
+    shared->getLog()->info(getName(), "ModelFactory->init(): EventValue.");
+    auto eventManager = getUtility<EventManager>(shared, EventIds::eventManager());
+
+    auto eventValueType = shared->makeId(ModelEventIds::entityEventValue());
+    auto eventValueBuilder = makeEntityEventValueBuilder(eventValueType);
+    eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
+
+    eventValueType = shared->makeId(ModelEventIds::pointEventValue());
+    eventValueBuilder = makePointEventValueBuilder(eventValueType);
+    eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
+#endif
+
+    // Finished.
+    shared->getLog()->info(getName(), "ModelFactory->init(): Finished.");
     isInit = true;
     return false;
 }
@@ -479,7 +532,7 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     regionGenerator->validateData(shared);
 }
 
-void frts::ModelFactoryImpl::validateModules(SharedManagerPtr)
+void frts::ModelFactoryImpl::validateModules(SharedManagerPtr shared)
 {
-    // Everything is ok.
+    validateUtility(getName(), EventIds::eventManager(), 1, shared);
 }

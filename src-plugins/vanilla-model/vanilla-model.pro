@@ -27,6 +27,7 @@ INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../../src/dependency/easyloggingpp/src
 INCLUDEPATH += $$PWD/../../src-helper/
+INCLUDEPATH += $$PWD/../vanilla-event
 
 # Headers and sources.
 UNIT_TEST {
@@ -44,9 +45,15 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(entity/entity.pri)
+include(event/event.pri)
 include(frts/frts.pri)
 include(main/main.pri)
 include(pathfinding/pathfinding.pri)
 include(region/region.pri)
 include(regiongenerator/regiongenerator.pri)
 include(resource/resource.pri)
+
+# Necessary for event.
+HEADERS += \
+    $$PWD/../vanilla-event/main/impl/BaseEventValue.h \
+    $$PWD/../vanilla-event/main/impl/BaseEventValueBuilder.h \

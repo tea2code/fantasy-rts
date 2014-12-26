@@ -4,7 +4,8 @@ SOURCES += \
     test/TestEntity.cpp \
     test/TestResource.cpp \
     $$PWD/TestPathfinding.cpp \
-    $$PWD/TestOpenSimplexNoise.cpp
+    $$PWD/TestOpenSimplexNoise.cpp \
+    $$PWD/TestEvent.cpp
     
 
 HEADERS += \

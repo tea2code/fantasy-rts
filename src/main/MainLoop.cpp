@@ -35,6 +35,8 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
     Frame::time accumulator = fromMilliseconds(0);
     Frame::ticks tick = 0;
 
+    Frame::time deltaTimeDebug = deltaTime + fromMilliseconds(1);
+
     std::string msgTemplate = R"(Frame time of %1%ms exceeded max frame time of %2%ms.)";
     std::string debugMsgTemplate = R"(Frame time of %1%ms exceeded delta frame time of %2%ms.)";
 
@@ -54,7 +56,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
             frameTime = maxFrameTime;
         }
         // For debugging.
-        else if (frameTime > deltaTime)
+        else if (frameTime > deltaTimeDebug)
         {
             auto msg = boost::format(debugMsgTemplate)
                     % std::chrono::duration_cast<std::chrono::milliseconds>(frameTime).count()

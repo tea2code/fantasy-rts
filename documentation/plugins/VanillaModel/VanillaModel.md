@@ -41,6 +41,13 @@ Components are created using builders which can be registered at the model facto
 
 Entities represent all interactable objects in the world. They consist of components representing their abilities, attributes...
 
+### Event
+
+Some model related event values for **VanillaEvent** are added to the event manager:
+
+- **EntityEventValue:** An event value for entities. Has type `frts.vanillamodel.event.value.entity`.
+- **PointEventValue:** An event value for points. Has type `frts.vanillamodel.event.value.point`.
+
 ### Model Data
 
 Model related meta settings like the size of the map are stored in this data value. 
