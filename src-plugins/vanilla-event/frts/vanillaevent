@@ -2,9 +2,11 @@
 #define FRTS_VANILLAEVENT_INCLUDE_H
 
 #include <main/BooleanEventValue.h>
+#include <main/Event.h>
 #include <main/EventError.h>
 #include <main/EventIds.h>
 #include <main/EventManager.h>
+#include <main/EventObserver.h>
 #include <main/EventValue.h>
 #include <main/EventValueBuilder.h>
 #include <main/FloatEventValue.h>

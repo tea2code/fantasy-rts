@@ -9,6 +9,7 @@
 #include <main/EventError.h>
 #include <main/EventIds.h>
 
+#include <algorithm>
 #include <utility>
 
 
@@ -123,12 +124,55 @@ bool frts::EventManagerImpl::preInit(SharedManagerPtr)
     return false;
 }
 
+void frts::EventManagerImpl::raise(EventPtr event)
+{
+    auto it = eventObservers.find(event->getType());
+    if (it != eventObservers.end())
+    {
+        auto& observers = it->second;
+        std::for_each(observers.begin(), observers.end(), [&](auto& observer){ observer->notify(event); });
+    }
+}
+
 void frts::EventManagerImpl::registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder)
 {
     assert(type != nullptr);
     assert(builder != nullptr);
 
     eventValueBuilders.insert(std::make_pair(type, builder));
+}
+
+void frts::EventManagerImpl::subscribe(EventObserverPtr observer, IdPtr type)
+{
+    eventObservers[type].push_back(observer);
+}
+
+void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer)
+{
+    for (auto eventObserver : eventObservers)
+    {
+        unsubscribe(observer, eventObserver.first);
+    }
+}
+
+void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer, IdPtr type)
+{
+    auto eoIt = eventObservers.find(type);
+    if (eoIt != eventObservers.end())
+    {
+        auto& observers = eoIt->second;
+        for (auto it = observers.begin(); it != observers.end();)
+        {
+            if(*it == observer)
+            {
+                it = observers.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
 }
 
 void frts::EventManagerImpl::validateData(SharedManagerPtr)

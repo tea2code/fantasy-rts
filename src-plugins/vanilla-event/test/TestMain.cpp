@@ -2,6 +2,7 @@
 
 #include <main/EventError.h>
 #include <main/EventIds.h>
+#include <main/EventObserver.h>
 #include <main/impl/EventManagerImpl.h>
 #include <main/StringEventValue.h>
 #include <main/IntegerEventValue.h>
@@ -14,6 +15,70 @@
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
 
+
+namespace test
+{
+    class TestObserver : public frts::EventObserver
+    {
+    public:
+        void notify(frts::EventPtr event) override
+        {
+            lastEvent = event->getType();
+        }
+
+        frts::IdPtr lastEvent;
+    };
+}
+
+
+TEST_CASE("EventObserver.", "[main]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto eventManager = frts::makeEventManager();
+    eventManager->init(shared);
+
+    auto eventId1 = shared->makeId("test.event.1");
+    auto event1 = eventManager->makeEvent(eventId1, shared);
+
+    auto eventId2 = shared->makeId("test.event.2");
+    auto event2 = eventManager->makeEvent(eventId2, shared);
+
+    auto eventId3 = shared->makeId("test.event.3");
+    auto event3 = eventManager->makeEvent(eventId3, shared);
+
+    auto observer = std::make_shared<test::TestObserver>();
+    eventManager->subscribe(observer, eventId1);
+    eventManager->subscribe(observer, eventId3);
+    REQUIRE(observer->lastEvent == nullptr);
+
+    eventManager->raise(event1);
+    REQUIRE(observer->lastEvent == eventId1);
+
+    eventManager->raise(event2);
+    REQUIRE(observer->lastEvent == eventId1);
+
+    eventManager->unsubscribe(observer);
+    eventManager->raise(event3);
+    REQUIRE(observer->lastEvent == eventId1);
+
+    eventManager->subscribe(observer, eventId1);
+    eventManager->subscribe(observer, eventId3);
+
+    eventManager->raise(event3);
+    REQUIRE(observer->lastEvent == eventId3);
+
+    eventManager->raise(event1);
+    REQUIRE(observer->lastEvent == eventId1);
+
+    eventManager->raise(event3);
+    REQUIRE(observer->lastEvent == eventId3);
+
+    eventManager->unsubscribe(observer, eventId1);
+    eventManager->raise(event1);
+    REQUIRE(observer->lastEvent == eventId3);
+}
 
 TEST_CASE("Event.", "[main]")
 {

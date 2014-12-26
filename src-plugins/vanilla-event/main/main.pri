@@ -24,7 +24,8 @@ HEADERS += \
     $$PWD/impl/IdEventValueBuilder.h \
     $$PWD/impl/IntegerEventValueBuilder.h \
     $$PWD/Event.h \
-    $$PWD/impl/EventImpl.h
+    $$PWD/impl/EventImpl.h \
+    $$PWD/EventObserver.h
 
 SOURCES += \ 
     main/main.cpp \

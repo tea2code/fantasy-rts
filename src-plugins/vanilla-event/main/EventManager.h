@@ -2,6 +2,7 @@
 #define FRTS_EVENTMANAGER
 
 #include "Event.h"
+#include "EventObserver.h"
 #include "EventValue.h"
 #include "EventValueBuilder.h"
 #include <frts/shared>
@@ -45,11 +46,38 @@ namespace frts
         virtual EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) = 0;
 
         /**
+         * @brief Raise a new event. Every event observer which has registered to this event
+         *        type will be notified.
+         * @param event The event.
+         */
+        virtual void raise(EventPtr event) = 0;
+
+        /**
          * @brief Register an event value builder.
          * @param type The event value type for which this builder is registered.
          * @param builder The event value builder.
          */
         virtual void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) = 0;
+
+        /**
+         * @brief Subscribe to given event type.
+         * @param observer The event observer.
+         * @param type The event type.
+         */
+        virtual void subscribe(EventObserverPtr observer, IdPtr type) = 0;
+
+        /**
+         * @brief Unsubcribe from all events.
+         * @param observer The observer.
+         */
+        virtual void unsubscribe(EventObserverPtr observer) = 0;
+
+        /**
+         * @brief Unsubcribe from given event type.
+         * @param observer The observer.
+         * @param type The type.
+         */
+        virtual void unsubscribe(EventObserverPtr observer, IdPtr type) = 0;
     };
 
     /**

@@ -24,6 +24,10 @@ Load using `frts/EventManager` in the `utilities` section of the load file.
 
 Will identify itself by the name and type `frts::EventManager`. It can be also found in the static class `EventIds`. 
 
+### Event Observer
+
+Any class which want to register to any event must implement the event observer interface. It has only one method  `notify()` which is called if an event has been raised. 
+
 ### Event Value
 
 An event value stores data associated with an event. Every event value has a type which allows to identify what underlying variable type is used. The type is also used to create these values using the appropriate make methods in event manager. Following event values are provided others can be registered in the event manager. The ids can be also found in the static class `EventIds`.

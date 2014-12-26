@@ -40,13 +40,19 @@ namespace frts
 
         EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) override;
         EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
+        void raise(EventPtr event) override;
         void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) override;
+        void subscribe(EventObserverPtr observer, IdPtr type) override;
+        void unsubscribe(EventObserverPtr observer) override;
+        void unsubscribe(EventObserverPtr observer, IdPtr type) override;
 
     private:
         using EventValueBuilderMap = std::unordered_map<IdPtr, EventValueBuilderPtr, IdHash, IdEqual>;
+        using EventObserverMap = std::unordered_map<IdPtr, std::vector<EventObserverPtr>, IdHash, IdEqual>;
 
     private:
         EventValueBuilderMap eventValueBuilders;
+        EventObserverMap eventObservers;
 
         bool isInit = false;
         bool isPreInit = false;
