@@ -1,7 +1,7 @@
 #include "VanillaSdl2Plugin.h"
 
 #include <graphic/Sdl2Renderer.h>
-#include <input/EventHandler.h>
+#include <input/Sdl2EventHandler.h>
 #include <input/impl/InputHandlerImpl.h>
 
 #include <frts/shared>
@@ -13,13 +13,13 @@ frts::VanillaSdl2Plugin::VanillaSdl2Plugin()
 {
 }
 
-frts::EventHandlerPtr frts::VanillaSdl2Plugin::getEventHandler()
+frts::Sdl2EventHandlerPtr frts::VanillaSdl2Plugin::getSdl2EventHandler()
 {
-    if (eventHandler == nullptr)
+    if (Sdl2EventHandler == nullptr)
     {
-        eventHandler = makeEventHandler();
+        Sdl2EventHandler = makeSdl2EventHandler();
     }
-    return eventHandler;
+    return Sdl2EventHandler;
 }
 
 frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
@@ -31,13 +31,13 @@ frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
     {
         result = makeSdl2Renderer();
     }
-    else if (id->toString() == EventHandler::identifier())
+    else if (id->toString() == Sdl2EventHandler::identifier())
     {
-        result = getEventHandler();
+        result = getSdl2EventHandler();
     }
     else if (id->toString() == InputHandlerImpl::identifier())
     {
-        result = makeInputHandler(getEventHandler());
+        result = makeInputHandler(getSdl2EventHandler());
     }
     return result;
 }

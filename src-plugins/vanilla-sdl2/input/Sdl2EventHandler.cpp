@@ -1,4 +1,4 @@
-#include "EventHandler.h"
+#include "Sdl2EventHandler.h"
 
 #include <graphic/impl/GraphicUtility.h>
 #include <graphic/GraphicData.h>
@@ -7,26 +7,26 @@
 #include <frts/vanillamodel>
 
 
-frts::EventHandler::EventHandler()
-    : BaseTickable("frts::EventHandler", 1, "frts::EventHandler", 1)
+frts::Sdl2EventHandler::Sdl2EventHandler()
+    : BaseTickable("frts::Sdl2EventHandler", 1, "frts::Sdl2EventHandler", 1)
 {
 }
 
-void frts::EventHandler::checkRequiredData(SharedManagerPtr shared)
+void frts::Sdl2EventHandler::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
     validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
 }
 
-void frts::EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
+void frts::Sdl2EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
 {
     assert(commandId != nullptr);
 
     keyCommands[key] = commandId;
 }
 
-void frts::EventHandler::tick(SharedManagerPtr shared)
+void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
@@ -73,7 +73,7 @@ void frts::EventHandler::tick(SharedManagerPtr shared)
     }
 }
 
-void frts::EventHandler::validateModules(frts::SharedManagerPtr shared)
+void frts::Sdl2EventHandler::validateModules(frts::SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 

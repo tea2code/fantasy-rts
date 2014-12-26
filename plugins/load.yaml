@@ -20,7 +20,7 @@ renderModules:
     - frts/ModelReseter
     
 updateModules:
-    - frts/EventHandler
+    - frts/Sdl2EventHandler
     - frts/VanillaDemo
     
 utilities:

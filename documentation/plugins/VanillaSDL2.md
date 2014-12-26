@@ -37,9 +37,9 @@ For tests it is necessary to copy the SDL2_image library to the executable:
 
 The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. 
 
-Load using `frts/EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
+Load using `frts/Sdl2EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
 
-Will identify itself by the name and type `frts::EventHandler`.
+Will identify itself by the name and type `frts::Sdl2EventHandler`.
 
 ### Input Handler
 

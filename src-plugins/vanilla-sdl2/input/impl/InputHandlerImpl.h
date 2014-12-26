@@ -1,7 +1,7 @@
 #ifndef FRTS_INPUTHANDLERIMPL_H
 #define FRTS_INPUTHANDLERIMPL_H
 
-#include <input/EventHandler.h>
+#include <input/Sdl2EventHandler.h>
 #include <input/InputHandler.h>
 
 #include <SDL2/SDL.h>
@@ -15,9 +15,9 @@ namespace frts
     {
     public:
         /**
-         * @param eventHandler The event handler.
+         * @param Sdl2EventHandler The event handler.
          */
-        InputHandlerImpl(EventHandlerPtr eventHandler);
+        InputHandlerImpl(Sdl2EventHandlerPtr Sdl2EventHandler);
 
         /**
          * @brief The identifier.
@@ -46,7 +46,7 @@ namespace frts
 
     private:
         std::vector<ConfigNodePtr> configNodes;
-        EventHandlerPtr eventHandler;
+        Sdl2EventHandlerPtr Sdl2EventHandler;
 
         bool isInit = false;
         bool isPreInit = false;
@@ -54,14 +54,14 @@ namespace frts
 
     /**
      * @brief Create new InputHandler.
-     * @param eventHandler The event handler.
+     * @param Sdl2EventHandler The event handler.
      * @return The module.
      */
-    inline ModulePtr makeInputHandler(EventHandlerPtr eventHandler)
+    inline ModulePtr makeInputHandler(Sdl2EventHandlerPtr Sdl2EventHandler)
     {
-        assert(eventHandler != nullptr);
+        assert(Sdl2EventHandler != nullptr);
 
-        return std::make_shared<InputHandlerImpl>(eventHandler);
+        return std::make_shared<InputHandlerImpl>(Sdl2EventHandler);
     }
 }
 

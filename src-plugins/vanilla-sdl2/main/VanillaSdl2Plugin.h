@@ -1,7 +1,7 @@
 #ifndef FRTS_VANILLASDL2PLUGIN_H
 #define FRTS_VANILLASDL2PLUGIN_H
 
-#include <input/EventHandler.h>
+#include <input/Sdl2EventHandler.h>
 
 #include <frts/plugin>
 
@@ -18,10 +18,10 @@ namespace frts
         ModulePtr getModule(frts::IdPtr id) override;
 
     private:
-        EventHandlerPtr eventHandler;
+        Sdl2EventHandlerPtr Sdl2EventHandler;
 
     private:
-        EventHandlerPtr getEventHandler();
+        Sdl2EventHandlerPtr getSdl2EventHandler();
     };
 }
 

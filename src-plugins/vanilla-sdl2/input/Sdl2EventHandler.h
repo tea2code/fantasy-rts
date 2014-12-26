@@ -1,5 +1,5 @@
-#ifndef FRTS_EVENTHANDLER_H
-#define FRTS_EVENTHANDLER_H
+#ifndef FRTS_SDL2Sdl2EventHandler_H
+#define FRTS_SDL2Sdl2EventHandler_H
 
 #include <frts/BaseTickable.h>
 
@@ -11,17 +11,17 @@
 
 namespace frts
 {
-    class EventHandler;
+    class Sdl2EventHandler;
 
     /**
-     * @brief Pointer to EventHandler.
+     * @brief Pointer to Sdl2EventHandler.
      */
-    using EventHandlerPtr = std::shared_ptr<EventHandler>;
+    using Sdl2EventHandlerPtr = std::shared_ptr<Sdl2EventHandler>;
 
-    class EventHandler : public BaseTickable
+    class Sdl2EventHandler : public BaseTickable
     {
     public:
-        EventHandler();
+        Sdl2EventHandler();
 
         /**
          * @brief The identifier.
@@ -29,7 +29,7 @@ namespace frts
          */
         static std::string identifier()
         {
-            return "frts/EventHandler";
+            return "frts/Sdl2EventHandler";
         }
 
         void checkRequiredData(SharedManagerPtr shared) override;
@@ -48,13 +48,13 @@ namespace frts
     };
 
     /**
-     * @brief Create new EventHandler.
+     * @brief Create new Sdl2EventHandler.
      * @return The module.
      */
-    inline EventHandlerPtr makeEventHandler()
+    inline Sdl2EventHandlerPtr makeSdl2EventHandler()
     {
-        return std::make_shared<EventHandler>();
+        return std::make_shared<Sdl2EventHandler>();
     }
 }
 
-#endif // FRTS_EVENTHANDLER_H
+#endif // FRTS_SDL2Sdl2EventHandler_H

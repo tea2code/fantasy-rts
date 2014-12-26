@@ -7,8 +7,8 @@
 #include <frts/configuration>
 
 
-frts::InputHandlerImpl::InputHandlerImpl(EventHandlerPtr eventHandler)
-    : eventHandler{eventHandler}
+frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr Sdl2EventHandler)
+    : Sdl2EventHandler{Sdl2EventHandler}
 {
 }
 
@@ -62,7 +62,7 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
         {
             auto key = keyNode->getString("key");
             auto id = shared->makeId(keyNode->getString("command"));
-            eventHandler->registerCommand(stringToSdl2Key(key), id);
+            Sdl2EventHandler->registerCommand(stringToSdl2Key(key), id);
         }
     }
     configNodes.clear();
@@ -82,7 +82,7 @@ bool frts::InputHandlerImpl::isPreInitialized() const
 
 void frts::InputHandlerImpl::registerCommand(Key key, IdPtr commandId)
 {
-    eventHandler->registerCommand(keyToSdl2Key(key), commandId);
+    Sdl2EventHandler->registerCommand(keyToSdl2Key(key), commandId);
 }
 
 void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)
@@ -109,5 +109,5 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
-    validateTickable(getName(), "frts::EventHandler", 1, shared);
+    validateTickable(getName(), "frts::Sdl2EventHandler", 1, shared);
 }
