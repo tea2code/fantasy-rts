@@ -29,6 +29,7 @@ INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../vanilla-model
 INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-sdl2
+INCLUDEPATH += $$PWD/../vanilla-event
 
 # Headers and sources.
 # Important this plugin needs a block implementation and takes the one provided

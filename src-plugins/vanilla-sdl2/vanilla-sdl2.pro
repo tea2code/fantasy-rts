@@ -30,6 +30,7 @@ INCLUDEPATH += $$PWD/dependency/SDL2/include
 INCLUDEPATH += $$PWD/dependency/SDL2_image/i686-w64-mingw32/include
 INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-model
+INCLUDEPATH += $$PWD/../vanilla-event
 
 # Libs.
 LIBS += -lmingw32 -mwindows -mconsole
