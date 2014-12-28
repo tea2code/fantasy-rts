@@ -23,12 +23,51 @@ namespace frts
     class GraphicData : public DataValue
     {
     public:
+        /**
+         * @brief Simple definition of a pixel value.
+         */
+        using Pixel = unsigned int;
+
+        /**
+         * @brief The screen rectangle describes a rectangle in the window.
+         */
+        struct ScreenArea
+        {
+            ScreenArea(Pixel x = 0, Pixel y = 0, Pixel width = 0, Pixel height = 0)
+                : x{x}, y{y}, width{width}, height{height}
+            {}
+
+            Pixel x = 0;
+            Pixel y = 0;
+
+            Pixel width = 0;
+            Pixel height = 0;
+
+            /**
+             * @brief Checks if a pixel coordinate is inside the rectangle.
+             * @param pixelX The x-component of the pixel coordinate.
+             * @param pixelY The y-component of the pixel coordinate.
+             * @return True if the pixel is inside the rectangle else false.
+             */
+            bool isPixelInRect(Pixel pixelX, Pixel pixelY)
+            {
+                return x <= pixelX && pixelX <= x + width &&
+                       y <= pixelY && pixelY <= y + height;
+            }
+        };
+
+    public:
         virtual ~GraphicData() {}
 
         /**
          * @return The cursor entity.
          */
         virtual EntityPtr getCursor() const = 0;
+
+        /**
+         * @return The map rectangle in the window.
+         */
+        virtual ScreenArea getmapArea() const = 0;
 
         /**
          * @return The maximum frame rate.
@@ -43,17 +82,17 @@ namespace frts
         /**
          * @return The screen height in pixel.
          */
-        virtual unsigned int getScreenHeight() const = 0;
+        virtual Pixel getScreenHeight() const = 0;
 
         /**
          * @return The screen offset step width in x direction in pixel.
          */
-        virtual unsigned int getScreenOffsetStepX() const = 0;
+        virtual Pixel getScreenOffsetStepX() const = 0;
 
         /**
          * @return The screen offset step width in y direction in pixel.
          */
-        virtual unsigned int getScreenOffsetStepY() const = 0;
+        virtual Pixel getScreenOffsetStepY() const = 0;
 
         /**
          * @return The current screen offset in x direction in number tiles.
@@ -73,17 +112,27 @@ namespace frts
         /**
          * @return The screen width in pixel.
          */
-        virtual unsigned int getScreenWidth() const = 0;
+        virtual Pixel getScreenWidth() const = 0;
+
+        /**
+         * @return The sidebar rectangle in the window.
+         */
+        virtual ScreenArea getsidebarArea() const = 0;
+
+        /**
+         * @return The sidebar width in pixel.
+         */
+        virtual Pixel getSidebarWidth() const = 0;
 
         /**
          * @return The tile height in pixel.
          */
-        virtual unsigned int getTileHeight() const = 0;
+        virtual Pixel getTileHeight() const = 0;
 
         /**
          * @return The tile width in pixel.
          */
-        virtual unsigned int getTileWidth() const = 0;
+        virtual Pixel getTileWidth() const = 0;
 
         /**
          * @return The current z-level.
@@ -100,6 +149,12 @@ namespace frts
          * @param cursor The cursor.
          */
         virtual void setCursor(EntityPtr cursor) = 0;
+
+        /**
+         * @brief Set map rectangle in the window.
+         * @param mapArea The map rectangle.
+         */
+        virtual void setmapArea(ScreenArea mapArea) = 0;
 
         /**
          * @brief Set the maximum frame rate.
@@ -123,19 +178,19 @@ namespace frts
          * @brief Set the screen height.
          * @param screenHeight The screen height.
          */
-        virtual void setScreenHeight(unsigned int screenHeight) = 0;
+        virtual void setScreenHeight(Pixel screenHeight) = 0;
 
         /**
          * @brief Set the screen offset step width in x direction.
          * @param offset The offset.
          */
-        virtual void setScreenOffsetStepX(unsigned int offsetStep) = 0;
+        virtual void setScreenOffsetStepX(Pixel offsetStep) = 0;
 
         /**
          * @brief Set the screen offset step width in y direction.
          * @param offset The offset.
          */
-        virtual void setScreenOffsetStepY(unsigned int offsetStep) = 0;
+        virtual void setScreenOffsetStepY(Pixel offsetStep) = 0;
 
         /**
          * @brief Set the current screen offset in x direction.
@@ -159,19 +214,31 @@ namespace frts
          * @brief Set the screen width.
          * @param screenWidth The screen width.
          */
-        virtual void setScreenWidth(unsigned int screenWidth) = 0;
+        virtual void setScreenWidth(Pixel screenWidth) = 0;
+
+        /**
+         * @brief Set sidebar rectangle in the window.
+         * @param mapArea The sidebar rectangle.
+         */
+        virtual void setsidebarArea(ScreenArea sidebarArea) = 0;
+
+        /**
+         * @brief Set the sidebar width.
+         * @param sidebarWidth The sidebar width.
+         */
+        virtual void setSidebarWidth(Pixel sidebarWidth) = 0;
 
         /**
          * @brief Set the tile height.
          * @param tileHeight The tile height.
          */
-        virtual void setTileHeight(unsigned int tileHeight) = 0;
+        virtual void setTileHeight(Pixel tileHeight) = 0;
 
         /**
          * @brief Set the tile width.
          * @param tileWidth The tile width.
          */
-        virtual void setTileWidth(unsigned int tileWidth) = 0;
+        virtual void setTileWidth(Pixel tileWidth) = 0;
 
         /**
          * @brief Set the current z-level.

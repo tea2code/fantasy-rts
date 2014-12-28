@@ -99,23 +99,35 @@ namespace frts
          * @param shared The shared manager.
          * @param pos The position.
          * @param zLevel The reference z-level.
+         * @param regionManager The region manager.
+         * @param modelFactory The model factory.
+         * @param graphicData The graphic data.
          */
-        void updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel);
+        void updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel,
+                            RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
 
         /**
          * @brief Update all given positions.
          * @param shared The shared manager.
          * @param positions List of positions.
          * @param zLevel The reference z-level.
+         * @param regionManager The region manager.
+         * @param modelFactory The model factory.
+         * @param graphicData The graphic data.
          */
-        void updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel);
+        void updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel,
+                             RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
 
         /**
          * @brief Update the whole screen.
          * @param shared The shared manager.
          * @param zLevel The z-level to show.
+         * @param regionManager The region manager.
+         * @param modelFactory The model factory.
+         * @param graphicData The graphic data.
          */
-        void updateScreen(SharedManagerPtr shared, Point::value zLevel);
+        void updateScreen(SharedManagerPtr shared, Point::value zLevel,
+                          RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
 
         /**
          * @brief Validate configuration. Should be called during data validation phase.
@@ -185,6 +197,16 @@ namespace frts
          * @brief Screen width in number tiles.
          */
         Point::value screenWidth = 0;
+
+        /**
+         * @brief Map width in number tiles.
+         */
+        Point::value mapWidth = 0;
+
+        /**
+         * @brief Sidebar width in number tiles.
+         */
+        Point::value sidebarWidth = 0;
 
         int tileHeight = 0;
         int tileWidth = 0;

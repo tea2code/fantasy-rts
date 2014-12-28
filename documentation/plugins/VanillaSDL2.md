@@ -269,6 +269,8 @@ The screen config defines the cursor entity, the size of the visible screen (and
         screen_move_y: <integer greater 0>
         
         title: <string>
+        
+        sidebar_width: <integer greater 0>
     
     tile:
     

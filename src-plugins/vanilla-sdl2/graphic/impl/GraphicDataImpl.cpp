@@ -11,6 +11,11 @@ frts::EntityPtr frts::GraphicDataImpl::getCursor() const
     return cursor;
 }
 
+frts::GraphicData::ScreenArea frts::GraphicDataImpl::getmapArea() const
+{
+    return mapArea;
+}
+
 unsigned int frts::GraphicDataImpl::getMaxFps() const
 {
     return maxFps;
@@ -26,17 +31,17 @@ std::string frts::GraphicDataImpl::getName() const
     return Sdl2Ids::graphicData();
 }
 
-unsigned int frts::GraphicDataImpl::getScreenHeight() const
+frts::GraphicData::Pixel frts::GraphicDataImpl::getScreenHeight() const
 {
     return screenHeight;
 }
 
-unsigned int frts::GraphicDataImpl::getScreenOffsetStepX() const
+frts::GraphicData::Pixel frts::GraphicDataImpl::getScreenOffsetStepX() const
 {
     return screenOffsetStepX;
 }
 
-unsigned int frts::GraphicDataImpl::getScreenOffsetStepY() const
+frts::GraphicData::Pixel frts::GraphicDataImpl::getScreenOffsetStepY() const
 {
     return screenOffsetStepY;
 }
@@ -56,17 +61,27 @@ std::string frts::GraphicDataImpl::getScreenTitle() const
     return screenTitle;
 }
 
-unsigned int frts::GraphicDataImpl::getScreenWidth() const
+frts::GraphicData::Pixel frts::GraphicDataImpl::getScreenWidth() const
 {
     return screenWidth;
 }
 
-unsigned int frts::GraphicDataImpl::getTileHeight() const
+frts::GraphicData::ScreenArea frts::GraphicDataImpl::getsidebarArea() const
+{
+    return sidebarArea;
+}
+
+frts::GraphicData::Pixel frts::GraphicDataImpl::getSidebarWidth() const
+{
+    return sidebarWidth;
+}
+
+frts::GraphicData::Pixel frts::GraphicDataImpl::getTileHeight() const
 {
     return tileHeight;
 }
 
-unsigned int frts::GraphicDataImpl::getTileWidth() const
+frts::GraphicData::Pixel frts::GraphicDataImpl::getTileWidth() const
 {
     return tileWidth;
 }
@@ -83,7 +98,7 @@ int frts::GraphicDataImpl::getTypeVersion() const
 
 int frts::GraphicDataImpl::getVersion() const
 {
-    return 1;
+    return 2;
 }
 
 frts::Point::value frts::GraphicDataImpl::getZLevel() const
@@ -101,6 +116,11 @@ void frts::GraphicDataImpl::setCursor(EntityPtr cursor)
     this->cursor = cursor;
 }
 
+void frts::GraphicDataImpl::setmapArea(ScreenArea mapArea)
+{
+    this->mapArea = mapArea;
+}
+
 void frts::GraphicDataImpl::setMaxFps(unsigned int maxFps)
 {
     this->maxFps = maxFps;
@@ -116,17 +136,17 @@ void frts::GraphicDataImpl::setRenderEverything(bool renderEverything)
     this->renderEverything = renderEverything;
 }
 
-void frts::GraphicDataImpl::setScreenHeight(unsigned int screenHeight)
+void frts::GraphicDataImpl::setScreenHeight(frts::GraphicData::Pixel screenHeight)
 {
     this->screenHeight = screenHeight;
 }
 
-void frts::GraphicDataImpl::setScreenOffsetStepX(unsigned int offsetStep)
+void frts::GraphicDataImpl::setScreenOffsetStepX(frts::GraphicData::Pixel offsetStep)
 {
     this->screenOffsetStepX = offsetStep;
 }
 
-void frts::GraphicDataImpl::setScreenOffsetStepY(unsigned int offsetStep)
+void frts::GraphicDataImpl::setScreenOffsetStepY(frts::GraphicData::Pixel offsetStep)
 {
     this->screenOffsetStepY = offsetStep;
 }
@@ -146,17 +166,27 @@ void frts::GraphicDataImpl::setScreenTitle(const std::string& screenTitle)
     this->screenTitle = screenTitle;
 }
 
-void frts::GraphicDataImpl::setScreenWidth(unsigned int screenWidth)
+void frts::GraphicDataImpl::setScreenWidth(frts::GraphicData::Pixel screenWidth)
 {
     this->screenWidth = screenWidth;
 }
 
-void frts::GraphicDataImpl::setTileHeight(unsigned int tileHeight)
+void frts::GraphicDataImpl::setsidebarArea(ScreenArea sidebarArea)
+{
+    this->sidebarArea = sidebarArea;
+}
+
+void frts::GraphicDataImpl::setSidebarWidth(frts::GraphicData::Pixel sidebarWidth)
+{
+    this->sidebarWidth = sidebarWidth;
+}
+
+void frts::GraphicDataImpl::setTileHeight(frts::GraphicData::Pixel tileHeight)
 {
     this->tileHeight = tileHeight;
 }
 
-void frts::GraphicDataImpl::setTileWidth(unsigned int tileWidth)
+void frts::GraphicDataImpl::setTileWidth(frts::GraphicData::Pixel tileWidth)
 {
     this->tileWidth = tileWidth;
 }

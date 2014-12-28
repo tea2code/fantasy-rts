@@ -40,14 +40,23 @@ void frts::Drawer::init(SharedManagerPtr shared)
     // Set data from config.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
+
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
+
     screenHeight = screenToRegion(gd->getScreenHeight(), tileHeight);
     screenHeight = std::min(screenHeight, md->getMapSizeY());
     gd->setScreenHeight(regionToScreen(screenHeight, tileHeight));
+
     screenWidth = screenToRegion(gd->getScreenWidth(), tileWidth);
     screenWidth = std::min(screenWidth, md->getMapSizeX());
     gd->setScreenWidth(regionToScreen(screenWidth, tileWidth));
+
+    mapWidth = screenWidth;
+
+    // Set rectangles of on screen areas.
+    GraphicData::ScreenArea mapArea(0, 0, gd->getScreenWidth(), gd->getScreenHeight());
+    gd->setmapArea(mapArea);
 
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -144,12 +153,7 @@ void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr 
 void frts::Drawer::renderNow(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
-
-    if (!initialized)
-    {
-        shared->getLog()->warning(getName(), "Tried to call renderNow() without init().");
-        return;
-    }
+    assert(initialized);
 
     SDL_RenderPresent(renderer.get());
 }
@@ -209,16 +213,12 @@ void frts::Drawer::setWindowTitle(const std::string& windowTitle)
     SDL_SetWindowTitle(window.get(), windowTitle.c_str());
 }
 
-void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel)
+void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel,
+                                  RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
     assert(shared != nullptr);
     assert(pos != nullptr);
-
-    if (!initialized)
-    {
-        shared->getLog()->warning(getName(), "Tried to call updatePosition() without init().");
-        return;
-    }
+    assert(initialized);
 
     // We only render on the same z-level or levels below.
     if (pos->getZ() > zLevel)
@@ -226,28 +226,34 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         return;
     }
 
-    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-
     // Change pos if it is below because we render always relative to the current zLevel.
     // Also we check if it is necessary to render (this may change later depending on transparency).
     bool renderPos = (pos->getZ() == zLevel);
     if (pos->getZ() < zLevel)
     {
-        pos = mf->makePoint(pos->getX(), pos->getY(), zLevel);
+        pos = modelFactory->makePoint(pos->getX(), pos->getY(), zLevel);
     }
 
-    // Clear background.
+    // The rectangle on the screen which should be rendered.
+    auto mapArea = graphicData->getmapArea();
+    auto renderX = mapArea.x + regionToScreen(pos->getX() - offsetX, tileWidth);
+    auto renderY = mapArea.y + regionToScreen(pos->getY() - offsetY, tileHeight);
     SDL_Rect rectToRender = {
-        static_cast<int>(regionToScreen(pos->getX() - offsetX, tileWidth)),
-        static_cast<int>(regionToScreen(pos->getY() - offsetY, tileHeight)),
+        static_cast<int>(renderX),
+        static_cast<int>(renderY),
         tileWidth,
         tileHeight
     };
 
+    // Check if the position is in the map rectangle.
+    if (!mapArea.isPixelInRect(renderX, renderY))
+    {
+        return;
+    }
+
     // Get block.
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
-    auto block = rm->getBlock(pos, shared);
+    auto block = regionManager->getBlock(pos, shared);
     auto entities = block->getByComponent(renderableId);
 
     // Check for transparency. Currently we only render blocks below if the first entity (the assumed background) has it.
@@ -265,8 +271,8 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         }
         while (transparency > 0)
         {
-            auto posBelow = mf->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
-            auto blockBelow = rm->getBlock(posBelow, shared);
+            auto posBelow = modelFactory->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
+            auto blockBelow = regionManager->getBlock(posBelow, shared);
             auto entitiesBelow = blockBelow->getByComponent(renderableId);
             renderEntities(entitiesBelow, renderableId, rectToRender, shared);
             transparency -= 1;
@@ -285,31 +291,31 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     }
 }
 
-void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel)
+void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel,
+                                   RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
     assert(shared != nullptr);
 
     for (PointPtr pos : positions)
     {
-        updatePosition(shared, pos, zLevel);
+        updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
     }
 }
 
-void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel)
+void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel,
+                                RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
     assert(shared != nullptr);
 
-    auto factory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-
-    Point::value width = offsetX + screenWidth;
+    Point::value width = offsetX + mapWidth;
     Point::value height = offsetY + screenHeight;
 
     for (Point::value x = offsetX; x < width; ++x)
     {
         for (Point::value y = offsetY; y < height; ++y)
         {
-            auto pos = factory->makePoint(x, y, zLevel);
-            updatePosition(shared, pos, zLevel);
+            auto pos = modelFactory->makePoint(x, y, zLevel);
+            updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
         }
     }
 }

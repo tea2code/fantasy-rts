@@ -1,6 +1,7 @@
 #include "Sdl2Renderer.h"
 
 #include "impl/GraphicDataImpl.h"
+#include "impl/GraphicUtility.h"
 #include "impl/RenderableBuilder.h"
 #include "impl/MoveScreenCommandBuilder.h"
 #include "impl/MoveCursorCommandBuilder.h"
@@ -19,7 +20,7 @@ void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 2, shared);
 }
 
 bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
@@ -85,9 +86,9 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     // Add commands.
     // Move screen.
     {
-        const int offsetStepX = (gd->getScreenOffsetStepX() / gd->getTileWidth());
-        const int offsetStepY = (gd->getScreenOffsetStepY() / gd->getTileHeight());
-        const int offsetStepZ = 1;
+        const Point::value offsetStepX = screenToRegion(gd->getScreenOffsetStepX(), gd->getTileWidth());
+        const Point::value offsetStepY = screenToRegion(gd->getScreenOffsetStepY(), gd->getTileHeight());
+        const Point::value offsetStepZ = 1;
 
         // West
         IdPtr commandId = shared->makeId(Sdl2Ids::moveScreenCommandWest());
@@ -189,6 +190,7 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
         gd->setScreenWidth(node->getInteger("width", gd->getScreenWidth()));
         gd->setScreenOffsetStepX(node->getInteger("screen_move_x", gd->getScreenOffsetStepX()));
         gd->setScreenOffsetStepY(node->getInteger("screen_move_y", gd->getScreenOffsetStepY()));
+        gd->setSidebarWidth((node->getInteger("sidebar_width", gd->getSidebarWidth())));
     }
 
     if (key == "tile")
@@ -230,6 +232,8 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     auto gd = graphicData(shared);
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     // FpsManager
     fpsManager.limitFps(gd->getMaxFps());
@@ -244,7 +248,7 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     {
 //        shared->getLog()->debug(getName(), "Beginning to render everything.");
 
-        drawer.updateScreen(shared, gd->getZLevel());
+        drawer.updateScreen(shared, gd->getZLevel(), rm, mf, gd);
         drawer.renderNow(shared);
         gd->setRenderEverything(false);
 
@@ -252,13 +256,13 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     }
     else
     {
-        auto changedPos = getDataValue<RegionManager>(shared, ModelIds::regionManager())->getChangedPos();
+        auto changedPos = rm->getChangedPos();
         if (!changedPos.empty())
         {
 //            auto msg = boost::format("Beginning to render %1% positions.") % changedPos.size();
 //            shared->getLog()->debug(getName(), msg.str());
 
-            drawer.updatePositions(shared, changedPos, gd->getZLevel());
+            drawer.updatePositions(shared, changedPos, gd->getZLevel(), rm, mf, gd);
             drawer.renderNow(shared);
 
 //            shared->getLog()->debug(getName(), "Finished rendering.");
@@ -306,6 +310,11 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
     if (gd->getScreenOffsetStepY() == 0)
     {
         throw DataViolation("Sdl2Renderer: Screen move width in y-direction must be greater than zero.");
+    }
+
+    if (gd->getSidebarWidth() == 0)
+    {
+        throw DataViolation("Sdl2Renderer: Sidebar width must be greater than zero.");
     }
 
     if (gd->getTileHeight() == 0)

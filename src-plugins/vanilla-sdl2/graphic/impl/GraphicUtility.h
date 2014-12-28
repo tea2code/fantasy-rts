@@ -1,6 +1,8 @@
 #ifndef FRTS_GRAPHICUTILITY_H
 #define FRTS_GRAPHICUTILITY_H
 
+#include <graphic/GraphicData.h>
+
 #include <frts/vanillamodel>
 
 
@@ -12,7 +14,7 @@ namespace frts
      * @param tile The tile width or height.
      * @return The region coordinate (x or y).
      */
-    Point::value screenToRegion(unsigned int screen, int tile);
+    Point::value screenToRegion(GraphicData::Pixel screen, int tile);
 
     /**
      * @brief Converts region coordinates in tiles to screen coordinates in pixel.
@@ -20,7 +22,7 @@ namespace frts
      * @param tile The tile width or height.
      * @return The screen coordinate (x or y).
      */
-    unsigned int regionToScreen(Point::value region, int tile);
+    GraphicData::Pixel regionToScreen(Point::value region, int tile);
 }
 
 #endif // FRTS_GRAPHICUTILITY_H

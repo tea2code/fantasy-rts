@@ -71,6 +71,21 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setScreenOffsetY(9);
     gd->setScreenOffsetStepX(10);
     gd->setScreenOffsetStepY(11);
+    gd->setSidebarWidth(12);
+
+    frts::GraphicData::ScreenArea sidebarArea;
+    sidebarArea.x = 1;
+    sidebarArea.y = 2;
+    sidebarArea.height = 3;
+    sidebarArea.width = 4;
+    gd->setsidebarArea(sidebarArea);
+
+    frts::GraphicData::ScreenArea mapArea;
+    mapArea.x = 5;
+    mapArea.y = 6;
+    mapArea.height = 7;
+    mapArea.width = 8;
+    gd->setmapArea(mapArea);
 
     REQUIRE_FALSE(gd->isRenderEverything());
     gd->setRenderEverything();
@@ -90,6 +105,17 @@ TEST_CASE("Graphic Data.", "[graphic]")
     REQUIRE(gd->getScreenOffsetY() == 9);
     REQUIRE(gd->getScreenOffsetStepX() == 10);
     REQUIRE(gd->getScreenOffsetStepY() == 11);
+    REQUIRE(gd->getSidebarWidth() == 12);
+
+    REQUIRE(gd->getsidebarArea().x == 1);
+    REQUIRE(gd->getsidebarArea().y == 2);
+    REQUIRE(gd->getsidebarArea().height == 3);
+    REQUIRE(gd->getsidebarArea().width == 4);
+
+    REQUIRE(gd->getmapArea().x == 5);
+    REQUIRE(gd->getmapArea().y == 6);
+    REQUIRE(gd->getmapArea().height == 7);
+    REQUIRE(gd->getmapArea().width == 8);
 }
 
 TEST_CASE("Renderable.", "[graphic]")

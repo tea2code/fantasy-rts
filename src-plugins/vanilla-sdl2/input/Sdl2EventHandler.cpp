@@ -16,7 +16,7 @@ void frts::Sdl2EventHandler::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 2, shared);
 }
 
 void frts::Sdl2EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
@@ -59,11 +59,22 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
             case SDL_MOUSEMOTION:
             {
                 // Set cursor position based on mouse event then update region and screen.
+                // Important: The map rectangle on the screen must be considered.
+
                 auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
                 auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
                 auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-                Point::value x = screenToRegion(event.motion.x, gd->getTileWidth()) + gd->getScreenOffsetX();
-                Point::value y = screenToRegion(event.motion.y, gd->getTileHeight()) + gd->getScreenOffsetY();
+
+                auto mapArea = gd->getmapArea();
+                auto mapPixelX = event.motion.x - mapArea.x;
+                auto mapPixelY = event.motion.y - mapArea.y;
+                if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))
+                {
+                    continue;
+                }
+
+                Point::value x = screenToRegion(mapPixelX, gd->getTileWidth()) + gd->getScreenOffsetX();
+                Point::value y = screenToRegion(mapPixelY, gd->getTileHeight()) + gd->getScreenOffsetY();
                 auto newPos = mf->makePoint(x, y, gd->getZLevel());
                 rm->removeEntity(gd->getCursor(), shared);
                 rm->setPos(gd->getCursor(), newPos, shared);

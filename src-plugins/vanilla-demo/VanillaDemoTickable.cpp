@@ -30,7 +30,7 @@ void frts::VanillaDemoTickable::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 1, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 2, shared);
 }
 
 bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
