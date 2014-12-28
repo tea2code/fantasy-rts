@@ -65,7 +65,7 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
                 auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
                 auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
-                auto mapArea = gd->getmapArea();
+                auto mapArea = gd->getMapArea();
                 auto mapPixelX = event.motion.x - mapArea.x;
                 auto mapPixelY = event.motion.y - mapArea.y;
                 if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))

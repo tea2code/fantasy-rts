@@ -51,8 +51,8 @@ namespace frts
              */
             bool isPixelInRect(Pixel pixelX, Pixel pixelY)
             {
-                return x <= pixelX && pixelX <= x + width &&
-                       y <= pixelY && pixelY <= y + height;
+                return x <= pixelX && pixelX < x + width &&
+                       y <= pixelY && pixelY < y + height;
             }
         };
 
@@ -67,7 +67,7 @@ namespace frts
         /**
          * @return The map rectangle in the window.
          */
-        virtual ScreenArea getmapArea() const = 0;
+        virtual ScreenArea getMapArea() const = 0;
 
         /**
          * @return The maximum frame rate.
@@ -117,7 +117,7 @@ namespace frts
         /**
          * @return The sidebar rectangle in the window.
          */
-        virtual ScreenArea getsidebarArea() const = 0;
+        virtual ScreenArea getSidebarArea() const = 0;
 
         /**
          * @return The sidebar width in pixel.
@@ -154,7 +154,7 @@ namespace frts
          * @brief Set map rectangle in the window.
          * @param mapArea The map rectangle.
          */
-        virtual void setmapArea(ScreenArea mapArea) = 0;
+        virtual void setMapArea(ScreenArea mapArea) = 0;
 
         /**
          * @brief Set the maximum frame rate.
@@ -220,7 +220,7 @@ namespace frts
          * @brief Set sidebar rectangle in the window.
          * @param mapArea The sidebar rectangle.
          */
-        virtual void setsidebarArea(ScreenArea sidebarArea) = 0;
+        virtual void setSidebarArea(ScreenArea sidebarArea) = 0;
 
         /**
          * @brief Set the sidebar width.

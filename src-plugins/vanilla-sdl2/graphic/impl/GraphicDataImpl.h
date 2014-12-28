@@ -15,7 +15,7 @@ namespace frts
         GraphicDataImpl();
 
         EntityPtr getCursor() const override;
-        ScreenArea getmapArea() const override;
+        ScreenArea getMapArea() const override;
         unsigned int getMaxFps() const override;
         unsigned int getNumFpsAvg() const override;
         std::string getName() const override;
@@ -26,7 +26,7 @@ namespace frts
         Point::value getScreenOffsetY() const override;
         std::string getScreenTitle() const override;
         Pixel getScreenWidth() const override;
-        ScreenArea getsidebarArea() const override;
+        ScreenArea getSidebarArea() const override;
         Pixel getSidebarWidth() const override;
         Pixel getTileHeight() const override;
         Pixel getTileWidth() const override;
@@ -36,7 +36,7 @@ namespace frts
         Point::value getZLevel() const override;
         bool isRenderEverything() const override;
         void setCursor(EntityPtr cursor) override;
-        void setmapArea(ScreenArea mapArea) override;
+        void setMapArea(ScreenArea mapArea) override;
         void setMaxFps(unsigned int maxFps) override;
         void setNumFpsAvg(unsigned int numFpsAvg) override;
         void setRenderEverything(bool renderEverything = true) override;
@@ -47,7 +47,7 @@ namespace frts
         void setScreenOffsetY(Point::value offset) override;
         void setScreenTitle(const std::string& screenTitle) override;
         void setScreenWidth(Pixel screenWidth) override;
-        void setsidebarArea(ScreenArea sidebarArea) override;
+        void setSidebarArea(ScreenArea sidebarArea) override;
         void setSidebarWidth(Pixel sidebarWidth) override;
         void setTileHeight(Pixel tileHeight) override;
         void setTileWidth(Pixel tileWidth) override;

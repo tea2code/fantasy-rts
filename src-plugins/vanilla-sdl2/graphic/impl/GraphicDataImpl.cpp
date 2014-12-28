@@ -11,7 +11,7 @@ frts::EntityPtr frts::GraphicDataImpl::getCursor() const
     return cursor;
 }
 
-frts::GraphicData::ScreenArea frts::GraphicDataImpl::getmapArea() const
+frts::GraphicData::ScreenArea frts::GraphicDataImpl::getMapArea() const
 {
     return mapArea;
 }
@@ -66,7 +66,7 @@ frts::GraphicData::Pixel frts::GraphicDataImpl::getScreenWidth() const
     return screenWidth;
 }
 
-frts::GraphicData::ScreenArea frts::GraphicDataImpl::getsidebarArea() const
+frts::GraphicData::ScreenArea frts::GraphicDataImpl::getSidebarArea() const
 {
     return sidebarArea;
 }
@@ -116,7 +116,7 @@ void frts::GraphicDataImpl::setCursor(EntityPtr cursor)
     this->cursor = cursor;
 }
 
-void frts::GraphicDataImpl::setmapArea(ScreenArea mapArea)
+void frts::GraphicDataImpl::setMapArea(ScreenArea mapArea)
 {
     this->mapArea = mapArea;
 }
@@ -171,7 +171,7 @@ void frts::GraphicDataImpl::setScreenWidth(frts::GraphicData::Pixel screenWidth)
     this->screenWidth = screenWidth;
 }
 
-void frts::GraphicDataImpl::setsidebarArea(ScreenArea sidebarArea)
+void frts::GraphicDataImpl::setSidebarArea(ScreenArea sidebarArea)
 {
     this->sidebarArea = sidebarArea;
 }

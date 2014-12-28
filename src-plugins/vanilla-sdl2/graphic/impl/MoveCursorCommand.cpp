@@ -21,7 +21,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto mapArea = gd->getmapArea();
+    auto mapArea = gd->getMapArea();
 
     // Old cursor position.
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
@@ -83,7 +83,7 @@ void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto mapArea = gd->getmapArea();
+    auto mapArea = gd->getMapArea();
 
     // Old cursor position.
     auto cursorPos = rm->getPos(gd->getCursor(), shared);

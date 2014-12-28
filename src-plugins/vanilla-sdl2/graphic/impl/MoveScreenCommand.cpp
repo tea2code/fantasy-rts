@@ -21,7 +21,7 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto mapArea = gd->getmapArea();
+    auto mapArea = gd->getMapArea();
 
     // Old cursor position without offset.
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
@@ -95,7 +95,7 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-    auto mapArea = gd->getmapArea();
+    auto mapArea = gd->getMapArea();
 
     // Old cursor position without offset.
     auto cursorPos = rm->getPos(gd->getCursor(), shared);
