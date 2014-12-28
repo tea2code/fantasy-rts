@@ -212,7 +212,7 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
         if (node->has("background"))
         {
             auto bgNode = node->getNode("background");
-            drawer.setBackground(bgNode->getInteger("r"), bgNode->getInteger("g"), bgNode->getInteger("b"));
+            drawer.setTileBackground(bgNode->getInteger("r"), bgNode->getInteger("g"), bgNode->getInteger("b"));
         }
 
         if (node->has("images"))

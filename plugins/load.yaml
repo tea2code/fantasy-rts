@@ -7,6 +7,8 @@ plugins:
     - vanilla-sdl2/SDL2_image
     - vanilla-sdl2/zlib1
     - vanilla-sdl2/libpng16-16
+    - vanilla-sdl2/libfreetype-6
+    - vanilla-sdl2/SDL2_ttf
     - vanilla-sdl2/vanilla-sdl2
     
 startupModules:
@@ -33,9 +35,10 @@ configurations:
     - vanilla-command/command.yaml
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
-    - vanilla-sdl2/keys.yaml
     - vanilla-sdl2/entities.yaml
+    - vanilla-sdl2/keys.yaml
     - vanilla-sdl2/screen.yaml
+    - vanilla-sdl2/sidebar.yaml
     - vanilla-sdl2/style.yaml
     
     # Maps

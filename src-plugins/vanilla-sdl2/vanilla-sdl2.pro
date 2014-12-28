@@ -28,6 +28,7 @@ INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../../src-helper
 INCLUDEPATH += $$PWD/dependency/SDL2/include
 INCLUDEPATH += $$PWD/dependency/SDL2_image/i686-w64-mingw32/include
+INCLUDEPATH += $$PWD/dependency/SDL2_ttf/i686-w64-mingw32/include
 INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-model
 INCLUDEPATH += $$PWD/../vanilla-event
@@ -36,7 +37,8 @@ INCLUDEPATH += $$PWD/../vanilla-event
 LIBS += -lmingw32 -mwindows -mconsole
 LIBS += -L$$PWD/dependency/SDL2/build -L$$PWD/dependency/SDL2/build/.libs
 LIBS += -L$$PWD/dependency/SDL2_image/i686-w64-mingw32/lib
-LIBS += -lSDL2main -lSDL2 -lSDL2_image
+LIBS += -L$$PWD/dependency/SDL2_ttf/i686-w64-mingw32/lib
+LIBS += -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 
 # Headers and sources.
 UNIT_TEST {

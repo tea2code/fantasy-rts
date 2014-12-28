@@ -1,0 +1,25 @@
+sidebar:
+
+    # Background color of sidebar.
+    background:
+        r: 51
+        g: 51
+        b: 51
+        
+    # Font color.
+    font-color:
+        r: 221
+        g: 221
+        b: 221
+        
+    # Color of separation lines.
+    line-color:
+        r: 221
+        g: 221
+        b: 221
+        
+    # Tile info background color.
+    tile-background:
+        r: 221
+        g: 221
+        b: 221

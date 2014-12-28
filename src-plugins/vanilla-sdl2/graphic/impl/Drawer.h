@@ -49,12 +49,12 @@ namespace frts
         void renderNow(SharedManagerPtr shared);
 
         /**
-         * @brief Set background color for filling.
+         * @brief Set background color for filling of map tiles.
          * @param r The red part of rgb.
          * @param g The green part of rgb.
          * @param b The blue part of rgb.
          */
-        void setBackground(int r = 0, int g = 0, int b = 0);
+        void setTileBackground(int r = 0, int g = 0, int b = 0);
 
         /**
          * @brief Set configuration for image. Can be called multiple times to override
@@ -218,9 +218,9 @@ namespace frts
         ImageMap images;
         SpriteManager spriteManager;
 
-        int backgroundR = 0;
-        int backgroundG = 0;
-        int backgroundB = 0;
+        int tileBackgroundR = 0;
+        int tileBackgroundG = 0;
+        int tileBackgroundB = 0;
 
     private:
         /**

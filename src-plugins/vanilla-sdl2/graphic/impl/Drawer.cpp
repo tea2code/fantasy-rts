@@ -8,6 +8,7 @@
 
 #include <boost/format.hpp>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <algorithm>
 #include <utility>
@@ -25,6 +26,7 @@ frts::Drawer::~Drawer()
     renderer.release();
     window.release();
     IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -67,7 +69,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        shared->getLog()->error("SDL2 Drawer", "SDL_Init Error: " + std::string(SDL_GetError()));
+        shared->getLog()->error(getName(), "SDL_Init Error: " + std::string(SDL_GetError()));
         return;
     }
 
@@ -75,7 +77,14 @@ void frts::Drawer::init(SharedManagerPtr shared)
     int imageFlags = IMG_INIT_PNG;
     if (IMG_Init(imageFlags) != imageFlags)
     {
-        shared->getLog()->error("SDL2 Drawer", "IMG_Init Error: " + std::string(IMG_GetError()));
+        shared->getLog()->error(getName(), "IMG_Init Error: " + std::string(IMG_GetError()));
+        return;
+    }
+
+    // TTF support.
+    if(TTF_Init() == -1)
+    {
+        shared->getLog()->error(getName(), "TTF_Init Error: " + std::string(TTF_GetError()));
         return;
     }
 
@@ -104,7 +113,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
     }
 
     // Non-transparent background color for filling tiles.
-    SDL_SetRenderDrawColor(renderer.get(), backgroundR, backgroundG, backgroundB, 0);
+    SDL_SetRenderDrawColor(renderer.get(), tileBackgroundR, tileBackgroundG, tileBackgroundB, 0);
 
     // Read images.
     for (auto& image : images)
@@ -164,11 +173,11 @@ void frts::Drawer::renderNow(SharedManagerPtr shared)
     SDL_RenderPresent(renderer.get());
 }
 
-void frts::Drawer::setBackground(int r, int g, int b)
+void frts::Drawer::setTileBackground(int r, int g, int b)
 {
-    backgroundR = r;
-    backgroundG = g;
-    backgroundB = b;
+    tileBackgroundR = r;
+    tileBackgroundG = g;
+    tileBackgroundB = b;
 }
 
 void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode)
@@ -330,9 +339,9 @@ void frts::Drawer::validateData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    if (backgroundR < 0 || 255 < backgroundR ||
-        backgroundG < 0 || 255 < backgroundG ||
-        backgroundB < 0 || 255 < backgroundB)
+    if (tileBackgroundR < 0 || 255 < tileBackgroundR ||
+        tileBackgroundG < 0 || 255 < tileBackgroundG ||
+        tileBackgroundB < 0 || 255 < tileBackgroundB)
     {
         throw DataViolation("Drawer: Background color must be a valid rgb color with values between 0 and 255.");
     }
