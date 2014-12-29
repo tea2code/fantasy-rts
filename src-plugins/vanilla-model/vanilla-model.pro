@@ -18,6 +18,7 @@ QMAKE_CXXFLAGS += -Wno-error=unused-parameter -Wno-error=unused-variable
 
 # Optimization flags.
 OPTIMIZE {
+    DEFINES += NDEBUG
     QMAKE_CXXFLAGS += -O3
 }
 

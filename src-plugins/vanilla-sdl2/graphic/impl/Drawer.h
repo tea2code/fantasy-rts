@@ -3,13 +3,12 @@
 
 #include <graphic/GraphicData.h>
 #include <graphic/impl/SpriteManager.h>
-
+#include <frts/shared>
 #include <frts/vanillamodel>
 
 #include <SDL2/SDL.h>
 
-#include <frts/shared>
-
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <vector>
@@ -33,8 +32,32 @@ namespace frts
     class Drawer
     {
     public:
+        /**
+         * @brief Deleter for smart pointer for SDL2.
+         * @see http://stackoverflow.com/a/24252225
+         */
+        struct Sdl2Deleter
+        {
+          void operator()(SDL_Window *p) const { SDL_DestroyWindow(p); }
+          void operator()(SDL_Renderer *p) const { SDL_DestroyRenderer(p); }
+          void operator()(SDL_Texture *p) const { SDL_DestroyTexture(p); }
+        };
+
+    public:
+        /**
+         * @brief Pointer to SDL renderer.
+         */
+        using RendererPtr = std::shared_ptr<SDL_Renderer>;
+
+    public:
         Drawer();
         ~Drawer();
+
+        /**
+         * @brief Get the renderer. Only call after init().
+         * @return The renderer.
+         */
+        RendererPtr getRenderer() const;
 
         /**
          * @brief Initialize drawer. Any configuration must be set before.
@@ -54,7 +77,7 @@ namespace frts
          * @param g The green part of rgb.
          * @param b The blue part of rgb.
          */
-        void setTileBackground(int r = 0, int g = 0, int b = 0);
+        void setTileBackground(std::uint8_t r = 0, std::uint8_t g = 0, std::uint8_t b = 0);
 
         /**
          * @brief Set configuration for image. Can be called multiple times to override
@@ -95,6 +118,17 @@ namespace frts
         void setWindowTitle(const std::string& windowTitle);
 
         /**
+         * @brief Update the whole map area.
+         * @param shared The shared manager.
+         * @param zLevel The z-level to show.
+         * @param regionManager The region manager.
+         * @param modelFactory The model factory.
+         * @param graphicData The graphic data.
+         */
+        void updateMap(SharedManagerPtr shared, Point::value zLevel,
+                          RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
+
+        /**
          * @brief Update given position.
          * @param shared The shared manager.
          * @param pos The position.
@@ -119,17 +153,6 @@ namespace frts
                              RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
 
         /**
-         * @brief Update the whole screen.
-         * @param shared The shared manager.
-         * @param zLevel The z-level to show.
-         * @param regionManager The region manager.
-         * @param modelFactory The model factory.
-         * @param graphicData The graphic data.
-         */
-        void updateScreen(SharedManagerPtr shared, Point::value zLevel,
-                          RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
-
-        /**
          * @brief Validate configuration. Should be called during data validation phase.
          * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
          * @throw InvalidImageConfigError if image node represents a invalid config.
@@ -138,23 +161,6 @@ namespace frts
         void validateData(SharedManagerPtr shared);
 
     private:
-        /**
-         * @brief Deleter for std::unique_ptr for SDL.
-         * @see http://stackoverflow.com/a/24252225
-         */
-        struct Sdl2Deleter
-        {
-          void operator()(SDL_Window *p) const { SDL_DestroyWindow(p); }
-          void operator()(SDL_Renderer *p) const { SDL_DestroyRenderer(p); }
-          void operator()(SDL_Texture *p) const { SDL_DestroyTexture(p); }
-        };
-
-    private:
-        /**
-         * @brief Pointer to SDL renderer.
-         */
-        using RendererPtr = std::unique_ptr<SDL_Renderer, Sdl2Deleter>;
-
         /**
          * @brief Pointer to SDL texture.
          */
@@ -218,9 +224,9 @@ namespace frts
         ImageMap images;
         SpriteManager spriteManager;
 
-        int tileBackgroundR = 0;
-        int tileBackgroundG = 0;
-        int tileBackgroundB = 0;
+        std::uint8_t tileBackgroundR = 0;
+        std::uint8_t tileBackgroundG = 0;
+        std::uint8_t tileBackgroundB = 0;
 
     private:
         /**

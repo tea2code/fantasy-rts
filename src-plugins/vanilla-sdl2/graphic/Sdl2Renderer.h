@@ -3,16 +3,18 @@
 
 #include "impl/Drawer.h"
 #include "impl/FpsManager.h"
-
+#include "impl/SidebarDrawer.h"
 #include <frts/BaseTickable.h>
+#include <frts/vanillaevent>
 
 #include <memory>
 #include <string>
+#include <vector>
 
 
 namespace frts
 {
-    class Sdl2Renderer : public BaseTickable
+    class Sdl2Renderer : public BaseTickable, public EventObserver
     {
     public:
         Sdl2Renderer();
@@ -30,6 +32,7 @@ namespace frts
         bool createData(SharedManagerPtr shared) override;
         std::vector<std::string> getSupportedConfig() override;
         bool init(SharedManagerPtr shared) override;
+        void notify(EventPtr event) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
@@ -38,7 +41,9 @@ namespace frts
     private:
         std::string cursorId;
         Drawer drawer;
+        SidebarDrawer sidebarDrawer;
         FpsManager fpsManager;
+        std::vector<IdPtr> events;
 
     private:     
         /**

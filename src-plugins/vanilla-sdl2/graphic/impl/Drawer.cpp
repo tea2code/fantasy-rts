@@ -23,7 +23,7 @@ frts::Drawer::~Drawer()
     {
         it.second.reset();
     }
-    renderer.release();
+    renderer.reset();
     window.release();
     IMG_Quit();
     TTF_Quit();
@@ -33,6 +33,13 @@ frts::Drawer::~Drawer()
 std::string frts::Drawer::getName() const
 {
     return "frts::SDL2Drawer";
+}
+
+frts::Drawer::RendererPtr frts::Drawer::getRenderer() const
+{
+    assert(initialized);
+
+    return renderer;
 }
 
 void frts::Drawer::init(SharedManagerPtr shared)
@@ -102,7 +109,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
     }
 
     // Create renderer.
-    renderer = std::unique_ptr<SDL_Renderer, Sdl2Deleter>(
+    renderer = std::shared_ptr<SDL_Renderer>(
         SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED),
         Sdl2Deleter()
     );
@@ -111,9 +118,6 @@ void frts::Drawer::init(SharedManagerPtr shared)
         shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
         return;
     }
-
-    // Non-transparent background color for filling tiles.
-    SDL_SetRenderDrawColor(renderer.get(), tileBackgroundR, tileBackgroundG, tileBackgroundB, 0);
 
     // Read images.
     for (auto& image : images)
@@ -165,15 +169,14 @@ void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr 
     }
 }
 
-void frts::Drawer::renderNow(SharedManagerPtr shared)
+void frts::Drawer::renderNow(SharedManagerPtr)
 {
-    assert(shared != nullptr);
     assert(initialized);
 
     SDL_RenderPresent(renderer.get());
 }
 
-void frts::Drawer::setTileBackground(int r, int g, int b)
+void frts::Drawer::setTileBackground(std::uint8_t r, std::uint8_t g, std::uint8_t b)
 {
     tileBackgroundR = r;
     tileBackgroundG = g;
@@ -228,6 +231,24 @@ void frts::Drawer::setWindowTitle(const std::string& windowTitle)
     SDL_SetWindowTitle(window.get(), windowTitle.c_str());
 }
 
+void frts::Drawer::updateMap(SharedManagerPtr shared, Point::value zLevel,
+                                RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
+{
+    assert(shared != nullptr);
+
+    Point::value width = offsetX + mapWidth;
+    Point::value height = offsetY + screenHeight;
+
+    for (Point::value x = offsetX; x < width; ++x)
+    {
+        for (Point::value y = offsetY; y < height; ++y)
+        {
+            auto pos = modelFactory->makePoint(x, y, zLevel);
+            updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
+        }
+    }
+}
+
 void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel,
                                   RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
@@ -259,6 +280,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         tileWidth,
         tileHeight
     };
+    SDL_SetRenderDrawColor(renderer.get(), tileBackgroundR, tileBackgroundG, tileBackgroundB, 0);
 
     // Check if the position is in the map rectangle.
     if (!mapArea.isPixelInRect(renderX, renderY))
@@ -317,34 +339,9 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnordered
     }
 }
 
-void frts::Drawer::updateScreen(SharedManagerPtr shared, Point::value zLevel,
-                                RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
-{
-    assert(shared != nullptr);
-
-    Point::value width = offsetX + mapWidth;
-    Point::value height = offsetY + screenHeight;
-
-    for (Point::value x = offsetX; x < width; ++x)
-    {
-        for (Point::value y = offsetY; y < height; ++y)
-        {
-            auto pos = modelFactory->makePoint(x, y, zLevel);
-            updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
-        }
-    }
-}
-
 void frts::Drawer::validateData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
-
-    if (tileBackgroundR < 0 || 255 < tileBackgroundR ||
-        tileBackgroundG < 0 || 255 < tileBackgroundG ||
-        tileBackgroundB < 0 || 255 < tileBackgroundB)
-    {
-        throw DataViolation("Drawer: Background color must be a valid rgb color with values between 0 and 255.");
-    }
 
     spriteManager.validateData(shared);
 

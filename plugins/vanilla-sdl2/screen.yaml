@@ -13,7 +13,7 @@ screen:
     width: 1280
     
     # The screen movement size should be around 30% of height and width (in pixel). Should be multiples of tile.height and tile.width.
-    screen_move_x: 384
+    screen_move_x: 320
     screen_move_y: 320
     
     # The window title. Use %1% as a placeholder for FPS.

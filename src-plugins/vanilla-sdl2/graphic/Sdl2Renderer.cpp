@@ -43,7 +43,7 @@ frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) co
 
 std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
 {
-    return {"style", "screen", "tile", "region"};
+    return {"style", "screen", "tile", "region", "sidebar"};
 }
 
 bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
@@ -79,8 +79,9 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     // Init fps manager.
     fpsManager.setNumFpsAvg(gd->getNumFpsAvg());
 
-    // Init drawer
+    // Init drawers.
     drawer.init(shared);
+    sidebarDrawer.init(drawer.getRenderer(), shared);
     gd->setRenderEverything();
 
     // Add commands.
@@ -192,20 +193,17 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
         gd->setScreenOffsetStepY(node->getInteger("screen_move_y", gd->getScreenOffsetStepY()));
         gd->setSidebarWidth((node->getInteger("sidebar_width", gd->getSidebarWidth())));
     }
-
-    if (key == "tile")
+    else if (key == "tile")
     {
         gd->setTileHeight(node->getInteger("height", gd->getTileHeight()));
         gd->setTileWidth(node->getInteger("width", gd->getTileWidth()));
     }
-
-    if (key == "region")
+    else if (key == "region")
     {
         gd->setZLevel(node->getInteger("surface_level", gd->getZLevel()));
     }
-
     // Drawer
-    if (key == "style")
+    else if (key == "style")
     {
         auto rootNamespace = node->getString("namespace");
 
@@ -225,6 +223,16 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
             drawer.setSpriteConfig(shared, rootNamespace, node->getNode("sprites"));
         }
     }
+    // Sidebar drawer
+    else if (key == "sidebar")
+    {
+        sidebarDrawer.setSidebarConfig(shared, node);
+    }
+}
+
+void frts::Sdl2Renderer::notify(EventPtr event)
+{
+    // TODO
 }
 
 void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
@@ -239,35 +247,45 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     fpsManager.limitFps(gd->getMaxFps());
     auto fps = fpsManager.calcFps();
 
-    // Drawer
+    // Drawers
+    bool renderNow = false;
     auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
     drawer.setWindowTitle(windowsTitle.str());
     drawer.setOffsetX(gd->getScreenOffsetX());
     drawer.setOffsetY(gd->getScreenOffsetY());
     if (gd->isRenderEverything())
     {
-//        shared->getLog()->debug(getName(), "Beginning to render everything.");
-
-        drawer.updateScreen(shared, gd->getZLevel(), rm, mf, gd);
-        drawer.renderNow(shared);
+        drawer.updateMap(shared, gd->getZLevel(), rm, mf, gd);
+        sidebarDrawer.updateSidebar(events, shared);
         gd->setRenderEverything(false);
-
-//        shared->getLog()->debug(getName(), "Finished rendering.");
+        renderNow = true;
     }
     else
     {
+        // Map
         auto changedPos = rm->getChangedPos();
         if (!changedPos.empty())
         {
-//            auto msg = boost::format("Beginning to render %1% positions.") % changedPos.size();
-//            shared->getLog()->debug(getName(), msg.str());
-
             drawer.updatePositions(shared, changedPos, gd->getZLevel(), rm, mf, gd);
-            drawer.renderNow(shared);
-
-//            shared->getLog()->debug(getName(), "Finished rendering.");
+            renderNow = true;
         }
+
+        // Sidebar
+        if (!events.empty())
+        {
+            sidebarDrawer.updateEvents(events, shared);
+        }
+        //sidebarDrawer.updateInfo(shared);
     }
+
+    // Render.
+    if (renderNow)
+    {
+        drawer.renderNow(shared);
+    }
+
+    // Cleanup
+    events.clear();
 }
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
@@ -329,6 +347,9 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 
     // Drawer
     drawer.validateData(shared);
+
+    // Sidebar drawer
+    sidebarDrawer.validateData(shared);
 }
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)

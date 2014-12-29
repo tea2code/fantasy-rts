@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/impl/MoveScreenCommandBuilder.h \
     $$PWD/impl/GraphicUtility.h \
     $$PWD/impl/MoveCursorCommand.h \
-    $$PWD/impl/MoveCursorCommandBuilder.h
+    $$PWD/impl/MoveCursorCommandBuilder.h \
+    $$PWD/impl/SidebarDrawer.h
     
 
 SOURCES += \
@@ -31,4 +32,5 @@ SOURCES += \
     $$PWD/impl/MoveScreenCommandBuilder.cpp \
     $$PWD/impl/GraphicUtility.cpp \
     $$PWD/impl/MoveCursorCommand.cpp \
-    $$PWD/impl/MoveCursorCommandBuilder.cpp
+    $$PWD/impl/MoveCursorCommandBuilder.cpp \
+    $$PWD/impl/SidebarDrawer.cpp
