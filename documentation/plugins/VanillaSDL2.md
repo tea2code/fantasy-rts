@@ -351,6 +351,8 @@ Beside the style configuration for the map there is another one for the sidebar.
         
         font-size: <integer greater 0>
             
+        info-update: <integer greater/equal 0>
+            
         line-color:
             r: <integer between 0 and 255, optional>
             g: <integer between 0 and 255, optional>
@@ -362,6 +364,8 @@ Beside the style configuration for the map there is another one for the sidebar.
             r: <integer between 0 and 255, optional>
             g: <integer between 0 and 255, optional>
             b: <integer between 0 and 255, optional>
+            
+        tile-zoom: <integer greater 0>
             
         events:
             - type: <string representing an id>

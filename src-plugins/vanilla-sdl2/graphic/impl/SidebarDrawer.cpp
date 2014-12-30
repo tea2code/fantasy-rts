@@ -7,13 +7,13 @@
 
 
 frts::SidebarDrawer::SidebarDrawer()
-    : eventsNextUpdate{fromMilliseconds(0)}, eventsUpdateTime{fromMilliseconds(0)}
+    : eventsNextUpdate{fromMilliseconds(0)}, eventsUpdateTime{fromMilliseconds(0)},
+      infoNextUpdate{fromMilliseconds(0)}, infoUpdateTime{fromMilliseconds(0)}
 {}
 
 frts::SidebarDrawer::~SidebarDrawer()
 {
-    texture.reset();
-    renderer.reset();
+    eventTexture.reset();
 }
 
 void frts::SidebarDrawer::drawRectangle(GraphicData::Pixel x, GraphicData::Pixel y, GraphicData::Pixel width, GraphicData::Pixel height,
@@ -25,8 +25,14 @@ void frts::SidebarDrawer::drawRectangle(GraphicData::Pixel x, GraphicData::Pixel
         static_cast<int>(width),
         static_cast<int>(height)
     };
-    SDL_SetRenderDrawColor(renderer.get(), r, g, b, 0);
-    SDL_RenderFillRect(renderer.get(), &rectToRender);
+    SDL_SetRenderDrawColor(drawer->getRenderer().get(), r, g, b, 0);
+    SDL_RenderFillRect(drawer->getRenderer().get(), &rectToRender);
+}
+
+void frts::SidebarDrawer::drawSeparationLine(GraphicData::Pixel startX, GraphicData::Pixel endX, GraphicData::Pixel y)
+{
+    SDL_SetRenderDrawColor(drawer->getRenderer().get(), lineColorR, lineColorG, lineColorB, 0);
+    SDL_RenderDrawLine(drawer->getRenderer().get(), startX, y, endX, y);
 }
 
 std::string frts::SidebarDrawer::getName() const
@@ -46,13 +52,13 @@ frts::IdVector frts::SidebarDrawer::getSidebarEvents() const
     return result;
 }
 
-void frts::SidebarDrawer::init(Drawer::RendererPtr renderer, SharedManagerPtr shared)
+void frts::SidebarDrawer::init(DrawerPtr drawer, SharedManagerPtr shared)
 {
-    assert(renderer != nullptr);
+    assert(drawer != nullptr);
     assert(shared != nullptr);
 
-    // Set renderer.
-    this->renderer = renderer;
+    // Set drawer.
+    this->drawer = drawer;
 
     // Read font.
     font = std::unique_ptr<TTF_Font, Drawer::Sdl2Deleter>(
@@ -125,6 +131,11 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
 
     fontSize = sidebarNode->getInteger("font-size", fontSize);
 
+    if (sidebarNode->has("info-update"))
+    {
+        infoUpdateTime = fromMilliseconds(sidebarNode->getInteger("info-update"));
+    }
+
     if (sidebarNode->has("line-color"))
     {
         auto rgbNode = sidebarNode->getNode("line-color");
@@ -142,6 +153,8 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
         tileBackgroundG = rgbNode->getInteger("g", tileBackgroundG);
         tileBackgroundB = rgbNode->getInteger("b", tileBackgroundB);
     }
+
+    tileZoom = sidebarNode->getInteger("tile-zoom", tileZoom);
 
     if (sidebarNode->has("events"))
     {
@@ -165,6 +178,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     assert(initialized);
     assert(shared != nullptr);
 
+    // Only update if necessary.
     if (!forceUpdate)
     {
         auto currentTime = shared->getFrame()->getRunTime();
@@ -258,12 +272,12 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
         height -= fontHeight;
     }
 
-    texture = std::shared_ptr<SDL_Texture>(
-        SDL_CreateTextureFromSurface(renderer.get(), surface),
+    eventTexture = std::shared_ptr<SDL_Texture>(
+        SDL_CreateTextureFromSurface(drawer->getRenderer().get(), surface),
         Drawer::Sdl2Deleter()
     );
     SDL_FreeSurface(surface);
-    if(texture == nullptr)
+    if(eventTexture == nullptr)
     {
         auto msg = boost::format(R"(SDL_CreateTextureFromSurface Error: %1%)") % SDL_GetError();
         shared->getLog()->error(getName(), msg.str());
@@ -272,7 +286,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
 
     // Draw background.
     auto startX = area.x + padding;
-    auto startY = area.y + padding;
+    auto startY = area.y + eventOffset + padding;
     drawRectangle(startX, startY, width, height, backgroundR, backgroundG, backgroundB);
 
     // Draw text.
@@ -288,19 +302,98 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
         width,
         height
     };
-    SDL_RenderCopy(renderer.get(), texture.get(), &clip, &rectToRender);
+    SDL_RenderCopy(drawer->getRenderer().get(), eventTexture.get(), &clip, &rectToRender);
 
     return true;
 }
 
-bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool)
+bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
 {
     assert(initialized);
     assert(shared != nullptr);
 
+    // Only update if necessary.
+    if (!forceUpdate)
+    {
+        auto currentTime = shared->getFrame()->getRunTime();
+        if (currentTime < infoNextUpdate)
+        {
+            return false;
+        }
+        infoNextUpdate += infoUpdateTime;
+    }
+
+    // Get current cursor position.
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto cursor = gd->getCursor();
+    auto pos = rm->getPos(cursor, shared);
+    if (pos == nullptr)
+    {
+        return false;
+    }
+
+    // Find entity to show at position.
+    auto renderableId = shared->makeId(Sdl2Ids::renderable());
+    auto block = rm->getBlock(pos, shared);
+    auto entities = block->getByComponent(renderableId);
+    if (entities.empty())
+    {
+        return false;
+    }
+
+    // Show the last entity which is not the cursor. Nobody likes the cursor.
+    auto entityToShow = entities.at(entities.size() - 1);
+    if (entityToShow == cursor)
+    {
+        if (entities.size() >= 2)
+        {
+            entityToShow = entities.at(entities.size() - 2);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    if (entityToShow == infoLastEntity)
+    {
+        return false;
+    }
+    infoLastEntity = entityToShow;
+    std::vector<EntityPtr> infoEntity = {entityToShow};
+
+    // Calculate position of portrait and background.
+    auto area = gd->getSidebarArea();
+    int width = static_cast<int>(gd->getTileWidth() * tileZoom);
+    int height = static_cast<int>(gd->getTileHeight() * tileZoom);
+    auto backgroundWidth = width + 2 * padding;
+    auto backgroundHeight = height + 2 * padding;
+    int x = static_cast<int>(area.x + (area.width / 2) - (backgroundWidth / 2));
+    int y = static_cast<int>(area.y + infoOffset + padding);
+
+    SDL_Rect rectToRender = {
+        static_cast<int>(x + padding),
+        static_cast<int>(y + padding),
+        width,
+        height
+    };
+
+    // Draw background.
+    drawRectangle(x, y, backgroundWidth, backgroundHeight,
+                  tileBackgroundR, tileBackgroundG, tileBackgroundB);
+
+    // Draw entity.
+    drawer->renderEntities(infoEntity, renderableId, rectToRender, shared);
+
+    // Entity info.
     // TODO
 
-    return false;
+    // Draw separation line below info.
+    auto separationY = y + backgroundHeight + padding;
+    drawSeparationLine(area.x + padding, area.x + area.width - padding, separationY);
+
+    eventOffset = separationY + 1;
+    return true;
 }
 
 bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
@@ -318,7 +411,7 @@ bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
     bool result = updateInfo(shared, true);
 
     // Draw events.
-    result = result || updateEvents(shared, true);
+    result = updateEvents(shared, true) || result;
 
     return result;
 }
@@ -338,5 +431,10 @@ void frts::SidebarDrawer::validateData(SharedManagerPtr)
     if (fontSize <= 0)
     {
         throw DataViolation("SidebarDrawer: Font size must be greater 0.");
+    }
+
+    if (tileZoom == 0)
+    {
+        throw DataViolation("SidebarDrawer: Tile zoom must be greater 0.");
     }
 }

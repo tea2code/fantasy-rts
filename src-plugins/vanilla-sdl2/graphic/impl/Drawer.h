@@ -27,6 +27,13 @@ namespace frts
         InvalidImageConfigError(const std::string& msg) : DataViolation(msg) {}
     };
 
+    class Drawer;
+
+    /**
+     * @brief Pointer to Drawer.
+     */
+    using DrawerPtr = std::shared_ptr<Drawer>;
+
     /**
      * @brief The drawer updates the screen and paints everything.
      */
@@ -75,6 +82,16 @@ namespace frts
          * @param shared The shared manager.
          */
         void init(SharedManagerPtr shared);
+
+        /**
+         * @brief Render given entities.
+         * @param entities The entities.
+         * @param renderableId The renderable id.
+         * @param rectToRender The rectangle to render.
+         * @param shared The shared manager.
+         */
+        void renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
+                            const SDL_Rect& rectToRender, SharedManagerPtr shared);
 
         /**
          * @brief After updating positions call this function to start the rendering.
@@ -235,10 +252,16 @@ namespace frts
          * @return The name.
          */
         std::string getName() const;
-
-        void renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
-                            const SDL_Rect& rectToRender, SharedManagerPtr shared);
     };
+
+    /**
+     * @brief Create new drawer.
+     * @return The drawer.
+     */
+    inline DrawerPtr makeDrawer()
+    {
+         return std::make_shared<Drawer>();
+    }
 }
 
 #endif // FRTS_DRAWER_H

@@ -38,7 +38,7 @@ namespace frts
 
     private:
         std::string cursorId;
-        Drawer drawer;
+        std::shared_ptr<Drawer> drawer;
         std::shared_ptr<SidebarDrawer> sidebarDrawer;
         FpsManager fpsManager;
 

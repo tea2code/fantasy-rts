@@ -12,12 +12,20 @@
 
 #include <cstdint>
 #include <list>
+#include <memory>
 #include <vector>
 #include <unordered_map>
 
 
 namespace frts
 {
+    class SidebarDrawer;
+
+    /**
+     * @brief Pointer to SidebarDrawer.
+     */
+    using SidebarDrawerPtr = std::shared_ptr<SidebarDrawer>;
+
     /**
      * @brief Helper class which draws the sidebar. Executing the rendering must happen somewhere else.
      */
@@ -43,10 +51,10 @@ namespace frts
 
         /**
          * @brief Initialize drawer. Any configuration must be set before.
-         * @param renderer The renderer.
+         * @param drawer The drawer.
          * @param shared The shared manager.
          */
-        void init(Drawer::RendererPtr renderer, SharedManagerPtr shared);
+        void init(DrawerPtr drawer, SharedManagerPtr shared);
 
         /**
          * @brief Set the sidebar configuration.
@@ -103,11 +111,12 @@ namespace frts
 
     private:
         bool initialized = false;
-        Drawer::RendererPtr renderer;
 
         std::uint8_t backgroundR = 0;
         std::uint8_t backgroundG = 0;
         std::uint8_t backgroundB = 0;
+
+        DrawerPtr drawer;
 
         std::list<EventPtr> events;
 
@@ -118,6 +127,10 @@ namespace frts
         bool eventsChanged = true;
         Frame::time eventsNextUpdate;
         Frame::time eventsUpdateTime;
+
+        Drawer::TexturePtr eventTexture;
+
+        GraphicData::Pixel eventOffset = 0;
 
         IdPtr eventValueBool;
         IdPtr eventValueFloat;
@@ -132,17 +145,24 @@ namespace frts
         FontPtr font;
         SDL_Color fontColor;
 
+        EntityPtr infoLastEntity;
+
+        Frame::time infoNextUpdate;
+        Frame::time infoUpdateTime;
+
+        GraphicData::Pixel infoOffset = 0;
+
         std::uint8_t lineColorR = 0;
         std::uint8_t lineColorG = 0;
         std::uint8_t lineColorB = 0;
 
         unsigned int padding = 0;
 
-        Drawer::TexturePtr texture;
-
         std::uint8_t tileBackgroundR = 0;
         std::uint8_t tileBackgroundG = 0;
         std::uint8_t tileBackgroundB = 0;
+
+        unsigned int tileZoom = 1;
 
     private:
         /**
@@ -157,7 +177,24 @@ namespace frts
          */
         void drawRectangle(GraphicData::Pixel x, GraphicData::Pixel y, GraphicData::Pixel width, GraphicData::Pixel height,
                            std::uint8_t r, std::uint8_t g, std::uint8_t b);
+
+        /**
+         * @brief Draw a separation line.
+         * @param startX The x coordinate of the start.
+         * @param endX The x coordinate of the end.
+         * @param y The y coordinate
+         */
+        void drawSeparationLine(GraphicData::Pixel startX, GraphicData::Pixel endX, GraphicData::Pixel y);
     };
+
+    /**
+     * @brief Create new sidebar drawer.
+     * @return The sidebar drawer.
+     */
+    inline SidebarDrawerPtr makeSidebarDrawer()
+    {
+        return std::make_shared<SidebarDrawer>();
+    }
 }
 
 #endif // FRTS_SIDEBARDRAWER_H

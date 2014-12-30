@@ -24,6 +24,9 @@ sidebar:
     # Font size.
     font-size: 12
 
+    # Time in milliseconds after which info should be updated.
+    info-update: 250
+    
     # Color of separation lines.
     line-color:
         r: 221
@@ -38,6 +41,9 @@ sidebar:
         r: 221
         g: 221
         b: 221
+        
+    # Zoom for entity portraits in info.
+    tile-zoom: 8
         
     # Event subscription.
     # TODO Replace text with text id in upcoming translation module.
