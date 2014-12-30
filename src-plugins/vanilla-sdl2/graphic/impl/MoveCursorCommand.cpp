@@ -3,6 +3,7 @@
 #include <graphic/GraphicData.h>
 #include "GraphicUtility.h"
 #include <main/Sdl2Ids.h>
+#include <frts/vanillaevent>
 
 #include <algorithm>
 
@@ -69,6 +70,14 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     }
 
     rm->setPos(gd->getCursor(), cursorPos, shared);
+
+    // Raise event.
+    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+    auto event = em->makeEvent(shared->makeId(Sdl2Ids::eventMoveCursor()), shared);
+    auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
+    eventValue->setValue(cursorPos);
+    event->setValue(shared->makeId(Sdl2Ids::eventMoveCursorPos()), eventValue);
+    em->raise(event, shared);
 }
 
 frts::IdPtr frts::MoveCursorCommand::getCommandType() const
@@ -141,4 +150,12 @@ void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
     lastX = lastY = lastZ = false;
 
     rm->setPos(gd->getCursor(), cursorPos, shared);
+
+    // Raise event.
+    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+    auto event = em->makeEvent(shared->makeId(Sdl2Ids::eventMoveCursor()), shared);
+    auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
+    eventValue->setValue(cursorPos);
+    event->setValue(shared->makeId(Sdl2Ids::eventMoveCursorPos()), eventValue);
+    em->raise(event, shared);
 }

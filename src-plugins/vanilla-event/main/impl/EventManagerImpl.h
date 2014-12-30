@@ -40,7 +40,7 @@ namespace frts
 
         EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) override;
         EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
-        void raise(EventPtr event) override;
+        void raise(EventPtr event, SharedManagerPtr shared) override;
         void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) override;
         void subscribe(EventObserverPtr observer, IdPtr type) override;
         void unsubscribe(EventObserverPtr observer) override;

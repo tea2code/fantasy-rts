@@ -8,7 +8,6 @@
 
 #include <boost/format.hpp>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
 #include <algorithm>
 #include <utility>
@@ -76,7 +75,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
     // Initialize SDL2.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        shared->getLog()->error(getName(), "SDL_Init Error: " + std::string(SDL_GetError()));
+        auto msg = boost::format(R"(SDL_Init Error: %1%)") % SDL_GetError();
+        shared->getLog()->error(getName(), msg.str());
         return;
     }
 
@@ -84,14 +84,16 @@ void frts::Drawer::init(SharedManagerPtr shared)
     int imageFlags = IMG_INIT_PNG;
     if (IMG_Init(imageFlags) != imageFlags)
     {
-        shared->getLog()->error(getName(), "IMG_Init Error: " + std::string(IMG_GetError()));
+        auto msg = boost::format(R"(IMG_Init Error: %1%)") % IMG_GetError();
+        shared->getLog()->error(getName(), msg.str());
         return;
     }
 
     // TTF support.
     if(TTF_Init() == -1)
     {
-        shared->getLog()->error(getName(), "TTF_Init Error: " + std::string(TTF_GetError()));
+        auto msg = boost::format(R"(TTF_Init Error: %1%)") % TTF_GetError();
+        shared->getLog()->error(getName(), msg.str());
         return;
     }
 
@@ -104,7 +106,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
     );
     if (window == nullptr)
     {
-        shared->getLog()->error(getName(), "SDL_CreateWindow Error: " + std::string(SDL_GetError()));
+        auto msg = boost::format(R"(SDL_CreateWindow Error: %1%)") % SDL_GetError();
+        shared->getLog()->error(getName(), msg.str());
         return;
     }
 
@@ -115,7 +118,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
     );
     if (renderer == nullptr)
     {
-        shared->getLog()->error(getName(), "SDL_CreateRenderer Error: " + std::string(SDL_GetError()));
+        auto msg = boost::format(R"(SDL_CreateRenderer Error: %1%)") % SDL_GetError();
+        shared->getLog()->error(getName(), msg.str());
         return;
     }
 
@@ -125,7 +129,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
         SDL_Surface *surface = IMG_Load(image.second.c_str());
         if (surface == nullptr)
         {
-            shared->getLog()->error(getName(), "IMG_Load Error: " + std::string(IMG_GetError()));
+            auto msg = boost::format(R"(IMG_Load Error: %1%)") % IMG_GetError();
+            shared->getLog()->error(getName(), msg.str());
             continue;
         }
 
@@ -136,7 +141,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
         SDL_FreeSurface(surface);
         if (texture == nullptr)
         {
-            shared->getLog()->error(getName(), "SDL_CreateTextureFromSurface Error: " + std::string(SDL_GetError()));
+            auto msg = boost::format(R"(SDL_CreateTextureFromSurface Error: %1%)") % SDL_GetError();
+            shared->getLog()->error(getName(), msg.str());
             continue;
         }
 

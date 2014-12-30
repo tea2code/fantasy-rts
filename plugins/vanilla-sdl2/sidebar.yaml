@@ -5,21 +5,44 @@ sidebar:
         r: 51
         g: 51
         b: 51
-        
+     
+    # Height of events area.
+    events-height: 500
+    
+    # Time in milliseconds after which events should be updated.
+    events-update: 500
+     
     # Font color.
     font-color:
         r: 221
         g: 221
         b: 221
-        
+     
+    # Path to font.
+    font-path: vanilla-sdl2/Vera.ttf
+    
+    # Font size.
+    font-size: 12
+
     # Color of separation lines.
     line-color:
         r: 221
         g: 221
         b: 221
         
+    # Padding between border and content of sidebar.
+    padding: 3
+        
     # Tile info background color.
     tile-background:
         r: 221
         g: 221
         b: 221
+        
+    # Event subscription.
+    # TODO Replace text with text id in upcoming translation module.
+    events:
+        - type: frts.vanillasdl2.event.movecursor
+          text: "Cursor moved to position (%1%, %2%, %3%)."
+          values:
+            - frts.vanillasdl2.event.movecursor.pos

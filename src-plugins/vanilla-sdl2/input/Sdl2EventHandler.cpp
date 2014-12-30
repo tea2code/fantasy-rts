@@ -5,6 +5,7 @@
 #include <main/Sdl2Ids.h>
 #include <frts/vanillacommand>
 #include <frts/vanillamodel>
+#include <frts/vanillaevent>
 
 
 frts::Sdl2EventHandler::Sdl2EventHandler()
@@ -59,7 +60,7 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
             case SDL_MOUSEMOTION:
             {
                 // Set cursor position based on mouse event then update region and screen.
-                // Important: The map rectangle on the screen must be considered.
+                // Important: The map area on the screen must be considered.
 
                 auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
                 auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
@@ -76,8 +77,17 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
                 Point::value x = screenToRegion(mapPixelX, gd->getTileWidth()) + gd->getScreenOffsetX();
                 Point::value y = screenToRegion(mapPixelY, gd->getTileHeight()) + gd->getScreenOffsetY();
                 auto newPos = mf->makePoint(x, y, gd->getZLevel());
-                rm->removeEntity(gd->getCursor(), shared);
-                rm->setPos(gd->getCursor(), newPos, shared);
+                auto oldPos = rm->setPos(gd->getCursor(), newPos, shared);
+
+                if (newPos != oldPos)
+                {
+                    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+                    auto event = em->makeEvent(shared->makeId(Sdl2Ids::eventMoveCursor()), shared);
+                    auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
+                    eventValue->setValue(newPos);
+                    event->setValue(shared->makeId(Sdl2Ids::eventMoveCursorPos()), eventValue);
+                    em->raise(event, shared);
+                }
             }
             break;
         }

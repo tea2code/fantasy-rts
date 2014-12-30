@@ -27,8 +27,9 @@ namespace frts
         /**
          * @brief Notify the observer regarding a new event.
          * @param event The event.
+         * @param shared The shared manager.
          */
-        virtual void notify(EventPtr event) = 0;
+        virtual void notify(EventPtr event, SharedManagerPtr shared) = 0;
     };
 }
 

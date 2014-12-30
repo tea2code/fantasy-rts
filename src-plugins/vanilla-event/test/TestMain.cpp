@@ -21,7 +21,7 @@ namespace test
     class TestObserver : public frts::EventObserver
     {
     public:
-        void notify(frts::EventPtr event) override
+        void notify(frts::EventPtr event, frts::SharedManagerPtr) override
         {
             lastEvent = event->getType();
         }
@@ -53,30 +53,30 @@ TEST_CASE("EventObserver.", "[main]")
     eventManager->subscribe(observer, eventId3);
     REQUIRE(observer->lastEvent == nullptr);
 
-    eventManager->raise(event1);
+    eventManager->raise(event1, shared);
     REQUIRE(observer->lastEvent == eventId1);
 
-    eventManager->raise(event2);
+    eventManager->raise(event2, shared);
     REQUIRE(observer->lastEvent == eventId1);
 
     eventManager->unsubscribe(observer);
-    eventManager->raise(event3);
+    eventManager->raise(event3, shared);
     REQUIRE(observer->lastEvent == eventId1);
 
     eventManager->subscribe(observer, eventId1);
     eventManager->subscribe(observer, eventId3);
 
-    eventManager->raise(event3);
+    eventManager->raise(event3, shared);
     REQUIRE(observer->lastEvent == eventId3);
 
-    eventManager->raise(event1);
+    eventManager->raise(event1, shared);
     REQUIRE(observer->lastEvent == eventId1);
 
-    eventManager->raise(event3);
+    eventManager->raise(event3, shared);
     REQUIRE(observer->lastEvent == eventId3);
 
     eventManager->unsubscribe(observer, eventId1);
-    eventManager->raise(event1);
+    eventManager->raise(event1, shared);
     REQUIRE(observer->lastEvent == eventId3);
 }
 

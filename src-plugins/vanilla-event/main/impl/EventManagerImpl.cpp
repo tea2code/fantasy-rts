@@ -124,13 +124,16 @@ bool frts::EventManagerImpl::preInit(SharedManagerPtr)
     return false;
 }
 
-void frts::EventManagerImpl::raise(EventPtr event)
+void frts::EventManagerImpl::raise(EventPtr event, SharedManagerPtr shared)
 {
+    assert(event != nullptr);
+    assert(shared != nullptr);
+
     auto it = eventObservers.find(event->getType());
     if (it != eventObservers.end())
     {
         auto& observers = it->second;
-        std::for_each(observers.begin(), observers.end(), [&](auto& observer){ observer->notify(event); });
+        std::for_each(observers.begin(), observers.end(), [&](auto& observer){ observer->notify(event, shared); });
     }
 }
 

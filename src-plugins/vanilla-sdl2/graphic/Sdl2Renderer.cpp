@@ -8,13 +8,16 @@
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillacommand>
+#include <frts/vanillaevent>
 
 #include <boost/format.hpp>
 
 
 frts::Sdl2Renderer::Sdl2Renderer()
     : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1)
-{}
+{
+    sidebarDrawer = std::make_shared<SidebarDrawer>();
+}
 
 void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
 {
@@ -79,10 +82,16 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     // Init fps manager.
     fpsManager.setNumFpsAvg(gd->getNumFpsAvg());
 
-    // Init drawers.
+    // Init drawer.
     drawer.init(shared);
-    sidebarDrawer.init(drawer.getRenderer(), shared);
     gd->setRenderEverything();
+
+    sidebarDrawer->init(drawer.getRenderer(), shared);
+    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+    for (auto& type : sidebarDrawer->getSidebarEvents())
+    {
+        em->subscribe(sidebarDrawer, type);
+    }
 
     // Add commands.
     // Move screen.
@@ -226,13 +235,8 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     // Sidebar drawer
     else if (key == "sidebar")
     {
-        sidebarDrawer.setSidebarConfig(shared, node);
+        sidebarDrawer->setSidebarConfig(shared, node);
     }
-}
-
-void frts::Sdl2Renderer::notify(EventPtr event)
-{
-    // TODO
 }
 
 void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
@@ -256,7 +260,7 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     if (gd->isRenderEverything())
     {
         drawer.updateMap(shared, gd->getZLevel(), rm, mf, gd);
-        sidebarDrawer.updateSidebar(events, shared);
+        sidebarDrawer->updateSidebar(shared);
         gd->setRenderEverything(false);
         renderNow = true;
     }
@@ -271,11 +275,8 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
         }
 
         // Sidebar
-        if (!events.empty())
-        {
-            sidebarDrawer.updateEvents(events, shared);
-        }
-        //sidebarDrawer.updateInfo(shared);
+        renderNow = renderNow || sidebarDrawer->updateEvents(shared);
+        renderNow = renderNow || sidebarDrawer->updateInfo(shared);
     }
 
     // Render.
@@ -283,9 +284,6 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     {
         drawer.renderNow(shared);
     }
-
-    // Cleanup
-    events.clear();
 }
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
@@ -349,7 +347,7 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
     drawer.validateData(shared);
 
     // Sidebar drawer
-    sidebarDrawer.validateData(shared);
+    sidebarDrawer->validateData(shared);
 }
 
 void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)

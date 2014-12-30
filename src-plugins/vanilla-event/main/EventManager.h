@@ -50,7 +50,7 @@ namespace frts
          *        type will be notified.
          * @param event The event.
          */
-        virtual void raise(EventPtr event) = 0;
+        virtual void raise(EventPtr event, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Register an event value builder.

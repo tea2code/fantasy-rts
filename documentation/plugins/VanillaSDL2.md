@@ -326,3 +326,45 @@ It is possible to define a background color on the `style` node. This is used fo
                      - x: <integer greater 0>
                        y: <integer greater 0>
                        chance: <float, optional>
+                       
+### Sidebar Config
+
+Beside the style configuration for the map there is another one for the sidebar.
+
+    sidebar:
+    
+        background:
+            r: <integer between 0 and 255, optional>
+            g: <integer between 0 and 255, optional>
+            b: <integer between 0 and 255, optional>
+         
+        events-height: <integer greater 0>
+        
+        events-update: <integer greater/equal 0>
+         
+        font-color:
+            r: <integer between 0 and 255, optional>
+            g: <integer between 0 and 255, optional>
+            b: <integer between 0 and 255, optional>
+            
+        font-path: <string>
+        
+        font-size: <integer greater 0>
+            
+        line-color:
+            r: <integer between 0 and 255, optional>
+            g: <integer between 0 and 255, optional>
+            b: <integer between 0 and 255, optional>
+         
+        padding: <integer greater/equal 0>
+
+        tile-background:
+            r: <integer between 0 and 255, optional>
+            g: <integer between 0 and 255, optional>
+            b: <integer between 0 and 255, optional>
+            
+        events:
+            - type: <string representing an id>
+              text: <string>
+              values:
+                - <string representing an id>

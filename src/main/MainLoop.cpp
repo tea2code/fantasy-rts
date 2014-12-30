@@ -40,6 +40,9 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
     std::string msgTemplate = R"(Frame time of %1%ms exceeded max frame time of %2%ms.)";
     std::string debugMsgTemplate = R"(Frame time of %1%ms exceeded delta frame time of %2%ms.)";
 
+    auto frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
+    shared->setFrame(frame);
+
     while (!shared->isQuitApplication())
     {
         Frame::time newTime = highResTime();
@@ -69,7 +72,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
 
         while (accumulator >= deltaTime)
         {
-            auto frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
+            frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
             shared->setFrame(frame);
             update(shared);
             accumulator -= deltaTime;
