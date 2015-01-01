@@ -41,14 +41,6 @@ namespace frts
         std::shared_ptr<Drawer> drawer;
         std::shared_ptr<SidebarDrawer> sidebarDrawer;
         FpsManager fpsManager;
-
-    private:     
-        /**
-         * @brief Retrieves the graphic data.
-         * @param shared The shared manager.
-         * @return The graphic data.
-         */
-        GraphicDataPtr graphicData(SharedManagerPtr shared) const;
     };
 
     /**

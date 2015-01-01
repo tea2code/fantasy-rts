@@ -130,7 +130,7 @@ namespace frts
 
         Drawer::TexturePtr eventTexture;
 
-        GraphicData::Pixel eventOffset = 0;
+        GraphicData::pixel eventOffset = 0;
 
         IdPtr eventValueBool;
         IdPtr eventValueFloat;
@@ -150,7 +150,7 @@ namespace frts
         Frame::time infoNextUpdate;
         Frame::time infoUpdateTime;
 
-        GraphicData::Pixel infoOffset = 0;
+        GraphicData::pixel infoOffset = 0;
 
         std::uint8_t lineColorR = 0;
         std::uint8_t lineColorG = 0;
@@ -175,7 +175,7 @@ namespace frts
          * @param g RGB component green.
          * @param b RGB component blue.
          */
-        void drawRectangle(GraphicData::Pixel x, GraphicData::Pixel y, GraphicData::Pixel width, GraphicData::Pixel height,
+        void drawRectangle(GraphicData::pixel x, GraphicData::pixel y, GraphicData::pixel width, GraphicData::pixel height,
                            std::uint8_t r, std::uint8_t g, std::uint8_t b);
 
         /**
@@ -184,7 +184,7 @@ namespace frts
          * @param endX The x coordinate of the end.
          * @param y The y coordinate
          */
-        void drawSeparationLine(GraphicData::Pixel startX, GraphicData::Pixel endX, GraphicData::Pixel y);
+        void drawSeparationLine(GraphicData::pixel startX, GraphicData::pixel endX, GraphicData::pixel y);
     };
 
     /**

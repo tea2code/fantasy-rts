@@ -212,7 +212,8 @@ int main(int argc, char* argv[])
 
         // Phase 6: Create data.
         log->info(logModule, "Phase 6: Create data.");
-        shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData(pluginsRoot));
+        auto mainData = frts::makeMainData(pluginsRoot, deltaTime);
+        shared->setDataValue(shared->makeId(frts::MainIds::mainData()), mainData);
         app.createData(modules, shared);
 
         // Log all data values with name, type and version.
@@ -279,7 +280,7 @@ int main(int argc, char* argv[])
         const size_t maxSize = 10;
         void *stackTrace[maxSize];
         size_t size = backtrace(stackTrace, maxSize);
-        auto symbols = backtrace_symbols (stackTrace, size);
+        auto symbols = backtrace_symbols(stackTrace, size);
         auto msg = boost::format(R"(Exception: %1%\nStack Trace: %2%)")
                 % ex.what() % symbols;
         log->error(logModule, msg.str());

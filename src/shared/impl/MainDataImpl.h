@@ -14,9 +14,11 @@ namespace frts
     public:
         /**
          * @param pluginPath Relative path to plugin directory.
+         * @param deltaTime The delta time of a frame.
          */
-        MainDataImpl(const std::string& pluginPath);
+        MainDataImpl(const std::string& pluginPath, Frame::time deltaTima);
 
+        Frame::time getDeltaTime() const override;
         std::string getName() const override;
         std::string getPluginPath() const override;
         std::string getTypeName() const override;
@@ -24,17 +26,19 @@ namespace frts
         int getVersion() const override;
 
     private:
+        Frame::time deltaTime;
         std::string pluginPath;
     };
 
     /**
      * @brief Create new MainData.
      * @param pluginPath Relative path to plugin directory.
+     * @param deltaTime The delta time of a frame.
      * @return The MainData.
      */
-    inline MainDataPtr makeMainData(const std::string& pluginPath)
+    inline MainDataPtr makeMainData(const std::string& pluginPath, Frame::time deltaTime)
     {
-        return std::make_shared<MainDataImpl>(pluginPath);
+        return std::make_shared<MainDataImpl>(pluginPath, deltaTime);
     }
 }
 

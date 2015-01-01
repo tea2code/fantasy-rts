@@ -14,7 +14,7 @@ namespace frts
      * @param tile The tile width or height.
      * @return The region coordinate (x or y).
      */
-    Point::value screenToRegion(GraphicData::Pixel screen, int tile);
+    Point::value screenToRegion(GraphicData::pixel screen, int tile);
 
     /**
      * @brief Converts region coordinates in tiles to screen coordinates in pixel.
@@ -22,7 +22,7 @@ namespace frts
      * @param tile The tile width or height.
      * @return The screen coordinate (x or y).
      */
-    GraphicData::Pixel regionToScreen(Point::value region, int tile);
+    GraphicData::pixel regionToScreen(Point::value region, int tile);
 }
 
 #endif // FRTS_GRAPHICUTILITY_H

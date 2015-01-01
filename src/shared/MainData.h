@@ -2,6 +2,7 @@
 #define FRTS_MAINDATA_H
 
 #include "DataValue.h"
+#include "Frame.h"
 
 #include <string>
 #include <memory>
@@ -23,6 +24,12 @@ namespace frts
     {
     public:
         virtual ~MainData() {}
+
+        /**
+         * @brief The time a frame normally should have.
+         * @return The delta time.
+         */
+        virtual Frame::time getDeltaTime() const = 0;
 
         /**
          * @brief Get the relative (from execution directory)

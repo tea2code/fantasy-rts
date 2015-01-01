@@ -32,7 +32,7 @@ namespace frts
             auto dataValue = getDataValue<DataValue>(shared, dataValueId);
             if (dataValue->getTypeVersion() != typeVersion)
             {
-                auto msg = boost::format(R"(Data value "%1%" has the wrong version %2%. Version %3% is required. Required by "%4%".)")
+                auto msg = boost::format(R"(Data value "%1%" has the wrong version %3%. Version %2% is required. Required by "%4%".)")
                         % dataValueId % typeVersion % dataValue->getTypeVersion() % validator;
                 throw DataViolation(msg.str());
             }

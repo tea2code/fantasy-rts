@@ -126,10 +126,10 @@ TEST_CASE("GraphicData.ScreenArea", "[graphic]")
     // x a a a x
     // x x x x x
     frts::GraphicData::ScreenArea a(1, 1, 3, 3);
-    frts::GraphicData::Pixel size = 5;
-    for (frts::GraphicData::Pixel x = 0; x < size; ++x)
+    frts::GraphicData::pixel size = 5;
+    for (frts::GraphicData::pixel x = 0; x < size; ++x)
     {
-        for (frts::GraphicData::Pixel y = 0; y < size; ++y)
+        for (frts::GraphicData::pixel y = 0; y < size; ++y)
         {
             if (x == 0 || x == size - 1 || y == 0 || y == size - 1)
             {

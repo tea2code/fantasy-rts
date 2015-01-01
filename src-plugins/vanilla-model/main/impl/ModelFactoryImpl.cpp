@@ -46,6 +46,7 @@ void frts::ModelFactoryImpl::checkRequiredData(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     validateDataValue(getName(), ModelIds::modelData(), 2, shared);
+    validateDataValue(getName(), MainIds::mainData(), 2, shared);
 }
 
 bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)

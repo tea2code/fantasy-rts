@@ -16,7 +16,7 @@ frts::SidebarDrawer::~SidebarDrawer()
     eventTexture.reset();
 }
 
-void frts::SidebarDrawer::drawRectangle(GraphicData::Pixel x, GraphicData::Pixel y, GraphicData::Pixel width, GraphicData::Pixel height,
+void frts::SidebarDrawer::drawRectangle(GraphicData::pixel x, GraphicData::pixel y, GraphicData::pixel width, GraphicData::pixel height,
                                         std::uint8_t r, std::uint8_t g, std::uint8_t b)
 {
     SDL_Rect rectToRender = {
@@ -29,7 +29,7 @@ void frts::SidebarDrawer::drawRectangle(GraphicData::Pixel x, GraphicData::Pixel
     SDL_RenderFillRect(drawer->getRenderer().get(), &rectToRender);
 }
 
-void frts::SidebarDrawer::drawSeparationLine(GraphicData::Pixel startX, GraphicData::Pixel endX, GraphicData::Pixel y)
+void frts::SidebarDrawer::drawSeparationLine(GraphicData::pixel startX, GraphicData::pixel endX, GraphicData::pixel y)
 {
     SDL_SetRenderDrawColor(drawer->getRenderer().get(), lineColorR, lineColorG, lineColorB, 0);
     SDL_RenderDrawLine(drawer->getRenderer().get(), startX, y, endX, y);
@@ -386,7 +386,8 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     drawer->renderEntities(infoEntity, renderableId, rectToRender, shared);
 
     // Entity info.
-    // TODO
+    // TODO Name
+    // TODO Position
 
     // Draw separation line below info.
     auto separationY = y + backgroundHeight + padding;

@@ -3,9 +3,14 @@
 #include <shared/MainIds.h>
 
 
-frts::MainDataImpl::MainDataImpl(const std::string& pluginPath)
-    : pluginPath{pluginPath}
+frts::MainDataImpl::MainDataImpl(const std::string& pluginPath, Frame::time deltaTime)
+    : deltaTime{deltaTime}, pluginPath{pluginPath}
 {
+}
+
+frts::Frame::time frts::MainDataImpl::getDeltaTime() const
+{
+    return deltaTime;
 }
 
 std::string frts::MainDataImpl::getName() const
@@ -25,10 +30,10 @@ std::string frts::MainDataImpl::getTypeName() const
 
 int frts::MainDataImpl::getTypeVersion() const
 {
-    return 1;
+    return getVersion();
 }
 
 int frts::MainDataImpl::getVersion() const
 {
-    return 1;
+    return 2;
 }

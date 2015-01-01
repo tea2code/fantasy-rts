@@ -24,7 +24,8 @@ void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 2, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 3, shared);
+    validateDataValue(getName(), MainIds::mainData(), 2, shared);
 }
 
 bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
@@ -36,13 +37,6 @@ bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
     shared->setDataValue(id, gd);
 
     return false;
-}
-
-frts::GraphicDataPtr frts::Sdl2Renderer::graphicData(SharedManagerPtr shared) const
-{
-    assert(shared != nullptr);
-
-    return getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 }
 
 std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
@@ -66,7 +60,7 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
         return true;
     }
 
-    auto gd = graphicData(shared);
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 
     // Register renderable.
     auto componentId = shared->makeId(Sdl2Ids::renderable());
@@ -190,11 +184,10 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     assert(shared != nullptr);
 
     // Graphic Data
-    auto gd = graphicData(shared);
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     if (key == "screen")
     {
         cursorId = node->getString("cursor", cursorId);
-        gd->setMaxFps(node->getInteger("fps", gd->getMaxFps()));
         gd->setNumFpsAvg(node->getInteger("num_fps_avg", gd->getNumFpsAvg()));
         gd->setScreenHeight(node->getInteger("height", gd->getScreenHeight()));
         gd->setScreenTitle(node->getString("title", gd->getScreenTitle()));
@@ -244,18 +237,13 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    auto gd = graphicData(shared);
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto md = getDataValue<MainData>(shared, MainIds::mainData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
-    // FpsManager
-    fpsManager.limitFps(gd->getMaxFps());
-    auto fps = fpsManager.calcFps();
-
     // Drawers
     bool renderNow = false;
-    auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
-    drawer->setWindowTitle(windowsTitle.str());
     drawer->setOffsetX(gd->getScreenOffsetX());
     drawer->setOffsetY(gd->getScreenOffsetY());
     if (gd->isRenderEverything())
@@ -285,24 +273,33 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     {
         drawer->renderNow(shared);
     }
+
+    // FpsManager
+    fpsManager.limitFps(md->getDeltaTime());
+    auto fps = fpsManager.calcFps();
+    auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
+    drawer->setWindowTitle(windowsTitle.str());
+
+    // For debugging.
+    // IMPORTANT: Simple calculation for "once per second". Don't do this for productive code.
+    if (shared->getFrame()->getNumber() % 100 == 0)
+    {
+        auto msg = boost::format(R"(FPS: %1%)") % fps;
+        shared->getLog()->debug(getName(), msg.str());
+    }
 }
 
 void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    // Graphic Data
-    auto gd = graphicData(shared);
-
     if (cursorId.empty())
     {
         throw DataViolation("Sdl2Renderer: Cursor entity is not set.");
     }
 
-    if (gd->getMaxFps() == 0)
-    {
-        throw DataViolation("Sdl2Renderer: Maximal frames per second must be greater than zero.");
-    }
+    // Graphic Data
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 
     if (gd->getNumFpsAvg() == 0)
     {

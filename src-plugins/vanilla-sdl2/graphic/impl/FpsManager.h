@@ -1,7 +1,8 @@
 #ifndef FRTS_FPSMANAGER_H
 #define FRTS_FPSMANAGER_H
 
-#include <memory>
+#include <frts/shared>
+
 #include <list>
 
 
@@ -23,9 +24,9 @@ namespace frts
 
         /**
          * @brief Limits the frame rate to the given value.
-         * @param fps The target frame rate.
+         * @param deltaTime The time of one frame.
          */
-        void limitFps(unsigned int fps);
+        void limitFps(Frame::time deltaTime);
 
         /**
          * @brief Set number of fps measures to calculate fps.

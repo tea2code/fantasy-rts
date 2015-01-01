@@ -2,8 +2,6 @@
 
 #include <SDL2/SDL.h>
 
-#include <numeric>
-
 
 frts::FpsManager::FpsManager()
     : lastLimitTime{SDL_GetTicks()}, lastTime{SDL_GetTicks()}
@@ -32,13 +30,12 @@ unsigned int frts::FpsManager::calcFps()
         // Default fps if no value is inserted.
         return 9999;
     }
-//    return std::accumulate(fpsQueue.begin(), fpsQueue.end(), 0) / fpsQueue.size();
     return fpsTotal / fpsQueue.size();
 }
 
-void frts::FpsManager::limitFps(unsigned int fps)
+void frts::FpsManager::limitFps(Frame::time deltaTime)
 {
-    unsigned int msPerFrame = 1000 / fps;
+    unsigned int msPerFrame = deltaTime.count();
     unsigned int diff = SDL_GetTicks() - lastLimitTime;
     if (diff < msPerFrame)
     {
