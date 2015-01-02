@@ -410,8 +410,8 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     {
         auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
 
-        modelData->setMapSizeX(node->getInteger("width"));
-        modelData->setMapSizeY(node->getInteger("height"));
+        modelData->setMapSizeX(node->getInteger("width", modelData->getMapSizeX()));
+        modelData->setMapSizeY(node->getInteger("height", modelData->getMapSizeY()));
         modelData->setPrecalculateDown(node->getInteger("precalculate_down", modelData->getPrecalculateDown()));
         modelData->setPrecalculateUp(node->getInteger("precalculate_up", modelData->getPrecalculateUp()));
         modelData->setSurfaceZLevel(node->getInteger("surface_level", modelData->getSurfaceZLevel()));

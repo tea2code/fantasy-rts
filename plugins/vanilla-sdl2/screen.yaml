@@ -4,12 +4,11 @@ screen:
     cursor: entity.cursor
 
     # Number of FPS measures used for average calculation. The average will be shown in the title.
-    #num_fps_avg: 10000
-    num_fps_avg: 100
+    num_fps_avg: 10000
 
     # Height and width of screen (in pixel). Should be multiples of tile.height and tile.width.
-    height: 1024
-    width: 1280
+    height: 768
+    width: 1024
     
     # The screen movement size should be around 30% of height and width (in pixel). Should be multiples of tile.height and tile.width.
     screen_move_x: 320

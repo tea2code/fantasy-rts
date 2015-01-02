@@ -2,8 +2,11 @@
 
 #include <main/Sdl2Ids.h>
 #include <frts/shared>
+#include <frts/vanillamodel>
 
 #include <boost/format.hpp>
+
+#include <algorithm>
 
 
 frts::SidebarDrawer::SidebarDrawer()
@@ -33,6 +36,60 @@ void frts::SidebarDrawer::drawSeparationLine(GraphicData::pixel startX, GraphicD
 {
     SDL_SetRenderDrawColor(drawer->getRenderer().get(), lineColorR, lineColorG, lineColorB, 0);
     SDL_RenderDrawLine(drawer->getRenderer().get(), startX, y, endX, y);
+}
+
+frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text, int x, int y, int maxWidth, int maxHeight, SharedManagerPtr shared)
+{
+    Drawer::TexturePtr texture = nullptr;
+
+    SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), fontColor, maxWidth);
+    if(surface == nullptr)
+    {
+        auto msg = boost::format(R"(TTF_RenderText_Blended_Wrapped Error: %1%)") % TTF_GetError();
+        shared->getLog()->error(getName(), msg.str());
+        return texture;
+    }
+
+    auto width = surface->w;
+
+    auto fontHeight = TTF_FontHeight(font.get());
+    int height = (surface->h / fontHeight) * fontHeight;
+    while (height > maxHeight)
+    {
+        height -= fontHeight;
+    }
+
+    texture = std::shared_ptr<SDL_Texture>(
+        SDL_CreateTextureFromSurface(drawer->getRenderer().get(), surface),
+        Drawer::Sdl2Deleter()
+    );
+    SDL_FreeSurface(surface);
+    if(texture == nullptr)
+    {
+        auto msg = boost::format(R"(SDL_CreateTextureFromSurface Error: %1%)") % SDL_GetError();
+        shared->getLog()->error(getName(), msg.str());
+        return texture;
+    }
+
+    // Draw background.
+    drawRectangle(x, y, maxWidth, maxHeight, backgroundR, backgroundG, backgroundB);
+
+    // Draw text.
+    SDL_Rect rectToRender = {
+        x,
+        y,
+        width,
+        height
+    };
+    SDL_Rect clip = {
+        0,
+        0,
+        width,
+        height
+    };
+    SDL_RenderCopy(drawer->getRenderer().get(), texture.get(), &clip, &rectToRender);
+
+    return texture;
 }
 
 std::string frts::SidebarDrawer::getName() const
@@ -130,6 +187,8 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
     }
 
     fontSize = sidebarNode->getInteger("font-size", fontSize);
+
+    infoText = sidebarNode->getString("info-text", infoText);
 
     if (sidebarNode->has("info-update"))
     {
@@ -251,60 +310,27 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
         text += eventText.str();
         text += "\n";
     }
+    if (text.empty())
+    {
+        return false;
+    }
 
+    // Calculate size.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto area = gd->getSidebarArea();
+    int maxWidth = area.width - 2 * padding;
+    auto x = area.x + padding;
+    auto y = area.y + eventOffset + padding;
 
-    // Create texture and calculate size.
-    int width = area.width - 2 * padding;
-
-    SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), fontColor, width);
-    if(surface == nullptr)
+    // Render and draw texture.
+    auto texture = drawText(text, x, y, maxWidth, eventsHeight, shared);
+    bool ok = (texture != nullptr);
+    if (ok)
     {
-        auto msg = boost::format(R"(TTF_RenderText_Blended_Wrapped Error: %1%)") % TTF_GetError();
-        shared->getLog()->error(getName(), msg.str());
-        return false;
+        eventTexture = texture;
     }
 
-    int height = (surface->h / fontHeight) * fontHeight;
-    while (height > static_cast<int>(eventsHeight))
-    {
-        height -= fontHeight;
-    }
-
-    eventTexture = std::shared_ptr<SDL_Texture>(
-        SDL_CreateTextureFromSurface(drawer->getRenderer().get(), surface),
-        Drawer::Sdl2Deleter()
-    );
-    SDL_FreeSurface(surface);
-    if(eventTexture == nullptr)
-    {
-        auto msg = boost::format(R"(SDL_CreateTextureFromSurface Error: %1%)") % SDL_GetError();
-        shared->getLog()->error(getName(), msg.str());
-        return false;
-    }
-
-    // Draw background.
-    auto startX = area.x + padding;
-    auto startY = area.y + eventOffset + padding;
-    drawRectangle(startX, startY, width, height, backgroundR, backgroundG, backgroundB);
-
-    // Draw text.
-    SDL_Rect rectToRender = {
-        static_cast<int>(startX),
-        static_cast<int>(startY),
-        width,
-        height
-    };
-    SDL_Rect clip = {
-        0,
-        0,
-        width,
-        height
-    };
-    SDL_RenderCopy(drawer->getRenderer().get(), eventTexture.get(), &clip, &rectToRender);
-
-    return true;
+    return ok;
 }
 
 bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
@@ -386,14 +412,25 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     drawer->renderEntities(infoEntity, renderableId, rectToRender, shared);
 
     // Entity info.
-    // TODO Name
-    // TODO Position
+    auto fontHeight = TTF_FontHeight(font.get());
+    auto msg = boost::format(infoText) % pos->getX() % pos->getY() % pos->getZ();
+    std::string text = msg.str();
+    auto lines = std::count(text.begin(), text.end(), '\n');
+    int maxWidth = area.width - 2 * padding;
+    int maxHeight = (1 + lines) * fontHeight;
+    x = area.x + padding;
+    y = y + backgroundHeight + padding;
+    auto texture = drawText(text, x, y, maxWidth, maxHeight, shared);
+    if (texture != nullptr)
+    {
+        infoTexture = texture;
+    }
 
     // Draw separation line below info.
-    auto separationY = y + backgroundHeight + padding;
+    auto separationY = y + maxHeight + padding;
     drawSeparationLine(area.x + padding, area.x + area.width - padding, separationY);
 
-    eventOffset = separationY + 1;
+    eventOffset = separationY + 1; // + 1 because of line height.
     return true;
 }
 

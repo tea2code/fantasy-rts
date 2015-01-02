@@ -152,6 +152,10 @@ namespace frts
 
         GraphicData::pixel infoOffset = 0;
 
+        std::string infoText;
+
+        Drawer::TexturePtr infoTexture;
+
         std::uint8_t lineColorR = 0;
         std::uint8_t lineColorG = 0;
         std::uint8_t lineColorB = 0;
@@ -185,6 +189,18 @@ namespace frts
          * @param y The y coordinate
          */
         void drawSeparationLine(GraphicData::pixel startX, GraphicData::pixel endX, GraphicData::pixel y);
+
+        /**
+         * @brief Render given text.
+         * @param text The text to render.
+         * @param x The x coordinate.
+         * @param y The y coordinate.
+         * @param maxWidth The max width of the text before a line break.
+         * @param maxHeight The max height of the text.
+         * @param shared The shared manager.
+         * @return The rendered texture or null if failed.
+         */
+        Drawer::TexturePtr drawText(const std::string& text, int x, int y, int maxWidth, int maxHeight, SharedManagerPtr shared);
     };
 
     /**

@@ -5,6 +5,7 @@
 #include "impl/FpsManager.h"
 #include "impl/SidebarDrawer.h"
 #include <frts/BaseTickable.h>
+#include <frts/shared>
 
 #include <memory>
 #include <string>
@@ -41,6 +42,7 @@ namespace frts
         std::shared_ptr<Drawer> drawer;
         std::shared_ptr<SidebarDrawer> sidebarDrawer;
         FpsManager fpsManager;
+        Frame::time nextFpsLog;
     };
 
     /**

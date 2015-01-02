@@ -14,7 +14,7 @@
 
 
 frts::Sdl2Renderer::Sdl2Renderer()
-    : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1)
+    : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1), nextFpsLog{fromMilliseconds(0)}
 {
     drawer = makeDrawer();
     sidebarDrawer = makeSidebarDrawer();
@@ -281,11 +281,11 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     drawer->setWindowTitle(windowsTitle.str());
 
     // For debugging.
-    // IMPORTANT: Simple calculation for "once per second". Don't do this for productive code.
-    if (shared->getFrame()->getNumber() % 100 == 0)
+    if (shared->getFrame()->getRunTime() >= nextFpsLog)
     {
         auto msg = boost::format(R"(FPS: %1%)") % fps;
         shared->getLog()->debug(getName(), msg.str());
+        nextFpsLog += fromMilliseconds(1000);
     }
 }
 

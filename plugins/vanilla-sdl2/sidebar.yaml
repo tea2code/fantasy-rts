@@ -23,7 +23,11 @@ sidebar:
     
     # Font size.
     font-size: 12
-
+    
+    # Info text.
+    # TODO Replace text with text id in upcoming translation module.
+    info-text: "Position: (%1%, %2%, %3%)"
+    
     # Time in milliseconds after which info should be updated.
     info-update: 250
     

@@ -1,0 +1,13 @@
+region:
+
+    precalculate_up: 0
+    precalculate_down: 0
+
+screen:
+
+    num_fps_avg: 1000
+    
+    height: 786
+    width: 1280
+    
+    sidebar_width: 240

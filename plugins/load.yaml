@@ -32,6 +32,7 @@ utilities:
     - frts/EventManager
     
 configurations:
+    # Plugin related config
     - vanilla-command/command.yaml
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
@@ -45,3 +46,6 @@ configurations:
     - maps/default.yaml
     #- maps/demo1/demo1.yaml
     - maps/forgotten tower/forgotten tower.yaml
+    
+    # User config
+    - user.yaml
