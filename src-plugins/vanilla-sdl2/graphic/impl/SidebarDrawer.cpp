@@ -1,8 +1,10 @@
 #include "SidebarDrawer.h"
 
 #include <main/Sdl2Ids.h>
+
 #include <frts/shared>
 #include <frts/vanillamodel>
+#include <frts/timer.h>
 
 #include <boost/format.hpp>
 
@@ -254,6 +256,8 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     }
     eventsChanged = false;
 
+    PerformanceLog pl(getName() + " UpdateEvents", shared);
+
     // Limit number of events. Don't try to show more than possible. And remove an extra one for the
     // headline.
     auto fontHeight = TTF_FontHeight(font.get());
@@ -349,6 +353,8 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
         infoNextUpdate += infoUpdateTime;
     }
 
+    PerformanceLog pl(getName() + " UpdateInfo", shared);
+
     // Get current cursor position.
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
@@ -438,6 +444,8 @@ bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
 {
     assert(initialized);
     assert(shared != nullptr);
+
+    PerformanceLog pl(getName() + " UpdateSidebar", shared);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto area = gd->getSidebarArea();

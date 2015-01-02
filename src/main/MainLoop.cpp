@@ -37,8 +37,8 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
 
     Frame::time deltaTimeDebug = deltaTime + fromMilliseconds(1);
 
-    std::string msgTemplate = R"(Frame time of %1%ms exceeded max frame time of %2%ms.)";
-    std::string debugMsgTemplate = R"(Frame time of %1%ms exceeded delta frame time of %2%ms.)";
+    std::string msgTemplate = R"(Frame %3% exceeded frame time of %1%ms with max frame time of %2%ms.)";
+    std::string debugMsgTemplate = R"(Frame %3% exceeded frame time of %1%ms with delta frame time of %2%ms.)";
 
     auto frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
     shared->setFrame(frame);
@@ -53,7 +53,8 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
         {
             auto msg = boost::format(msgTemplate)
                     % std::chrono::duration_cast<std::chrono::milliseconds>(frameTime).count()
-                    % std::chrono::duration_cast<std::chrono::milliseconds>(maxFrameTime).count();
+                    % std::chrono::duration_cast<std::chrono::milliseconds>(maxFrameTime).count()
+                    % frame->getNumber();
             shared->getLog()->info(logModule, msg.str());
 
             frameTime = maxFrameTime;
@@ -63,7 +64,8 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
         {
             auto msg = boost::format(debugMsgTemplate)
                     % std::chrono::duration_cast<std::chrono::milliseconds>(frameTime).count()
-                    % std::chrono::duration_cast<std::chrono::milliseconds>(deltaTime).count();
+                    % std::chrono::duration_cast<std::chrono::milliseconds>(deltaTime).count()
+                    % frame->getNumber();
             shared->getLog()->debug(logModule, msg.str());
         }
 

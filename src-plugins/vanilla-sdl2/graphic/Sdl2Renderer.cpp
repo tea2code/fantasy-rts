@@ -280,10 +280,10 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
     drawer->setWindowTitle(windowsTitle.str());
 
-    // For debugging.
+    // Log every second the current fps.
     if (shared->getFrame()->getRunTime() >= nextFpsLog)
     {
-        auto msg = boost::format(R"(FPS: %1%)") % fps;
+        auto msg = boost::format(R"(FPS of frame %2%: %1%)") % fps % shared->getFrame()->getNumber();
         shared->getLog()->debug(getName(), msg.str());
         nextFpsLog += fromMilliseconds(1000);
     }

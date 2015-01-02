@@ -5,6 +5,7 @@
 
 #include <frts/file.h>
 #include <frts/vanillamodel>
+#include <frts/timer.h>
 
 #include <boost/format.hpp>
 #include <SDL2/SDL_image.h>
@@ -176,8 +177,9 @@ void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr 
     }
 }
 
-void frts::Drawer::renderNow(SharedManagerPtr)
+void frts::Drawer::renderNow(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
     assert(initialized);
 
     SDL_RenderPresent(renderer.get());
@@ -242,6 +244,8 @@ void frts::Drawer::updateMap(SharedManagerPtr shared, Point::value zLevel,
                                 RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
     assert(shared != nullptr);
+
+    PerformanceLog pl(getName() + " UpdateMap", shared);
 
     Point::value width = offsetX + mapWidth;
     Point::value height = offsetY + screenHeight;
@@ -339,6 +343,8 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnordered
                                    RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
 {
     assert(shared != nullptr);
+
+    PerformanceLog pl(getName() + " UpdatePositions", shared);
 
     for (PointPtr pos : positions)
     {
