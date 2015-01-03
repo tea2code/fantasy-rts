@@ -152,7 +152,10 @@ namespace frts
 
         GraphicData::pixel infoOffset = 0;
 
+        bool infoOnlyWithComponent = true;
+
         std::string infoText;
+        unsigned int infoTextHeight = 0;
 
         Drawer::TexturePtr infoTexture;
 

@@ -10,7 +10,7 @@ sidebar:
     events-height: 500
     
     # Time in milliseconds after which events should be updated.
-    events-update: 500
+    events-update: 300
      
     # Font color.
     font-color:
@@ -24,9 +24,15 @@ sidebar:
     # Font size.
     font-size: 12
     
+    # Only show entities with info component.
+    info-only-with-component: true
+    
     # Info text.
     # TODO Replace text with text id in upcoming translation module.
     info-text: "Position: (%1%, %2%, %3%)"
+    
+    # Height of info text in info area.
+    info-text-height: 100
     
     # Time in milliseconds after which info should be updated.
     info-update: 250

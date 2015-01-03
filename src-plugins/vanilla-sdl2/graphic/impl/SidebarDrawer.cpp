@@ -190,7 +190,11 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
 
     fontSize = sidebarNode->getInteger("font-size", fontSize);
 
+    infoOnlyWithComponent = sidebarNode->getBool("info-only-with-component", infoOnlyWithComponent);
+
     infoText = sidebarNode->getString("info-text", infoText);
+
+    infoTextHeight = sidebarNode->getInteger("info-text-height", infoTextHeight);
 
     if (sidebarNode->has("info-update"))
     {
@@ -323,11 +327,12 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto area = gd->getSidebarArea();
     int maxWidth = area.width - 2 * padding;
+    int maxHeight = eventsHeight - (eventsHeight % fontHeight);
     auto x = area.x + padding;
     auto y = area.y + eventOffset + padding;
 
     // Render and draw texture.
-    auto texture = drawText(text, x, y, maxWidth, eventsHeight, shared);
+    auto texture = drawText(text, x, y, maxWidth, maxHeight, shared);
     bool ok = (texture != nullptr);
     if (ok)
     {
@@ -368,7 +373,20 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     // Find entity to show at position.
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
     auto block = rm->getBlock(pos, shared);
-    auto entities = block->getByComponent(renderableId);
+    auto unfilteredEntities = block->getByComponent(renderableId);
+    auto entities = unfilteredEntities;
+    auto infoId = shared->makeId(ComponentIds::info());
+    if (infoOnlyWithComponent)
+    {
+        entities.clear();
+        for (auto& entity : unfilteredEntities)
+        {
+            if (entity->hasComponent(infoId))
+            {
+                entities.push_back(entity);
+            }
+        }
+    }
     if (entities.empty())
     {
         return false;
@@ -418,12 +436,25 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     drawer->renderEntities(infoEntity, renderableId, rectToRender, shared);
 
     // Entity info.
-    auto fontHeight = TTF_FontHeight(font.get());
     auto msg = boost::format(infoText) % pos->getX() % pos->getY() % pos->getZ();
     std::string text = msg.str();
-    auto lines = std::count(text.begin(), text.end(), '\n');
+    if (entityToShow->hasComponent(infoId))
+    {
+        auto info = getComponent<Info>(infoId, entityToShow);
+        auto information = info->getInformation();
+        for (auto& infoItem : information)
+        {
+            text += "\n";
+            text += infoItem.first->toString();
+            text += ": ";
+            text += infoItem.second->toString();
+        }
+    }
+
+    // Render info.
+    auto fontHeight = TTF_FontHeight(font.get());
     int maxWidth = area.width - 2 * padding;
-    int maxHeight = (1 + lines) * fontHeight;
+    int maxHeight = infoTextHeight - (infoTextHeight % fontHeight);
     x = area.x + padding;
     y = y + backgroundHeight + padding;
     auto texture = drawText(text, x, y, maxWidth, maxHeight, shared);
@@ -477,6 +508,11 @@ void frts::SidebarDrawer::validateData(SharedManagerPtr)
     if (fontSize <= 0)
     {
         throw DataViolation("SidebarDrawer: Font size must be greater 0.");
+    }
+
+    if (infoTextHeight == 0)
+    {
+        throw DataViolation("SidebarDrawer: Info text height must be greater 0.");
     }
 
     if (tileZoom == 0)

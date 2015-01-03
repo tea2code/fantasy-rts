@@ -171,6 +171,10 @@ entities:
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Grass"
         - name: air
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -178,14 +182,26 @@ entities:
                 - blocking.air
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Air"
         - name: dirt
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Dirt"
         - name: rock.floor
           components:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Rock"
         - name: ramp
           components:
             - component: frts.vanillamodel.entity.component.sortorder
@@ -205,6 +221,10 @@ entities:
                 - blocking.wall
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Stonewall"
         - name: earth
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -215,6 +235,10 @@ entities:
                 - entity.dirt
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Earth"
         - name: rock
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -225,6 +249,10 @@ entities:
                 - entity.rock.floor
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Rock"
         - name: rock.iron
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -236,6 +264,12 @@ entities:
                 - entity.ore.iron
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Iron Ore"
+                - name: Description
+                  value: "Iron ore can be used to create iron tools and weapons."
         - name: rock.coal
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -247,6 +281,12 @@ entities:
                 - entity.coal
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Coal"
+                - name: Description
+                  value: "Feeds the furnaces and dyes faces black."
         - name: rock.diamond
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -258,3 +298,9 @@ entities:
                 - entity.diamond
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Diamonds"
+                - name: Description
+                  value: "Sparkling clear gem. My precious."
