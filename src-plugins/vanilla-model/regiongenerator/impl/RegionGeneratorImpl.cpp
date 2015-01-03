@@ -64,6 +64,10 @@ bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block
                 break;
             }
         }
+        if (initialized)
+        {
+            break;
+        }
     }
     return initialized;
 }

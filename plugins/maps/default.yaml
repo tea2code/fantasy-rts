@@ -11,10 +11,10 @@ region_generator:
         levels:
         
             default_below:
-                - map.underground.generator.rock.3
-                - map.underground.generator.coal
-                - map.underground.generator.iron
                 - map.underground.generator.diamond
+                - map.underground.generator.iron
+                - map.underground.generator.coal
+                - map.underground.generator.rock.3
         
             levels:
                 - level: -1
@@ -25,8 +25,8 @@ region_generator:
                     - map.underground.generator.rock.2
                 - level: -3
                   generators: 
-                    - map.underground.generator.rock.3
                     - map.underground.generator.coal
+                    - map.underground.generator.rock.3
                     
         generators:
             namespace: generator

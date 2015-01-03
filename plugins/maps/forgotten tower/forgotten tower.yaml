@@ -42,6 +42,7 @@ bmp_map:
               g: 127
               b: 127
               entities:  
+                - entity.dirt
                 - entity.wall
                 
             # Grass
