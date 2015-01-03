@@ -29,7 +29,7 @@ namespace frts
         using pixel = unsigned int;
 
         /**
-         * @brief The screen rectangle describes a rectangle in the window.
+         * @brief The screen area describes an area in the window.
          */
         struct ScreenArea
         {
@@ -55,6 +55,12 @@ namespace frts
                        y <= pixelY && pixelY < y + height;
             }
         };
+
+    public:
+        /**
+         * @brief Default entity index for info area of sidebar.
+         */
+        const int sidebarInfoIndexDefault = -1;
 
     public:
         virtual ~GraphicData() {}
@@ -112,6 +118,11 @@ namespace frts
          * @return The sidebar rectangle in the window.
          */
         virtual ScreenArea getSidebarArea() const = 0;
+
+        /**
+         * @return Entity index for info area of sidebar.
+         */
+        virtual int getSidebarInfoIndex() const = 0;
 
         /**
          * @return The sidebar width in pixel.
@@ -209,6 +220,12 @@ namespace frts
          * @param mapArea The sidebar rectangle.
          */
         virtual void setSidebarArea(ScreenArea sidebarArea) = 0;
+
+        /**
+         * @brief Set entity index for info area of sidebar.
+         * @param index The entity index.
+         */
+        virtual void setSidebarInfoIndex(int index) = 0;
 
         /**
          * @brief Set the sidebar width.

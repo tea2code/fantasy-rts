@@ -16,3 +16,5 @@ command:
         - frts.vanillasdl2.command.movescreen.southeast
         - frts.vanillasdl2.command.movescreen.northwest
         - frts.vanillasdl2.command.movescreen.southwest
+        - frts.vanillasdl2.command.switchsidebarinfoindex.plus
+        - frts.vanillasdl2.command.switchsidebarinfoindex.minus

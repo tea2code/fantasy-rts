@@ -26,6 +26,7 @@ namespace frts
         std::string getScreenTitle() const override;
         pixel getScreenWidth() const override;
         ScreenArea getSidebarArea() const override;
+        int getSidebarInfoIndex() const override;
         pixel getSidebarWidth() const override;
         pixel getTileHeight() const override;
         pixel getTileWidth() const override;
@@ -46,6 +47,7 @@ namespace frts
         void setScreenTitle(const std::string& screenTitle) override;
         void setScreenWidth(pixel screenWidth) override;
         void setSidebarArea(ScreenArea sidebarArea) override;
+        void setSidebarInfoIndex(int index) override;
         void setSidebarWidth(pixel sidebarWidth) override;
         void setTileHeight(pixel tileHeight) override;
         void setTileWidth(pixel tileWidth) override;
@@ -65,6 +67,7 @@ namespace frts
         std::string screenTitle;
         pixel screenWidth = 0;
         ScreenArea sidebarArea;
+        int sidebarInfoIndex = sidebarInfoIndexDefault;
         pixel sidebarWidth = 0;
         pixel tileHeight = 0;
         pixel tileWidth = 0;

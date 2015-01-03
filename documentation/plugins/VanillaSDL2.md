@@ -26,12 +26,24 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 
 Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
 
-For tests it is necessary to copy the SDL2_image library to the executable:
+For tests it is necessary to copy some libraries to the executable:
 
 ### Windows
 
     xcopy
     %{buildDir}\..\..\vanilla-sdl2\dependency\SDL2_image\i686-w64-mingw32\bin\SDL2_image.dll %{buildDir}  /eiy
+    %{buildDir}
+    
+    xcopy
+    %{buildDir}\..\..\vanilla-sdl2\dependency\SDL2_ttf\i686-w64-mingw32\bin\SDL2_ttf.dll %{buildDir}  /eiy
+    %{buildDir}
+    
+    xcopy
+    %{buildDir}\..\..\vanilla-sdl2\dependency\SDL2_ttf\i686-w64-mingw32\bin\libfreetype-6.dll %{buildDir}  /eiy
+    %{buildDir}
+    
+    xcopy
+    %{buildDir}\..\..\vanilla-sdl2\dependency\SDL2_ttf\i686-w64-mingw32\bin\zlib1.dll %{buildDir}  /eiy
     %{buildDir}
 
 ## Input/Event Handling

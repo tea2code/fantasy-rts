@@ -28,4 +28,7 @@ keys:
       command: frts.vanillasdl2.command.movecursor.north
     - key: down
       command: frts.vanillasdl2.command.movecursor.south
-    
+      
+    # Switch sidebar info index
+    - key: i
+      command: frts.vanillasdl2.command.switchsidebarinfoindex.plus

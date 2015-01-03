@@ -9,6 +9,8 @@
 #include <graphic/impl/RenderableImpl.h>
 #include <graphic/impl/Sprite.h>
 #include <graphic/impl/SpritePoint.h>
+#include <graphic/impl/SwitchSidebarInfoIndexCommand.h>
+#include <graphic/impl/SwitchSidebarInfoIndexCommandBuilder.h>
 #include <main/Sdl2Ids.h>
 
 #include <frts/configuration>
@@ -59,7 +61,6 @@ TEST_CASE("Graphic Data.", "[graphic]")
 {
     auto gd = frts::makeGraphicData();
 
-    gd->setMaxFps(1);
     gd->setNumFpsAvg(2);
     gd->setScreenHeight(3);
     gd->setScreenTitle("a");
@@ -72,6 +73,7 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setScreenOffsetStepX(10);
     gd->setScreenOffsetStepY(11);
     gd->setSidebarWidth(12);
+    gd->setSidebarInfoIndex(13);
 
     frts::GraphicData::ScreenArea sidebarArea;
     sidebarArea.x = 1;
@@ -93,7 +95,6 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setRenderEverything(false);
     REQUIRE_FALSE(gd->isRenderEverything());
 
-    REQUIRE(gd->getMaxFps() == 1);
     REQUIRE(gd->getNumFpsAvg() == 2);
     REQUIRE(gd->getScreenHeight() == 3);
     REQUIRE(gd->getScreenWidth() == 4);
@@ -106,6 +107,7 @@ TEST_CASE("Graphic Data.", "[graphic]")
     REQUIRE(gd->getScreenOffsetStepX() == 10);
     REQUIRE(gd->getScreenOffsetStepY() == 11);
     REQUIRE(gd->getSidebarWidth() == 12);
+    REQUIRE(gd->getSidebarInfoIndex() == 13);
 
     REQUIRE(gd->getSidebarArea().x == 1);
     REQUIRE(gd->getSidebarArea().y == 2);
@@ -192,6 +194,34 @@ TEST_CASE("Sprite.", "[graphic]")
     REQUIRE(sprite.getWidth() == 20);
     REQUIRE(sprite.getX() == 1);
     REQUIRE(sprite.getY() == 2);
+}
+
+TEST_CASE("MoveScreenCommand.", "[graphic]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto gd = frts::makeGraphicData();
+    shared->setDataValue(shared->makeId(frts::Sdl2Ids::graphicData()), gd);
+
+    gd->setSidebarInfoIndex(0);
+    REQUIRE(gd->getSidebarInfoIndex() == 0);
+
+    auto commandId = shared->makeId("command.id");
+
+    auto builder = frts::makeSwitchSidebarInfoIndexCommandBuilder(commandId, +1);
+    auto command = builder->build(shared);
+    command->execute(shared);
+    REQUIRE(gd->getSidebarInfoIndex() == 1);
+    command->undo(shared);
+    REQUIRE(gd->getSidebarInfoIndex() == 0);
+
+    builder = frts::makeSwitchSidebarInfoIndexCommandBuilder(commandId, -1);
+    command = builder->build(shared);
+    command->execute(shared);
+    REQUIRE(gd->getSidebarInfoIndex() == -1);
+    command->undo(shared);
+    REQUIRE(gd->getSidebarInfoIndex() == 0);
 }
 
 // The following test case has a huge dependency on vanilla-model.

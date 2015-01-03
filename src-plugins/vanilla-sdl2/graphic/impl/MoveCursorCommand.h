@@ -1,7 +1,6 @@
 #ifndef FRTS_MOVECURSORCOMMAND_H
 #define FRTS_MOVECURSORCOMMAND_H
 
-#include <graphic/GraphicData.h>
 #include <frts/vanillacommand>
 #include <frts/vanillamodel>
 

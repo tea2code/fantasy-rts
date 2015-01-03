@@ -15,7 +15,9 @@ HEADERS += \
     $$PWD/impl/GraphicUtility.h \
     $$PWD/impl/MoveCursorCommand.h \
     $$PWD/impl/MoveCursorCommandBuilder.h \
-    $$PWD/impl/SidebarDrawer.h
+    $$PWD/impl/SidebarDrawer.h \
+    $$PWD/impl/SwitchSidebarInfoIndexCommand.h \
+    $$PWD/impl/SwitchSidebarInfoIndexCommandBuilder.h
     
 
 SOURCES += \
@@ -33,4 +35,6 @@ SOURCES += \
     $$PWD/impl/GraphicUtility.cpp \
     $$PWD/impl/MoveCursorCommand.cpp \
     $$PWD/impl/MoveCursorCommandBuilder.cpp \
-    $$PWD/impl/SidebarDrawer.cpp
+    $$PWD/impl/SidebarDrawer.cpp \
+    $$PWD/impl/SwitchSidebarInfoIndexCommand.cpp \
+    $$PWD/impl/SwitchSidebarInfoIndexCommandBuilder.cpp

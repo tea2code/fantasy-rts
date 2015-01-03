@@ -66,6 +66,11 @@ frts::GraphicData::ScreenArea frts::GraphicDataImpl::getSidebarArea() const
     return sidebarArea;
 }
 
+int frts::GraphicDataImpl::getSidebarInfoIndex() const
+{
+    return sidebarInfoIndex;
+}
+
 frts::GraphicData::pixel frts::GraphicDataImpl::getSidebarWidth() const
 {
     return sidebarWidth;
@@ -93,7 +98,7 @@ int frts::GraphicDataImpl::getTypeVersion() const
 
 int frts::GraphicDataImpl::getVersion() const
 {
-    return 3;
+    return 4;
 }
 
 frts::Point::value frts::GraphicDataImpl::getZLevel() const
@@ -164,6 +169,11 @@ void frts::GraphicDataImpl::setScreenWidth(frts::GraphicData::pixel screenWidth)
 void frts::GraphicDataImpl::setSidebarArea(ScreenArea sidebarArea)
 {
     this->sidebarArea = sidebarArea;
+}
+
+void frts::GraphicDataImpl::setSidebarInfoIndex(int index)
+{
+    this->sidebarInfoIndex = index;
 }
 
 void frts::GraphicDataImpl::setSidebarWidth(frts::GraphicData::pixel sidebarWidth)

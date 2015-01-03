@@ -174,7 +174,7 @@ TEST_CASE("Create and use shared manager.", "[shared]")
 
 TEST_CASE("MainData", "[shared]")
 {
-    frts::MainDataPtr mainData = frts::makeMainData("plugins/");
+    frts::MainDataPtr mainData = frts::makeMainData("plugins/", frts::fromMilliseconds(10));
 
     REQUIRE(mainData->getPluginPath() == "plugins/");
 }

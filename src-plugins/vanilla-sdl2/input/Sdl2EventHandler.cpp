@@ -17,7 +17,7 @@ void frts::Sdl2EventHandler::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 3, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 4, shared);
 }
 
 void frts::Sdl2EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)

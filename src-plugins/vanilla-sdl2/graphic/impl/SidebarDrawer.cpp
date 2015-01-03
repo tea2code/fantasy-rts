@@ -2,8 +2,6 @@
 
 #include <main/Sdl2Ids.h>
 
-#include <frts/shared>
-#include <frts/vanillamodel>
 #include <frts/timer.h>
 
 #include <boost/format.hpp>
@@ -17,9 +15,7 @@ frts::SidebarDrawer::SidebarDrawer()
 {}
 
 frts::SidebarDrawer::~SidebarDrawer()
-{
-    eventTexture.reset();
-}
+{}
 
 void frts::SidebarDrawer::drawRectangle(GraphicData::pixel x, GraphicData::pixel y, GraphicData::pixel width, GraphicData::pixel height,
                                         std::uint8_t r, std::uint8_t g, std::uint8_t b)
@@ -347,6 +343,8 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     assert(initialized);
     assert(shared != nullptr);
 
+    // This function uses a couple of heuristics to detect if a update really is necessary.
+
     // Only update if necessary.
     if (!forceUpdate)
     {
@@ -360,15 +358,21 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
 
     PerformanceLog pl(getName() + " UpdateInfo", shared);
 
-    // Get current cursor position.
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+
+    // Get current cursor position.
     auto cursor = gd->getCursor();
     auto pos = rm->getPos(cursor, shared);
     if (pos == nullptr)
     {
         return false;
     }
+    if (pos != infoLastPos)
+    {
+        gd->setSidebarInfoIndex(gd->sidebarInfoIndexDefault);
+    }
+    infoLastPos = pos;
 
     // Find entity to show at position.
     auto renderableId = shared->makeId(Sdl2Ids::renderable());
@@ -391,14 +395,28 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     {
         return false;
     }
+    if (infoLastCountEntities != entities.size())
+    {
+        gd->setSidebarInfoIndex(gd->sidebarInfoIndexDefault);
+    }
+    infoLastCountEntities = entities.size();
 
     // Show the last entity which is not the cursor. Nobody likes the cursor.
-    auto entityToShow = entities.at(entities.size() - 1);
+    if (gd->getSidebarInfoIndex() == gd->sidebarInfoIndexDefault)
+    {
+        gd->setSidebarInfoIndex(entities.size() - 1);
+    }
+    else
+    {
+        gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() % entities.size());
+    }
+    auto entityToShow = entities.at(gd->getSidebarInfoIndex());
     if (entityToShow == cursor)
     {
-        if (entities.size() >= 2)
+        if (gd->getSidebarInfoIndex() > 0)
         {
-            entityToShow = entities.at(entities.size() - 2);
+            gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() - 1);
+            entityToShow = entities.at(gd->getSidebarInfoIndex());
         }
         else
         {

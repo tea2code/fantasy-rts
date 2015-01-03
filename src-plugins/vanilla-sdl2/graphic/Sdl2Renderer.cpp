@@ -5,6 +5,7 @@
 #include "impl/RenderableBuilder.h"
 #include "impl/MoveScreenCommandBuilder.h"
 #include "impl/MoveCursorCommandBuilder.h"
+#include "impl/SwitchSidebarInfoIndexCommandBuilder.h"
 #include <main/Sdl2Ids.h>
 
 #include <frts/vanillacommand>
@@ -24,7 +25,7 @@ void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateDataValue(getName(), Sdl2Ids::graphicData(), 3, shared);
+    validateDataValue(getName(), Sdl2Ids::graphicData(), 4, shared);
     validateDataValue(getName(), MainIds::mainData(), 2, shared);
 }
 
@@ -172,6 +173,19 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
         // South West
         commandId = shared->makeId(Sdl2Ids::moveCursorCommandSouthWest());
         commandFactory->registerCommandBuilder(commandId, makeMoveCursorCommandBuilder(commandId, cursorStepX, -cursorStepY, 0));
+    }
+
+    // Switch sidebar info index.
+    {
+        const int stepSize = 1;
+
+        // Plus
+        IdPtr commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexPlus());
+        commandFactory->registerCommandBuilder(commandId, makeSwitchSidebarInfoIndexCommandBuilder(commandId, stepSize));
+
+        // Minus
+        commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexMinus());
+        commandFactory->registerCommandBuilder(commandId, makeSwitchSidebarInfoIndexCommandBuilder(commandId, -stepSize));
     }
 
     isInit = true;

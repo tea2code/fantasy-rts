@@ -6,6 +6,7 @@
 #include <frts/configuration>
 #include <frts/shared>
 #include <frts/vanillaevent>
+#include <frts/vanillamodel>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -145,7 +146,9 @@ namespace frts
         FontPtr font;
         SDL_Color fontColor;
 
+        unsigned int infoLastCountEntities = 0;
         EntityPtr infoLastEntity;
+        PointPtr infoLastPos;
 
         Frame::time infoNextUpdate;
         Frame::time infoUpdateTime;
