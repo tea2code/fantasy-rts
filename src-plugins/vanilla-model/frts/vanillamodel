@@ -8,6 +8,7 @@
 #include <entity/Entity.h>
 #include <entity/HasResource.h>
 #include <entity/IsResource.h>
+#include <entity/Info.h>
 #include <entity/Movable.h>
 #include <entity/SortOrder.h>
 #include <event/EntityEventValue.h>

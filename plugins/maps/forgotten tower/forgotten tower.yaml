@@ -59,6 +59,14 @@ bmp_map:
                 - entity.grass
                 - entity.tree
                 
+            # Wood logs on grass.
+            - r: 104
+              g: 62
+              b: 62
+              entities:
+                - entity.grass
+                - entity.wood.log
+                
             # Dirt
             - r: 127
               g: 0

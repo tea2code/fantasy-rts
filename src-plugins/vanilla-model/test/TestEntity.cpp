@@ -12,6 +12,8 @@
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceImpl.h>
 #include <entity/impl/IsResourceBuilder.h>
+#include <entity/impl/InfoImpl.h>
+#include <entity/impl/InfoBuilder.h>
 #include <entity/impl/MovableBuilder.h>
 #include <entity/impl/MovableImpl.h>
 #include <entity/impl/SortOrderImpl.h>
@@ -343,6 +345,34 @@ TEST_CASE("IsResource Builder.", "[entity]")
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::IsResource>(component);
     REQUIRE(castComponent->getResourceType() == frts::makeId("id.resource"));
+}
+
+TEST_CASE("Info.", "[entity]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeInfoBuilder();
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto k1 = shared->makeId("k1");
+    auto v1 = shared->makeId("v1");
+    auto k2 = shared->makeId("k2");
+    auto v2 = shared->makeId("v2");
+    std::vector<frts::Info::InfoItem> infos;
+    infos.push_back(std::make_pair(k1, v1));
+    infos.push_back(std::make_pair(k2, v2));
+
+    auto info = std::static_pointer_cast<frts::Info>(component);
+    info->setInformation(infos);
+
+    auto componentInfos = info->getInformation();
+    REQUIRE(componentInfos.size() == 2);
+    REQUIRE(componentInfos.at(0).first == k1);
+    REQUIRE(componentInfos.at(0).second == v1);
+    REQUIRE(componentInfos.at(1).first == k2);
+    REQUIRE(componentInfos.at(1).second == v2);
 }
 
 TEST_CASE("Movable.", "[entity]")

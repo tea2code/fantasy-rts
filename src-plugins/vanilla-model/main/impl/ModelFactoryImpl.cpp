@@ -8,6 +8,7 @@
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
 #include <entity/impl/HasResourceBuilder.h>
+#include <entity/impl/InfoBuilder.h>
 #include <entity/impl/IsResourceBuilder.h>
 #include <entity/impl/MovableBuilder.h>
 #include <entity/impl/SortOrderBuilder.h>
@@ -157,6 +158,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto hasResourceId = shared->makeId(ComponentIds::hasResource());
     componentBuilder = makeHasResourceBuilder();
     registerComponentBuilder(hasResourceId, componentBuilder);
+
+    // Info.
+    auto infoId = shared->makeId(ComponentIds::info());
+    componentBuilder = makeInfoBuilder();
+    registerComponentBuilder(infoId, componentBuilder);
 
     // IsResource.
     auto isResourceId = shared->makeId(ComponentIds::isResource());

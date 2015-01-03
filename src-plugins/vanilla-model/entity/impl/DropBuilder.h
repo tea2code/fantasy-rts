@@ -6,6 +6,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Builder for drop components.
+     */
     class DropBuilder : public ComponentBuilder
     {
     public:
@@ -15,6 +18,10 @@ namespace frts
         ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) override;
     };
 
+    /**
+     * @brief Create new drop builder.
+     * @return The component builder.
+     */
     inline ComponentBuilderPtr makeDropBuilder()
     {
         return std::make_shared<DropBuilder>();

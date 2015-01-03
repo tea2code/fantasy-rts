@@ -45,6 +45,12 @@ entities:
             - component: frts.vanillamodel.entity.component.movable
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 240
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Dwarf"
+                - name: Description
+                  value: "A sturdy little creature. Beware its axe and its mead."
     
         # Vegetation
         - name: shrub.berry
@@ -66,6 +72,12 @@ entities:
                 - resource.food
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 100
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Berry Shrub"
+                - name: Description
+                  value: "A low plant with delicious berries."
         - name: tree
           components:
             - component: frts.vanillamodel.entity.component.blockedby
@@ -85,6 +97,12 @@ entities:
                 - resource.wood
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 100
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Tree"
+                - name: Description
+                  value: "Majestic plant which gives plenty of living space and hard wood for craftsman."
         
         # Resource
         - name: berry
@@ -93,31 +111,60 @@ entities:
               resource_type: resource.food
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Berries"
+                - name: Description
+                  value: "Edible berries."
         - name: wood.log
           components:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.wood
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Wood Log"
+                - name: Description
+                  value: "A wood log. Don't confuse with morning wood."
         - name: ore.iron
           components:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.iron
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Iron Ore"
+                - name: Description
+                  value: "Iron ore can be used to create iron tools and weapons."
         - name: coal
           components:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.coal
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Coal"
+                - name: Description
+                  value: "Feeds the furnaces and dyes faces black."
         - name: diamond
           components:
             - component: frts.vanillamodel.entity.component.isresource
               resource_type: resource.diamond
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
-        
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: Name
+                  value: "Diamonds"
+                - name: Description
+                  value: "Sparkling clear gem. My precious."
               
         # Background
         - name: grass

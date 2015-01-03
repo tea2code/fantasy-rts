@@ -51,7 +51,7 @@ TEST_CASE("ModelFactory.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
-    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/"));
+    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/", frts::fromMilliseconds(10)));
 
     frts::ModelFactoryPtr modelFactory = frts::makeModelFactory();
 
@@ -118,7 +118,7 @@ TEST_CASE("ModelReseter.", "[main]")
 {
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
-    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/"));
+    shared->setDataValue(shared->makeId(frts::MainIds::mainData()), frts::makeMainData("/", frts::fromMilliseconds(10)));
 
     frts::TickablePtr modelReseter = frts::makeModelReseter();
 

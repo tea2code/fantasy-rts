@@ -38,6 +38,16 @@ Entities may contain resources which can be harvested.
     resources:
         - <string representing an id>
 
+## Info
+
+Component with additional information about an entity. The ids are for translation texts.
+
+### Configuration
+
+    infos:
+        - name: <string representing an id>
+          value: <string representing an id>
+
 ## IsResource
 
 Entities with this component represent a resource.

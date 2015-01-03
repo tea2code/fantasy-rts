@@ -31,6 +31,11 @@ namespace frts
             return "frts.vanillamodel.entity.component.hasresource";
         }
 
+        static std::string info()
+        {
+            return "frts.vanillamodel.entity.component.info";
+        }
+
         static std::string isResource()
         {
             return "frts.vanillamodel.entity.component.isresource";
