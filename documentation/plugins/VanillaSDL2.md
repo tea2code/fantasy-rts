@@ -362,6 +362,12 @@ Beside the style configuration for the map there is another one for the sidebar.
         
         font-size: <integer greater 0>
             
+        info-only-with-component: <boolean>
+
+        info-text: <string>
+
+        info-text-height: <integer greater 0>
+            
         info-update: <integer greater/equal 0>
             
         line-color:
