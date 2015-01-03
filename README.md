@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **21**
+Current Version: **22**
 
 - Version 1: Configuration.
 - Version 2: Kernel.
@@ -31,6 +31,7 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 20: Precalculated z-levels using parallel thread.
 - Version 21: Event system.
 - Version 22: Sidebar ui.
+- Version 23: Digging.
 
 Major goals:
 
