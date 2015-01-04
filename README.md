@@ -34,6 +34,7 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 23: Action plugin.
 - Version 24: Jobs plugin.
 - Version 25: Digging.
+- Version 26: Menu
 
 Major goals:
 
