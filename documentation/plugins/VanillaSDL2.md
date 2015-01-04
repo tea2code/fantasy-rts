@@ -207,11 +207,11 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Commands
 
-This plugin implements a couple of commands which are assigned to different keys. If necessary it adds these commands also to the undo blacklist of VanillaCommand.
+This plugin implements a couple of commands (using the *VanillaCommand* plugin) which are assigned to different keys. If necessary it adds these commands also to the undo blacklist.
 
 ### MoveCursorCommand
 
-This command (using the *VanillaCommand* plugin) allows movement of the cursor over the map. Following directions are implemented:
+This command  allows movement of the cursor over the map. Following directions are implemented:
 
 - **North:** Using command id `frts.vanillasdl2.command.movecursor.north`.
 - **East:** Using command id `frts.vanillasdl2.command.movecursor.east`.
@@ -224,7 +224,7 @@ This command (using the *VanillaCommand* plugin) allows movement of the cursor o
 
 ### MoveScreenCommand
 
-This command (using the *VanillaCommand* plugin) allows movement of the visible screen over the map. Following directions are implemented:
+This command allows movement of the visible screen over the map. Following directions are implemented:
 
 - **North:** Using command id `frts.vanillasdl2.command.movescreen.north`.
 - **East:** Using command id `frts.vanillasdl2.command.movescreen.east`.
