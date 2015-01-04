@@ -31,7 +31,9 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 20: Precalculated z-levels using parallel thread.
 - Version 21: Event system.
 - Version 22: Sidebar ui.
-- Version 23: Digging.
+- Version 23: Action plugin.
+- Version 24: Jobs plugin.
+- Version 25: Digging.
 
 Major goals:
 
