@@ -16,6 +16,8 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ### Action
 
+The action interface must be implemented by any class which wants to use the action manager for its execution. All action methods are executed by the action manager. The method `init()` is called directly after adding to the action manager. The method `stop()` is most likely called if another action wants to be executed because there can only be one at a time. The methods `execute()` and `stop()` are called every frame until they return `Finished` or `Cancel`. 
+
 ### Action Manager
 
 ## Commands
