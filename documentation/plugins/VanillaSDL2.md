@@ -205,28 +205,9 @@ Following keys are currently supported. If multiple names for one key exist they
         At @
         Caret ^
 
-## Graphic Output
+## Commands
 
-### GraphicData
-
-This data value contains common data related to graphic output. 
-
-Default ID can be found in the static class `Sdl2Ids`.
-
-Will identify itself by the name and type `frts::GraphicData`.
-
-### Renderable
-
-This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
-
-Default ID can be found in the static class `Sdl2Ids`.
-
-Its config consists of the sprite ID and a optional transparency value:
-
-    sprite: <string representing an id>
-    transparency: <integer greater or equal 0, optional>
-
-If `transparency` is given the defined number of blocks below the current one are rendered. This is currently only for the background (the lowest) entity supported. It only works if the sprites have a alpha channel with at least some transparency.
+This plugin implements a couple of commands which are assigned to different keys. If necessary it adds these commands also to the undo blacklist of VanillaCommand.
 
 ### MoveCursorCommand
 
@@ -258,6 +239,36 @@ This command (using the *VanillaCommand* plugin) allows movement of the visible 
 
 Step width is configured in the `screen` configuration (see **Screen Config**).
 
+### SwitchSidebarInfoIndexCommand
+
+This command allows to switch the currently shown entity in the info area of the sidebar:
+
+- **Next:** Using command id `frts.vanillasdl2.command.switchsidebarinfoindex.next`.
+- **Previous:** Using command id `frts.vanillasdl2.command.switchsidebarinfoindex.previous`.
+
+## Graphic Output
+
+### GraphicData
+
+This data value contains common data related to graphic output. 
+
+Default ID can be found in the static class `Sdl2Ids`.
+
+Will identify itself by the name and type `frts::GraphicData`.
+
+### Renderable
+
+This component describes with which sprite a entity is rendered. If a sprite has the multiple attribute it also defines the index of the specific sub sprite.
+
+Default ID can be found in the static class `Sdl2Ids`.
+
+Its config consists of the sprite ID and a optional transparency value:
+
+    sprite: <string representing an id>
+    transparency: <integer greater or equal 0, optional>
+
+If `transparency` is given the defined number of blocks below the current one are rendered. This is currently only for the background (the lowest) entity supported. It only works if the sprites have a alpha channel with at least some transparency.
+
 ### SDL2 Renderer
 
 The renderer module manages everything graphic related. 
@@ -266,7 +277,7 @@ Load using `frts/SDL2Renderer` in the `renderModules` section of the load file.
 
 Will identify itself by the name and type `frts::SDL2Renderer`.
 
-### Screen Config
+#### Screen Config
 
 The screen config defines the cursor entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
 
@@ -291,7 +302,7 @@ The screen config defines the cursor entity, the size of the visible screen (and
         height: <integer greater 0>
         width: <integer greater 0>
 
-### Style Config
+#### Style Config
 
 A complete style configuration consists of a list of sprite images with their pathes relative to the plugin root and a list of single sprites with image ID and position. A default `image` may be set below the `sprites` key. It will be used if no image is defined on a sprite. The same applies for default `height`and `width`. The position can be a single position or a list of positions. In the latter case it's possible to give a chance for each position. If no chance is given the probability for every position is the same. A `fallback` id of an sprite must be defined  below `sprites`.
 
@@ -338,7 +349,7 @@ It is possible to define a background color on the `style` node. This is used fo
                        y: <integer greater 0>
                        chance: <float, optional>
                        
-### Sidebar Config
+#### Sidebar Config
 
 Beside the style configuration for the map there is another one for the sidebar.
 

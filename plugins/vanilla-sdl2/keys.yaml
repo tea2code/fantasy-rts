@@ -31,4 +31,21 @@ keys:
       
     # Switch sidebar info index
     - key: i
-      command: frts.vanillasdl2.command.switchsidebarinfoindex.plus
+      command: frts.vanillasdl2.command.switchsidebarinfoindex.next
+      
+command:
+
+    # Following commands won't be added to the undo list.
+    undo_blacklist:
+        - frts.vanillasdl2.command.movescreen.north
+        - frts.vanillasdl2.command.movescreen.east
+        - frts.vanillasdl2.command.movescreen.south
+        - frts.vanillasdl2.command.movescreen.west
+        - frts.vanillasdl2.command.movescreen.up
+        - frts.vanillasdl2.command.movescreen.down
+        - frts.vanillasdl2.command.movescreen.northeast
+        - frts.vanillasdl2.command.movescreen.southeast
+        - frts.vanillasdl2.command.movescreen.northwest
+        - frts.vanillasdl2.command.movescreen.southwest
+        - frts.vanillasdl2.command.switchsidebarinfoindex.next
+        - frts.vanillasdl2.command.switchsidebarinfoindex.previous

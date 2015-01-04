@@ -127,14 +127,14 @@ namespace frts
             return "frts.vanillasdl2.entity.component.renderable";
         }
 
-        static std::string switchSidebarInfoIndexPlus()
+        static std::string switchSidebarInfoIndexNext()
         {
-            return "frts.vanillasdl2.command.switchsidebarinfoindex.plus";
+            return "frts.vanillasdl2.command.switchsidebarinfoindex.next";
         }
 
-        static std::string switchSidebarInfoIndexMinus()
+        static std::string switchSidebarInfoIndexPrevious()
         {
-            return "frts.vanillasdl2.command.switchsidebarinfoindex.minus";
+            return "frts.vanillasdl2.command.switchsidebarinfoindex.previous";
         }
     };
 }
