@@ -16,6 +16,16 @@ namespace frts
         {
             return "frts::ActionManager";
         }
+
+        static std::string stopActionCommand()
+        {
+            return "frts.vanillaaction.command.stopaction";
+        }
+
+        static std::string stopActionOrQuitCommand()
+        {
+            return "frts.vanillaaction.command.stopactionorquit";
+        }
     };
 }
 

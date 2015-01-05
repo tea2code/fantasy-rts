@@ -22,7 +22,7 @@ The event manager is implemented as a utility module.
 
 Load using `frts/EventManager` in the `utilities` section of the load file. 
 
-Will identify itself by the name and type `frts::EventManager`. It can be also found in the static class `EventIds`. 
+Will identify itself by the name and type `frts::EventManager`. It can also be found in the static class `EventIds`. 
 
 ### Event Observer
 

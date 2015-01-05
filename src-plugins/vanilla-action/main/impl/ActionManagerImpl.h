@@ -1,6 +1,7 @@
 #ifndef FRTS_ACTIONMANAGERIMPL_H
 #define FRTS_ACTIONMANAGERIMPL_H
 
+#include <main/ActionHandler.h>
 #include <main/ActionManager.h>
 
 
@@ -9,7 +10,10 @@ namespace frts
     class ActionManagerImpl : public ActionManager
     {
     public:
-        ActionManagerImpl();
+        /**
+         * @param actionHandler The action handler.
+         */
+        ActionManagerImpl(ActionHandlerPtr actionHandler);
 
         /**
          * @brief The identifier.
@@ -32,46 +36,27 @@ namespace frts
         bool isPreInitialized() const override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
-        void tick(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
         void newAction(ActionPtr action, SharedManagerPtr shared) override;
-        void stopAction(SharedManagerPtr shared) override;
+        bool stopAction(SharedManagerPtr shared) override;
 
     private:
         bool isInit = false;
         bool isPreInit = false;
 
-        /**
-         * @brief The currently running action. Null if no action is set.
-         */
-        ActionPtr currentAction;
-
-        /**
-         * @brief Indicates if current action is executing or stopping.
-         */
-        bool isExecuting = true;
-
-        /**
-         * @brief The next action to execute. Null if no action is set.
-         */
-        ActionPtr nextAction;
-
-    private:
-        /**
-         * @brief End the current action and start the next one if available.
-         */
-        void endAction();
+        ActionHandlerPtr actionHandler;
     };
 
     /**
      * @brief Create a new action manager.
+     * @param actionHandler The action handler.
      * @return The action manager.
      */
-    inline ActionManagerPtr makeActionManager()
+    inline ActionManagerPtr makeActionManager(ActionHandlerPtr actionHandler)
     {
-        return std::make_shared<ActionManagerImpl>();
+        return std::make_shared<ActionManagerImpl>(actionHandler);
     }
 }
 

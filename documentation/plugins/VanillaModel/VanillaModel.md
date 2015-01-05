@@ -62,7 +62,7 @@ Utility module which acts as a factory to create model related objects like poin
 
 Load using `frts/ModelFactory` in the `utilities` section of the load file. This is also the utility ID. It can be found in the static class `ModelIds`. 
 
-Will identify itself by the name and type `frts::ModelFactory`. It can be also found in the static class `ModelIds`. 
+Will identify itself by the name and type `frts::ModelFactory`. It can also be found in the static class `ModelIds`. 
 
 The model factory contains following types of methods:
 

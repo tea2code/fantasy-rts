@@ -62,7 +62,7 @@ The input handler module allows to register commands to certain keys by using th
 
 Load using `frts/InputHandler` in the `utilities` section of the load file.
 
-Will identify itself by the name and type `frts::InputHandler`. It can be also found in the static class `Sdl2Ids`. 
+Will identify itself by the name and type `frts::InputHandler`. It can also be found in the static class `Sdl2Ids`. 
 
 ### Configuration
 
@@ -211,7 +211,7 @@ This plugin implements a couple of commands (using the *VanillaCommand* plugin) 
 
 ### MoveCursorCommand
 
-This command  allows movement of the cursor over the map. Following directions are implemented:
+This command allows movement of the cursor over the map. Following directions are implemented:
 
 - **North:** Using command id `frts.vanillasdl2.command.movecursor.north`.
 - **East:** Using command id `frts.vanillasdl2.command.movecursor.east`.

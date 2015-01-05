@@ -1,7 +1,7 @@
 #include <catch.hpp>
 
 #include <main/Action.h>
-#include <main/impl/ActionManagerImpl.h>
+#include <main/ActionHandler.h>
 
 #include <frts/shared>
 
@@ -69,7 +69,7 @@ TEST_CASE("ActionManager.", "[main]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
-    auto actionManager = frts::makeActionManager();
+    auto actionManager = frts::makeActionHandler();
 
     SECTION("2, 0, 4, 0")
     {

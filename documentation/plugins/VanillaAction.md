@@ -18,13 +18,21 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 The action interface must be implemented by any class which wants to use the action manager for its execution. All action methods are executed by the action manager. The method `stop()` is most likely called if another action wants to be executed because there can only be one at a time. The methods `execute()` and `stop()` are called every frame until they return `Finished` or `Cancel`. 
 
-### Action Manager
+### Action Handler
 
 The action manager is implemented as a tickable module. It will execute the currently running action every frame until finished.
 
-Load using `frts/ActionManager` in the `updateModules` section of the load file. 
+Load using `frts/ActionHandler` in the `updateModules` section of the load file. 
 
-Will identify itself by the name and type `frts::ActionManager`. It can be also found in the static class `ActionIds`. 
+Will identify itself by the name and type `frts::ActionHandler`.
+
+### Action Manager
+
+The action manager is implemented as a utility module. It will forward commands to the action handler.
+
+Load using `frts/ActionManager` in the `utilities` section of the load file. 
+
+Will identify itself by the name and type `frts::ActionManager`. It can also be found in the static class `ActionIds`. 
 
 ## Commands
 
@@ -32,4 +40,8 @@ This plugin implements also the following two commands using the *VanillaCommand
 
 ### StopActionCommand
 
+This command will stop the currently running action. The command id is `frts.vanillaaction.command.stopaction`.
+
 ### StopActionOrQuitCommand
+
+This command will stop the currently running action. If no action is running it will quit the application. The command id is `frts.vanillaaction.command.stopactionorquit`.

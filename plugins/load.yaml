@@ -25,15 +25,16 @@ renderModules:
     
 updateModules:
     - frts/Sdl2EventHandler
-    - frts/ActionManager
+    - frts/ActionHandler
     - frts/VanillaDemo
     
 utilities:
+    - frts/ActionManager
     - frts/CommandFactory
+    - frts/EventManager
     - frts/InputHandler
     - frts/ModelFactory
-    - frts/EventManager
-    
+
 configurations:
     # Plugin related config
     - vanilla-command/command.yaml
@@ -44,6 +45,7 @@ configurations:
     - vanilla-sdl2/screen.yaml
     - vanilla-sdl2/sidebar.yaml
     - vanilla-sdl2/style.yaml
+    - vanilla-action/keys.yaml
     
     # Maps
     - maps/default.yaml

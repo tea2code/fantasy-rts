@@ -34,7 +34,7 @@ The command factory is implemented as a utility module. It has a couple of prere
 
 Load using `frts/CommandFactory` in the `utilities` section of the load file. 
 
-Will identify itself by the name and type `frts::CommandFactory`. It can be also found in the static class `CommandIds`. 
+Will identify itself by the name and type `frts::CommandFactory`. It can also be found in the static class `CommandIds`. 
 
 ## Configuration
 

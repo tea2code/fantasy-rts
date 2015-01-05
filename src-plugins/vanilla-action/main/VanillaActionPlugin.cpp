@@ -1,10 +1,20 @@
 #include "VanillaActionPlugin.h"
 
+#include "ActionHandler.h"
 #include "impl/ActionManagerImpl.h"
 
 
 frts::VanillaActionPlugin::VanillaActionPlugin()
 {
+}
+
+frts::ActionHandlerPtr frts::VanillaActionPlugin::getActionHandler()
+{
+    if (actionHandler == nullptr)
+    {
+        actionHandler = makeActionHandler();
+    }
+    return actionHandler;
 }
 
 frts::ModulePtr frts::VanillaActionPlugin::getModule(frts::IdPtr id)
@@ -14,7 +24,11 @@ frts::ModulePtr frts::VanillaActionPlugin::getModule(frts::IdPtr id)
     frts::ModulePtr result = nullptr;
     if (id->toString() == ActionManagerImpl::identifier())
     {
-        result = makeActionManager();
+        result = makeActionManager(getActionHandler());
+    }
+    else if (id->toString() == ActionHandler::identifier())
+    {
+        result = getActionHandler();
     }
     return result;
 }

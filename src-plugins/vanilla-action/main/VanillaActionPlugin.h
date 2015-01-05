@@ -1,6 +1,8 @@
 #ifndef FRTS_VANILLAACTIONPLUGIN_H
 #define FRTS_VANILLAACTIONPLUGIN_H
 
+#include "ActionHandler.h"
+
 #include <frts/plugin>
 
 
@@ -12,6 +14,12 @@ namespace frts
         VanillaActionPlugin();
 
         ModulePtr getModule(frts::IdPtr id) override;
+
+    private:
+        ActionHandlerPtr actionHandler;
+
+    private:
+        ActionHandlerPtr getActionHandler();
     };
 }
 

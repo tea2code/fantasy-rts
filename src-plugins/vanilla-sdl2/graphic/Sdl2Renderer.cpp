@@ -180,11 +180,11 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
         const int stepSize = 1;
 
         // Plus
-        IdPtr commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexNext());
+        IdPtr commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexCommandNext());
         commandFactory->registerCommandBuilder(commandId, makeSwitchSidebarInfoIndexCommandBuilder(commandId, stepSize));
 
         // Minus
-        commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexPrevious());
+        commandId = shared->makeId(Sdl2Ids::switchSidebarInfoIndexCommandPrevious());
         commandFactory->registerCommandBuilder(commandId, makeSwitchSidebarInfoIndexCommandBuilder(commandId, -stepSize));
     }
 

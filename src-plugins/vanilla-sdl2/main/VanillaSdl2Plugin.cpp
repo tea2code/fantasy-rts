@@ -15,11 +15,11 @@ frts::VanillaSdl2Plugin::VanillaSdl2Plugin()
 
 frts::Sdl2EventHandlerPtr frts::VanillaSdl2Plugin::getSdl2EventHandler()
 {
-    if (Sdl2EventHandler == nullptr)
+    if (sdl2EventHandler == nullptr)
     {
-        Sdl2EventHandler = makeSdl2EventHandler();
+        sdl2EventHandler = makeSdl2EventHandler();
     }
-    return Sdl2EventHandler;
+    return sdl2EventHandler;
 }
 
 frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)

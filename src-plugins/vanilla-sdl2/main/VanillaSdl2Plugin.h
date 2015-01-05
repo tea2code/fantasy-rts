@@ -18,7 +18,7 @@ namespace frts
         ModulePtr getModule(frts::IdPtr id) override;
 
     private:
-        Sdl2EventHandlerPtr Sdl2EventHandler;
+        Sdl2EventHandlerPtr sdl2EventHandler;
 
     private:
         Sdl2EventHandlerPtr getSdl2EventHandler();

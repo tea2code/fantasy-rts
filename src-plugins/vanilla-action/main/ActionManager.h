@@ -19,9 +19,9 @@ namespace frts
     using ActionManagerPtr = std::shared_ptr<ActionManager>;
 
     /**
-     * @brief The action manager handles the currently running user action and allows to stop it.
+     * @brief The action manager forwards commands to the action handler.
      */
-    class ActionManager : public Tickable
+    class ActionManager : public Utility
     {
     public:
         virtual ~ActionManager() {}
@@ -36,8 +36,9 @@ namespace frts
         /**
          * @brief Stop/Cancel the currently running action.
          * @param shared The shared manager.
+         * @return True if there was an action to stop else false.
          */
-        virtual void stopAction(SharedManagerPtr shared) = 0;
+        virtual bool stopAction(SharedManagerPtr shared) = 0;
     };
 }
 
