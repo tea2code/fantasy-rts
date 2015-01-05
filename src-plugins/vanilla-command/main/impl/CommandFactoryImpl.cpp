@@ -71,7 +71,7 @@ std::string frts::CommandFactoryImpl::getTypeName() const
 
 int frts::CommandFactoryImpl::getTypeVersion() const
 {
-    return 1;
+    return getVersion();
 }
 
 int frts::CommandFactoryImpl::getVersion() const

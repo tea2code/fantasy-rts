@@ -2,8 +2,6 @@
 
 #include "impl/EventManagerImpl.h"
 
-#include <frts/shared>
-
 
 frts::VanillaEventPlugin::VanillaEventPlugin()
 {

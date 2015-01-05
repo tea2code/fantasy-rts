@@ -20,6 +20,12 @@ The action interface must be implemented by any class which wants to use the act
 
 ### Action Manager
 
+The action manager is implemented as a tickable module. It will execute the currently running action every frame until finished.
+
+Load using `frts/ActionManager` in the `updateModules` section of the load file. 
+
+Will identify itself by the name and type `frts::ActionManager`. It can be also found in the static class `ActionIds`. 
+
 ## Commands
 
 This plugin implements also the following two commands using the *VanillaCommand* plugin.

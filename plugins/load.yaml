@@ -25,6 +25,7 @@ renderModules:
     
 updateModules:
     - frts/Sdl2EventHandler
+    - frts/ActionManager
     - frts/VanillaDemo
     
 utilities:

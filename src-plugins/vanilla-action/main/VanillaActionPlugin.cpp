@@ -1,6 +1,6 @@
 #include "VanillaActionPlugin.h"
 
-#include <frts/shared>
+#include "impl/ActionManagerImpl.h"
 
 
 frts::VanillaActionPlugin::VanillaActionPlugin()
@@ -12,10 +12,10 @@ frts::ModulePtr frts::VanillaActionPlugin::getModule(frts::IdPtr id)
     assert(id != nullptr);
 
     frts::ModulePtr result = nullptr;
-//    if (id->toString() == EventManagerImpl::identifier())
-//    {
-//        result = makeEventManager();
-//    }
+    if (id->toString() == ActionManagerImpl::identifier())
+    {
+        result = makeActionManager();
+    }
     return result;
 }
 

@@ -66,7 +66,7 @@ namespace frts
                {
                    if (module->getTypeVersion() != 1)
                    {
-                       auto msg = boost::format(R"(Tickable "%1%" has the wrong version %2%. Version %3% is required. Required by "%4%".)")
+                       auto msg = boost::format(R"(Tickable "%1%" has the wrong version %3%. Version %2% is required. Required by "%4%".)")
                                % typeName % typeVersion % module->getTypeVersion() % validator;
                        throw ModuleViolation(msg.str());
                    }
@@ -102,7 +102,7 @@ namespace frts
             auto module = getUtility<Module>(shared, utilityId);
             if (module->getTypeVersion() != typeVersion)
             {
-                auto msg = boost::format(R"(Utility "%1%" has the wrong version %2%. Version %3% is required. Required by "%4%".)")
+                auto msg = boost::format(R"(Utility "%1%" has the wrong version %3%. Version %2% is required. Required by "%4%".)")
                         % utilityId % typeVersion % module->getTypeVersion() % validator;
                 throw ModuleViolation(msg.str());
             }
