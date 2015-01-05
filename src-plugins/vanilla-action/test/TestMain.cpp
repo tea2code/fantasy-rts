@@ -30,11 +30,6 @@ namespace test
             }
         }
 
-        void init(frts::SharedManagerPtr) override
-        {
-            numInit += 1;
-        }
-
         State stop(frts::SharedManagerPtr) override
         {
             numStops += 1;
@@ -53,11 +48,6 @@ namespace test
             return numExecutions;
         }
 
-        int getNumInit()
-        {
-            return numInit;
-        }
-
         int getNumStops()
         {
             return numStops;
@@ -68,7 +58,6 @@ namespace test
         int doNumStops;
 
         int numExecutions = 0;
-        int numInit = 0;
         int numStops = 0;
     };
 }

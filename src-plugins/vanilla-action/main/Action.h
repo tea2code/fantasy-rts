@@ -45,12 +45,6 @@ namespace frts
         virtual State execute(SharedManagerPtr shared) = 0;
 
         /**
-         * @brief Initialize this action.
-         * @param shared The shared manager.
-         */
-        virtual void init(SharedManagerPtr shared) = 0;
-
-        /**
          * @brief Stop this action. Will be called while it returns "Running".
          * @param shared The shared manager.
          * @return Current state of the stopping process.

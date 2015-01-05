@@ -1,0 +1,6 @@
+#ifndef FRTS_VANILLAJOB_INCLUDE_H
+#define FRTS_VANILLAJOB_INCLUDE_H
+
+#include <main/Job.h>
+
+#endif // FRTS_VANILLAJOB_INCLUDE_H
