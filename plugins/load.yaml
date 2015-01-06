@@ -26,6 +26,7 @@ renderModules:
 updateModules:
     - frts/Sdl2EventHandler
     - frts/ActionHandler
+    - frts/JobHandler
     - frts/VanillaDemo
     
 utilities:
@@ -33,6 +34,7 @@ utilities:
     - frts/CommandFactory
     - frts/EventManager
     - frts/InputHandler
+    - frts/JobManager
     - frts/ModelFactory
 
 configurations:

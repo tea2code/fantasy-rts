@@ -20,6 +20,14 @@ Entities have the ability to block other entities. Blocking describes what a ent
     blocks:
        - <string representing an id>
 
+## Curriculum
+
+TODO
+
+### Configuration
+
+    TODO
+
 ## Drop
 
 Entities can drop other entities if they are destroyed, killed, harvested... The dropable entities are defined by this component.

@@ -1,6 +1,6 @@
 # Vanilla Job
 
-This plugin manages a list of unfinished jobs and gives access to the next one due.
+This plugin manages new jobs and executes them if an adequate entity is provided. An adequate entity is defined as one which has the **Curriculum** and all the required ids are matched by the entity.
 
 ## Installation
 
@@ -14,5 +14,18 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ### Job
 
+The job interface must be implemented by any class which wants to behave as a job. All methods are executed by the job handler or job manager and shouldn't be called manually. The method `stop()` is called if the job should be stopped. The methods `execute()` and `stop()` are called every frame until they return `Finished` or `Cancel`. 
+
+### Job Handler
+
+The job handler is implemented as a tickable module. It will execute the currently running jobs every frame until finished.
+
+Load using `frts/JobHandler` in the `updateModules` section of the load file. 
+
+Will identify itself by the name and type `frts::JobHandler`.
+
 ### Job Manager
 
+Load using `frts/JobManager` in the `utilities` section of the load file. 
+
+Will identify itself by the name and type `frts::JobManager`. It can also be found in the static class `JobIds`. 
