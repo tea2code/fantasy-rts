@@ -3,7 +3,7 @@
 
 #include "Action.h"
 
-#include <frts/module>
+#include <frts/BaseTickable.h>
 
 #include <memory>
 
@@ -20,7 +20,7 @@ namespace frts
     /**
      * @brief The action handlers handles the currently running user action and allows to stop it.
      */
-    class ActionHandler : public Tickable
+    class ActionHandler : public BaseTickable
     {
     public:
         ActionHandler();
@@ -35,21 +35,7 @@ namespace frts
             return "frts/ActionHandler";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
-        std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
-        bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
 
         void newAction(ActionPtr action, SharedManagerPtr shared);
         bool stopAction(SharedManagerPtr shared);

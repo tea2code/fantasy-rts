@@ -2,6 +2,7 @@
 
 
 frts::ActionHandler::ActionHandler()
+    : BaseTickable("frts::ActionHandler", 1, "frts::ActionHandler", 1)
 {
 
 }
@@ -9,16 +10,6 @@ frts::ActionHandler::ActionHandler()
 frts::ActionHandler::~ActionHandler()
 {
 
-}
-
-void frts::ActionHandler::checkRequiredData(SharedManagerPtr)
-{
-
-}
-
-bool frts::ActionHandler::createData(SharedManagerPtr)
-{
-    return false;
 }
 
 void frts::ActionHandler::endAction()
@@ -30,47 +21,6 @@ void frts::ActionHandler::endAction()
         currentAction = nextAction;
         nextAction = nullptr;
     }
-}
-
-std::string frts::ActionHandler::getName() const
-{
-    return "frts::ActionHandler";
-}
-
-std::vector<std::string> frts::ActionHandler::getSupportedConfig()
-{
-    return {};
-}
-
-std::string frts::ActionHandler::getTypeName() const
-{
-    return getName();
-}
-
-int frts::ActionHandler::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::ActionHandler::getVersion() const
-{
-    return 1;
-}
-
-bool frts::ActionHandler::init(SharedManagerPtr)
-{
-    isInit = true;
-    return false;
-}
-
-bool frts::ActionHandler::isInitialized() const
-{
-    return isInit;
-}
-
-bool frts::ActionHandler::isPreInitialized() const
-{
-    return isPreInit;
 }
 
 void frts::ActionHandler::newAction(ActionPtr action, SharedManagerPtr shared)
@@ -88,17 +38,6 @@ void frts::ActionHandler::newAction(ActionPtr action, SharedManagerPtr shared)
     {
         currentAction = action;
     }
-}
-
-void frts::ActionHandler::parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr)
-{
-
-}
-
-bool frts::ActionHandler::preInit(SharedManagerPtr)
-{
-    isPreInit = true;
-    return false;
 }
 
 bool frts::ActionHandler::stopAction(SharedManagerPtr)
@@ -144,14 +83,4 @@ void frts::ActionHandler::tick(SharedManagerPtr shared)
             endAction();
         }
     }
-}
-
-void frts::ActionHandler::validateData(SharedManagerPtr)
-{
-
-}
-
-void frts::ActionHandler::validateModules(SharedManagerPtr shared)
-{
-    assert(shared != nullptr);
 }
