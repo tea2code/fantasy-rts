@@ -31,4 +31,8 @@ void frts::JobHandler::tick(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     // TODO
+
+#ifndef UNIT_TEST
+    // TODO Send events here.
+#endif
 }

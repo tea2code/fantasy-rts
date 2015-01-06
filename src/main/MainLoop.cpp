@@ -6,8 +6,6 @@
 
 #include <boost/format.hpp>
 
-#include <memory>
-
 
 const std::string frts::MainLoop::logModule = "frts::MainLoop";
 
@@ -40,7 +38,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
     std::string msgTemplate = R"(Frame %3% exceeded frame time of %1%ms with max frame time of %2%ms.)";
     std::string debugMsgTemplate = R"(Frame %3% exceeded frame time of %1%ms with delta frame time of %2%ms.)";
 
-    auto frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
+    auto frame = makeFrame(deltaTime, tick, runTime);
     shared->setFrame(frame);
 
     while (!shared->isQuitApplication())
@@ -74,7 +72,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
 
         while (accumulator >= deltaTime)
         {
-            frame = std::make_shared<FrameImpl>(deltaTime, tick, runTime);
+            frame = makeFrame(deltaTime, tick, runTime);
             shared->setFrame(frame);
             update(shared);
             accumulator -= deltaTime;

@@ -64,12 +64,12 @@ namespace test
 }
 
 
-TEST_CASE("ActionManager.", "[main]")
+TEST_CASE("JobHandler.", "[main]")
 {
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
-    auto actionManager = frts::makeActionHandler();
+    auto actionHandler = frts::makeActionHandler();
 
     SECTION("2, 0, 4, 0")
     {
@@ -78,15 +78,15 @@ TEST_CASE("ActionManager.", "[main]")
         int doExecute = 4;
         int doStop = 0;
         auto action = std::make_shared<test::TestAction>(doNumExecutions, doNumStops);
-        actionManager->newAction(action, shared);
+        actionHandler->newAction(action, shared);
         for (int i = 0; i < doExecute; ++i)
         {
-            actionManager->tick(shared);
+            actionHandler->tick(shared);
         }
-        actionManager->stopAction(shared);
+        actionHandler->stopAction(shared);
         for (int i = 0; i < doStop; ++i)
         {
-            actionManager->tick(shared);
+            actionHandler->tick(shared);
         }
         REQUIRE(action->getNumExecutions() == doNumExecutions);
         REQUIRE(action->getNumStops() == doNumStops);
@@ -99,11 +99,11 @@ TEST_CASE("ActionManager.", "[main]")
         int doExecute = 0;
         int doStop = 2;
         auto action = std::make_shared<test::TestAction>(doNumExecutions, doNumStops);
-        actionManager->newAction(action, shared);
-        actionManager->stopAction(shared);
+        actionHandler->newAction(action, shared);
+        actionHandler->stopAction(shared);
         for (int i = 0; i < doStop; ++i)
         {
-            actionManager->tick(shared);
+            actionHandler->tick(shared);
         }
         REQUIRE(action->getNumExecutions() == doNumExecutions);
         REQUIRE(action->getNumStops() == doNumStops);
@@ -117,15 +117,15 @@ TEST_CASE("ActionManager.", "[main]")
         int doStop = 4;
         int ignoreExecutions = 2;
         auto action = std::make_shared<test::TestAction>(doNumExecutions, doNumStops);
-        actionManager->newAction(action, shared);
+        actionHandler->newAction(action, shared);
         for (int i = 0; i < doExecute - ignoreExecutions; ++i)
         {
-            actionManager->tick(shared);
+            actionHandler->tick(shared);
         }
-        actionManager->stopAction(shared);
+        actionHandler->stopAction(shared);
         for (int i = 0; i < doStop; ++i)
         {
-            actionManager->tick(shared);
+            actionHandler->tick(shared);
         }
         REQUIRE(action->getNumExecutions() == doExecute - ignoreExecutions);
         REQUIRE(action->getNumStops() == doNumStops);
