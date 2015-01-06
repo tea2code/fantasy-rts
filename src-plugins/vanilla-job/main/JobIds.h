@@ -12,9 +12,24 @@ namespace frts
     class JobIds
     {
     public:
+        static std::string entityEventValue()
+        {
+            return "frts.vanillajob.event.value.entity";
+        }
+
+        static std::string jobFinishedEvent()
+        {
+            return "frts.vanillajob.event.job.finished";
+        }
+
         static std::string jobManager()
         {
             return "frts::JobManager";
+        }
+
+        static std::string jobStoppedEvent()
+        {
+            return "frts.vanillajob.event.job.stopped";
         }
     };
 }

@@ -15,7 +15,6 @@ Default path of plugin is `vanilla-sdl2/vanilla-sdl2`. Before including this plu
 
 ## Dependencies
 
-
 The .pro file assumes that all dependencies are put into a directory *dependency* in the plugin root. For the naming of the individual directories of every dependency see the .pro file.
 
 - [SDL2](https://www.libsdl.org/)
@@ -207,35 +206,35 @@ Following keys are currently supported. If multiple names for one key exist they
 
 ## Commands
 
-This plugin implements a couple of commands (using the *VanillaCommand* plugin) which are assigned to different keys. If necessary it adds these commands also to the undo blacklist.
+This plugin implements a couple of commands (using the *VanillaCommand* plugin) which are assigned to different keys. If necessary it adds these commands also to the undo blacklist. IDs can also be found in the static class `Sdl2Ids`.
 
 ### MoveCursorCommand
 
 This command allows movement of the cursor over the map. Following directions are implemented:
 
-- **North:** Using command id `frts.vanillasdl2.command.movecursor.north`.
-- **East:** Using command id `frts.vanillasdl2.command.movecursor.east`.
-- **South:** Using command id `frts.vanillasdl2.command.movecursor.south`.
-- **West:** Using command id `frts.vanillasdl2.command.movecursor.west`.
-- **North East:** Using command id `frts.vanillasdl2.command.movecursor.northeast`.
-- **South East:** Using command id `frts.vanillasdl2.command.movecursor.southeast`.
-- **South West:** Using command id `frts.vanillasdl2.command.movecursor.southwest`.
-- **North West:** Using command id `frts.vanillasdl2.command.movecursor.northwest`.
+- **North:** Use command id `frts.vanillasdl2.command.movecursor.north`.
+- **East:** Use command id `frts.vanillasdl2.command.movecursor.east`.
+- **South:** Use command id `frts.vanillasdl2.command.movecursor.south`.
+- **West:** Use command id `frts.vanillasdl2.command.movecursor.west`.
+- **North East:** Use command id `frts.vanillasdl2.command.movecursor.northeast`.
+- **South East:** Use command id `frts.vanillasdl2.command.movecursor.southeast`.
+- **South West:** Use command id `frts.vanillasdl2.command.movecursor.southwest`.
+- **North West:** Use command id `frts.vanillasdl2.command.movecursor.northwest`.
 
 ### MoveScreenCommand
 
 This command allows movement of the visible screen over the map. Following directions are implemented:
 
-- **North:** Using command id `frts.vanillasdl2.command.movescreen.north`.
-- **East:** Using command id `frts.vanillasdl2.command.movescreen.east`.
-- **South:** Using command id `frts.vanillasdl2.command.movescreen.south`.
-- **West:** Using command id `frts.vanillasdl2.command.movescreen.west`.
-- **Up:** Using command id `frts.vanillasdl2.command.movescreen.up`.
-- **Down:** Using command id `frts.vanillasdl2.command.movescreen.down`.
-- **North East:** Using command id `frts.vanillasdl2.command.movescreen.northeast`.
-- **South East:** Using command id `frts.vanillasdl2.command.movescreen.southeast`.
-- **South West:** Using command id `frts.vanillasdl2.command.movescreen.southwest`.
-- **North West:** Using command id `frts.vanillasdl2.command.movescreen.northwest`.
+- **North:** Use command id `frts.vanillasdl2.command.movescreen.north`.
+- **East:** Use command id `frts.vanillasdl2.command.movescreen.east`.
+- **South:** Use command id `frts.vanillasdl2.command.movescreen.south`.
+- **West:** Use command id `frts.vanillasdl2.command.movescreen.west`.
+- **Up:** Use command id `frts.vanillasdl2.command.movescreen.up`.
+- **Down:** Use command id `frts.vanillasdl2.command.movescreen.down`.
+- **North East:** Use command id `frts.vanillasdl2.command.movescreen.northeast`.
+- **South East:** Use command id `frts.vanillasdl2.command.movescreen.southeast`.
+- **South West:** Use command id `frts.vanillasdl2.command.movescreen.southwest`.
+- **North West:** Use command id `frts.vanillasdl2.command.movescreen.northwest`.
 
 Step width is configured in the `screen` configuration (see **Screen Config**).
 
@@ -243,8 +242,8 @@ Step width is configured in the `screen` configuration (see **Screen Config**).
 
 This command allows to switch the currently shown entity in the info area of the sidebar:
 
-- **Next:** Using command id `frts.vanillasdl2.command.switchsidebarinfoindex.next`.
-- **Previous:** Using command id `frts.vanillasdl2.command.switchsidebarinfoindex.previous`.
+- **Next:** Use command id `frts.vanillasdl2.command.switchsidebarinfoindex.next`.
+- **Previous:** Use command id `frts.vanillasdl2.command.switchsidebarinfoindex.previous`.
 
 ## Graphic Output
 

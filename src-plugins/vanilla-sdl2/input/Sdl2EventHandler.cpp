@@ -82,10 +82,10 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
                 if (newPos != oldPos)
                 {
                     auto em = getUtility<EventManager>(shared, EventIds::eventManager());
-                    auto event = em->makeEvent(shared->makeId(Sdl2Ids::eventMoveCursor()), shared);
+                    auto event = em->makeEvent(shared->makeId(Sdl2Ids::moveCursorEvent()), shared);
                     auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
                     eventValue->setValue(newPos);
-                    event->setValue(shared->makeId(Sdl2Ids::eventMoveCursorPos()), eventValue);
+                    event->setValue(shared->makeId(Sdl2Ids::moveCursorEventPos()), eventValue);
                     em->raise(event, shared);
                 }
             }

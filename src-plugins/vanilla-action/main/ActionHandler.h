@@ -18,7 +18,7 @@ namespace frts
     using ActionHandlerPtr = std::shared_ptr<ActionHandler>;
 
     /**
-     * @brief The action handlers handles the currently running user action and allows to stop it.
+     * @brief The action handlers runs the current user action and allows to stop it.
      */
     class ActionHandler : public BaseTickable
     {
@@ -37,13 +37,21 @@ namespace frts
 
         void tick(SharedManagerPtr shared) override;
 
+        /**
+         * @brief Set a new action as the currently running. This will stop/cancel the previously.
+         * @param action The action.
+         * @param shared The shared manager.
+         */
         void newAction(ActionPtr action, SharedManagerPtr shared);
+
+        /**
+         * @brief Stop/Cancel the currently running action.
+         * @param shared The shared manager.
+         * @return True if there was an action to stop else false.
+         */
         bool stopAction(SharedManagerPtr shared);
 
     private:
-        bool isInit = false;
-        bool isPreInit = false;
-
         /**
          * @brief The currently running action. Null if no action is set.
          */

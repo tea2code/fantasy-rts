@@ -1,19 +1,22 @@
-#ifndef FRTS_ACTIONMANAGERIMPL_H
-#define FRTS_ACTIONMANAGERIMPL_H
+#ifndef FRTS_JOBMANAGERIMPL_H
+#define FRTS_JOBMANAGERIMPL_H
 
-#include <main/ActionHandler.h>
-#include <main/ActionManager.h>
+#include <main/JobHandler.h>
+#include <main/JobManager.h>
+
+#include <memory>
 
 
 namespace frts
 {
-    class ActionManagerImpl : public ActionManager
+    class JobManagerImpl : public JobManager
     {
     public:
         /**
-         * @param actionHandler The action handler.
+         * @param jobHandler The job handler.
          */
-        ActionManagerImpl(ActionHandlerPtr actionHandler);
+        JobManagerImpl(JobHandlerPtr jobHandler);
+        ~JobManagerImpl();
 
         /**
          * @brief The identifier.
@@ -21,7 +24,7 @@ namespace frts
          */
         static std::string identifier()
         {
-            return "frts/ActionManager";
+            return "frts/JobManager";
         }
 
         void checkRequiredData(SharedManagerPtr shared) override;
@@ -39,27 +42,28 @@ namespace frts
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
-        void newAction(ActionPtr action, SharedManagerPtr shared) override;
-        bool stopAction(SharedManagerPtr shared) override;
+        void addJob(JobPtr job) override;
+        bool employEntity(EntityPtr entity) override;
+        void stopJob(JobPtr job) override;
 
     private:
         bool isInit = false;
         bool isPreInit = false;
 
-        ActionHandlerPtr actionHandler;
+        JobHandlerPtr jobHandler;
     };
 
     /**
-     * @brief Create a new action manager.
-     * @param actionHandler The action handler.
-     * @return The action manager.
+     * @brief Create new JobManager.
+     * @param jobHandler The job handler.
+     * @return The job manager.
      */
-    inline ActionManagerPtr makeActionManager(ActionHandlerPtr actionHandler)
+    inline JobManagerPtr makeJobManager(JobHandlerPtr jobHandler)
     {
-        assert(actionHandler != nullptr);
+        assert(jobHandler != nullptr);
 
-        return std::make_shared<ActionManagerImpl>(actionHandler);
+        return std::make_shared<JobManagerImpl>(jobHandler);
     }
 }
 
-#endif // FRTS_ACTIONMANAGERIMPL_H
+#endif // FRTS_JOBMANAGERIMPL_H

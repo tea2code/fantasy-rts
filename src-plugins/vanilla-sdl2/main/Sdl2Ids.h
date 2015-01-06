@@ -12,16 +12,6 @@ namespace frts
     class Sdl2Ids
     {
     public:
-        static std::string eventMoveCursor()
-        {
-            return "frts.vanillasdl2.event.movecursor";
-        }
-
-        static std::string eventMoveCursorPos()
-        {
-            return "frts.vanillasdl2.event.movecursor.pos";
-        }
-
         static std::string graphicData()
         {
             return "frts::GraphicData";
@@ -30,6 +20,16 @@ namespace frts
         static std::string inputHandler()
         {
             return "frts::InputHandler";
+        }
+
+        static std::string moveCursorEvent()
+        {
+            return "frts.vanillasdl2.event.movecursor";
+        }
+
+        static std::string moveCursorEventPos()
+        {
+            return "frts.vanillasdl2.event.movecursor.pos";
         }
 
         static std::string moveScreenCommandWest()

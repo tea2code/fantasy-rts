@@ -10,7 +10,7 @@
 frts::ActionManagerImpl::ActionManagerImpl(ActionHandlerPtr actionHandler)
     : actionHandler{actionHandler}
 {
-    assert(actionHandler != nullptr);
+
 }
 
 void frts::ActionManagerImpl::checkRequiredData(SharedManagerPtr)
