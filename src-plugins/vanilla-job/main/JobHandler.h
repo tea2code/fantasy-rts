@@ -5,6 +5,10 @@
 
 #include <frts/BaseTickable.h>
 
+#include <queue>
+#include <unordered_set>
+#include <utility>
+
 
 namespace frts
 {
@@ -17,7 +21,7 @@ namespace frts
 
     /**
      * @brief The job handlers runs the currently active jobs and allows to stop them.
-     *        The job handler will send an event if a job is finished/has stopped.
+     *        The job handler will send an event if a job has finished/stopped.
      */
     class JobHandler : public BaseTickable
     {
@@ -47,6 +51,16 @@ namespace frts
          * @param job The job to stop.
          */
         void stopJob(JobPtr job);
+
+    private:
+        using JobSet = std::unordered_set<JobPtr>;
+        using JobQueue = std::priority_queue<std::pair<Frame::time, JobPtr>>;
+
+    private:
+        JobSet knownJobs;
+        JobQueue runningJobs;
+        JobQueue stoppingJobs;
+        JobSet toStop;
     };
 
     /**

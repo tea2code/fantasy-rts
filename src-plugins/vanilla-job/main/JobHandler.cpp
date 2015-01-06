@@ -16,23 +16,103 @@ void frts::JobHandler::runJob(JobPtr job)
 {
     assert(job != nullptr);
 
-    // TODO
+    // Only add if not already added.
+    if (knownJobs.find(job) != knownJobs.end())
+    {
+        return;
+    }
+
+    // Start immediatly aka next tick.
+    knownJobs.insert(job);
+    runningJobs.push(std::make_pair(fromMilliseconds(0), job));
 }
 
 void frts::JobHandler::stopJob(JobPtr job)
 {
     assert(job != nullptr);
 
-    // TODO
+    // Only stop if previously added.
+    if (knownJobs.find(job) == knownJobs.end())
+    {
+        return;
+    }
+
+    toStop.insert(job);
 }
 
 void frts::JobHandler::tick(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    // TODO
+    auto time = shared->getFrame()->getRunTime();
 
-#ifndef UNIT_TEST
-    // TODO Send events here.
-#endif
+    // Running
+    while(!runningJobs.empty() && runningJobs.top().first <= time)
+    {
+        auto tj = runningJobs.top();
+        runningJobs.pop();
+
+        // Is this job marked for stopping?
+        auto it = toStop.find(tj.second);
+        if (it != toStop.end())
+        {
+            toStop.erase(it);
+            stoppingJobs.push(tj);
+        }
+        else
+        {
+            auto state = tj.second->execute(shared);
+
+            // Is this job finished?
+            if (state == Job::State::Finished)
+            {
+                knownJobs.erase(tj.second);
+                #ifndef UNIT_TEST
+                // TODO Send finished event here.
+                #endif
+            }
+            // Does this job want to cancel?
+            else if (state == Job::State::Cancel)
+            {
+                stoppingJobs.push(tj);
+            }
+            // Another round.
+            else
+            {
+                tj.first = tj.second->getDueTime();
+                runningJobs.push(tj);
+            }
+        }
+    }
+
+    // Stopping
+    while(!stoppingJobs.empty() && stoppingJobs.top().first <= time)
+    {
+        auto tj = stoppingJobs.top();
+        stoppingJobs.pop();
+
+        // Check if it is again in the stop list. Can happen.
+        auto it = toStop.find(tj.second);
+        if (it != toStop.end())
+        {
+            toStop.erase(it);
+        }
+
+        auto state = tj.second->stop(shared);
+
+        // Another round.
+        if (state == Job::State::Running)
+        {
+            tj.first = tj.second->getDueTime();
+            stoppingJobs.push(tj);
+        }
+        // Job is finished.
+        else
+        {
+            knownJobs.erase(tj.second);
+            #ifndef UNIT_TEST
+            // TODO Send stopped event here.
+            #endif
+        }
+    }
 }

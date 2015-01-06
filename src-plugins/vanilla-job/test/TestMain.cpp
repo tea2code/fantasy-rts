@@ -99,12 +99,11 @@ TEST_CASE("JobHandler.", "[main]")
 
     auto jobHandler = frts::makeJobHandler();
 
-    SECTION("2 executions.")
+    SECTION("2 executions 0 stops.")
     {
         int doNumExecutions = 2;
         int doNumStops = 0;
         std::queue<frts::Frame::time> dueTimes;
-        dueTimes.push(frts::fromMilliseconds(1));
         dueTimes.push(frts::fromMilliseconds(3));
         auto job = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes);
         jobHandler->runJob(job);
@@ -138,50 +137,44 @@ TEST_CASE("JobHandler.", "[main]")
         REQUIRE(job->getNumStops() == 0);
     }
 
-    SECTION("1 execution 2 stops.")
+    SECTION("0 execution 3 stops.")
     {
-        int doNumExecutions = 1;
-        int doNumStops = 2;
+        int doNumExecutions = 0;
+        int doNumStops = 3;
         std::queue<frts::Frame::time> dueTimes;
-        dueTimes.push(frts::fromMilliseconds(1));
         dueTimes.push(frts::fromMilliseconds(3));
         dueTimes.push(frts::fromMilliseconds(4));
         auto job = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes);
         jobHandler->runJob(job);
 
-        int num = 1;
+        jobHandler->stopJob(job);
+
+        auto num = 2;
         auto frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
-        REQUIRE(job->getNumExecutions() == 1);
-        REQUIRE(job->getNumStops() == 0);
-
-        num = 2;
-        frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
-        shared->setFrame(frame);
-        jobHandler->tick(shared);
-        REQUIRE(job->getNumExecutions() == 1);
-        REQUIRE(job->getNumStops() == 0);
+        REQUIRE(job->getNumExecutions() == 0);
+        REQUIRE(job->getNumStops() == 1);
 
         num = 3;
         frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
-        REQUIRE(job->getNumExecutions() == 1);
-        REQUIRE(job->getNumStops() == 1);
+        REQUIRE(job->getNumExecutions() == 0);
+        REQUIRE(job->getNumStops() == 2);
 
         num = 4;
         frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
-        REQUIRE(job->getNumExecutions() == 1);
-        REQUIRE(job->getNumStops() == 2);
+        REQUIRE(job->getNumExecutions() == 0);
+        REQUIRE(job->getNumStops() == 3);
 
         num = 5;
         frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
-        REQUIRE(job->getNumExecutions() == 1);
-        REQUIRE(job->getNumStops() == 2);
+        REQUIRE(job->getNumExecutions() == 0);
+        REQUIRE(job->getNumStops() == 3);
     }
 }
