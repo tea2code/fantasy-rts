@@ -26,6 +26,8 @@ OPTIMIZE {
 INCLUDEPATH += $$PWD/../../src
 INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
+INCLUDEPATH += $$PWD/../../src-helper/
+INCLUDEPATH += $$PWD/../vanilla-model
 
 # Headers and sources.
 UNIT_TEST {

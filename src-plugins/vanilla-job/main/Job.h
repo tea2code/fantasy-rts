@@ -2,6 +2,7 @@
 #define FRTS_JOB
 
 #include <frts/shared>
+#include <frts/vanillamodel>
 
 #include <memory>
 
@@ -52,10 +53,22 @@ namespace frts
         virtual Frame::time getDueTime() const = 0;
 
         /**
-         * @brief The entity type for which this job is.
-         * @return The entity type.
+         * @brief Get the entity which is currently executing this job.
+         * @return The currently executing entity or null.
          */
-        virtual IdPtr getEntityType() const = 0;
+        virtual EntityPtr getExecutingEntity() const = 0;
+
+        /**
+         * @brief Get a list of requirements for this job.
+         * @return List of ids each representing a requirement.
+         */
+        virtual std::vector<IdPtr> getRequirements() const = 0;
+
+        /**
+         * @brief Set the entity which should execute this job. Don't reset before calling stop().
+         * @param entity The entity.
+         */
+        virtual void setExecutingEntity(EntityPtr entity) = 0;
 
         /**
          * @brief Stop this action. Will be called when the next due time is hit and the last
