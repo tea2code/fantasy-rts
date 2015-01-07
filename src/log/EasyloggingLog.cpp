@@ -1,14 +1,19 @@
 #include "EasyloggingLog.h"
 
 // Define before includes to prevent default log file.
-#define _ELPP_NO_DEFAULT_LOG_FILE
+#define ELPP_NO_DEFAULT_LOG_FILE
 
 // Define before includes to get internal easylogging errors.
-#define _ELPP_ENABLE_ERRORS
+#define ELPP_ENABLE_ERRORS
+
+// Enable stack trace on GCC and Linux.
+#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
+#define ELPP_STACKTRACE_ON_CRASH
+#endif
 
 #include <easylogging++.h>
 
-_INITIALIZE_EASYLOGGINGPP
+INITIALIZE_EASYLOGGINGPP
 
 
 frts::EasyloggingLog::EasyloggingLog(const std::string& configFilePath)

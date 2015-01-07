@@ -18,7 +18,9 @@ SOURCES += \
     $$PWD/impl/TeleportImpl.cpp \
     $$PWD/impl/TeleportBuilder.cpp \
     $$PWD/impl/InfoImpl.cpp \
-    $$PWD/impl/InfoBuilder.cpp
+    $$PWD/impl/InfoBuilder.cpp \
+    $$PWD/impl/CurriculumBuilder.cpp \
+    $$PWD/impl/CurriculumImpl.cpp
     
 
 HEADERS += \
@@ -54,4 +56,7 @@ HEADERS += \
     $$PWD/impl/TeleportBuilder.h \
     $$PWD/Info.h \
     $$PWD/impl/InfoImpl.h \
-    $$PWD/impl/InfoBuilder.h
+    $$PWD/impl/InfoBuilder.h \
+    $$PWD/Curriculum.h \
+    $$PWD/impl/CurriculumBuilder.h \
+    $$PWD/impl/CurriculumImpl.h

@@ -23,14 +23,6 @@ bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
     auto blockedByBlocks = blockedBy->getBlocks();
     auto blockingBlocks = blocking.getBlocks();
 
-    // Following original implementation seems to fail in some cases.
-//    BlockedBy::BlockSet intersect;
-//    std::set_intersection(blockedByBlocks.begin(), blockedByBlocks.end(),
-//                          blockingBlocks.begin(), blockingBlocks.end(),
-//                          std::inserter(intersect, intersect.begin()));
-//    return !intersect.empty();
-
-    // TODO Replace naive implementation with something more smart and faster.
     for (auto& block : blockingBlocks)
     {
         if (blockedByBlocks.find(block) != blockedByBlocks.end())

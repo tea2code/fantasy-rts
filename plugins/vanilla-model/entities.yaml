@@ -47,10 +47,13 @@ entities:
               sort_order: 240
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Dwarf"
-                - name: Description
+                - name: "Description"
                   value: "A sturdy little creature. Beware its axe and its mead."
+            - component: frts.vanillamodel.entity.component.curriculum
+              abilities:
+                - player.unit
     
         # Vegetation
         - name: shrub.berry
@@ -74,9 +77,9 @@ entities:
               sort_order: 100
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Berry Shrub"
-                - name: Description
+                - name: "Description"
                   value: "A low plant with delicious berries."
         - name: tree
           components:
@@ -99,9 +102,9 @@ entities:
               sort_order: 100
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Tree"
-                - name: Description
+                - name: "Description"
                   value: "Majestic plant which gives plenty of living space and hard wood for craftsman."
         
         # Resource
@@ -113,9 +116,9 @@ entities:
               sort_order: 140
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Berries"
-                - name: Description
+                - name: "Description"
                   value: "Edible berries."
         - name: wood.log
           components:
@@ -125,9 +128,9 @@ entities:
               sort_order: 140
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Wood Log"
-                - name: Description
+                - name: "Description"
                   value: "A wood log. Don't confuse with morning wood."
         - name: ore.iron
           components:
@@ -137,9 +140,9 @@ entities:
               sort_order: 140
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Iron Ore"
-                - name: Description
+                - name: "Description"
                   value: "Iron ore can be used to create iron tools and weapons."
         - name: coal
           components:
@@ -149,9 +152,9 @@ entities:
               sort_order: 140
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Coal"
-                - name: Description
+                - name: "Description"
                   value: "Feeds the furnaces and dyes faces black."
         - name: diamond
           components:
@@ -161,9 +164,9 @@ entities:
               sort_order: 140
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Diamonds"
-                - name: Description
+                - name: "Description"
                   value: "Sparkling clear gem. My precious."
               
         # Background
@@ -173,7 +176,7 @@ entities:
               sort_order: 0
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Grass"
         - name: air
           components:
@@ -184,7 +187,7 @@ entities:
               sort_order: 0
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Air"
         - name: dirt
           components:
@@ -192,7 +195,7 @@ entities:
               sort_order: 0
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Dirt"
         - name: rock.floor
           components:
@@ -200,7 +203,7 @@ entities:
               sort_order: 0
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Rock"
         - name: ramp
           components:
@@ -223,7 +226,7 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Stonewall"
         - name: earth
           components:
@@ -237,7 +240,7 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Earth"
         - name: rock
           components:
@@ -251,7 +254,7 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Rock"
         - name: rock.iron
           components:
@@ -266,9 +269,9 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Iron Ore"
-                - name: Description
+                - name: "Description"
                   value: "Iron ore can be used to create iron tools and weapons."
         - name: rock.coal
           components:
@@ -283,9 +286,9 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Coal"
-                - name: Description
+                - name: "Description"
                   value: "Feeds the furnaces and dyes faces black."
         - name: rock.diamond
           components:
@@ -300,7 +303,7 @@ entities:
               sort_order: 180
             - component: frts.vanillamodel.entity.component.info
               infos:
-                - name: Name
+                - name: "Name"
                   value: "Diamonds"
-                - name: Description
+                - name: "Description"
                   value: "Sparkling clear gem. My precious."

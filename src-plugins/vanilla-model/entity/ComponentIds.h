@@ -21,6 +21,11 @@ namespace frts
             return "frts.vanillamodel.entity.component.blocking";
         }
 
+        static std::string curriculum()
+        {
+            return "frts.vanillamodel.entity.component.curriculum";
+        }
+
         static std::string drop()
         {
             return "frts.vanillamodel.entity.component.drop";

@@ -5,6 +5,8 @@
 #include <entity/impl/BlockedByBuilder.h>
 #include <entity/impl/BlockingImpl.h>
 #include <entity/impl/BlockingBuilder.h>
+#include <entity/impl/CurriculumBuilder.h>
+#include <entity/impl/CurriculumImpl.h>
 #include <entity/impl/DropImpl.h>
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
@@ -194,6 +196,36 @@ TEST_CASE("Blocking Builder.", "[entity]")
 
     auto castComponent = std::static_pointer_cast<frts::Blocking>(component);
     //REQUIRE(castComponent->blocks(blockedBy));
+}
+
+TEST_CASE("Curriculum.", "[entity]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeCurriculumBuilder();
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto ability1 = shared->makeId("ability.1");
+    auto ability2 = shared->makeId("ability.2");
+    auto ability3 = shared->makeId("ability.3");
+
+    auto castComponent = std::static_pointer_cast<frts::Curriculum>(component);
+    castComponent->addAbility(ability1);
+    castComponent->addAbility(ability2);
+
+    REQUIRE(castComponent->getAbilities().size() == 2);
+    REQUIRE(castComponent->hasAbility(ability1));
+    REQUIRE(castComponent->hasAbility(ability2));
+    REQUIRE_FALSE(castComponent->hasAbility(ability3));
+
+    castComponent->removeAbility(ability1);
+
+    REQUIRE(castComponent->getAbilities().size() == 1);
+    REQUIRE_FALSE(castComponent->hasAbility(ability1));
+    REQUIRE(castComponent->hasAbility(ability2));
+    REQUIRE_FALSE(castComponent->hasAbility(ability3));
 }
 
 TEST_CASE("Drop.", "[entity]")

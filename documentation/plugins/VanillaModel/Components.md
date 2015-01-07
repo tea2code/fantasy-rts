@@ -22,11 +22,12 @@ Entities have the ability to block other entities. Blocking describes what a ent
 
 ## Curriculum
 
-TODO
+Gives a description of the abilities of an entity. Can be used to determine if an entity can execude an task. Abilities are described as ids in a simple list.
 
 ### Configuration
 
-    TODO
+    abilities:
+        - <string representing an id>
 
 ## Drop
 

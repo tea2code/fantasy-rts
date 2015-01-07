@@ -11,6 +11,9 @@ namespace frts
     class DropImpl : public Drop
     {
     public:
+        /**
+         * @param type The component type.
+         */
         DropImpl(IdPtr type);
 
         void addDrop(IdPtr entityId) override;
