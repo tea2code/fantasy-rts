@@ -4,6 +4,7 @@
 #include <main/JobHandler.h>
 #include <main/JobManager.h>
 
+#include <list>
 #include <memory>
 
 
@@ -43,7 +44,7 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
         void addJob(JobPtr job) override;
-        bool employEntity(EntityPtr entity) override;
+        bool employEntity(EntityPtr entity, SharedManagerPtr shared) override;
         void stopJob(JobPtr job) override;
 
     private:
@@ -51,6 +52,8 @@ namespace frts
         bool isPreInit = false;
 
         JobHandlerPtr jobHandler;
+
+        std::list<JobPtr> jobs;
     };
 
     /**

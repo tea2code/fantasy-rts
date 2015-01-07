@@ -37,11 +37,15 @@ UNIT_TEST {
         $$PWD/../../src/log/NoLog.h \
         $$PWD/../../src/shared/impl/IdImpl.h \
         $$PWD/../../src/shared/impl/SharedManagerImpl.h \
-        $$PWD/../../src/shared/impl/FrameImpl.h
+        $$PWD/../../src/shared/impl/FrameImpl.h \
+        $$PWD/../vanilla-model/entity/impl/EntityImpl.h \
+        $$PWD/../vanilla-model/entity/impl/CurriculumImpl.h
     SOURCES += \
         $$PWD/../../src/shared/impl/IdImpl.cpp \
         $$PWD/../../src/shared/impl/SharedManagerImpl.cpp \
-        $$PWD/../../src/shared/impl/FrameImpl.cpp
+        $$PWD/../../src/shared/impl/FrameImpl.cpp \
+        $$PWD/../vanilla-model/entity/impl/EntityImpl.cpp \
+        $$PWD/../vanilla-model/entity/impl/CurriculumImpl.cpp
 
     include(test/test.pri)
 }

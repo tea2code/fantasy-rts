@@ -4,6 +4,8 @@
 
 #include <frts/vanillaevent>
 
+#include <algorithm>
+
 
 frts::JobManagerImpl::JobManagerImpl(JobHandlerPtr jobHandler)
     : jobHandler{jobHandler}
@@ -20,7 +22,11 @@ void frts::JobManagerImpl::addJob(JobPtr job)
 {
     assert(job != nullptr);
 
-    // TODO
+    // Every job instance may only be added once.
+    if (std::find(jobs.begin(), jobs.end(), job) == jobs.end())
+    {
+        jobs.push_back(job);
+    }
 }
 
 void frts::JobManagerImpl::checkRequiredData(SharedManagerPtr)
@@ -33,13 +39,41 @@ bool frts::JobManagerImpl::createData(SharedManagerPtr)
     return false;
 }
 
-bool frts::JobManagerImpl::employEntity(EntityPtr entity)
+bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr shared)
 {
     assert(entity != nullptr);
+    assert(shared != nullptr);
 
-    // TODO
+    bool result = false;
 
-    return false;
+    auto curriculumId = shared->makeId(ComponentIds::curriculum());
+    if (!entity->hasComponent(curriculumId))
+    {
+        return result;
+    }
+    auto curriculum = getComponent<Curriculum>(curriculumId, entity);
+
+    auto hasAbility = [&](IdPtr ability)
+    {
+        return curriculum->hasAbility(ability);
+    };
+    auto satisfiesRequirements = [&](JobPtr job)
+    {
+        auto requirements = job->getRequirements();
+        return std::all_of(requirements.begin(), requirements.end(), hasAbility);
+    };
+
+    auto it = std::find_if(jobs.begin(), jobs.end(), satisfiesRequirements);
+    if (it != jobs.end())
+    {
+        auto job = *it;
+        job->setExecutingEntity(entity);
+        jobHandler->runJob(job);
+        jobs.erase(it);
+        result = true;
+    }
+
+    return result;
 }
 
 std::string frts::JobManagerImpl::getName() const
@@ -98,7 +132,17 @@ void frts::JobManagerImpl::stopJob(JobPtr job)
 {
     assert(job != nullptr);
 
-    // TODO
+    auto it = std::find(jobs.begin(), jobs.end(), job);
+    if (it != jobs.end())
+    {
+        // Not yet started.
+        jobs.erase(it);
+    }
+    else
+    {
+        // May already be running.
+        jobHandler->stopJob(job);
+    }
 }
 
 void frts::JobManagerImpl::validateData(SharedManagerPtr)

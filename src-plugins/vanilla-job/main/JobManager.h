@@ -36,9 +36,10 @@ namespace frts
         /**
          * @brief If possible employ given entity.
          * @param entity The entity.
+         * @param shared The shared manager.
          * @return True if entity was employed else false.
          */
-        virtual bool employEntity(EntityPtr entity) = 0;
+        virtual bool employEntity(EntityPtr entity, SharedManagerPtr shared) = 0;
 
         /**
          * @brief Stop job.

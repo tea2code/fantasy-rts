@@ -33,6 +33,8 @@ The job handler will raise the following events. They both contain a single enti
 
 ### Job Manager
 
+The job manager is implemented as an utility module. It has methods to add new jobs, start them by using an entity with curriculum component and stop jobs.
+
 Load using `frts/JobManager` in the `utilities` section of the load file. 
 
 Will identify itself by the name and type `frts::JobManager`. It can also be found in the static class `JobIds`. 

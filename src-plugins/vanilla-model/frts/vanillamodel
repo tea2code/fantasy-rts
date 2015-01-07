@@ -5,6 +5,7 @@
 #include <entity/Blocking.h>
 #include <entity/Component.h>
 #include <entity/ComponentIds.h>
+#include <entity/Curriculum.h>
 #include <entity/Entity.h>
 #include <entity/HasResource.h>
 #include <entity/IsResource.h>
