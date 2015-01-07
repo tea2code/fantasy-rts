@@ -123,6 +123,11 @@ int main(int argc, char* argv[])
     frts::LogPtr log = frts::makeEasyloggingLog(logConfigFile);
     assert(log != nullptr);
 
+    // Start application.
+    log->info(logModule, "Start application.");
+    frts::Application app(log);
+    app.setMaxNumberExtraExecutions(deadLock);
+
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");
     log->warning(logModule, "\tdeadLock = " + std::to_string(deadLock));
@@ -131,11 +136,6 @@ int main(int argc, char* argv[])
     log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
     log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
     log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
-
-    // Start application.
-    log->info(logModule, "Start application");
-    frts::Application app(log);
-    app.setMaxNumberExtraExecutions(deadLock);
 
     try
     {
@@ -271,6 +271,7 @@ int main(int argc, char* argv[])
 
         // Phase 15: All done. Good night.
         log->info(logModule, "Phase 15: Application finished.");
+        log->info(logModule, "-------------------------------------------------------------------");
         return 0;
     }
     catch(const std::exception& ex)
