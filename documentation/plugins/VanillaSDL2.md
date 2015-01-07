@@ -47,7 +47,7 @@ For tests it is necessary to copy some libraries to the executable:
 
 ## Input/Event Handling
 
-### Event Handler
+### SDL2 Event Handler
 
 The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. 
 
@@ -244,6 +244,14 @@ This command allows to switch the currently shown entity in the info area of the
 
 - **Next:** Use command id `frts.vanillasdl2.command.switchsidebarinfoindex.next`.
 - **Previous:** Use command id `frts.vanillasdl2.command.switchsidebarinfoindex.previous`.
+
+## Events
+
+Using the *VanillaEvent* plugin this plugin will throw following events. IDs can also be found in the static class `Sdl2Ids`.
+
+### Move Cursor Event
+
+This event is thrown, when every the cursor is moved by the user. It has the id `frts.vanillasdl2.event.movecursor`. It has a single point value with id `frts.vanillasdl2.event.movecursor.pos` describing the new position of the cursor.
 
 ## Graphic Output
 
