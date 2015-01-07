@@ -6,6 +6,38 @@ The kernel or core consists only of a couple of classes defining the plugin arch
 
 The configuration package contains classes related to reading and parsing configuration files. Current implementation uses the YAML format. The configuration object has ja simple generic interface to access values in the configuration files. Depending on the unterlaying format not all format specific details may be supported. It can be accessed through the shared manager. 
 
+### YAML
+
+YAML is an file format with a similar syntax to languages like Python and Perl. For more information see the [Homepage](http://yaml.org/) and [Wikipedia](https://en.wikipedia.org/wiki/YAML). Because of the configuration interface not every aspect of YAML is supported.
+
+#### Boolean
+
+    key: true or false
+
+#### Floating point number
+
+Integers are also valid floating point numbers.
+
+    key: 1 or 1.2
+
+#### Integer number
+
+    key: 1
+
+#### String
+
+Strings containing whitespace must be encapsulated in quotes. The current convention is to encapsulate readable text in quotes and strings which for example represent IDs not. The latter shouldn't (by convention) contain whitespace. This allows a easy differentiation between human readable text and configuration strings.
+
+    key: text or "text with whitespace"
+
+#### List of x
+
+Every type can be represented as a list. 
+
+    key:
+        - value1
+        - value2
+
 ## FRTS
 
 This package consists of include files which allow an easier usage of the other packages. The best way to use this in external projects like plugins is to add the *src* directory to the include path and use the kernel packages with the following includes:
