@@ -365,8 +365,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 
     // Get current cursor position.
-    auto cursor = gd->getCursor();
-    auto pos = rm->getPos(cursor, shared);
+    auto pos = rm->getPos(gd->getCursor(), shared);
     if (pos == nullptr)
     {
         return false;
@@ -404,7 +403,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     }
     infoLastCountEntities = entities.size();
 
-    // Show the last entity which is not the cursor. Nobody likes the cursor.
+    // Show the last entity.
     if (gd->getSidebarInfoIndex() == gd->sidebarInfoIndexDefault)
     {
         gd->setSidebarInfoIndex(entities.size() - 1);
@@ -414,18 +413,6 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
         gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() % entities.size());
     }
     auto entityToShow = entities.at(gd->getSidebarInfoIndex());
-    if (entityToShow == cursor)
-    {
-        if (gd->getSidebarInfoIndex() > 0)
-        {
-            gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() - 1);
-            entityToShow = entities.at(gd->getSidebarInfoIndex());
-        }
-        else
-        {
-            return false;
-        }
-    }
     if (entityToShow == infoLastEntity)
     {
         return false;
