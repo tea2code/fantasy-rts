@@ -12,17 +12,22 @@
 
 namespace
 {
+    #ifndef UNIT_TEST
     void raiseEvent(const std::string& eventId, frts::EntityPtr entity, frts::SharedManagerPtr shared)
     {
-        #ifndef UNIT_TEST
         auto em = frts::getUtility<frts::EventManager>(shared, frts::EventIds::eventManager());
         auto event = em->makeEvent(shared->makeId(eventId), shared);
         auto eventValue = frts::makeEventValue<frts::EntityEventValue>(em, frts::ModelEventIds::entityEventValue(), shared);
         eventValue->setValue(entity);
         event->setValue(shared->makeId(frts::JobIds::entityEventValue()), eventValue);
         em->raise(event, shared);
-        #endif
     }
+    #else
+    void raiseEvent(const std::string&, frts::EntityPtr, frts::SharedManagerPtr)
+    {
+        // Dummy
+    }
+    #endif
 }
 
 frts::JobHandler::JobHandler()
@@ -102,6 +107,11 @@ void frts::JobHandler::tick(SharedManagerPtr shared)
                 jm->addJob(tj.second);
 
                 raiseEvent(JobIds::jobCanceledEvent(), tj.second->getExecutingEntity(), shared);
+            }
+            // Does this job want to stop completely?
+            else if (state == Job::State::Stop)
+            {
+                stoppingJobs.push(tj);
             }
             // Another round.
             else

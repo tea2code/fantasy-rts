@@ -23,16 +23,18 @@ namespace frts
     {
     public:
         /**
-         * @brief Result of job methods. Handled by jobs manager.
-         *        Cancel: Indicates that this action wants to cancel its execution.
+         * @brief Result of job methods. Handled by jobs manager and handler.
+         *        Cancel: Indicates that this action wants to cancel its execution and retry it later.
          *        Finished: Indicates that execution is complete.
          *        Running: Indicates that more executions are necessary to complete.
+         *        Stop: Indicates that this job can no longer progress and shouldn't restart.
          */
         enum class State
         {
             Cancel,
             Finished,
-            Running
+            Running,
+            Stop
         };
 
     public:
