@@ -14,7 +14,7 @@ Access to all necessary interfaces can be aquired by adding the source directory
 
 ### Job
 
-The job interface must be implemented by any class which wants to behave as a job. All methods are executed by the job handler or job manager and shouldn't be called manually. The method `stop()` is called if the job should be stopped. The methods `execute()` and `stop()` are called every frame until they return `Finished` or `Cancel`. 
+The job interface must be implemented by any class which wants to behave as a job. All methods are executed by the job handler or job manager and shouldn't be called manually. The method `stop()` is called if the job should be stopped. The methods `execute()` and `stop()` are called every frame until they return `Finished` or `Cancel`. The latter means that the job will be executed later. 
 
 ### Job Handler
 
@@ -28,6 +28,7 @@ Will identify itself by the name and type `frts::JobHandler`.
 
 The job handler will raise the following events. They both contain a single entity value with id `frts.vanillajob.event.value.entity`. The ids can also be found in the static class `JobIds`. 
 
+- **Canceled:** Send if a job has been canceled and will be executed later. Use event id `frts.vanillajob.event.job.canceled`.
 - **Finished:** Send if a job has been finished. Use event id `frts.vanillajob.event.job.finished`.
 - **Stopped:** Send if a job has been stopped. Use event id `frts.vanillajob.event.job.stopped`.
 

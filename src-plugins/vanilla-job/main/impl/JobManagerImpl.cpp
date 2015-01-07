@@ -68,9 +68,9 @@ bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr share
     if (it != jobs.end())
     {
         auto job = *it;
+        jobs.erase(it);
         job->setExecutingEntity(entity);
         jobHandler->runJob(job);
-        jobs.erase(it);
         result = true;
     }
 

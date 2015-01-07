@@ -17,6 +17,11 @@ namespace frts
             return "frts.vanillajob.event.value.entity";
         }
 
+        static std::string jobCanceledEvent()
+        {
+            return "frts.vanillajob.event.job.canceled";
+        }
+
         static std::string jobFinishedEvent()
         {
             return "frts.vanillajob.event.job.finished";
