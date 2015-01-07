@@ -225,9 +225,12 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
             auto type = shared->makeId(node->getString("type"));
             EventSubscription subscription;
             subscription.text = node->getString("text");
-            for(auto& value : node->getStrings("values"))
+            if (node->has("values"))
             {
-                subscription.eventValues.push_back(shared->makeId(value));
+                for(auto& value : node->getStrings("values"))
+                {
+                    subscription.eventValues.push_back(shared->makeId(value));
+                }
             }
             eventSubscriptions.insert(std::make_pair(type, subscription));
         }
@@ -289,9 +292,9 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
                 eventText = eventText % std::static_pointer_cast<IntegerEventValue>(eventValue)->getValue();
             }
             if (eventValue->getType() == eventValueString)
-             {
-                 eventText = eventText % std::static_pointer_cast<StringEventValue>(eventValue)->getValue();
-             }
+            {
+                eventText = eventText % std::static_pointer_cast<StringEventValue>(eventValue)->getValue();
+            }
             else if (eventValue->getType() == eventValueId)
             {
                 eventText = eventText % std::static_pointer_cast<IdEventValue>(eventValue)->getValue();
@@ -306,7 +309,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
             else
             {
                 auto msg = boost::format(R"(Unsupported event value "%1%" with type "%2%".)")
-                        % valueId % eventValue->getType();
+                        % valueId->toString() % eventValue->getType()->toString();
                 shared->getLog()->warning(getName(), msg.str());
             }
         }

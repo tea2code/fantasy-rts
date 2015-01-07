@@ -62,3 +62,7 @@ sidebar:
           text: "Cursor moved to position (%1%, %2%, %3%)."
           values:
             - frts.vanillasdl2.event.movecursor.pos
+        - type: frts.vanillajob.event.job.finished
+          text: "Job finished."
+        - type: frts.vanillajob.event.job.stopped
+          text: "Job stopped."

@@ -28,8 +28,8 @@ Will identify itself by the name and type `frts::JobHandler`.
 
 The job handler will raise the following events. They both contain a single entity value with id `frts.vanillajob.event.value.entity`. The ids can also be found in the static class `JobIds`. 
 
-- **Finished:** Send if a job has been finished. Use event id `frts.vanillasdl2.command.movescreen.north`.
-- **Stopped:** Send if a job has been stopped. Use event id `frts.vanillasdl2.command.movescreen.east`.
+- **Finished:** Send if a job has been finished. Use event id `frts.vanillajob.event.job.finished`.
+- **Stopped:** Send if a job has been stopped. Use event id `frts.vanillajob.event.job.stopped`.
 
 ### Job Manager
 

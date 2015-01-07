@@ -1,5 +1,11 @@
 #include "JobHandler.h"
 
+#ifndef UNIT_TEST
+#include "JobIds.h"
+#include <frts/vanillaevent>
+#include <frts/vanillamodel>
+#endif
+
 
 frts::JobHandler::JobHandler()
     : BaseTickable("frts::JobHandler", 1, "frts::JobHandler", 1)
@@ -67,8 +73,15 @@ void frts::JobHandler::tick(SharedManagerPtr shared)
             if (state == Job::State::Finished)
             {
                 knownJobs.erase(tj.second);
+
                 #ifndef UNIT_TEST
-                // TODO Send finished event here.
+                // Raise event.
+                auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+                auto event = em->makeEvent(shared->makeId(JobIds::jobFinishedEvent()), shared);
+                auto eventValue = makeEventValue<EntityEventValue>(em, ModelEventIds::entityEventValue(), shared);
+                eventValue->setValue(tj.second->getExecutingEntity());
+                event->setValue(shared->makeId(JobIds::entityEventValue()), eventValue);
+                em->raise(event, shared);
                 #endif
             }
             // Does this job want to cancel?
@@ -110,8 +123,15 @@ void frts::JobHandler::tick(SharedManagerPtr shared)
         else
         {
             knownJobs.erase(tj.second);
+
             #ifndef UNIT_TEST
-            // TODO Send stopped event here.
+            // Raise event.
+            auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+            auto event = em->makeEvent(shared->makeId(JobIds::jobStoppedEvent()), shared);
+            auto eventValue = makeEventValue<EntityEventValue>(em, ModelEventIds::entityEventValue(), shared);
+            eventValue->setValue(tj.second->getExecutingEntity());
+            event->setValue(shared->makeId(JobIds::entityEventValue()), eventValue);
+            em->raise(event, shared);
             #endif
         }
     }
