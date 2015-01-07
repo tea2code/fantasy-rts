@@ -350,7 +350,7 @@ It is possible to define a background color on the `style` node. This is used fo
                        
 #### Sidebar Config
 
-Beside the style configuration for the map there is another one for the sidebar.
+Beside the style configuration for the map there is another one for the sidebar. The key `values` of `events` is optional.
 
     sidebar:
     
