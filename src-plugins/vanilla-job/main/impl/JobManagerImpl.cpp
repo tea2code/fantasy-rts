@@ -49,6 +49,7 @@ bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr share
     auto curriculumId = shared->makeId(ComponentIds::curriculum());
     if (!entity->hasComponent(curriculumId))
     {
+        shared->getLog()->warning(getName(), "Tried to employ an entity without curriculum.");
         return result;
     }
     auto curriculum = getComponent<Curriculum>(curriculumId, entity);
