@@ -5,6 +5,8 @@ plugins:
     - vanilla-event/vanilla-event
     - vanilla-job/vanilla-job
     - vanilla-model/vanilla-model
+    - vanilla-user-action/vanilla-user-action
+    # VanillaSDL2
     - vanilla-sdl2/SDL2
     - vanilla-sdl2/SDL2_image
     - vanilla-sdl2/zlib1
@@ -36,6 +38,7 @@ utilities:
     - frts/InputHandler
     - frts/JobManager
     - frts/ModelFactory
+    - frts/UserActionFactory
 
 configurations:
     # Plugin related config
