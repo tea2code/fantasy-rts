@@ -348,21 +348,23 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
 
     // This function uses a couple of heuristics to detect if a update really is necessary.
 
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+
     // Only update if necessary.
-    if (!forceUpdate)
+    if (!forceUpdate && infoLastEntityIndex == gd->getSidebarInfoIndex())
     {
         auto currentTime = shared->getFrame()->getRunTime();
         if (currentTime < infoNextUpdate)
         {
             return false;
         }
-        infoNextUpdate += infoUpdateTime;
     }
+    infoNextUpdate += infoUpdateTime;
+    infoLastEntityIndex = gd->getSidebarInfoIndex();
 
     PerformanceLog pl(getName() + " UpdateInfo", shared);
 
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 
     // Get current cursor position.
     auto pos = rm->getPos(gd->getCursor(), shared);
@@ -418,6 +420,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
         return false;
     }
     infoLastEntity = entityToShow;
+    infoLastEntityIndex = gd->getSidebarInfoIndex(); // Save last index again because it may have changed.
     std::vector<EntityPtr> infoEntity = {entityToShow};
 
     // Calculate position of portrait and background.

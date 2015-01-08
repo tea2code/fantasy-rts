@@ -148,6 +148,7 @@ namespace frts
 
         unsigned int infoLastCountEntities = 0;
         EntityPtr infoLastEntity;
+        int infoLastEntityIndex;
         PointPtr infoLastPos;
 
         Frame::time infoNextUpdate;

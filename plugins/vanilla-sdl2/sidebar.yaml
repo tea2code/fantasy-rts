@@ -10,7 +10,7 @@ sidebar:
     events-height: 500
     
     # Time in milliseconds after which events should be updated.
-    events-update: 300
+    events-update: 500
      
     # Font color.
     font-color:
@@ -35,7 +35,7 @@ sidebar:
     info-text-height: 100
     
     # Time in milliseconds after which info should be updated.
-    info-update: 250
+    info-update: 500
     
     # Color of separation lines.
     line-color:

@@ -14,7 +14,7 @@ QMAKE_CXXFLAGS += -std=c++14
 QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Werror -Wdeprecated
 
 # Deactivate some unnecessary warnings. Best to use "-Wno-error=..." and keep warnings.
-QMAKE_CXXFLAGS += -Wno-error=unused-parameter
+QMAKE_CXXFLAGS += -Wno-error=unused-parameter -Wno-error=unused-variable -Wno-error=unused-but-set-variable
 
 # Optimization flags.
 OPTIMIZE {

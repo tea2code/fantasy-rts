@@ -281,9 +281,9 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     int width = std::min(static_cast<int>(info[18]), md->getMapSizeX());
     int height = std::min(static_cast<int>(info[22]), md->getMapSizeY());
-    int rgbWidth = width * 3;
 
     // Precalculate padding.
+    int rgbWidth = width * 3;
     int rowPadded = (rgbWidth + 3) & (~3);
 
     // Read and parse map file.
@@ -292,7 +292,8 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
     for(int y = 0; y < height; ++y)
     {
         fread(data, sizeof(unsigned char), rowPadded, file);
-        for(int x = 0; x < rgbWidth; ++x)
+
+        for(int x = 0; x < width; ++x)
         {
             int nextRgb = 3 * x;
             int r = static_cast<int>(data[nextRgb + 2]);
