@@ -155,6 +155,6 @@ void frts::JobManagerImpl::validateModules(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateTickable(getName(), "frts::JobHandler", 1, shared);
+    validateTickable(getName(), JobIds::jobHandler(), 1, shared);
     validateUtility(getName(), EventIds::eventManager(), 1, shared);
 }

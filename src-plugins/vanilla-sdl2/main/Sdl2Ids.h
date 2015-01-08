@@ -127,6 +127,16 @@ namespace frts
             return "frts.vanillasdl2.entity.component.renderable";
         }
 
+        static std::string sdl2EventHandler()
+        {
+            return "frts::Sdl2EventHandler";
+        }
+
+        static std::string sdl2Renderer()
+        {
+            return "frts::SDL2Renderer";
+        }
+
         static std::string switchSidebarInfoIndexCommandNext()
         {
             return "frts.vanillasdl2.command.switchsidebarinfoindex.next";

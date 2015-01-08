@@ -111,6 +111,6 @@ void frts::ActionManagerImpl::validateModules(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateTickable(getName(), "frts::ActionHandler", 1, shared);
+    validateTickable(getName(), ActionIds::actionHandler(), 1, shared);
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
 }

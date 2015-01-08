@@ -9,7 +9,7 @@
 
 
 frts::Sdl2EventHandler::Sdl2EventHandler()
-    : BaseTickable("frts::Sdl2EventHandler", 1, "frts::Sdl2EventHandler", 1)
+    : BaseTickable(Sdl2Ids::sdl2EventHandler(), 1, Sdl2Ids::sdl2EventHandler(), 1)
 {
 }
 

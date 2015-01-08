@@ -24,7 +24,7 @@ The action handler is implemented as a tickable module. It will execute the curr
 
 Load using `frts/ActionHandler` in the `updateModules` section of the load file. 
 
-Will identify itself by the name and type `frts::ActionHandler`.
+Will identify itself by the name and type `frts::ActionHandler`. It can also be found in the static class `ActionIds`. 
 
 ### Action Manager
 

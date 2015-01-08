@@ -27,6 +27,11 @@ namespace frts
             return "frts.vanillajob.event.job.finished";
         }
 
+        static std::string jobHandler()
+        {
+            return "frts::JobHandler";
+        }
+
         static std::string jobManager()
         {
             return "frts::JobManager";

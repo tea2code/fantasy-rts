@@ -109,5 +109,5 @@ void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
-    validateTickable(getName(), "frts::Sdl2EventHandler", 1, shared);
+    validateTickable(getName(), Sdl2Ids::sdl2EventHandler(), 1, shared);
 }

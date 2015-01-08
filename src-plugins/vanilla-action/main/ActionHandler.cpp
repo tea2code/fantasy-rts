@@ -1,8 +1,10 @@
 #include "ActionHandler.h"
 
+#include "ActionIds.h"
+
 
 frts::ActionHandler::ActionHandler()
-    : BaseTickable("frts::ActionHandler", 1, "frts::ActionHandler", 1)
+    : BaseTickable(ActionIds::actionHandler(), 1, ActionIds::actionHandler(), 1)
 {
 
 }

@@ -53,7 +53,7 @@ The event handler module consumes all SDL2 events in the queue and handles them.
 
 Load using `frts/Sdl2EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
 
-Will identify itself by the name and type `frts::Sdl2EventHandler`.
+Will identify itself by the name and type `frts::Sdl2EventHandler`. It can also be found in the static class `Sdl2Ids`
 
 ### Input Handler
 
@@ -261,7 +261,7 @@ This data value contains common data related to graphic output.
 
 Default ID can be found in the static class `Sdl2Ids`.
 
-Will identify itself by the name and type `frts::GraphicData`.
+Will identify itself by the name and type `frts::GraphicData`. It can also be found in the static class `Sdl2Ids`
 
 ### Renderable
 
@@ -282,7 +282,7 @@ The renderer module manages everything graphic related.
 
 Load using `frts/SDL2Renderer` in the `renderModules` section of the load file.
 
-Will identify itself by the name and type `frts::SDL2Renderer`.
+Will identify itself by the name and type `frts::SDL2Renderer`. It can also be found in the static class `Sdl2Ids`
 
 #### Screen Config
 

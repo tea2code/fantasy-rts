@@ -22,7 +22,7 @@ Command plugin related configuration.
 
 Default ID can be found in the static class `CommandIds`.
 
-Will identify itself by the name and type `frts::CommandConfig`.
+Will identify itself by the name and type `frts::CommandConfig`. It can also be found in the static class `CommandIds`.
 
 ### Command Builder
 

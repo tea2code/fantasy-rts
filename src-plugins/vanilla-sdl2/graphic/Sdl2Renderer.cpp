@@ -15,7 +15,7 @@
 
 
 frts::Sdl2Renderer::Sdl2Renderer()
-    : BaseTickable("frts::SDL2Renderer", 1, "frts::SDL2Renderer", 1), nextFpsLog{fromMilliseconds(0)}
+    : BaseTickable(Sdl2Ids::sdl2Renderer(), 1, Sdl2Ids::sdl2Renderer(), 1), nextFpsLog{fromMilliseconds(0)}
 {
     drawer = makeDrawer();
     sidebarDrawer = makeSidebarDrawer();

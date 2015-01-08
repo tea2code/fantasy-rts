@@ -31,7 +31,7 @@ namespace
 }
 
 frts::JobHandler::JobHandler()
-    : BaseTickable("frts::JobHandler", 1, "frts::JobHandler", 1)
+    : BaseTickable(JobIds::jobHandler(), 1, JobIds::jobHandler(), 1)
 {
 
 }

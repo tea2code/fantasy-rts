@@ -22,7 +22,7 @@ The job handler is implemented as a tickable module. It will execute the current
 
 Load using `frts/JobHandler` in the `updateModules` section of the load file. 
 
-Will identify itself by the name and type `frts::JobHandler`.
+Will identify itself by the name and type `frts::JobHandler`. It can also be found in the static class `JobIds`. 
 
 #### Events
 
