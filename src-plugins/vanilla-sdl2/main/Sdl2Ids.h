@@ -147,6 +147,21 @@ namespace frts
             return "frts::SelectionData";
         }
 
+        static std::string selectionChangedEvent()
+        {
+            return "frts.vanillasdl2.event.selection.changed";
+        }
+
+        static std::string selectionFinishedEvent()
+        {
+            return "frts.vanillasdl2.event.selection.finished";
+        }
+
+        static std::string selectionEventValue()
+        {
+            return "frts.vanillasdl2.event.value.selection";
+        }
+
         static std::string switchSidebarInfoIndexCommandNext()
         {
             return "frts.vanillasdl2.command.switchsidebarinfoindex.next";

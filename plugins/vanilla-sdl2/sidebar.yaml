@@ -68,3 +68,8 @@ sidebar:
           text: "Job finished."
         - type: frts.vanillajob.event.job.stopped
           text: "Job stopped."
+        - type: frts.vanillasdl2.event.selection.changed
+          text: "Selection changed."
+        - type: frts.vanillasdl2.event.selection.finished
+          text: "Selection finished."
+        

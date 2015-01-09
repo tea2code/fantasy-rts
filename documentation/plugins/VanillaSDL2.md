@@ -263,11 +263,11 @@ Using the *VanillaEvent* plugin this plugin will throw following events. IDs can
 
 ### Move Cursor Event
 
-This event is thrown, when every the cursor is moved by the user. It has the id `frts.vanillasdl2.event.movecursor`. It has a single point value with id `frts.vanillasdl2.event.movecursor.pos` describing the new position of the cursor.
+This event is thrown, when ever the cursor is moved by the user. It has the id `frts.vanillasdl2.event.movecursor`. It has a single point value with id `frts.vanillasdl2.event.movecursor.pos` describing the new position of the cursor.
 
 ### Selection Event
 
-> TODO
+There are two variants of this event. The change event is raised when ever the current selection changes. It has the id `frts.vanillasdl2.event.selection.changed`. The finished event is raised when the selection is complete. It has the id `frts.vanillasdl2.event.selection.finished`. They have a point list value with id `frts.vanillasdl2.event.value.selection` describing the selection.
 
 ## Graphic Output
 

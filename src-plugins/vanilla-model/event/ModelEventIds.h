@@ -17,9 +17,19 @@ namespace frts
             return "frts.vanillamodel.event.value.entity";
         }
 
+        static std::string entityListEventValue()
+        {
+            return "frts.vanillamodel.event.value.entity.list";
+        }
+
         static std::string pointEventValue()
         {
             return "frts.vanillamodel.event.value.point";
+        }
+
+        static std::string pointListEventValue()
+        {
+            return "frts.vanillamodel.event.value.point.list";
         }
     };
 }

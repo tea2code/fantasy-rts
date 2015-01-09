@@ -16,7 +16,9 @@
 #include <entity/impl/TeleportBuilder.h>
 #include <event/ModelEventIds.h>
 #include <event/impl/EntityEventValueBuilder.h>
+#include <event/impl/EntityListEventValueBuilder.h>
 #include <event/impl/PointEventValueBuilder.h>
+#include <event/impl/PointListEventValueBuilder.h>
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
@@ -299,8 +301,16 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto eventValueBuilder = makeEntityEventValueBuilder(eventValueType);
     eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
 
+    eventValueType = shared->makeId(ModelEventIds::entityListEventValue());
+    eventValueBuilder = makeEntityListEventValueBuilder(eventValueType);
+    eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
+
     eventValueType = shared->makeId(ModelEventIds::pointEventValue());
     eventValueBuilder = makePointEventValueBuilder(eventValueType);
+    eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
+
+    eventValueType = shared->makeId(ModelEventIds::pointListEventValue());
+    eventValueBuilder = makePointListEventValueBuilder(eventValueType);
     eventManager->registerEventValueBuilder(eventValueType, eventValueBuilder);
 #endif
 

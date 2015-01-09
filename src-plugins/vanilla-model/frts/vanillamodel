@@ -13,8 +13,10 @@
 #include <entity/Movable.h>
 #include <entity/SortOrder.h>
 #include <event/EntityEventValue.h>
+#include <event/EntityListEventValue.h>
 #include <event/ModelEventIds.h>
 #include <event/PointEventValue.h>
+#include <event/PointListEventValue.h>
 #include <main/ModelError.h>
 #include <main/ModelFactory.h>
 #include <main/ModelIds.h>

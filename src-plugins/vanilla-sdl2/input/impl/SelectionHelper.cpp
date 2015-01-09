@@ -4,6 +4,21 @@
 #include <input/SelectionData.h>
 #include <main/Sdl2Ids.h>
 
+#include <frts/vanillaevent>
+
+
+namespace
+{
+void raiseEvent(const std::string& eventId, frts::PointVector selection, frts::SharedManagerPtr shared)
+{
+    auto em = frts::getUtility<frts::EventManager>(shared, frts::EventIds::eventManager());
+    auto event = em->makeEvent(shared->makeId(eventId), shared);
+    auto eventValue = frts::makeEventValue<frts::PointListEventValue>(em, frts::ModelEventIds::pointListEventValue(), shared);
+    eventValue->setValue(selection);
+    event->setValue(shared->makeId(frts::Sdl2Ids::moveCursorEventPos()), eventValue);
+    em->raise(event, shared);
+}
+}
 
 void frts::endSelection(SharedManagerPtr shared)
 {
@@ -22,7 +37,7 @@ void frts::endSelection(SharedManagerPtr shared)
     stopSelection(shared);
 
     // Raise selection finished event.
-    // TODO
+    raiseEvent(Sdl2Ids::selectionFinishedEvent(), selection, shared);
 }
 
 void frts::newSelection(SharedManagerPtr shared)
@@ -110,5 +125,5 @@ void frts::updateSelection(PointPtr cursorPos, SharedManagerPtr shared)
     }
 
     // Raise selection changed event.
-    // TODO
+    raiseEvent(Sdl2Ids::selectionChangedEvent(), selection, shared);
 }
