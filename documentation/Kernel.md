@@ -87,7 +87,7 @@ The application class executes all the execution phase related functions and is 
 
 ### IteratorWrapper
 
-Simple wrapper for iterator pointer which alows usage of interfaces in iterators.
+Simple wrapper for iterator pointer which allows usage of interfaces in iterators.
 
 ## Module
 
@@ -135,17 +135,17 @@ For much easier use the functions `frts::validateUtility()` and `frts::validateT
 
 ## Plugin
 
-The plugin package consists of two parts. First is the interface and API for individual plugins. Every plugin library must have one class which implements the plugin interface. Additionally in some place in the library the plugin API must be included and the implemented plugin class must be registered using the method `REGISTER_PLUGIN(<Name-Of-Plugin-Class>)`. This is all to create a plugin. Of course every plugin library should implement modules or else the plugin will nevery do anything. Every plugin library contains also a version method (defined in the plugin API) which returns the implemented plugin API version. In the unlikely case that the plugin API will change somedays this version is used to determine incompatibilities. 
+The plugin package consists of two parts. First is the interface and API for individual plugins. Every plugin library must have one class which implements the plugin interface. Additionally in some place in the library the plugin API must be included and the implemented plugin class must be registered using the method `REGISTER_PLUGIN(<Name-Of-Plugin-Class>)`. This is all to create a plugin. Of course every plugin library should implement modules or else the plugin will nevery do anything. Every plugin library contains also a version method (defined in the plugin API) which returns the implemented plugin API version. In the unlikely case that the plugin API will change someways this version is used to determine incompatibilities. 
 
 The second part of the package is the plugin loading related code which is only used inside the kernel. It consists of a plugin manager and a platform independent library loader. The plugin loading mechanism allows to load regular plugin libraries but also any generic library. This is helpful if a plugin is linked to a dynamic library. In this case the dynamic library must be loaded before the plugin.
 
 ## Shared
 
-The shared package contains the shared manager which repesents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager stays valid. Following state data can be accessed through the manager:
+The shared package contains the shared manager which represents the application state. It contains data values and all existing modules. Every frame the modules receive the current state. While it may be tempting to store the shared manager inside the module you must never do this. It will probably work but there is no guarantee that a single instance of this manager stays valid. Following state data can be accessed through the manager:
 
 ### Data Values
 
-Data values store all variable game state data. They implement the same identifaction methods as modules.
+Data values store all variable game state data. They implement the same identification methods as modules.
 
 #### MainData
 

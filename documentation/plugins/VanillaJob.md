@@ -8,7 +8,7 @@ Default path of plugin is `vanilla-job/vanilla-job`.
 
 ## Development
 
-Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillajob` (e.g. `#include <frts/vanillajob>`).
+Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillajob` (e.g. `#include <frts/vanillajob>`).
 
 ## Interfaces
 

@@ -8,7 +8,7 @@ Default path of plugin is `vanilla-event/vanilla-event`.
 
 ## Development
 
-Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillaevent` (e.g. `#include <frts/vanillaevent>`).
+Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillaevent` (e.g. `#include <frts/vanillaevent>`).
 
 ## Interfaces
 

@@ -111,7 +111,7 @@ Default compile settings with additional copy step after making:
 
 ## Code Style
 
-There is no particular code style enfored. Just some simple recommendations which might help.
+There is no particular code style enforced. Just some simple recommendations which might help.
 
 ### Namespace
 

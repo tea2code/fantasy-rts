@@ -24,11 +24,11 @@ Every module has now the chance to check if any required module is missing by ac
 
 ### 5. Preinitialize Modules.
 
-A first initialization step which can be used to preconfigure modules. For example influence the creation of data. Should only be used for cases where no other phase is fitting. It is possible to request another execution if required. If too many extra executions are requested it is assumed that a dead lock has occured and an exception is thrown.
+A first initialization step which can be used to preconfigure modules. For example influence the creation of data. Should only be used for cases where no other phase is fitting. It is possible to request another execution if required. If too many extra executions are requested it is assumed that a dead lock has occurred and an exception is thrown.
 
 ### 6. Create Data
 
-The modules should create any data objects in the shared manager in this phase. It is possible to request another execution if required. This allows for example to let another module create it's data objects and then modify them afterwards. If too many extra executions are requested it is assumed that a dead lock has occured and an exception is thrown.
+The modules should create any data objects in the shared manager in this phase. It is possible to request another execution if required. This allows for example to let another module create it's data objects and then modify them afterwards. If too many extra executions are requested it is assumed that a dead lock has occurred and an exception is thrown.
 
 ### 7. Check Required Data
 
@@ -48,7 +48,7 @@ After reading all configuration files the modules can validate the data. This in
 
 ### 11. Initialize Modules
 
-The application core will call the *init()* method in this phase. Every module can now initialize it's internal state and make last changes to the shared manager. It is possible to request another execution if required. If too many extra executions are requested it is assumed that a dead lock has occured and an exception is thrown.
+The application core will call the *init()* method in this phase. Every module can now initialize it's internal state and make last changes to the shared manager. It is possible to request another execution if required. If too many extra executions are requested it is assumed that a dead lock has occurred and an exception is thrown.
 
 ### 12. Startup
 

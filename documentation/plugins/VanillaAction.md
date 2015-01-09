@@ -10,7 +10,7 @@ Default path of plugin is `vanilla-action/vanilla-action`.
 
 ## Development
 
-Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillaaction` (e.g. `#include <frts/vanillaaction>`).
+Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillaaction` (e.g. `#include <frts/vanillaaction>`).
 
 ## Interfaces
 

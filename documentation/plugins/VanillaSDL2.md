@@ -23,7 +23,7 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 
 ## Development
 
-Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
+Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
 
 For tests it is necessary to copy some libraries to the executable:
 

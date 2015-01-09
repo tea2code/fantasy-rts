@@ -19,7 +19,7 @@ Currently following parts are thread safe:
 - Block
 - Region Manager
 
-By thread safety is aquired using a mutex. Normaly a `std::recursive_mutex` is used. But it can be replaced by a lightweight spin lock implementation by adding `DEFINES+=SPIN_LOCK` to the additional arguments of qmake. Spin lock is [implemented using a simple atomic boolean](http://stackoverflow.com/a/8115400/1931663).
+By thread safety is acquired using a mutex. Normally a `std::recursive_mutex` is used. But it can be replaced by a lightweight spin lock implementation by adding `DEFINES+=SPIN_LOCK` to the additional arguments of qmake. Spin lock is [implemented using a simple atomic boolean](http://stackoverflow.com/a/8115400/1931663).
 
 ## Interfaces
 
@@ -93,14 +93,14 @@ Will identify itself by the name and type `frts::ModelStartup`.
 
 ### Path Finder
 
-The path finder optained by the model factory allowes to calculate the shortest path between two points in the region. The default implementation uses A* with manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
+The path finder obtained by the model factory allows to calculate the shortest path between two points in the region. The default implementation uses A* with Manhattan distance. It also supports the teleport component by adding the target position to the list of possible neighbors.
 
 #### Possible ideas for optimization of default implementation
 
 - Before calculating a path from start to goal, try to calculate a path with limited number of iterations from goal to start. If a path is found use it. If goal is in a small room we see that there is no possible path and can stop the whole algorithm. This may prevent some "flooding the whole map" cases and even is realistic because start and goal are often blocked if they are in rooms with closed doors. Maybe it's even possible to use the already calculated values.
 - [Near-Optimal Hierarchical Pathfinding (HPA*)](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/)
 - Another priority queue like a heap. For example Boost provides a heap implementation with support for priority updates.
-- Simplify grid graph with something like a navigation mesh. It's probably possible to connect positions inside of rooms and handle them as a "single" waypoint.
+- Simplify grid graph with something like a navigation mesh. It's probably possible to connect positions inside of rooms and handle them as a "single" way point.
 
 ##### Tested and discarded
 
@@ -117,7 +117,7 @@ The region consists of blocks at certain positions and represents the game world
 
 ### Region Generator
 
-The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
+The blocks of a region are created by a region generator. At the beginning a region may be completely empty but at the same moment a block is requested for the first time it will be created by the generator.
 
 See [RegionGenerator.md](RegionGenerator.md) for more information.
 
@@ -133,7 +133,7 @@ Default ID can be found in the static class `ModelIds`.
 
 Will identify itself by the name and type `frts::RegionManager`.
 
-**IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initalization of modules after phase **Initialize Modules** is complete. Doing so will most likely result in a crash or undefined behavior.
+**IMPORTANT:** Because of implementation details it is currently not possible to access the region manager before initialization of modules after phase **Initialize Modules** is complete. Doing so will most likely result in a crash or undefined behavior.
 
 ### Resource Lock
 

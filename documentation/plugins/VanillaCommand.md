@@ -8,7 +8,7 @@ Default path of plugin is `vanilla-command/vanilla-command`.
 
 ## Development
 
-Access to all necessary interfaces can be aquired by adding the source directory to the include pathes and include `frts/vanillacommand` (e.g. `#include <frts/vanillacommand>`).
+Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillacommand` (e.g. `#include <frts/vanillacommand>`).
 
 ## Interfaces
 
@@ -59,6 +59,6 @@ Default ID can be found in the static class `CommandIds`.
 
 ### UndoCommand
 
-Undos the last executed command. 
+Undoes the last executed command. 
 
 Default ID can be found in the static class `CommandIds`.

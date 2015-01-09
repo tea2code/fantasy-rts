@@ -26,7 +26,7 @@ Reached: *Spring 2014: Full plugin based architecture.*
 - Version 15: Graphic support with SDL2.
 - Version 16: Maintenance & Demo Region Generator.
 - Version 17: Keyboard control of map.
-- Version 18: Controlable entities.
+- Version 18: Controllable entities.
 - Version 19: Perlin noise for hills, surface stuff and minerals.
 - Version 20: Precalculated z-levels using parallel thread.
 - Version 21: Event system.
@@ -52,4 +52,4 @@ Major goals:
 
 ## Documentation
 
-A documentation of the ingame mechanisms and especially of the mod support is provided in the documentation directory. This also includes design sheets.
+A documentation of the in-game mechanisms and especially of the mod support is provided in the documentation directory. This also includes design sheets.

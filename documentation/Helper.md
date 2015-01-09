@@ -4,7 +4,7 @@ In directory *src-helper* are a couple of helper functions, utility classes...
 
 ## file.h
 
-File related helper funtions. Currently only a file exists method.
+File related helper functions. Currently only a file exists method.
 
 ## random.h
 

@@ -1,6 +1,6 @@
 # Region Generator
 
-The blocks of a region are created by a region generator. At the beginning a region may be completly empty but at the same moment a block is requested for the first time it will be created by the generator.
+The blocks of a region are created by a region generator. At the beginning a region may be completely empty but at the same moment a block is requested for the first time it will be created by the generator.
 
 ## Map Parser
 
@@ -62,7 +62,7 @@ TODO
 
 ## Dynamic Region Generation
 
-The current region generator uses a combination of default entities for the surface, below and above, a static map parser for surface structures and a noise based dynamic generation of structures below the surface. It has no intentation to be realistic in any way and is more of a prove of concept.
+The current region generator uses a combination of default entities for the surface, below and above, a static map parser for surface structures and a noise based dynamic generation of structures below the surface. It has no intention to be realistic in any way and is more of a prove of concept.
 
 #### Configuration
 
