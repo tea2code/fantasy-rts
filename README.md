@@ -42,7 +42,8 @@ Major goals:
 
 ## Ideas
 
-- Sidebar with info about selected entity, commands and some kind of global info.
+The order of this ideas doesn't reflect their priority in any way.
+
 - Mobile Support (Android and iOS).
 - Feelings plugin (every x + random seconds, update based on emotional attributes and handlers).
 - Fluids.
