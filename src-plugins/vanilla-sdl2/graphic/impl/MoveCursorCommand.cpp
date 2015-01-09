@@ -70,14 +70,7 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
     }
 
     rm->setPos(gd->getCursor(), cursorPos, shared);
-
-    // Raise event.
-    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
-    auto event = em->makeEvent(shared->makeId(Sdl2Ids::moveCursorEvent()), shared);
-    auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
-    eventValue->setValue(cursorPos);
-    event->setValue(shared->makeId(Sdl2Ids::moveCursorEventPos()), eventValue);
-    em->raise(event, shared);
+    raiseMoveCursorEvent(cursorPos, shared);
 }
 
 frts::IdPtr frts::MoveCursorCommand::getCommandType() const
@@ -150,12 +143,5 @@ void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
     lastX = lastY = lastZ = false;
 
     rm->setPos(gd->getCursor(), cursorPos, shared);
-
-    // Raise event.
-    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
-    auto event = em->makeEvent(shared->makeId(Sdl2Ids::moveCursorEvent()), shared);
-    auto eventValue = makeEventValue<PointEventValue>(em, ModelEventIds::pointEventValue(), shared);
-    eventValue->setValue(cursorPos);
-    event->setValue(shared->makeId(Sdl2Ids::moveCursorEventPos()), eventValue);
-    em->raise(event, shared);
+    raiseMoveCursorEvent(cursorPos, shared);
 }

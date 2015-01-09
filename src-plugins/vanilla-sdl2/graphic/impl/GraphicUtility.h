@@ -9,6 +9,13 @@
 namespace frts
 {
     /**
+     * @brief Raise an move cursor event with the new cursor position.
+     * @param cursorPos The new cursor position.
+     * @param shared The shared manager.
+     */
+    void raiseMoveCursorEvent(PointPtr cursorPos, SharedManagerPtr shared);
+
+    /**
      * @brief Converts screen coordinates in pixel to region coordinates in tiles.
      * @param screen The screen coordinate (x or y).
      * @param tile The tile width or height.
