@@ -49,11 +49,11 @@ For tests it is necessary to copy some libraries to the executable:
 
 ### SDL2 Event Handler
 
-The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. 
+The event handler module consumes all SDL2 events in the queue and handles them. These are mostly input events. It also implements mouse and keyboard based selection (See **Events**). 
 
-Load using `frts/Sdl2EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
+Load using `frts/SDL2EventHandler` in the `updateModules` (recommended) or `renderModules` section of the load file.
 
-Will identify itself by the name and type `frts::Sdl2EventHandler`. It can also be found in the static class `Sdl2Ids`
+Will identify itself by the name and type `frts::SDL2EventHandler`. It can also be found in the static class `Sdl2Ids`
 
 ### Input Handler
 
@@ -204,6 +204,14 @@ Following keys are currently supported. If multiple names for one key exist they
         At @
         Caret ^
 
+### Selection Data
+
+This data value contains data related to selecting positions using mouse or keyboard.
+
+Default ID can be found in the static class `Sdl2Ids`.
+
+Will identify itself by the name and type `frts::SelectionData`. It can also be found in the static class `Sdl2Ids`
+
 ## Commands
 
 This plugin implements a couple of commands (using the *VanillaCommand* plugin) which are assigned to different keys. If necessary it adds these commands also to the undo blacklist. IDs can also be found in the static class `Sdl2Ids`.
@@ -238,6 +246,10 @@ This command allows movement of the visible screen over the map. Following direc
 
 Step width is configured in the `screen` configuration (see **Screen Config**).
 
+### SelectCommand
+
+This command allows to select a rectangular group of positions using the keyboard. Use command id `frts.vanillasdl2.command.select`.
+
 ### SwitchSidebarInfoIndexCommand
 
 This command allows to switch the currently shown entity in the info area of the sidebar:
@@ -253,9 +265,13 @@ Using the *VanillaEvent* plugin this plugin will throw following events. IDs can
 
 This event is thrown, when every the cursor is moved by the user. It has the id `frts.vanillasdl2.event.movecursor`. It has a single point value with id `frts.vanillasdl2.event.movecursor.pos` describing the new position of the cursor.
 
+### Selection Event
+
+> TODO
+
 ## Graphic Output
 
-### GraphicData
+### Graphic Data
 
 This data value contains common data related to graphic output. 
 
@@ -286,11 +302,13 @@ Will identify itself by the name and type `frts::SDL2Renderer`. It can also be f
 
 #### Screen Config
 
-The screen config defines the cursor entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
+The screen config defines the cursor entity, selection entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
 
     screen:
     
-        cursor: <string>
+        cursor: <string representing an id>
+        
+        selection: <string representing an id>
 
         num_fps_avg: <integer greater 0>
     

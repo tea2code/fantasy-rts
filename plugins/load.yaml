@@ -6,7 +6,8 @@ plugins:
     - vanilla-job/vanilla-job
     - vanilla-model/vanilla-model
     - vanilla-user-action/vanilla-user-action
-    # VanillaSDL2
+    
+    # VanillaSDL2:
     - vanilla-sdl2/SDL2
     - vanilla-sdl2/SDL2_image
     - vanilla-sdl2/zlib1
@@ -26,7 +27,7 @@ renderModules:
     - frts/ModelReseter
     
 updateModules:
-    - frts/Sdl2EventHandler
+    - frts/SDL2EventHandler
     - frts/ActionHandler
     - frts/JobHandler
     - frts/VanillaDemo

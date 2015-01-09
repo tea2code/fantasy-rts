@@ -6,7 +6,7 @@ entities:
         - name: grid
           components:
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1000
+              sort_order: 1025
         - name: highlight.green
           components:
             - component: frts.vanillamodel.entity.component.sortorder
@@ -26,13 +26,17 @@ entities:
         - name: dot
           components:
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1100
+              sort_order: 1090
             
         # Meta 
         - name: cursor
           components:
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1100            
+              sort_order: 1100    
+        - name: selection
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1000    
             
         # Units
         - name: dwarf

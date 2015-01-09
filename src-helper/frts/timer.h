@@ -32,21 +32,21 @@ namespace frts
         /**
          * @param label The description label.
          * @param shared The shared manager.
-         * @param ignoreZeroMs If true resulting times of zero milliseconds will be ignored. Default true.
+         * @param minDuration Minimum duration to log. Default ignores durations of zero milliseconds.
          */
-        PerformanceLog(std::string label, SharedManagerPtr shared, bool ignoreZeroMs = true)
-            : ignoreZeroMs{ignoreZeroMs}, label{label}, shared{shared}, startTime{highResTime()}
+        PerformanceLog(std::string label, SharedManagerPtr shared, unsigned int minDuration = 1)
+            : label{label}, minDuration{minDuration}, shared{shared}, startTime{highResTime()}
         {}
 
         ~PerformanceLog()
         {
             auto duration = (highResTime() - startTime).count();
-            if (ignoreZeroMs && duration == 0)
+            if (duration < minDuration)
             {
                 return;
             }
 
-            Frame::ticks frameNum = -1;
+            Frame::ticks frameNum = 0;
             if (shared->getFrame() != nullptr)
             {
                 frameNum = shared->getFrame()->getNumber();
@@ -57,8 +57,8 @@ namespace frts
         }
 
     private:
-        bool ignoreZeroMs;
         std::string label;
+        unsigned int minDuration;
         SharedManagerPtr shared;
         std::chrono::milliseconds startTime;
     };

@@ -4,6 +4,8 @@ keys:
       command: frts.vanillacommand.command.quit
     - key: z
       command: frts.vanillacommand.command.undo
+    - key: enter
+      command: frts.vanillasdl2.command.select
       
     # Screen movement
     - key: d
@@ -47,5 +49,14 @@ command:
         - frts.vanillasdl2.command.movescreen.southeast
         - frts.vanillasdl2.command.movescreen.northwest
         - frts.vanillasdl2.command.movescreen.southwest
+        - frts.vanillasdl2.command.movecursor.north
+        - frts.vanillasdl2.command.movecursor.east
+        - frts.vanillasdl2.command.movecursor.south
+        - frts.vanillasdl2.command.movecursor.west
+        - frts.vanillasdl2.command.movecursor.northeast
+        - frts.vanillasdl2.command.movecursor.southeast
+        - frts.vanillasdl2.command.movecursor.southwest
+        - frts.vanillasdl2.command.movecursor.northwest
         - frts.vanillasdl2.command.switchsidebarinfoindex.next
         - frts.vanillasdl2.command.switchsidebarinfoindex.previous
+        - frts.vanillasdl2.command.select

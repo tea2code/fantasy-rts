@@ -182,6 +182,8 @@ void frts::Drawer::renderNow(SharedManagerPtr shared)
     assert(shared != nullptr);
     assert(initialized);
 
+    PerformanceLog pl(getName() + "RenderNow", shared, 5);
+
     SDL_RenderPresent(renderer.get());
 }
 
@@ -344,7 +346,7 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnordered
 {
     assert(shared != nullptr);
 
-    PerformanceLog pl(getName() + " UpdatePositions", shared);
+    PerformanceLog pl(getName() + " UpdatePositions", shared, 2);
 
     for (PointPtr pos : positions)
     {

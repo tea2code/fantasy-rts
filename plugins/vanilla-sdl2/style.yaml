@@ -59,6 +59,10 @@ style:
               x: 0
               y: 192
               
+            - name: selection
+              x: 16
+              y: 192
+              
             # Units
             - name: dwarf.north
               multiple:

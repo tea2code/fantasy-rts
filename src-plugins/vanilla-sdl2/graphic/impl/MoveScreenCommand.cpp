@@ -1,8 +1,10 @@
 #include "MoveScreenCommand.h"
 
-#include <graphic/GraphicData.h>
 #include "GraphicUtility.h"
+#include <graphic/GraphicData.h>
 #include <main/Sdl2Ids.h>
+#include <input/SelectionData.h>
+#include <input/impl/SelectionHelper.h>
 
 #include <algorithm>
 
@@ -79,6 +81,22 @@ void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
                                   cursorPos->getY() + gd->getScreenOffsetY(),
                                   gd->getZLevel());
         rm->setPos(gd->getCursor(), cursorPos, shared);
+        raiseMoveCursorEvent(cursorPos, shared);
+
+        // Update selection?
+        try
+        {
+            auto sd = getDataValue<SelectionData>(shared, Sdl2Ids::selectionData());
+
+            if (sd->isSelecting())
+            {
+                updateSelection(cursorPos, shared);
+            }
+        }
+        catch(const IdNotFoundError&)
+        {
+            // Ignore. Seems like another input handler is used.
+        }
     }
 }
 
@@ -161,4 +179,5 @@ void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
                               cursorPos->getY() + gd->getScreenOffsetY(),
                               gd->getZLevel());
     rm->setPos(gd->getCursor(), cursorPos, shared);
+    raiseMoveCursorEvent(cursorPos, shared);
 }

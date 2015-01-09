@@ -33,6 +33,7 @@
 #include <frts/configuration>
 #include <frts/shared>
 #include <frts/vanillaevent>
+#include <frts/timer.h>
 
 #include <boost/format.hpp>
 
@@ -363,6 +364,8 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
 {
     assert(id != nullptr);
     assert(shared != nullptr);
+
+    PerformanceLog pl(getName() + " MakeEntity " + id->toString(), shared);
 
     try
     {

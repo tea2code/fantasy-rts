@@ -33,6 +33,10 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.cursor
+        - name: selection
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.selection
             
         # Units
         - name: dwarf

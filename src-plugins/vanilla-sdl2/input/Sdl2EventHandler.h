@@ -29,10 +29,14 @@ namespace frts
          */
         static std::string identifier()
         {
-            return "frts/Sdl2EventHandler";
+            return "frts/SDL2EventHandler";
         }
 
         void checkRequiredData(SharedManagerPtr shared) override;
+        bool createData(SharedManagerPtr shared) override;
+        std::vector<std::string> getSupportedConfig() override;
+        bool init(SharedManagerPtr shared) override;
+        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 

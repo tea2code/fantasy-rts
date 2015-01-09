@@ -259,7 +259,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     }
     eventsChanged = false;
 
-    PerformanceLog pl(getName() + " UpdateEvents", shared);
+    PerformanceLog pl(getName() + " UpdateEvents", shared, 2);
 
     // Limit number of events. Don't try to show more than possible. And remove an extra one for the
     // headline.
@@ -362,7 +362,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     infoNextUpdate += infoUpdateTime;
     infoLastEntityIndex = gd->getSidebarInfoIndex();
 
-    PerformanceLog pl(getName() + " UpdateInfo", shared);
+    PerformanceLog pl(getName() + " UpdateInfo", shared, 2);
 
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
@@ -487,7 +487,7 @@ bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
     assert(initialized);
     assert(shared != nullptr);
 
-    PerformanceLog pl(getName() + " UpdateSidebar", shared);
+    PerformanceLog pl(getName() + " UpdateSidebar", shared, 3);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto area = gd->getSidebarArea();

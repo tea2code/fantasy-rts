@@ -129,12 +129,22 @@ namespace frts
 
         static std::string sdl2EventHandler()
         {
-            return "frts::Sdl2EventHandler";
+            return "frts::SDL2EventHandler";
         }
 
         static std::string sdl2Renderer()
         {
             return "frts::SDL2Renderer";
+        }
+
+        static std::string selectCommand()
+        {
+            return "frts.vanillasdl2.command.select";
+        }
+
+        static std::string selectionData()
+        {
+            return "frts::SelectionData";
         }
 
         static std::string switchSidebarInfoIndexCommandNext()

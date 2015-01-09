@@ -1,8 +1,11 @@
 #include "MoveCursorCommand.h"
 
-#include <graphic/GraphicData.h>
 #include "GraphicUtility.h"
+#include <graphic/GraphicData.h>
 #include <main/Sdl2Ids.h>
+#include <input/SelectionData.h>
+#include <input/impl/SelectionHelper.h>
+
 #include <frts/vanillaevent>
 
 #include <algorithm>
@@ -71,6 +74,21 @@ void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
 
     rm->setPos(gd->getCursor(), cursorPos, shared);
     raiseMoveCursorEvent(cursorPos, shared);
+
+    // Update selection?
+    try
+    {
+        auto sd = getDataValue<SelectionData>(shared, Sdl2Ids::selectionData());
+
+        if (sd->isSelecting())
+        {
+            updateSelection(cursorPos, shared);
+        }
+    }
+    catch(const IdNotFoundError&)
+    {
+        // Ignore. Seems like another input handler is used.
+    }
 }
 
 frts::IdPtr frts::MoveCursorCommand::getCommandType() const
