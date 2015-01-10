@@ -39,7 +39,7 @@ namespace frts
         /**
          * @brief Check if entity has a certain drop.
          * @param entityId The entity id.
-         * @return
+         * @return True if it hase the drop else false.
          */
         virtual bool hasDrop(IdPtr entityId) const = 0;
 

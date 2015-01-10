@@ -38,6 +38,15 @@ Entities can drop other entities if they are destroyed, killed, harvested... The
     drops:
         - <string representing an entity id>
 
+## Harvestable
+
+Entities with this component can be harvested by the associated types.
+
+### Configuration
+
+    types:
+        - <string representing an entity id>
+
 ## HasResource
 
 Entities may contain resources which can be harvested.

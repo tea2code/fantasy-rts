@@ -31,6 +31,11 @@ namespace frts
             return "frts.vanillamodel.entity.component.drop";
         }
 
+        static std::string harvestable()
+        {
+            return "frts.vanillamodel.entity.component.harvestable";
+        }
+
         static std::string hasResource()
         {
             return "frts.vanillamodel.entity.component.hasresource";

@@ -85,6 +85,9 @@ entities:
                   value: "Berry Shrub"
                 - name: "Description"
                   value: "A low plant with delicious berries."
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.crop
         - name: tree
           components:
             - component: frts.vanillamodel.entity.component.blockedby
@@ -110,6 +113,9 @@ entities:
                   value: "Tree"
                 - name: "Description"
                   value: "Majestic plant which gives plenty of living space and hard wood for craftsman."
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.chop
         
         # Resource
         - name: berry
@@ -246,6 +252,9 @@ entities:
               infos:
                 - name: "Name"
                   value: "Earth"
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig
         - name: rock
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -260,6 +269,9 @@ entities:
               infos:
                 - name: "Name"
                   value: "Rock"
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig
         - name: rock.iron
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -277,6 +289,9 @@ entities:
                   value: "Iron Ore"
                 - name: "Description"
                   value: "Iron ore can be used to create iron tools and weapons."
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig
         - name: rock.coal
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -294,6 +309,9 @@ entities:
                   value: "Coal"
                 - name: "Description"
                   value: "Feeds the furnaces and dyes faces black."
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig
         - name: rock.diamond
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -311,3 +329,6 @@ entities:
                   value: "Diamonds"
                 - name: "Description"
                   value: "Sparkling clear gem. My precious."
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig

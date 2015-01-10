@@ -10,6 +10,8 @@
 #include <entity/impl/DropImpl.h>
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/HarvestableImpl.h>
+#include <entity/impl/HarvestableBuilder.h>
 #include <entity/impl/HasResourceImpl.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/IsResourceImpl.h>
@@ -195,7 +197,7 @@ TEST_CASE("Blocking Builder.", "[entity]")
     blockedBy->addBlock(frts::makeId("block1"));
 
     auto castComponent = std::static_pointer_cast<frts::Blocking>(component);
-    //REQUIRE(castComponent->blocks(blockedBy));
+    REQUIRE(castComponent->blocks(blockedBy));
 }
 
 TEST_CASE("Curriculum.", "[entity]")
@@ -230,7 +232,7 @@ TEST_CASE("Curriculum.", "[entity]")
 
 TEST_CASE("Drop.", "[entity]")
 {
-    frts::EntityPtr entity = frts::makeEntity();
+    auto entity = frts::makeEntity();
     frts::IdPtr resourceId1 = frts::makeId("wood");
     frts::IdPtr resourceId2 = frts::makeId("food");
 
@@ -301,6 +303,44 @@ TEST_CASE("Entity.", "[entity]")
     entity->addComponent(hasResource);
 
     REQUIRE(entity->getComponents().size() == 2);
+}
+
+TEST_CASE("Harvestable.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeHarvestableBuilder();
+
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    auto entity = frts::makeEntity();
+    frts::IdPtr type1 = frts::makeId("harvestable.type1");
+    frts::IdPtr type2 = frts::makeId("harvestable.type2");
+
+    auto harvestable = std::static_pointer_cast<frts::Harvestable>(component);
+    harvestable->addType(type1);
+    frts::IdPtr id = harvestable->getComponentType();
+    entity->addComponent(harvestable);
+
+    auto foundHarvestable = frts::getComponent<frts::Harvestable>(id, entity);
+    REQUIRE(foundHarvestable != nullptr);
+    REQUIRE(foundHarvestable->hasType(type1));
+    REQUIRE_FALSE(foundHarvestable->hasType(type2));
+    REQUIRE(foundHarvestable->getTypes().size() == 1);
+
+    foundHarvestable->addType(type2);
+
+    REQUIRE(foundHarvestable->hasType(type1));
+    REQUIRE(foundHarvestable->hasType(type2));
+    REQUIRE(foundHarvestable->getTypes().size() == 2);
+
+    foundHarvestable->removeType(type1);
+
+    REQUIRE_FALSE(foundHarvestable->hasType(type1));
+    REQUIRE(foundHarvestable->hasType(type2));
+    REQUIRE(foundHarvestable->getTypes().size() == 1);
 }
 
 TEST_CASE("Resource.", "[entity]")

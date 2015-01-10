@@ -20,7 +20,9 @@ SOURCES += \
     $$PWD/impl/InfoImpl.cpp \
     $$PWD/impl/InfoBuilder.cpp \
     $$PWD/impl/CurriculumBuilder.cpp \
-    $$PWD/impl/CurriculumImpl.cpp
+    $$PWD/impl/CurriculumImpl.cpp \
+    $$PWD/impl/HarvestableBuilder.cpp \
+    $$PWD/impl/HarvestableImpl.cpp
     
 
 HEADERS += \
@@ -59,4 +61,7 @@ HEADERS += \
     $$PWD/impl/InfoBuilder.h \
     $$PWD/Curriculum.h \
     $$PWD/impl/CurriculumBuilder.h \
-    $$PWD/impl/CurriculumImpl.h
+    $$PWD/impl/CurriculumImpl.h \
+    $$PWD/Harvestable.h \
+    $$PWD/impl/HarvestableBuilder.h \
+    $$PWD/impl/HarvestableImpl.h

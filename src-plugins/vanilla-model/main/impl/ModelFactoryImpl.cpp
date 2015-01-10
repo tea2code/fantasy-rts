@@ -8,6 +8,7 @@
 #include <entity/impl/CurriculumBuilder.h>
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/HarvestableBuilder.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/InfoBuilder.h>
 #include <entity/impl/IsResourceBuilder.h>
@@ -162,6 +163,11 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     auto dropId = shared->makeId(ComponentIds::drop());
     componentBuilder = makeDropBuilder();
     registerComponentBuilder(dropId, componentBuilder);
+
+    // Harvestable.
+    auto harvestableId = shared->makeId(ComponentIds::harvestable());
+    componentBuilder = makeHarvestableBuilder();
+    registerComponentBuilder(harvestableId, componentBuilder);
 
     // HasResource.
     auto hasResourceId = shared->makeId(ComponentIds::hasResource());
@@ -375,7 +381,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr sh
     assert(id != nullptr);
     assert(shared != nullptr);
 
-    PerformanceLog pl(getName() + " MakeEntity " + id->toString(), shared);
+    PerformanceLog pl(getName() + " MakeEntity " + id->toString(), shared, 2);
 
     try
     {
