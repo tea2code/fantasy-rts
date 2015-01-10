@@ -33,10 +33,15 @@ Any class which want to register to any event must implement the event observer 
 An event value stores data associated with an event. Every event value has a type which allows to identify what underlying variable type is used. The type is also used to create these values using the appropriate make methods in event manager. Following event values are provided others can be registered in the event manager. The ids can be also found in the static class `EventIds`.
 
 - **StringEventValue:** An event value for strings. Has type `frts.vanillaevent.value.string`.
+- **StringListEventValue:** An event value for string lists. Has type `frts.vanillaevent.value.string.list`.
 - **IntegerEventValue:** An event value for integers (implemented as `long`). Has type `frts.vanillaevent.value.integer`.
+- **IntegerListEventValue:** An event value for integer (implemented as `long`) lists. Has type `frts.vanillaevent.value.integer.list`.
 - **FloatEventValue:** An event value for floating point numbers (implemented as `double`). Has type `frts.vanillaevent.value.float`.
+- **FloatListEventValue:** An event value for floating point number (implemented as `double`) lists. Has type `frts.vanillaevent.value.float.list`.
 - **BooleanEventValue:** An event value for booleans. Has type `frts.vanillaevent.value.boolean`.
+- **BooleanListEventValue:** An event value for boolean lists. Has type `frts.vanillaevent.value.boolean.list`.
 - **IdEventValue:** An event value for ids. Has type `frts.vanillaevent.value.id`.
+- **IdListEventValue:** An event value for id lists. Has type `frts.vanillaevent.value.id.list`.
 
 ### Event Value Builder
 

@@ -17,6 +17,11 @@ namespace frts
             return "frts.vanillaevent.value.boolean";
         }
 
+        static std::string booleanListEventValue()
+        {
+            return "frts.vanillaevent.value.boolean.list";
+        }
+
         static std::string eventManager()
         {
             return "frts::EventManager";
@@ -27,9 +32,19 @@ namespace frts
             return "frts.vanillaevent.value.float";
         }
 
+        static std::string floatListEventValue()
+        {
+            return "frts.vanillaevent.value.float.list";
+        }
+
         static std::string idEventValue()
         {
             return "frts.vanillaevent.value.id";
+        }
+
+        static std::string idListEventValue()
+        {
+            return "frts.vanillaevent.value.id.list";
         }
 
         static std::string integerEventValue()
@@ -37,9 +52,19 @@ namespace frts
             return "frts.vanillaevent.value.integer";
         }
 
+        static std::string integerListEventValue()
+        {
+            return "frts.vanillaevent.value.integer.list";
+        }
+
         static std::string stringEventValue()
         {
             return "frts.vanillaevent.value.string";
+        }
+
+        static std::string stringListEventValue()
+        {
+            return "frts.vanillaevent.value.string.list";
         }
     };
 }

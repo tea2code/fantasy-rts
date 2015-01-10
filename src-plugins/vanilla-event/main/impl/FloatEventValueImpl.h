@@ -7,7 +7,7 @@
 
 namespace frts
 {
-    class FloatEventValueImpl : public BaseEventValue<double, FloatEventValue>
+    class FloatEventValueImpl : public BaseEventValue<FloatEventValue::type, FloatEventValue>
     {
     public:
         /**

@@ -7,7 +7,7 @@
 
 namespace frts
 {
-    class BooleanEventValueImpl : public BaseEventValue<bool, BooleanEventValue>
+    class BooleanEventValueImpl : public BaseEventValue<BooleanEventValue::type, BooleanEventValue>
     {
     public:
         /**

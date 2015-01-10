@@ -2,10 +2,15 @@
 
 #include "EventImpl.h"
 #include "StringEventValueBuilder.h"
+#include "StringListEventValueBuilder.h"
 #include "IntegerEventValueBuilder.h"
+#include "IntegerListEventValueBuilder.h"
 #include "FloatEventValueBuilder.h"
+#include "FloatListEventValueBuilder.h"
 #include "BooleanEventValueBuilder.h"
+#include "BooleanListEventValueBuilder.h"
 #include "IdEventValueBuilder.h"
+#include "IdListEventValueBuilder.h"
 #include <main/EventError.h>
 #include <main/EventIds.h>
 
@@ -61,21 +66,41 @@ bool frts::EventManagerImpl::init(SharedManagerPtr shared)
     auto eventValueType = shared->makeId(EventIds::stringEventValue());
     registerEventValueBuilder(eventValueType, makeStringEventValueBuilder(eventValueType));
 
+    // String list.
+    eventValueType = shared->makeId(EventIds::stringListEventValue());
+    registerEventValueBuilder(eventValueType, makeStringListEventValueBuilder(eventValueType));
+
     // Integer.
     eventValueType = shared->makeId(EventIds::integerEventValue());
     registerEventValueBuilder(eventValueType, makeIntegerEventValueBuilder(eventValueType));
+
+    // Integer list.
+    eventValueType = shared->makeId(EventIds::integerListEventValue());
+    registerEventValueBuilder(eventValueType, makeIntegerListEventValueBuilder(eventValueType));
 
     // Float.
     eventValueType = shared->makeId(EventIds::floatEventValue());
     registerEventValueBuilder(eventValueType, makeFloatEventValueBuilder(eventValueType));
 
+    // Float list.
+    eventValueType = shared->makeId(EventIds::floatListEventValue());
+    registerEventValueBuilder(eventValueType, makeFloatListEventValueBuilder(eventValueType));
+
     // Boolean.
     eventValueType = shared->makeId(EventIds::booleanEventValue());
     registerEventValueBuilder(eventValueType, makeBooleanEventValueBuilder(eventValueType));
 
+    // Boolean list.
+    eventValueType = shared->makeId(EventIds::booleanListEventValue());
+    registerEventValueBuilder(eventValueType, makeBooleanListEventValueBuilder(eventValueType));
+
     // Id.
     eventValueType = shared->makeId(EventIds::idEventValue());
     registerEventValueBuilder(eventValueType, makeIdEventValueBuilder(eventValueType));
+
+    // Id list.
+    eventValueType = shared->makeId(EventIds::idListEventValue());
+    registerEventValueBuilder(eventValueType, makeIdListEventValueBuilder(eventValueType));
 
     isInit = true;
     return false;

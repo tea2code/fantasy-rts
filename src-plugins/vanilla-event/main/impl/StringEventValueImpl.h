@@ -7,7 +7,7 @@
 
 namespace frts
 {
-    class StringEventValueImpl : public BaseEventValue<std::string, StringEventValue>
+    class StringEventValueImpl : public BaseEventValue<StringEventValue::type, StringEventValue>
     {
     public:
         /**

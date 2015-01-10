@@ -1,28 +1,31 @@
-#ifndef FRTS_BOOLEANEVENTVALUE
-#define FRTS_BOOLEANEVENTVALUE
+#ifndef FRTS_STRINGLISTEVENTVALUE
+#define FRTS_STRINGLISTEVENTVALUE
 
 #include "EventValue.h"
+
+#include <string>
+#include <vector>
 
 
 namespace frts
 {
-    class BooleanEventValue;
+    class StringListEventValue;
 
     /**
-     * @brief Pointer to BooleanEventValue.
+     * @brief Pointer to StringListEventValue.
      */
-    using BooleanEventValuePtr = std::shared_ptr<BooleanEventValue>;
+    using StringListEventValuePtr = std::shared_ptr<StringListEventValue>;
 
     /**
-     * @brief A boolean event value.
+     * @brief A string list event value.
      */
-    class BooleanEventValue : public EventValue
+    class StringListEventValue : public EventValue
     {
     public:
         /**
          * @brief The type.
          */
-        using type = bool;
+        using type = std::vector<std::string>;
 
     public:
         /**
@@ -39,5 +42,5 @@ namespace frts
     };
 }
 
-#endif // FRTS_BOOLEANEVENTVALUE
+#endif // FRTS_STRINGLISTEVENTVALUE
 

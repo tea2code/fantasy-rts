@@ -8,7 +8,7 @@
 
 namespace frts
 {
-    class EntityListEventValueImpl : public BaseEventValue<std::vector<EntityPtr>, EntityListEventValue>
+    class EntityListEventValueImpl : public BaseEventValue<EntityListEventValue::type, EntityListEventValue>
     {
     public:
         /**

@@ -22,16 +22,22 @@ namespace frts
     {
     public:
         /**
+         * @brief The type.
+         */
+        using type = std::string;
+
+    public:
+        /**
          * @brief Get the value.
          * @return The value.
          */
-        virtual std::string getValue() const = 0;
+        virtual type getValue() const = 0;
 
         /**
          * @brief Set the value.
          * @param value The value.
          */
-        virtual void setValue(std::string value) = 0;
+        virtual void setValue(type value) = 0;
     };
 }
 

@@ -8,7 +8,7 @@
 
 namespace frts
 {
-    class EntityEventValueImpl : public BaseEventValue<EntityPtr, EntityEventValue>
+    class EntityEventValueImpl : public BaseEventValue<EntityEventValue::type, EntityEventValue>
     {
     public:
         /**

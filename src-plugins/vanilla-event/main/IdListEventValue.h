@@ -1,28 +1,31 @@
-#ifndef FRTS_BOOLEANEVENTVALUE
-#define FRTS_BOOLEANEVENTVALUE
+#ifndef FRTS_IDLISTEVENTVALUE
+#define FRTS_IDLISTEVENTVALUE
 
 #include "EventValue.h"
+#include <frts/shared>
+
+#include <vector>
 
 
 namespace frts
 {
-    class BooleanEventValue;
+    class IdListEventValue;
 
     /**
-     * @brief Pointer to BooleanEventValue.
+     * @brief Pointer to IdListEventValue.
      */
-    using BooleanEventValuePtr = std::shared_ptr<BooleanEventValue>;
+    using IdListEventValuePtr = std::shared_ptr<IdListEventValue>;
 
     /**
-     * @brief A boolean event value.
+     * @brief An id list event value.
      */
-    class BooleanEventValue : public EventValue
+    class IdListEventValue : public EventValue
     {
     public:
         /**
          * @brief The type.
          */
-        using type = bool;
+        using type = IdVector;
 
     public:
         /**
@@ -39,5 +42,5 @@ namespace frts
     };
 }
 
-#endif // FRTS_BOOLEANEVENTVALUE
+#endif // FRTS_IDLISTEVENTVALUE
 

@@ -20,16 +20,22 @@ namespace frts
     {
     public:
         /**
+         * @brief The type.
+         */
+        using type = double;
+
+    public:
+        /**
          * @brief Get the value.
          * @return The value.
          */
-        virtual double getValue() const = 0;
+        virtual type getValue() const = 0;
 
         /**
          * @brief Set the value.
          * @param value The value.
          */
-        virtual void setValue(double value) = 0;
+        virtual void setValue(type value) = 0;
     };
 }
 

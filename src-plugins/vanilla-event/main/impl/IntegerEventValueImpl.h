@@ -7,7 +7,7 @@
 
 namespace frts
 {
-    class IntegerEventValueImpl : public BaseEventValue<long, IntegerEventValue>
+    class IntegerEventValueImpl : public BaseEventValue<IntegerEventValue::type, IntegerEventValue>
     {
     public:
         /**

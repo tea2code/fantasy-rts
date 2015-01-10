@@ -2,6 +2,7 @@
 #define FRTS_VANILLAEVENT_INCLUDE_H
 
 #include <main/BooleanEventValue.h>
+#include <main/BooleanListEventValue.h>
 #include <main/Event.h>
 #include <main/EventError.h>
 #include <main/EventIds.h>
@@ -10,8 +11,12 @@
 #include <main/EventValue.h>
 #include <main/EventValueBuilder.h>
 #include <main/FloatEventValue.h>
+#include <main/FloatListEventValue.h>
 #include <main/IdEventValue.h>
+#include <main/IdListEventValue.h>
 #include <main/IntegerEventValue.h>
+#include <main/IntegerListEventValue.h>
 #include <main/StringEventValue.h>
+#include <main/StringListEventValue.h>
 
 #endif // FRTS_VANILLAEVENT_INCLUDE_H

@@ -57,7 +57,7 @@ entities:
                   value: "A sturdy little creature. Beware its axe and its mead."
             - component: frts.vanillamodel.entity.component.curriculum
               abilities:
-                - player.unit
+                - unit.player
     
         # Vegetation
         - name: shrub.berry

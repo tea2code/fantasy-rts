@@ -46,7 +46,9 @@ Entities represent all interactable objects in the world. They consist of compon
 Some model related event values for **VanillaEvent** are added to the event manager. The ids can be also found in the static class `ModelEventIds`.
 
 - **EntityEventValue:** An event value for entities. Has type `frts.vanillamodel.event.value.entity`.
+- **EntityListEventValue:** An event value for entity lists. Has type `frts.vanillamodel.event.value.entity.list`.
 - **PointEventValue:** An event value for points. Has type `frts.vanillamodel.event.value.point`.
+- **PointListEventValue:** An event value for point lists. Has type `frts.vanillamodel.event.value.point.list`.
 
 ### Model Data
 

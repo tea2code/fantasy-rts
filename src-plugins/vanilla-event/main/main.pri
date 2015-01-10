@@ -7,22 +7,37 @@ HEADERS += \
     $$PWD/EventValueBuilder.h \
     $$PWD/EventError.h \
     $$PWD/StringEventValue.h \
+    $$PWD/StringListEventValue.h \
     $$PWD/impl/StringEventValueImpl.h \
     $$PWD/impl/StringEventValueBuilder.h \
+    $$PWD/impl/StringListEventValueImpl.h \
+    $$PWD/impl/StringListEventValueBuilder.h \
     $$PWD/impl/BaseEventValue.h \
     $$PWD/impl/BaseEventValueBuilder.h \
     $$PWD/IntegerEventValue.h \
+    $$PWD/IntegerListEventValue.h \
     $$PWD/FloatEventValue.h \
+    $$PWD/FloatListEventValue.h \
     $$PWD/BooleanEventValue.h \
+    $$PWD/BooleanListEventValue.h \
     $$PWD/IdEventValue.h \
+    $$PWD/IdListEventValue.h \
     $$PWD/impl/BooleanEventValueImpl.h \
+    $$PWD/impl/BooleanListEventValueImpl.h \
     $$PWD/impl/FloatEventValueImpl.h \
+    $$PWD/impl/FloatListEventValueImpl.h \
     $$PWD/impl/IdEventValueImpl.h \
+    $$PWD/impl/IdListEventValueImpl.h \
     $$PWD/impl/IntegerEventValueImpl.h \
+    $$PWD/impl/IntegerListEventValueImpl.h \
     $$PWD/impl/BooleanEventValueBuilder.h \
+    $$PWD/impl/BooleanListEventValueBuilder.h \
     $$PWD/impl/FloatEventValueBuilder.h \
+    $$PWD/impl/FloatListEventValueBuilder.h \
     $$PWD/impl/IdEventValueBuilder.h \
+    $$PWD/impl/IdListEventValueBuilder.h \
     $$PWD/impl/IntegerEventValueBuilder.h \
+    $$PWD/impl/IntegerListEventValueBuilder.h \
     $$PWD/Event.h \
     $$PWD/impl/EventImpl.h \
     $$PWD/EventObserver.h
@@ -32,13 +47,23 @@ SOURCES += \
     main/VanillaEventPlugin.cpp \
     $$PWD/impl/EventManagerImpl.cpp \
     $$PWD/impl/StringEventValueImpl.cpp \
+    $$PWD/impl/StringListEventValueImpl.cpp \
     $$PWD/impl/StringEventValueBuilder.cpp \
+    $$PWD/impl/StringListEventValueBuilder.cpp \
     $$PWD/impl/BooleanEventValueImpl.cpp \
+    $$PWD/impl/BooleanListEventValueImpl.cpp \
     $$PWD/impl/FloatEventValueImpl.cpp \
+    $$PWD/impl/FloatListEventValueImpl.cpp \
     $$PWD/impl/IdEventValueImpl.cpp \
+    $$PWD/impl/IdListEventValueImpl.cpp \
     $$PWD/impl/IntegerEventValueImpl.cpp \
+    $$PWD/impl/IntegerListEventValueImpl.cpp \
     $$PWD/impl/BooleanEventValueBuilder.cpp \
+    $$PWD/impl/BooleanListEventValueBuilder.cpp \
     $$PWD/impl/FloatEventValueBuilder.cpp \
+    $$PWD/impl/FloatListEventValueBuilder.cpp \
     $$PWD/impl/IdEventValueBuilder.cpp \
+    $$PWD/impl/IdListEventValueBuilder.cpp \
     $$PWD/impl/IntegerEventValueBuilder.cpp \
+    $$PWD/impl/IntegerListEventValueBuilder.cpp \
     $$PWD/impl/EventImpl.cpp

@@ -1,28 +1,30 @@
-#ifndef FRTS_BOOLEANEVENTVALUE
-#define FRTS_BOOLEANEVENTVALUE
+#ifndef FRTS_FLOATLISTEVENTVALUE
+#define FRTS_FLOATLISTEVENTVALUE
 
 #include "EventValue.h"
+
+#include <vector>
 
 
 namespace frts
 {
-    class BooleanEventValue;
+    class FloatListEventValue;
 
     /**
-     * @brief Pointer to BooleanEventValue.
+     * @brief Pointer to FloatListEventValue.
      */
-    using BooleanEventValuePtr = std::shared_ptr<BooleanEventValue>;
+    using FloatListEventValuePtr = std::shared_ptr<FloatListEventValue>;
 
     /**
-     * @brief A boolean event value.
+     * @brief A float list event value.
      */
-    class BooleanEventValue : public EventValue
+    class FloatListEventValue : public EventValue
     {
     public:
         /**
          * @brief The type.
          */
-        using type = bool;
+        using type = std::vector<double>;
 
     public:
         /**
@@ -39,5 +41,5 @@ namespace frts
     };
 }
 
-#endif // FRTS_BOOLEANEVENTVALUE
+#endif // FRTS_FLOATLISTEVENTVALUE
 

@@ -5,10 +5,15 @@
 #include <main/EventObserver.h>
 #include <main/impl/EventManagerImpl.h>
 #include <main/StringEventValue.h>
+#include <main/StringListEventValue.h>
 #include <main/IntegerEventValue.h>
+#include <main/IntegerListEventValue.h>
 #include <main/FloatEventValue.h>
+#include <main/FloatListEventValue.h>
 #include <main/BooleanEventValue.h>
+#include <main/BooleanListEventValue.h>
 #include <main/IdEventValue.h>
+#include <main/IdListEventValue.h>
 
 #include <frts/shared>
 
@@ -135,6 +140,17 @@ TEST_CASE("EventValues.", "[main]")
         REQUIRE(eventValue->getValue() == "test");
     }
 
+    SECTION("StringListEventValue")
+    {
+        auto eventValue = frts::makeEventValue<frts::StringListEventValue>(eventManager, frts::EventIds::stringListEventValue(), shared);
+        REQUIRE(eventValue != nullptr);
+        REQUIRE(eventValue->getType()->toString() == frts::EventIds::stringListEventValue());
+
+        std::vector<std::string> list = {"test"};
+        eventValue->setValue(list);
+        REQUIRE(eventValue->getValue() == list);
+    }
+
     SECTION("IntegerEventValue")
     {
         auto eventValue = frts::makeEventValue<frts::IntegerEventValue>(eventManager, frts::EventIds::integerEventValue(), shared);
@@ -145,6 +161,17 @@ TEST_CASE("EventValues.", "[main]")
         REQUIRE(eventValue->getValue() == 123);
     }
 
+    SECTION("IntegerListEventValue")
+    {
+        auto eventValue = frts::makeEventValue<frts::IntegerListEventValue>(eventManager, frts::EventIds::integerListEventValue(), shared);
+        REQUIRE(eventValue != nullptr);
+        REQUIRE(eventValue->getType()->toString() == frts::EventIds::integerListEventValue());
+
+        std::vector<long> list = {123};
+        eventValue->setValue(list);
+        REQUIRE(eventValue->getValue() == list);
+    }
+
     SECTION("FloatEventValue")
     {
         auto eventValue = frts::makeEventValue<frts::FloatEventValue>(eventManager, frts::EventIds::floatEventValue(), shared);
@@ -153,6 +180,17 @@ TEST_CASE("EventValues.", "[main]")
 
         eventValue->setValue(0.53);
         REQUIRE(eventValue->getValue() == Approx(0.53));
+    }
+
+    SECTION("FloatListEventValue")
+    {
+        auto eventValue = frts::makeEventValue<frts::FloatListEventValue>(eventManager, frts::EventIds::floatListEventValue(), shared);
+        REQUIRE(eventValue != nullptr);
+        REQUIRE(eventValue->getType()->toString() == frts::EventIds::floatListEventValue());
+
+        std::vector<double> list = {0.53};
+        eventValue->setValue(list);
+        REQUIRE(eventValue->getValue().at(0) == Approx(0.53));
     }
 
     SECTION("BooleanEventValue")
@@ -168,6 +206,17 @@ TEST_CASE("EventValues.", "[main]")
         REQUIRE(eventValue->getValue() == false);
     }
 
+    SECTION("BooleanListEventValue")
+    {
+        auto eventValue = frts::makeEventValue<frts::BooleanListEventValue>(eventManager, frts::EventIds::booleanListEventValue(), shared);
+        REQUIRE(eventValue != nullptr);
+        REQUIRE(eventValue->getType()->toString() == frts::EventIds::booleanListEventValue());
+
+        std::vector<bool> list = {true, false};
+        eventValue->setValue(list);
+        REQUIRE(eventValue->getValue() == list);
+    }
+
     SECTION("IdEventValue")
     {
         auto eventValue = frts::makeEventValue<frts::IdEventValue>(eventManager, frts::EventIds::idEventValue(), shared);
@@ -176,5 +225,16 @@ TEST_CASE("EventValues.", "[main]")
 
         eventValue->setValue(shared->makeId("test"));
         REQUIRE(eventValue->getValue()->toString() == "test");
+    }
+
+    SECTION("IdListEventValue")
+    {
+        auto eventValue = frts::makeEventValue<frts::IdListEventValue>(eventManager, frts::EventIds::idListEventValue(), shared);
+        REQUIRE(eventValue != nullptr);
+        REQUIRE(eventValue->getType()->toString() == frts::EventIds::idListEventValue());
+
+        std::vector<frts::IdPtr> list = {shared->makeId("test")};
+        eventValue->setValue(list);
+        REQUIRE(eventValue->getValue() == list);
     }
 }

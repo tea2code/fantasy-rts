@@ -7,7 +7,7 @@
 
 namespace frts
 {
-    class IdEventValueImpl : public BaseEventValue<IdPtr, IdEventValue>
+    class IdEventValueImpl : public BaseEventValue<IdEventValue::type, IdEventValue>
     {
     public:
         /**

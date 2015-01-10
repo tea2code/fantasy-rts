@@ -24,16 +24,22 @@ namespace frts
     {
     public:
         /**
+         * @brief The type.
+         */
+        using type = std::vector<EntityPtr>;
+
+    public:
+        /**
          * @brief Get the value.
          * @return The value.
          */
-        virtual std::vector<EntityPtr> getValue() const = 0;
+        virtual type getValue() const = 0;
 
         /**
          * @brief Set the value.
          * @param value The value.
          */
-        virtual void setValue(std::vector<EntityPtr> value) = 0;
+        virtual void setValue(type value) = 0;
     };
 }
 

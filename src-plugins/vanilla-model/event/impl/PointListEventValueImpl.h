@@ -8,7 +8,7 @@
 
 namespace frts
 {
-    class PointListEventValueImpl : public BaseEventValue<PointVector, PointListEventValue>
+    class PointListEventValueImpl : public BaseEventValue<PointListEventValue::type, PointListEventValue>
     {
     public:
         /**
