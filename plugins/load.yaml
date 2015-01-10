@@ -47,11 +47,11 @@ configurations:
     - vanilla-model/entities.yaml
     - vanilla-model/region.yaml
     - vanilla-sdl2/entities.yaml
-    - vanilla-sdl2/keys.yaml
     - vanilla-sdl2/screen.yaml
     - vanilla-sdl2/sidebar.yaml
     - vanilla-sdl2/style.yaml
-    - vanilla-action/keys.yaml
+    - vanilla-user-action/useraction.yaml
+    - keys.yaml
     
     # Maps
     - maps/default.yaml

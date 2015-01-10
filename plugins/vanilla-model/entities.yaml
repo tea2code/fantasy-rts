@@ -47,6 +47,7 @@ entities:
                 - blocking.wall
                 - blocking.water
             - component: frts.vanillamodel.entity.component.movable
+              speed: 10
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 240
             - component: frts.vanillamodel.entity.component.info
@@ -58,6 +59,7 @@ entities:
             - component: frts.vanillamodel.entity.component.curriculum
               abilities:
                 - unit.player
+                - component.movable
     
         # Vegetation
         - name: shrub.berry

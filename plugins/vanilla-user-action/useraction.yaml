@@ -1,0 +1,14 @@
+useraction:
+
+    namespace: frts.vanillauseraction.command
+    
+    useractions:
+    
+        - command: dig
+          type: frts.vanillauseraction.useraction.harvest
+          settings:
+            harvest_types: 
+                - harvestable.dig
+            requirements: 
+                - unit.player
+                - component.movable

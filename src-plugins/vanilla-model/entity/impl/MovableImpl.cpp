@@ -54,6 +54,11 @@ frts::PointPtr frts::MovableImpl::getPreviousPathPos() const
     return previous;
 }
 
+unsigned int frts::MovableImpl::getSpeed() const
+{
+    return this->speed;
+}
+
 void frts::MovableImpl::setPath(PathPtr path)
 {
     assert(path != nullptr);
@@ -61,4 +66,9 @@ void frts::MovableImpl::setPath(PathPtr path)
     this->path = path;
     previous = nullptr;
     current = nullptr;
+}
+
+void frts::MovableImpl::setSpeed(unsigned int speed)
+{
+    this->speed = speed;
 }

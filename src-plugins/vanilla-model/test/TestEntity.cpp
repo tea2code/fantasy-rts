@@ -468,7 +468,7 @@ TEST_CASE("Movable.", "[entity]")
         frts::makePoint(1, 1, 0),
         frts::makePoint(1, 0, 0)
     };
-   auto path = frts::makePath(pathPart, true);
+    auto path = frts::makePath(pathPart, true);
     movable->setPath(path);
     REQUIRE(movable->getPath()->getCompletePath() == pathPart);
     REQUIRE(movable->getPreviousPathPos() == nullptr);
@@ -481,6 +481,10 @@ TEST_CASE("Movable.", "[entity]")
     REQUIRE(movable->getDirection() == frts::Movable::Direction::North);
     REQUIRE(movable->getNextPathPos() == nullptr);
     REQUIRE(movable->getDirection() == frts::Movable::Direction::South);
+
+    // Speed
+    movable->setSpeed(123);
+    REQUIRE(movable->getSpeed() == 123);
 }
 
 TEST_CASE("SortOrder.", "[entity]")

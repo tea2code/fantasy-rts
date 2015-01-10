@@ -78,6 +78,12 @@ Entities with this component represent a resource.
 
 Entities with this component can move and may change the direction they are looking.
 
+### Configuration
+
+Speed is in blocks per second.
+
+    speed: <integer greater 0>
+
 ## SortOrder
 
 Entities may have a certain order in a block. The sort order component stores this attribute.

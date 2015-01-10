@@ -64,10 +64,22 @@ namespace frts
         virtual PointPtr getPreviousPathPos() const = 0;
 
         /**
+         * @brief Get the movement speed.
+         * @return The speed in blocks per second.
+         */
+        virtual unsigned int getSpeed() const = 0;
+
+        /**
          * @brief Set the path. This will reset this component.
          * @param path The path.
          */
         virtual void setPath(PathPtr path) = 0;
+
+        /**
+         * @brief Set the movement speed.
+         * @param speed The speed in blocks per second.
+         */
+        virtual void setSpeed(unsigned int speed) = 0;
     };
 }
 

@@ -16,10 +16,12 @@ frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared)
     return makeMovable(id);
 }
 
-frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared, ConfigNodePtr)
+frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
 {
     assert(shared != nullptr);
+    assert(node != nullptr);
 
-    // No config.
-    return build(shared);
+    auto component = std::static_pointer_cast<Movable>(build(shared));
+    component->setSpeed(node->getInteger("speed"));
+    return component;
 }
