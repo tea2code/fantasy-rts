@@ -15,7 +15,7 @@ void raiseEvent(const std::string& eventId, frts::PointVector selection, frts::S
     auto event = em->makeEvent(shared->makeId(eventId), shared);
     auto eventValue = frts::makeEventValue<frts::PointListEventValue>(em, frts::ModelEventIds::pointListEventValue(), shared);
     eventValue->setValue(selection);
-    event->setValue(shared->makeId(frts::Sdl2Ids::moveCursorEventPos()), eventValue);
+    event->setValue(shared->makeId(frts::Sdl2Ids::selectionEventValue()), eventValue);
     em->raise(event, shared);
 }
 }
