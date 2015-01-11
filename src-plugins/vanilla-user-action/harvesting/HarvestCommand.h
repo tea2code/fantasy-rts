@@ -1,6 +1,7 @@
 #ifndef FRTS_HARVESTCOMMAND_H
 #define FRTS_HARVESTCOMMAND_H
 
+#include <frts/vanillaaction>
 #include <frts/vanillacommand>
 
 
@@ -24,6 +25,9 @@ namespace frts
         const std::string name = "frts::HarvestCommand";
 
         IdPtr commandType;
+        ConfigNodePtr settings;
+
+        ActionPtr action;
     };
 
     /**
