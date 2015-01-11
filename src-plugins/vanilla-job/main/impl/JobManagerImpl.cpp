@@ -61,7 +61,8 @@ bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr share
     auto satisfiesRequirements = [&](JobPtr job)
     {
         auto requirements = job->getRequirements();
-        return std::all_of(requirements.begin(), requirements.end(), hasAbility);
+        return std::all_of(requirements.begin(), requirements.end(), hasAbility) &&
+               job->checkSpecialRequirements(entity, shared);
     };
 
     auto it = std::find_if(jobs.begin(), jobs.end(), satisfiesRequirements);
@@ -99,7 +100,7 @@ int frts::JobManagerImpl::getTypeVersion() const
 
 int frts::JobManagerImpl::getVersion() const
 {
-    return 1;
+    return 2;
 }
 
 bool frts::JobManagerImpl::init(SharedManagerPtr)

@@ -22,9 +22,16 @@ namespace test
     class TestJob : public frts::Job
     {
     public:
-        TestJob(int doNumExecutions, int doNumStops, std::queue<frts::Frame::time> dueTimes, std::vector<frts::IdPtr> requirements = {})
-            : doNumExecutions{doNumExecutions}, doNumStops{doNumStops}, dueTimes{dueTimes}, requirements{requirements}
+        TestJob(int doNumExecutions, int doNumStops, std::queue<frts::Frame::time> dueTimes,
+                std::vector<frts::IdPtr> requirements = {}, bool specialRequirements = true)
+            : doNumExecutions{doNumExecutions}, doNumStops{doNumStops}, dueTimes{dueTimes},
+              requirements{requirements}, specialRequirements{specialRequirements}
         {}
+
+        bool checkSpecialRequirements(frts::EntityPtr, frts::SharedManagerPtr) const override
+        {
+            return specialRequirements;
+        }
 
         State execute(frts::SharedManagerPtr) override
         {
@@ -93,6 +100,8 @@ namespace test
         mutable std::queue<frts::Frame::time> dueTimes;
 
         std::vector<frts::IdPtr> requirements;
+
+        bool specialRequirements;
     };
 }
 
@@ -200,54 +209,109 @@ TEST_CASE("Job manager.", "[main]")
     int doNumStops = 0;
     std::queue<frts::Frame::time> dueTimes;
 
-    auto ability1 = shared->makeId("requirement.1");
-    std::vector<frts::IdPtr> requirements1 = {ability1};
-    auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1);
+    SECTION("Normal behaviour")
+    {
+        auto ability1 = shared->makeId("requirement.1");
+        std::vector<frts::IdPtr> requirements1 = {ability1};
+        auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1);
 
-    auto ability2 = shared->makeId("requirement.2");
-    std::vector<frts::IdPtr> requirements2 = {ability2};
-    auto job2 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements2);
+        auto ability2 = shared->makeId("requirement.2");
+        std::vector<frts::IdPtr> requirements2 = {ability2};
+        auto job2 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements2);
 
-    auto entity = frts::makeEntity();
-    auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
-    curriculum->addAbility(ability1);
-    entity->addComponent(curriculum);
+        auto entity = frts::makeEntity();
+        auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
+        curriculum->addAbility(ability1);
+        entity->addComponent(curriculum);
 
-    jobManager->addJob(job2);
-    jobHandler->tick(shared);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        jobManager->addJob(job2);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    bool employed = jobManager->employEntity(entity, shared);
-    jobHandler->tick(shared);
-    REQUIRE_FALSE(employed);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        bool employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE_FALSE(employed);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    jobManager->addJob(job1);
-    jobHandler->tick(shared);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        jobManager->addJob(job1);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    jobManager->stopJob(job1);
-    jobHandler->tick(shared);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        jobManager->stopJob(job1);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    employed = jobManager->employEntity(entity, shared);
-    jobHandler->tick(shared);
-    REQUIRE_FALSE(employed);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE_FALSE(employed);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    jobManager->addJob(job1);
-    jobHandler->tick(shared);
-    REQUIRE(job1->getNumExecutions() == 0);
-    REQUIRE(job2->getNumExecutions() == 0);
+        jobManager->addJob(job1);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
 
-    employed = jobManager->employEntity(entity, shared);
-    jobHandler->tick(shared);
-    REQUIRE(employed);
-    REQUIRE(job1->getNumExecutions() == 1);
-    REQUIRE(job2->getNumExecutions() == 0);
+        employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE(employed);
+        REQUIRE(job1->getNumExecutions() == 1);
+        REQUIRE(job2->getNumExecutions() == 0);
+    }
+
+    SECTION("No requirements.")
+    {
+        std::vector<frts::IdPtr> requirements1 = {};
+        auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1);
+
+        auto entity = frts::makeEntity();
+        auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
+        entity->addComponent(curriculum);
+
+        jobManager->addJob(job1);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+
+        bool employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE(employed);
+        REQUIRE(job1->getNumExecutions() == 1);
+    }
+
+    SECTION("Special requirements.")
+    {
+        std::vector<frts::IdPtr> requirements1 = {};
+        auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1, false);
+
+        std::vector<frts::IdPtr> requirements2 = {};
+        auto job2 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1, true);
+
+        auto entity = frts::makeEntity();
+        auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
+        entity->addComponent(curriculum);
+
+        jobManager->addJob(job1);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+
+        bool employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE_FALSE(employed);
+        REQUIRE(job1->getNumExecutions() == 0);
+
+        jobManager->addJob(job2);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 0);
+
+        employed = jobManager->employEntity(entity, shared);
+        jobHandler->tick(shared);
+        REQUIRE(employed);
+        REQUIRE(job1->getNumExecutions() == 0);
+        REQUIRE(job2->getNumExecutions() == 1);
+    }
 }

@@ -41,6 +41,15 @@ namespace frts
         virtual ~Job() {}
 
         /**
+         * @brief Check additional requirements beside normal ones. For example are certain conditions
+         *        met in the world.
+         * @param entity The entity which would execute this job.
+         * @param shared The shared manager.
+         * @return True if special requirements are met else false.
+         */
+        virtual bool checkSpecialRequirements(EntityPtr entity, SharedManagerPtr shared) const = 0;
+
+        /**
          * @brief Execute this job. Will be called when the next due time is hit and the last
          *        result was "Running".
          * @param shared The shared manager.
