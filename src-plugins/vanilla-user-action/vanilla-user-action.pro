@@ -32,6 +32,7 @@ INCLUDEPATH += $$PWD/../vanilla-command
 INCLUDEPATH += $$PWD/../vanilla-event
 INCLUDEPATH += $$PWD/../vanilla-job
 INCLUDEPATH += $$PWD/../vanilla-model
+INCLUDEPATH += $$PWD/../vanilla-sdl2
 
 # Headers and sources.
 UNIT_TEST {
