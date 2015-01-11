@@ -73,11 +73,11 @@ namespace frts
          * @brief Get a list of requirements for this job.
          * @return List of ids each representing a requirement.
          */
-        virtual std::vector<IdPtr> getRequirements() const = 0;
+        virtual IdUnorderedSet getRequirements() const = 0;
 
         /**
          * @brief Set the entity which should execute this job. Don't reset before calling stop().
-         * @param entity The entity.
+         * @param entity The entity. Null is a valid value if the job is canceled.
          */
         virtual void setExecutingEntity(EntityPtr entity) = 0;
 

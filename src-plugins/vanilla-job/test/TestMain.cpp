@@ -23,7 +23,7 @@ namespace test
     {
     public:
         TestJob(int doNumExecutions, int doNumStops, std::queue<frts::Frame::time> dueTimes,
-                std::vector<frts::IdPtr> requirements = {}, bool specialRequirements = true)
+                frts::IdUnorderedSet requirements = frts::IdUnorderedSet(), bool specialRequirements = true)
             : doNumExecutions{doNumExecutions}, doNumStops{doNumStops}, dueTimes{dueTimes},
               requirements{requirements}, specialRequirements{specialRequirements}
         {}
@@ -58,7 +58,7 @@ namespace test
             return nullptr;
         }
 
-        std::vector<frts::IdPtr> getRequirements() const override
+        frts::IdUnorderedSet getRequirements() const override
         {
             return requirements;
         }
@@ -99,7 +99,7 @@ namespace test
         // Const cheating.
         mutable std::queue<frts::Frame::time> dueTimes;
 
-        std::vector<frts::IdPtr> requirements;
+        frts::IdUnorderedSet requirements;
 
         bool specialRequirements;
     };
@@ -212,11 +212,11 @@ TEST_CASE("Job manager.", "[main]")
     SECTION("Normal behaviour")
     {
         auto ability1 = shared->makeId("requirement.1");
-        std::vector<frts::IdPtr> requirements1 = {ability1};
+        frts::IdUnorderedSet requirements1 = {ability1};
         auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1);
 
         auto ability2 = shared->makeId("requirement.2");
-        std::vector<frts::IdPtr> requirements2 = {ability2};
+        frts::IdUnorderedSet requirements2 = {ability2};
         auto job2 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements2);
 
         auto entity = frts::makeEntity();
@@ -265,7 +265,7 @@ TEST_CASE("Job manager.", "[main]")
 
     SECTION("No requirements.")
     {
-        std::vector<frts::IdPtr> requirements1 = {};
+        frts::IdUnorderedSet requirements1;
         auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1);
 
         auto entity = frts::makeEntity();
@@ -284,10 +284,10 @@ TEST_CASE("Job manager.", "[main]")
 
     SECTION("Special requirements.")
     {
-        std::vector<frts::IdPtr> requirements1 = {};
+        frts::IdUnorderedSet requirements1;
         auto job1 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1, false);
 
-        std::vector<frts::IdPtr> requirements2 = {};
+        frts::IdUnorderedSet requirements2;
         auto job2 = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes, requirements1, true);
 
         auto entity = frts::makeEntity();
