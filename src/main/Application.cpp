@@ -12,6 +12,27 @@
 #include <string>
 
 
+namespace
+{
+    frts::DeadLockError makeDeadLockError(const std::string& function, const std::vector<frts::ModulePtr>& modules)
+    {
+        std::string msg = "Application: Possible dead lock while executing " + function + " was "
+                          "detected. Following modules where involved: ";
+        for (auto module : modules)
+        {
+            msg += module->getName();
+            msg += ", ";
+        }
+        if (!modules.empty())
+        {
+            msg = msg.substr(0, msg.size() - 2);
+        }
+
+        return frts::DeadLockError(msg);
+    }
+}
+
+
 frts::Application::Application(LogPtr log)
     : log{log}
 {
@@ -44,7 +65,7 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules, Shared
 
         if (count >= maxNumberExtraExecutions)
         {
-            throw DeadLockError("Application: Possible dead lock while executing createData() was detected.");
+            throw makeDeadLockError("createData()", todo);
         }
         count += 1;
     }
@@ -94,7 +115,7 @@ void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManage
 
         if (count >= maxNumberExtraExecutions)
         {
-            throw DeadLockError("Application: Possible dead lock while executing init() was detected.");
+            throw makeDeadLockError("init()", todo);
         }
         count += 1;
     }
@@ -147,7 +168,7 @@ void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedMan
 
         if (count >= maxNumberExtraExecutions)
         {
-            throw DeadLockError("Application: Possible dead lock while executing preInit() was detected.");
+            throw makeDeadLockError("preInit()", todo);
         }
         count += 1;
     }

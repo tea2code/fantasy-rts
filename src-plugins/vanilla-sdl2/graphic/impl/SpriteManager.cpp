@@ -101,7 +101,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
     std::string ns = rootNamespace;
     if (spritesNode->has("namespace"))
     {
-        ns = ns + "." + spritesNode->getString("namespace");
+        ns += spritesNode->getString("namespace") + ".";
     }
 
     // Fallback.
@@ -136,7 +136,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
     for (auto spriteNode : *node)
     {
         // ID.
-        auto id = shared->makeId(ns + "." + spriteNode->getString("name"));
+        auto id = shared->makeId(ns + spriteNode->getString("name"));
 
         // Height.
         int height = defaultHeight;

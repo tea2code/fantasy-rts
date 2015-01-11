@@ -174,6 +174,11 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
     assert(shared != nullptr);
 
     std::string ns = node->getString("namespace", "");
+    if (!ns.empty())
+    {
+        ns += ".";
+    }
+
     height = node->getInteger("height", height);
     width = node->getInteger("width", width);
 
@@ -195,13 +200,13 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
         std::string imageNs = ns;
         if (imagesNode->has("namespace"))
         {
-            imageNs += "." + imagesNode->getString("namespace");
+            imageNs += imagesNode->getString("namespace") + ".";
         }
 
         auto imagesListNode = imagesNode->getNode("images");
         for (auto imageNode : *imagesListNode)
         {
-            auto id = shared->makeId(imageNs + "." + imageNode->getString("name"));
+            auto id = shared->makeId(imageNs + imageNode->getString("name"));
             images[id] = imageNode->getString("path");
         }
     }

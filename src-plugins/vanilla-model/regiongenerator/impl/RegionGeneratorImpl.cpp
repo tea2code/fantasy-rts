@@ -149,6 +149,10 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
     node = node->getNode("noise_map");
 
     std::string ns = node->getString("namespace", "");
+    if (!ns.empty())
+    {
+        ns += ".";
+    }
 
     if (node->has("levels"))
     {
@@ -184,7 +188,7 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
 
         if (generatorsNode->has("namespace"))
         {
-            ns += "." + generatorsNode->getString("namespace");
+            ns += generatorsNode->getString("namespace") + ".";
         }
 
         if (generatorsNode->has("generators"))
@@ -192,7 +196,7 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
             generatorsNode = generatorsNode->getNode("generators");
             for (ConfigNodePtr generatorNode : *generatorsNode)
             {
-                auto id = shared->makeId(ns + "." + generatorNode->getString("name"));
+                auto id = shared->makeId(ns + generatorNode->getString("name"));
                 double featureSize = generatorNode->getFloat("feature_size");
 
                 std::vector<std::pair<double, double>> ranges;

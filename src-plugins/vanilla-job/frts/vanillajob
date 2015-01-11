@@ -2,5 +2,7 @@
 #define FRTS_VANILLAJOB_INCLUDE_H
 
 #include <main/Job.h>
+#include <main/JobIds.h>
+#include <main/JobManager.h>
 
 #endif // FRTS_VANILLAJOB_INCLUDE_H

@@ -2,6 +2,9 @@
 #define FRTS_USERACTIONFACTORY_H
 
 #include <frts/BaseUtility.h>
+#include <frts/shared>
+
+#include <unordered_map>
 
 
 namespace frts
@@ -24,7 +27,28 @@ namespace frts
             return "frts/UserActionFactory";
         }
 
+        std::vector<std::string> getSupportedConfig() override;
         bool init(SharedManagerPtr shared) override;
+        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
+        void validateModules(SharedManagerPtr shared) override;
+
+    private:
+        /**
+         * @brief Simple struct to store configuration of an command.
+         */
+        struct CommandConfig
+        {
+            IdPtr type;
+            ConfigNodePtr settings;
+        };
+
+        /**
+         * @brief Command config map.
+         */
+        using CommandConfigMap = std::unordered_map<IdPtr, CommandConfig, IdHash, IdEqual>;
+
+    private:
+        CommandConfigMap commandConfigs;
     };
 
     /**

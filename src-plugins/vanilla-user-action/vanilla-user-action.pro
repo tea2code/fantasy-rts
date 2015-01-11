@@ -29,7 +29,9 @@ INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../../src-helper/
 INCLUDEPATH += $$PWD/../vanilla-action
 INCLUDEPATH += $$PWD/../vanilla-command
+INCLUDEPATH += $$PWD/../vanilla-event
 INCLUDEPATH += $$PWD/../vanilla-job
+INCLUDEPATH += $$PWD/../vanilla-model
 
 # Headers and sources.
 UNIT_TEST {
@@ -44,5 +46,9 @@ UNIT_TEST {
 
     include(test/test.pri)
 }
+include(building/building.pri)
 include(frts/frts.pri)
+include(gathering/gathering.pri)
+include(harvesting/harvesting.pri)
 include(main/main.pri)
+include(production/production.pri)

@@ -59,7 +59,6 @@ entities:
             - component: frts.vanillamodel.entity.component.curriculum
               abilities:
                 - unit.player
-                - component.movable
     
         # Vegetation
         - name: shrub.berry

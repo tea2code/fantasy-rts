@@ -22,18 +22,36 @@ Will identify itself by the name and type `frts::UserActionFactory`. It can also
 
 ## User Actions
 
+Every user action configuration has an command id and an type id. The command id is for referencing this user action while the type id describes of what type the user action is. All type ids can also be found in the static class `UserActionIds`. Additionally every user action has a specific settings node described below.
+
+    useraction:
+
+        namespace: <string>
+        
+        useractions:
+        
+            - command: <string>
+              type: <string representing an id>
+              settings:
+                <see below>
+
 ### Building
 
-TODO
+> Not yet implemented.
 
 ### Gathering
 
-TOOD
+> Not yet implemented.
 
 ### Harvesting
 
-TODO
+User actions of this type will let the executing entity go to the specified position and destroy the object which should be harvested. Destroying this object will result in drops using the *Drop* component. Has type id `frts.vanillauseraction.useraction.harvest`.
+
+    harvest_types: 
+        - <string representing an id>
+    requirements: 
+        - <string representing an id>
 
 ### Production
 
-TODO
+> Not yet implemented.

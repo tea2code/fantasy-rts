@@ -416,10 +416,9 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
 
     if (key == entitiesConfigKey)
     {
-        std::string namePrefix = "";
-        if (node->has("namespace"))
+        std::string namePrefix = node->getString("namespace", "");
+        if (!namePrefix.empty())
         {
-            namePrefix = node->getString("namespace");
             namePrefix += ".";
         }
 

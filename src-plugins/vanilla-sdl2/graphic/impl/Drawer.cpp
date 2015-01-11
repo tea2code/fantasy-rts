@@ -203,7 +203,7 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     std::string ns = rootNamespace;
     if (imagesNode->has("namespace"))
     {
-        ns = ns + "." + imagesNode->getString("namespace");
+        ns += imagesNode->getString("namespace") + ".";
     }
 
     // Plugin path.
@@ -213,7 +213,7 @@ void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& ro
     auto node = imagesNode->getNode("image");
     for (auto imageNode : *node)
     {
-        auto id = shared->makeId(ns + "." + imageNode->getString("name"));
+        auto id = shared->makeId(ns + imageNode->getString("name"));
         std::string path = plugins + imageNode->getString("path");
         images.insert(std::make_pair(id, path));
     }

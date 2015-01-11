@@ -64,4 +64,4 @@ After stopping the main loop another set of modules is executed. This may involv
 
 ### 15. Application Finished
 
-The end. Have a nice day.
+The end. Have a nice day. Roll credits.

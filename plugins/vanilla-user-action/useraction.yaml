@@ -11,4 +11,3 @@ useraction:
                 - harvestable.dig
             requirements: 
                 - unit.player
-                - component.movable

@@ -40,8 +40,8 @@ keys:
     # Gathering
 
     # Harvesting
-    # - key: h
-      # command: frts.vanillauseraction.command.dig
+    - key: h
+      command: frts.vanillauseraction.command.dig
       
     # Production
       

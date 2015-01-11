@@ -12,6 +12,11 @@ namespace frts
     class UserActionIds
     {
     public:
+        static std::string harvest()
+        {
+            return "frts.vanillauseraction.useraction.harvest";
+        }
+
         static std::string userActionFactory()
         {
             return "frts::UserActionFactory";

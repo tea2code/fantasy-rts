@@ -223,6 +223,10 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     else if (key == "style")
     {
         auto rootNamespace = node->getString("namespace");
+        if (!rootNamespace.empty())
+        {
+            rootNamespace += ".";
+        }
 
         if (node->has("background"))
         {
