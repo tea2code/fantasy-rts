@@ -34,12 +34,13 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
     // Selection received. Add jobs.
     else if (harvestState == HarvestActionState::SelectionReceived)
     {
+        shared->getLog()->debug(name, "execute->addingJobs");
+
         harvestState = HarvestActionState::Finished;
         result = State::Finished;
 
         // TODO Add jobs to job manager.
         // TODO Add job entities to positions.
-        shared->getLog()->debug(name, "execute->addingJobs");
     }
     // Action was previously stopped but the action manager doesn't know yet.
     else if (harvestState == HarvestActionState::Stopped)
@@ -83,9 +84,21 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
     // Stop/Cancel jobs.
     else if (harvestState == HarvestActionState::Finished)
     {
-        // TODO Stop/Cancel jobs.
-        // TODO Remove job entities.
         shared->getLog()->debug(name, "execute->stoppingJobs");
+
+        // Stop/Cancel jobs.
+        auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
+        for (auto job : jobs)
+        {
+            jm->stopJob(job);
+        }
+
+        // Remove job entities.
+        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+        for (auto jobEntity : jobEntities)
+        {
+            rm->removeEntity(jobEntity, shared);
+        }
     }
 
     harvestState = HarvestActionState::Stopped;

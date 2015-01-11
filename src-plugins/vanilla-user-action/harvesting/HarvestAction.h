@@ -3,6 +3,7 @@
 
 #include <frts/vanillaaction>
 #include <frts/vanillaevent>
+#include <frts/vanillajob>
 #include <frts/vanillamodel>
 
 
@@ -46,6 +47,9 @@ namespace frts
         IdUnorderedSet jobRequirements;
 
         PointVector selection;
+
+        EntityVector jobEntities;
+        std::vector<JobPtr> jobs;
     };
 
     /**
