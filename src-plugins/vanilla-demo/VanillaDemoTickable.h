@@ -30,7 +30,7 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
-        std::vector<EntityPtr> highlights;
+        EntityVector highlights;
         PointPtr lastCursorPos;
         EntityPtr player;
 

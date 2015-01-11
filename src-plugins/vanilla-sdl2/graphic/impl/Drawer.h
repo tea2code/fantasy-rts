@@ -90,7 +90,7 @@ namespace frts
          * @param rectToRender The rectangle to render.
          * @param shared The shared manager.
          */
-        void renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
+        void renderEntities(const EntityVector& entities, IdPtr renderableId,
                             const SDL_Rect& rectToRender, SharedManagerPtr shared);
 
         /**

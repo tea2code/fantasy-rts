@@ -87,7 +87,7 @@ namespace frts
          * @return The other teleport entity if a connection has happened.
          */
         EntityPtr connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
-                                  const std::vector<EntityPtr>& targets, SharedManagerPtr shared);
+                                  const EntityVector& targets, SharedManagerPtr shared);
 
         /**
          * @brief Get block at given position.

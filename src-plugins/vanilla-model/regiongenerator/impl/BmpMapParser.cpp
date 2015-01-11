@@ -20,7 +20,7 @@ frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr 
 }
 
 frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
-                                                    const std::vector<EntityPtr>& targets, SharedManagerPtr shared)
+                                                    const EntityVector& targets, SharedManagerPtr shared)
 {
     assert(block != nullptr);
     assert(otherPos != nullptr);
@@ -137,7 +137,7 @@ frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManager
             if (tIt != teleporters.end())
             {
                 // Do we already have teleport components in this block?
-                std::vector<EntityPtr> targets;
+                EntityVector targets;
                 for (auto& entity : block->getByComponent(teleportType))
                 {
                     auto teleport = getComponent<Teleport>(teleportType, entity);
@@ -347,7 +347,7 @@ void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr bloc
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 
         // Do we already have teleport components in this block?
-        std::vector<EntityPtr> targets;
+        EntityVector targets;
         for (auto& entity : block->getByComponent(teleportType))
         {
             auto teleport = getComponent<Teleport>(teleportType, entity);

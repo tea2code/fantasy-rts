@@ -113,7 +113,7 @@ namespace frts
     };
 
     /**
-     * @brief set of IDs.
+     * @brief Set of IDs.
      */
     using IdSet = std::set<IdPtr, IdLess>;
 

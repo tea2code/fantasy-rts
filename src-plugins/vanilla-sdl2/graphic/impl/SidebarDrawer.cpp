@@ -421,7 +421,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     }
     infoLastEntity = entityToShow;
     infoLastEntityIndex = gd->getSidebarInfoIndex(); // Save last index again because it may have changed.
-    std::vector<EntityPtr> infoEntity = {entityToShow};
+    EntityVector infoEntity = {entityToShow};
 
     // Calculate position of portrait and background.
     auto area = gd->getSidebarArea();

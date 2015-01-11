@@ -20,14 +20,14 @@ namespace frts
         PointVector getSelection(SharedManagerPtr shared) const override;
         PointPtr getSelectionEnd() const override;
         IdPtr getSelectionEntityId() const override;
-        std::vector<EntityPtr> getSelectionEntities() const override;
+        EntityVector getSelectionEntities() const override;
         PointPtr getSelectionStart() const override;
         bool isSelecting() const override;
         void resetSelection() override;
         void setIsSelecting(bool isSelecting) override;
         void setSelectionEnd(PointPtr pos) override;
         void setSelectionEntityId(IdPtr entityId) override;
-        void setSelectionEntities(std::vector<EntityPtr> entities) override;
+        void setSelectionEntities(EntityVector entities) override;
         void setSelectionStart(PointPtr pos) override;
 
     private:
@@ -36,7 +36,7 @@ namespace frts
 
         IdPtr selectionEntityId;
 
-        std::vector<EntityPtr> selectionEntities;
+        EntityVector selectionEntities;
 
         bool currentlySelecting = false;
     };

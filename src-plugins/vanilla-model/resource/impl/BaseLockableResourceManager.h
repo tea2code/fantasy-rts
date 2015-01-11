@@ -38,7 +38,7 @@ namespace frts
             IdPtr resourceType;
         };
 
-        using EntitySet = std::unordered_set<EntityPtr>;
+        using EntitySet = EntityUnorderedSet;
         using IdEntitiesMap = std::unordered_map<IdPtr, EntitySet, IdHash, IdEqual>;
         using LockInfoMap = std::unordered_map<ResourceLockPtr, LockInfo>;
         using EntityLocksMap = std::unordered_map<EntityPtr, std::unordered_set<ResourceLockPtr>>;

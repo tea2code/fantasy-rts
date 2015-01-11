@@ -115,7 +115,7 @@ void frts::SelectionDataImpl::setSelectionEntityId(IdPtr entityId)
     this->selectionEntityId = entityId;
 }
 
-void frts::SelectionDataImpl::setSelectionEntities(std::vector<EntityPtr> entities)
+void frts::SelectionDataImpl::setSelectionEntities(EntityVector entities)
 {
     this->selectionEntities = entities;
 }

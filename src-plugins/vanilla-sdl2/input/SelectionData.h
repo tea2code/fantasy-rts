@@ -48,7 +48,7 @@ namespace frts
          * @brief Get the selection marker entities if available.
          * @return A list of selection marker entities.
          */
-        virtual std::vector<EntityPtr> getSelectionEntities() const = 0;
+        virtual EntityVector getSelectionEntities() const = 0;
 
         /**
          * @brief Get the start position of the current selection.
@@ -89,7 +89,7 @@ namespace frts
          * @brief Set the current selection marker entities.
          * @param entities The entities.
          */
-        virtual void setSelectionEntities(std::vector<EntityPtr> entities) = 0;
+        virtual void setSelectionEntities(EntityVector entities) = 0;
 
         /**
          * @brief Set the start position of the current selection.

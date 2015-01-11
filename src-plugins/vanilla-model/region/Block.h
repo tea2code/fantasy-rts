@@ -33,7 +33,7 @@ namespace frts
          * @param componentType The type of component.
          * @return Entities ordered by their sort order component (if existing).
          */
-        virtual std::vector<EntityPtr> getByComponent(IdPtr componentType) const = 0;
+        virtual EntityVector getByComponent(IdPtr componentType) const = 0;
 
         /**
          * @brief Check if block contains entity.

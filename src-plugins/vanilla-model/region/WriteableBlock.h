@@ -22,7 +22,7 @@ namespace frts
          * @brief Get all entities in this block.
          * @return List of all entities.
          */
-        virtual std::vector<EntityPtr> getEntities() const = 0;
+        virtual EntityVector getEntities() const = 0;
 
         /**
          * @brief Insert entity into block.

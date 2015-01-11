@@ -16,7 +16,7 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(IdPtr componentType
 
     std::lock_guard<RecursiveLock> lock(locker);
 
-    std::vector<EntityPtr> result;
+    EntityVector result;
     std::copy_if(entities->begin(), entities->end(),
                  std::back_inserter(result),
                  HasComponentPred(componentType));
@@ -27,7 +27,7 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getEntities() const
 {
     std::lock_guard<RecursiveLock> lock(locker);
 
-    std::vector<EntityPtr> result;
+    EntityVector result;
     std::copy(entities->begin(), entities->end(), std::back_inserter(result));
     return result;
 }

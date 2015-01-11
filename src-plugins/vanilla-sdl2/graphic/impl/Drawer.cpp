@@ -154,7 +154,7 @@ void frts::Drawer::init(SharedManagerPtr shared)
     initialized = true;
 }
 
-void frts::Drawer::renderEntities(const std::vector<EntityPtr>& entities, IdPtr renderableId,
+void frts::Drawer::renderEntities(const EntityVector& entities, IdPtr renderableId,
                                   const SDL_Rect& rectToRender, SharedManagerPtr shared)
 {
     assert(initialized);

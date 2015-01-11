@@ -26,7 +26,7 @@ namespace frts
         /**
          * @brief The type.
          */
-        using type = std::vector<EntityPtr>;
+        using type = EntityVector;
 
     public:
         /**

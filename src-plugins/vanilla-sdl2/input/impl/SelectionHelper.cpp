@@ -95,8 +95,8 @@ void frts::updateSelection(PointPtr cursorPos, SharedManagerPtr shared)
     // creating entities has some costs and the number of entities created can quickly increase
     // during an selection.
     auto oldEntities = sd->getSelectionEntities();
-    std::vector<EntityPtr>::size_type index = 0;
-    std::vector<EntityPtr> entities;
+    EntityVector::size_type index = 0;
+    EntityVector entities;
 
     // Set selection highlight entities.
     auto selection = sd->getSelection(shared);

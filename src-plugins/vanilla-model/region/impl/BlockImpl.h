@@ -29,8 +29,8 @@ namespace frts
          */
         BlockImpl(IdPtr blockingType, IdPtr sortOrderType);
 
-        std::vector<EntityPtr> getByComponent(IdPtr componentType) const override;
-        std::vector<EntityPtr> getEntities() const override;
+        EntityVector getByComponent(IdPtr componentType) const override;
+        EntityVector getEntities() const override;
         bool has(EntityPtr entity) const override;
         void insert(EntityPtr entity) override;
         bool isBlocking(BlockedByPtr blockedBy) const override;

@@ -1,14 +1,13 @@
 #ifndef FRTS_ENTITY_H
 #define FRTS_ENTITY_H
 
-#include "Blocking.h"
 #include "Component.h"
 
 #include <frts/shared>
 
-#include <functional>
 #include <memory>
 #include <vector>
+#include <unordered_set>
 
 
 namespace frts
@@ -76,6 +75,16 @@ namespace frts
 
         return castComponent<ComponentClass>(type, entity->getComponent(type));
     }
+
+    /**
+     * @brief Unordered set of Entities.
+     */
+    using EntityUnorderedSet = std::unordered_set<EntityPtr>;
+
+    /**
+     * @brief Vector of Entities.
+     */
+    using EntityVector = std::vector<EntityPtr>;
 }
 
 #endif // FRTS_ENTITY_H
