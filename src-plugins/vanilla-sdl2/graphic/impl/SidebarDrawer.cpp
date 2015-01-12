@@ -444,7 +444,8 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
                   tileBackgroundR, tileBackgroundG, tileBackgroundB);
 
     // Draw entity.
-    drawer->renderEntities(infoEntity, renderableId, rectToRender, shared);
+    IdUnorderedSet stacked;
+    drawer->renderEntities(infoEntity, renderableId, rectToRender, stacked, shared);
 
     // Entity info.
     auto msg = boost::format(infoText) % pos->getX() % pos->getY() % pos->getZ();

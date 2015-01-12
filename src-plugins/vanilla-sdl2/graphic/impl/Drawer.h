@@ -88,10 +88,12 @@ namespace frts
          * @param entities The entities.
          * @param renderableId The renderable id.
          * @param rectToRender The rectangle to render.
+         * @param stacked Reference to a list of already stacked sprite ids.
          * @param shared The shared manager.
          */
         void renderEntities(const EntityVector& entities, IdPtr renderableId,
-                            const SDL_Rect& rectToRender, SharedManagerPtr shared);
+                            const SDL_Rect& rectToRender, IdUnorderedSet &stacked,
+                            SharedManagerPtr shared);
 
         /**
          * @brief After updating positions call this function to start the rendering.

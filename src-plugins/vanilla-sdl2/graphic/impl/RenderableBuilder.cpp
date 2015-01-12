@@ -24,6 +24,7 @@ frts::ComponentPtr frts::RenderableBuilder::build(SharedManagerPtr shared, Confi
     auto component = std::static_pointer_cast<Renderable>(build(shared));
     auto id = shared->makeId(node->getString("sprite"));
     component->setSprite(id);
+    component->setStacking(node->getBool("stacking", true));
     component->setTransparency(node->getInteger("transparency", 0));
     return component;
 }

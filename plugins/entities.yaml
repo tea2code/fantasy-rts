@@ -58,6 +58,7 @@ entities:
             - component: frts.vanillajob.component.jobmarker
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.jobmarker
+              stacking: false
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1000    
               

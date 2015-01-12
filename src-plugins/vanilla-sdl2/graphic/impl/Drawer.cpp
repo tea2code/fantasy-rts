@@ -155,7 +155,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
 }
 
 void frts::Drawer::renderEntities(const EntityVector& entities, IdPtr renderableId,
-                                  const SDL_Rect& rectToRender, SharedManagerPtr shared)
+                                  const SDL_Rect& rectToRender, IdUnorderedSet& stacked,
+                                  SharedManagerPtr shared)
 {
     assert(initialized);
     assert(renderableId != nullptr);
@@ -164,6 +165,13 @@ void frts::Drawer::renderEntities(const EntityVector& entities, IdPtr renderable
     for (auto& entity : entities)
     {
         auto renderable = getComponent<Renderable>(renderableId, entity);
+
+        if (!renderable->doStacking() && stacked.find(renderable->getSprite()) != stacked.end())
+        {
+            continue;
+        }
+        stacked.insert(renderable->getSprite());
+
         auto sprite = spriteManager.getSprite(renderable, entity, shared);
         auto texture = textures.at(sprite.getImage());
 
@@ -306,6 +314,9 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     auto block = regionManager->getBlock(pos, shared);
     auto entities = block->getByComponent(renderableId);
 
+    // Stacking support.
+    IdUnorderedSet stacked;
+
     // Check for transparency. Currently we only render blocks below if the first entity (the assumed background) has it.
     auto filledBackground = false;
     if (entities.size() > 0)
@@ -324,7 +335,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
             auto posBelow = modelFactory->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
             auto blockBelow = regionManager->getBlock(posBelow, shared);
             auto entitiesBelow = blockBelow->getByComponent(renderableId);
-            renderEntities(entitiesBelow, renderableId, rectToRender, shared);
+            renderEntities(entitiesBelow, renderableId, rectToRender, stacked, shared);
             transparency -= 1;
             renderPos = true;
         }
@@ -337,7 +348,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
             SDL_RenderFillRect(renderer.get(), &rectToRender);
         }
 
-        renderEntities(entities, renderableId, rectToRender, shared);
+        renderEntities(entities, renderableId, rectToRender, stacked, shared);
     }
 }
 

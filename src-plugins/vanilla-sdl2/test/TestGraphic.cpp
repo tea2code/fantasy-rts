@@ -156,11 +156,13 @@ TEST_CASE("Renderable.", "[graphic]")
     REQUIRE_FALSE(component->isSpriteIndexSet());
 
     component->setSpriteIndex(3);
+    component->setStacking(false);
     component->setTransparency(4);
 
     REQUIRE(component->getSprite() == shared->makeId("sprite1"));
     REQUIRE(component->getSpriteIndex() == 3);
     REQUIRE(component->isSpriteIndexSet());
+    REQUIRE_FALSE(component->doStacking());
     REQUIRE(component->getTransparency() == 4);
 }
 

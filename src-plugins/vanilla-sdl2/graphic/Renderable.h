@@ -24,6 +24,12 @@ namespace frts
         virtual ~Renderable() {}
 
         /**
+         * @brief Indicates if a renderable is stackable.
+         * @return True if stacking should be done else false.
+         */
+        virtual bool doStacking() const = 0;
+
+        /**
          * @brief Get the ID of the sprite to use.
          * @return The ID.
          */
@@ -58,6 +64,12 @@ namespace frts
          * @param index The index.
          */
         virtual void setSpriteIndex(int index) = 0;
+
+        /**
+         * @brief Set if stacking should be done.
+         * @param stacking Should stacking be done.
+         */
+        virtual void setStacking(bool stacking) = 0;
 
         /**
          * @brief Set the number of visible levels below.

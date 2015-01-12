@@ -288,7 +288,10 @@ Default ID can be found in the static class `Sdl2Ids`.
 Its config consists of the sprite ID and a optional transparency value:
 
     sprite: <string representing an id>
+    stacking: <boolean, optional, default true>
     transparency: <integer greater or equal 0, optional>
+
+If `stacking` is set to `false` this will prevent multiple drawings of the same renderable type over each other. The same renderable is defined as having the same sprite id.
 
 If `transparency` is given the defined number of blocks below the current one are rendered. This is currently only for the background (the lowest) entity supported. It only works if the sprites have a alpha channel with at least some transparency.
 

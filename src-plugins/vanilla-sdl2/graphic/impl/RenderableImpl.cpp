@@ -5,6 +5,11 @@ frts::RenderableImpl::RenderableImpl(IdPtr type)
     : type{type}
 {}
 
+bool frts::RenderableImpl::doStacking() const
+{
+    return stacking;
+}
+
 frts::IdPtr frts::RenderableImpl::getComponentType() const
 {
     return type;
@@ -39,6 +44,11 @@ void frts::RenderableImpl::setSpriteIndex(int index)
 {
     spriteIndex = index;
     spriteIndexSet = true;
+}
+
+void frts::RenderableImpl::setStacking(bool stacking)
+{
+    this->stacking = stacking;
 }
 
 void frts::RenderableImpl::setTransparency(unsigned int transparency)

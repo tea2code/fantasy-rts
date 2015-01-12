@@ -11,6 +11,7 @@ namespace frts
     public:
         RenderableImpl(IdPtr type);
 
+        bool doStacking() const override;
         IdPtr getComponentType() const override;
         IdPtr getSprite() const override;
         unsigned int getTransparency() const override;
@@ -18,12 +19,14 @@ namespace frts
         bool isSpriteIndexSet() const override;
         void setSprite(IdPtr id) override;
         void setSpriteIndex(int index) override;
+        void setStacking(bool stacking) override;
         void setTransparency(unsigned int transparency) override;
 
     private:
         IdPtr sprite;
         int spriteIndex = 0;
         bool spriteIndexSet = false;
+        bool stacking = true;
         unsigned int transparency = 0;
         IdPtr type;
     };
