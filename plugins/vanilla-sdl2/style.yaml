@@ -26,16 +26,16 @@ style:
         
         sprite:
             # Dev
+            - name: dot
+              x: 80
+              y: 240
+            
             - name: grid
               x: 0
               y: 240
               
             - name: highlight.green
               x: 16
-              y: 240
-              
-            - name: highlight.yellow
-              x: 32
               y: 240
               
             - name: highlight.orange
@@ -46,24 +46,50 @@ style:
               x: 64
               y: 240
               
-            - name: dot
-              x: 80
+            - name: highlight.yellow
+              x: 32
               y: 240
         
             # Meta
-            - name: unknown
-              x: 0
-              y: 16
-              
             - name: cursor
               x: 0
               y: 192
+              
+            - name: jobmarker
+              x: 0
+              y: 304
               
             - name: selection
               x: 16
               y: 192
               
+            - name: unknown
+              x: 0
+              y: 16
+
             # Units
+            - name: dwarf
+              multiple:
+                  - x: 0
+                    y: 80
+                  - x: 16
+                    y: 80
+                  - x: 32
+                    y: 80
+                  - x: 48
+                    y: 80
+            
+            - name: dwarf.east
+              multiple:
+                  - x: 0
+                    y: 128
+                  - x: 16
+                    y: 128
+                  - x: 32
+                    y: 128
+                  - x: 48
+                    y: 128
+            
             - name: dwarf.north
               multiple:
                   - x: 0
@@ -75,16 +101,16 @@ style:
                   - x: 48
                     y: 96
                 
-            - name: dwarf.east
+            - name: dwarf.south
               multiple:
                   - x: 0
-                    y: 128
+                    y: 80
                   - x: 16
-                    y: 128
+                    y: 80
                   - x: 32
-                    y: 128
+                    y: 80
                   - x: 48
-                    y: 128
+                    y: 80
                 
             - name: dwarf.west
               multiple:
@@ -96,28 +122,6 @@ style:
                     y: 112
                   - x: 48
                     y: 112
-                
-            - name: dwarf
-              multiple:
-                  - x: 0
-                    y: 80
-                  - x: 16
-                    y: 80
-                  - x: 32
-                    y: 80
-                  - x: 48
-                    y: 80
-                
-            - name: dwarf.south
-              multiple:
-                  - x: 0
-                    y: 80
-                  - x: 16
-                    y: 80
-                  - x: 32
-                    y: 80
-                  - x: 48
-                    y: 80
             
             # Vegetation
             - name: shrub.berry
@@ -139,14 +143,6 @@ style:
                   - x: 16
                     y: 160
               
-            - name: wood
-              x: 0
-              y: 176
-              
-            - name: ore.iron
-              x: 0
-              y: 288
-              
             - name: coal
               x: 16
               y: 288
@@ -154,20 +150,16 @@ style:
             - name: diamond
               x: 32
               y: 288
-            
+              
+            - name: ore.iron
+              x: 0
+              y: 288
+              
+            - name: wood
+              x: 0
+              y: 176
+
             # Background
-            - name: grass
-              multiple:
-                 - x: 0
-                   y: 32
-                   chance: 0.25
-                 - x: 16
-                   y: 32
-                   chance: 0.5
-                 - x: 32
-                   y: 32
-                   chance: 0.25
-            
             - name: air
               #x: 0
               x: 16
@@ -184,6 +176,22 @@ style:
                  - x: 96
                    y: 224
                    chance: 0.25
+            
+            - name: grass
+              multiple:
+                 - x: 0
+                   y: 32
+                   chance: 0.25
+                 - x: 16
+                   y: 32
+                   chance: 0.5
+                 - x: 32
+                   y: 32
+                   chance: 0.25
+            
+            - name: ramp
+              x: 0
+              y: 256
                    
             - name: rock.floor
               multiple:
@@ -196,16 +204,9 @@ style:
                  - x: 224
                    y: 224
                    chance: 0.25
-                   
-            - name: ramp
-              x: 0
-              y: 256
+
             
             # Massive blocks (walls...)
-            - name: wall
-              x: 0
-              y: 48
-              
             - name: earth
               multiple:
                  - x: 0
@@ -230,18 +231,6 @@ style:
                    y: 224
                    chance: 0.1
                    
-            - name: rock.iron
-              multiple:
-                 - x: 0
-                   y: 272
-                   chance: 0.5
-                 - x: 16
-                   y: 272
-                   chance: 0.25
-                 - x: 32
-                   y: 272
-                   chance: 0.25
-                   
             - name: rock.coal
               multiple:
                  - x: 64
@@ -257,3 +246,19 @@ style:
             - name: rock.diamond
               x: 128
               y: 272
+                 
+            - name: rock.iron
+              multiple:
+                 - x: 0
+                   y: 272
+                   chance: 0.5
+                 - x: 16
+                   y: 272
+                   chance: 0.25
+                 - x: 32
+                   y: 272
+                   chance: 0.25
+            
+            - name: wall
+              x: 0
+              y: 48

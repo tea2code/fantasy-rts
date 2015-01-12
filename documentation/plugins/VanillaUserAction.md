@@ -49,6 +49,7 @@ User actions of this type will let the executing entity go to the specified posi
 
     harvest_types: 
         - <string representing an id>
+    jobmarker: <string representing an id>
     requirements: 
         - <string representing an id>
 

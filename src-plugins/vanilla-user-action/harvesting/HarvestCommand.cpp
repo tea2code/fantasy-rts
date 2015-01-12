@@ -37,6 +37,8 @@ void frts::HarvestCommand::execute(SharedManagerPtr shared)
         throw DataViolation(msg.str());
     }
 
+    IdPtr jobMarker = shared->makeId(settings->getString("jobmarker"));
+
     IdUnorderedSet jobRequirements;
     for (auto& jobRequirement : settings->getStrings("requirements"))
     {
@@ -44,7 +46,7 @@ void frts::HarvestCommand::execute(SharedManagerPtr shared)
     }
 
     // Create and start action.
-    action = makeHarvestAction(harvestTypes, jobRequirements);
+    action = makeHarvestAction(harvestTypes, jobRequirements, jobMarker);
     auto am = getUtility<ActionManager>(shared, ActionIds::actionManager());
     am->newAction(action, shared);
 }

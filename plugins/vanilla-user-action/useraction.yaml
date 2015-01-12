@@ -2,8 +2,6 @@ useraction:
 
     namespace: frts.vanillauseraction.command
     
-    jobmarker: entity.jobmarker
-    
     useractions:
     
         - command: dig
@@ -11,5 +9,6 @@ useraction:
           settings:
             harvest_types: 
                 - harvestable.dig
+            jobmarker: entity.jobmarker
             requirements: 
                 - unit.player

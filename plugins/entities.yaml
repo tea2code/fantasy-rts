@@ -56,6 +56,10 @@ entities:
         - name: jobmarker
           components:
             - component: frts.vanillajob.component.jobmarker
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.jobmarker
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1000    
               
         - name: selection
           components:

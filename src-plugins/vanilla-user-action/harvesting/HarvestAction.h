@@ -17,8 +17,9 @@ namespace frts
         /**
          * @param harvestTypes List of harvestable types.
          * @param jobRequirements List of requirements for the entity which might execute the job.
+         * @param jobMarker The job marker id.
          */
-        HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements);
+        HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker);
         ~HarvestAction();
 
         State execute(SharedManagerPtr shared) override;
@@ -45,6 +46,7 @@ namespace frts
 
         IdUnorderedSet harvestTypes;
         IdUnorderedSet jobRequirements;
+        IdPtr jobMarker;
 
         PointVector selection;
 
@@ -56,13 +58,14 @@ namespace frts
      * @brief Create new HarvestAction.
      * @param harvestTypes List of harvestable types.
      * @param jobRequirements List of requirements for the entity which might execute the job.
+     * @param jobMarker The job marker id.
      * @return The action.
      */
-    inline ActionPtr makeHarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements)
+    inline ActionPtr makeHarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker)
     {
         assert(!harvestTypes.empty());
 
-        return std::make_shared<HarvestAction>(harvestTypes, jobRequirements);
+        return std::make_shared<HarvestAction>(harvestTypes, jobRequirements, jobMarker);
     }
 }
 

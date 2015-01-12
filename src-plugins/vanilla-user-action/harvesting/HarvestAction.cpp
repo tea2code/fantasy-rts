@@ -1,10 +1,14 @@
 #include "HarvestAction.h"
 
+#include "HarvestJob.h"
+
 #include <frts/vanillasdl2input>
 
+#include <algorithm>
 
-frts::HarvestAction::HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements)
-    : harvestTypes{harvestTypes}, jobRequirements{jobRequirements}
+
+frts::HarvestAction::HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker)
+    : harvestTypes{harvestTypes}, jobRequirements{jobRequirements}, jobMarker{jobMarker}
 {
 
 }
@@ -39,8 +43,38 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
         harvestState = HarvestActionState::Finished;
         result = State::Finished;
 
-        // TODO Add jobs to job manager.
-        // TODO Add job entities to positions.
+        // Add jobs to job manager and job markers to region.
+        auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
+        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+        auto harvestableId = shared->makeId(ComponentIds::harvestable());
+        auto jobMarkerId = shared->makeId(JobIds::jobMarker());
+        for (auto& pos : selection)
+        {
+            auto block = rm->getBlock(pos, shared);
+            auto entities = block->getByComponent(harvestableId);
+            for (auto entity : entities)
+            {
+                auto harvestable = getComponent<Harvestable>(harvestableId, entity);
+                bool toHarvest = std::any_of(harvestTypes.begin(), harvestTypes.end(),
+                                             [&](IdPtr type) { return harvestable->hasType(type); });
+                if (!toHarvest)
+                {
+                    continue;
+                }
+
+                auto job = makeHarvestJob(entity, jobRequirements);
+                jm->addJob(job);
+                jobs.push_back(job);
+
+                auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
+                auto jobMarkerComponent = getComponent<JobMarker>(jobMarkerId, jobMarkerEntity);
+                jobMarkerComponent->setJob(job);
+                rm->setPos(jobMarkerEntity, pos, shared);
+                jobEntities.push_back(jobMarkerEntity);
+            }
+        }
+        selection.clear();
     }
     // Action was previously stopped but the action manager doesn't know yet.
     else if (harvestState == HarvestActionState::Stopped)
@@ -92,6 +126,7 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
         {
             jm->stopJob(job);
         }
+        jobs.clear();
 
         // Remove job entities.
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
@@ -99,6 +134,7 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
         {
             rm->removeEntity(jobEntity, shared);
         }
+        jobEntities.clear();
     }
 
     harvestState = HarvestActionState::Stopped;
