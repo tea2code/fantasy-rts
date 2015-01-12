@@ -41,7 +41,8 @@ namespace frts
         /**
          * @brief Find free neightbors of given position.
          * @param pos The position.
-         * @param blockedBy Description of what can block.
+         * @param blockedBy Description of what can block. Null is a valid value and interpreted
+         *                  as "blocked by nothing".
          * @param sameZLevel If true neightbors are only searched on the same z-level.
          * @param shared The shared manager.
          * @return List of free neightbors.

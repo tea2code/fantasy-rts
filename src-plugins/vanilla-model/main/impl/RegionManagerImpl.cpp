@@ -35,7 +35,6 @@ void frts::RegionManagerImpl::addChangedPosLockFree(PointPtr pos)
 std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
 {
     assert(pos != nullptr);
-    assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
     std::lock_guard<RecursiveLock> lock(locker);
