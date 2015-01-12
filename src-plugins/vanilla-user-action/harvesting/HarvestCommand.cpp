@@ -22,8 +22,6 @@ void frts::HarvestCommand::execute(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    shared->getLog()->debug(name, "execute");
-
     // Parse settings.
     IdUnorderedSet harvestTypes;
     for (auto& harvestType : settings->getStrings("harvest_types"))
@@ -60,8 +58,6 @@ void frts::HarvestCommand::undo(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
     assert(this->action != nullptr);
-
-    shared->getLog()->debug(name, "stop");
 
     action->stop(shared);
 }

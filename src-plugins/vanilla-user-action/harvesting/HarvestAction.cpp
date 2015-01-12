@@ -23,8 +23,6 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
     assert(shared != nullptr);
     assert(this->harvestState != HarvestActionState::Finished);
 
-    shared->getLog()->debug(name, "execute");
-
     State result = State::Running;
 
     // First execution. Wait for selection.
@@ -38,8 +36,6 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
     // Selection received. Add jobs.
     else if (harvestState == HarvestActionState::SelectionReceived)
     {
-        shared->getLog()->debug(name, "execute->addingJobs");
-
         harvestState = HarvestActionState::Finished;
         result = State::Finished;
 
@@ -65,12 +61,12 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
                 }
 
                 // Add job for this entity.
-                auto job = makeHarvestJob(entity, jobRequirements);
+                auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
+                auto job = makeHarvestJob(entity, jobRequirements, jobMarkerEntity);
                 jm->addJob(job);
                 jobs.push_back(job);
 
                 // Add job marker at this position.
-                auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
                 auto jobMarkerComponent = getComponent<JobMarker>(jobMarkerId, jobMarkerEntity);
                 jobMarkerComponent->setJob(job);
                 rm->setPos(jobMarkerEntity, pos, shared);
@@ -93,8 +89,6 @@ void frts::HarvestAction::notify(EventPtr event, SharedManagerPtr shared)
     assert(event != nullptr);
     assert(shared != nullptr);
 
-    shared->getLog()->debug(name, "notify");
-
     // Selection complete.
     harvestState = HarvestActionState::SelectionReceived;
 
@@ -110,8 +104,6 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    shared->getLog()->debug(name, "stop");
-
     // Stop waiting for selection.
     if (harvestState == HarvestActionState::WaitingForSelection)
     {
@@ -121,8 +113,6 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
     // Stop/Cancel jobs.
     else if (harvestState == HarvestActionState::Finished)
     {
-        shared->getLog()->debug(name, "execute->stoppingJobs");
-
         // Stop/Cancel jobs.
         auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
         for (auto job : jobs)
