@@ -37,6 +37,11 @@ namespace frts
             return "frts::JobManager";
         }
 
+        static std::string jobMarker()
+        {
+            return "frts.vanillajob.component.jobmarker";
+        }
+
         static std::string jobStoppedEvent()
         {
             return "frts.vanillajob.event.job.stopped";

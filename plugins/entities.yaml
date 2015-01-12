@@ -53,6 +53,10 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1100    
               
+        - name: jobmarker
+          components:
+            - component: frts.vanillajob.component.jobmarker
+              
         - name: selection
           components:
             - component: frts.vanillasdl2.entity.component.renderable

@@ -4,6 +4,8 @@
 #include <main/JobHandler.h>
 #include <main/JobIds.h>
 #include <main/impl/JobManagerImpl.h>
+#include <main/impl/JobMarkerBuilder.h>
+#include <main/impl/JobMarkerImpl.h>
 
 #include <frts/shared>
 #include <frts/vanillamodel>
@@ -314,4 +316,21 @@ TEST_CASE("Job manager.", "[main]")
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 1);
     }
+}
+
+TEST_CASE("JobMarker", "[main]")
+{
+    auto log = frts::makeNoLog();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeJobMarkerBuilder();
+    auto component = builder->build(shared);
+    REQUIRE(component != nullptr);
+
+    std::queue<frts::Frame::time> dueTimes;
+    auto job = std::make_shared<test::TestJob>(0, 0, dueTimes);
+
+    auto jobMarker = std::static_pointer_cast<frts::JobMarker>(component);
+    jobMarker->setJob(job);
+    REQUIRE(jobMarker->getJob() == job);
 }

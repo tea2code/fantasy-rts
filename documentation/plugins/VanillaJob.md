@@ -38,4 +38,10 @@ The job manager is implemented as an utility module. It has methods to add new j
 
 Load using `frts/JobManager` in the `utilities` section of the load file. 
 
-Will identify itself by the name and type `frts::JobManager`. It can also be found in the static class `JobIds`. 
+Will identify itself by the name and type `frts::JobManager`. It can also be found in the static class `JobIds`.
+
+### Job Marker
+
+This component describes that a certain job is executed at the entity position.
+
+Default ID can be found in the static class `JobIds`.

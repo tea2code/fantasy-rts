@@ -1,8 +1,10 @@
 #include "JobManagerImpl.h"
 
+#include "JobMarkerBuilder.h"
 #include <main/JobIds.h>
 
 #include <frts/vanillaevent>
+#include <frts/vanillamodel>
 
 #include <algorithm>
 
@@ -103,8 +105,16 @@ int frts::JobManagerImpl::getVersion() const
     return 2;
 }
 
-bool frts::JobManagerImpl::init(SharedManagerPtr)
+bool frts::JobManagerImpl::init(SharedManagerPtr shared)
 {
+    assert(shared != nullptr);
+
+    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+
+    auto componentId = shared->makeId(JobIds::jobMarker());
+    auto builder = makeJobMarkerBuilder();
+    mf->registerComponentBuilder(componentId, builder);
+
     isInit = true;
     return false;
 }

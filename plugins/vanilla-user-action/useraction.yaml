@@ -2,6 +2,8 @@ useraction:
 
     namespace: frts.vanillauseraction.command
     
+    jobmarker: entity.jobmarker
+    
     useractions:
     
         - command: dig

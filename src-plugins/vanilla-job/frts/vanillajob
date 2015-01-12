@@ -4,5 +4,6 @@
 #include <main/Job.h>
 #include <main/JobIds.h>
 #include <main/JobManager.h>
+#include <main/JobMarker.h>
 
 #endif // FRTS_VANILLAJOB_INCLUDE_H
