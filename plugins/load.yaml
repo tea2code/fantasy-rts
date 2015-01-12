@@ -44,7 +44,6 @@ utilities:
 configurations:
     # Plugin related config
     - vanilla-command/command.yaml
-    - vanilla-model/
     - vanilla-model/region.yaml
     - vanilla-sdl2/entities.yaml
     - vanilla-sdl2/screen.yaml

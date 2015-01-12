@@ -3,6 +3,13 @@ entities:
 
     entities:
         # Dev
+        - name: dot
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.dot
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1090
+        
         - name: grid
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -14,13 +21,6 @@ entities:
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.highlight.green
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1050
-              
-        - name: highlight.yellow
-          components:
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.highlight.yellow
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1050
               
@@ -38,13 +38,13 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 1050
               
-        - name: dot
+        - name: highlight.yellow
           components:
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.dot
+              sprite: style.sprite.highlight.yellow
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1090
-            
+              sort_order: 1050
+
         # Meta 
         - name: cursor
           components:
@@ -162,37 +162,7 @@ entities:
               sprite: style.sprite.berry
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
-
-        - name: wood.log
-          components:
-            - component: frts.vanillamodel.entity.component.info
-              infos:
-                - name: "Name"
-                  value: "Wood Log"
-                - name: "Description"
-                  value: "A wood log. Don't confuse with morning wood."
-            - component: frts.vanillamodel.entity.component.isresource
-              resource_type: resource.wood
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.wood
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
-
-        - name: ore.iron
-          components:
-            - component: frts.vanillamodel.entity.component.info
-              infos:
-                - name: "Name"
-                  value: "Iron Ore"
-                - name: "Description"
-                  value: "Iron ore can be used to create iron tools and weapons."
-            - component: frts.vanillamodel.entity.component.isresource
-              resource_type: resource.iron
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.ore.iron
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
-
+              
         - name: coal
           components:
             - component: frts.vanillamodel.entity.component.info
@@ -223,18 +193,37 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 140
 
-        # Background
-        - name: grass
+        - name: ore.iron
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
                 - name: "Name"
-                  value: "Grass"
+                  value: "Iron Ore"
+                - name: "Description"
+                  value: "Iron ore can be used to create iron tools and weapons."
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.iron
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.grass
+              sprite: style.sprite.ore.iron
             - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 0
+              sort_order: 140
+              
+        - name: wood.log
+          components:
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: "Name"
+                  value: "Wood Log"
+                - name: "Description"
+                  value: "A wood log. Don't confuse with morning wood."
+            - component: frts.vanillamodel.entity.component.isresource
+              resource_type: resource.wood
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.wood
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 140
 
+        # Background
         - name: air
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -260,6 +249,24 @@ entities:
               sprite: style.sprite.dirt
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
+        
+        - name: grass
+          components:
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: "Name"
+                  value: "Grass"
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.grass
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0
+
+        - name: ramp
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.ramp
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 10
 
         - name: rock.floor
           components:
@@ -272,34 +279,7 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 0
 
-        - name: ramp
-          components:
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.ramp
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 10
-              
         # Massive blocks (walls...)
-        - name: wall
-          components:
-            - component: frts.vanillamodel.entity.component.blockedby
-              blocks:
-                - blocking.air
-                - blocking.vegetation
-                - blocking.wall
-                - blocking.water
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
-            - component: frts.vanillamodel.entity.component.info
-              infos:
-                - name: "Name"
-                  value: "Stonewall"
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.wall
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
-
         - name: earth
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -339,30 +319,7 @@ entities:
               sprite: style.sprite.rock
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
-
-        - name: rock.iron
-          components:
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
-            - component: frts.vanillamodel.entity.component.drop
-              drops:
-                - entity.rock.floor
-                - entity.ore.iron
-            - component: frts.vanillamodel.entity.component.harvestable
-              types:
-                - harvestable.dig
-            - component: frts.vanillamodel.entity.component.info
-              infos:
-                - name: "Name"
-                  value: "Iron Ore"
-                - name: "Description"
-                  value: "Iron ore can be used to create iron tools and weapons."
-            - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.rock.iron
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
-
+              
         - name: rock.coal
           components:
             - component: frts.vanillamodel.entity.component.blocking
@@ -406,5 +363,48 @@ entities:
                   value: "Sparkling clear gem. My precious."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock.diamond
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+
+        - name: rock.iron
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.drop
+              drops:
+                - entity.rock.floor
+                - entity.ore.iron
+            - component: frts.vanillamodel.entity.component.harvestable
+              types:
+                - harvestable.dig
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: "Name"
+                  value: "Iron Ore"
+                - name: "Description"
+                  value: "Iron ore can be used to create iron tools and weapons."
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.rock.iron
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+        
+        - name: wall
+          components:
+            - component: frts.vanillamodel.entity.component.blockedby
+              blocks:
+                - blocking.air
+                - blocking.vegetation
+                - blocking.wall
+                - blocking.water
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.wall
+            - component: frts.vanillamodel.entity.component.info
+              infos:
+                - name: "Name"
+                  value: "Stonewall"
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.wall
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 180
