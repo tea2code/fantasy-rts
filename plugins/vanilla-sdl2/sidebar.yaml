@@ -10,7 +10,7 @@ sidebar:
     events-height: 500
     
     # Time in milliseconds after which events should be updated.
-    events-update: 500
+    events-update: 1000
      
     # Font color.
     font-color:
