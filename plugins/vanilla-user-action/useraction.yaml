@@ -12,3 +12,11 @@ useraction:
             jobmarker: entity.jobmarker
             requirements: 
                 - unit.player
+        - command: chop
+          type: frts.vanillauseraction.useraction.harvest
+          settings:
+            harvest_types: 
+                - harvestable.chop
+            jobmarker: entity.jobmarker
+            requirements: 
+                - unit.player

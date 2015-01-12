@@ -12,6 +12,10 @@ bmp_map:
     width: 100
     
     levels:
+        - level: -1
+          image: map.forgottentower.image.level.-1
+        - level: -2
+          image: map.forgottentower.image.level.-2
         - level: 0
           image: map.forgottentower.image.level.0
         - level: 1
@@ -23,6 +27,10 @@ bmp_map:
         namespace: image
         
         images:
+            - name: level.-1
+              path: maps/forgotten tower/level-1.bmp
+            - name: level.-2
+              path: maps/forgotten tower/level-2.bmp
             - name: level.0
               path: maps/forgotten tower/level0.bmp
             - name: level.1
@@ -37,37 +45,13 @@ bmp_map:
             b: 255
     
         colors:
-            # Walls
-            - r: 127
-              g: 127
-              b: 127
-              entities:  
-                - entity.dirt
-                - entity.wall
-                
-            # Grass
+            # Air
             - r: 0
-              g: 127
-              b: 0
-              entities: 
-                - entity.grass
-                
-            # Tree on grass
-            - r: 127
-              g: 45
-              b: 45
-              entities: 
-                - entity.grass
-                - entity.tree
-                
-            # Wood logs on grass.
-            - r: 104
-              g: 62
-              b: 62
+              g: 0
+              b: 255
               entities:
-                - entity.grass
-                - entity.wood.log
-                
+                - entity.air
+        
             # Dirt
             - r: 127
               g: 0
@@ -75,14 +59,46 @@ bmp_map:
               entities: 
                 - entity.dirt
                 
+            # Dirt Teleport Down
+            - r: 127
+              g: 0
+              b: 100
+              teleport_down: true
+              entities: 
+                - entity.dirt
+                
+            # Dirt Teleport Up
+            - r: 127
+              g: 100
+              b: 100
+              teleport_up: true
+              entities: 
+                - entity.dirt
+                - entity.ramp
+                
             # Earth
             - r: 0
               g: 0
               b: 0
               entities: 
                 - entity.earth
+        
+            # Grass
+            - r: 0
+              g: 127
+              b: 0
+              entities: 
+                - entity.grass
                 
-            # Teleport Up
+            # Grass Teleport Down
+            - r: 0
+              g: 255
+              b: 255
+              teleport_down: true
+              entities: 
+                - entity.grass
+                
+            # Grass Teleport Up
             - r: 0
               g: 255
               b: 0
@@ -91,10 +107,26 @@ bmp_map:
                 - entity.grass
                 - entity.ramp
                 
-            # Teleport Down
-            - r: 0
-              g: 255
-              b: 255
-              teleport_down: true
+            # Tree on grass
+            - r: 127
+              g: 45
+              b: 45
               entities: 
                 - entity.grass
+                - entity.tree
+        
+            # Walls
+            - r: 127
+              g: 127
+              b: 127
+              entities:  
+                - entity.dirt
+                - entity.wall
+                
+            # Wood logs on grass.
+            - r: 104
+              g: 62
+              b: 62
+              entities:
+                - entity.grass
+                - entity.wood.log
