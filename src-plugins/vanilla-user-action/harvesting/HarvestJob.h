@@ -43,6 +43,8 @@ namespace frts
 
         HarvestJobState harvestState = HarvestJobState::FirstExecution;
 
+        Frame::time dueTime;
+
         EntityPtr executingEntity;
         IdUnorderedSet jobRequirements;
         EntityPtr toHarvest;
