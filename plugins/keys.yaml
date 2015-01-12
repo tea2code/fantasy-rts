@@ -42,6 +42,8 @@ keys:
     # Harvesting
     - key: c
       command: frts.vanillauseraction.command.chop
+    - key: h
+      command: frts.vanillauseraction.command.crop
     - key: m
       command: frts.vanillauseraction.command.dig
       

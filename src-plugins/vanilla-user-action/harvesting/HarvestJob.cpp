@@ -39,6 +39,9 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
     assert(shared != nullptr);
     assert(this->harvestState != HarvestJobState::Finished);
 
+    clearJobMarker(shared);
+    return State::Finished;
+
     State result = State::Running;
 
     if (harvestState == HarvestJobState::FirstExecution)

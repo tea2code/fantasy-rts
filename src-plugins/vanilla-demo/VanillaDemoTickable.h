@@ -3,14 +3,16 @@
 
 #include <frts/BaseTickable.h>
 #include <frts/vanillamodel>
+#include <frts/vanillaevent>
 
+#include <memory>
 #include <string>
 #include <vector>
 
 
 namespace frts
 {
-    class VanillaDemoTickable : public BaseTickable
+    class VanillaDemoTickable : public BaseTickable, public EventObserver, public std::enable_shared_from_this<EventObserver>
     {
     public:
         VanillaDemoTickable();
@@ -26,13 +28,15 @@ namespace frts
 
         void checkRequiredData(SharedManagerPtr shared) override;
         bool init(SharedManagerPtr shared) override;
+        void notify(EventPtr event, SharedManagerPtr shared) override;
         void tick(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
     private:
         EntityVector highlights;
-        PointPtr lastCursorPos;
         EntityPtr player;
+
+        bool isPlayerWorking = false;
 
     private:
         void addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,

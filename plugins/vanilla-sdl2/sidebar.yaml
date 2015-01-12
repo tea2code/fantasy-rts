@@ -58,18 +58,18 @@ sidebar:
     # Event subscription.
     # TODO Replace text with text id in upcoming translation module.
     events:
-        - type: frts.vanillasdl2.event.movecursor
-          text: "Cursor moved to position (%1%, %2%, %3%)."
-          values:
-            - frts.vanillasdl2.event.movecursor.pos
+        # - type: frts.vanillasdl2.event.movecursor
+          # text: "Cursor moved to position (%1%, %2%, %3%)."
+          # values:
+            # - frts.vanillasdl2.event.movecursor.pos
         - type: frts.vanillajob.event.job.canceled
           text: "Job canceled."
         - type: frts.vanillajob.event.job.finished
           text: "Job finished."
         - type: frts.vanillajob.event.job.stopped
           text: "Job stopped."
-        - type: frts.vanillasdl2.event.selection.changed
-          text: "Selection changed."
-        - type: frts.vanillasdl2.event.selection.finished
-          text: "Selection finished."
+        # - type: frts.vanillasdl2.event.selection.changed
+          # text: "Selection changed."
+        # - type: frts.vanillasdl2.event.selection.finished
+          # text: "Selection finished."
         

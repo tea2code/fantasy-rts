@@ -29,6 +29,8 @@ INCLUDEPATH += $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src/dependency/boost
 INCLUDEPATH += $$PWD/../vanilla-model
 INCLUDEPATH += $$PWD/../vanilla-command
+INCLUDEPATH += $$PWD/../vanilla-event
+INCLUDEPATH += $$PWD/../vanilla-job
 INCLUDEPATH += $$PWD/../vanilla-sdl2
 INCLUDEPATH += $$PWD/../vanilla-event
 

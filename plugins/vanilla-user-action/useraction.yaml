@@ -4,19 +4,29 @@ useraction:
     
     useractions:
     
-        - command: dig
-          type: frts.vanillauseraction.useraction.harvest
-          settings:
-            harvest_types: 
-                - harvestable.dig
-            jobmarker: entity.jobmarker
-            requirements: 
-                - unit.player
         - command: chop
           type: frts.vanillauseraction.useraction.harvest
           settings:
             harvest_types: 
                 - harvestable.chop
+            jobmarker: entity.jobmarker
+            requirements: 
+                - unit.player
+    
+        - command: crop
+          type: frts.vanillauseraction.useraction.harvest
+          settings:
+            harvest_types: 
+                - harvestable.crop
+            jobmarker: entity.jobmarker
+            requirements: 
+                - unit.player
+    
+        - command: dig
+          type: frts.vanillauseraction.useraction.harvest
+          settings:
+            harvest_types: 
+                - harvestable.dig
             jobmarker: entity.jobmarker
             requirements: 
                 - unit.player

@@ -2,6 +2,7 @@
 
 #include "DemoRegionGenerator.h"
 #include <frts/shared>
+#include <frts/vanillajob>
 #include <frts/vanillamodel>
 #include <frts/vanillasdl2graphic>
 
@@ -48,7 +49,11 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     modelFactory->setRegionGenerator(regionGenerator);
     #endif
 
-    shared->getLog()->debug(getName(), "Demo loaded");
+    auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+    em->subscribe(shared_from_this(), shared->makeId(JobIds::jobCanceledEvent()));
+    em->subscribe(shared_from_this(), shared->makeId(JobIds::jobFinishedEvent()));
+    em->subscribe(shared_from_this(), shared->makeId(JobIds::jobStoppedEvent()));
+
     isInit = true;
     return false;
 }
@@ -65,6 +70,19 @@ void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, 
     highlights.clear();
 }
 
+void frts::VanillaDemoTickable::notify(EventPtr event, SharedManagerPtr shared)
+{
+    assert(event != nullptr);
+    assert(shared != nullptr);
+
+    if (event->getType() == shared->makeId(JobIds::jobCanceledEvent()) ||
+        event->getType() == shared->makeId(JobIds::jobFinishedEvent()) ||
+        event->getType() == shared->makeId(JobIds::jobStoppedEvent()))
+    {
+        isPlayerWorking = false;
+    }
+}
+
 void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
     assert(shared != nullptr);
@@ -76,21 +94,24 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     if (shared->getFrame()->getNumber() == 0)
     {
         // Add dwarf at start position.
+        auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
         player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
         auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
-        auto pos = rm->findFreeRandomPos({0}, blockedBy, shared);
+        auto pos = rm->findFreeRandomPos({md->getSurfaceZLevel()}, blockedBy, shared);
         if (pos != nullptr)
         {
             rm->setPos(player, pos, shared);
         }
-
-        // Initialize position of cursor.
-        lastCursorPos = rm->getPos(gd->getCursor(), shared);
+        else
+        {
+            shared->getLog()->error(getName(), "Couldn't find a free position for player.");
+            shared->setQuitApplication(true);
+        }
 
         return;
     }
 
-    #ifdef A_STAR_BENCHMARK
+#ifdef A_STAR_BENCHMARK
     // Pregenerate map.
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     for (Point::value x = 0; x < md->getMapSizeX(); ++x)
@@ -120,68 +141,14 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
         pathFinder->findPath(leftBottom, leftTop, blockedBy, shared);
     }
     shared->setQuitApplication(true);
-    #else
-    auto cursorPos = rm->getPos(gd->getCursor(), shared);
-    if (shared->getFrame()->getNumber() % 50 == 0 && lastCursorPos != cursorPos)
+#else
+    // Temporary ai replacement.
+    if (!isPlayerWorking && shared->getFrame()->getNumber() % 50 == 0)
     {
-        lastCursorPos = cursorPos;
-
-        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-        auto pathFinder = mf->getPathFinder();
-        auto start = rm->getPos(player, shared);
-        if (start == nullptr)
-        {
-            return;
-        }
-        auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
-        auto path = pathFinder->findPath(start, cursorPos, blockedBy, shared);
-        if (path->pathExists())
-        {
-            auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
-            movable->setPath(path);
-
-//            resetHighlights(rm, shared);
-//            auto lastCosts = pathFinder->getLastCosts();
-//            double highestCost = 0.0;
-//            for (auto it : lastCosts)
-//            {
-//                highestCost = std::max(highestCost, it.second);
-//            }
-//            for (auto it : lastCosts)
-//            {
-//                std::string id = "entity.highlight.red";
-//                if (it.second > highestCost * 0.75)
-//                {
-//                    id = "entity.highlight.green";
-//                }
-//                else if (it.second > highestCost * 0.5)
-//                {
-//                    id = "entity.highlight.yellow";
-//                }
-//                else if (it.second > highestCost * 0.25)
-//                {
-//                    id = "entity.highlight.orange";
-//                }
-//                addHighlight(mf, rm, shared, it.first, id);
-//            }
-//            for (auto pos : path)
-//            {
-//                addHighlight(mf, rm, shared, pos, "entity.dot");
-//            }
-        }
+        auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
+        isPlayerWorking = jm->employEntity(player, shared);
     }
-
-    if (shared->getFrame()->getNumber() % 5 == 0)
-    {
-        auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), player);
-        auto nextPos = movable->getNextPathPos();
-        if (nextPos != nullptr)
-        {
-            rm->removeEntity(player, shared);
-            rm->setPos(player, nextPos, shared);
-        }
-    }
-    #endif
+#endif
 }
 
 void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
@@ -189,5 +156,7 @@ void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
     assert(shared != nullptr);
 
     validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
-    validateTickable(getName(), "frts::SDL2Renderer", 1, shared);
+    validateTickable(getName(), Sdl2Ids::sdl2Renderer(), 1, shared);
+    validateUtility(getName(), EventIds::eventManager(), 1, shared);
+    validateUtility(getName(), JobIds::jobManager(), 2, shared);
 }
