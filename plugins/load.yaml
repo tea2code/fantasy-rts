@@ -44,13 +44,16 @@ utilities:
 configurations:
     # Plugin related config
     - vanilla-command/command.yaml
-    - vanilla-model/entities.yaml
+    - vanilla-model/
     - vanilla-model/region.yaml
     - vanilla-sdl2/entities.yaml
     - vanilla-sdl2/screen.yaml
     - vanilla-sdl2/sidebar.yaml
     - vanilla-sdl2/style.yaml
     - vanilla-user-action/useraction.yaml
+    
+    # General config
+    - entities.yaml
     - keys.yaml
     
     # Maps
