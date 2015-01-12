@@ -55,6 +55,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
             auto entities = block->getByComponent(harvestableId);
             for (auto entity : entities)
             {
+                // Any supported harvestable type?
                 auto harvestable = getComponent<Harvestable>(harvestableId, entity);
                 bool toHarvest = std::any_of(harvestTypes.begin(), harvestTypes.end(),
                                              [&](IdPtr type) { return harvestable->hasType(type); });
@@ -63,10 +64,12 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
                     continue;
                 }
 
+                // Add job for this entity.
                 auto job = makeHarvestJob(entity, jobRequirements);
                 jm->addJob(job);
                 jobs.push_back(job);
 
+                // Add job marker at this position.
                 auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
                 auto jobMarkerComponent = getComponent<JobMarker>(jobMarkerId, jobMarkerEntity);
                 jobMarkerComponent->setJob(job);
