@@ -22,6 +22,7 @@ namespace frts
         Frame::time getDueTime() const override;
         EntityPtr getExecutingEntity() const override;
         IdUnorderedSet getRequirements() const override;
+        bool isValid(SharedManagerPtr shared) const override;
         void setExecutingEntity(EntityPtr entity) override;
         State stop(SharedManagerPtr shared) override;
 

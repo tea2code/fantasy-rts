@@ -76,6 +76,13 @@ namespace frts
         virtual IdUnorderedSet getRequirements() const = 0;
 
         /**
+         * @brief Indicates if this job is still valid or became obsolete.
+         * @param shared The shared manager.
+         * @return True if is valid else false.
+         */
+        virtual bool isValid(SharedManagerPtr shared) const = 0;
+
+        /**
          * @brief Set the entity which should execute this job. Don't reset before calling stop().
          * @param entity The entity. Null is a valid value if the job is canceled.
          */

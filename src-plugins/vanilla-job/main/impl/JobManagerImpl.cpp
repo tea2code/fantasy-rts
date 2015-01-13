@@ -20,7 +20,7 @@ frts::JobManagerImpl::~JobManagerImpl()
 
 }
 
-void frts::JobManagerImpl::addJob(JobPtr job)
+void frts::JobManagerImpl::addJob(JobPtr job, SharedManagerPtr)
 {
     assert(job != nullptr);
 
@@ -102,7 +102,7 @@ int frts::JobManagerImpl::getTypeVersion() const
 
 int frts::JobManagerImpl::getVersion() const
 {
-    return 2;
+    return 3;
 }
 
 bool frts::JobManagerImpl::init(SharedManagerPtr shared)
@@ -140,14 +140,16 @@ bool frts::JobManagerImpl::preInit(SharedManagerPtr)
     return false;
 }
 
-void frts::JobManagerImpl::stopJob(JobPtr job)
+void frts::JobManagerImpl::stopJob(JobPtr job, SharedManagerPtr shared)
 {
     assert(job != nullptr);
+    assert(shared != nullptr);
 
     auto it = std::find(jobs.begin(), jobs.end(), job);
     if (it != jobs.end())
     {
         // Not yet started.
+        (*it)->stop(shared);
         jobs.erase(it);
     }
     else

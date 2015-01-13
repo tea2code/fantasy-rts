@@ -63,7 +63,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
                 // Add job for this entity.
                 auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
                 auto job = makeHarvestJob(entity, jobRequirements, jobMarkerEntity);
-                jm->addJob(job);
+                jm->addJob(job, shared);
                 jobs.push_back(job);
 
                 // Add job marker at this position.
@@ -117,7 +117,7 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
         auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
         for (auto job : jobs)
         {
-            jm->stopJob(job);
+            jm->stopJob(job, shared);
         }
         jobs.clear();
 

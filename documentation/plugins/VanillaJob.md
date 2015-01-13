@@ -16,6 +16,8 @@ Access to all necessary interfaces can be acquired by adding the source director
 
 The job interface must be implemented by any class which wants to behave as a job. All methods are executed by the job handler or job manager and shouldn't be called manually. The method `stop()` is called if the job should be stopped. The methods `execute()` and `stop()` are called every frame until they return `Finished`, `Stop` or `Cancel`. The state `Stop` means that the job handler will switch from calling `execute()` to calling `stop()` while the state `Cancel` means that the job will be scheduled for later execution by another entity.
 
+The method `stop()` might be called multiple times during the stopping process. Any implementation must be prepared for this.
+
 ### Job Handler
 
 The job handler is implemented as a tickable module. It will execute the currently running jobs every frame until finished.

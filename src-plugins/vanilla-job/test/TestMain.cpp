@@ -65,6 +65,11 @@ namespace test
             return requirements;
         }
 
+        bool isValid(frts::SharedManagerPtr) const override
+        {
+            return true;
+        }
+
         void setExecutingEntity(frts::EntityPtr) override
         {}
 
@@ -226,7 +231,7 @@ TEST_CASE("Job manager.", "[main]")
         curriculum->addAbility(ability1);
         entity->addComponent(curriculum);
 
-        jobManager->addJob(job2);
+        jobManager->addJob(job2, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
@@ -237,12 +242,12 @@ TEST_CASE("Job manager.", "[main]")
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
 
-        jobManager->addJob(job1);
+        jobManager->addJob(job1, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
 
-        jobManager->stopJob(job1);
+        jobManager->stopJob(job1, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
@@ -253,7 +258,7 @@ TEST_CASE("Job manager.", "[main]")
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
 
-        jobManager->addJob(job1);
+        jobManager->addJob(job1, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);
@@ -274,7 +279,7 @@ TEST_CASE("Job manager.", "[main]")
         auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
         entity->addComponent(curriculum);
 
-        jobManager->addJob(job1);
+        jobManager->addJob(job1, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
 
@@ -296,7 +301,7 @@ TEST_CASE("Job manager.", "[main]")
         auto curriculum = frts::makeCurriculum(shared->makeId(frts::ComponentIds::curriculum()));
         entity->addComponent(curriculum);
 
-        jobManager->addJob(job1);
+        jobManager->addJob(job1, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
 
@@ -305,7 +310,7 @@ TEST_CASE("Job manager.", "[main]")
         REQUIRE_FALSE(employed);
         REQUIRE(job1->getNumExecutions() == 0);
 
-        jobManager->addJob(job2);
+        jobManager->addJob(job2, shared);
         jobHandler->tick(shared);
         REQUIRE(job1->getNumExecutions() == 0);
         REQUIRE(job2->getNumExecutions() == 0);

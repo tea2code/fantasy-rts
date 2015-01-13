@@ -46,6 +46,7 @@ bool frts::HarvestJob::checkSpecialRequirements(EntityPtr entity, SharedManagerP
 
 void frts::HarvestJob::clearJobMarker(SharedManagerPtr shared)
 {
+    // TODO Move into helper function.
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     rm->removeEntity(jobMarker, shared);
     jobMarker.reset();
@@ -108,6 +109,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
     }
     else if (harvestState == HarvestJobState::Goto)
     {
+        // TODO Move into helper function.
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
         auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), executingEntity);
         auto nextPos = movable->getNextPathPos();
@@ -159,6 +161,21 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
 
         // Remove marker and set to null.
         clearJobMarker(shared);
+
+        // Check if other jobs at this position are still valid.
+        // TODO Move into helper function.
+        auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
+        auto block = rm->getBlock(pos, shared);
+        auto jobMarkerId = shared->makeId(JobIds::jobMarker());
+        auto otherJobMarkers = block->getByComponent(jobMarkerId);
+        for (auto otherJobMarker : otherJobMarkers)
+        {
+            auto marker = getComponent<JobMarker>(jobMarkerId, otherJobMarker);
+            if (!marker->getJob()->isValid(shared))
+            {
+                jm->stopJob(marker->getJob(), shared);
+            }
+        }
     }
     // Job was previously stopped but the job manager doesn't know yet.
     else if (harvestState == HarvestJobState::Stopped)
@@ -182,6 +199,15 @@ frts::EntityPtr frts::HarvestJob::getExecutingEntity() const
 frts::IdUnorderedSet frts::HarvestJob::getRequirements() const
 {
     return jobRequirements;
+}
+
+bool frts::HarvestJob::isValid(SharedManagerPtr shared) const
+{
+    assert(shared != nullptr);
+
+    // Simple check if the toHarvest entity still exists in the region.
+    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    return (rm->getPos(toHarvest, shared) != nullptr);
 }
 
 void frts::HarvestJob::setExecutingEntity(EntityPtr entity)

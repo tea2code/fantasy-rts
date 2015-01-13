@@ -43,9 +43,9 @@ namespace frts
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
-        void addJob(JobPtr job) override;
+        void addJob(JobPtr job, SharedManagerPtr shared) override;
         bool employEntity(EntityPtr entity, SharedManagerPtr shared) override;
-        void stopJob(JobPtr job) override;
+        void stopJob(JobPtr job, SharedManagerPtr shared) override;
 
     private:
         bool isInit = false;

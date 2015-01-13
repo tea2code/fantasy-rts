@@ -4,7 +4,6 @@
 #include "JobManager.h"
 
 #ifndef UNIT_TEST
-#include "JobIds.h"
 #include <frts/vanillaevent>
 #include <frts/vanillamodel>
 #endif
@@ -104,7 +103,7 @@ void frts::JobHandler::tick(SharedManagerPtr shared)
                 // Execution cancelt. Send it back to the job manager.
                 tj.second->setExecutingEntity(nullptr);
                 auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
-                jm->addJob(tj.second);
+                jm->addJob(tj.second, shared);
 
                 raiseEvent(JobIds::jobCanceledEvent(), tj.second->getExecutingEntity(), shared);
             }

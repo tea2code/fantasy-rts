@@ -30,8 +30,9 @@ namespace frts
         /**
          * @brief Add a new job.
          * @param job The job.
+         * @param shared The shared manager.
          */
-        virtual void addJob(JobPtr job) = 0;
+        virtual void addJob(JobPtr job, SharedManagerPtr shared) = 0;
 
         /**
          * @brief If possible employ given entity.
@@ -44,8 +45,9 @@ namespace frts
         /**
          * @brief Stop job.
          * @param job The job.
+         * @param shared The shared manager.
          */
-        virtual void stopJob(JobPtr job) = 0;
+        virtual void stopJob(JobPtr job, SharedManagerPtr shared) = 0;
     };
 }
 
