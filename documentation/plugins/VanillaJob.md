@@ -12,6 +12,8 @@ Access to all necessary interfaces can be acquired by adding the source director
 
 ## Interfaces
 
+It is important to note that the job handler and the job manager are pretty lightweight and don't implement much comfort. They only execute the jobs. Everything else like creating and removing job markers or check if other jobs became invalid because of the execution of the current job must be implemented by the jobs them self. It is recommended to read the implementation in *VanillaUserAction* for examples.
+
 ### Job
 
 The job interface must be implemented by any class which wants to behave as a job. All methods are executed by the job handler or job manager and shouldn't be called manually. The method `stop()` is called if the job should be stopped. The methods `execute()` and `stop()` are called every frame until they return `Finished`, `Stop` or `Cancel`. The state `Stop` means that the job handler will switch from calling `execute()` to calling `stop()` while the state `Cancel` means that the job will be scheduled for later execution by another entity.
