@@ -30,6 +30,12 @@ namespace frts
         virtual void addType(IdPtr type) = 0;
 
         /**
+         * @brief Get the harvest speed.
+         * @return The speed.
+         */
+        virtual double getSpeed() const = 0;
+
+        /**
          * @brief Get all harvest types.
          * @return The harvest types.
          */
@@ -47,6 +53,12 @@ namespace frts
          * @param type The Type.
          */
         virtual void removeType(IdPtr type) = 0;
+
+        /**
+         * @brief Set the harvest speed.
+         * @param speed The speed.
+         */
+        virtual void setSpeed(double speed) = 0;
     };
 }
 

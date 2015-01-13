@@ -67,7 +67,7 @@ namespace frts
          * @brief Get the movement speed.
          * @return The speed in blocks per second.
          */
-        virtual unsigned int getSpeed() const = 0;
+        virtual double getSpeed() const = 0;
 
         /**
          * @brief Set the path. This will reset this component.
@@ -79,7 +79,7 @@ namespace frts
          * @brief Set the movement speed.
          * @param speed The speed in blocks per second.
          */
-        virtual void setSpeed(unsigned int speed) = 0;
+        virtual void setSpeed(double speed) = 0;
     };
 }
 

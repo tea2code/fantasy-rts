@@ -109,6 +109,7 @@ entities:
               drops:
                 - entity.berry
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 0.6
               types:
                 - harvestable.crop
             - component: frts.vanillamodel.entity.component.hasresource
@@ -140,6 +141,7 @@ entities:
               drops:
                 - entity.wood.log
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 1
               types:
                 - harvestable.chop
             - component: frts.vanillamodel.entity.component.hasresource
@@ -298,6 +300,7 @@ entities:
               drops:
                 - entity.dirt
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 3
               types:
                 - harvestable.dig
             - component: frts.vanillamodel.entity.component.info
@@ -318,6 +321,7 @@ entities:
               drops:
                 - entity.rock.floor
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 1
               types:
                 - harvestable.dig
             - component: frts.vanillamodel.entity.component.info
@@ -339,6 +343,7 @@ entities:
                 - entity.rock.floor
                 - entity.coal
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 1
               types:
                 - harvestable.dig
             - component: frts.vanillamodel.entity.component.info
@@ -362,6 +367,7 @@ entities:
                 - entity.rock.floor
                 - entity.diamond
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 0.3
               types:
                 - harvestable.dig
             - component: frts.vanillamodel.entity.component.info
@@ -385,6 +391,7 @@ entities:
                 - entity.rock.floor
                 - entity.ore.iron
             - component: frts.vanillamodel.entity.component.harvestable
+              speed: 0.6
               types:
                 - harvestable.dig
             - component: frts.vanillamodel.entity.component.info

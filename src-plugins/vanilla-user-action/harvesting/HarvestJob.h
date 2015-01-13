@@ -1,12 +1,12 @@
 #ifndef FRTS_HARVESTJOB_H
 #define FRTS_HARVESTJOB_H
 
-#include <frts/vanillajob>
+#include <main/BaseJob.h>
 
 
 namespace frts
 {
-    class HarvestJob : public Job
+    class HarvestJob : public BaseJob
     {
     public:
         /**
@@ -19,11 +19,7 @@ namespace frts
 
         bool checkSpecialRequirements(EntityPtr entity, SharedManagerPtr shared) const override;
         State execute(SharedManagerPtr shared) override;
-        Frame::time getDueTime() const override;
-        EntityPtr getExecutingEntity() const override;
-        IdUnorderedSet getRequirements() const override;
         bool isValid(SharedManagerPtr shared) const override;
-        void setExecutingEntity(EntityPtr entity) override;
         State stop(SharedManagerPtr shared) override;
 
     private:
@@ -44,19 +40,7 @@ namespace frts
 
         HarvestJobState harvestState = HarvestJobState::FirstExecution;
 
-        Frame::time dueTime;
-
-        EntityPtr executingEntity;
-        IdUnorderedSet jobRequirements;
         EntityPtr toHarvest;
-
-        /**
-         * @warning Must be set to null after removale from region to prevent possible memory leak.
-         */
-        EntityPtr jobMarker;
-
-    private:
-        void clearJobMarker(SharedManagerPtr shared);
     };
 
     /**

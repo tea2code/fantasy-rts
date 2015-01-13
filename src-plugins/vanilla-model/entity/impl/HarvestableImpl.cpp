@@ -24,6 +24,11 @@ frts::IdPtr frts::HarvestableImpl::getComponentType() const
     return componentType;
 }
 
+double frts::HarvestableImpl::getSpeed() const
+{
+    return speed;
+}
+
 frts::IdUnorderedSet frts::HarvestableImpl::getTypes() const
 {
     return types;
@@ -41,4 +46,9 @@ void frts::HarvestableImpl::removeType(IdPtr type)
     assert(type != nullptr);
 
     types.erase(type);
+}
+
+void frts::HarvestableImpl::setSpeed(double speed)
+{
+    this->speed = speed;
 }

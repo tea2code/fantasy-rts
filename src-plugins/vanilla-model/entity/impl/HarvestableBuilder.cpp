@@ -3,6 +3,8 @@
 #include "HarvestableImpl.h"
 #include <entity/ComponentIds.h>
 
+#include <frts/module>
+
 
 frts::HarvestableBuilder::HarvestableBuilder()
 {
@@ -28,6 +30,11 @@ frts::ComponentPtr frts::HarvestableBuilder::build(SharedManagerPtr shared, Conf
     assert(node != nullptr);
 
     auto component = std::static_pointer_cast<Harvestable>(build(shared));
+    component->setSpeed(node->getFloat("speed"));
+    if (!(component->getSpeed() > 0.0))
+    {
+        throw DataViolation("frts::HarvestableBuilder: Speed of harvestable must be greater than zero.");
+    }
     for (auto& type : node->getStrings("types"))
     {
         auto id = shared->makeId(type);

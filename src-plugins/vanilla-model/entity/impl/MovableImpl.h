@@ -21,15 +21,15 @@ namespace frts
         PathPtr getPath() const override;
         PointPtr getNextPathPos() override;
         PointPtr getPreviousPathPos() const override;
-        unsigned int getSpeed() const override;
+        double getSpeed() const override;
         void setPath(PathPtr path) override;
-        void setSpeed(unsigned int speed) override;
+        void setSpeed(double speed) override;
 
     private:
         PointPtr current;
         PathPtr path;
         PointPtr previous;
-        unsigned int speed = 0;
+        double speed = 0.0;
         IdPtr type;
     };
 

@@ -19,11 +19,14 @@ namespace frts
 
         void addType(IdPtr type) override;
         IdPtr getComponentType() const override;
+        double getSpeed() const override;
         IdUnorderedSet getTypes() const override;
         bool hasType(IdPtr type) const override;
         void removeType(IdPtr type) override;
+        void setSpeed(double speed) override;
 
     private:
+        double speed = 0.0;
         IdUnorderedSet types;
         IdPtr componentType;
     };

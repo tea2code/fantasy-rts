@@ -1,10 +1,13 @@
 #include "HarvestJob.h"
 
+#include <main/UserActionUtility.h>
 #include <frts/vanillamodel>
+
+#include <algorithm>
 
 
 frts::HarvestJob::HarvestJob(EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
-    : dueTime{fromMilliseconds(0)}, jobRequirements{jobRequirements}, toHarvest{toHarvest}, jobMarker{jobMarker}
+    : BaseJob(jobRequirements, jobMarker), toHarvest{toHarvest}
 {
 
 }
@@ -44,14 +47,6 @@ bool frts::HarvestJob::checkSpecialRequirements(EntityPtr entity, SharedManagerP
     return true;
 }
 
-void frts::HarvestJob::clearJobMarker(SharedManagerPtr shared)
-{
-    // TODO Move into helper function.
-    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-    rm->removeEntity(jobMarker, shared);
-    jobMarker.reset();
-}
-
 frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
@@ -64,44 +59,21 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
         harvestState = HarvestJobState::Goto;
 
         // Calculate path.
-        // TODO Move into helper function.
-        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-        auto start = rm->getPos(executingEntity, shared);
         auto pos = rm->getPos(toHarvest, shared);
+
+        // Already harvested?
         if (pos == nullptr)
         {
-            // Already harvested?
             result = State::Stop;
         }
         else
         {
-            auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), executingEntity);
-            auto neighbors = rm->findFreeNeighbors(pos, blockedBy, true, shared);
-            if (neighbors.empty())
+            // Find a path to one of the neighbors of the job position.
+            bool pathFound = findPathToJob(getExecutingEntity(), pos, true, shared);
+            if (!pathFound)
             {
                 result = State::Cancel;
-            }
-            else
-            {
-                bool pathFound = false;
-                for (auto goal : neighbors)
-                {
-                    auto path = mf->getPathFinder()->findPath(start, goal, blockedBy, shared);
-                    if (!path->pathExists())
-                    {
-                        continue;
-                    }
-                    auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), executingEntity);
-                    movable->setPath(path);
-                    pathFound = true;
-                    break;
-                }
-
-                if (!pathFound)
-                {
-                    result = State::Cancel;
-                }
             }
         }
 
@@ -109,32 +81,27 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
     }
     else if (harvestState == HarvestJobState::Goto)
     {
-        // TODO Move into helper function.
-        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-        auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), executingEntity);
-        auto nextPos = movable->getNextPathPos();
-        if (nextPos != nullptr)
+        // Already harvested?
+        if (!isValid(shared))
         {
-            // Move to next position in path.
-            rm->setPos(executingEntity, nextPos, shared);
+            result = State::Stop;
+        }
 
+        Frame::time moveTime;
+        bool moved = moveEntity(getExecutingEntity(), moveTime, shared);
+        if (moved)
+        {
             // Set next due time.
-            auto moveTime = fromMilliseconds(1000 / movable->getSpeed());
-            dueTime = shared->getFrame()->getRunTime() + moveTime;
+            setDueTime(shared->getFrame()->getRunTime() + moveTime);
         }
         else
         {
             harvestState = HarvestJobState::Harvest;
 
-            if (rm->getPos(toHarvest, shared) == nullptr)
-            {
-                // Already harvested?
-                result = State::Stop;
-            }
-
             // Set next due time.
-            // TODO From harvestable component of toHarvest entity.
-            dueTime = shared->getFrame()->getRunTime() + fromMilliseconds(333);
+            auto harvestable = getComponent<Harvestable>(shared->makeId(ComponentIds::harvestable()), toHarvest);
+            auto harvestTime = fromMilliseconds(1000.0 / harvestable->getSpeed());
+            setDueTime(shared->getFrame()->getRunTime() + harvestTime);
         }
     }
     else if (harvestState == HarvestJobState::Harvest)
@@ -146,35 +113,24 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
         auto pos = rm->removeEntity(toHarvest, shared);
 
-        // Drop.
-        auto dropId = shared->makeId(ComponentIds::drop());
-        if (toHarvest->hasComponent(dropId))
+        // Already harvested?
+        if (pos == nullptr)
         {
-            auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
-            auto drop = getComponent<Drop>(dropId, toHarvest);
-            for (auto dropEntityId : drop->getDrops())
-            {
-                auto dropEntity = mf->makeEntity(dropEntityId, shared);
-                rm->setPos(dropEntity, pos, shared);
-            }
+            result = State::Stop;
+        }
+        else
+        {
+            // Drops.
+            createDrops(toHarvest, pos, shared);
         }
 
         // Remove marker and set to null.
         clearJobMarker(shared);
 
         // Check if other jobs at this position are still valid.
-        // TODO Move into helper function.
-        auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
-        auto block = rm->getBlock(pos, shared);
-        auto jobMarkerId = shared->makeId(JobIds::jobMarker());
-        auto otherJobMarkers = block->getByComponent(jobMarkerId);
-        for (auto otherJobMarker : otherJobMarkers)
+        if (pos != nullptr)
         {
-            auto marker = getComponent<JobMarker>(jobMarkerId, otherJobMarker);
-            if (!marker->getJob()->isValid(shared))
-            {
-                jm->stopJob(marker->getJob(), shared);
-            }
+            areJobsValid(pos, shared);
         }
     }
     // Job was previously stopped but the job manager doesn't know yet.
@@ -186,21 +142,6 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
     return result;
 }
 
-frts::Frame::time frts::HarvestJob::getDueTime() const
-{
-    return dueTime;
-}
-
-frts::EntityPtr frts::HarvestJob::getExecutingEntity() const
-{
-    return executingEntity;
-}
-
-frts::IdUnorderedSet frts::HarvestJob::getRequirements() const
-{
-    return jobRequirements;
-}
-
 bool frts::HarvestJob::isValid(SharedManagerPtr shared) const
 {
     assert(shared != nullptr);
@@ -208,11 +149,6 @@ bool frts::HarvestJob::isValid(SharedManagerPtr shared) const
     // Simple check if the toHarvest entity still exists in the region.
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     return (rm->getPos(toHarvest, shared) != nullptr);
-}
-
-void frts::HarvestJob::setExecutingEntity(EntityPtr entity)
-{
-    this->executingEntity = entity;
 }
 
 frts::Job::State frts::HarvestJob::stop(SharedManagerPtr shared)

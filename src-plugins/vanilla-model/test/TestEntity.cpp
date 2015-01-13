@@ -341,6 +341,10 @@ TEST_CASE("Harvestable.", "[entity]")
     REQUIRE_FALSE(foundHarvestable->hasType(type1));
     REQUIRE(foundHarvestable->hasType(type2));
     REQUIRE(foundHarvestable->getTypes().size() == 1);
+
+    // Speed
+    foundHarvestable->setSpeed(123.5);
+    REQUIRE(foundHarvestable->getSpeed() == Approx(123.5));
 }
 
 TEST_CASE("Resource.", "[entity]")
@@ -483,8 +487,8 @@ TEST_CASE("Movable.", "[entity]")
     REQUIRE(movable->getDirection() == frts::Movable::Direction::South);
 
     // Speed
-    movable->setSpeed(123);
-    REQUIRE(movable->getSpeed() == 123);
+    movable->setSpeed(123.5);
+    REQUIRE(movable->getSpeed() == Approx(123.5));
 }
 
 TEST_CASE("SortOrder.", "[entity]")

@@ -40,10 +40,11 @@ Entities can drop other entities if they are destroyed, killed, harvested... The
 
 ## Harvestable
 
-Entities with this component can be harvested by the associated types.
+Entities with this component can be harvested by the associated types. The speed is in number of blocks per second. 
 
 ### Configuration
 
+    speed: <float greater 0>
     types:
         - <string representing an entity id>
 
@@ -76,13 +77,11 @@ Entities with this component represent a resource.
 
 ## Movable
 
-Entities with this component can move and may change the direction they are looking.
+Entities with this component can move and may change the direction they are looking. The speed is in blocks per second.
 
 ### Configuration
 
-Speed is in blocks per second.
-
-    speed: <integer greater 0>
+    speed: <float greater 0>
 
 ## SortOrder
 
