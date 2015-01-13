@@ -19,7 +19,8 @@ namespace frts
          * @param jobRequirements List of requirements for the entity which might execute the job.
          * @param jobMarker The job marker id.
          */
-        HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker);
+        HarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
+                      IdUnorderedSet jobRequirements, IdPtr jobMarker);
         ~HarvestAction();
 
         State execute(SharedManagerPtr shared) override;
@@ -28,9 +29,9 @@ namespace frts
 
     private:
         /**
-         * @brief Internal state of harvest action.
+         * @brief Internal state of action.
          */
-        enum class HarvestActionState
+        enum class ActionState
         {
             FirstExecution,
             WaitingForSelection,
@@ -42,8 +43,10 @@ namespace frts
     private:
         const std::string name = "frts::HarvestAction";
 
-        HarvestActionState harvestState = HarvestActionState::FirstExecution;
+        ActionState actionState = ActionState::FirstExecution;
 
+        IdPtr jobId;
+        IdPtr jobType;
         IdUnorderedSet harvestTypes;
         IdUnorderedSet jobRequirements;
         IdPtr jobMarker;
@@ -56,16 +59,22 @@ namespace frts
 
     /**
      * @brief Create new HarvestAction.
+     * @param jobId The job id.
+     * @param jobType The job type.
      * @param harvestTypes List of harvestable types.
      * @param jobRequirements List of requirements for the entity which might execute the job.
      * @param jobMarker The job marker id.
      * @return The action.
      */
-    inline ActionPtr makeHarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker)
+    inline ActionPtr makeHarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
+                                       IdUnorderedSet jobRequirements, IdPtr jobMarker)
     {
+        assert(jobId != nullptr);
+        assert(jobType != nullptr);
         assert(!harvestTypes.empty());
+        assert(jobMarker != nullptr);
 
-        return std::make_shared<HarvestAction>(harvestTypes, jobRequirements, jobMarker);
+        return std::make_shared<HarvestAction>(jobId, jobType, harvestTypes, jobRequirements, jobMarker);
     }
 }
 

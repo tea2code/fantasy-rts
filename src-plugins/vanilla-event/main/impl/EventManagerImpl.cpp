@@ -177,7 +177,7 @@ void frts::EventManagerImpl::subscribe(EventObserverPtr observer, IdPtr type)
 
 void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer)
 {
-    for (auto eventObserver : eventObservers)
+    for (auto& eventObserver : eventObservers)
     {
         unsubscribe(observer, eventObserver.first);
     }

@@ -17,6 +17,11 @@ namespace frts
             return "frts.vanillauseraction.useraction.harvest";
         }
 
+        static std::string stopJobs()
+        {
+            return "frts.vanillauseraction.useraction.stopjobs";
+        }
+
         static std::string userActionFactory()
         {
             return "frts::UserActionFactory";

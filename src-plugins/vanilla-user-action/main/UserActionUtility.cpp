@@ -14,7 +14,7 @@ void frts::areJobsValid(PointPtr pos, SharedManagerPtr shared)
     auto block = rm->getBlock(pos, shared);
     auto jobMarkerId = shared->makeId(JobIds::jobMarker());
     auto otherJobMarkers = block->getByComponent(jobMarkerId);
-    for (auto otherJobMarker : otherJobMarkers)
+    for (auto& otherJobMarker : otherJobMarkers)
     {
         auto marker = getComponent<JobMarker>(jobMarkerId, otherJobMarker);
         if (!marker->getJob()->isValid(shared))
@@ -36,7 +36,7 @@ void frts::createDrops(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
         auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
         auto drop = getComponent<Drop>(dropId, entity);
-        for (auto dropEntityId : drop->getDrops())
+        for (auto& dropEntityId : drop->getDrops())
         {
             auto dropEntity = mf->makeEntity(dropEntityId, shared);
             rm->setPos(dropEntity, pos, shared);
@@ -82,7 +82,7 @@ bool frts::findPathToJob(EntityPtr entity, PointPtr jobPos, bool toNeighbor, Sha
 
     // Try to find path for given unit.
     bool pathFound = false;
-    for (auto goal : goals)
+    for (auto& goal : goals)
     {
         auto path = mf->getPathFinder()->findPath(start, goal, blockedBy, shared);
         if (!path->pathExists())

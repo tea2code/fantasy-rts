@@ -60,9 +60,19 @@ namespace test
             return nullptr;
         }
 
+        frts::IdPtr getId() const
+        {
+            return nullptr;
+        }
+
         frts::IdUnorderedSet getRequirements() const override
         {
             return requirements;
+        }
+
+        frts::IdPtr getType() const
+        {
+            return nullptr;
         }
 
         bool isValid(frts::SharedManagerPtr) const override

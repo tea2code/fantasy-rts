@@ -11,8 +11,9 @@ namespace frts
     public:
         /**
          * @param commandType The command type.
+         * @param userActionType The user action type.
          */
-        HarvestCommandBuilder(IdPtr commandType);
+        HarvestCommandBuilder(IdPtr commandType, IdPtr userActionType);
         ~HarvestCommandBuilder();
 
         CommandPtr build(SharedManagerPtr shared) override;
@@ -20,19 +21,22 @@ namespace frts
 
     private:
         IdPtr commandType;
+        IdPtr userActionType;
         ConfigNodePtr node;
     };
 
     /**
      * @brief Create new harvest command builder.
      * @param commandType The command type.
+     * @param userActionType The user action type.
      * @return The command builder.
      */
-    inline UserActionCommandBuilderPtr makeHarvestCommandBuilder(IdPtr commandType)
+    inline UserActionCommandBuilderPtr makeHarvestCommandBuilder(IdPtr commandType, IdPtr userActionType)
     {
         assert(commandType != nullptr);
+        assert(userActionType != nullptr);
 
-        return std::make_shared<HarvestCommandBuilder>(commandType);
+        return std::make_shared<HarvestCommandBuilder>(commandType, userActionType);
     }
 }
 

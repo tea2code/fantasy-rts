@@ -56,3 +56,14 @@ User actions of this type will let the executing entity go to the specified posi
 ### Production
 
 > Not yet implemented.
+
+### Special
+
+#### Stop Jobs
+
+General user action to stop all or specific jobs within the selection. Jobs are found by their job markers. Has type id `frts.vanillauseraction.useraction.stop`. There are three different variants depending on the configuration. If the `settings` node is empty all found jobs are stopped. If a list of job ids is given jobs with these ids will be stopped. If a list of job types is given these types will be stopped. The last two can be combined.
+
+    jobs:
+        - <string representing an id>
+    types:
+        - <string representing an id>

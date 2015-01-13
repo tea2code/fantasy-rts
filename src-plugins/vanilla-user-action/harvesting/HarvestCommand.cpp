@@ -7,8 +7,8 @@
 #include <boost/format.hpp>
 
 
-frts::HarvestCommand::HarvestCommand(IdPtr commandType, ConfigNodePtr settings)
-    : commandType{commandType}, settings{settings}
+frts::HarvestCommand::HarvestCommand(IdPtr commandType, IdPtr userActionType, ConfigNodePtr settings)
+    : commandType{commandType}, userActionType{userActionType}, settings{settings}
 {
 
 }
@@ -44,7 +44,7 @@ void frts::HarvestCommand::execute(SharedManagerPtr shared)
     }
 
     // Create and start action.
-    action = makeHarvestAction(harvestTypes, jobRequirements, jobMarker);
+    action = makeHarvestAction(commandType, userActionType, harvestTypes, jobRequirements, jobMarker);
     auto am = getUtility<ActionManager>(shared, ActionIds::actionManager());
     am->newAction(action, shared);
 }

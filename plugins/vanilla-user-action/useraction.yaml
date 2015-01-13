@@ -30,3 +30,8 @@ useraction:
             jobmarker: entity.jobmarker
             requirements: 
                 - unit.player
+                
+        - command: stop
+          type: frts.vanillauseraction.useraction.stopjobs
+          settings:
+            # Stop all.

@@ -14,12 +14,14 @@ namespace frts
          * @param jobRequirements List of requirements for the entity which might execute the job.
          * @param jobMarker The job marker entity. Will be removed after completion.
          */
-        BaseJob(IdUnorderedSet jobRequirements, EntityPtr jobMarker);
+        BaseJob(IdPtr id, IdPtr type, IdUnorderedSet jobRequirements, EntityPtr jobMarker);
         ~BaseJob();
 
         EntityPtr getExecutingEntity() const override;
         Frame::time getDueTime() const override;
+        IdPtr getId() const override;
         IdUnorderedSet getRequirements() const override;
+        IdPtr getType() const override;
         void setExecutingEntity(EntityPtr entity) override;
 
     protected:
@@ -38,7 +40,9 @@ namespace frts
     private:
         Frame::time dueTime;
         EntityPtr executingEntity;
+        IdPtr id;
         IdUnorderedSet jobRequirements;
+        IdPtr type;
 
         /**
          * @warning Must be set to null after removale from region to prevent possible memory leak.

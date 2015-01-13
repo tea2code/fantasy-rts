@@ -70,10 +70,22 @@ namespace frts
         virtual EntityPtr getExecutingEntity() const = 0;
 
         /**
+         * @brief Get the job id.
+         * @return The job id.
+         */
+        virtual IdPtr getId() const = 0;
+
+        /**
          * @brief Get a list of requirements for this job.
          * @return List of ids each representing a requirement.
          */
         virtual IdUnorderedSet getRequirements() const = 0;
+
+        /**
+         * @brief Get the job type.
+         * @return The job type.
+         */
+        virtual IdPtr getType() const = 0;
 
         /**
          * @brief Indicates if this job is still valid or became obsolete.

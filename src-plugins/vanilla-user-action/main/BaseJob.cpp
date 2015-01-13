@@ -1,8 +1,9 @@
 #include "BaseJob.h"
 
 
-frts::BaseJob::BaseJob(IdUnorderedSet jobRequirements, EntityPtr jobMarker)
-    : dueTime{fromMilliseconds(0)}, jobRequirements{jobRequirements}, jobMarker{jobMarker}
+frts::BaseJob::BaseJob(IdPtr id, IdPtr type, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
+    : dueTime{fromMilliseconds(0)}, id{id}, jobRequirements{jobRequirements},
+      type{type}, jobMarker{jobMarker}
 {
 
 }
@@ -29,9 +30,19 @@ frts::EntityPtr frts::BaseJob::getExecutingEntity() const
     return executingEntity;
 }
 
+frts::IdPtr frts::BaseJob::getId() const
+{
+    return id;
+}
+
 frts::IdUnorderedSet frts::BaseJob::getRequirements() const
 {
     return jobRequirements;
+}
+
+frts::IdPtr frts::BaseJob::getType() const
+{
+    return type;
 }
 
 void frts::BaseJob::setDueTime(Frame::time dueTime)

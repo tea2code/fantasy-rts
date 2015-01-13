@@ -2,6 +2,7 @@
 
 #include "UserActionIds.h"
 #include <harvesting/HarvestCommandBuilder.h>
+#include <special/stop-jobs/StopJobsCommandBuilder.h>
 
 #include <frts/vanillaaction>
 #include <frts/vanillacommand>
@@ -40,7 +41,7 @@ bool frts::UserActionFactory::init(SharedManagerPtr shared)
         return true;
     }
 
-    for (auto it : commandConfigs)
+    for (auto& it : commandConfigs)
     {
         auto commandId = it.first;
         auto config = it.second;
@@ -48,7 +49,11 @@ bool frts::UserActionFactory::init(SharedManagerPtr shared)
 
         if (config.type->toString() == UserActionIds::harvest())
         {
-            commandBuilder = makeHarvestCommandBuilder(commandId);
+            commandBuilder = makeHarvestCommandBuilder(commandId, config.type);
+        }
+        else if (config.type->toString() == UserActionIds::stopJobs())
+        {
+            commandBuilder = makeStopJobsCommandBuilder(commandId);
         }
         else
         {

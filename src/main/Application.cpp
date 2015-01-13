@@ -18,7 +18,7 @@ namespace
     {
         std::string msg = "Application: Possible dead lock while executing " + function + " was "
                           "detected. Following modules where involved: ";
-        for (auto module : modules)
+        for (auto& module : modules)
         {
             msg += module->getName();
             msg += ", ";

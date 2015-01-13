@@ -6,8 +6,8 @@
 #include <algorithm>
 
 
-frts::HarvestJob::HarvestJob(EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
-    : BaseJob(jobRequirements, jobMarker), toHarvest{toHarvest}
+frts::HarvestJob::HarvestJob(IdPtr id, IdPtr type, EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
+    : BaseJob(id, type, jobRequirements, jobMarker), toHarvest{toHarvest}
 {
 
 }
@@ -50,13 +50,13 @@ bool frts::HarvestJob::checkSpecialRequirements(EntityPtr entity, SharedManagerP
 frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
-    assert(this->harvestState != HarvestJobState::Finished);
+    assert(this->jobState != JobState::Finished);
 
     State result = State::Running;
 
-    if (harvestState == HarvestJobState::FirstExecution)
+    if (jobState == JobState::FirstExecution)
     {
-        harvestState = HarvestJobState::Goto;
+        jobState = JobState::Goto;
 
         // Calculate path.
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
@@ -79,7 +79,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
 
         // Not necessary to change due time. Start at the next frame.
     }
-    else if (harvestState == HarvestJobState::Goto)
+    else if (jobState == JobState::Goto)
     {
         // Already harvested?
         if (!isValid(shared))
@@ -96,7 +96,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
         }
         else
         {
-            harvestState = HarvestJobState::Harvest;
+            jobState = JobState::Harvest;
 
             // Set next due time.
             auto harvestable = getComponent<Harvestable>(shared->makeId(ComponentIds::harvestable()), toHarvest);
@@ -104,9 +104,9 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
             setDueTime(shared->getFrame()->getRunTime() + harvestTime);
         }
     }
-    else if (harvestState == HarvestJobState::Harvest)
+    else if (jobState == JobState::Harvest)
     {
-        harvestState = HarvestJobState::Finished;
+        jobState = JobState::Finished;
         result = State::Finished;
 
         // Remove toHarvest entity.
@@ -134,7 +134,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
         }
     }
     // Job was previously stopped but the job manager doesn't know yet.
-    else if (harvestState == HarvestJobState::Stopped)
+    else if (jobState == JobState::Stopped)
     {
         result = State::Stop;
     }
@@ -155,13 +155,13 @@ frts::Job::State frts::HarvestJob::stop(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    if (harvestState != HarvestJobState::Stopped &&
-        harvestState != HarvestJobState::Finished)
+    if (jobState != JobState::Stopped &&
+        jobState != JobState::Finished)
     {
         // Remove marker and set to null.
         clearJobMarker(shared);
     }
 
-    harvestState = HarvestJobState::Stopped;
+    jobState = JobState::Stopped;
     return State::Finished;
 }

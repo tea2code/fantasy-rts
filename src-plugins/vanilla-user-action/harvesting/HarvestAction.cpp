@@ -7,8 +7,10 @@
 #include <algorithm>
 
 
-frts::HarvestAction::HarvestAction(IdUnorderedSet harvestTypes, IdUnorderedSet jobRequirements, IdPtr jobMarker)
-    : harvestTypes{harvestTypes}, jobRequirements{jobRequirements}, jobMarker{jobMarker}
+frts::HarvestAction::HarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
+                                   IdUnorderedSet jobRequirements, IdPtr jobMarker)
+    : jobId{jobId}, jobType{jobType}, harvestTypes{harvestTypes}, jobRequirements{jobRequirements},
+      jobMarker{jobMarker}
 {
 
 }
@@ -21,22 +23,22 @@ frts::HarvestAction::~HarvestAction()
 frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
-    assert(this->harvestState != HarvestActionState::Finished);
+    assert(this->actionState != ActionState::Finished);
 
     State result = State::Running;
 
     // First execution. Wait for selection.
-    if (harvestState == HarvestActionState::FirstExecution)
+    if (actionState == ActionState::FirstExecution)
     {
-        harvestState = HarvestActionState::WaitingForSelection;
+        actionState = ActionState::WaitingForSelection;
 
         auto em = getUtility<EventManager>(shared, EventIds::eventManager());
         em->subscribe(shared_from_this(), shared->makeId(Sdl2Ids::selectionFinishedEvent()));
     }
     // Selection received. Add jobs.
-    else if (harvestState == HarvestActionState::SelectionReceived)
+    else if (actionState == ActionState::SelectionReceived)
     {
-        harvestState = HarvestActionState::Finished;
+        actionState = ActionState::Finished;
         result = State::Finished;
 
         // Add jobs to job manager and job markers to region.
@@ -49,7 +51,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
         {
             auto block = rm->getBlock(pos, shared);
             auto entities = block->getByComponent(harvestableId);
-            for (auto entity : entities)
+            for (auto& entity : entities)
             {
                 // Any supported harvestable type?
                 auto harvestable = getComponent<Harvestable>(harvestableId, entity);
@@ -62,7 +64,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
 
                 // Add job for this entity.
                 auto jobMarkerEntity = mf->makeEntity(jobMarker, shared);
-                auto job = makeHarvestJob(entity, jobRequirements, jobMarkerEntity);
+                auto job = makeHarvestJob(jobId, jobType, entity, jobRequirements, jobMarkerEntity);
                 jm->addJob(job, shared);
                 jobs.push_back(job);
 
@@ -76,7 +78,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
         selection.clear();
     }
     // Action was previously stopped but the action manager doesn't know yet.
-    else if (harvestState == HarvestActionState::Stopped)
+    else if (actionState == ActionState::Stopped)
     {
         result = State::Cancel;
     }
@@ -90,7 +92,7 @@ void frts::HarvestAction::notify(EventPtr event, SharedManagerPtr shared)
     assert(shared != nullptr);
 
     // Selection complete.
-    harvestState = HarvestActionState::SelectionReceived;
+    actionState = ActionState::SelectionReceived;
 
     auto value = getEventValue<PointListEventValue>(event, shared->makeId(Sdl2Ids::selectionEventValue()));
     selection = value->getValue();
@@ -105,17 +107,17 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     // Stop waiting for selection.
-    if (harvestState == HarvestActionState::WaitingForSelection)
+    if (actionState == ActionState::WaitingForSelection)
     {
         auto em = getUtility<EventManager>(shared, EventIds::eventManager());
         em->unsubscribe(shared_from_this());
     }
     // Stop/Cancel jobs.
-    else if (harvestState == HarvestActionState::Finished)
+    else if (actionState == ActionState::Finished)
     {
         // Stop/Cancel jobs.
         auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
-        for (auto job : jobs)
+        for (auto& job : jobs)
         {
             jm->stopJob(job, shared);
         }
@@ -123,13 +125,13 @@ frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
 
         // Remove job entities.
         auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-        for (auto jobEntity : jobEntities)
+        for (auto& jobEntity : jobEntities)
         {
             rm->removeEntity(jobEntity, shared);
         }
         jobEntities.clear();
     }
 
-    harvestState = HarvestActionState::Stopped;
+    actionState = ActionState::Stopped;
     return State::Finished;
 }

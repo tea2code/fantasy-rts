@@ -1,5 +1,6 @@
 keys:
 
+    # General
     - key: escape
       command: frts.vanillaaction.command.stopactionorquit
     - key: z
@@ -7,7 +8,7 @@ keys:
     - key: enter
       command: frts.vanillasdl2.command.select
       
-    # Screen movement
+    # SDL2: Screen movement
     - key: d
       command: frts.vanillasdl2.command.movescreen.east
     - key: a
@@ -21,7 +22,7 @@ keys:
     - key: q
       command: frts.vanillasdl2.command.movescreen.down
       
-    # Cursor movement
+    # SDL2: Cursor movement
     - key: right
       command: frts.vanillasdl2.command.movecursor.east
     - key: left
@@ -31,15 +32,15 @@ keys:
     - key: down
       command: frts.vanillasdl2.command.movecursor.south
       
-    # Switch sidebar info index
+    # SDL2: Switch sidebar info index
     - key: i
       command: frts.vanillasdl2.command.switchsidebarinfoindex.next
       
-    # Building
+    # UserAction: Building
     
-    # Gathering
+    # UserAction: Gathering
 
-    # Harvesting
+    # UserAction: Harvesting
     - key: c
       command: frts.vanillauseraction.command.chop
     - key: h
@@ -47,12 +48,20 @@ keys:
     - key: m
       command: frts.vanillauseraction.command.dig
       
-    # Production
+    # UserAction: Production
+      
+    # UserAction: Special
+    - key: x
+      command: frts.vanillauseraction.command.stop
       
 command:
 
     # Following commands won't be added to the undo list.
     undo_blacklist:
+        # VanillaAction
+        - frts.vanillaaction.command.stopaction
+        - frts.vanillaaction.command.stopactionorquit
+    
         # VanillaSDL2
         - frts.vanillasdl2.command.movescreen.north
         - frts.vanillasdl2.command.movescreen.east
@@ -75,7 +84,3 @@ command:
         - frts.vanillasdl2.command.switchsidebarinfoindex.next
         - frts.vanillasdl2.command.switchsidebarinfoindex.previous
         - frts.vanillasdl2.command.select
-        
-        # VanillaAction
-        - frts.vanillaaction.command.stopaction
-        - frts.vanillaaction.command.stopactionorquit

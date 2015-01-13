@@ -69,7 +69,7 @@ void frts::stopSelection(SharedManagerPtr shared)
 
     // Remove all selection highlighting entities.
     auto entities = sd->getSelectionEntities();
-    for (auto entity : entities)
+    for (auto& entity : entities)
     {
         rm->removeEntity(entity, shared);
     }
@@ -100,7 +100,7 @@ void frts::updateSelection(PointPtr cursorPos, SharedManagerPtr shared)
 
     // Set selection highlight entities.
     auto selection = sd->getSelection(shared);
-    for (auto pos : selection)
+    for (auto& pos : selection)
     {
         // Recycle old entities.
         EntityPtr entity;
