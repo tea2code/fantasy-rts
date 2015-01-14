@@ -7,8 +7,13 @@
 #include <region/WriteableBlock.h>
 
 #include <unordered_map>
-//#include <vector>
 
+// Benchmarks shown a ~7% faster lookup. But that isn't significant enough to activate this
+// obvious more complicated code.
+//#define FAST_POS_BLOCK
+#ifdef FAST_POS_BLOCK
+#include <vector>
+#endif
 
 namespace frts
 {
@@ -47,14 +52,16 @@ namespace frts
          */
         PosBlockMap posBlock;
 
-//        /**
-//         * @brief Faster lookup of blocks using vectors and the coordinate values in order z, x and y. Works
-//         *        only on certain z-levels.
-//         */
-//        PosBlockVector fastPosBlock;
+        #ifdef FAST_POS_BLOCK
+        /**
+         * @brief Faster lookup of blocks using vectors and the coordinate values in order z, x and y. Works
+         *        only on certain z-levels.
+         */
+        PosBlockVector fastPosBlock;
 
-//        Point::value fastLookupLow = -10;
-//        Point::value fastLookupHigh = 5;
+        Point::value fastLookupLow = -10;
+        Point::value fastLookupHigh = 5;
+        #endif
 
     private:
         WriteableBlockPtr getWriteableBlock(PointPtr pos, SharedManagerPtr shared);

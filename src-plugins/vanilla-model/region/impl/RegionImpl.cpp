@@ -11,20 +11,22 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
                              RegionGeneratorPtr regionGenerator)
     : mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, regionGenerator{regionGenerator}
 {
-//    for (int z = 0; z <= std::abs(fastLookupHigh - fastLookupLow); ++z)
-//    {
-//        fastPosBlock.push_back(std::vector<std::vector<WriteableBlockPtr>>());
-//        fastPosBlock.at(z).reserve(mapSizeX);
-//        for (int x = 0; x < mapSizeX; ++x)
-//        {
-//            fastPosBlock.at(z).push_back(std::vector<WriteableBlockPtr>());
-//            fastPosBlock.at(z).at(x).reserve(mapSizeY);
-//            for (int y = 0; y < mapSizeY; ++y)
-//            {
-//                fastPosBlock.at(z).at(x).push_back(nullptr);
-//            }
-//        }
-//    }
+#ifdef FAST_POS_BLOCK
+    for (int z = 0; z <= std::abs(fastLookupHigh - fastLookupLow); ++z)
+    {
+        fastPosBlock.push_back(std::vector<std::vector<WriteableBlockPtr>>());
+        fastPosBlock.at(z).reserve(mapSizeX);
+        for (int x = 0; x < mapSizeX; ++x)
+        {
+            fastPosBlock.at(z).push_back(std::vector<WriteableBlockPtr>());
+            fastPosBlock.at(z).at(x).reserve(mapSizeY);
+            for (int y = 0; y < mapSizeY; ++y)
+            {
+                fastPosBlock.at(z).at(x).push_back(nullptr);
+            }
+        }
+    }
+#endif
 }
 
 std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
@@ -162,21 +164,25 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
 
     frts::WriteableBlockPtr result = nullptr;
 
-//    bool useFastLookup = (fastLookupLow <= pos->getZ() && pos->getZ() <= fastLookupHigh);
-//    int fastZ = (pos->getZ() - fastLookupLow);
-//    if (useFastLookup)
-//    {
-//        // No bounds check for better performance.
-//        result = fastPosBlock[fastZ][pos->getX()][pos->getY()];
-//    }
-//    else
-//    {
+#ifdef FAST_POS_BLOCK
+    bool useFastLookup = (fastLookupLow <= pos->getZ() && pos->getZ() <= fastLookupHigh);
+    int fastZ = (pos->getZ() - fastLookupLow);
+    if (useFastLookup)
+    {
+        // No bounds check for better performance.
+        result = fastPosBlock[fastZ][pos->getX()][pos->getY()];
+    }
+    else
+    {
+#endif
         auto it = posBlock.find(pos);
         if (it != posBlock.end())
         {
             result = it->second;
         }
-//    }
+#ifdef FAST_POS_BLOCK
+    }
+#endif
 
     if (result == nullptr)
     {
@@ -185,15 +191,18 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
         {
             entityPos[entity] = pos;
         }
-
-//        if (useFastLookup)
-//        {
-//            fastPosBlock.at(fastZ).at(pos->getX()).at(pos->getY()) = result;
-//        }
-//        else
-//        {
+#ifdef FAST_POS_BLOCK
+        if (useFastLookup)
+        {
+            fastPosBlock.at(fastZ).at(pos->getX()).at(pos->getY()) = result;
+        }
+        else
+        {
+#endif
             posBlock.insert(std::make_pair(pos, result));
-//        }
+#ifdef FAST_POS_BLOCK
+        }
+#endif
     }
 
     return result;
