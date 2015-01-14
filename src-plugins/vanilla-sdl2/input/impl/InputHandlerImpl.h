@@ -38,11 +38,14 @@ namespace frts
         bool init(SharedManagerPtr shared) override;
         bool isInitialized() const override;
         bool isPreInitialized() const override;
-        void registerCommand(KeyCommand keyCommand, IdPtr commandId) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
+
+        void closeCurrentContext() override;
+        void registerCommand(KeyCommand keyCommand, IdPtr commandId) override;
+        void registerContextChange(KeyCommand keyCommand, IdPtr context) override;
 
     private:
         std::vector<ConfigNodePtr> configNodes;

@@ -1,6 +1,7 @@
 #include "Sdl2EventHandler.h"
 
 #include "InputHandler.h"
+#include "impl/CloseContextCommandBuilder.h"
 #include "impl/SelectionDataImpl.h"
 #include "impl/SelectionHelper.h"
 #include "impl/SelectCommandBuilder.h"
@@ -24,6 +25,14 @@ void frts::Sdl2EventHandler::checkRequiredData(SharedManagerPtr shared)
 
     validateDataValue(getName(), Sdl2Ids::graphicData(), 4, shared);
     validateDataValue(getName(), Sdl2Ids::selectionData(), 1, shared);
+}
+
+void frts::Sdl2EventHandler::closeCurrentContext()
+{
+    if (contextStack.top() != defaultContext)
+    {
+        contextStack.pop();
+    }
 }
 
 bool frts::Sdl2EventHandler::createData(SharedManagerPtr shared)
@@ -56,9 +65,13 @@ bool frts::Sdl2EventHandler::init(SharedManagerPtr shared)
         return true;
     }
 
-    // Add select commands.
+    // Add select command.
     IdPtr commandId = shared->makeId(Sdl2Ids::selectCommand());
     commandFactory->registerCommandBuilder(commandId, makeSelectCommandBuilder(commandId));
+
+    // Add close context command.
+    commandId = shared->makeId(Sdl2Ids::closeContextCommand());
+    commandFactory->registerCommandBuilder(commandId, makeCloseContextCommandBuilder(commandId));
 
     // Check if input handler has initialized the default context.
     if (defaultContext == nullptr)

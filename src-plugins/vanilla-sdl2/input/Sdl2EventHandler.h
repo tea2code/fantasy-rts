@@ -95,6 +95,11 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
         /**
+         * @brief Closes the current context.
+         */
+        void closeCurrentContext();
+
+        /**
          * @brief Register a custom command with an key.
          * @param keyCommand The key command.
          * @param commandId The command id.

@@ -20,8 +20,8 @@ namespace frts
          */
         struct KeyCommand
         {
-            KeyCommand(Key key, bool alt = false, bool ctrl = false, bool shift = false)
-                : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}
+            KeyCommand(Key key, bool alt = false, bool ctrl = false, bool shift = false, IdPtr context = nullptr)
+                : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
             {}
 
             Key key;
@@ -29,10 +29,17 @@ namespace frts
             bool alt;
             bool ctrl;
             bool shift;
+
+            IdPtr context;
         };
 
     public:
         virtual ~InputHandler() {}
+
+        /**
+         * @brief Closes the current context.
+         */
+        virtual void closeCurrentContext() = 0;
 
         /**
          * @brief Register a custom command with an key.
@@ -40,6 +47,13 @@ namespace frts
          * @param commandId The command id.
          */
         virtual void registerCommand(KeyCommand keyCommand, IdPtr commandId) = 0;
+
+        /**
+         * @brief Register a context change with an key.
+         * @param keyCommand The key command.
+         * @param context The context:
+         */
+        virtual void registerContextChange(KeyCommand keyCommand, IdPtr context) = 0;
     };
 }
 

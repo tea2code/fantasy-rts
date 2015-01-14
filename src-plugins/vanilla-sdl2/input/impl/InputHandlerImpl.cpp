@@ -17,6 +17,11 @@ frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler)
 void frts::InputHandlerImpl::checkRequiredData(SharedManagerPtr)
 {}
 
+void frts::InputHandlerImpl::closeCurrentContext()
+{
+    sdl2EventHandler->closeCurrentContext();
+}
+
 bool frts::InputHandlerImpl::createData(SharedManagerPtr)
 {
     return false;
@@ -122,14 +127,32 @@ bool frts::InputHandlerImpl::isPreInitialized() const
 
 void frts::InputHandlerImpl::registerCommand(KeyCommand keyCommand, IdPtr commandId)
 {
+    assert(commandId != nullptr);
+
     Sdl2KeyCommand sdl2KeyCommand =
     {
         keyToSdl2Key(keyCommand.key),
         keyCommand.alt,
         keyCommand.ctrl,
-        keyCommand.shift
+        keyCommand.shift,
+        keyCommand.context
     };
     sdl2EventHandler->registerCommand(sdl2KeyCommand, commandId);
+}
+
+void frts::InputHandlerImpl::registerContextChange(KeyCommand keyCommand, IdPtr context)
+{
+    assert(context != nullptr);
+
+    Sdl2KeyCommand sdl2KeyCommand =
+    {
+        keyToSdl2Key(keyCommand.key),
+        keyCommand.alt,
+        keyCommand.ctrl,
+        keyCommand.shift,
+        keyCommand.context
+    };
+    sdl2EventHandler->registerContextChange(sdl2KeyCommand, context);
 }
 
 void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)

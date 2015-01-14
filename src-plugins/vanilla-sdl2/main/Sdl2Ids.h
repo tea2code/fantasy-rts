@@ -12,6 +12,11 @@ namespace frts
     class Sdl2Ids
     {
     public:
+        static std::string closeContextCommand()
+        {
+            return "frts.vanillasdl2.command.closecontext";
+        }
+
         static std::string graphicData()
         {
             return "frts::GraphicData";

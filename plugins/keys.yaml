@@ -15,7 +15,7 @@ keys:
         - key: enter
           command: frts.vanillasdl2.command.select
         - key: Backspace
-          # command: frts.vanillasdl2.command.closecontext
+          command: frts.vanillasdl2.command.closecontext
           
         # SDL2: Screen movement
         - key: d
@@ -78,6 +78,7 @@ command:
         - frts.vanillaaction.command.stopactionorquit
     
         # VanillaSDL2
+        - frts.vanillasdl2.command.closecontext
         - frts.vanillasdl2.command.movescreen.north
         - frts.vanillasdl2.command.movescreen.east
         - frts.vanillasdl2.command.movescreen.south

@@ -65,7 +65,7 @@ Will identify itself by the name and type `frts::InputHandler`. It can also be f
 
 ### Configuration
 
-Beside support for modifiers like ctrl or alt the input handler provides also a construct called "context". A key command without a context will always work. By providing a context the key will only work if the current context is the same. Switching the context is done by using `set_context` instead of `command`. Visually a context implements something like a menu and its submenus.
+Beside support for modifiers like ctrl or alt the input handler provides also a construct called "context". A key command without a context will always work. By providing a context the key will only work if the current context is the same. Switching the context is done by using `set_context` instead of `command`. Visually a context implements something like a menu and its submenus. 
 
     keys:
     
@@ -227,6 +227,10 @@ Will identify itself by the name and type `frts::SelectionData`. It can also be 
 ## Commands
 
 This plugin implements a couple of commands (using the *VanillaCommand* plugin) which are assigned to different keys. If necessary it adds these commands also to the undo blacklist. IDs can also be found in the static class `Sdl2Ids`.
+
+### CloseContextCommand
+
+This command allows to the current input context (See **Input/Event Handling**). Use command id `frts.vanillasdl2.command.closecontext`.
 
 ### MoveCursorCommand
 
