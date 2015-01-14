@@ -53,8 +53,9 @@ namespace frts
         void stopJob(JobPtr job);
 
     private:
+        using TimeJob = std::pair<Frame::time, JobPtr>;
         using JobSet = std::unordered_set<JobPtr>;
-        using JobQueue = std::priority_queue<std::pair<Frame::time, JobPtr>>;
+        using JobQueue = std::priority_queue<TimeJob, std::vector<TimeJob>, std::greater<TimeJob>>;
 
     private:
         JobSet knownJobs;

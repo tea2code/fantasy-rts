@@ -34,9 +34,9 @@ namespace frts
 
     private:
         EntityVector highlights;
-        EntityPtr player;
 
-        bool isPlayerWorking = false;
+        EntityVector lazy;
+        EntityVector working;
 
     private:
         void addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,

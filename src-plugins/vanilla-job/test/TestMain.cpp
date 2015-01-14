@@ -208,6 +208,70 @@ TEST_CASE("JobHandler.", "[main]")
         REQUIRE(job->getNumExecutions() == 0);
         REQUIRE(job->getNumStops() == 3);
     }
+
+    SECTION("Two jobs with different timings")
+    {
+        int doNumExecutions1 = 5;
+        int doNumStops1 = 0;
+        std::queue<frts::Frame::time> dueTimes1;
+        dueTimes1.push(frts::fromMilliseconds(1));
+        dueTimes1.push(frts::fromMilliseconds(3));
+        dueTimes1.push(frts::fromMilliseconds(4));
+        dueTimes1.push(frts::fromMilliseconds(5));
+        auto job1 = std::make_shared<test::TestJob>(doNumExecutions1, doNumStops1, dueTimes1);
+
+        int doNumExecutions2 = 3;
+        int doNumStops2 = 0;
+        std::queue<frts::Frame::time> dueTimes2;
+        dueTimes2.push(frts::fromMilliseconds(2));
+        dueTimes2.push(frts::fromMilliseconds(4));
+        auto job2 = std::make_shared<test::TestJob>(doNumExecutions2, doNumStops2, dueTimes2);
+
+        jobHandler->runJob(job1);
+        jobHandler->runJob(job2);
+
+        auto num = 0;
+        auto frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 1);
+        REQUIRE(job2->getNumExecutions() == 1);
+
+        num = 1;
+        frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 2);
+        REQUIRE(job2->getNumExecutions() == 1);
+
+        num = 2;
+        frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 2);
+        REQUIRE(job2->getNumExecutions() == 2);
+
+        num = 3;
+        frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 3);
+        REQUIRE(job2->getNumExecutions() == 2);
+
+        num = 4;
+        frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 4);
+        REQUIRE(job2->getNumExecutions() == 3);
+
+        num = 5;
+        frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
+        shared->setFrame(frame);
+        jobHandler->tick(shared);
+        REQUIRE(job1->getNumExecutions() == 5);
+        REQUIRE(job2->getNumExecutions() == 3);
+    }
 }
 
 TEST_CASE("Job manager.", "[main]")

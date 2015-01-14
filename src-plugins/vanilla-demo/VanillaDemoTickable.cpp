@@ -79,7 +79,17 @@ void frts::VanillaDemoTickable::notify(EventPtr event, SharedManagerPtr shared)
         event->getType() == shared->makeId(JobIds::jobFinishedEvent()) ||
         event->getType() == shared->makeId(JobIds::jobStoppedEvent()))
     {
-        isPlayerWorking = false;
+        auto entityValue = getEventValue<EntityEventValue>(event, shared->makeId(JobIds::entityEventValue()));
+        auto it = std::find(working.begin(), working.end(), entityValue->getValue());
+        if (it != working.end())
+        {
+            lazy.push_back(*it);
+            working.erase(it);
+        }
+        else
+        {
+            shared->getLog()->warning(getName(), "Working entity which is not in working list.");
+        }
     }
 }
 
@@ -93,19 +103,26 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 
     if (shared->getFrame()->getNumber() == 0)
     {
-        // Add dwarf at start position.
+        // Add dwarves.
+        const unsigned int numEntities = 10;
+        const auto entityId = shared->makeId("entity.dwarf");
+
+        auto blockedById = shared->makeId(ComponentIds::blockedBy());
         auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
-        player = mf->makeEntity(shared->makeId("entity.dwarf"), shared);
-        auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
-        auto pos = rm->findFreeRandomPos({md->getSurfaceZLevel()}, blockedBy, shared);
-        if (pos != nullptr)
+        for (unsigned int i = 0; i < numEntities; ++i)
         {
-            rm->setPos(player, pos, shared);
-        }
-        else
-        {
-            shared->getLog()->error(getName(), "Couldn't find a free position for player.");
-            shared->setQuitApplication(true);
+            auto entity = mf->makeEntity(entityId, shared);
+            auto blockedBy = getComponent<BlockedBy>(blockedById, entity);
+            auto pos = rm->findFreeRandomPos({md->getSurfaceZLevel()}, blockedBy, shared);
+            if (pos != nullptr)
+            {
+                rm->setPos(entity, pos, shared);
+                lazy.push_back(entity);
+            }
+            else
+            {
+                shared->getLog()->warning(getName(), "Couldn't find a free position for entity.");
+            }
         }
 
         return;
@@ -143,10 +160,24 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     shared->setQuitApplication(true);
 #else
     // Temporary ai replacement.
-    if (!isPlayerWorking && shared->getFrame()->getNumber() % 50 == 0)
+    if (shared->getFrame()->getNumber() % 50 == 0)
     {
         auto jm = getUtility<JobManager>(shared, JobIds::jobManager());
-        isPlayerWorking = jm->employEntity(player, shared);
+        for (auto it = lazy.begin(); it != lazy.end();)
+        {
+            bool isWorking = jm->employEntity(*it, shared);
+            if (isWorking)
+            {
+                working.push_back(*it);
+                it = lazy.erase(it);
+
+                shared->getLog()->debug(getName(), "Found work.");
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 #endif
 }
