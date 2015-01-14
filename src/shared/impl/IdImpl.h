@@ -16,6 +16,7 @@ namespace frts
         explicit IdImpl(const std::string& str);
         ~IdImpl() override;
 
+        std::size_t hash() const override;
         std::string toString() const override;
 
         bool operator==(const Id& rhs) override;
@@ -23,6 +24,7 @@ namespace frts
         bool operator<(const Id& rhs) override;
 
     private:
+        size_t cachedHash;
         std::string str;
     };
 

@@ -21,6 +21,12 @@ namespace frts
         virtual ~Id() {}
 
         /**
+         * @brief Calculate hash of id.
+         * @return The hash.
+         */
+        virtual std::size_t hash() const = 0;
+
+        /**
          * @brief Get the string representation of this Id.
          * @return The string representation.
          */
@@ -83,7 +89,7 @@ namespace std
             {
                 return 0;
             }
-            return std::hash<std::string>()(id->toString());
+            return id->hash();
         }
     };
 }

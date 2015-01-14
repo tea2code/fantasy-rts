@@ -62,6 +62,12 @@ namespace frts
         virtual value getZ() const = 0;
 
         /**
+         * @brief Calculate hash of point.
+         * @return The hash.
+         */
+        virtual std::size_t hash() = 0;
+
+        /**
          * @brief Add two points.
          * @param other The rhs point.
          * @return Resulting point.
@@ -239,49 +245,8 @@ namespace std
                 return 0;
             }
 
-            // The following represents the performance order of these hash algorithms.
-            // The higher the better. Order was determined by comparing the timings
-            // of execution of ModelStartup with a total of 16 z-levels precalculated.
-
-            // See "Effective Java 2nd Edition" page 49
-            // Result: ~5.5s
-            unsigned int result = 17;
-            result = 31 * result + point->getX();
-            result = 31 * result + point->getY();
-            result = 31 * result + point->getZ();
-            return intHash(result);
-
-            // See http://stackoverflow.com/a/5929567/1931663 ("mod n" removed because the unordered_map does this as far as i know).
-            // Result: ~5.5s
-//            return intHash(point->getX() * 73856093 ^ point->getY() *  19349663 ^ point->getZ() * 83492791);
-
-            // See http://stackoverflow.com/a/2634715/1931663
-            // Result: ~7s
-//            return intHash(51 + point->getX() * 51 + point->getY() * 51 + point->getZ());
-
-            // String hashing
-            // Result: ~9s
-//            return stringHash(std::to_string(point->getX()) + " " + std::to_string(point->getY()) + " " + std::to_string(point->getZ()));
-
-            // See http://stackoverflow.com/a/16794345/1931663
-            // Result: ~10-11s
-//            size_t h1 = intHash(point->getX());
-//            size_t h2 = intHash(point->getY());
-//            size_t h3 = intHash(point->getZ());
-//            return (h1 ^ (h2 << 1)) ^ h3;
-
-            // Original naive variant.
-            // Result: ~26s
-//            return intHash(point->getX() + point->getY() + point->getZ());
-
-            // Maybe...
-            // Result: Nope, stopped execution because it took to long.
-//            return intHash(point->getX() * point->getY() * point->getZ());
+            return point->hash();
         }
-
-    private:
-        std::hash<int> intHash;
-//        std::hash<std::string> stringHash;
     };
 }
 

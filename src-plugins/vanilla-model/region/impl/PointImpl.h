@@ -15,6 +15,7 @@ namespace frts
         value getX() const override;
         value getY() const override;
         value getZ() const override;
+        std::size_t hash() override;
         PointPtr operator+(const Point& other) const override;
         PointPtr operator-(const Point& other) const override;
         PointPtr operator*(const Point& other) const override;

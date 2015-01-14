@@ -7,12 +7,17 @@
 
 
 frts::IdImpl::IdImpl(const std::string& str)
-    : str{str}
+    : cachedHash{std::hash<std::string>()(str)}, str{str}
 {
 }
 
 frts::IdImpl::~IdImpl()
 {
+}
+
+std::size_t frts::IdImpl::hash() const
+{
+    return cachedHash;
 }
 
 std::string frts::IdImpl::toString() const
