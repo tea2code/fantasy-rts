@@ -194,12 +194,12 @@ namespace frts
         /**
          * @brief Lookup map for textures.
          */
-        using TextureMap = std::unordered_map<IdPtr, TexturePtr, IdHash, IdEqual>;
+        using TextureMap = std::unordered_map<IdPtr, TexturePtr>;
 
         /**
          * @brief Lookup map for image paths.
          */
-        using ImageMap = std::unordered_map<IdPtr, std::string, IdHash, IdEqual>;
+        using ImageMap = std::unordered_map<IdPtr, std::string>;
 
     private:
         bool initialized = false;

@@ -38,7 +38,7 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
     frontier.emplace(0.0, start);
 
-    std::unordered_map<PointPtr, PointPtr, PointHash, PointEqual> cameFrom;
+    std::unordered_map<PointPtr, PointPtr> cameFrom;
     cameFrom[start] = start;
 
     costSoFar.clear();

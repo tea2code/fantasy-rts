@@ -45,7 +45,7 @@ namespace frts
         /**
          * @brief Command config map.
          */
-        using CommandConfigMap = std::unordered_map<IdPtr, CommandConfig, IdHash, IdEqual>;
+        using CommandConfigMap = std::unordered_map<IdPtr, CommandConfig>;
 
     private:
         CommandConfigMap commandConfigs;

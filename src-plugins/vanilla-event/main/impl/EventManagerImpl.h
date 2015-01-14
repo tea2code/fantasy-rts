@@ -47,8 +47,8 @@ namespace frts
         void unsubscribe(EventObserverPtr observer, IdPtr type) override;
 
     private:
-        using EventValueBuilderMap = std::unordered_map<IdPtr, EventValueBuilderPtr, IdHash, IdEqual>;
-        using EventObserverMap = std::unordered_map<IdPtr, std::vector<EventObserverPtr>, IdHash, IdEqual>;
+        using EventValueBuilderMap = std::unordered_map<IdPtr, EventValueBuilderPtr>;
+        using EventObserverMap = std::unordered_map<IdPtr, std::vector<EventObserverPtr>>;
 
     private:
         EventValueBuilderMap eventValueBuilders;

@@ -44,7 +44,7 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
-        using CommandBuilderMap = std::unordered_map<IdPtr, CommandBuilderPtr, IdHash, IdEqual>;
+        using CommandBuilderMap = std::unordered_map<IdPtr, CommandBuilderPtr>;
 
     private:
         CommandBuilderMap commandBuilders;

@@ -75,8 +75,8 @@ namespace frts
         TickableItr updateModulesEnd() const override;
 
     private:
-        using DataValueMap = std::unordered_map<IdPtr, DataValuePtr, IdHash, IdEqual>;
-        using UtilityModulesMap = std::unordered_map<IdPtr, UtilityPtr, IdHash, IdEqual>;
+        using DataValueMap = std::unordered_map<IdPtr, DataValuePtr>;
+        using UtilityModulesMap = std::unordered_map<IdPtr, UtilityPtr>;
 
     private:
         static const std::string logModule;

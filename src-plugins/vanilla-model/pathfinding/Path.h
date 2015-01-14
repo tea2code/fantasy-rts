@@ -32,7 +32,7 @@ namespace frts
         /**
          * @brief For debugging purpose. A mapping of points and their associated costs.
          */
-        using CostMap = std::unordered_map<PointPtr, Point::length, PointHash, PointEqual>;
+        using CostMap = std::unordered_map<PointPtr, Point::length>;
 
         /**
          * @brief A part or the complete path as a list of points.

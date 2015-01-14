@@ -61,7 +61,7 @@ namespace frts
         /**
          * @brief Lookup map for sprites.
          */
-        using SpriteMap = std::unordered_map<IdPtr, Sprite, IdHash, IdEqual>;
+        using SpriteMap = std::unordered_map<IdPtr, Sprite>;
 
     private:
         IdPtr fallback;

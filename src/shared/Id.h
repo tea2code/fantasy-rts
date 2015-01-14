@@ -65,62 +65,40 @@ namespace frts
     {
         bool lhsNull = (lhs == nullptr);
         bool rhsNull = (rhs == nullptr);
-        if (!lhsNull && rhsNull)
-        {
-            return false;
-        }
         return (lhsNull && !rhsNull) || (!lhsNull && !rhsNull && *lhs < *rhs);
     }
+}
 
+namespace std
+{
     /**
-     * @brief Hash function object for Ids.
+     * @brief Hash for ids.
      */
-    struct IdHash
+    template <>
+    struct hash<frts::IdPtr>
     {
-        std::hash<std::string>::result_type operator() (IdPtr id) const
+        size_t operator()(frts::IdPtr id) const
         {
             if (id == nullptr)
             {
                 return 0;
             }
-            return stringHash(id->toString());
-        }
-
-    private:
-        std::hash<std::string> stringHash;
-    };
-
-    /**
-     * @brief Equal to function object for Ids.
-     */
-    struct IdEqual
-    {
-        bool operator() (IdPtr lhs, IdPtr rhs) const
-        {
-            return lhs == rhs;
+            return std::hash<std::string>()(id->toString());
         }
     };
+}
 
-    /**
-     * @brief Less to function object for Ids.
-     */
-    struct IdLess
-    {
-        bool operator() (IdPtr lhs, IdPtr rhs) const
-        {
-            return lhs < rhs;
-        }
-    };
-
+namespace frts
+{
     /**
      * @brief Set of IDs.
      */
-    using IdSet = std::set<IdPtr, IdLess>;
+    using IdSet = std::set<IdPtr>;
 
     /**
      * @brief Unordered set of IDs.
      */
-    using IdUnorderedSet = std::unordered_set<IdPtr, IdHash, IdEqual>;
+    using IdUnorderedSet = std::unordered_set<IdPtr>;
 
     /**
      * @brief Vector of IDs.

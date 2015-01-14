@@ -2,6 +2,7 @@
 #define FRTS_SDL2Sdl2EventHandler_H
 
 #include <frts/BaseTickable.h>
+#include <frts/shared>
 
 #include <SDL2/SDL.h>
 

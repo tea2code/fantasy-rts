@@ -4,6 +4,7 @@
 #include <cassert>
 #include <functional>
 #include <memory>
+#include <set>
 #include <unordered_set>
 #include <vector>
 
@@ -207,11 +208,31 @@ namespace frts
     }
 
     /**
-     * @brief Hash function object for points.
+     * @brief Compare less.
+     * @param lhs First point.
+     * @param rhs Second point.
+     * @return True if lhs is less than rhs.
      */
-    struct PointHash
+    inline bool operator<(PointPtr lhs, PointPtr rhs)
     {
-        std::hash<int>::result_type operator() (PointPtr point) const
+        assert(lhs != nullptr);
+        assert(rhs != nullptr);
+
+        return lhs->getX() < rhs->getX() ||
+               lhs->getY() < rhs->getY() ||
+               lhs->getZ() < rhs->getZ();
+    }
+}
+
+namespace std
+{
+    /**
+     * @brief Hash for points.
+     */
+    template <>
+    struct hash<frts::PointPtr>
+    {
+        size_t operator()(frts::PointPtr point) const
         {
             if (point == nullptr)
             {
@@ -262,38 +283,19 @@ namespace frts
         std::hash<int> intHash;
 //        std::hash<std::string> stringHash;
     };
+}
 
+namespace frts
+{
     /**
-     * @brief Equal to function object for points.
+     * @brief Set of points.
      */
-    struct PointEqual
-    {
-        bool operator() (PointPtr lhs, PointPtr rhs) const
-        {
-            return lhs == rhs;
-        }
-    };
-
-    /**
-     * @brief Less to function object for points.
-     */
-    struct PointLess
-    {
-        bool operator() (PointPtr lhs, PointPtr rhs) const
-        {
-            assert(lhs != nullptr);
-            assert(rhs != nullptr);
-
-            return lhs->getX() < rhs->getX() ||
-                   lhs->getY() < rhs->getY() ||
-                   lhs->getZ() < rhs->getZ();
-        }
-    };
+    using PointSet = std::set<PointPtr>;
 
     /**
      * @brief Unordered set of points.
      */
-    using PointUnorderedSet = std::unordered_set<PointPtr, PointHash, PointEqual>;
+    using PointUnorderedSet = std::unordered_set<PointPtr>;
 
     /**
      * @brief Vector of points.

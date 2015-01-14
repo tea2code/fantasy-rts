@@ -23,7 +23,7 @@ namespace frts
         void removeComponent(IdPtr type) override;
 
     private:
-        using ComponentMap = std::unordered_map<IdPtr, ComponentPtr, IdHash, IdEqual>;
+        using ComponentMap = std::unordered_map<IdPtr, ComponentPtr>;
 
     private:
         ComponentMap components;

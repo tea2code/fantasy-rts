@@ -59,9 +59,9 @@ namespace frts
         void validateModules(SharedManagerPtr shared) override;
 
     private:
-        using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr, IdHash, IdEqual>;
-        using EntityConfigMap = std::unordered_map<IdPtr, std::vector<ConfigNodePtr>, IdHash, IdEqual>;
-        using MapParserMap = std::unordered_map<IdPtr, MapParserPtr, IdHash, IdEqual>;
+        using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr>;
+        using EntityConfigMap = std::unordered_map<IdPtr, std::vector<ConfigNodePtr>>;
+        using MapParserMap = std::unordered_map<IdPtr, MapParserPtr>;
 
     private:
         const std::string entitiesConfigKey = "entities";

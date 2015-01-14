@@ -64,18 +64,18 @@ namespace frts
         unsigned int height = 0;
         unsigned int width = 0;
 
-        std::unordered_map<PointPtr, WriteableBlockPtr, PointHash, PointEqual> blocks;
+        std::unordered_map<PointPtr, WriteableBlockPtr> blocks;
         std::unordered_map<Rgb, IdVector, RgbHash> colors;
-        std::unordered_map<IdPtr, std::string, IdHash, IdEqual> images;
+        std::unordered_map<IdPtr, std::string> images;
         std::unordered_map<Point::value, IdPtr> levels;
-        std::unordered_map<PointPtr, Rgb, PointHash, PointEqual> mapPoints;
+        std::unordered_map<PointPtr, Rgb> mapPoints;
         Rgb neutralColor;
 
         TeleportColors teleportUp;
         TeleportColors teleportDown;
 
         std::unordered_map<Rgb, IdPtr, RgbHash> teleporters;
-        std::unordered_map<IdPtr, PointVector, IdHash, IdEqual> teleporterPoints;
+        std::unordered_map<IdPtr, PointVector> teleporterPoints;
 
     private:
         /**

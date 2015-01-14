@@ -23,7 +23,7 @@ namespace frts
 
     private:
         IdPtr type;
-        std::unordered_map<IdPtr, EventValuePtr, IdHash, IdEqual> eventValues;
+        std::unordered_map<IdPtr, EventValuePtr> eventValues;
     };
 
     /**

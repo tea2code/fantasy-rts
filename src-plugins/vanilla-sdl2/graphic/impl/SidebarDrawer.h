@@ -103,7 +103,7 @@ namespace frts
         /**
          * @brief Map of event subscriptions.
          */
-        using EventSubscriptionMap = std::unordered_map<IdPtr, EventSubscription, IdHash, IdEqual>;
+        using EventSubscriptionMap = std::unordered_map<IdPtr, EventSubscription>;
 
         /**
          * @brief Pointer to SDL font.

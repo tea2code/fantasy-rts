@@ -33,7 +33,7 @@ namespace frts
 
     private:
         using PosBlockVector = std::vector<std::vector<std::vector<WriteableBlockPtr>>>;
-        using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr, PointHash, PointEqual>;
+        using PosBlockMap = std::unordered_map<PointPtr, WriteableBlockPtr>;
         using EntityPosMap = std::unordered_map<EntityPtr, PointPtr>;
 
     private:

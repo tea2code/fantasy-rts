@@ -93,16 +93,14 @@ TEST_CASE("Create and use frame data.", "[shared]")
 
 TEST_CASE("Create and use id.", "[shared]")
 {
-    std::string str1 = "test";
-    frts::IdPtr id1 = frts::makeId(str1);
-    frts::IdPtr id2 = frts::makeId(str1);
+    frts::IdPtr id1 = frts::makeId("test");
+    frts::IdPtr id2 = frts::makeId("test");
 
-    std::string str2 = "testtest";
-    frts::IdPtr id3 = frts::makeId(str2);
+    frts::IdPtr id3 = frts::makeId("testtest");
 
-    REQUIRE(id1->toString() == str1);
-    REQUIRE(id2->toString() == str1);
-    REQUIRE(id3->toString() == str2);
+    REQUIRE(id1->toString() == "test");
+    REQUIRE(id2->toString() == "test");
+    REQUIRE(id3->toString() == "testtest");
     REQUIRE(id1 == id2);
     REQUIRE(id1 != id3);
     REQUIRE(id2 != id3);
