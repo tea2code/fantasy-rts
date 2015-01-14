@@ -4,7 +4,7 @@ A fantasy real-time strategy game in the style of Dwarf Fortress. For now withou
 
 ## Roadmap
 
-Current Version: **25**
+Current Version: **26**
 
 - Version 1: Configuration.
 - Version 2: Kernel.
@@ -44,6 +44,7 @@ Major goals:
 
 The order of this ideas doesn't reflect their priority in any way.
 
+- Menu in sidebar.
 - Mobile Support (Android and iOS).
 - Feelings plugin (every x + random seconds, update based on emotional attributes and handlers).
 - Fluids.
