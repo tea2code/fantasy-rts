@@ -68,6 +68,9 @@ Will identify itself by the name and type `frts::InputHandler`. It can also be f
     keys:
     
         - key: <string representing a key>
+          alt: <boolean, optional, default false>
+          ctrl: <boolean, optional, default false>
+          shift: <boolean, optional, default false>
           command: <string representing a command id>
 
 ### Keys

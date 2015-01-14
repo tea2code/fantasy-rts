@@ -15,9 +15,9 @@ namespace frts
     {
     public:
         /**
-         * @param Sdl2EventHandler The event handler.
+         * @param sdl2EventHandler The event handler.
          */
-        InputHandlerImpl(Sdl2EventHandlerPtr Sdl2EventHandler);
+        InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler);
 
         /**
          * @brief The identifier.
@@ -38,7 +38,7 @@ namespace frts
         bool init(SharedManagerPtr shared) override;
         bool isInitialized() const override;
         bool isPreInitialized() const override;
-        void registerCommand(Key key, IdPtr commandId) override;
+        void registerCommand(KeyCommand keyCommand, IdPtr commandId) override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
         bool preInit(SharedManagerPtr shared) override;
         void validateData(SharedManagerPtr shared) override;
@@ -46,7 +46,7 @@ namespace frts
 
     private:
         std::vector<ConfigNodePtr> configNodes;
-        Sdl2EventHandlerPtr Sdl2EventHandler;
+        Sdl2EventHandlerPtr sdl2EventHandler;
 
         bool isInit = false;
         bool isPreInit = false;
@@ -54,14 +54,14 @@ namespace frts
 
     /**
      * @brief Create new InputHandler.
-     * @param Sdl2EventHandler The event handler.
+     * @param sdl2EventHandler The event handler.
      * @return The module.
      */
-    inline ModulePtr makeInputHandler(Sdl2EventHandlerPtr Sdl2EventHandler)
+    inline ModulePtr makeInputHandler(Sdl2EventHandlerPtr sdl2EventHandler)
     {
-        assert(Sdl2EventHandler != nullptr);
+        assert(sdl2EventHandler != nullptr);
 
-        return std::make_shared<InputHandlerImpl>(Sdl2EventHandler);
+        return std::make_shared<InputHandlerImpl>(sdl2EventHandler);
     }
 }
 

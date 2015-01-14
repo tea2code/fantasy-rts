@@ -1,8 +1,11 @@
 keys:
 
     # General
+    - key: q
+      ctrl: true
+      command: frts.vanillacommand.command.quit
     - key: escape
-      command: frts.vanillaaction.command.stopactionorquit
+      command: frts.vanillaaction.command.stopaction
     - key: z
       command: frts.vanillacommand.command.undo
     - key: enter

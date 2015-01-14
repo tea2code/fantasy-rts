@@ -11,6 +11,53 @@
 
 namespace frts
 {
+    /**
+     * @brief Simple struct for a key command consisting of a key and optional modifiers.
+     */
+    struct Sdl2KeyCommand
+    {
+        Sdl2KeyCommand(SDL_Keycode key, bool alt = false, bool ctrl = false, bool shift = false)
+            : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}
+        {}
+
+        SDL_Keycode key;
+
+        bool alt;
+        bool ctrl;
+        bool shift;
+
+        bool operator==(const Sdl2KeyCommand &other) const
+        {
+            return (key == other.key) &&
+                   (alt == other.alt) &&
+                   (ctrl == other.ctrl) &&
+                   (shift == other.shift);
+        }
+    };
+}
+
+namespace std
+{
+    /**
+     * @brief Hash for key commands.
+     */
+    template <>
+    struct hash<frts::Sdl2KeyCommand>
+    {
+        size_t operator()(const frts::Sdl2KeyCommand& keyCommand) const
+        {
+            size_t result = 17;
+            result = 31 * result + std::hash<char>()(static_cast<char>(keyCommand.key));
+            result = 31 * result + std::hash<bool>()(keyCommand.alt);
+            result = 31 * result + std::hash<bool>()(keyCommand.ctrl);
+            result = 31 * result + std::hash<bool>()(keyCommand.shift);
+            return result;
+        }
+    };
+}
+
+namespace frts
+{
     class Sdl2EventHandler;
 
     /**
@@ -42,13 +89,13 @@ namespace frts
 
         /**
          * @brief Register a custom command with an key.
-         * @param key The key.
+         * @param keyCommand The key command.
          * @param commandId The command id.
          */
-        void registerCommand(SDL_Keycode key, IdPtr commandId);
+        void registerCommand(Sdl2KeyCommand keyCommand, IdPtr commandId);
 
     private:
-        std::unordered_map<SDL_Keycode, IdPtr, std::hash<char>> keyCommands;
+        std::unordered_map<Sdl2KeyCommand, IdPtr> keyCommands;
     };
 
     /**

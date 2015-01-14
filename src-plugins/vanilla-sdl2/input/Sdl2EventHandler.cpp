@@ -68,11 +68,11 @@ void frts::Sdl2EventHandler::parseConfig(const std::string&, ConfigNodePtr node,
     }
 }
 
-void frts::Sdl2EventHandler::registerCommand(SDL_Keycode key, IdPtr commandId)
+void frts::Sdl2EventHandler::registerCommand(Sdl2KeyCommand keyCommand, IdPtr commandId)
 {
     assert(commandId != nullptr);
 
-    keyCommands[key] = commandId;
+    keyCommands[keyCommand] = commandId;
 }
 
 void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
@@ -96,8 +96,14 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
             case SDL_KEYDOWN:
             {
                 // Check if a known key is pressed and execute the corresponding command.
-                auto key = event.key.keysym.sym;
-                auto it = keyCommands.find(key);
+                Sdl2KeyCommand keyCommand = {
+                    event.key.keysym.sym,
+                    event.key.keysym.mod & KMOD_ALT,
+                    event.key.keysym.mod & KMOD_CTRL,
+                    event.key.keysym.mod & KMOD_SHIFT
+                };
+
+                auto it = keyCommands.find(keyCommand);
                 if (it != keyCommands.end())
                 {
                     auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());

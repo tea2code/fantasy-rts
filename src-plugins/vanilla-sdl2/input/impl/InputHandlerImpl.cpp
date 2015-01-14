@@ -7,8 +7,8 @@
 #include <frts/configuration>
 
 
-frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr Sdl2EventHandler)
-    : Sdl2EventHandler{Sdl2EventHandler}
+frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler)
+    : sdl2EventHandler{sdl2EventHandler}
 {
 }
 
@@ -61,8 +61,20 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
         for (auto keyNode : *node)
         {
             auto key = keyNode->getString("key");
+            auto alt = keyNode->getBool("alt", false);
+            auto ctrl = keyNode->getBool("ctrl", false);
+            auto shift = keyNode->getBool("shift", false);
+
+            Sdl2KeyCommand sdl2KeyCommand =
+            {
+                stringToSdl2Key(key),
+                alt,
+                ctrl,
+                shift
+            };
+
             auto id = shared->makeId(keyNode->getString("command"));
-            Sdl2EventHandler->registerCommand(stringToSdl2Key(key), id);
+            sdl2EventHandler->registerCommand(sdl2KeyCommand, id);
         }
     }
     configNodes.clear();
@@ -80,9 +92,16 @@ bool frts::InputHandlerImpl::isPreInitialized() const
     return isPreInit;
 }
 
-void frts::InputHandlerImpl::registerCommand(Key key, IdPtr commandId)
+void frts::InputHandlerImpl::registerCommand(KeyCommand keyCommand, IdPtr commandId)
 {
-    Sdl2EventHandler->registerCommand(keyToSdl2Key(key), commandId);
+    Sdl2KeyCommand sdl2KeyCommand =
+    {
+        keyToSdl2Key(keyCommand.key),
+        keyCommand.alt,
+        keyCommand.ctrl,
+        keyCommand.shift
+    };
+    sdl2EventHandler->registerCommand(sdl2KeyCommand, commandId);
 }
 
 void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)
