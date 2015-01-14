@@ -1,5 +1,6 @@
 #include "Sdl2EventHandler.h"
 
+#include "InputHandler.h"
 #include "impl/SelectionDataImpl.h"
 #include "impl/SelectionHelper.h"
 #include "impl/SelectCommandBuilder.h"
@@ -49,9 +50,21 @@ bool frts::Sdl2EventHandler::init(SharedManagerPtr shared)
         return true;
     }
 
+    auto inputHandler = getUtility<Module>(shared, Sdl2Ids::inputHandler());
+    if (!inputHandler->isInitialized())
+    {
+        return true;
+    }
+
     // Add select commands.
     IdPtr commandId = shared->makeId(Sdl2Ids::selectCommand());
     commandFactory->registerCommandBuilder(commandId, makeSelectCommandBuilder(commandId));
+
+    // Check if input handler has initialized the default context.
+    if (defaultContext == nullptr)
+    {
+        throw DataViolation(getName() + ": No default context provided.");
+    }
 
     isInit = true;
     return false;
@@ -72,7 +85,28 @@ void frts::Sdl2EventHandler::registerCommand(Sdl2KeyCommand keyCommand, IdPtr co
 {
     assert(commandId != nullptr);
 
-    keyCommands[keyCommand] = commandId;
+    CommandContextChange ccc;
+    ccc.command = commandId;
+    keyCommands[keyCommand] = ccc;
+}
+
+void frts::Sdl2EventHandler::registerContextChange(Sdl2KeyCommand keyCommand, IdPtr context)
+{
+    assert(context != nullptr);
+
+    CommandContextChange ccc;
+    ccc.contextChange = context;
+    keyCommands[keyCommand] = ccc;
+}
+
+void frts::Sdl2EventHandler::setDefaultContext(IdPtr context)
+{
+    defaultContext = context;
+    while(!contextStack.empty())
+    {
+        contextStack.pop();
+    }
+    contextStack.push(context);
 }
 
 void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
@@ -96,20 +130,38 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
             case SDL_KEYDOWN:
             {
                 // Check if a known key is pressed and execute the corresponding command.
+                // First with current context.
                 Sdl2KeyCommand keyCommand = {
                     event.key.keysym.sym,
                     event.key.keysym.mod & KMOD_ALT,
                     event.key.keysym.mod & KMOD_CTRL,
-                    event.key.keysym.mod & KMOD_SHIFT
+                    event.key.keysym.mod & KMOD_SHIFT,
+                    contextStack.top()
                 };
-
                 auto it = keyCommands.find(keyCommand);
+
+                // If nothing is found try again without current context.
+                if (it == keyCommands.end())
+                {
+                    keyCommand.context = nullptr;
+                    it = keyCommands.find(keyCommand);
+                }
+
+                // Anything found?
                 if (it != keyCommands.end())
                 {
-                    auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-                    auto command = commandFactory->makeCommand(it->second, shared);
-                    command->execute(shared);
-                    commandFactory->addToUndo(command, shared);
+                    CommandContextChange ccc = it->second;
+                    if (ccc.command != nullptr)
+                    {
+                        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+                        auto command = commandFactory->makeCommand(ccc.command, shared);
+                        command->execute(shared);
+                        commandFactory->addToUndo(command, shared);
+                    }
+                    else
+                    {
+                        contextStack.push(ccc.contextChange);
+                    }
                 }
             }
             break;

@@ -6,6 +6,8 @@
 
 #include <frts/configuration>
 
+#include <boost/format.hpp>
+
 
 frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler)
     : sdl2EventHandler{sdl2EventHandler}
@@ -56,29 +58,55 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     }
 
     // Initialize commands from configuration.
-    for (auto& node : configNodes)
+    for (auto node : configNodes)
     {
-        for (auto keyNode : *node)
+        if (node->has("default_context"))
+        {
+            sdl2EventHandler->setDefaultContext(shared->makeId(node->getString("default_context")));
+        }
+
+        auto keyNodes = node->getNode("keys");
+        for (auto keyNode : *keyNodes)
         {
             auto key = keyNode->getString("key");
             auto alt = keyNode->getBool("alt", false);
             auto ctrl = keyNode->getBool("ctrl", false);
             auto shift = keyNode->getBool("shift", false);
+            IdPtr context;
+            if (keyNode->has("context"))
+            {
+                context = shared->makeId(keyNode->getString("context"));
+            }
 
             Sdl2KeyCommand sdl2KeyCommand =
             {
                 stringToSdl2Key(key),
                 alt,
                 ctrl,
-                shift
+                shift,
+                context
             };
 
-            auto id = shared->makeId(keyNode->getString("command"));
-            sdl2EventHandler->registerCommand(sdl2KeyCommand, id);
+            if (keyNode->has("command"))
+            {
+                auto id = shared->makeId(keyNode->getString("command"));
+                sdl2EventHandler->registerCommand(sdl2KeyCommand, id);
+            }
+            else if (keyNode->has("set_context"))
+            {
+                auto id = shared->makeId(keyNode->getString("set_context"));
+                sdl2EventHandler->registerContextChange(sdl2KeyCommand, id);
+            }
+            else
+            {
+                auto msg = boost::format(R"(No command or context set for key "%1%".)") % key;
+                shared->getLog()->warning(getName(), msg.str());
+            }
         }
     }
     configNodes.clear();
 
+    isInit = true;
     return false;
 }
 

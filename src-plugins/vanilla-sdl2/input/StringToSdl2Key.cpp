@@ -1,5 +1,7 @@
 #include "StringToSdl2Key.h"
 
+#include <boost/format.hpp>
+
 #include <algorithm>
 #include <unordered_map>
 
@@ -182,5 +184,14 @@ SDL_Keycode frts::stringToSdl2Key(std::string keyString)
         {"^", SDLK_CARET}
     };
     std::transform(keyString.begin(), keyString.end(), keyString.begin(), ::tolower);
-    return mapping.at(keyString);
+    auto it = mapping.find(keyString);
+    if (it != mapping.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        auto msg = boost::format(R"(Unknown key "%1%".)") % keyString;
+        throw UnknownKeyString(msg.str());
+    }
 }

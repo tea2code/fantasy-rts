@@ -5,6 +5,7 @@
 
 #include <SDL2/SDL.h>
 
+#include <stack>
 #include <unordered_map>
 #include <memory>
 
@@ -16,8 +17,10 @@ namespace frts
      */
     struct Sdl2KeyCommand
     {
-        Sdl2KeyCommand(SDL_Keycode key, bool alt = false, bool ctrl = false, bool shift = false)
-            : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}
+        Sdl2KeyCommand(SDL_Keycode key,
+                       bool alt = false, bool ctrl = false, bool shift = false,
+                       IdPtr context = nullptr)
+            : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
         {}
 
         SDL_Keycode key;
@@ -26,12 +29,15 @@ namespace frts
         bool ctrl;
         bool shift;
 
+        IdPtr context;
+
         bool operator==(const Sdl2KeyCommand &other) const
         {
             return (key == other.key) &&
                    (alt == other.alt) &&
                    (ctrl == other.ctrl) &&
-                   (shift == other.shift);
+                   (shift == other.shift) &&
+                   (context == other.context);
         }
     };
 }
@@ -51,6 +57,7 @@ namespace std
             result = 31 * result + std::hash<bool>()(keyCommand.alt);
             result = 31 * result + std::hash<bool>()(keyCommand.ctrl);
             result = 31 * result + std::hash<bool>()(keyCommand.shift);
+            result = 31 * result + std::hash<frts::IdPtr>()(keyCommand.context);
             return result;
         }
     };
@@ -94,8 +101,33 @@ namespace frts
          */
         void registerCommand(Sdl2KeyCommand keyCommand, IdPtr commandId);
 
+        /**
+         * @brief Register a context change with an key.
+         * @param keyCommand The key command.
+         * @param context The context:
+         */
+        void registerContextChange(Sdl2KeyCommand keyCommand, IdPtr context);
+
+        /**
+         * @brief Set the default context.
+         * @param context The default context.
+         */
+        void setDefaultContext(IdPtr context);
+
     private:
-        std::unordered_map<Sdl2KeyCommand, IdPtr> keyCommands;
+        /**
+         * @brief A key command could be a real command or a context change.
+         */
+        struct CommandContextChange
+        {
+            IdPtr command;
+            IdPtr contextChange;
+        };
+
+    private:
+        std::stack<IdPtr> contextStack;
+        IdPtr defaultContext;
+        std::unordered_map<Sdl2KeyCommand, CommandContextChange> keyCommands;
     };
 
     /**

@@ -1,61 +1,73 @@
 keys:
 
-    # General
-    - key: q
-      ctrl: true
-      command: frts.vanillacommand.command.quit
-    - key: escape
-      command: frts.vanillaaction.command.stopaction
-    - key: z
-      command: frts.vanillacommand.command.undo
-    - key: enter
-      command: frts.vanillasdl2.command.select
-      
-    # SDL2: Screen movement
-    - key: d
-      command: frts.vanillasdl2.command.movescreen.east
-    - key: a
-      command: frts.vanillasdl2.command.movescreen.west
-    - key: w
-      command: frts.vanillasdl2.command.movescreen.north
-    - key: s
-      command: frts.vanillasdl2.command.movescreen.south
-    - key: e
-      command: frts.vanillasdl2.command.movescreen.up
-    - key: q
-      command: frts.vanillasdl2.command.movescreen.down
-      
-    # SDL2: Cursor movement
-    - key: right
-      command: frts.vanillasdl2.command.movecursor.east
-    - key: left
-      command: frts.vanillasdl2.command.movecursor.west
-    - key: up
-      command: frts.vanillasdl2.command.movecursor.north
-    - key: down
-      command: frts.vanillasdl2.command.movecursor.south
-      
-    # SDL2: Switch sidebar info index
-    - key: i
-      command: frts.vanillasdl2.command.switchsidebarinfoindex.next
-      
-    # UserAction: Building
-    
-    # UserAction: Gathering
+    default_context: context.default
 
-    # UserAction: Harvesting
-    - key: c
-      command: frts.vanillauseraction.command.chop
-    - key: h
-      command: frts.vanillauseraction.command.crop
-    - key: m
-      command: frts.vanillauseraction.command.dig
-      
-    # UserAction: Production
-      
-    # UserAction: Special
-    - key: x
-      command: frts.vanillauseraction.command.stop
+    keys:
+    
+        # General
+        - key: q
+          ctrl: true
+          command: frts.vanillacommand.command.quit
+        - key: escape
+          command: frts.vanillaaction.command.stopaction
+        - key: z
+          command: frts.vanillacommand.command.undo
+        - key: enter
+          command: frts.vanillasdl2.command.select
+        - key: Backspace
+          # command: frts.vanillasdl2.command.closecontext
+          
+        # SDL2: Screen movement
+        - key: d
+          command: frts.vanillasdl2.command.movescreen.east
+        - key: a
+          command: frts.vanillasdl2.command.movescreen.west
+        - key: w
+          command: frts.vanillasdl2.command.movescreen.north
+        - key: s
+          command: frts.vanillasdl2.command.movescreen.south
+        - key: e
+          command: frts.vanillasdl2.command.movescreen.up
+        - key: q
+          command: frts.vanillasdl2.command.movescreen.down
+          
+        # SDL2: Cursor movement
+        - key: right
+          command: frts.vanillasdl2.command.movecursor.east
+        - key: left
+          command: frts.vanillasdl2.command.movecursor.west
+        - key: up
+          command: frts.vanillasdl2.command.movecursor.north
+        - key: down
+          command: frts.vanillasdl2.command.movecursor.south
+          
+        # SDL2: Switch sidebar info index
+        - key: i
+          command: frts.vanillasdl2.command.switchsidebarinfoindex.next
+          
+        # UserAction: Building
+        
+        # UserAction: Gathering
+
+        # UserAction: Harvesting
+        - key: h
+          context: context.default
+          set_context: context.harvesting
+        - key: c
+          context: context.harvesting
+          command: frts.vanillauseraction.command.chop
+        - key: h
+          context: context.harvesting
+          command: frts.vanillauseraction.command.crop
+        - key: m
+          context: context.harvesting
+          command: frts.vanillauseraction.command.dig
+          
+        # UserAction: Production
+          
+        # UserAction: Special
+        - key: x
+          command: frts.vanillauseraction.command.stop
       
 command:
 

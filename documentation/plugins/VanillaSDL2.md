@@ -65,13 +65,22 @@ Will identify itself by the name and type `frts::InputHandler`. It can also be f
 
 ### Configuration
 
+Beside support for modifiers like ctrl or alt the input handler provides also a construct called "context". A key command without a context will always work. By providing a context the key will only work if the current context is the same. Switching the context is done by using `set_context` instead of `command`. Visually a context implements something like a menu and its submenus.
+
     keys:
     
-        - key: <string representing a key>
-          alt: <boolean, optional, default false>
-          ctrl: <boolean, optional, default false>
-          shift: <boolean, optional, default false>
-          command: <string representing a command id>
+        default_context: <string representing an id>
+    
+        keys:
+        
+            - key: <string representing a key>
+              alt: <boolean, optional, default false>
+              ctrl: <boolean, optional, default false>
+              shift: <boolean, optional, default false>
+              context: <<string representing an id, optional>
+              
+              command: <string representing a command id, optional>
+              set_context: <string representing an id, optional>
 
 ### Keys
 
