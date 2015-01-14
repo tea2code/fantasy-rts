@@ -45,7 +45,7 @@ frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, Shared
 
     auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
-    auto block = makeBlock(blockingType, sortOrderType);
+    auto block = modelFactory->makeBlock(shared);
     block->insert(modelFactory->makeEntity(shared->makeId(idStr), shared));
     block->insert(modelFactory->makeEntity(shared->makeId("entity.grid"), shared));
     return block;

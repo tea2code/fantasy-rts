@@ -4,6 +4,7 @@
 #include <entity/Component.h>
 #include <entity/ComponentBuilder.h>
 #include <entity/Entity.h>
+#include <region/Block.h>
 #include <region/Point.h>
 #include <region/Region.h>
 #include <regiongenerator/RegionGenerator.h>
@@ -58,6 +59,13 @@ namespace frts
         virtual PathFinderPtr getPathFinder() const = 0;
 
         /**
+         * @brief Make an empty block. Use for implementations of region managers.
+         * @param shared The shared manager.
+         * @return The block.
+         */
+        virtual WriteableBlockPtr makeBlock(SharedManagerPtr shared) = 0;
+
+        /**
          * @brief Make a component using the specified builder.
          * @throws UnknownComponentBuilderError if there is not builder registered for the
          *         given ID.
@@ -68,7 +76,7 @@ namespace frts
 
         /**
          * @brief Make an empty entity.
-         * @return The entity;
+         * @return The entity.
          */
         virtual EntityPtr makeEntity() = 0;
 
@@ -77,7 +85,7 @@ namespace frts
          * @throws UnknownEntityError if no configuration for given ID is found.
          * @param id The entity id.
          * @param shared The shared manager.
-         * @return The entity;
+         * @return The entity.
          */
         virtual EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) = 0;
 

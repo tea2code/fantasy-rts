@@ -52,5 +52,5 @@ void frts::ModelStartup::validateModules(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 2, shared);
 }

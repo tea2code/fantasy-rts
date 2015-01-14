@@ -371,5 +371,5 @@ void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
     assert(shared != nullptr);
 
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
-    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 2, shared);
 }

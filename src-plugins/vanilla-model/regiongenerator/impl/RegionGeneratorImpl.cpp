@@ -84,7 +84,7 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
 
     if (block == nullptr)
     {
-        block = makeBlock(blockingType, sortOrderType);
+        block = mf->makeBlock(shared);
 
         if (pos->getZ() < md->getSurfaceZLevel())
         {

@@ -41,6 +41,7 @@ namespace frts
         bool init(SharedManagerPtr shared) override;
         bool isInitialized() const override;
         bool isPreInitialized() const override;
+        WriteableBlockPtr makeBlock(SharedManagerPtr shared) override;
         ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
         EntityPtr makeEntity() override;
         EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) override;

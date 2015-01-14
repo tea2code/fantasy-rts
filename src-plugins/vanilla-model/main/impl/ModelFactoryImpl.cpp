@@ -22,6 +22,7 @@
 #include <event/impl/PointListEventValueBuilder.h>
 #include <main/ModelError.h>
 #include <main/ModelIds.h>
+#include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
 #include <regiongenerator/impl/RegionGeneratorImpl.h>
 #include <regiongenerator/impl/BmpMapParser.h>
@@ -121,12 +122,12 @@ std::string frts::ModelFactoryImpl::getTypeName() const
 
 int frts::ModelFactoryImpl::getTypeVersion() const
 {
-    return 1;
+    return getVersion();
 }
 
 int frts::ModelFactoryImpl::getVersion() const
 {
-    return 1;
+    return 2;
 }
 
 bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
@@ -334,6 +335,13 @@ bool frts::ModelFactoryImpl::isInitialized() const
 bool frts::ModelFactoryImpl::isPreInitialized() const
 {
     return isPreInit;
+}
+
+frts::WriteableBlockPtr frts::ModelFactoryImpl::makeBlock(SharedManagerPtr shared)
+{
+    assert(shared != nullptr);
+
+    return frts::makeBlock(shared->makeId(ComponentIds::blocking()), shared->makeId(ComponentIds::sortOrder()));
 }
 
 frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)

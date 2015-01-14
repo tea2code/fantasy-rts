@@ -155,7 +155,7 @@ void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 2, shared);
     validateTickable(getName(), Sdl2Ids::sdl2Renderer(), 1, shared);
     validateUtility(getName(), EventIds::eventManager(), 1, shared);
     validateUtility(getName(), JobIds::jobManager(), 3, shared);

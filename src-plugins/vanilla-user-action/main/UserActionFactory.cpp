@@ -100,5 +100,5 @@ void frts::UserActionFactory::validateModules(SharedManagerPtr shared)
     validateUtility(getName(), ActionIds::actionManager(), 1, shared);
     validateUtility(getName(), CommandIds::commandFactory(), 1, shared);
     validateUtility(getName(), JobIds::jobManager(), 3, shared);
-    validateUtility(getName(), ModelIds::modelFactory(), 1, shared);
+    validateUtility(getName(), ModelIds::modelFactory(), 2, shared);
 }

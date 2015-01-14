@@ -73,13 +73,13 @@ frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManager
         auto mpIt = mapPoints.find(pos);
         if (mpIt != mapPoints.end())
         {
-            block = makeBlock(blockingType, sortOrderType);
+            auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+            block = mf->makeBlock(shared);
 
             auto& rgb = mpIt->second;
             auto cIt = colors.find(rgb);
             if (cIt != colors.end())
             {
-                auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
                 for (auto& entityId : cIt->second)
                 {
                     block->insert(mf->makeEntity(entityId, shared));
