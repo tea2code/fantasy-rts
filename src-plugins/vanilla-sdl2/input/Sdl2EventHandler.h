@@ -54,7 +54,7 @@ namespace std
         size_t operator()(const frts::Sdl2KeyCommand& keyCommand) const
         {
             size_t result = 17;
-            result = 31 * result + std::hash<char>()(static_cast<char>(keyCommand.key));
+            result = 31 * result + std::hash<int>()(keyCommand.key);
             result = 31 * result + std::hash<bool>()(keyCommand.alt);
             result = 31 * result + std::hash<bool>()(keyCommand.ctrl);
             result = 31 * result + std::hash<bool>()(keyCommand.shift);

@@ -170,7 +170,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            REQUIRE(path.at(i) == frts::makePoint(static_cast<int>(i), 0, 0));
+            REQUIRE(path.at(i) == frts::makePoint(static_cast<frts::Point::value>(i), 0, 0));
         }
 
         goal = frts::makePoint(0, 9, 0);
@@ -178,7 +178,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            REQUIRE(path.at(i) == frts::makePoint(0, static_cast<int>(i), 0));
+            REQUIRE(path.at(i) == frts::makePoint(0, static_cast<frts::Point::value>(i), 0));
         }
 
         goal = frts::makePoint(9, 9, 0);
@@ -357,7 +357,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         int z = 0;
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            frts::Point::value x = static_cast<int>(i);
+            auto x = static_cast<frts::Point::value>(i);
             if (i >= 5)
             {
                 z = 1;
@@ -414,7 +414,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 9);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            frts::Point::value x = static_cast<int>(i);
+            auto x = static_cast<frts::Point::value>(i);
             if (i > 4)
             {
                 x += 1;

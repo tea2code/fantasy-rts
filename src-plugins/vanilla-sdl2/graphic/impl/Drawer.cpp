@@ -324,7 +324,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     {
         auto entity = entities.at(0);
         auto renderable = getComponent<Renderable>(renderableId, entity);
-        auto transparency = renderable->getTransparency();
+        auto transparency = static_cast<Point::value>(renderable->getTransparency());
 
         if (transparency > 0)
         {
@@ -335,7 +335,7 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         {
             auto posBelow = modelFactory->makePoint(pos->getX(),
                                                     pos->getY(),
-                                                    pos->getZ() - static_cast<Point::value>(transparency));
+                                                    pos->getZ() - transparency);
             auto blockBelow = regionManager->getBlock(posBelow, shared);
             auto entitiesBelow = blockBelow->getByComponent(renderableId);
             renderEntities(entitiesBelow, renderableId, rectToRender, stacked, shared);

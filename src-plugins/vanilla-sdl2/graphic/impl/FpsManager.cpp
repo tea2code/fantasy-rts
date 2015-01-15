@@ -35,8 +35,8 @@ unsigned int frts::FpsManager::calcFps()
 
 void frts::FpsManager::limitFps(Frame::time deltaTime)
 {
-    unsigned int msPerFrame = static_cast<unsigned int>(deltaTime.count());
-    unsigned int diff = SDL_GetTicks() - lastLimitTime;
+    auto msPerFrame = static_cast<unsigned int>(deltaTime.count());
+    auto diff = SDL_GetTicks() - lastLimitTime;
     if (diff < msPerFrame)
     {
         SDL_Delay(msPerFrame - diff);

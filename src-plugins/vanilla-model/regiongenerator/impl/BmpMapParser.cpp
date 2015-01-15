@@ -284,12 +284,12 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     // Extract image height and width from header.
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
-    int width = std::min(static_cast<int>(info[18]), md->getMapSizeX());
-    int height = std::min(static_cast<int>(info[22]), md->getMapSizeY());
+    auto width = std::min(static_cast<Point::value>(info[18]), md->getMapSizeX());
+    auto height = std::min(static_cast<Point::value>(info[22]), md->getMapSizeY());
 
     // Precalculate padding.
-    int rgbWidth = width * 3;
-    unsigned int rowPadded = static_cast<unsigned int>((rgbWidth + 3) & (~3));
+    auto rgbWidth = width * 3;
+    size_t rowPadded = static_cast<size_t>((rgbWidth + 3) & (~3));
 
     // Read and parse map file.
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
@@ -300,10 +300,10 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
         for(int x = 0; x < width; ++x)
         {
-            int nextRgb = 3 * x;
-            int r = static_cast<int>(data[nextRgb + 2]);
-            int g = static_cast<int>(data[nextRgb + 1]);
-            int b = static_cast<int>(data[nextRgb]);
+            auto nextRgb = 3 * x;
+            auto r = data[nextRgb + 2];
+            auto g = data[nextRgb + 1];
+            auto b = data[nextRgb];
             auto rgb = std::make_tuple(r, g, b);
 
             if (rgb == neutralColor)

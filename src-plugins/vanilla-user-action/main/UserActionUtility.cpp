@@ -1,6 +1,7 @@
 #include "UserActionUtility.h"
 
 #include <frts/vanillajob>
+#include <frts/math.h>
 
 
 void frts::areJobsValid(PointPtr pos, SharedManagerPtr shared)
@@ -113,7 +114,7 @@ bool frts::moveEntity(EntityPtr entity, Frame::time& nextMoveTime, SharedManager
             rm->setPos(entity, nextPos, shared);
 
             // Set next due time.
-            nextMoveTime = fromMilliseconds(static_cast<unsigned int>(1000.0 / movable->getSpeed() + 0.5));
+            nextMoveTime = fromMilliseconds(round<unsigned int>(1000.0 / movable->getSpeed()));
 
             result = true;
         }

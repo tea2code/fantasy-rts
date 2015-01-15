@@ -250,7 +250,7 @@ TEST_CASE("RegionManager.", "[main]")
         thread1.join();
         thread2.join();
 
-        unsigned int size = static_cast<unsigned int>(sizeX * sizeY);
+        auto size = static_cast<unsigned int>(sizeX * sizeY);
 
         REQUIRE(thread1Blocks.size() == size);
         REQUIRE(thread2Blocks.size() == size);

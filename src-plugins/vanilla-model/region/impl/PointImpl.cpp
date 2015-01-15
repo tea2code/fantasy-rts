@@ -40,7 +40,7 @@ std::size_t frts::PointImpl::hash()
         result = 31 * result + static_cast<size_t>(x);
         result = 31 * result + static_cast<size_t>(y);
         result = 31 * result + static_cast<size_t>(z);
-        return std::hash<size_t>()(result);
+        return result;
 
     // See http://stackoverflow.com/a/5929567/1931663 ("mod n" removed because the unordered_map does this as far as i know).
     // Result: ~5.5s

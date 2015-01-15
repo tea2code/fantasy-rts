@@ -33,7 +33,7 @@ namespace frts
         /**
          * @brief Tuple of rgb color.
          */
-        using Rgb = std::tuple<int, int, int>;
+        using Rgb = std::tuple<unsigned char, unsigned char, unsigned char>;
 
         /**
          * @brief Set of configured teleport colors.
@@ -47,13 +47,13 @@ namespace frts
         {
             std::size_t operator() (Rgb rgb) const
             {
-                return intHash(std::get<0>(rgb)) ^
-                       intHash(std::get<1>(rgb)) ^
-                       intHash(std::get<2>(rgb));
+                return hasher(std::get<0>(rgb)) ^
+                       hasher(std::get<1>(rgb)) ^
+                       hasher(std::get<2>(rgb));
             }
 
         private:
-            std::hash<int> intHash;
+            std::hash<unsigned char> hasher;
         };
 
     private:

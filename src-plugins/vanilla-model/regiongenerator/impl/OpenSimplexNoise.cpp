@@ -41,7 +41,7 @@ frts::OpenSimplexNoise::OpenSimplexNoise(long long seed)
     {
         seed = lcgRand(seed);
 
-        int r = static_cast<int>((seed + 31) % (i + 1));
+        auto r = static_cast<int>((seed + 31) % (i + 1));
         if (r < 0)
         {
             r += (i + 1);
@@ -326,7 +326,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z) const
         {
             // (0,0,0) is not one of the closest two tetrahedral vertices.
             // Our two extra vertices are determined by the closest two.
-            char c = static_cast<char>(aPoint | bPoint);
+            char c = aPoint | bPoint;
 
             if ((c & 0x01) == 0)
             {
@@ -492,7 +492,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z) const
         {
             // (1,1,1) is not one of the closest two tetrahedral vertices.
             // Our two extra vertices are determined by the closest two.
-            char c = static_cast<char>(aPoint & bPoint);
+            char c = aPoint & bPoint;
 
             if ((c & 0x01) != 0)
             {
@@ -672,7 +672,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z) const
                 zsv_ext0 = zsb + 1;
 
                 // Other extra point is based on the shared axis.
-                char c = static_cast<char>(aPoint & bPoint);
+                char c = aPoint & bPoint;
                 if ((c & 0x01) != 0)
                 {
                     dx_ext1 = dx0 - 2 - 2 * SQUISH_CONSTANT_3D;
@@ -714,7 +714,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z) const
                 zsv_ext0 = zsb;
 
                 // Other extra point is based on the omitted axis.
-                char c = static_cast<char>(aPoint | bPoint);
+                char c = aPoint | bPoint;
                 if ((c & 0x01) == 0)
                 {
                     dx_ext1 = dx0 + 1 - SQUISH_CONSTANT_3D;
@@ -1062,7 +1062,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
         {
             // (0,0,0,0) is not one of the closest two pentachoron vertices.
             // Our three extra vertices are determined by the closest two.
-            char c = static_cast<char>(aPoint | bPoint);
+            char c = aPoint | bPoint;
 
             if ((c & 0x01) == 0)
             {
@@ -1315,7 +1315,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
         {
             // (1,1,1,1) is not one of the closest two pentachoron vertices.
             // Our three extra vertices are determined by the closest two.
-            char c = static_cast<char>(aPoint & bPoint);
+            char c = aPoint & bPoint;
 
             if ((c & 0x01) != 0)
             {
@@ -1584,8 +1584,8 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
             if (aIsBiggerSide)
             {
                 // Both closest points on the bigger side
-                char c1 = static_cast<char>(aPoint | bPoint);
-                char c2 = static_cast<char>(aPoint & bPoint);
+                char c1 = aPoint | bPoint;
+                char c2 = aPoint & bPoint;
                 if ((c1 & 0x01) == 0)
                 {
                     xsv_ext0 = xsb;
@@ -1687,7 +1687,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
                 dw_ext2 = dw0;
 
                 // Other two points are based on the omitted axes.
-                char c = static_cast<char>(aPoint | bPoint);
+                char c = aPoint | bPoint;
 
                 if ((c & 0x01) == 0)
                 {
@@ -2124,8 +2124,8 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
             if (aIsBiggerSide)
             {
                 // Both closest points on the bigger side
-                char c1 = static_cast<char>(aPoint & bPoint);
-                char c2 = static_cast<char>(aPoint | bPoint);
+                char c1 = aPoint & bPoint;
+                char c2 = aPoint | bPoint;
 
                 // Two contributions are permutations of (0,0,0,1) and (0,0,0,2) based on c1
                 xsv_ext0 = xsv_ext1 = xsb;
@@ -2213,7 +2213,7 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
                 dw_ext2 = dw0 - 1 - 4 * SQUISH_CONSTANT_4D;
 
                 // Other two points are based on the shared axes.
-                char c = static_cast<char>(aPoint & bPoint);
+                char c = aPoint & bPoint;
 
                 if ((c & 0x01) != 0)
                 {
