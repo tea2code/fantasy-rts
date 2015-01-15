@@ -12,7 +12,7 @@
 #include <vector>
 
 
-namespace TestConfig
+namespace
 {
     #define TEST_CONFIGURATION_CONFIG_FILE "configuration.yaml"
 
@@ -63,7 +63,7 @@ namespace TestConfig
 
 TEST_CASE("Parse YAML configuration file.", "[configuration]")
 {
-    TestConfig::setupConfiguration();
+    setupConfiguration();
     frts::YamlConfigParser parser;
 
     SECTION("The YAML file exists.")
@@ -81,7 +81,7 @@ TEST_CASE("Parse YAML configuration file.", "[configuration]")
 
 TEST_CASE("Parse YAML configuration node.", "[configuration]")
 {
-    TestConfig::setupConfiguration();
+    setupConfiguration();
     frts::YamlConfigParser parser;
     frts::ConfigNodePtr node = parser.parseFile(TEST_CONFIGURATION_CONFIG_FILE);
     REQUIRE(node.get() != nullptr);

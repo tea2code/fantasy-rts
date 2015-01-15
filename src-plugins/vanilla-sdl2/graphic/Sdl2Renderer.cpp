@@ -202,18 +202,18 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     if (key == "screen")
     {
         cursorId = node->getString("cursor", cursorId);
-        gd->setNumFpsAvg(node->getInteger("num_fps_avg", gd->getNumFpsAvg()));
-        gd->setScreenHeight(node->getInteger("height", gd->getScreenHeight()));
+        gd->setNumFpsAvg(getCastInteger<unsigned int>(node, "num_fps_avg", gd->getNumFpsAvg()));
+        gd->setScreenHeight(getCastInteger<GraphicData::pixel>(node, "height", gd->getScreenHeight()));
         gd->setScreenTitle(node->getString("title", gd->getScreenTitle()));
-        gd->setScreenWidth(node->getInteger("width", gd->getScreenWidth()));
-        gd->setScreenOffsetStepX(node->getInteger("screen_move_x", gd->getScreenOffsetStepX()));
-        gd->setScreenOffsetStepY(node->getInteger("screen_move_y", gd->getScreenOffsetStepY()));
-        gd->setSidebarWidth((node->getInteger("sidebar_width", gd->getSidebarWidth())));
+        gd->setScreenWidth(getCastInteger<GraphicData::pixel>(node, "width", gd->getScreenWidth()));
+        gd->setScreenOffsetStepX(getCastInteger<GraphicData::pixel>(node, "screen_move_x", gd->getScreenOffsetStepX()));
+        gd->setScreenOffsetStepY(getCastInteger<GraphicData::pixel>(node, "screen_move_y", gd->getScreenOffsetStepY()));
+        gd->setSidebarWidth(getCastInteger<GraphicData::pixel>(node, "sidebar_width", gd->getSidebarWidth()));
     }
     else if (key == "tile")
     {
-        gd->setTileHeight(node->getInteger("height", gd->getTileHeight()));
-        gd->setTileWidth(node->getInteger("width", gd->getTileWidth()));
+        gd->setTileHeight(getCastInteger<GraphicData::pixel>(node, "height", gd->getTileHeight()));
+        gd->setTileWidth(getCastInteger<GraphicData::pixel>(node, "width", gd->getTileWidth()));
     }
     else if (key == "region")
     {
@@ -231,7 +231,10 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
         if (node->has("background"))
         {
             auto bgNode = node->getNode("background");
-            drawer->setTileBackground(bgNode->getInteger("r"), bgNode->getInteger("g"), bgNode->getInteger("b"));
+            auto r = getCastInteger<std::uint8_t>(bgNode, "r");
+            auto g = getCastInteger<std::uint8_t>(bgNode, "g");
+            auto b = getCastInteger<std::uint8_t>(bgNode, "b");
+            drawer->setTileBackground(r, g, b);
         }
 
         if (node->has("images"))

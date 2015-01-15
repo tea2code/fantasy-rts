@@ -33,14 +33,18 @@ void frts::SidebarDrawer::drawRectangle(GraphicData::pixel x, GraphicData::pixel
 void frts::SidebarDrawer::drawSeparationLine(GraphicData::pixel startX, GraphicData::pixel endX, GraphicData::pixel y)
 {
     SDL_SetRenderDrawColor(drawer->getRenderer().get(), lineColorR, lineColorG, lineColorB, 0);
-    SDL_RenderDrawLine(drawer->getRenderer().get(), startX, y, endX, y);
+    SDL_RenderDrawLine(drawer->getRenderer().get(), static_cast<int>(startX), static_cast<int>(y),
+                                                    static_cast<int>(endX), static_cast<int>(y));
 }
 
-frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text, int x, int y, int maxWidth, int maxHeight, SharedManagerPtr shared)
+frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text,
+                                                       GraphicData::pixel x, GraphicData::pixel y,
+                                                       GraphicData::pixel maxWidth, GraphicData::pixel maxHeight,
+                                                       SharedManagerPtr shared)
 {
     Drawer::TexturePtr texture = nullptr;
 
-    SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), fontColor, maxWidth);
+    SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), fontColor,maxWidth);
     if(surface == nullptr)
     {
         auto msg = boost::format(R"(TTF_RenderText_Blended_Wrapped Error: %1%)") % TTF_GetError();
@@ -51,8 +55,8 @@ frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text, 
     auto width = surface->w;
 
     auto fontHeight = TTF_FontHeight(font.get());
-    int height = (surface->h / fontHeight) * fontHeight;
-    while (height > maxHeight)
+    auto height = (surface->h / fontHeight) * fontHeight;
+    while (height > static_cast<int>(maxHeight))
     {
         height -= fontHeight;
     }
@@ -74,8 +78,8 @@ frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text, 
 
     // Draw text.
     SDL_Rect rectToRender = {
-        x,
-        y,
+        static_cast<int>(x),
+        static_cast<int>(y),
         width,
         height
     };
@@ -159,24 +163,24 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
     if (sidebarNode->has("background"))
     {
         auto rgbNode = sidebarNode->getNode("background");
-        backgroundR = rgbNode->getInteger("r", backgroundR);
-        backgroundG = rgbNode->getInteger("g", backgroundG);
-        backgroundB = rgbNode->getInteger("b", backgroundB);
+        backgroundR = getCastInteger<std::uint8_t>(rgbNode, "r", backgroundR);
+        backgroundG = getCastInteger<std::uint8_t>(rgbNode, "g", backgroundG);
+        backgroundB = getCastInteger<std::uint8_t>(rgbNode, "b", backgroundB);
     }
 
-    eventsHeight = sidebarNode->getInteger("events-height", eventsHeight);
+    eventsHeight = getCastInteger<unsigned int>(sidebarNode, "events-height", eventsHeight);
 
     if (sidebarNode->has("events-update"))
     {
-        eventsUpdateTime = fromMilliseconds(sidebarNode->getInteger("events-update"));
+        eventsUpdateTime = fromMilliseconds(getCastInteger<unsigned int>(sidebarNode, "events-update"));
     }
 
     if (sidebarNode->has("font-color"))
     {
         auto rgbNode = sidebarNode->getNode("font-color");
-        fontColor.r = rgbNode->getInteger("r", fontColor.r);
-        fontColor.g = rgbNode->getInteger("g", fontColor.g);
-        fontColor.b = rgbNode->getInteger("b", fontColor.b);
+        fontColor.r = getCastInteger<std::uint8_t>(rgbNode, "r", fontColor.r);
+        fontColor.g = getCastInteger<std::uint8_t>(rgbNode, "g", fontColor.g);
+        fontColor.b = getCastInteger<std::uint8_t>(rgbNode, "b", fontColor.b);
     }
 
     if (sidebarNode->has("font-path"))
@@ -190,32 +194,32 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
 
     infoText = sidebarNode->getString("info-text", infoText);
 
-    infoTextHeight = sidebarNode->getInteger("info-text-height", infoTextHeight);
+    infoTextHeight = getCastInteger<unsigned int>(sidebarNode, "info-text-height", infoTextHeight);
 
     if (sidebarNode->has("info-update"))
     {
-        infoUpdateTime = fromMilliseconds(sidebarNode->getInteger("info-update"));
+        infoUpdateTime = fromMilliseconds(getCastInteger<unsigned int>(sidebarNode, "info-update"));
     }
 
     if (sidebarNode->has("line-color"))
     {
         auto rgbNode = sidebarNode->getNode("line-color");
-        lineColorR = rgbNode->getInteger("r", lineColorR);
-        lineColorG = rgbNode->getInteger("g", lineColorG);
-        lineColorB = rgbNode->getInteger("b", lineColorB);
+        lineColorR = getCastInteger<std::uint8_t>(rgbNode, "r", lineColorR);
+        lineColorG = getCastInteger<std::uint8_t>(rgbNode, "g", lineColorG);
+        lineColorB = getCastInteger<std::uint8_t>(rgbNode, "b", lineColorB);
     }
 
-    padding = sidebarNode->getInteger("padding", padding);
+    padding = getCastInteger<unsigned int>(sidebarNode, "padding", padding);
 
     if (sidebarNode->has("tile-background"))
     {
         auto rgbNode = sidebarNode->getNode("tile-background");
-        tileBackgroundR = rgbNode->getInteger("r", tileBackgroundR);
-        tileBackgroundG = rgbNode->getInteger("g", tileBackgroundG);
-        tileBackgroundB = rgbNode->getInteger("b", tileBackgroundB);
+        tileBackgroundR = getCastInteger<std::uint8_t>(rgbNode, "r", tileBackgroundR);
+        tileBackgroundG = getCastInteger<std::uint8_t>(rgbNode, "g", tileBackgroundG);
+        tileBackgroundB = getCastInteger<std::uint8_t>(rgbNode, "b", tileBackgroundB);
     }
 
-    tileZoom = sidebarNode->getInteger("tile-zoom", tileZoom);
+    tileZoom = getCastInteger<unsigned int>(sidebarNode, "tile-zoom", tileZoom);
 
     if (sidebarNode->has("events"))
     {
@@ -263,7 +267,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
 
     // Limit number of events. Don't try to show more than possible. And remove an extra one for the
     // headline.
-    auto fontHeight = TTF_FontHeight(font.get());
+    auto fontHeight = static_cast<GraphicData::pixel>(TTF_FontHeight(font.get()));
     while (events.size() * fontHeight > eventsHeight)
     {
         events.pop_back();
@@ -325,8 +329,8 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     // Calculate size.
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto area = gd->getSidebarArea();
-    int maxWidth = area.width - 2 * padding;
-    int maxHeight = eventsHeight - (eventsHeight % fontHeight);
+    auto maxWidth = area.width - 2 * padding;
+    auto maxHeight = eventsHeight - (eventsHeight % fontHeight);
     auto x = area.x + padding;
     auto y = area.y + eventOffset + padding;
 
@@ -408,13 +412,13 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     // Show the last entity.
     if (gd->getSidebarInfoIndex() == gd->sidebarInfoIndexDefault)
     {
-        gd->setSidebarInfoIndex(entities.size() - 1);
+        gd->setSidebarInfoIndex(std::max(0, static_cast<int>(entities.size()) - 1));
     }
     else
     {
-        gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() % entities.size());
+        gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() % static_cast<int>(entities.size()));
     }
-    auto entityToShow = entities.at(gd->getSidebarInfoIndex());
+    auto entityToShow = entities.at(static_cast<unsigned int>(gd->getSidebarInfoIndex()));
     if (entityToShow == infoLastEntity)
     {
         return false;
@@ -425,18 +429,18 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
 
     // Calculate position of portrait and background.
     auto area = gd->getSidebarArea();
-    int width = static_cast<int>(gd->getTileWidth() * tileZoom);
-    int height = static_cast<int>(gd->getTileHeight() * tileZoom);
+    auto width = gd->getTileWidth() * tileZoom;
+    auto height = gd->getTileHeight() * tileZoom;
     auto backgroundWidth = width + 2 * padding;
     auto backgroundHeight = height + 2 * padding;
-    int x = static_cast<int>(area.x + (area.width / 2) - (backgroundWidth / 2));
-    int y = static_cast<int>(area.y + infoOffset + padding);
+    auto x = area.x + (area.width / 2) - (backgroundWidth / 2);
+    auto y = area.y + infoOffset + padding;
 
     SDL_Rect rectToRender = {
         static_cast<int>(x + padding),
         static_cast<int>(y + padding),
-        width,
-        height
+        static_cast<int>(width),
+        static_cast<int>(height)
     };
 
     // Draw background.
@@ -464,9 +468,9 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     }
 
     // Render info.
-    auto fontHeight = TTF_FontHeight(font.get());
-    int maxWidth = area.width - 2 * padding;
-    int maxHeight = infoTextHeight - (infoTextHeight % fontHeight);
+    auto fontHeight = static_cast<GraphicData::pixel>(TTF_FontHeight(font.get()));
+    auto maxWidth = area.width - 2 * padding;
+    auto maxHeight = infoTextHeight - (infoTextHeight % fontHeight);
     x = area.x + padding;
     y = y + backgroundHeight + padding;
     auto texture = drawText(text, x, y, maxWidth, maxHeight, shared);

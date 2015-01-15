@@ -64,7 +64,7 @@ template<typename Function>
 Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name) const
 {
     FARPROC functionAddress = ::GetProcAddress(library, name.c_str());
-    if(functionAddress == NULL)
+    if(functionAddress == nullptr)
     {
         auto msg = boost::format(R"(LibraryLoader: Could not find exported function "%1%".)") % name;
         throw std::runtime_error(msg.str());
@@ -82,7 +82,7 @@ Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std:
     void *functionAddress = ::dlsym(library, name.c_str());
 
     const char *error = ::dlerror(); // check for error
-    if(error != NULL)
+    if(error != nullptr)
     {
         auto msg = boost::format(R"(LibraryLoader: Could not find exported function "%1%".)") % name;
         throw std::runtime_error(msg.str());

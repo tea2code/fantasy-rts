@@ -20,7 +20,7 @@ frts::IdPtr frts::RenderableImpl::getSprite() const
     return sprite;
 }
 
-int frts::RenderableImpl::getSpriteIndex() const
+unsigned int frts::RenderableImpl::getSpriteIndex() const
 {
     return spriteIndex;
 }
@@ -40,7 +40,7 @@ void frts::RenderableImpl::setSprite(IdPtr id)
     sprite = id;
 }
 
-void frts::RenderableImpl::setSpriteIndex(int index)
+void frts::RenderableImpl::setSpriteIndex(unsigned int index)
 {
     spriteIndex = index;
     spriteIndexSet = true;

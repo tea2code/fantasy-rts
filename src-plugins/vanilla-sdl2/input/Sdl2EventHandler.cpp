@@ -191,8 +191,8 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
 
                 // Create selections only in map area.
                 auto mapArea = gd->getMapArea();
-                auto mapPixelX = event.button.x - mapArea.x;
-                auto mapPixelY = event.button.y - mapArea.y;
+                auto mapPixelX = static_cast<GraphicData::pixel>(event.button.x) - mapArea.x;
+                auto mapPixelY = static_cast<GraphicData::pixel>(event.button.y) - mapArea.y;
                 if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))
                 {
                     return;
@@ -219,6 +219,10 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
                 mouseMoveEvent = event;
             }
             break;
+
+            default:
+            // Rest we don't care.
+            break;
         }
     }
 
@@ -236,8 +240,8 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
         // Set cursor position based on mouse event then update region and screen.
         // Important: The map area on the screen must be considered.
         auto mapArea = gd->getMapArea();
-        auto mapPixelX = mouseMoveEvent.motion.x - mapArea.x;
-        auto mapPixelY = mouseMoveEvent.motion.y - mapArea.y;
+        auto mapPixelX = static_cast<GraphicData::pixel>(mouseMoveEvent.motion.x) - mapArea.x;
+        auto mapPixelY = static_cast<GraphicData::pixel>(mouseMoveEvent.motion.y) - mapArea.y;
         if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))
         {
             return;

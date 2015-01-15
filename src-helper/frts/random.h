@@ -19,7 +19,7 @@ namespace frts
     auto inline defaultGenerator()
     {
 #if defined(__GNUC__) && (defined(WIN32) || defined(_WIN32))
-        std::mt19937 gen(std::time(nullptr));
+        std::mt19937 gen(static_cast<unsigned int>(std::time(nullptr)));
 #else
         std::random_device rd;
         std::mt19937 gen(rd());

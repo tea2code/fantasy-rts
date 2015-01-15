@@ -101,7 +101,8 @@ void frts::Drawer::init(SharedManagerPtr shared)
     // Create window.
     window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        regionToScreen(screenWidth, tileWidth), regionToScreen(screenHeight, tileHeight),
+                        static_cast<int>(regionToScreen(screenWidth, tileWidth)),
+                        static_cast<int>(regionToScreen(screenHeight, tileHeight)),
                         SDL_WINDOW_SHOWN),
         Sdl2Deleter()
     );
@@ -298,8 +299,8 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     SDL_Rect rectToRender = {
         static_cast<int>(renderX),
         static_cast<int>(renderY),
-        tileWidth,
-        tileHeight
+        static_cast<int>(tileWidth),
+        static_cast<int>(tileHeight)
     };
     SDL_SetRenderDrawColor(renderer.get(), tileBackgroundR, tileBackgroundG, tileBackgroundB, 0);
 
@@ -332,7 +333,9 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
         }
         while (transparency > 0)
         {
-            auto posBelow = modelFactory->makePoint(pos->getX(), pos->getY(), pos->getZ() - transparency);
+            auto posBelow = modelFactory->makePoint(pos->getX(),
+                                                    pos->getY(),
+                                                    pos->getZ() - static_cast<Point::value>(transparency));
             auto blockBelow = regionManager->getBlock(posBelow, shared);
             auto entitiesBelow = blockBelow->getByComponent(renderableId);
             renderEntities(entitiesBelow, renderableId, rectToRender, stacked, shared);

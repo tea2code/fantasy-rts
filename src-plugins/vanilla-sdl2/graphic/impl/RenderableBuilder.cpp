@@ -25,6 +25,6 @@ frts::ComponentPtr frts::RenderableBuilder::build(SharedManagerPtr shared, Confi
     auto id = shared->makeId(node->getString("sprite"));
     component->setSprite(id);
     component->setStacking(node->getBool("stacking", true));
-    component->setTransparency(node->getInteger("transparency", 0));
+    component->setTransparency(getCastInteger<unsigned int>(node, "transparency", 0));
     return component;
 }

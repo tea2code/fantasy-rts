@@ -107,6 +107,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool s
     PointVector result;
 
     // North
+    #pragma GCC diagnostic ignored "-Wstrict-overflow"
     if (y - 1 >= 0)
     {
         result.push_back(makePoint(x, y - 1, z));
@@ -125,6 +126,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool s
     }
 
     // West
+    #pragma GCC diagnostic ignored "-Wstrict-overflow"
     if (x - 1 >= 0)
     {
         result.push_back(makePoint(x - 1, y, z));

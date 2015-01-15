@@ -15,13 +15,13 @@ void frts::raiseMoveCursorEvent(PointPtr cursorPos, SharedManagerPtr shared)
     em->raise(event, shared);
 }
 
-frts::Point::value frts::screenToRegion(GraphicData::pixel screen, int tile)
+frts::Point::value frts::screenToRegion(GraphicData::pixel screen, GraphicData::pixel tile)
 {
-    return screen / tile;
+    return static_cast<Point::value>(screen / tile);
 }
 
 
-frts::GraphicData::pixel frts::regionToScreen(Point::value region, int tile)
+frts::GraphicData::pixel frts::regionToScreen(Point::value region, GraphicData::pixel tile)
 {
-    return region * tile;
+    return static_cast<GraphicData::pixel>(region) * tile;
 }

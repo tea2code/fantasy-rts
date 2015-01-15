@@ -121,7 +121,7 @@ namespace frts
 
         std::list<EventPtr> events;
 
-        unsigned int eventsHeight = 0;
+        GraphicData::pixel eventsHeight = 0;
 
         EventSubscriptionMap eventSubscriptions;
 
@@ -159,7 +159,7 @@ namespace frts
         bool infoOnlyWithComponent = true;
 
         std::string infoText;
-        unsigned int infoTextHeight = 0;
+        GraphicData::pixel infoTextHeight = 0;
 
         Drawer::TexturePtr infoTexture;
 
@@ -167,7 +167,7 @@ namespace frts
         std::uint8_t lineColorG = 0;
         std::uint8_t lineColorB = 0;
 
-        unsigned int padding = 0;
+        GraphicData::pixel padding = 0;
 
         std::uint8_t tileBackgroundR = 0;
         std::uint8_t tileBackgroundG = 0;
@@ -207,7 +207,8 @@ namespace frts
          * @param shared The shared manager.
          * @return The rendered texture or null if failed.
          */
-        Drawer::TexturePtr drawText(const std::string& text, int x, int y, int maxWidth, int maxHeight, SharedManagerPtr shared);
+        Drawer::TexturePtr drawText(const std::string& text, GraphicData::pixel x, GraphicData::pixel y,
+                                    GraphicData::pixel maxWidth, GraphicData::pixel maxHeight, SharedManagerPtr shared);
     };
 
     /**

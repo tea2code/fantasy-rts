@@ -100,7 +100,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
 
             // Set next due time.
             auto harvestable = getComponent<Harvestable>(shared->makeId(ComponentIds::harvestable()), toHarvest);
-            auto harvestTime = fromMilliseconds(1000.0 / harvestable->getSpeed());
+            auto harvestTime = fromMilliseconds(static_cast<unsigned int>(1000.0 / harvestable->getSpeed() + 0.5));
             setDueTime(shared->getFrame()->getRunTime() + harvestTime);
         }
     }

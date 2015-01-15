@@ -12,7 +12,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     const std::string pathWithExtension = path + name + ".dll";
 
     HandleType moduleHandle = ::LoadLibraryA(pathWithExtension.c_str());
-    if(moduleHandle == NULL)
+    if(moduleHandle == nullptr)
     {
         auto msg = boost::format(R"(LibraryLoader: Could not load DLL "%1%".)") % pathWithExtension;
         throw std::runtime_error(msg.str());
@@ -37,7 +37,7 @@ frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& pat
     const std::string pathWithExtension = std::string("./") + path + "lib" + name + ".so";
 
     void* sharedObject = ::dlopen(pathWithExtension.c_str(), RTLD_NOW);
-    if(sharedObject == NULL)
+    if(sharedObject == nullptr)
     {
         auto msg = boost::format(R"(LibraryLoader: Could not load shared library "%1%".)") % pathWithExtension;
         throw std::runtime_error(msg.str());

@@ -190,6 +190,33 @@ namespace frts
          */
         virtual bool isString(const std::string& key) = 0;
     };
+
+    /**
+     * @brief Get integer with direct cast.
+     * @throws ConversionError if type conversion fails.
+     * @throws MissingValueError if value is not found.
+     * @param node The configuration node.
+     * @param key Key of the value.
+     * @return The integer.
+     */
+    template<typename IntegerType>
+    inline IntegerType getCastInteger(ConfigNodePtr node, const std::string& key)
+    {
+        return static_cast<IntegerType>(node->getInteger(key));
+    }
+
+    /**
+     * @brief Get integer or default value with direct cast.
+     * @param node The configuration node.
+     * @param key Key of the value.
+     * @param Default value if key is not found or conversion fails.
+     * @return The integer.
+     */
+    template<typename IntegerType>
+    inline IntegerType getCastInteger(ConfigNodePtr node, const std::string& key, IntegerType defaultValue)
+    {
+        return static_cast<IntegerType>(node->getInteger(key, static_cast<long>(defaultValue)));
+    }
 }
 
 #endif // FRTS_CONFIGNODE_H

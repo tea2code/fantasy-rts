@@ -22,14 +22,21 @@
 
     #include "PluginPtr.h"
 
-    #define REGISTER_PLUGIN(pluginClass) extern "C" PLUGIN_API frts::PluginPtr getPlugin()\
+    #define REGISTER_PLUGIN(pluginClass)\
+    namespace\
     {\
-        return frts::PluginPtr(new pluginClass());\
-    }\
+        extern "C" PLUGIN_API frts::PluginPtr getPlugin()\
+        {\
+            return frts::PluginPtr(new pluginClass());\
+        }\
+    }
 
-    extern "C" PLUGIN_API int getVersion()
+    namespace
     {
-      return 1; // Also update in PluginManager.cpp.
+        extern "C" PLUGIN_API int getVersion()
+        {
+          return 1; // Also update in PluginManager.cpp.
+        }
     }
 
 #endif

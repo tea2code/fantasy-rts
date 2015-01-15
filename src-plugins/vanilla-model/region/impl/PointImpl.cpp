@@ -37,10 +37,10 @@ std::size_t frts::PointImpl::hash()
     // See "Effective Java 2nd Edition" page 49
     // Result: ~5.5s
         size_t result = 17;
-        result = 31 * result + x;
-        result = 31 * result + y;
-        result = 31 * result + z;
-        return std::hash<std::size_t>()(result);
+        result = 31 * result + static_cast<size_t>(x);
+        result = 31 * result + static_cast<size_t>(y);
+        result = 31 * result + static_cast<size_t>(z);
+        return std::hash<size_t>()(result);
 
     // See http://stackoverflow.com/a/5929567/1931663 ("mod n" removed because the unordered_map does this as far as i know).
     // Result: ~5.5s

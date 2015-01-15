@@ -234,8 +234,8 @@ namespace frts
          */
         Point::value sidebarWidth = 0;
 
-        int tileHeight = 0;
-        int tileWidth = 0;
+        GraphicData::pixel tileHeight = 0;
+        GraphicData::pixel tileWidth = 0;
 
         RendererPtr renderer;
         TextureMap textures;

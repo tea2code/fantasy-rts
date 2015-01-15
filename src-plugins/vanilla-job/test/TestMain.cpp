@@ -139,7 +139,7 @@ TEST_CASE("JobHandler.", "[main]")
         auto job = std::make_shared<test::TestJob>(doNumExecutions, doNumStops, dueTimes);
         jobHandler->runJob(job);
 
-        int num = 1;
+        unsigned int num = 1;
         auto frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
@@ -180,7 +180,7 @@ TEST_CASE("JobHandler.", "[main]")
 
         jobHandler->stopJob(job);
 
-        auto num = 2;
+        unsigned int num = 2;
         auto frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
@@ -230,7 +230,7 @@ TEST_CASE("JobHandler.", "[main]")
         jobHandler->runJob(job1);
         jobHandler->runJob(job2);
 
-        auto num = 0;
+        unsigned int num = 0;
         auto frame = frts::makeFrame(frts::fromMilliseconds(num), num, frts::fromMilliseconds(num));
         shared->setFrame(frame);
         jobHandler->tick(shared);
@@ -282,7 +282,7 @@ TEST_CASE("Job manager.", "[main]")
     auto jobHandler = frts::makeJobHandler();
     auto jobManager = frts::makeJobManager(jobHandler);
 
-    int num = 1;
+    unsigned int num = 1;
     auto frame = frts::makeFrame(frts::fromMilliseconds(num),num, frts::fromMilliseconds(num));
     shared->setFrame(frame);
 

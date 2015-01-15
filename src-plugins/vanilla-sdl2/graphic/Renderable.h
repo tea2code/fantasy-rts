@@ -39,7 +39,7 @@ namespace frts
          * @brief Get the index of the sprite. Default is 0.
          * @return The index.
          */
-        virtual int getSpriteIndex() const = 0;
+        virtual unsigned int getSpriteIndex() const = 0;
 
         /**
          * @brief Get the number of visible levels below. Default is 0.
@@ -63,7 +63,7 @@ namespace frts
          * @brief Set the index of the sprite.
          * @param index The index.
          */
-        virtual void setSpriteIndex(int index) = 0;
+        virtual void setSpriteIndex(unsigned int index) = 0;
 
         /**
          * @brief Set if stacking should be done.

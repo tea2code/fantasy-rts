@@ -130,10 +130,7 @@ void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr nod
 
     auto cc = getDataValue<CommandConfig>(shared, CommandIds::commandConfig());
 
-    if (node->has("num_undo"))
-    {
-        cc->setNumUndo(node->getInteger("num_undo", cc->getNumUndo()));
-    }
+    cc->setNumUndo(getCastInteger<unsigned int>(node, "num_undo", cc->getNumUndo()));
 
     if (node->has("undo_blacklist"))
     {

@@ -56,7 +56,9 @@ namespace test
         {
             auto entity = frts::makeEntity();
 
-            auto id = maps.at(pos->getZ()).at(pos->getY()).at(pos->getX());
+            auto id = maps.at(pos->getZ())
+                          .at(static_cast<unsigned int>(pos->getY()))
+                          .at(static_cast<unsigned int>(pos->getX()));
             if (id == "w")
             {
                 auto blocking = frts::makeBlocking(blockingType);
@@ -168,7 +170,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            REQUIRE(path.at(i) == frts::makePoint(i, 0, 0));
+            REQUIRE(path.at(i) == frts::makePoint(static_cast<int>(i), 0, 0));
         }
 
         goal = frts::makePoint(0, 9, 0);
@@ -176,7 +178,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 10);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            REQUIRE(path.at(i) == frts::makePoint(0, i, 0));
+            REQUIRE(path.at(i) == frts::makePoint(0, static_cast<int>(i), 0));
         }
 
         goal = frts::makePoint(9, 9, 0);
@@ -355,7 +357,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         int z = 0;
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            auto x = i;
+            frts::Point::value x = static_cast<int>(i);
             if (i >= 5)
             {
                 z = 1;
@@ -412,7 +414,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         REQUIRE(path.size() == 9);
         for (unsigned int i = 0; i < path.size(); ++i)
         {
-            auto x = i;
+            frts::Point::value x = static_cast<int>(i);
             if (i > 4)
             {
                 x += 1;

@@ -74,7 +74,7 @@ frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr 
                                        [](double sum, SpritePoint sp) { return sum + sp.getChance(); });
         double dice = frts::randomFloat(0.0, upper);
         double chanceFrom = 0.0;
-        int spriteIndex = 0;
+        unsigned int spriteIndex = 0;
         for (auto& spritePoint : spritePoints)
         {
             if (chanceFrom <= dice && dice <= chanceFrom + spritePoint.getChance())

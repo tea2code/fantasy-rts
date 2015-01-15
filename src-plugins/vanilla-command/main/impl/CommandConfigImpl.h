@@ -22,7 +22,7 @@ namespace frts
 
     private:
         IdUnorderedSet notUndoableCommands;
-        int numUndo = 0;
+        unsigned int numUndo = 0;
     };
 
     /**

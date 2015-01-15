@@ -78,12 +78,12 @@ namespace frts
          * @throw SpriteIndexInvalidError if index is out of bounds.
          * @param spritePointIndex The sprite point index.
          */
-        void setSpritePointIndex(int spritePointIndex);
+        void setSpritePointIndex(unsigned int spritePointIndex);
 
     private:
         int height;
         IdPtr image;
-        int spritePointIndex = 0;
+        unsigned int spritePointIndex = 0;
         std::vector<SpritePoint> spritePoints;
         int width;
     };

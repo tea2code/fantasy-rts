@@ -179,8 +179,8 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
         ns += ".";
     }
 
-    height = node->getInteger("height", height);
-    width = node->getInteger("width", width);
+    height = getCastInteger<unsigned int>(node, "height", height);
+    width = getCastInteger<unsigned int>(node, "width", width);
 
     // Levels.
     if (node->has("levels"))
@@ -272,7 +272,7 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     FILE* file = fopen(path.c_str(), "rb");
 
-    if(file == NULL)
+    if(file == nullptr)
     {
         auto msg = boost::format(R"(BmpMapParser: Map file with path "%1%" not found.)") % path;
         throw MapFileNotFoundError(msg.str());
@@ -289,7 +289,7 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
 
     // Precalculate padding.
     int rgbWidth = width * 3;
-    int rowPadded = (rgbWidth + 3) & (~3);
+    unsigned int rowPadded = static_cast<unsigned int>((rgbWidth + 3) & (~3));
 
     // Read and parse map file.
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());

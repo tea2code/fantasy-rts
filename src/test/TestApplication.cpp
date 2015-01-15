@@ -19,7 +19,7 @@
 #include <vector>
 
 
-namespace TestApp
+namespace
 {
     #define TEST_APPLICATION_LOAD_FILE "load.yaml"
 
@@ -80,7 +80,7 @@ namespace TestApp
 
 TEST_CASE("Execute start phases.", "[application]")
 {
-    TestApp::setupLoadFile();
+    setupLoadFile();
 
     frts::Application app(nullptr);
 
@@ -191,7 +191,7 @@ TEST_CASE("Execute start phases.", "[application]")
                     // Execute the following sub sections after phase 6 because we need
                     // the config keys.
 
-                    TestApp::setupConfiguration();
+                    setupConfiguration();
                     std::vector<std::string> configFiles = {TEST_CONFIGURATION_CONFIG_FILE};
 
                     REQUIRE_NOTHROW(app.readConfig(supportedKeys, shared, "", configFiles));

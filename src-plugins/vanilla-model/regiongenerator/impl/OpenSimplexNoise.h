@@ -17,10 +17,11 @@ namespace frts
     {
     public:
         const static int ARRAY_SIZE = 256;
+        using PermutationArray = std::array<short, ARRAY_SIZE>;
 
     public:
         OpenSimplexNoise(long long seed = 0);
-        OpenSimplexNoise(const std::array<short, ARRAY_SIZE>& perm);
+        OpenSimplexNoise(const PermutationArray& perm);
         ~OpenSimplexNoise();
 
         /**
@@ -115,8 +116,8 @@ namespace frts
         }};
 
     private:
-        std::array<short, ARRAY_SIZE> perm;
-        std::array<short, ARRAY_SIZE> permGradIndex3D;
+        PermutationArray perm;
+        PermutationArray permGradIndex3D;
 
     private:
         double extrapolate(int xsb, int ysb, double dx, double dy) const;

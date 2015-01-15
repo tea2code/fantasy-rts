@@ -27,10 +27,10 @@ namespace {
 
 frts::OpenSimplexNoise::OpenSimplexNoise(long long seed)
 {
-    std::array<short, ARRAY_SIZE> source;
-    for (short i = 0; i < ARRAY_SIZE; i++)
+    PermutationArray source;
+    for (PermutationArray::size_type i = 0; i < ARRAY_SIZE; i++)
     {
-        source[i] = i;
+        source[i] = static_cast<PermutationArray::value_type>(i);
     }
 
     seed = lcgRand(seed);
@@ -47,18 +47,21 @@ frts::OpenSimplexNoise::OpenSimplexNoise(long long seed)
             r += (i + 1);
         }
 
-        perm[i] = source.at(r);
-        permGradIndex3D[i] = gradientValue3D(perm.at(i), gradients3D.size());
-        source[r] = source.at(i);
+        auto iArray = static_cast<PermutationArray::size_type>(i);
+        auto rArray = static_cast<PermutationArray::size_type>(r);
+
+        perm[iArray] = source.at(rArray);
+        permGradIndex3D[iArray] = gradientValue3D(perm.at(iArray), static_cast<int>(gradients3D.size()));
+        source[rArray] = source.at(iArray);
     }
 }
 
-frts::OpenSimplexNoise::OpenSimplexNoise(const std::array<short, ARRAY_SIZE>& perm)
+frts::OpenSimplexNoise::OpenSimplexNoise(const PermutationArray& perm)
     : perm(perm)
 {
-    for (int i = 0; i < ARRAY_SIZE; ++i)
+    for (PermutationArray::size_type i = 0; i < ARRAY_SIZE; ++i)
     {
-        permGradIndex3D[i] = gradientValue3D(perm.at(i), gradients3D.size());
+        permGradIndex3D[i] = gradientValue3D(perm.at(i), static_cast<int>(gradients3D.size()));
     }
 }
 
@@ -2546,17 +2549,17 @@ double frts::OpenSimplexNoise::eval(double x, double y, double z, double w) cons
 
 double frts::OpenSimplexNoise::extrapolate(int xsb, int ysb, double dx, double dy) const
 {
-    int innerIndex = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
-    int index = perm.at(innerIndex) & 0x0E;
+    PermutationArray::size_type innerIndex = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
+    PermutationArray::size_type index = perm.at(innerIndex) & 0x0E;
     return gradients2D.at(index) * dx +
            gradients2D.at(index + 1) * dy;
 }
 
 double frts::OpenSimplexNoise::extrapolate(int xsb, int ysb, int zsb, double dx, double dy, double dz) const
 {
-    int innerIndex1 = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
-    int innerIndex2 = (perm.at(innerIndex1) + zsb) & 0xFF;
-    int index = permGradIndex3D.at(innerIndex2);
+    PermutationArray::size_type innerIndex1 = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
+    PermutationArray::size_type innerIndex2 = (perm.at(innerIndex1) + zsb) & 0xFF;
+    PermutationArray::size_type index = static_cast<PermutationArray::size_type>(permGradIndex3D.at(innerIndex2));
     return gradients3D.at(index) * dx +
            gradients3D.at(index + 1) * dy +
            gradients3D.at(index + 2) * dz;
@@ -2564,10 +2567,10 @@ double frts::OpenSimplexNoise::extrapolate(int xsb, int ysb, int zsb, double dx,
 
 double frts::OpenSimplexNoise::extrapolate(int xsb, int ysb, int zsb, int wsb, double dx, double dy, double dz, double dw) const
 {
-    int innerIndex1 = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
-    int innerIndex2 = (perm.at(innerIndex1) + zsb) & 0xFF;
-    int innerIndex3 = (perm.at(innerIndex2) + wsb) & 0xFF;
-    int index = perm.at(innerIndex3) & 0xFC;
+    PermutationArray::size_type innerIndex1 = (perm.at(xsb & 0xFF) + ysb) & 0xFF;
+    PermutationArray::size_type innerIndex2 = (perm.at(innerIndex1) + zsb) & 0xFF;
+    PermutationArray::size_type innerIndex3 = (perm.at(innerIndex2) + wsb) & 0xFF;
+    PermutationArray::size_type index = perm.at(innerIndex3) & 0xFC;
     return gradients4D.at(index) * dx +
            gradients4D.at(index + 1) * dy +
            gradients4D.at(index + 2) * dz +

@@ -15,6 +15,7 @@
 
 INITIALIZE_EASYLOGGINGPP
 
+#pragma GCC diagnostic ignored "-Wstrict-overflow"
 
 frts::EasyloggingLog::EasyloggingLog(const std::string& configFilePath)
 {

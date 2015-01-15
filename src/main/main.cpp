@@ -30,53 +30,56 @@
 #endif
 
 
-/**
- * @brief Check if command line options exist.
- * @see http://stackoverflow.com/a/868894/1931663
- * @param begin Begin of options.
- * @param end End of options.
- * @param option The option key.
- * @return True if key exists else false.
- */
-bool cmdOptionExists(char** begin, char** end, const std::string& option)
+namespace
 {
-    return std::find(begin, end, option) != end;
-}
-
-/**
- * @brief Get command line options.
- * @see http://stackoverflow.com/a/868894/1931663
- * @param begin Begin of options.
- * @param end End of options.
- * @param option The option key.
- * @return The option value.
- */
-char* getCmdOption(char** begin, char** end, const std::string& option)
-{
-    char** itr = std::find(begin, end, option);
-    if (itr != end && ++itr != end)
+    /**
+     * @brief Check if command line options exist.
+     * @see http://stackoverflow.com/a/868894/1931663
+     * @param begin Begin of options.
+     * @param end End of options.
+     * @param option The option key.
+     * @return True if key exists else false.
+     */
+    bool cmdOptionExists(char** begin, char** end, const std::string& option)
     {
-        return *itr;
+        return std::find(begin, end, option) != end;
     }
-    return 0;
-}
 
-/**
- * @brief Write load config to log.
- * @param log The log.
- * @param logModule The log module.
- * @param key The key.
- * @param values The values.
- */
-void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
-                       const std::string& key, const std::vector<std::string>& values)
-{
-    assert(log != nullptr);
-
-    log->warning(logModule, "\t" + key);
-    for(const auto& value : values)
+    /**
+     * @brief Get command line options.
+     * @see http://stackoverflow.com/a/868894/1931663
+     * @param begin Begin of options.
+     * @param end End of options.
+     * @param option The option key.
+     * @return The option value.
+     */
+    char* getCmdOption(char** begin, char** end, const std::string& option)
     {
-        log->warning(logModule, "\t\t-" + value);
+        char** itr = std::find(begin, end, option);
+        if (itr != end && ++itr != end)
+        {
+            return *itr;
+        }
+        return nullptr;
+    }
+
+    /**
+     * @brief Write load config to log.
+     * @param log The log.
+     * @param logModule The log module.
+     * @param key The key.
+     * @param values The values.
+     */
+    void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
+                           const std::string& key, const std::vector<std::string>& values)
+    {
+        assert(log != nullptr);
+
+        log->warning(logModule, "\t" + key);
+        for(const auto& value : values)
+        {
+            log->warning(logModule, "\t\t-" + value);
+        }
     }
 }
 
@@ -104,7 +107,7 @@ int main(int argc, char* argv[])
     );
     const frts::Frame::time deltaTime = frts::fromMilliseconds(
                 cmdOptionExists(argv, argv+argc, "deltaTime") ?
-                std::atoi(getCmdOption(argv, argv+argc, "deltaTime")) : 10
+                static_cast<unsigned int>(std::atoi(getCmdOption(argv, argv+argc, "deltaTime"))) : 10
     );
     const std::string loadFile = cmdOptionExists(argv, argv+argc, "loadFile") ?
                 getCmdOption(argv, argv+argc, "loadFile") : "load.yaml";
@@ -112,7 +115,7 @@ int main(int argc, char* argv[])
                 getCmdOption(argv, argv+argc, "logConfigFile") : "log/easylogging.conf";
     const frts::Frame::time maxFrameTime = frts::fromMilliseconds(
                 cmdOptionExists(argv, argv+argc, "maxFrameTime") ?
-                std::atoi(getCmdOption(argv, argv+argc, "maxFrameTime")) : 100
+                static_cast<unsigned int>(std::atoi(getCmdOption(argv, argv+argc, "maxFrameTime"))) : 100
     );
     const std::string pluginsRoot = cmdOptionExists(argv, argv+argc, "pluginsRoot") ?
                 getCmdOption(argv, argv+argc, "pluginsRoot") : "plugins/";
