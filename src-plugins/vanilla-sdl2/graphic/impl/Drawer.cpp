@@ -14,6 +14,22 @@
 #include <utility>
 
 
+namespace
+{
+    /**
+     * @brief Get transparency of entities.
+     * @param entities The entities.
+     * @param renderableId The id of the renderable component.
+     * @return The transparency value.
+     */
+    frts::Point::value getTransparency(frts::EntityVector entities, frts::IdPtr renderableId)
+    {
+        auto renderable = frts::getComponent<frts::Renderable>(renderableId, entities.at(0));
+        return static_cast<frts::Point::value>(renderable->getTransparency());
+    }
+}
+
+
 frts::Drawer::Drawer()
 {}
 
@@ -322,25 +338,43 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     auto filledBackground = false;
     if (entities.size() > 0)
     {
-        auto entity = entities.at(0);
-        auto renderable = getComponent<Renderable>(renderableId, entity);
-        auto transparency = static_cast<Point::value>(renderable->getTransparency());
+        auto transparency = getTransparency(entities, renderableId);
 
         if (transparency > 0)
         {
             SDL_RenderFillRect(renderer.get(), &rectToRender);
             filledBackground = true;
+            renderPos = true;
         }
-        while (transparency > 0)
+
+        // Check descending if the entities are transparent.
+        std::vector<EntityVector> allEntitiesBelow;
+        for (Point::value i = 1; i <= transparency; ++i)
         {
             auto posBelow = modelFactory->makePoint(pos->getX(),
                                                     pos->getY(),
-                                                    pos->getZ() - transparency);
+                                                    pos->getZ() - i);
             auto blockBelow = regionManager->getBlock(posBelow, shared);
             auto entitiesBelow = blockBelow->getByComponent(renderableId);
-            renderEntities(entitiesBelow, renderableId, rectToRender, stacked, shared);
-            transparency -= 1;
-            renderPos = true;
+            allEntitiesBelow.push_back(entitiesBelow);
+
+            // Initialize with a value greater 0 to keep going if there are no entities.
+            frts::Point::value transparencyBelow = 1;
+            if (entitiesBelow.size() > 0)
+            {
+                transparencyBelow = getTransparency(entitiesBelow, renderableId);
+            }
+            if (transparencyBelow == 0)
+            {
+                // Doesn't make sense to go deeper if not transparent.
+                break;
+            }
+        }
+
+        // Render beginning from the lowest one.
+        for (auto it = allEntitiesBelow.rbegin(); it != allEntitiesBelow.rend(); ++it)
+        {
+            renderEntities(*it, renderableId, rectToRender, stacked, shared);
         }
     }
 
