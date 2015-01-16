@@ -10,46 +10,19 @@
 
 
 frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler)
-    : sdl2EventHandler{sdl2EventHandler}
+    : BaseUtility(Sdl2Ids::inputHandler(), 1, Sdl2Ids::inputHandler(), 1),
+      sdl2EventHandler{sdl2EventHandler}
 {
 }
-
-void frts::InputHandlerImpl::checkRequiredData(SharedManagerPtr)
-{}
 
 void frts::InputHandlerImpl::closeCurrentContext()
 {
     sdl2EventHandler->closeCurrentContext();
 }
 
-bool frts::InputHandlerImpl::createData(SharedManagerPtr)
-{
-    return false;
-}
-
-std::string frts::InputHandlerImpl::getName() const
-{
-    return Sdl2Ids::inputHandler();
-}
-
 std::vector<std::string> frts::InputHandlerImpl::getSupportedConfig()
 {
     return {"keys"};
-}
-
-std::string frts::InputHandlerImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::InputHandlerImpl::getTypeVersion() const
-{
-    return 1;
-}
-
-int frts::InputHandlerImpl::getVersion() const
-{
-    return 1;
 }
 
 bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
@@ -111,18 +84,7 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     }
     configNodes.clear();
 
-    isInit = true;
-    return false;
-}
-
-bool frts::InputHandlerImpl::isInitialized() const
-{
-    return isInit;
-}
-
-bool frts::InputHandlerImpl::isPreInitialized() const
-{
-    return isPreInit;
+    return BaseUtility::init(shared);
 }
 
 void frts::InputHandlerImpl::registerCommand(KeyCommand keyCommand, IdPtr commandId)
@@ -161,17 +123,6 @@ void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node,
 
     // Store for initialization.
     configNodes.push_back(node);
-}
-
-bool frts::InputHandlerImpl::preInit(SharedManagerPtr)
-{
-    isPreInit = true;
-    return false;
-}
-
-void frts::InputHandlerImpl::validateData(SharedManagerPtr)
-{
-
 }
 
 void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)

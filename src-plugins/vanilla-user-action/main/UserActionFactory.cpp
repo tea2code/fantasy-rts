@@ -67,8 +67,7 @@ bool frts::UserActionFactory::init(SharedManagerPtr shared)
         cf->registerCommandBuilder(commandId, commandBuilder);
     }
 
-    isInit = true;
-    return false;
+    return BaseUtility::init(shared);
 }
 
 void frts::UserActionFactory::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)

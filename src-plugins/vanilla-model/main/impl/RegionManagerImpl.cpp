@@ -12,7 +12,8 @@ frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
                                            LockableResourceManagerPtr resourceManager,
                                            LockableResourceManagerPtr resourceEntityManager,
                                            IdPtr hasResourceType, IdPtr isResourceType)
-    : hasResourceType{hasResourceType}, isResourceType{isResourceType}, region{region},
+    : BaseDataValue(ModelIds::regionManager(), 2, ModelIds::regionManager(), 2),
+      hasResourceType{hasResourceType}, isResourceType{isResourceType}, region{region},
       resourceManager{resourceManager}, resourceEntityManager{resourceEntityManager}
 {
 }
@@ -124,11 +125,6 @@ frts::PointUnorderedSet frts::RegionManagerImpl::getChangedPos()
     return changedPos;
 }
 
-std::string frts::RegionManagerImpl::getName() const
-{
-    return ModelIds::regionManager();
-}
-
 std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared)
 {
     assert(pos != nullptr);
@@ -147,21 +143,6 @@ frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPt
     std::lock_guard<RecursiveLock> lock(locker);
 
     return region->getPos(entity, shared);
-}
-
-std::string frts::RegionManagerImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::RegionManagerImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::RegionManagerImpl::getVersion() const
-{
-    return 1;
 }
 
 frts::PointPtr frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)

@@ -3,11 +3,12 @@
 
 #include <main/ActionHandler.h>
 #include <main/ActionManager.h>
+#include <frts/BaseUtility.h>
 
 
 namespace frts
 {
-    class ActionManagerImpl : public ActionManager
+    class ActionManagerImpl : public BaseUtility<ActionManager>
     {
     public:
         /**
@@ -24,28 +25,13 @@ namespace frts
             return "frts/ActionManager";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
-        std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
         void newAction(ActionPtr action, SharedManagerPtr shared) override;
         bool stopAction(SharedManagerPtr shared) override;
 
     private:
-        bool isInit = false;
-        bool isPreInit = false;
-
         ActionHandlerPtr actionHandler;
     };
 

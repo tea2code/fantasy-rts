@@ -4,6 +4,7 @@
 
 
 frts::SelectionDataImpl::SelectionDataImpl()
+    : BaseDataValue(Sdl2Ids::selectionData(), 1, Sdl2Ids::selectionData(), 1)
 {
     resetSelection();
 }
@@ -11,11 +12,6 @@ frts::SelectionDataImpl::SelectionDataImpl()
 frts::SelectionDataImpl::~SelectionDataImpl()
 {
 
-}
-
-std::string frts::SelectionDataImpl::getName() const
-{
-    return Sdl2Ids::selectionData();
 }
 
 frts::PointVector frts::SelectionDataImpl::getSelection(SharedManagerPtr shared) const
@@ -66,21 +62,6 @@ std::vector<frts::EntityPtr> frts::SelectionDataImpl::getSelectionEntities() con
 frts::PointPtr frts::SelectionDataImpl::getSelectionStart() const
 {
     return start;
-}
-
-std::string frts::SelectionDataImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::SelectionDataImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::SelectionDataImpl::getVersion() const
-{
-    return 1;
 }
 
 bool frts::SelectionDataImpl::isSelecting() const

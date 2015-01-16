@@ -3,6 +3,7 @@
 
 #include <input/Sdl2EventHandler.h>
 #include <input/InputHandler.h>
+#include <frts/BaseUtility.h>
 
 #include <SDL2/SDL.h>
 
@@ -11,7 +12,7 @@
 
 namespace frts
 {
-    class InputHandlerImpl : public InputHandler
+    class InputHandlerImpl : public BaseUtility<InputHandler>
     {
     public:
         /**
@@ -28,19 +29,9 @@ namespace frts
             return "frts/InputHandler";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
         std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
         void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
         void closeCurrentContext() override;
@@ -50,9 +41,6 @@ namespace frts
     private:
         std::vector<ConfigNodePtr> configNodes;
         Sdl2EventHandlerPtr sdl2EventHandler;
-
-        bool isInit = false;
-        bool isPreInit = false;
     };
 
     /**

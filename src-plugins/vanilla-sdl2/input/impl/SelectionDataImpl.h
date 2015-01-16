@@ -2,20 +2,16 @@
 #define FRTS_SELECTIONDATAIMPL_H
 
 #include <input/SelectionData.h>
+#include <frts/BaseDataValue.h>
 
 
 namespace frts
 {
-    class SelectionDataImpl : public SelectionData
+    class SelectionDataImpl : public BaseDataValue<SelectionData>
     {
     public:
         SelectionDataImpl();
         ~SelectionDataImpl();
-
-        std::string getName() const override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
 
         PointVector getSelection(SharedManagerPtr shared) const override;
         PointPtr getSelectionEnd() const override;

@@ -1,26 +1,23 @@
-#ifndef FRTS_REGIONCONFIGIMPL_H
-#define FRTS_REGIONCONFIGIMPL_H
+#ifndef FRTS_MODELDATAIMPL_H
+#define FRTS_MODELDATAIMPL_H
 
 #include <main/ModelData.h>
+#include <frts/BaseDataValue.h>
 
 
 namespace frts
 {
-    class ModelDataImpl : public ModelData
+    class ModelDataImpl : public BaseDataValue<ModelData>
     {
     public:
         ModelDataImpl();
 
-        std::string getName() const override;
         Point::value getMapSizeX() const override;
         Point::value getMapSizeY() const override;
         unsigned int getPrecalculateDown() const override;
         unsigned int getPrecalculateUp() const override;
         ZLevelRange getPrecalculatedRange() const override;
         Point::value getSurfaceZLevel() const override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         void setMapSizeX(Point::value size) override;
         void setMapSizeY(Point::value size) override;
         void setPrecalculateDown(unsigned int zLevels) override;
@@ -47,4 +44,4 @@ namespace frts
     }
 }
 
-#endif // FRTS_REGIONCONFIGIMPL_H
+#endif // FRTS_MODELDATAIMPL_H

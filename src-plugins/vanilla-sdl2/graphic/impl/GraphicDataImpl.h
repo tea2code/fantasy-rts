@@ -2,6 +2,7 @@
 #define FRTS_GRAPHICDATAIMPL_H
 
 #include <graphic/GraphicData.h>
+#include <frts/BaseDataValue.h>
 
 #include <string>
 #include <memory>
@@ -9,7 +10,7 @@
 
 namespace frts
 {
-    class GraphicDataImpl : public GraphicData
+    class GraphicDataImpl : public BaseDataValue<GraphicData>
     {
     public:
         GraphicDataImpl();
@@ -17,7 +18,6 @@ namespace frts
         EntityPtr getCursor() const override;
         ScreenArea getMapArea() const override;
         unsigned int getNumFpsAvg() const override;
-        std::string getName() const override;
         pixel getScreenHeight() const override;
         pixel getScreenOffsetStepX() const override;
         pixel getScreenOffsetStepY() const override;
@@ -30,9 +30,6 @@ namespace frts
         pixel getSidebarWidth() const override;
         pixel getTileHeight() const override;
         pixel getTileWidth() const override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         Point::value getZLevel() const override;
         bool isRenderEverything() const override;
         void setCursor(EntityPtr cursor) override;

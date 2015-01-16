@@ -36,6 +36,7 @@ OPTIMIZE {
 QMAKE_CXXFLAGS += -isystem $$PWD/../../src/dependency/boost
 QMAKE_CXXFLAGS += -isystem $$PWD/../../src/dependency/Catch/single_include
 INCLUDEPATH += $$PWD/../../src
+INCLUDEPATH += $$PWD/../../src-helper/
 
 # Headers and sources.
 UNIT_TEST {

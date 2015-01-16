@@ -2,23 +2,20 @@
 #define FRTS_COMMANDCONFIGIMPL_H
 
 #include <main/CommandConfig.h>
+#include <frts/BaseDataValue.h>
 
 
 namespace frts
 {
-    class CommandConfigImpl : public CommandConfig
+    class CommandConfigImpl : public BaseDataValue<CommandConfig>
     {
     public:
         CommandConfigImpl();
 
-        std::string getName() const override;
         IdUnorderedSet getNotUndoableCommands() const override;
         unsigned int getNumUndo() const override;
         void setNotUndoableCommands(IdUnorderedSet commands) override;
         void setNumUndo(unsigned int numUndo) override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
 
     private:
         IdUnorderedSet notUndoableCommands;

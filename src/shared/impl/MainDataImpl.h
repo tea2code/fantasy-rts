@@ -2,6 +2,7 @@
 #define MAINDATAIMPL_H
 
 #include <shared/MainData.h>
+#include <frts/BaseDataValue.h>
 
 #include <string>
 #include <memory>
@@ -9,7 +10,7 @@
 
 namespace frts
 {
-    class MainDataImpl : public MainData
+    class MainDataImpl : public BaseDataValue<MainData>
     {
     public:
         /**
@@ -19,11 +20,7 @@ namespace frts
         MainDataImpl(const std::string& pluginPath, Frame::time deltaTima);
 
         Frame::time getDeltaTime() const override;
-        std::string getName() const override;
         std::string getPluginPath() const override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
 
     private:
         Frame::time deltaTime;

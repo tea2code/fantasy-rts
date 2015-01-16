@@ -15,7 +15,8 @@
 
 
 frts::Sdl2Renderer::Sdl2Renderer()
-    : BaseTickable(Sdl2Ids::sdl2Renderer(), 1, Sdl2Ids::sdl2Renderer(), 1), nextFpsLog{fromMilliseconds(0)}
+    : BaseTickable(Sdl2Ids::sdl2Renderer(), 1, Sdl2Ids::sdl2Renderer(), 1),
+      nextFpsLog{fromMilliseconds(0)}
 {
     drawer = makeDrawer();
     sidebarDrawer = makeSidebarDrawer();
@@ -188,8 +189,7 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
         commandFactory->registerCommandBuilder(commandId, makeSwitchSidebarInfoIndexCommandBuilder(commandId, -stepSize));
     }
 
-    isInit = true;
-    return false;
+    return BaseTickable::init(shared);
 }
 
 void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)

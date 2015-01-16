@@ -2,13 +2,14 @@
 #define FRTS_EVENTMANAGERIMPL_H
 
 #include <main/EventManager.h>
+#include <frts/BaseUtility.h>
 
 #include <unordered_map>
 
 
 namespace frts
 {
-    class EventManagerImpl : public EventManager
+    class EventManagerImpl : public BaseUtility<EventManager>
     {
     public:
         EventManagerImpl();
@@ -23,20 +24,7 @@ namespace frts
             return "frts/EventManager";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
-        std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
 
         EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) override;
         EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
@@ -53,9 +41,6 @@ namespace frts
     private:
         EventValueBuilderMap eventValueBuilders;
         EventObserverMap eventObservers;
-
-        bool isInit = false;
-        bool isPreInit = false;
     };
 
     /**

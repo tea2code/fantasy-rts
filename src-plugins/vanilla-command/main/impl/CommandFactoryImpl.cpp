@@ -14,6 +14,7 @@
 
 
 frts::CommandFactoryImpl::CommandFactoryImpl()
+    : BaseUtility(CommandIds::commandFactory(), 1, CommandIds::commandFactory(), 1)
 {
 }
 
@@ -54,29 +55,9 @@ bool frts::CommandFactoryImpl::createData(SharedManagerPtr shared)
     return false;
 }
 
-std::string frts::CommandFactoryImpl::getName() const
-{
-    return CommandIds::commandFactory();
-}
-
 std::vector<std::string> frts::CommandFactoryImpl::getSupportedConfig()
 {
     return {"command"};
-}
-
-std::string frts::CommandFactoryImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::CommandFactoryImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::CommandFactoryImpl::getVersion() const
-{
-    return 1;
 }
 
 bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
@@ -92,18 +73,7 @@ bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
     commandId = shared->makeId(CommandIds::undo());
     registerCommandBuilder(commandId, makeUndoCommandBuilder(commandId));
 
-    isInit = true;
-    return false;
-}
-
-bool frts::CommandFactoryImpl::isInitialized() const
-{
-    return isInit;
-}
-
-bool frts::CommandFactoryImpl::isPreInitialized() const
-{
-    return isPreInit;
+    return BaseUtility::init(shared);
 }
 
 frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedManagerPtr shared)
@@ -144,13 +114,6 @@ void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr nod
     }
 }
 
-bool frts::CommandFactoryImpl::preInit(SharedManagerPtr)
-{
-    isPreInit = true;
-    return false;
-}
-
-
 void frts::CommandFactoryImpl::registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder)
 {
     assert(builderId != nullptr);
@@ -168,13 +131,4 @@ void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
         undoQueue.back()->undo(shared);
         undoQueue.pop_back();
     }
-}
-
-void frts::CommandFactoryImpl::validateData(SharedManagerPtr)
-{
-}
-
-void frts::CommandFactoryImpl::validateModules(SharedManagerPtr)
-{
-
 }

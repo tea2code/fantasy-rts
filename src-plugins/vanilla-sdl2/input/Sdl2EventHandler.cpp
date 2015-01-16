@@ -79,8 +79,7 @@ bool frts::Sdl2EventHandler::init(SharedManagerPtr shared)
         throw DataViolation(getName() + ": No default context provided.");
     }
 
-    isInit = true;
-    return false;
+    return BaseTickable::init(shared);
 }
 
 void frts::Sdl2EventHandler::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)

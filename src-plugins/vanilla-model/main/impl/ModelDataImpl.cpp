@@ -4,13 +4,9 @@
 
 
 frts::ModelDataImpl::ModelDataImpl()
-    : precalculatedRange{0, 0}
+    : BaseDataValue(ModelIds::modelData(), 2, ModelIds::modelData(), 2),
+      precalculatedRange{0, 0}
 {
-}
-
-std::string frts::ModelDataImpl::getName() const
-{
-    return ModelIds::modelData();
 }
 
 frts::Point::value frts::ModelDataImpl::getMapSizeX() const
@@ -41,21 +37,6 @@ frts::ModelData::ZLevelRange frts::ModelDataImpl::getPrecalculatedRange() const
 frts::Point::value frts::ModelDataImpl::getSurfaceZLevel() const
 {
     return surfaceZLevel;
-}
-
-std::string frts::ModelDataImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::ModelDataImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::ModelDataImpl::getVersion() const
-{
-    return 2;
 }
 
 void frts::ModelDataImpl::setMapSizeX(Point::value size)

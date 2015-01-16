@@ -4,6 +4,7 @@
 
 
 frts::GraphicDataImpl::GraphicDataImpl()
+    : BaseDataValue(Sdl2Ids::graphicData(), 4, Sdl2Ids::graphicData(), 4)
 {}
 
 frts::EntityPtr frts::GraphicDataImpl::getCursor() const
@@ -19,11 +20,6 @@ frts::GraphicData::ScreenArea frts::GraphicDataImpl::getMapArea() const
 unsigned int frts::GraphicDataImpl::getNumFpsAvg() const
 {
     return numFpsAvg;
-}
-
-std::string frts::GraphicDataImpl::getName() const
-{
-    return Sdl2Ids::graphicData();
 }
 
 frts::GraphicData::pixel frts::GraphicDataImpl::getScreenHeight() const
@@ -84,21 +80,6 @@ frts::GraphicData::pixel frts::GraphicDataImpl::getTileHeight() const
 frts::GraphicData::pixel frts::GraphicDataImpl::getTileWidth() const
 {
     return tileWidth;
-}
-
-std::string frts::GraphicDataImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::GraphicDataImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::GraphicDataImpl::getVersion() const
-{
-    return 4;
 }
 
 frts::Point::value frts::GraphicDataImpl::getZLevel() const

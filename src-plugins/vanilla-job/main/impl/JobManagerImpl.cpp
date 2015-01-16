@@ -10,7 +10,8 @@
 
 
 frts::JobManagerImpl::JobManagerImpl(JobHandlerPtr jobHandler)
-    : jobHandler{jobHandler}
+    : BaseUtility(JobIds::jobManager(), 3, JobIds::jobManager(), 3),
+      jobHandler{jobHandler}
 {
 
 }
@@ -29,16 +30,6 @@ void frts::JobManagerImpl::addJob(JobPtr job, SharedManagerPtr)
     {
         jobs.push_back(job);
     }
-}
-
-void frts::JobManagerImpl::checkRequiredData(SharedManagerPtr)
-{
-
-}
-
-bool frts::JobManagerImpl::createData(SharedManagerPtr)
-{
-    return false;
 }
 
 bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr shared)
@@ -80,31 +71,6 @@ bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr share
     return result;
 }
 
-std::string frts::JobManagerImpl::getName() const
-{
-    return JobIds::jobManager();
-}
-
-std::vector<std::string> frts::JobManagerImpl::getSupportedConfig()
-{
-    return {};
-}
-
-std::string frts::JobManagerImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::JobManagerImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::JobManagerImpl::getVersion() const
-{
-    return 3;
-}
-
 bool frts::JobManagerImpl::init(SharedManagerPtr shared)
 {
     assert(shared != nullptr);
@@ -115,29 +81,7 @@ bool frts::JobManagerImpl::init(SharedManagerPtr shared)
     auto builder = makeJobMarkerBuilder();
     mf->registerComponentBuilder(componentId, builder);
 
-    isInit = true;
-    return false;
-}
-
-bool frts::JobManagerImpl::isInitialized() const
-{
-    return isInit;
-}
-
-bool frts::JobManagerImpl::isPreInitialized() const
-{
-    return isPreInit;
-}
-
-void frts::JobManagerImpl::parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr)
-{
-
-}
-
-bool frts::JobManagerImpl::preInit(SharedManagerPtr)
-{
-    isPreInit = true;
-    return false;
+    return BaseUtility::init(shared);
 }
 
 void frts::JobManagerImpl::stopJob(JobPtr job, SharedManagerPtr shared)
@@ -157,11 +101,6 @@ void frts::JobManagerImpl::stopJob(JobPtr job, SharedManagerPtr shared)
         // May already be running.
         jobHandler->stopJob(job);
     }
-}
-
-void frts::JobManagerImpl::validateData(SharedManagerPtr)
-{
-
 }
 
 void frts::JobManagerImpl::validateModules(SharedManagerPtr shared)

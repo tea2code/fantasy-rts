@@ -1,12 +1,13 @@
 #ifndef FRTS_MODELFACTORYIMPL_H
 #define FRTS_MODELFACTORYIMPL_H
 
-#include <main/ModelFactory.h>
 #include "ModelDataImpl.h"
+#include <main/ModelFactory.h>
 #include <region/Region.h>
 #include <regiongenerator/RegionGenerator.h>
 #include <pathfinding/DistanceAlgorithm.h>
 #include <resource/LockableResourceManager.h>
+#include <frts/BaseUtility.h>
 
 #include <unordered_map>
 #include <vector>
@@ -14,7 +15,7 @@
 
 namespace frts
 {
-    class ModelFactoryImpl : public ModelFactory
+    class ModelFactoryImpl : public BaseUtility<ModelFactory>
     {
     public:
         ModelFactoryImpl();
@@ -32,15 +33,9 @@ namespace frts
         bool createData(SharedManagerPtr shared) override;
         DistanceAlgorithmPtr getDistanceAlgorithm() const override;
         MapParserPtr getMapParser(IdPtr id) const override;
-        std::string getName() const override;
         PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
         WriteableBlockPtr makeBlock(SharedManagerPtr shared) override;
         ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
         EntityPtr makeEntity() override;
@@ -81,8 +76,6 @@ namespace frts
         LockableResourceManagerPtr resourceManager;
 
         bool firstInit = true;
-        bool isInit = false;
-        bool isPreInit = false;
 
     private:
         ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);

@@ -45,6 +45,7 @@
 
 
 frts::ModelFactoryImpl::ModelFactoryImpl()
+    : BaseUtility(ModelIds::modelFactory(), 2, ModelIds::modelFactory(), 2)
 {
 }
 
@@ -89,11 +90,6 @@ frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
     }
 }
 
-std::string frts::ModelFactoryImpl::getName() const
-{
-    return ModelIds::modelFactory();
-}
-
 frts::PathFinderPtr frts::ModelFactoryImpl::getPathFinder() const
 {
     return pathFinder;
@@ -113,21 +109,6 @@ std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
     result.push_back(regionGenerator->getSupportedConfig());
 
     return result;
-}
-
-std::string frts::ModelFactoryImpl::getTypeName() const
-{
-    return getName();
-}
-
-int frts::ModelFactoryImpl::getTypeVersion() const
-{
-    return getVersion();
-}
-
-int frts::ModelFactoryImpl::getVersion() const
-{
-    return 2;
 }
 
 bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
@@ -323,18 +304,7 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
 
     // Finished.
     shared->getLog()->info(getName(), "ModelFactory->init(): Finished.");
-    isInit = true;
-    return false;
-}
-
-bool frts::ModelFactoryImpl::isInitialized() const
-{
-    return isInit;
-}
-
-bool frts::ModelFactoryImpl::isPreInitialized() const
-{
-    return isPreInit;
+    return BaseUtility::init(shared);
 }
 
 frts::WriteableBlockPtr frts::ModelFactoryImpl::makeBlock(SharedManagerPtr shared)
@@ -495,8 +465,7 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
         regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
     }
 
-    isPreInit = true;
-    return false;
+    return BaseUtility::preInit(shared);
 }
 
 void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm)

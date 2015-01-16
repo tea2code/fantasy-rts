@@ -3,6 +3,7 @@
 
 #include <main/JobHandler.h>
 #include <main/JobManager.h>
+#include <frts/BaseUtility.h>
 
 #include <list>
 #include <memory>
@@ -10,7 +11,7 @@
 
 namespace frts
 {
-    class JobManagerImpl : public JobManager
+    class JobManagerImpl : public BaseUtility<JobManager>
     {
     public:
         /**
@@ -28,19 +29,7 @@ namespace frts
             return "frts/JobManager";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
-        std::string getName() const override;
-        std::vector<std::string> getSupportedConfig() override;
-        std::string getTypeName() const override;
-        int getTypeVersion() const override;
-        int getVersion() const override;
         bool init(SharedManagerPtr shared) override;
-        bool isInitialized() const override;
-        bool isPreInitialized() const override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
         void validateModules(SharedManagerPtr shared) override;
 
         void addJob(JobPtr job, SharedManagerPtr shared) override;
@@ -48,9 +37,6 @@ namespace frts
         void stopJob(JobPtr job, SharedManagerPtr shared) override;
 
     private:
-        bool isInit = false;
-        bool isPreInit = false;
-
         JobHandlerPtr jobHandler;
 
         std::list<JobPtr> jobs;
