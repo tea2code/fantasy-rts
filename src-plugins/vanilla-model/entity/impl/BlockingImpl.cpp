@@ -24,7 +24,7 @@ bool frts::BlockingImpl::blocks(const BlockedByPtr& blockedBy)
     auto blockingBlocks = blocking.getBlocks();
 
     return std::any_of(blockingBlocks.begin(), blockingBlocks.end(),
-                       [&](IdPtr block) { return blockedByBlocks.find(block) != blockedByBlocks.end(); });
+                       [&](const IdPtr& block) { return blockedByBlocks.find(block) != blockedByBlocks.end(); });
 }
 
 frts::IdPtr frts::BlockingImpl::getComponentType() const

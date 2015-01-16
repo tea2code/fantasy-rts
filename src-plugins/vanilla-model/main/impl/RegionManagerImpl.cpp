@@ -90,7 +90,7 @@ frts::BlockPtr frts::RegionManagerImpl::getBlock(const PointPtr& pos, const Shar
 
     // Seems to result in a dead lock. Further testing is necessary. Currently the block generation speed
     // is more than fast enough so we will leave it for now.
-//    auto func = [](Point::value zLevel, Point::value sizeX, Point::value sizeY, SharedManagerPtr shared)
+//    auto func = [](Point::value zLevel, Point::value sizeX, Point::value sizeY, const SharedManagerPtr& shared)
 //    {
 //        auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
 //        auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());

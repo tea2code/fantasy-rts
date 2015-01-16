@@ -66,7 +66,7 @@ bool frts::findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool t
 
         // Sort by distance to have a more believable movement pattern for units.
         auto distAlgo = mf->getDistanceAlgorithm();
-        auto distCompare = [&](PointPtr pos1, PointPtr pos2)
+        auto distCompare = [&](const PointPtr& pos1, const PointPtr& pos2)
         {
             return distAlgo->distance(start, pos1) < distAlgo->distance(start, pos2);
         };

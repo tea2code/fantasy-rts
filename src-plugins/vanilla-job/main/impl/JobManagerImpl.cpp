@@ -47,11 +47,11 @@ bool frts::JobManagerImpl::employEntity(const EntityPtr& entity, const SharedMan
     }
     auto curriculum = getComponent<Curriculum>(curriculumId, entity);
 
-    auto hasAbility = [&](IdPtr ability)
+    auto hasAbility = [&](const IdPtr& ability)
     {
         return curriculum->hasAbility(ability);
     };
-    auto satisfiesRequirements = [&](JobPtr job)
+    auto satisfiesRequirements = [&](const JobPtr& job)
     {
         auto requirements = job->getRequirements();
         return std::all_of(requirements.begin(), requirements.end(), hasAbility) &&

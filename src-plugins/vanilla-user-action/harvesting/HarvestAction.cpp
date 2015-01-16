@@ -56,7 +56,7 @@ frts::Action::State frts::HarvestAction::execute(const SharedManagerPtr& shared)
                 // Any supported harvestable type?
                 auto harvestable = getComponent<Harvestable>(harvestableId, entity);
                 bool toHarvest = std::any_of(harvestTypes.begin(), harvestTypes.end(),
-                                             [&](IdPtr type) { return harvestable->hasType(type); });
+                                             [&](const IdPtr& type) { return harvestable->hasType(type); });
                 if (!toHarvest)
                 {
                     continue;

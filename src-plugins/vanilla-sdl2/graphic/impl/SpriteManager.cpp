@@ -71,7 +71,7 @@ frts::Sprite frts::SpriteManager::getSprite(const RenderablePtr& renderable, con
         // and checking if the dice value is int he chance interval of the current sprite point.
         // The advantage is that it doesn't matter what values the chances are.
         double upper = std::accumulate(spritePoints.begin(), spritePoints.end(), 0.0,
-                                       [](double sum, SpritePoint sp) { return sum + sp.getChance(); });
+                                       [](double sum, const SpritePoint& sp) { return sum + sp.getChance(); });
         double dice = frts::randomFloat(0.0, upper);
         double chanceFrom = 0.0;
         unsigned int spriteIndex = 0;
