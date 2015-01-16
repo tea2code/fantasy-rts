@@ -12,7 +12,7 @@
 
 namespace frts
 {
-    class VanillaDemoTickable : public BaseTickable, public EventObserver, public std::enable_shared_from_this<EventObserver>
+    class VanillaDemoTickable : public BaseTickable<Tickable>, public EventObserver, public std::enable_shared_from_this<EventObserver>
     {
     public:
         VanillaDemoTickable();

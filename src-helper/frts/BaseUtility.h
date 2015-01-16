@@ -2,6 +2,7 @@
 #define FRTS_BASEUTILITY_H
 
 #include <frts/module>
+#include <frts/shared>
 
 #include <string>
 
@@ -11,7 +12,8 @@ namespace frts
     /**
      * @brief Base implementation of utilities.
      */
-    class BaseUtility : public Utility
+    template<class UtilityInterface>
+    class BaseUtility : public UtilityInterface
     {
     public:
         BaseUtility(const std::string& name, int version, const std::string& typeName, int typeVersion)

@@ -14,7 +14,7 @@
 
 namespace frts
 {
-    class Sdl2Renderer : public BaseTickable
+    class Sdl2Renderer : public BaseTickable<Tickable>
     {
     public:
         Sdl2Renderer();

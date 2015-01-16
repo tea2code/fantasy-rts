@@ -23,7 +23,7 @@ namespace frts
      * @brief The job handlers runs the currently active jobs and allows to stop them.
      *        The job handler will send an event if a job has finished/stopped.
      */
-    class JobHandler : public BaseTickable
+    class JobHandler : public BaseTickable<Tickable>
     {
     public:
         JobHandler();

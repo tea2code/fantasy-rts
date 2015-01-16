@@ -11,7 +11,8 @@ namespace frts
     /**
      * @brief Base implementation of data values.
      */
-    class BaseDataValue : public DataValue
+    template <class DataValueInterface>
+    class BaseDataValue : public DataValueInterface
     {
     public:
         BaseDataValue(const std::string& name, int version, const std::string& typeName, int typeVersion)

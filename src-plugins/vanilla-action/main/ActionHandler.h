@@ -20,7 +20,7 @@ namespace frts
     /**
      * @brief The action handlers runs the current user action and allows to stop it.
      */
-    class ActionHandler : public BaseTickable
+    class ActionHandler : public BaseTickable<Tickable>
     {
     public:
         ActionHandler();

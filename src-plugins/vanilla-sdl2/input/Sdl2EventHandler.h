@@ -73,7 +73,7 @@ namespace frts
      */
     using Sdl2EventHandlerPtr = std::shared_ptr<Sdl2EventHandler>;
 
-    class Sdl2EventHandler : public BaseTickable
+    class Sdl2EventHandler : public BaseTickable<Tickable>
     {
     public:
         Sdl2EventHandler();

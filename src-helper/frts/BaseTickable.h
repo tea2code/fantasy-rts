@@ -2,6 +2,7 @@
 #define FRTS_BASETICKABLE_H
 
 #include <frts/module>
+#include <frts/shared>
 
 #include <string>
 
@@ -11,7 +12,8 @@ namespace frts
     /**
      * @brief Base implementation of tickables.
      */
-    class BaseTickable : public Tickable
+    template<class TickableInterface>
+    class BaseTickable : public TickableInterface
     {
     public:
         BaseTickable(const std::string& name, int version, const std::string& typeName, int typeVersion)

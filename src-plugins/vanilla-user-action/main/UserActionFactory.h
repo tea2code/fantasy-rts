@@ -2,7 +2,6 @@
 #define FRTS_USERACTIONFACTORY_H
 
 #include <frts/BaseUtility.h>
-#include <frts/shared>
 
 #include <unordered_map>
 
@@ -12,7 +11,7 @@ namespace frts
     /**
      * @brief This factory will register all commands, actions and jobs of this plugin.
      */
-    class UserActionFactory : public BaseUtility
+    class UserActionFactory : public BaseUtility<Utility>
     {
     public:
         UserActionFactory();

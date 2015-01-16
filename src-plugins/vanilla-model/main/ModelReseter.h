@@ -14,7 +14,7 @@ namespace frts
      *        Currently the following resets are done:
      *        - Reset changed positions.
      */
-    class ModelReseter : public BaseTickable
+    class ModelReseter : public BaseTickable<Tickable>
     {
     public:
         ModelReseter();

@@ -10,7 +10,7 @@ namespace frts
      * @brief The model startup executes task before going into the "Run Game"
      *        phase. It should be added to startup modules.
      */
-    class ModelStartup : public BaseTickable
+    class ModelStartup : public BaseTickable<Tickable>
     {
     public:
         ModelStartup();
