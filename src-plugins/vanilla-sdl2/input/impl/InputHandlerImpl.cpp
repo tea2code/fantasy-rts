@@ -9,7 +9,7 @@
 #include <boost/format.hpp>
 
 
-frts::InputHandlerImpl::InputHandlerImpl(Sdl2EventHandlerPtr sdl2EventHandler)
+frts::InputHandlerImpl::InputHandlerImpl(const Sdl2EventHandlerPtr& sdl2EventHandler)
     : BaseUtility(Sdl2Ids::inputHandler(), 1, Sdl2Ids::inputHandler(), 1),
       sdl2EventHandler{sdl2EventHandler}
 {
@@ -25,7 +25,7 @@ std::vector<std::string> frts::InputHandlerImpl::getSupportedConfig()
     return {"keys"};
 }
 
-bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
+bool frts::InputHandlerImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -87,7 +87,7 @@ bool frts::InputHandlerImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-void frts::InputHandlerImpl::registerCommand(KeyCommand keyCommand, IdPtr commandId)
+void frts::InputHandlerImpl::registerCommand(const KeyCommand& keyCommand, const IdPtr& commandId)
 {
     assert(commandId != nullptr);
 
@@ -102,7 +102,7 @@ void frts::InputHandlerImpl::registerCommand(KeyCommand keyCommand, IdPtr comman
     sdl2EventHandler->registerCommand(sdl2KeyCommand, commandId);
 }
 
-void frts::InputHandlerImpl::registerContextChange(KeyCommand keyCommand, IdPtr context)
+void frts::InputHandlerImpl::registerContextChange(const KeyCommand& keyCommand, const IdPtr& context)
 {
     assert(context != nullptr);
 
@@ -117,7 +117,7 @@ void frts::InputHandlerImpl::registerContextChange(KeyCommand keyCommand, IdPtr 
     sdl2EventHandler->registerContextChange(sdl2KeyCommand, context);
 }
 
-void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr)
+void frts::InputHandlerImpl::parseConfig(const std::string&, const ConfigNodePtr& node, const SharedManagerPtr&)
 {
     assert(node != nullptr);
 
@@ -125,7 +125,7 @@ void frts::InputHandlerImpl::parseConfig(const std::string&, ConfigNodePtr node,
     configNodes.push_back(node);
 }
 
-void frts::InputHandlerImpl::validateModules(SharedManagerPtr shared)
+void frts::InputHandlerImpl::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

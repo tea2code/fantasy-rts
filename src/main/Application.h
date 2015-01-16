@@ -44,7 +44,7 @@ namespace frts
         /**
          * @param log The logger.
          */
-        explicit Application(LogPtr log);
+        explicit Application(const LogPtr& log);
 
         /**
          * @brief Validate that all required data values are available.
@@ -52,7 +52,7 @@ namespace frts
          * @param shared The shared manager.
          */
         void checkRequiredDataValues(const std::vector<ModulePtr>& modules,
-                                     SharedManagerPtr shared) const;
+                                     const SharedManagerPtr& shared) const;
 
         /**
          * @brief Create data objects for modules.
@@ -60,14 +60,14 @@ namespace frts
          * @param modules The modules.
          * @param shared The shared manager.
          */
-        void createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+        void createData(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const;
 
         /**
          * @brief Execute given tickable modules.
          * @param modules The modules.
          * @param shared The shared manager.
          */
-        void executeModules(const std::vector<TickablePtr>& modules, SharedManagerPtr shared) const;
+        void executeModules(const std::vector<TickablePtr>& modules, const SharedManagerPtr& shared) const;
 
         /**
          * @brief Find tickable modules in loaded plugins.
@@ -81,7 +81,7 @@ namespace frts
          * @param id Id of the module.
          * @return List of utility modules.
          */
-        UtilityPtr findUtility(IdPtr id);
+        UtilityPtr findUtility(const IdPtr& id);
 
         /**
          * @brief Initialize given modules with the shared manager.
@@ -89,7 +89,7 @@ namespace frts
          * @param modules The modules to initialize.
          * @param shared The shared manager.
          */
-        void init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+        void init(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const;
 
         /**
          * @brief Load libraries and get plugins.
@@ -106,7 +106,7 @@ namespace frts
          * @param modules The modules to initialize.
          * @param shared The shared manager.
          */
-        void preInit(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const;
+        void preInit(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const;
 
         /**
          * @brief Read configuration.
@@ -118,7 +118,7 @@ namespace frts
          * @param configFiles List of configuration file names.
          */
         void readConfig(const std::map<std::string, std::vector<ModulePtr>>& supportedKeys,
-                        SharedManagerPtr shared,
+                        const SharedManagerPtr& shared,
                         const std::string& rootPath,
                         const std::vector<std::string>& configFiles) const;
 
@@ -149,7 +149,7 @@ namespace frts
          * @param shared The shared manager.
          */
         void validateData(const std::vector<ModulePtr>& modules,
-                          SharedManagerPtr shared) const;
+                          const SharedManagerPtr& shared) const;
 
         /**
          * @brief Validate that all required modules are available aka check
@@ -158,11 +158,11 @@ namespace frts
          * @param shared The shared manager.
          */
         void validateRequiredModules(const std::vector<ModulePtr>& modules,
-                                     SharedManagerPtr shared) const;
+                                     const SharedManagerPtr& shared) const;
 
     private:
         LogPtr log;
-        unsigned int maxNumberExtraExecutions = 1000;
+        unsigned int maxNumberExtraExecutions = 0;
         PluginManager pluginManager;
     };
 }

@@ -10,12 +10,12 @@ Tickable::Tickable()
 {
 }
 
-void Tickable::checkRequiredData(frts::SharedManagerPtr)
+void Tickable::checkRequiredData(const frts::SharedManagerPtr&)
 {
 
 }
 
-bool Tickable::createData(frts::SharedManagerPtr shared)
+bool Tickable::createData(const frts::SharedManagerPtr& shared)
 {
     auto data = std::make_shared<DataValue>();
     auto id = shared->makeId(data->getName());
@@ -49,7 +49,7 @@ int Tickable::getVersion() const
     return 1;
 }
 
-bool Tickable::init(frts::SharedManagerPtr)
+bool Tickable::init(const frts::SharedManagerPtr&)
 {
     return false;
 }
@@ -64,27 +64,27 @@ bool Tickable::isPreInitialized() const
     return false;
 }
 
-void Tickable::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
+void Tickable::parseConfig(const std::string&, const frts::ConfigNodePtr&, const frts::SharedManagerPtr&)
 {
 
 }
 
-bool Tickable::preInit(frts::SharedManagerPtr)
+bool Tickable::preInit(const frts::SharedManagerPtr&)
 {
     return false;
 }
 
-void Tickable::tick(frts::SharedManagerPtr)
+void Tickable::tick(const frts::SharedManagerPtr&)
 {
 
 }
 
-void Tickable::validateData(frts::SharedManagerPtr)
+void Tickable::validateData(const frts::SharedManagerPtr&)
 {
     // Everything is ok.
 }
 
-void Tickable::validateModules(frts::SharedManagerPtr)
+void Tickable::validateModules(const frts::SharedManagerPtr&)
 {
     // Everything is ok.
 }

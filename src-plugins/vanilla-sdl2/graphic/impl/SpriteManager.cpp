@@ -15,7 +15,7 @@ frts::SpriteManager::SpriteManager()
 {
 }
 
-frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr entity, SharedManagerPtr shared)
+frts::Sprite frts::SpriteManager::getSprite(const RenderablePtr& renderable, const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(renderable != nullptr);
     assert(entity != nullptr);
@@ -92,7 +92,7 @@ frts::Sprite frts::SpriteManager::getSprite(RenderablePtr renderable, EntityPtr 
     return sprite;
 }
 
-void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode)
+void frts::SpriteManager::setConfig(const SharedManagerPtr& shared, const std::string& rootNamespace, const ConfigNodePtr& spritesNode)
 {
     assert(shared != nullptr);
     assert(spritesNode != nullptr);
@@ -207,7 +207,7 @@ void frts::SpriteManager::setConfig(SharedManagerPtr shared, const std::string& 
     isConfigInitialized = true;
 }
 
-void frts::SpriteManager::validateData(SharedManagerPtr)
+void frts::SpriteManager::validateData(const SharedManagerPtr&)
 {
     // Is fallback set.
     if (fallback == nullptr)

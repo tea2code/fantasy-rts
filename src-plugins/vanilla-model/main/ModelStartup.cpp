@@ -12,14 +12,14 @@ frts::ModelStartup::ModelStartup()
 
 }
 
-void frts::ModelStartup::checkRequiredData(SharedManagerPtr shared)
+void frts::ModelStartup::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     validateDataValue(getName(), ModelIds::modelData(), 2, shared);
 }
 
-void frts::ModelStartup::tick(SharedManagerPtr shared)
+void frts::ModelStartup::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -48,7 +48,7 @@ void frts::ModelStartup::tick(SharedManagerPtr shared)
     shared->getLog()->info(getName(), "Precalculation complete.");
 }
 
-void frts::ModelStartup::validateModules(SharedManagerPtr shared)
+void frts::ModelStartup::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

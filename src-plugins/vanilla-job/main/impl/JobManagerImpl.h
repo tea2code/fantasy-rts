@@ -17,7 +17,7 @@ namespace frts
         /**
          * @param jobHandler The job handler.
          */
-        JobManagerImpl(JobHandlerPtr jobHandler);
+        JobManagerImpl(const JobHandlerPtr& jobHandler);
         ~JobManagerImpl();
 
         /**
@@ -29,12 +29,12 @@ namespace frts
             return "frts/JobManager";
         }
 
-        bool init(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
-        void addJob(JobPtr job, SharedManagerPtr shared) override;
-        bool employEntity(EntityPtr entity, SharedManagerPtr shared) override;
-        void stopJob(JobPtr job, SharedManagerPtr shared) override;
+        void addJob(const JobPtr& job, const SharedManagerPtr& shared) override;
+        bool employEntity(const EntityPtr& entity, const SharedManagerPtr& shared) override;
+        void stopJob(const JobPtr& job, const SharedManagerPtr& shared) override;
 
     private:
         JobHandlerPtr jobHandler;
@@ -47,7 +47,7 @@ namespace frts
      * @param jobHandler The job handler.
      * @return The job manager.
      */
-    inline JobManagerPtr makeJobManager(JobHandlerPtr jobHandler)
+    inline JobManagerPtr makeJobManager(const JobHandlerPtr& jobHandler)
     {
         assert(jobHandler != nullptr);
 

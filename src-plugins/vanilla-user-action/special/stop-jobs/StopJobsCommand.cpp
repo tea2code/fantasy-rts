@@ -3,7 +3,7 @@
 #include "StopJobsAction.h"
 
 
-frts::StopJobsCommand::StopJobsCommand(IdPtr commandType, ConfigNodePtr settings)
+frts::StopJobsCommand::StopJobsCommand(const IdPtr& commandType, const ConfigNodePtr& settings)
     : commandType{commandType}, settings{settings}
 {
 
@@ -14,7 +14,7 @@ frts::StopJobsCommand::~StopJobsCommand()
 
 }
 
-void frts::StopJobsCommand::execute(SharedManagerPtr shared)
+void frts::StopJobsCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -48,7 +48,7 @@ frts::IdPtr frts::StopJobsCommand::getCommandType() const
     return commandType;
 }
 
-void frts::StopJobsCommand::undo(SharedManagerPtr shared)
+void frts::StopJobsCommand::undo(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(this->action != nullptr);

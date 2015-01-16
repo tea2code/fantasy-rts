@@ -14,7 +14,7 @@ namespace frts
 
         IdUnorderedSet getNotUndoableCommands() const override;
         unsigned int getNumUndo() const override;
-        void setNotUndoableCommands(IdUnorderedSet commands) override;
+        void setNotUndoableCommands(const IdUnorderedSet& commands) override;
         void setNumUndo(unsigned int numUndo) override;
 
     private:

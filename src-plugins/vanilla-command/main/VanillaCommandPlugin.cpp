@@ -9,7 +9,7 @@ frts::VanillaCommandPlugin::VanillaCommandPlugin()
 {
 }
 
-frts::ModulePtr frts::VanillaCommandPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaCommandPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

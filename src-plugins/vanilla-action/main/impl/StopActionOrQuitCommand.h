@@ -15,12 +15,12 @@ namespace frts
     class StopActionOrQuitCommand : public Command
     {
     public:
-        StopActionOrQuitCommand(IdPtr commandType);
+        StopActionOrQuitCommand(const IdPtr& commandType);
         ~StopActionOrQuitCommand();
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -31,7 +31,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command.
      */
-    inline CommandPtr makeStopActionOrQuitCommand(IdPtr commandType)
+    inline CommandPtr makeStopActionOrQuitCommand(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
 

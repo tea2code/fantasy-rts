@@ -5,7 +5,7 @@
 #include <main/Sdl2Ids.h>
 
 
-frts::SelectCommand::SelectCommand(IdPtr commandType)
+frts::SelectCommand::SelectCommand(const IdPtr& commandType)
     : commandType{commandType}
 {
 
@@ -16,7 +16,7 @@ frts::SelectCommand::~SelectCommand()
 
 }
 
-void frts::SelectCommand::execute(SharedManagerPtr shared)
+void frts::SelectCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -37,7 +37,7 @@ frts::IdPtr frts::SelectCommand::getCommandType() const
     return commandType;
 }
 
-void frts::SelectCommand::undo(SharedManagerPtr shared)
+void frts::SelectCommand::undo(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

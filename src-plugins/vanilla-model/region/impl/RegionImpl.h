@@ -26,15 +26,15 @@ namespace frts
          * @param regionGenerator The region generator.
          */
         RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
-                   RegionGeneratorPtr regionGenerator);
+                   const RegionGeneratorPtr& regionGenerator);
 
-        PointVector findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) override;
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
-        BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
-        PointVector getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) override;
-        PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
-        PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
-        PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
+        PointVector findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy, bool sameZLevel, const SharedManagerPtr& shared) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, const BlockedByPtr& blockedBy, const SharedManagerPtr& shared) override;
+        BlockPtr getBlock(const PointPtr& pos, const SharedManagerPtr& shared) override;
+        PointVector getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr& shared) override;
+        PointPtr getPos(const EntityPtr& entity, const SharedManagerPtr& shared) override;
+        PointPtr removeEntity(const EntityPtr& entity, const SharedManagerPtr& shared) override;
+        PointPtr setPos(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared) override;
 
     private:
         using PosBlockVector = std::vector<std::vector<std::vector<WriteableBlockPtr>>>;
@@ -64,7 +64,7 @@ namespace frts
         #endif
 
     private:
-        WriteableBlockPtr getWriteableBlock(PointPtr pos, SharedManagerPtr shared);
+        WriteableBlockPtr getWriteableBlock(const PointPtr& pos, const SharedManagerPtr& shared);
     };
 
     /**
@@ -75,7 +75,7 @@ namespace frts
      * @return The region pointer.
      */
     inline RegionPtr makeRegion(Point::value mapSizeX, Point::value mapSizeY,
-                                RegionGeneratorPtr regionGenerator)
+                                const RegionGeneratorPtr& regionGenerator)
     {
         assert(regionGenerator != nullptr);
 

@@ -43,7 +43,7 @@ namespace frts
          * @brief Set information values.
          * @param values A list of information items.
          */
-        virtual void setInformation(std::vector<InfoItem> values) = 0;
+        virtual void setInformation(const std::vector<InfoItem>& values) = 0;
     };
 }
 

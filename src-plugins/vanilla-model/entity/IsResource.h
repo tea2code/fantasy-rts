@@ -33,7 +33,7 @@ namespace frts
          * @brief Set type of resource.
          * @param resourceType The resource type.
          */
-        virtual void setResourceType(IdPtr resourceType) = 0;
+        virtual void setResourceType(const IdPtr& resourceType) = 0;
     };
 }
 

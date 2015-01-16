@@ -16,13 +16,14 @@ namespace frts
          * @param jobRequirements List of requirements for the entity which might execute the job.
          * @param jobMarker The job marker entity. Will be removed after completion.
          */
-        HarvestJob(IdPtr id, IdPtr type, EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker);
+        HarvestJob(const IdPtr& id, const IdPtr& type, const EntityPtr& toHarvest,
+                   const IdUnorderedSet& jobRequirements, const EntityPtr& jobMarker);
         ~HarvestJob();
 
-        bool checkSpecialRequirements(EntityPtr entity, SharedManagerPtr shared) const override;
-        State execute(SharedManagerPtr shared) override;
-        bool isValid(SharedManagerPtr shared) const override;
-        State stop(SharedManagerPtr shared) override;
+        bool checkSpecialRequirements(const EntityPtr& entity, const SharedManagerPtr& shared) const override;
+        State execute(const SharedManagerPtr& shared) override;
+        bool isValid(const SharedManagerPtr& shared) const override;
+        State stop(const SharedManagerPtr& shared) override;
 
     private:
         /**
@@ -54,7 +55,8 @@ namespace frts
      * @param jobMarker The job marker entity. Will be removed after completion.
      * @return The job.
      */
-    inline JobPtr makeHarvestJob(IdPtr id, IdPtr type, EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
+    inline JobPtr makeHarvestJob(const IdPtr& id, const IdPtr& type, const EntityPtr& toHarvest,
+                                 const IdUnorderedSet& jobRequirements, const EntityPtr& jobMarker)
     {
         assert(id != nullptr);
         assert(type != nullptr);

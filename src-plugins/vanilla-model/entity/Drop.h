@@ -28,7 +28,7 @@ namespace frts
          * @brief Add entity to drop.
          * @param entityId The entity id.
          */
-        virtual void addDrop(IdPtr entityId) = 0;
+        virtual void addDrop(const IdPtr& entityId) = 0;
 
         /**
          * @brief Get all drops.
@@ -41,13 +41,13 @@ namespace frts
          * @param entityId The entity id.
          * @return True if it hase the drop else false.
          */
-        virtual bool hasDrop(IdPtr entityId) const = 0;
+        virtual bool hasDrop(const IdPtr& entityId) const = 0;
 
         /**
          * @brief Remove entity to drop.
          * @param entityId The entity id.
          */
-        virtual void removeDrop(IdPtr entityId) = 0;
+        virtual void removeDrop(const IdPtr& entityId) = 0;
     };
 }
 

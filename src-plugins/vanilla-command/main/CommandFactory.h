@@ -33,7 +33,7 @@ namespace frts
          * @param command The command.
          * @param shared The shared manager.
          */
-        virtual void addToUndo(CommandPtr command, SharedManagerPtr shared) = 0;
+        virtual void addToUndo(const CommandPtr& command, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Create a new command.
@@ -42,20 +42,20 @@ namespace frts
          * @param shared The shared manager.
          * @return The command.
          */
-        virtual CommandPtr makeCommand(IdPtr builderId, SharedManagerPtr shared) = 0;
+        virtual CommandPtr makeCommand(const IdPtr& builderId, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Register a command builder.
          * @param builderId The id of the command builder.
          * @param commandBuilder The command builder.
          */
-        virtual void registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder) = 0;
+        virtual void registerCommandBuilder(const IdPtr& builderId, const CommandBuilderPtr& builder) = 0;
 
         /**
          * @brief Executes undo for the last command.
          * @param shared The shared manager.
          */
-        virtual void undoLastCommand(SharedManagerPtr shared) = 0;
+        virtual void undoLastCommand(const SharedManagerPtr& shared) = 0;
     };
 }
 

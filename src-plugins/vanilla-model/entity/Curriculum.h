@@ -30,7 +30,7 @@ namespace frts
          * @brief Add a new ability. Adding multiple times will add it only once.
          * @param ability The ability.
          */
-        virtual void addAbility(IdPtr ability) = 0;
+        virtual void addAbility(const IdPtr& ability) = 0;
 
         /**
          * @brief Get all abilities.
@@ -43,13 +43,13 @@ namespace frts
          * @param ability The ability.
          * @return True if this entity has the given ability else false.
          */
-        virtual bool hasAbility(IdPtr ability) const = 0;
+        virtual bool hasAbility(const IdPtr& ability) const = 0;
 
         /**
          * @brief Remove an ability. Removing multiple times isn't any problem
          * @param ability The ability.
          */
-        virtual void removeAbility(IdPtr ability) = 0;
+        virtual void removeAbility(const IdPtr& ability) = 0;
     };
 }
 

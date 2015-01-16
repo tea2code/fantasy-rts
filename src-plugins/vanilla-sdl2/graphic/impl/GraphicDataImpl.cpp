@@ -92,12 +92,12 @@ bool frts::GraphicDataImpl::isRenderEverything() const
     return renderEverything;
 }
 
-void frts::GraphicDataImpl::setCursor(EntityPtr cursor)
+void frts::GraphicDataImpl::setCursor(const EntityPtr& cursor)
 {
     this->cursor = cursor;
 }
 
-void frts::GraphicDataImpl::setMapArea(ScreenArea mapArea)
+void frts::GraphicDataImpl::setMapArea(const ScreenArea& mapArea)
 {
     this->mapArea = mapArea;
 }
@@ -147,7 +147,7 @@ void frts::GraphicDataImpl::setScreenWidth(frts::GraphicData::pixel screenWidth)
     this->screenWidth = screenWidth;
 }
 
-void frts::GraphicDataImpl::setSidebarArea(ScreenArea sidebarArea)
+void frts::GraphicDataImpl::setSidebarArea(const ScreenArea& sidebarArea)
 {
     this->sidebarArea = sidebarArea;
 }

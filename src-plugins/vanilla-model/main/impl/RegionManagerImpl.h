@@ -15,23 +15,23 @@ namespace frts
     class RegionManagerImpl : public BaseDataValue<RegionManager>
     {
     public:
-        RegionManagerImpl(RegionPtr region, LockableResourceManagerPtr resourceManager,
-                          LockableResourceManagerPtr resourceEntityManager,
-                          IdPtr hasResourceType, IdPtr isResourceType);
+        RegionManagerImpl(const RegionPtr& region, const LockableResourceManagerPtr& resourceManager,
+                          const LockableResourceManagerPtr& resourceEntityManager,
+                          const IdPtr& hasResourceType, const IdPtr& isResourceType);
 
-        void addChangedPos(PointPtr pos) override;
-        PointVector findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) override;
-        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
-        ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
-        ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
-        BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) override;
+        void addChangedPos(const PointPtr& pos) override;
+        PointVector findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy, bool sameZLevel, const SharedManagerPtr& shared) override;
+        PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, const BlockedByPtr& blockedBy, const SharedManagerPtr& shared) override;
+        ResourceLockPtr findNearestResource(const IdPtr& entityGroup, const IdPtr& resourceType, const PointPtr& pos, const SharedManagerPtr& shared) override;
+        ResourceLockPtr findNearestResourceEntity(const IdPtr& entityGroup, const IdPtr& resourceType, const PointPtr& pos, const SharedManagerPtr& shared) override;
+        BlockPtr getBlock(const PointPtr& pos, const SharedManagerPtr& shared) override;
         PointUnorderedSet getChangedPos() override;
-        PointVector getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) override;
-        PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) override;
-        PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) override;
+        PointVector getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr& shared) override;
+        PointPtr getPos(const EntityPtr& entity, const SharedManagerPtr& shared) override;
+        PointPtr removeEntity(const EntityPtr& entity, const SharedManagerPtr& shared) override;
         void resetChangedPos() override;
-        PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) override;
-        void updateResources(EntityPtr entity, SharedManagerPtr shared) override;
+        PointPtr setPos(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared) override;
+        void updateResources(const EntityPtr& entity, const SharedManagerPtr& shared) override;
 
     private:
         PointUnorderedSet changedPos;
@@ -48,24 +48,24 @@ namespace frts
          * @brief Lock free implementation of addChangedPos().
          * @param pos The position.
          */
-        void addChangedPosLockFree(PointPtr pos);
+        void addChangedPosLockFree(const PointPtr& pos);
 
         /**
          * @brief Lock free implementation of updateResource().
          * @param entity The entity.
          * @param shared The shared manager.
          */
-        void updateResourcesLockFree(EntityPtr entity, SharedManagerPtr shared);
+        void updateResourcesLockFree(const EntityPtr& entity, const SharedManagerPtr& shared);
     };
 
     /**
      * @brief Create new region manager.
      * @return The region manager.
      */
-    inline RegionManagerPtr makeRegionManager(RegionPtr region,
-                                              LockableResourceManagerPtr resourceManager,
-                                              LockableResourceManagerPtr resourceEntityManager,
-                                              IdPtr hasResourceType, IdPtr isResourceType)
+    inline RegionManagerPtr makeRegionManager(const RegionPtr& region,
+                                              const LockableResourceManagerPtr& resourceManager,
+                                              const LockableResourceManagerPtr& resourceEntityManager,
+                                              const IdPtr& hasResourceType, const IdPtr& isResourceType)
     {
         assert(region != nullptr);
 

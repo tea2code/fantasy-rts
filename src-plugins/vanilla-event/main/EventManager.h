@@ -35,7 +35,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The event.
          */
-        virtual EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) = 0;
+        virtual EventPtr makeEvent(const IdPtr& type, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Create a new event value.
@@ -43,41 +43,41 @@ namespace frts
          * @param shared The shared manager.
          * @return The event value.
          */
-        virtual EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) = 0;
+        virtual EventValuePtr makeEventValue(const IdPtr& type, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Raise a new event. Every event observer which has registered to this event
          *        type will be notified.
          * @param event The event.
          */
-        virtual void raise(EventPtr event, SharedManagerPtr shared) = 0;
+        virtual void raise(const EventPtr& event, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Register an event value builder.
          * @param type The event value type for which this builder is registered.
          * @param builder The event value builder.
          */
-        virtual void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) = 0;
+        virtual void registerEventValueBuilder(const IdPtr& type, const EventValueBuilderPtr& builder) = 0;
 
         /**
          * @brief Subscribe to given event type.
          * @param observer The event observer.
          * @param type The event type.
          */
-        virtual void subscribe(EventObserverPtr observer, IdPtr type) = 0;
+        virtual void subscribe(const EventObserverPtr& observer, const IdPtr& type) = 0;
 
         /**
          * @brief Unsubcribe from all events.
          * @param observer The observer.
          */
-        virtual void unsubscribe(EventObserverPtr observer) = 0;
+        virtual void unsubscribe(const EventObserverPtr& observer) = 0;
 
         /**
          * @brief Unsubcribe from given event type.
          * @param observer The observer.
          * @param type The type.
          */
-        virtual void unsubscribe(EventObserverPtr observer, IdPtr type) = 0;
+        virtual void unsubscribe(const EventObserverPtr& observer, const IdPtr& type) = 0;
     };
 
     /**
@@ -88,7 +88,7 @@ namespace frts
      * @return The event value.
      */
     template<class EventValue>
-    std::shared_ptr<EventValue> makeEventValue(EventManagerPtr eventManager, const std::string& type, SharedManagerPtr shared)
+    std::shared_ptr<EventValue> makeEventValue(const EventManagerPtr& eventManager, const std::string& type, const SharedManagerPtr& shared)
     {
         auto typeId = shared->makeId(type);
         return std::static_pointer_cast<EventValue>(eventManager->makeEventValue(typeId, shared));

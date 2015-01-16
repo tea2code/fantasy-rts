@@ -40,7 +40,7 @@ frts::JobHandler::~JobHandler()
 
 }
 
-void frts::JobHandler::runJob(JobPtr job)
+void frts::JobHandler::runJob(const JobPtr& job)
 {
     assert(job != nullptr);
 
@@ -55,7 +55,7 @@ void frts::JobHandler::runJob(JobPtr job)
     runningJobs.push(std::make_pair(fromMilliseconds(0), job));
 }
 
-void frts::JobHandler::stopJob(JobPtr job)
+void frts::JobHandler::stopJob(const JobPtr& job)
 {
     assert(job != nullptr);
 
@@ -68,7 +68,7 @@ void frts::JobHandler::stopJob(JobPtr job)
     toStop.insert(job);
 }
 
-void frts::JobHandler::tick(SharedManagerPtr shared)
+void frts::JobHandler::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

@@ -1,6 +1,6 @@
 #include "MovableImpl.h"
 
-frts::MovableImpl::MovableImpl(IdPtr type)
+frts::MovableImpl::MovableImpl(const IdPtr& type)
     : current{nullptr}, path{nullptr}, previous{nullptr}, type{type}
 {}
 
@@ -59,7 +59,7 @@ double frts::MovableImpl::getSpeed() const
     return this->speed;
 }
 
-void frts::MovableImpl::setPath(PathPtr path)
+void frts::MovableImpl::setPath(const PathPtr& path)
 {
     assert(path != nullptr);
 

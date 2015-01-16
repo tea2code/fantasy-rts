@@ -36,7 +36,7 @@ namespace frts
         SidebarDrawer();
         ~SidebarDrawer();
 
-        void notify(EventPtr event, SharedManagerPtr shared) override;
+        void notify(const EventPtr& event, const SharedManagerPtr& shared) override;
 
         /**
          * @brief Get class name.
@@ -55,14 +55,14 @@ namespace frts
          * @param drawer The drawer.
          * @param shared The shared manager.
          */
-        void init(DrawerPtr drawer, SharedManagerPtr shared);
+        void init(const DrawerPtr& drawer, const SharedManagerPtr& shared);
 
         /**
          * @brief Set the sidebar configuration.
          * @param shared The shared manager.
          * @param sidebarNode The sidebar config node.
          */
-        void setSidebarConfig(SharedManagerPtr shared, ConfigNodePtr sidebarNode);
+        void setSidebarConfig(const SharedManagerPtr& shared, const ConfigNodePtr& sidebarNode);
 
         /**
          * @brief Update events in sidebar.
@@ -70,7 +70,7 @@ namespace frts
          * @param forceUpdate If set to true an update will be executed even if it seems not necessary.
          * @return True if something has been updated else false.
          */
-        bool updateEvents(SharedManagerPtr shared, bool forceUpdate = false);
+        bool updateEvents(const SharedManagerPtr& shared, bool forceUpdate = false);
 
         /**
          * @brief Update tile info in sidebar.
@@ -78,20 +78,20 @@ namespace frts
          * @param forceUpdate If set to true an update will be executed even if it seems not necessary.
          * @return True if something has been updated else false.
          */
-        bool updateInfo(SharedManagerPtr shared, bool forceUpdate = false);
+        bool updateInfo(const SharedManagerPtr& shared, bool forceUpdate = false);
 
         /**
          * @brief Update complete sidebar.
          * @param shared The shared manager.
          * @return True if something has been updated else false.
          */
-        bool updateSidebar(SharedManagerPtr shared);
+        bool updateSidebar(const SharedManagerPtr& shared);
 
         /**
          * @brief Validate configuration. Should be called during data validation phase.
          * @param shared The shared manager.
          */
-        void validateData(SharedManagerPtr shared);
+        void validateData(const SharedManagerPtr& shared);
 
     private:
         struct EventSubscription
@@ -208,7 +208,8 @@ namespace frts
          * @return The rendered texture or null if failed.
          */
         Drawer::TexturePtr drawText(const std::string& text, GraphicData::pixel x, GraphicData::pixel y,
-                                    GraphicData::pixel maxWidth, GraphicData::pixel maxHeight, SharedManagerPtr shared);
+                                    GraphicData::pixel maxWidth, GraphicData::pixel maxHeight,
+                                    const SharedManagerPtr& shared);
     };
 
     /**

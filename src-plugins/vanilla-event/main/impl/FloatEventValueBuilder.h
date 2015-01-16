@@ -13,7 +13,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        FloatEventValueBuilder(IdPtr type);
+        FloatEventValueBuilder(const IdPtr& type);
     };
 
     /**

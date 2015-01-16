@@ -14,7 +14,7 @@ frts::CurriculumBuilder::~CurriculumBuilder()
 
 }
 
-frts::ComponentPtr frts::CurriculumBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::CurriculumBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -22,7 +22,7 @@ frts::ComponentPtr frts::CurriculumBuilder::build(SharedManagerPtr shared)
     return makeCurriculum(id);
 }
 
-frts::ComponentPtr frts::CurriculumBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::CurriculumBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

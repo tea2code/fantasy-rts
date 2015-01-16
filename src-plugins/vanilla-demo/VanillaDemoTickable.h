@@ -26,11 +26,11 @@ namespace frts
             return "frts/VanillaDemo";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool init(SharedManagerPtr shared) override;
-        void notify(EventPtr event, SharedManagerPtr shared) override;
-        void tick(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        void checkRequiredData(const SharedManagerPtr& shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        void notify(const EventPtr& event, const SharedManagerPtr& shared) override;
+        void tick(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
     private:
         EntityVector highlights;
@@ -39,9 +39,9 @@ namespace frts
         EntityVector working;
 
     private:
-        void addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,
-                          SharedManagerPtr shared, PointPtr pos, const std::string& id);
-        void resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared);
+        void addHighlight(const ModelFactoryPtr& modelFactory, const RegionManagerPtr& regionManager,
+                          const SharedManagerPtr& shared, const PointPtr& pos, const std::string& id);
+        void resetHighlights(const RegionManagerPtr& regionManager, const SharedManagerPtr& shared);
     };
 }
 

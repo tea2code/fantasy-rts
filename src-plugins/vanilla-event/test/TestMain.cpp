@@ -26,7 +26,7 @@ namespace test
     class TestObserver : public frts::EventObserver
     {
     public:
-        void notify(frts::EventPtr event, frts::SharedManagerPtr) override
+        void notify(const frts::EventPtr& event, const frts::SharedManagerPtr&) override
         {
             lastEvent = event->getType();
         }

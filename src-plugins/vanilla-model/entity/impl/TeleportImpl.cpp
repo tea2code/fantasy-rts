@@ -1,7 +1,7 @@
 #include "TeleportImpl.h"
 
 
-frts::TeleportImpl::TeleportImpl(IdPtr type)
+frts::TeleportImpl::TeleportImpl(const IdPtr& type)
     : target{nullptr}, type{type}
 {}
 
@@ -15,7 +15,7 @@ frts::EntityPtr frts::TeleportImpl::getTarget() const
     return target;
 }
 
-void frts::TeleportImpl::setTarget(EntityPtr target)
+void frts::TeleportImpl::setTarget(const EntityPtr& target)
 {
     assert(target != nullptr);
 

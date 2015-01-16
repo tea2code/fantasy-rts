@@ -31,7 +31,7 @@ namespace frts
          * @param point2 Second point.
          * @return The distance.
          */
-        virtual Point::length distance(PointPtr point1, PointPtr point2) = 0;
+        virtual Point::length distance(const PointPtr& point1, const PointPtr& point2) = 0;
     };
 }
 

@@ -4,7 +4,7 @@
 #include <main/ActionManager.h>
 
 
-frts::StopActionCommand::StopActionCommand(IdPtr commandType)
+frts::StopActionCommand::StopActionCommand(const IdPtr& commandType)
     : commandType{commandType}
 {
 
@@ -15,7 +15,7 @@ frts::StopActionCommand::~StopActionCommand()
 
 }
 
-void frts::StopActionCommand::execute(SharedManagerPtr shared)
+void frts::StopActionCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -28,7 +28,7 @@ frts::IdPtr frts::StopActionCommand::getCommandType() const
     return commandType;
 }
 
-void frts::StopActionCommand::undo(SharedManagerPtr)
+void frts::StopActionCommand::undo(const SharedManagerPtr&)
 {
     // No support for undo.
 }

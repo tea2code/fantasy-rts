@@ -22,7 +22,7 @@ frts::Sdl2EventHandlerPtr frts::VanillaSdl2Plugin::getSdl2EventHandler()
     return sdl2EventHandler;
 }
 
-frts::ModulePtr frts::VanillaSdl2Plugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaSdl2Plugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

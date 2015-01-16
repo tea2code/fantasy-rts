@@ -9,14 +9,14 @@ frts::EntityImpl::EntityImpl()
 {
 }
 
-void frts::EntityImpl::addComponent(ComponentPtr component)
+void frts::EntityImpl::addComponent(const ComponentPtr& component)
 {
     assert(component != nullptr);
 
     components[component->getComponentType()] = component;
 }
 
-frts::ComponentPtr frts::EntityImpl::getComponent(IdPtr type) const
+frts::ComponentPtr frts::EntityImpl::getComponent(const IdPtr& type) const
 {
     assert(type != nullptr);
 
@@ -39,14 +39,14 @@ std::vector<frts::ComponentPtr> frts::EntityImpl::getComponents() const
     return result;
 }
 
-bool frts::EntityImpl::hasComponent(IdPtr type) const
+bool frts::EntityImpl::hasComponent(const IdPtr& type) const
 {
     assert(type != nullptr);
 
     return getComponent(type) != nullptr;
 }
 
-void frts::EntityImpl::removeComponent(IdPtr type)
+void frts::EntityImpl::removeComponent(const IdPtr& type)
 {
     assert(type != nullptr);
 

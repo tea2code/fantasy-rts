@@ -24,15 +24,15 @@ namespace frts
             return "frts/EventManager";
         }
 
-        bool init(SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
 
-        EventPtr makeEvent(IdPtr type, SharedManagerPtr shared) override;
-        EventValuePtr makeEventValue(IdPtr type, SharedManagerPtr shared) override;
-        void raise(EventPtr event, SharedManagerPtr shared) override;
-        void registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder) override;
-        void subscribe(EventObserverPtr observer, IdPtr type) override;
-        void unsubscribe(EventObserverPtr observer) override;
-        void unsubscribe(EventObserverPtr observer, IdPtr type) override;
+        EventPtr makeEvent(const IdPtr& type, const SharedManagerPtr& shared) override;
+        EventValuePtr makeEventValue(const IdPtr& type, const SharedManagerPtr& shared) override;
+        void raise(const EventPtr& event, const SharedManagerPtr& shared) override;
+        void registerEventValueBuilder(const IdPtr& type, const EventValueBuilderPtr& builder) override;
+        void subscribe(const EventObserverPtr& observer, const IdPtr& type) override;
+        void unsubscribe(const EventObserverPtr& observer) override;
+        void unsubscribe(const EventObserverPtr& observer, const IdPtr& type) override;
 
     private:
         using EventValueBuilderMap = std::unordered_map<IdPtr, EventValueBuilderPtr>;

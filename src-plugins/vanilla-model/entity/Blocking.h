@@ -28,20 +28,20 @@ namespace frts
          * @brief Add block type.
          * @param block The block type.
          */
-        virtual void addBlock(IdPtr block) = 0;
+        virtual void addBlock(const IdPtr& block) = 0;
 
         /**
          * @brief Check if it blocks.
          * @param blockedBy The blocked describtion.
          * @return True if it blocks else false.
          */
-        virtual bool blocks(BlockedByPtr blockedBy) = 0;
+        virtual bool blocks(const BlockedByPtr& blockedBy) = 0;
 
         /**
          * @brief Remove block type.
          * @param block The block type.
          */
-        virtual void removeBlock(IdPtr block) = 0;
+        virtual void removeBlock(const IdPtr& block) = 0;
     };
 }
 

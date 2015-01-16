@@ -24,9 +24,9 @@ namespace frts
             return "frts/ModelStartup";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        void tick(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        void checkRequiredData(const SharedManagerPtr& shared) override;
+        void tick(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
     };
 
     /**

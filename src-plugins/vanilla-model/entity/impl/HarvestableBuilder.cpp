@@ -16,7 +16,7 @@ frts::HarvestableBuilder::~HarvestableBuilder()
 
 }
 
-frts::ComponentPtr frts::HarvestableBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::HarvestableBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -24,7 +24,7 @@ frts::ComponentPtr frts::HarvestableBuilder::build(SharedManagerPtr shared)
     return makeHarvestable(id);
 }
 
-frts::ComponentPtr frts::HarvestableBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::HarvestableBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

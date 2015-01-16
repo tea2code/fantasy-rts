@@ -14,8 +14,8 @@ frts::VanillaDemoTickable::VanillaDemoTickable()
 {
 }
 
-void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, RegionManagerPtr regionManager,
-                                             SharedManagerPtr shared, PointPtr pos, const std::string& id)
+void frts::VanillaDemoTickable::addHighlight(const ModelFactoryPtr& modelFactory, const RegionManagerPtr& regionManager,
+                                             const SharedManagerPtr& shared, const PointPtr& pos, const std::string& id)
 {
     assert(modelFactory != nullptr);
     assert(regionManager != nullptr);
@@ -27,14 +27,14 @@ void frts::VanillaDemoTickable::addHighlight(ModelFactoryPtr modelFactory, Regio
     highlights.push_back(entity);
 }
 
-void frts::VanillaDemoTickable::checkRequiredData(SharedManagerPtr shared)
+void frts::VanillaDemoTickable::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     validateDataValue(getName(), Sdl2Ids::graphicData(), 4, shared);
 }
 
-bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
+bool frts::VanillaDemoTickable::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -54,11 +54,10 @@ bool frts::VanillaDemoTickable::init(frts::SharedManagerPtr shared)
     em->subscribe(shared_from_this(), shared->makeId(JobIds::jobFinishedEvent()));
     em->subscribe(shared_from_this(), shared->makeId(JobIds::jobStoppedEvent()));
 
-    isInit = true;
-    return false;
+    return BaseTickable::init(shared);
 }
 
-void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, SharedManagerPtr shared)
+void frts::VanillaDemoTickable::resetHighlights(const RegionManagerPtr& regionManager, const SharedManagerPtr& shared)
 {
     assert(regionManager != nullptr);
     assert(shared != nullptr);
@@ -70,7 +69,7 @@ void frts::VanillaDemoTickable::resetHighlights(RegionManagerPtr regionManager, 
     highlights.clear();
 }
 
-void frts::VanillaDemoTickable::notify(EventPtr event, SharedManagerPtr shared)
+void frts::VanillaDemoTickable::notify(const EventPtr& event, const SharedManagerPtr& shared)
 {
     assert(event != nullptr);
     assert(shared != nullptr);
@@ -93,7 +92,7 @@ void frts::VanillaDemoTickable::notify(EventPtr event, SharedManagerPtr shared)
     }
 }
 
-void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
+void frts::VanillaDemoTickable::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -188,7 +187,7 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 #endif
 }
 
-void frts::VanillaDemoTickable::validateModules(frts::SharedManagerPtr shared)
+void frts::VanillaDemoTickable::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

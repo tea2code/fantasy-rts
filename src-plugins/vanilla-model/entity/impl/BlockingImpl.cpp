@@ -4,19 +4,19 @@
 #include <iterator>
 
 
-frts::BlockingImpl::BlockingImpl(IdPtr type)
+frts::BlockingImpl::BlockingImpl(const IdPtr& type)
     : blocking{}, type{type}
 {
 }
 
-void frts::BlockingImpl::addBlock(IdPtr block)
+void frts::BlockingImpl::addBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 
     blocking.addBlock(block);
 }
 
-bool frts::BlockingImpl::blocks(BlockedByPtr blockedBy)
+bool frts::BlockingImpl::blocks(const BlockedByPtr& blockedBy)
 {
     assert(blockedBy != nullptr);
 
@@ -32,7 +32,7 @@ frts::IdPtr frts::BlockingImpl::getComponentType() const
     return type;
 }
 
-void frts::BlockingImpl::removeBlock(IdPtr block)
+void frts::BlockingImpl::removeBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 

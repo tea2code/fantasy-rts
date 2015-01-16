@@ -38,19 +38,19 @@ namespace frts
             return "frts/JobHandler";
         }
 
-        void tick(SharedManagerPtr shared) override;
+        void tick(const SharedManagerPtr& shared) override;
 
         /**
          * @brief Run given job.
          * @param job The job to run.
          */
-        void runJob(JobPtr job);
+        void runJob(const JobPtr& job);
 
         /**
          * @brief Stop given job if already running.
          * @param job The job to stop.
          */
-        void stopJob(JobPtr job);
+        void stopJob(const JobPtr& job);
 
     private:
         using TimeJob = std::pair<Frame::time, JobPtr>;

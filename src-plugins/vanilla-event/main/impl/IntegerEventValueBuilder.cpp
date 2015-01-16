@@ -1,7 +1,7 @@
 #include "IntegerEventValueBuilder.h"
 
 
-frts::IntegerEventValueBuilder::IntegerEventValueBuilder(IdPtr type)
+frts::IntegerEventValueBuilder::IntegerEventValueBuilder(const IdPtr& type)
     : BaseEventValueBuilder(type)
 {
 

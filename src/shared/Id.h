@@ -43,7 +43,7 @@ namespace frts
      * @param rhs Second id.
      * @return True if id are equal.
      */
-    inline bool operator==(IdPtr lhs, IdPtr rhs)
+    inline bool operator==(const IdPtr& lhs, const IdPtr& rhs)
     {
         bool lhsNull = (lhs == nullptr);
         bool rhsNull = (rhs == nullptr);
@@ -56,7 +56,7 @@ namespace frts
      * @param rhs Second id.
      * @return True if id are not equal.
      */
-    inline bool operator!=(IdPtr lhs, IdPtr rhs)
+    inline bool operator!=(const IdPtr& lhs, const IdPtr& rhs)
     {
         return !(lhs == rhs);
     }
@@ -67,7 +67,7 @@ namespace frts
      * @param rhs Second id.
      * @return True if lhs is less than rhs.
      */
-    inline bool operator<(IdPtr lhs, IdPtr rhs)
+    inline bool operator<(const IdPtr& lhs, const IdPtr& rhs)
     {
         bool lhsNull = (lhs == nullptr);
         bool rhsNull = (rhs == nullptr);
@@ -83,7 +83,7 @@ namespace std
     template <>
     struct hash<frts::IdPtr>
     {
-        size_t operator()(frts::IdPtr id) const
+        size_t operator()(const frts::IdPtr& id) const
         {
             if (id == nullptr)
             {

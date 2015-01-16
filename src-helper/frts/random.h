@@ -64,7 +64,7 @@ namespace frts
      * @return The selected random value.
      */
     template<typename Iter, typename RandomGenerator>
-    Iter selectRandomly(Iter start, Iter end, RandomGenerator& generator)
+    Iter selectRandomly(Iter start, Iter end, RandomGenerator generator)
     {
         std::uniform_int_distribution<> dis(0, std::distance(start, end) - 1);
         std::advance(start, dis(generator));

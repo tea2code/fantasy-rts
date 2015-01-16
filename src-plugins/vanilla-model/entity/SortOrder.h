@@ -59,13 +59,13 @@ namespace frts
          */
         struct SortOrdered
         {
-            SortOrdered(IdPtr componentType)
+            SortOrdered(const IdPtr& componentType)
                 : componentType{componentType}
             {
                 assert(componentType != nullptr);
             }
 
-            bool operator() (EntityPtr lhs, EntityPtr rhs) const
+            bool operator() (const EntityPtr& lhs, const EntityPtr& rhs) const
             {
                 assert(lhs != nullptr);
                 assert(rhs != nullptr);

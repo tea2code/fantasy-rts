@@ -27,7 +27,7 @@ namespace frts
          * @brief Add harvest type.
          * @param type The harvest type.
          */
-        virtual void addType(IdPtr type) = 0;
+        virtual void addType(const IdPtr& type) = 0;
 
         /**
          * @brief Get the harvest speed.
@@ -46,13 +46,13 @@ namespace frts
          * @param type The harvest type.
          * @return True if it has the harvest type else false.
          */
-        virtual bool hasType(IdPtr type) const = 0;
+        virtual bool hasType(const IdPtr& type) const = 0;
 
         /**
          * @brief Remove harvest type.
          * @param type The Type.
          */
-        virtual void removeType(IdPtr type) = 0;
+        virtual void removeType(const IdPtr& type) = 0;
 
         /**
          * @brief Set the harvest speed.

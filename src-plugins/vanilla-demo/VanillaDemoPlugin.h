@@ -13,7 +13,7 @@ namespace frts
     public:
         VanillaDemoPlugin();
 
-        ModulePtr getModule(frts::IdPtr id) override;
+        ModulePtr getModule(const IdPtr& id) override;
     };
 }
 

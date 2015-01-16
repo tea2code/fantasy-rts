@@ -40,7 +40,7 @@ void frts::SidebarDrawer::drawSeparationLine(GraphicData::pixel startX, GraphicD
 frts::Drawer::TexturePtr frts::SidebarDrawer::drawText(const std::string& text,
                                                        GraphicData::pixel x, GraphicData::pixel y,
                                                        GraphicData::pixel maxWidth, GraphicData::pixel maxHeight,
-                                                       SharedManagerPtr shared)
+                                                       const SharedManagerPtr& shared)
 {
     Drawer::TexturePtr texture = nullptr;
 
@@ -111,7 +111,7 @@ frts::IdVector frts::SidebarDrawer::getSidebarEvents() const
     return result;
 }
 
-void frts::SidebarDrawer::init(DrawerPtr drawer, SharedManagerPtr shared)
+void frts::SidebarDrawer::init(const DrawerPtr& drawer, const SharedManagerPtr& shared)
 {
     assert(drawer != nullptr);
     assert(shared != nullptr);
@@ -144,7 +144,7 @@ void frts::SidebarDrawer::init(DrawerPtr drawer, SharedManagerPtr shared)
     initialized = true;
 }
 
-void frts::SidebarDrawer::notify(EventPtr event, SharedManagerPtr shared)
+void frts::SidebarDrawer::notify(const EventPtr& event, const SharedManagerPtr& shared)
 {
     assert(event != nullptr);
     assert(shared != nullptr);
@@ -153,7 +153,7 @@ void frts::SidebarDrawer::notify(EventPtr event, SharedManagerPtr shared)
     eventsChanged = true;
 }
 
-void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePtr sidebarNode)
+void frts::SidebarDrawer::setSidebarConfig(const SharedManagerPtr& shared, const ConfigNodePtr& sidebarNode)
 {
     assert(shared != nullptr);
     assert(sidebarNode != nullptr);
@@ -241,7 +241,7 @@ void frts::SidebarDrawer::setSidebarConfig(SharedManagerPtr shared, ConfigNodePt
     }
 }
 
-bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate)
+bool frts::SidebarDrawer::updateEvents(const SharedManagerPtr& shared, bool forceUpdate)
 {
     assert(initialized);
     assert(shared != nullptr);
@@ -345,7 +345,7 @@ bool frts::SidebarDrawer::updateEvents(SharedManagerPtr shared, bool forceUpdate
     return ok;
 }
 
-bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
+bool frts::SidebarDrawer::updateInfo(const SharedManagerPtr& shared, bool forceUpdate)
 {
     assert(initialized);
     assert(shared != nullptr);
@@ -487,7 +487,7 @@ bool frts::SidebarDrawer::updateInfo(SharedManagerPtr shared, bool forceUpdate)
     return true;
 }
 
-bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
+bool frts::SidebarDrawer::updateSidebar(const SharedManagerPtr& shared)
 {
     assert(initialized);
     assert(shared != nullptr);
@@ -509,7 +509,7 @@ bool frts::SidebarDrawer::updateSidebar(SharedManagerPtr shared)
     return result;
 }
 
-void frts::SidebarDrawer::validateData(SharedManagerPtr)
+void frts::SidebarDrawer::validateData(const SharedManagerPtr&)
 {
     if (eventsHeight == 0)
     {

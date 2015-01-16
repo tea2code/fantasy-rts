@@ -27,7 +27,7 @@ namespace frts
     class SharedManagerImpl : public SharedManager
     {
     public:
-        explicit SharedManagerImpl(LogPtr log);
+        explicit SharedManagerImpl(const LogPtr& log);
         ~SharedManagerImpl() override;
 
         /**
@@ -40,7 +40,7 @@ namespace frts
          * @brief Set current frame.
          * @param frame The frame.
          */
-        void setFrame(FramePtr frame);
+        void setFrame(const FramePtr& frame);
 
         /**
          * @brief Set render modules
@@ -59,17 +59,17 @@ namespace frts
          * @param id The id of the module.
          * @param utility The module.
          */
-        void setUtility(IdPtr id, UtilityPtr utility);
+        void setUtility(const IdPtr& id, const UtilityPtr& utility);
 
-        DataValuePtr getDataValue(IdPtr id) const override;
+        DataValuePtr getDataValue(const IdPtr& id) const override;
         const FramePtr getFrame() const override;
         LogPtr getLog() const;
-        UtilityPtr getUtility(IdPtr id) const override;
+        UtilityPtr getUtility(const IdPtr& id) const override;
         bool isQuitApplication() const override;
         IdPtr makeId(const std::string& str) const override;
         TickableItr renderModulesBegin() const override;
         TickableItr renderModulesEnd() const override;
-        void setDataValue(IdPtr id, DataValuePtr value) override;
+        void setDataValue(const IdPtr& id, const DataValuePtr& value) override;
         void setQuitApplication(bool quit) override;
         TickableItr updateModulesBegin() const override;
         TickableItr updateModulesEnd() const override;
@@ -79,7 +79,7 @@ namespace frts
         using UtilityModulesMap = std::unordered_map<IdPtr, UtilityPtr>;
 
     private:
-        static const std::string logModule;
+        const std::string logModule = "frts::SharedManager";
 
         DataValueMap dataValues;
         FramePtr frame;
@@ -90,7 +90,7 @@ namespace frts
         UtilityModulesMap utilityModules;
 
     private:
-        IdNotFoundError makeIdNotFoundError(IdPtr id) const;
+        IdNotFoundError makeIdNotFoundError(const IdPtr& id) const;
     };
 
     /**
@@ -98,7 +98,7 @@ namespace frts
      * @param log The log.
      * @return The SharedManager.
      */
-    inline SharedManagerImplPtr makeSharedManager(LogPtr log)
+    inline SharedManagerImplPtr makeSharedManager(const LogPtr& log)
     {
         assert(log != nullptr);
 

@@ -12,11 +12,11 @@ namespace frts
         /**
          * @param type The component type.
          */
-        InfoImpl(IdPtr type);
+        InfoImpl(const IdPtr& type);
 
         IdPtr getComponentType() const override;
         std::vector<InfoItem> getInformation() const override;
-        void setInformation(std::vector<InfoItem> values) override;
+        void setInformation(const std::vector<InfoItem>& values) override;
 
     private:
         std::vector<InfoItem> information;
@@ -28,7 +28,7 @@ namespace frts
      * @param type The component type.
      * @return The component.
      */
-    inline InfoPtr makeInfo(IdPtr type)
+    inline InfoPtr makeInfo(const IdPtr& type)
     {
         return std::make_shared<InfoImpl>(type);
     }

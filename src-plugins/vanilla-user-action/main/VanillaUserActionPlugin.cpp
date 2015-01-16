@@ -9,7 +9,7 @@ frts::VanillaUserActionPlugin::VanillaUserActionPlugin()
 {
 }
 
-frts::ModulePtr frts::VanillaUserActionPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaUserActionPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

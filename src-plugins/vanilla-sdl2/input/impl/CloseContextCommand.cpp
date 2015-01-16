@@ -4,7 +4,7 @@
 #include <main/Sdl2Ids.h>
 
 
-frts::CloseContextCommand::CloseContextCommand(IdPtr commandType)
+frts::CloseContextCommand::CloseContextCommand(const IdPtr& commandType)
     : commandType{commandType}
 {
 
@@ -15,7 +15,7 @@ frts::CloseContextCommand::~CloseContextCommand()
 
 }
 
-void frts::CloseContextCommand::execute(SharedManagerPtr shared)
+void frts::CloseContextCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -27,7 +27,8 @@ frts::IdPtr frts::CloseContextCommand::getCommandType() const
 {
     return commandType;
 }
-void frts::CloseContextCommand::undo(SharedManagerPtr)
+
+void frts::CloseContextCommand::undo(const SharedManagerPtr&)
 {
     // Undo not supported.
 }

@@ -3,13 +3,13 @@
 #include <entity/IsResource.h>
 
 
-frts::LockableIsResourceManager::LockableIsResourceManager(
-        IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
+frts::LockableIsResourceManager::LockableIsResourceManager(const IdPtr& componentType, const RegionPtr& region,
+                                                           const DistanceAlgorithmPtr& distAlgo)
     : componentType{componentType}, resourceManager{distAlgo, region}
 {
 }
 
-void frts::LockableIsResourceManager::add(EntityPtr entity)
+void frts::LockableIsResourceManager::add(const EntityPtr& entity)
 {
     assert(entity != nullptr);
 
@@ -22,8 +22,9 @@ void frts::LockableIsResourceManager::add(EntityPtr entity)
     resourceManager.add(component->getResourceType(), entity);
 }
 
-frts::ResourceLockPtr frts::LockableIsResourceManager::findNearest(
-        IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared)
+frts::ResourceLockPtr frts::LockableIsResourceManager::findNearest(const IdPtr& entityGroup, const IdPtr& resourceType,
+                                                                   const PointPtr& pos,
+                                                                   const SharedManagerPtr& shared)
 {
     assert(entityGroup != nullptr);
     assert(resourceType != nullptr);
@@ -33,35 +34,35 @@ frts::ResourceLockPtr frts::LockableIsResourceManager::findNearest(
     return resourceManager.findNearest(entityGroup, resourceType, pos, shared_from_this(), shared);
 }
 
-frts::EntityPtr frts::LockableIsResourceManager::getEntity(ResourceLockPtr lock) const
+frts::EntityPtr frts::LockableIsResourceManager::getEntity(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
     return resourceManager.getEntity(lock);
 }
 
-frts::IdPtr frts::LockableIsResourceManager::getResourceType(ResourceLockPtr lock) const
+frts::IdPtr frts::LockableIsResourceManager::getResourceType(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
     return resourceManager.getResourceType(lock);
 }
 
-bool frts::LockableIsResourceManager::isValid(ResourceLockPtr lock) const
+bool frts::LockableIsResourceManager::isValid(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
     return resourceManager.isValid(lock);
 }
 
-void frts::LockableIsResourceManager::release(ResourceLockPtr lock)
+void frts::LockableIsResourceManager::release(const ResourceLockPtr& lock)
 {
     assert(lock != nullptr);
 
     resourceManager.release(lock);
 }
 
-void frts::LockableIsResourceManager::remove(EntityPtr entity)
+void frts::LockableIsResourceManager::remove(const EntityPtr& entity)
 {
     assert(entity != nullptr);
 

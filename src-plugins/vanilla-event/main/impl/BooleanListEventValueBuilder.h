@@ -13,7 +13,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        BooleanListEventValueBuilder(IdPtr type);
+        BooleanListEventValueBuilder(const IdPtr& type);
     };
 
     /**
@@ -21,7 +21,7 @@ namespace frts
      * @param type The event value type.
      * @return The event value builder.
      */
-    inline EventValueBuilderPtr makeBooleanListEventValueBuilder(IdPtr type)
+    inline EventValueBuilderPtr makeBooleanListEventValueBuilder(const IdPtr& type)
     {
         return std::make_shared<BooleanListEventValueBuilder>(type);
     }

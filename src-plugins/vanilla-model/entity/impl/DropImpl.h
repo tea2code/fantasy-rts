@@ -14,22 +14,22 @@ namespace frts
         /**
          * @param type The component type.
          */
-        DropImpl(IdPtr type);
+        DropImpl(const IdPtr& type);
 
-        void addDrop(IdPtr entityId) override;
+        void addDrop(const IdPtr& entityId) override;
         IdPtr getComponentType() const override;
         IdVector getDrops() const override;
-        bool hasDrop(IdPtr entityId) const override;
-        void removeDrop(IdPtr entityId) override;
+        bool hasDrop(const IdPtr& entityId) const override;
+        void removeDrop(const IdPtr& entityId) override;
 
     private:
         struct IdComparison
         {
-            IdComparison(IdPtr id)
+            IdComparison(const IdPtr& id)
                 : id{id}
             {}
 
-            bool operator()(IdPtr other)
+            bool operator()(const IdPtr& other)
             {
                 return id == other;
             }
@@ -47,7 +47,7 @@ namespace frts
      * @param type The component type.
      * @return The Drop.
      */
-    inline DropPtr makeDrop(IdPtr type)
+    inline DropPtr makeDrop(const IdPtr& type)
     {
         assert(type != nullptr);
 

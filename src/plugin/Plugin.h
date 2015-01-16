@@ -19,7 +19,7 @@ namespace frts
          * @param id The module id.
          * @return The module or null.
          */
-        virtual ModulePtr getModule(IdPtr id) = 0;
+        virtual ModulePtr getModule(const IdPtr& id) = 0;
     };
 }
 

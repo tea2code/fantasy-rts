@@ -11,12 +11,12 @@ namespace frts
     class StopJobsAction : public Action, public EventObserver, public std::enable_shared_from_this<EventObserver>
     {
     public:
-        StopJobsAction(IdUnorderedSet jobs, IdUnorderedSet types);
+        StopJobsAction(const IdUnorderedSet& jobs, const IdUnorderedSet& types);
         ~StopJobsAction();
 
-        State execute(SharedManagerPtr shared) override;
-        void notify(EventPtr event, SharedManagerPtr shared) override;
-        State stop(SharedManagerPtr shared) override;
+        State execute(const SharedManagerPtr& shared) override;
+        void notify(const EventPtr& event, const SharedManagerPtr& shared) override;
+        State stop(const SharedManagerPtr& shared) override;
 
     private:
         /**
@@ -48,7 +48,7 @@ namespace frts
      * @param type List of type ids.
      * @return The action.
      */
-    inline ActionPtr makeStopJobsAction(IdUnorderedSet jobs, IdUnorderedSet types)
+    inline ActionPtr makeStopJobsAction(const IdUnorderedSet& jobs, const IdUnorderedSet& types)
     {
         return std::make_shared<StopJobsAction>(jobs, types);
     }

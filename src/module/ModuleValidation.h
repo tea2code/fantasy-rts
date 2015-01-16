@@ -23,7 +23,7 @@ namespace frts
      * @param typeVersion The type version of the data value.
      * @param shared The shared manager.
      */
-    inline void validateDataValue(const std::string& validator, const std::string& dataValueId, int typeVersion, SharedManagerPtr shared)
+    inline void validateDataValue(const std::string& validator, const std::string& dataValueId, int typeVersion, const SharedManagerPtr& shared)
     {
         assert(shared != nullptr);
 
@@ -52,7 +52,7 @@ namespace frts
      * @param typeVersion The type version.
      * @param shared The shared manager.
      */
-    inline void validateTickable(const std::string& validator, const std::string& typeName, int typeVersion, SharedManagerPtr shared)
+    inline void validateTickable(const std::string& validator, const std::string& typeName, int typeVersion, const SharedManagerPtr& shared)
     {
         assert(shared != nullptr);
 
@@ -93,7 +93,7 @@ namespace frts
      * @param typeVersion The type version of the module.
      * @param shared The shared manager.
      */
-    inline void validateUtility(const std::string& validator, const std::string& utilityId, int typeVersion, SharedManagerPtr shared)
+    inline void validateUtility(const std::string& validator, const std::string& utilityId, int typeVersion, const SharedManagerPtr& shared)
     {
         assert(shared != nullptr);
 

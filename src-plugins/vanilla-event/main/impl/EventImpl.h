@@ -14,12 +14,12 @@ namespace frts
         /**
          * @param type The event type.
          */
-        EventImpl(IdPtr type);
+        EventImpl(const IdPtr& type);
 
         IdPtr getType() const override;
-        EventValuePtr getValue(IdPtr valueId) const override;
-        bool hasValue(IdPtr valueId) const override;
-        void setValue(IdPtr valueId, EventValuePtr value) override;
+        EventValuePtr getValue(const IdPtr& valueId) const override;
+        bool hasValue(const IdPtr& valueId) const override;
+        void setValue(const IdPtr& valueId, const EventValuePtr& value) override;
 
     private:
         IdPtr type;
@@ -31,7 +31,7 @@ namespace frts
      * @param type The event type.
      * @return The event.
      */
-    inline EventPtr makeEvent(IdPtr type)
+    inline EventPtr makeEvent(const IdPtr& type)
     {
         assert(type != nullptr);
 

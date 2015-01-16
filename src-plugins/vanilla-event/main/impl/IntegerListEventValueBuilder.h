@@ -13,7 +13,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        IntegerListEventValueBuilder(IdPtr type);
+        IntegerListEventValueBuilder(const IdPtr& type);
     };
 
     /**
@@ -21,7 +21,7 @@ namespace frts
      * @param type The event value type.
      * @return The event value builder.
      */
-    inline EventValueBuilderPtr makeIntegerListEventValueBuilder(IdPtr type)
+    inline EventValueBuilderPtr makeIntegerListEventValueBuilder(const IdPtr& type)
     {
         return std::make_shared<IntegerListEventValueBuilder>(type);
     }

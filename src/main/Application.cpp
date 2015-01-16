@@ -33,12 +33,13 @@ namespace
 }
 
 
-frts::Application::Application(LogPtr log)
+frts::Application::Application(const LogPtr& log)
     : log{log}
 {
+    setMaxNumberExtraExecutions();
 }
 
-void frts::Application::checkRequiredDataValues(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::checkRequiredDataValues(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     for (auto& module : modules)
     {
@@ -46,7 +47,7 @@ void frts::Application::checkRequiredDataValues(const std::vector<ModulePtr>& mo
     }
 }
 
-void frts::Application::createData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::createData(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
@@ -71,7 +72,7 @@ void frts::Application::createData(const std::vector<ModulePtr>& modules, Shared
     }
 }
 
-void frts::Application::executeModules(const std::vector<TickablePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::executeModules(const std::vector<TickablePtr>& modules, const SharedManagerPtr& shared) const
 {
     for(auto& module : modules)
     {
@@ -91,12 +92,12 @@ std::vector<frts::TickablePtr> frts::Application::findTickables(const std::vecto
     return result;
 }
 
-frts::UtilityPtr frts::Application::findUtility(IdPtr id)
+frts::UtilityPtr frts::Application::findUtility(const IdPtr& id)
 {
     return std::dynamic_pointer_cast<Utility>(pluginManager.findModule(id));
 }
 
-void frts::Application::init(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::init(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
@@ -149,7 +150,7 @@ void frts::Application::loadPlugins(const std::string& rootPath, const std::vect
     }
 }
 
-void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::preInit(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     auto todo = modules;
     std::vector<ModulePtr> repeat;
@@ -175,7 +176,7 @@ void frts::Application::preInit(const std::vector<ModulePtr>& modules, SharedMan
 }
 
 void frts::Application::readConfig(const std::map<std::string, std::vector<ModulePtr>>& supportedKeys,
-                                   SharedManagerPtr shared,
+                                   const SharedManagerPtr& shared,
                                    const std::string& rootPath,
                                    const std::vector<std::string>& configFiles) const
 {
@@ -241,7 +242,7 @@ void frts::Application::setMaxNumberExtraExecutions(unsigned int num)
     maxNumberExtraExecutions = num;
 }
 
-void frts::Application::validateData(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::validateData(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     assert(shared != nullptr);
 
@@ -251,7 +252,7 @@ void frts::Application::validateData(const std::vector<ModulePtr>& modules, Shar
     }
 }
 
-void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules, SharedManagerPtr shared) const
+void frts::Application::validateRequiredModules(const std::vector<ModulePtr>& modules, const SharedManagerPtr& shared) const
 {
     assert(shared != nullptr);
 

@@ -10,26 +10,26 @@ namespace frts
      * @brief End selection.
      * @param shared The shared manager.
      */
-    void endSelection(SharedManagerPtr shared);
+    void endSelection(const SharedManagerPtr& shared);
 
     /**
      * @brief Start a new selection.
      * @param shared The shared manager.
      */
-    void newSelection(SharedManagerPtr shared);
+    void newSelection(const SharedManagerPtr& shared);
 
     /**
      * @brief Stop/Cancel selection.
      * @param shared The shared manager.
      */
-    void stopSelection(SharedManagerPtr shared);
+    void stopSelection(const SharedManagerPtr& shared);
 
     /**
      * @brief Update current selection.
      * @param cursorPos The current cursor position.
      * @param shared The shared manager.
      */
-    void updateSelection(PointPtr cursorPos, SharedManagerPtr shared);
+    void updateSelection(const PointPtr& cursorPos, const SharedManagerPtr& shared);
 }
 
 #endif // FRTS_SELECTIONHELPER_H

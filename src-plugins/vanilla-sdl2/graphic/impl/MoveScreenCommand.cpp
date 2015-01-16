@@ -9,11 +9,11 @@
 #include <algorithm>
 
 
-frts::MoveScreenCommand::MoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
+frts::MoveScreenCommand::MoveScreenCommand(const IdPtr& commandType, Point::value x, Point::value y, Point::value z)
     : commandType{commandType}, x{x}, y{y}, z{z}
 {}
 
-void frts::MoveScreenCommand::execute(SharedManagerPtr shared)
+void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -105,7 +105,7 @@ frts::IdPtr frts::MoveScreenCommand::getCommandType() const
     return commandType;
 }
 
-void frts::MoveScreenCommand::undo(SharedManagerPtr shared)
+void frts::MoveScreenCommand::undo(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

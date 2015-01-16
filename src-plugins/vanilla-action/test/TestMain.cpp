@@ -18,7 +18,7 @@ namespace test
             : doNumExecutions{doNumExecutions}, doNumStops{doNumStops}
         {}
 
-        State execute(frts::SharedManagerPtr) override
+        State execute(const frts::SharedManagerPtr&) override
         {
             numExecutions += 1;
             if (numExecutions >= doNumExecutions)
@@ -31,7 +31,7 @@ namespace test
             }
         }
 
-        State stop(frts::SharedManagerPtr) override
+        State stop(const frts::SharedManagerPtr&) override
         {
             numStops += 1;
             if (numStops >= doNumStops)

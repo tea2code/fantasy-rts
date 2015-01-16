@@ -37,7 +37,7 @@ frts::PluginManager::~PluginManager()
     }
 }
 
-frts::ModulePtr frts::PluginManager::findModule(IdPtr id)
+frts::ModulePtr frts::PluginManager::findModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

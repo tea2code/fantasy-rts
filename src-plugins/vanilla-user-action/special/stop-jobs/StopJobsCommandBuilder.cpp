@@ -3,7 +3,7 @@
 #include "StopJobsCommand.h"
 
 
-frts::StopJobsCommandBuilder::StopJobsCommandBuilder(IdPtr commandType)
+frts::StopJobsCommandBuilder::StopJobsCommandBuilder(const IdPtr& commandType)
     : commandType{commandType}
 {
 
@@ -14,12 +14,12 @@ frts::StopJobsCommandBuilder::~StopJobsCommandBuilder()
 
 }
 
-frts::CommandPtr frts::StopJobsCommandBuilder::build(SharedManagerPtr)
+frts::CommandPtr frts::StopJobsCommandBuilder::build(const SharedManagerPtr&)
 {
     return makeStopJobsCommand(commandType, node);
 }
 
-void frts::StopJobsCommandBuilder::setSettings(ConfigNodePtr node)
+void frts::StopJobsCommandBuilder::setSettings(const ConfigNodePtr& node)
 {
     assert(node != nullptr);
 

@@ -9,11 +9,11 @@ namespace frts
     class IsResourceImpl : public IsResource
     {
     public:
-        IsResourceImpl(IdPtr componentType);
+        IsResourceImpl(const IdPtr& componentType);
 
         IdPtr getComponentType() const override;
         IdPtr getResourceType() const override;
-        void setResourceType(IdPtr resourceType) override;
+        void setResourceType(const IdPtr& resourceType) override;
 
     private:
         IdPtr componentType;
@@ -25,7 +25,7 @@ namespace frts
      * @param componentType The component type.
      * @return The IsResource.
      */
-    inline IsResourcePtr makeIsResource(IdPtr componentType)
+    inline IsResourcePtr makeIsResource(const IdPtr& componentType)
     {
         assert(componentType != nullptr);
 

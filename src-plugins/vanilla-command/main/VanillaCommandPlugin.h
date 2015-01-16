@@ -11,7 +11,7 @@ namespace frts
     public:
         VanillaCommandPlugin();
 
-        ModulePtr getModule(frts::IdPtr id) override;
+        ModulePtr getModule(const IdPtr& id) override;
     };
 }
 

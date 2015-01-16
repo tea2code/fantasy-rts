@@ -20,7 +20,7 @@ namespace {
     }
 }
 
-frts::RegionGeneratorImpl::RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType)
+frts::RegionGeneratorImpl::RegionGeneratorImpl(const IdPtr& blockingType, const IdPtr& sortOrderType)
     : blockingType{blockingType}, sortOrderType{sortOrderType}
 {}
 
@@ -29,13 +29,13 @@ std::string frts::RegionGeneratorImpl::getSupportedConfig() const
     return "region_generator";
 }
 
-void frts::RegionGeneratorImpl::init(SharedManagerPtr)
+void frts::RegionGeneratorImpl::init(const SharedManagerPtr&)
 {}
 
-bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block, PointPtr pos,
+bool frts::RegionGeneratorImpl::initializeWithGenerators(const WriteableBlockPtr& block, const PointPtr& pos,
                                                          const IdVector& generatorIds,
-                                                         ModelFactoryPtr modelFactory,
-                                                         SharedManagerPtr shared) const
+                                                         const ModelFactoryPtr& modelFactory,
+                                                         const SharedManagerPtr& shared) const
 {
     assert(block != nullptr);
     assert(pos != nullptr);
@@ -72,7 +72,7 @@ bool frts::RegionGeneratorImpl::initializeWithGenerators(WriteableBlockPtr block
     return initialized;
 }
 
-frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -120,7 +120,7 @@ frts::WriteableBlockPtr frts::RegionGeneratorImpl::newBlock(PointPtr pos, Shared
     return block;
 }
 
-void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr shared)
+void frts::RegionGeneratorImpl::parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -146,17 +146,17 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
         return;
     }
 
-    node = node->getNode("noise_map");
+    auto noiseMapNode = node->getNode("noise_map");
 
-    std::string ns = node->getString("namespace", "");
+    std::string ns = noiseMapNode->getString("namespace", "");
     if (!ns.empty())
     {
         ns += ".";
     }
 
-    if (node->has("levels"))
+    if (noiseMapNode->has("levels"))
     {
-        ConfigNodePtr levelsNode = node->getNode("levels");
+        ConfigNodePtr levelsNode = noiseMapNode->getNode("levels");
 
         if (levelsNode->has("default_below"))
         {
@@ -182,9 +182,9 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
         }
     }
 
-    if (node->has("generators"))
+    if (noiseMapNode->has("generators"))
     {
-        ConfigNodePtr generatorsNode = node->getNode("generators");
+        ConfigNodePtr generatorsNode = noiseMapNode->getNode("generators");
 
         if (generatorsNode->has("namespace"))
         {
@@ -218,7 +218,7 @@ void frts::RegionGeneratorImpl::parseConfig(ConfigNodePtr node, SharedManagerPtr
     }
 }
 
-void frts::RegionGeneratorImpl::validateData(SharedManagerPtr)
+void frts::RegionGeneratorImpl::validateData(const SharedManagerPtr&)
 {
     if (defaultAboveSurfaceEntity == nullptr)
     {

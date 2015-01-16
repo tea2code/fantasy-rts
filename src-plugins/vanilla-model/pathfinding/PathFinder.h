@@ -37,7 +37,8 @@ namespace frts
          * @param shared The shared manager.
          * @return The path result.
          */
-        virtual PathPtr findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
+        virtual PathPtr findPath(const PointPtr& start, const PointPtr& goal,
+                                 const BlockedByPtr& blockedBy, const SharedManagerPtr& shared) = 0;
     };
 }
 

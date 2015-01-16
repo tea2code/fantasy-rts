@@ -19,7 +19,7 @@ namespace frts
          */
         ManhattanDistance(double scale = 1.0);
 
-        Point::length distance(PointPtr point1, PointPtr point2) override;
+        Point::length distance(const PointPtr& point1, const PointPtr& point2) override;
 
     private:
         double scale;

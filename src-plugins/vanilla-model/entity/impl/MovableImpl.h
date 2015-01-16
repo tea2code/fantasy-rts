@@ -14,7 +14,7 @@ namespace frts
         /**
          * @param type The component type.
          */
-        MovableImpl(IdPtr type);
+        MovableImpl(const IdPtr& type);
 
         IdPtr getComponentType() const override;
         Direction getDirection() const override;
@@ -22,7 +22,7 @@ namespace frts
         PointPtr getNextPathPos() override;
         PointPtr getPreviousPathPos() const override;
         double getSpeed() const override;
-        void setPath(PathPtr path) override;
+        void setPath(const PathPtr& path) override;
         void setSpeed(double speed) override;
 
     private:
@@ -38,7 +38,7 @@ namespace frts
      * @param type The component type.
      * @return The component.
      */
-    inline MovablePtr makeMovable(IdPtr type)
+    inline MovablePtr makeMovable(const IdPtr& type)
     {
         assert(type != nullptr);
 

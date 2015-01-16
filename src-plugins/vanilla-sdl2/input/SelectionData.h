@@ -30,7 +30,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The current selection as a point list.
          */
-        virtual PointVector getSelection(SharedManagerPtr shared) const = 0;
+        virtual PointVector getSelection(const SharedManagerPtr& shared) const = 0;
 
         /**
          * @brief Get the end position of the current selection.
@@ -77,25 +77,25 @@ namespace frts
          * @brief Set the end position of the current selection.
          * @param pos The end position.
          */
-        virtual void setSelectionEnd(PointPtr pos) = 0;
+        virtual void setSelectionEnd(const PointPtr& pos) = 0;
 
         /**
          * @brief Set the selection marker entity id.
          * @param entityId The id.
          */
-        virtual void setSelectionEntityId(IdPtr entityId) = 0;
+        virtual void setSelectionEntityId(const IdPtr& entityId) = 0;
 
         /**
          * @brief Set the current selection marker entities.
          * @param entities The entities.
          */
-        virtual void setSelectionEntities(EntityVector entities) = 0;
+        virtual void setSelectionEntities(const EntityVector& entities) = 0;
 
         /**
          * @brief Set the start position of the current selection.
          * @param pos The start position.
          */
-        virtual void setSelectionStart(PointPtr pos) = 0;
+        virtual void setSelectionStart(const PointPtr& pos) = 0;
     };
 }
 

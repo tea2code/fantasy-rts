@@ -15,8 +15,8 @@ namespace frts
         JobMarkerBuilder();
         ~JobMarkerBuilder();
 
-        ComponentPtr build(SharedManagerPtr shared) override;
-        ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) override;
+        ComponentPtr build(const SharedManagerPtr& shared) override;
+        ComponentPtr build(const SharedManagerPtr& shared, const ConfigNodePtr& node) override;
     };
 
     /**

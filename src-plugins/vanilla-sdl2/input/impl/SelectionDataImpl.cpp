@@ -14,7 +14,7 @@ frts::SelectionDataImpl::~SelectionDataImpl()
 
 }
 
-frts::PointVector frts::SelectionDataImpl::getSelection(SharedManagerPtr shared) const
+frts::PointVector frts::SelectionDataImpl::getSelection(const SharedManagerPtr& shared) const
 {
     PointVector result;
     if (start == nullptr || end == nullptr)
@@ -82,26 +82,26 @@ void frts::SelectionDataImpl::setIsSelecting(bool isSelecting)
     this->currentlySelecting = isSelecting;
 }
 
-void frts::SelectionDataImpl::setSelectionEnd(PointPtr pos)
+void frts::SelectionDataImpl::setSelectionEnd(const PointPtr& pos)
 {
     assert(pos != nullptr);
 
     this->end = pos;
 }
 
-void frts::SelectionDataImpl::setSelectionEntityId(IdPtr entityId)
+void frts::SelectionDataImpl::setSelectionEntityId(const IdPtr& entityId)
 {
     assert(entityId != nullptr);
 
     this->selectionEntityId = entityId;
 }
 
-void frts::SelectionDataImpl::setSelectionEntities(EntityVector entities)
+void frts::SelectionDataImpl::setSelectionEntities(const EntityVector& entities)
 {
     this->selectionEntities = entities;
 }
 
-void frts::SelectionDataImpl::setSelectionStart(PointPtr pos)
+void frts::SelectionDataImpl::setSelectionStart(const PointPtr& pos)
 {
     assert(pos != nullptr);
 

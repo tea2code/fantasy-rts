@@ -19,13 +19,13 @@ namespace frts
          * @param sortOrderType The component type id of the sort order component.
          * @param teleportType The component type id of the teleport component.
          */
-        BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType);
+        BmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType);
 
         std::string getSupportedConfig() const override;
-        void init(SharedManagerPtr shared) override;
-        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
-        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
+        void init(const SharedManagerPtr& shared) override;
+        WriteableBlockPtr newBlock(const PointPtr& pos, const SharedManagerPtr& shared) override;
+        void parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        void validateData(const SharedManagerPtr& shared) override;
 
     private:
         struct RgbHash;
@@ -45,7 +45,7 @@ namespace frts
          */
         struct RgbHash
         {
-            std::size_t operator() (Rgb rgb) const
+            std::size_t operator() (const Rgb& rgb) const
             {
                 return hasher(std::get<0>(rgb)) ^
                        hasher(std::get<1>(rgb)) ^
@@ -86,8 +86,8 @@ namespace frts
          * @param shared The shared manager.
          * @return The other teleport entity if a connection has happened.
          */
-        EntityPtr connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
-                                  const EntityVector& targets, SharedManagerPtr shared);
+        EntityPtr connectIfNotYet(const WriteableBlockPtr& block, const PointPtr& otherPos,
+                                  const EntityVector& targets, const SharedManagerPtr& shared);
 
         /**
          * @brief Get block at given position.
@@ -95,7 +95,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The block.
          */
-        WriteableBlockPtr getBlock(PointPtr pos, SharedManagerPtr shared);
+        WriteableBlockPtr getBlock(const PointPtr& pos, const SharedManagerPtr& shared);
 
         /**
          * @brief Parse the map image. Will store result in mapPoints.
@@ -103,7 +103,7 @@ namespace frts
          * @param zLevel The z-level for given image file.
          * @param shared The shared manager.
          */
-        void parseMap(const std::string& path, Point::value zLevel, SharedManagerPtr shared);
+        void parseMap(const std::string& path, Point::value zLevel, const SharedManagerPtr& shared);
 
         /**
          * @brief Try to connect given block using teleport.
@@ -114,8 +114,10 @@ namespace frts
          * @param zLevelChange The change in z level to try.
          * @param shared The shared manager.
          */
-        void tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
-                                const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared);
+        void tryConnectTeleport(const PointPtr& pos, const WriteableBlockPtr& block,
+                                const TeleportColors& teleportColorsBlock,
+                                const TeleportColors& teleportColorsOther, Point::value zLevelChange,
+                                const SharedManagerPtr& shared);
     };
 
     /**
@@ -125,7 +127,7 @@ namespace frts
      * @param teleportType The component type id of the teleport component.
      * @return The map parser.
      */
-    inline MapParserPtr makeBmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType)
+    inline MapParserPtr makeBmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType)
     {
         assert(blockingType != nullptr);
         assert(sortOrderType != nullptr);

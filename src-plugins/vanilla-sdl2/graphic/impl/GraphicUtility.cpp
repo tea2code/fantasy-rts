@@ -5,7 +5,7 @@
 #include <frts/vanillaevent>
 
 
-void frts::raiseMoveCursorEvent(PointPtr cursorPos, SharedManagerPtr shared)
+void frts::raiseMoveCursorEvent(const PointPtr& cursorPos, const SharedManagerPtr& shared)
 {
     auto em = getUtility<EventManager>(shared, EventIds::eventManager());
     auto event = em->makeEvent(shared->makeId(Sdl2Ids::moveCursorEvent()), shared);

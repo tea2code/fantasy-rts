@@ -8,7 +8,7 @@ frts::IsResourceBuilder::IsResourceBuilder()
 {
 }
 
-frts::ComponentPtr frts::IsResourceBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::IsResourceBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,7 +16,7 @@ frts::ComponentPtr frts::IsResourceBuilder::build(SharedManagerPtr shared)
     return makeIsResource(id);
 }
 
-frts::ComponentPtr frts::IsResourceBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::IsResourceBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

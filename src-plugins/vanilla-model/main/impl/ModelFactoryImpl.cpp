@@ -49,7 +49,7 @@ frts::ModelFactoryImpl::ModelFactoryImpl()
 {
 }
 
-void frts::ModelFactoryImpl::checkRequiredData(SharedManagerPtr shared)
+void frts::ModelFactoryImpl::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -57,7 +57,7 @@ void frts::ModelFactoryImpl::checkRequiredData(SharedManagerPtr shared)
     validateDataValue(getName(), MainIds::mainData(), 2, shared);
 }
 
-bool frts::ModelFactoryImpl::createData(frts::SharedManagerPtr shared)
+bool frts::ModelFactoryImpl::createData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -74,7 +74,7 @@ frts::DistanceAlgorithmPtr frts::ModelFactoryImpl::getDistanceAlgorithm() const
     return distanceAlgorithm;
 }
 
-frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(IdPtr id) const
+frts::MapParserPtr frts::ModelFactoryImpl::getMapParser(const IdPtr& id) const
 {
     assert(id != nullptr);
 
@@ -111,7 +111,7 @@ std::vector<std::string> frts::ModelFactoryImpl::getSupportedConfig()
     return result;
 }
 
-bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
+bool frts::ModelFactoryImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -307,14 +307,14 @@ bool frts::ModelFactoryImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-frts::WriteableBlockPtr frts::ModelFactoryImpl::makeBlock(SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::ModelFactoryImpl::makeBlock(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return frts::makeBlock(shared->makeId(ComponentIds::blocking()), shared->makeId(ComponentIds::sortOrder()));
 }
 
-frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, SharedManagerPtr shared)
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared)
 {
     assert(builderId != nullptr);
     assert(shared != nullptr);
@@ -331,7 +331,7 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, Shared
     }
 }
 
-frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared)
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(builderId != nullptr);
     assert(node != nullptr);
@@ -354,7 +354,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity()
     return frts::makeEntity();
 }
 
-frts::EntityPtr frts::ModelFactoryImpl::makeEntity(IdPtr id, SharedManagerPtr shared)
+frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const SharedManagerPtr& shared)
 {
     assert(id != nullptr);
     assert(shared != nullptr);
@@ -387,7 +387,7 @@ frts::PointPtr frts::ModelFactoryImpl::makePoint(Point::value x, Point::value y,
     return frts::makePoint(x, y, z);
 }
 
-void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
+void frts::ModelFactoryImpl::parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -441,7 +441,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, ConfigNodePtr n
     }
 }
 
-bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
+bool frts::ModelFactoryImpl::preInit(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -468,17 +468,17 @@ bool frts::ModelFactoryImpl::preInit(SharedManagerPtr shared)
     return BaseUtility::preInit(shared);
 }
 
-void frts::ModelFactoryImpl::setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm)
+void frts::ModelFactoryImpl::setDistanceAlgorithm(const DistanceAlgorithmPtr& distanceAlgorithm)
 {
     this->distanceAlgorithm = distanceAlgorithm;
 }
 
-void frts::ModelFactoryImpl::setPathFinder(PathFinderPtr pathFinder)
+void frts::ModelFactoryImpl::setPathFinder(const PathFinderPtr& pathFinder)
 {
     this->pathFinder = pathFinder;
 }
 
-void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder)
+void frts::ModelFactoryImpl::registerComponentBuilder(const IdPtr& builderId, const ComponentBuilderPtr& builder)
 {
     assert(builderId != nullptr);
     assert(builder != nullptr);
@@ -486,7 +486,7 @@ void frts::ModelFactoryImpl::registerComponentBuilder(IdPtr builderId, Component
     componentBuilders[builderId] = builder;
 }
 
-void frts::ModelFactoryImpl::registerMapParser(IdPtr id, MapParserPtr mapParser)
+void frts::ModelFactoryImpl::registerMapParser(const IdPtr& id, const MapParserPtr& mapParser)
 {
     assert(id != nullptr);
     assert(mapParser != nullptr);
@@ -494,27 +494,27 @@ void frts::ModelFactoryImpl::registerMapParser(IdPtr id, MapParserPtr mapParser)
     mapParsers[id] = mapParser;
 }
 
-void frts::ModelFactoryImpl::setRegion(RegionPtr region)
+void frts::ModelFactoryImpl::setRegion(const RegionPtr& region)
 {
     this->region = region;
 }
 
-void frts::ModelFactoryImpl::setRegionGenerator(RegionGeneratorPtr regionGenerator)
+void frts::ModelFactoryImpl::setRegionGenerator(const RegionGeneratorPtr& regionGenerator)
 {
     this->regionGenerator = regionGenerator;
 }
 
-void frts::ModelFactoryImpl::setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager)
+void frts::ModelFactoryImpl::setResourceEntityManager(const LockableResourceManagerPtr& resourceEntityManager)
 {
     this->resourceEntityManager = resourceEntityManager;
 }
 
-void frts::ModelFactoryImpl::setResourceManager(LockableResourceManagerPtr resourceManager)
+void frts::ModelFactoryImpl::setResourceManager(const LockableResourceManagerPtr& resourceManager)
 {
     this->resourceManager = resourceManager;
 }
 
-void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
+void frts::ModelFactoryImpl::validateData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -540,7 +540,7 @@ void frts::ModelFactoryImpl::validateData(SharedManagerPtr shared)
     regionGenerator->validateData(shared);
 }
 
-void frts::ModelFactoryImpl::validateModules(SharedManagerPtr shared)
+void frts::ModelFactoryImpl::validateModules(const SharedManagerPtr& shared)
 {
     validateUtility(getName(), EventIds::eventManager(), 1, shared);
 }

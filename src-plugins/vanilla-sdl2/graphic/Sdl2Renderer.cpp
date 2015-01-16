@@ -22,7 +22,7 @@ frts::Sdl2Renderer::Sdl2Renderer()
     sidebarDrawer = makeSidebarDrawer();
 }
 
-void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
+void frts::Sdl2Renderer::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -30,7 +30,7 @@ void frts::Sdl2Renderer::checkRequiredData(SharedManagerPtr shared)
     validateDataValue(getName(), MainIds::mainData(), 2, shared);
 }
 
-bool frts::Sdl2Renderer::createData(SharedManagerPtr shared)
+bool frts::Sdl2Renderer::createData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -46,7 +46,7 @@ std::vector<std::string> frts::Sdl2Renderer::getSupportedConfig()
     return {"style", "screen", "tile", "region", "sidebar"};
 }
 
-bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
+bool frts::Sdl2Renderer::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -192,7 +192,7 @@ bool frts::Sdl2Renderer::init(SharedManagerPtr shared)
     return BaseTickable::init(shared);
 }
 
-void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared)
+void frts::Sdl2Renderer::parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -254,7 +254,7 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, ConfigNodePtr node,
     }
 }
 
-void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
+void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -310,7 +310,7 @@ void frts::Sdl2Renderer::tick(SharedManagerPtr shared)
     }
 }
 
-void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
+void frts::Sdl2Renderer::validateData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -369,7 +369,7 @@ void frts::Sdl2Renderer::validateData(SharedManagerPtr shared)
     sidebarDrawer->validateData(shared);
 }
 
-void frts::Sdl2Renderer::validateModules(SharedManagerPtr shared)
+void frts::Sdl2Renderer::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

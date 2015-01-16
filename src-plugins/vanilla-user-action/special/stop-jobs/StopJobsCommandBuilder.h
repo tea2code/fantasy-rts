@@ -12,11 +12,11 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        StopJobsCommandBuilder(IdPtr commandType);
+        StopJobsCommandBuilder(const IdPtr& commandType);
         ~StopJobsCommandBuilder();
 
-        CommandPtr build(SharedManagerPtr shared) override;
-        void setSettings(ConfigNodePtr node) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
+        void setSettings(const ConfigNodePtr& node) override;
 
     private:
         IdPtr commandType;
@@ -28,7 +28,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline UserActionCommandBuilderPtr makeStopJobsCommandBuilder(IdPtr commandType)
+    inline UserActionCommandBuilderPtr makeStopJobsCommandBuilder(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
 

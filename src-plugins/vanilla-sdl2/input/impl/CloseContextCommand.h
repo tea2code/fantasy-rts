@@ -12,12 +12,12 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        CloseContextCommand(IdPtr commandType);
+        CloseContextCommand(const IdPtr& commandType);
         ~CloseContextCommand();
 
-        void execute(SharedManagerPtr shared);
+        void execute(const SharedManagerPtr& shared);
         IdPtr getCommandType() const;
-        void undo(SharedManagerPtr shared);
+        void undo(const SharedManagerPtr& shared);
 
     private:
         IdPtr commandType;
@@ -28,7 +28,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command.
      */
-    inline CommandPtr makeCloseContextCommand(IdPtr commandType)
+    inline CommandPtr makeCloseContextCommand(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
 

@@ -14,7 +14,7 @@ namespace frts
     public:
         EuclideanDistance();
 
-        Point::length distance(PointPtr point1, PointPtr point2) override;
+        Point::length distance(const PointPtr& point1, const PointPtr& point2) override;
     };
 
     /**

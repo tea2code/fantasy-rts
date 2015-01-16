@@ -39,8 +39,8 @@ namespace test
          * @param sortOrderType The component type id of the sort order component.
          * @param maps Collection of maps for several z-levels.
          */
-        TestRegionGenerator(frts::IdPtr blockingType, frts::IdPtr sortOrderType,
-                            std::unordered_map<int, Map> maps, frts::IdPtr teleportType)
+        TestRegionGenerator(const frts::IdPtr& blockingType, const frts::IdPtr& sortOrderType,
+                            const std::unordered_map<int, Map>& maps, const frts::IdPtr& teleportType)
             : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}, maps{maps}
         {}
 
@@ -49,10 +49,10 @@ namespace test
             return {};
         }
 
-        void init(frts::SharedManagerPtr) override
+        void init(const frts::SharedManagerPtr&) override
         {}
 
-        frts::WriteableBlockPtr newBlock(frts::PointPtr pos, frts::SharedManagerPtr shared) override
+        frts::WriteableBlockPtr newBlock(const frts::PointPtr& pos, const frts::SharedManagerPtr& shared) override
         {
             auto entity = frts::makeEntity();
 
@@ -86,10 +86,10 @@ namespace test
             return block;
         }
 
-        void parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr) override
+        void parseConfig(const frts::ConfigNodePtr&, const frts::SharedManagerPtr&) override
         {}
 
-        void validateData(frts::SharedManagerPtr) override
+        void validateData(const frts::SharedManagerPtr&) override
         {}
 
     private:

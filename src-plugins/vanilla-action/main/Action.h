@@ -42,14 +42,14 @@ namespace frts
          * @param shared The shared manager.
          * @return Current state of this execution.
          */
-        virtual State execute(SharedManagerPtr shared) = 0;
+        virtual State execute(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Stop this action. Will be called while it returns "Running".
          * @param shared The shared manager.
          * @return Current state of the stopping process.
          */
-        virtual State stop(SharedManagerPtr shared) = 0;
+        virtual State stop(const SharedManagerPtr& shared) = 0;
     };
 }
 

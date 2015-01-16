@@ -28,7 +28,7 @@ std::vector<std::string> frts::UserActionFactory::getSupportedConfig()
     return {"useraction"};
 }
 
-bool frts::UserActionFactory::init(SharedManagerPtr shared)
+bool frts::UserActionFactory::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -70,7 +70,7 @@ bool frts::UserActionFactory::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-void frts::UserActionFactory::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)
+void frts::UserActionFactory::parseConfig(const std::string&, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -92,7 +92,7 @@ void frts::UserActionFactory::parseConfig(const std::string&, ConfigNodePtr node
     }
 }
 
-void frts::UserActionFactory::validateModules(SharedManagerPtr shared)
+void frts::UserActionFactory::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

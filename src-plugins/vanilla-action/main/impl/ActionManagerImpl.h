@@ -14,7 +14,7 @@ namespace frts
         /**
          * @param actionHandler The action handler.
          */
-        ActionManagerImpl(ActionHandlerPtr actionHandler);
+        ActionManagerImpl(const ActionHandlerPtr& actionHandler);
 
         /**
          * @brief The identifier.
@@ -25,11 +25,11 @@ namespace frts
             return "frts/ActionManager";
         }
 
-        bool init(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
-        void newAction(ActionPtr action, SharedManagerPtr shared) override;
-        bool stopAction(SharedManagerPtr shared) override;
+        void newAction(const ActionPtr& action, const SharedManagerPtr& shared) override;
+        bool stopAction(const SharedManagerPtr& shared) override;
 
     private:
         ActionHandlerPtr actionHandler;
@@ -40,7 +40,7 @@ namespace frts
      * @param actionHandler The action handler.
      * @return The action manager.
      */
-    inline ActionManagerPtr makeActionManager(ActionHandlerPtr actionHandler)
+    inline ActionManagerPtr makeActionManager(const ActionHandlerPtr& actionHandler)
     {
         assert(actionHandler != nullptr);
 

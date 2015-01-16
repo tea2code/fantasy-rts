@@ -1,7 +1,7 @@
 #include "FloatEventValueBuilder.h"
 
 
-frts::FloatEventValueBuilder::FloatEventValueBuilder(IdPtr type)
+frts::FloatEventValueBuilder::FloatEventValueBuilder(const IdPtr& type)
     : BaseEventValueBuilder(type)
 {
 

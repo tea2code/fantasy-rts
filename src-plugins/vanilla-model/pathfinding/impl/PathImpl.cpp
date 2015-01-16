@@ -1,7 +1,7 @@
 #include "PathImpl.h"
 
 
-frts::PathImpl::PathImpl(Path::PathPart path, bool exists, Path::CostMap costs, Path::BenchmarkMap timings)
+frts::PathImpl::PathImpl(const Path::PathPart& path, bool exists, const Path::CostMap& costs, const Path::BenchmarkMap& timings)
     : costs{costs}, exists{exists}, path{path}, timings{timings}
 {
 }

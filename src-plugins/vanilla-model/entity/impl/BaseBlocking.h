@@ -15,7 +15,7 @@ namespace frts
          * @brief Add block.
          * @param block The block.
          */
-        void addBlock(IdPtr block);
+        void addBlock(const IdPtr& block);
 
         /**
          * @brief Get all block types.
@@ -27,7 +27,7 @@ namespace frts
          * @brief Remove block.
          * @param block The block.
          */
-        void removeBlock(IdPtr block);
+        void removeBlock(const IdPtr& block);
 
     private:
         BlockedBy::BlockSet blocks;

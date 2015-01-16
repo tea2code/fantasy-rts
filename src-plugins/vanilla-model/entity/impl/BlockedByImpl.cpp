@@ -1,12 +1,12 @@
 #include "BlockedByImpl.h"
 
 
-frts::BlockedByImpl::BlockedByImpl(IdPtr type)
+frts::BlockedByImpl::BlockedByImpl(const IdPtr& type)
     : blocking{}, type{type}
 {
 }
 
-void frts::BlockedByImpl::addBlock(IdPtr block)
+void frts::BlockedByImpl::addBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 
@@ -23,7 +23,7 @@ frts::IdPtr frts::BlockedByImpl::getComponentType() const
     return type;
 }
 
-void frts::BlockedByImpl::removeBlock(IdPtr block)
+void frts::BlockedByImpl::removeBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 

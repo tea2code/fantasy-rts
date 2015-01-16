@@ -12,12 +12,12 @@ namespace frts
     class BlockedByImpl : public BlockedBy
     {
     public:
-        BlockedByImpl(IdPtr type);
+        BlockedByImpl(const IdPtr& type);
 
-        void addBlock(IdPtr block) override;
+        void addBlock(const IdPtr& block) override;
         const BlockSet getBlocks() const override;
         IdPtr getComponentType() const override;
-        void removeBlock(IdPtr block) override;
+        void removeBlock(const IdPtr& block) override;
 
     private:
         BaseBlocking blocking;
@@ -29,7 +29,7 @@ namespace frts
      * @param type The component type.
      * @return The BlockedBy.
      */
-    inline BlockedByPtr makeBlockedBy(IdPtr type)
+    inline BlockedByPtr makeBlockedBy(const IdPtr& type)
     {
         assert(type != nullptr);
 

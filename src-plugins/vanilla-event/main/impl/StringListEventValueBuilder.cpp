@@ -1,7 +1,7 @@
 #include "StringListEventValueBuilder.h"
 
 
-frts::StringListEventValueBuilder::StringListEventValueBuilder(IdPtr type)
+frts::StringListEventValueBuilder::StringListEventValueBuilder(const IdPtr& type)
     : BaseEventValueBuilder(type)
 {
 

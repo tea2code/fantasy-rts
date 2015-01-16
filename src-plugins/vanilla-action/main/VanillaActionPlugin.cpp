@@ -17,7 +17,7 @@ frts::ActionHandlerPtr frts::VanillaActionPlugin::getActionHandler()
     return actionHandler;
 }
 
-frts::ModulePtr frts::VanillaActionPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaActionPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

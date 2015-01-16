@@ -27,14 +27,14 @@ namespace frts
          * @throws DataViolation if a data value is missing or invalid.
          * @param shared The shared manager.
          */
-        virtual void checkRequiredData(SharedManagerPtr shared) = 0;
+        virtual void checkRequiredData(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Create data value objects. Executed during "Create Data" phase.
          * @param shared The shared manager.
          * @return True if another execution of this method is requested else false.
          */
-        virtual bool createData(SharedManagerPtr shared) = 0;
+        virtual bool createData(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get the module name.
@@ -72,7 +72,7 @@ namespace frts
          * @param shared The shared manager.
          * @return True if another execution of this method is requested else false.
          */
-        virtual bool init(SharedManagerPtr shared) = 0;
+        virtual bool init(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Indicates if module is initialized. Must return true after init()
@@ -95,7 +95,7 @@ namespace frts
          * @param node The configuration node.
          * @param shared The shared manager.
          */
-        virtual void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) = 0;
+        virtual void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Preinitialize the module. Executed during "Preinitialize Modules"
@@ -103,7 +103,7 @@ namespace frts
          * @param shared The shared manager.
          * @return True if another execution of this method is requested else false.
          */
-        virtual bool preInit(SharedManagerPtr shared) = 0;
+        virtual bool preInit(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Validate the current data values. Executed during "Validate Data"
@@ -111,7 +111,7 @@ namespace frts
          * @throws DataViolation if a data value is invalid.
          * @param shared The shared manager.
          */
-        virtual void validateData(SharedManagerPtr shared) = 0;
+        virtual void validateData(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Validate the existing modules. Executed during "Check Required
@@ -119,7 +119,7 @@ namespace frts
          * @throws ModuleViolation if a module is invalid.
          * @param shared The shared manager.
          */
-        virtual void validateModules(SharedManagerPtr shared) = 0;
+        virtual void validateModules(const SharedManagerPtr& shared) = 0;
     };
 }
 

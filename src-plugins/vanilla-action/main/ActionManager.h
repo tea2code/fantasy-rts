@@ -31,14 +31,14 @@ namespace frts
          * @param action The action.
          * @param shared The shared manager.
          */
-        virtual void newAction(ActionPtr action, SharedManagerPtr shared) = 0;
+        virtual void newAction(const ActionPtr& action, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Stop/Cancel the currently running action.
          * @param shared The shared manager.
          * @return True if there was an action to stop else false.
          */
-        virtual bool stopAction(SharedManagerPtr shared) = 0;
+        virtual bool stopAction(const SharedManagerPtr& shared) = 0;
     };
 }
 

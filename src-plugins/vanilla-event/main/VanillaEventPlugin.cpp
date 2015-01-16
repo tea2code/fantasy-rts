@@ -7,7 +7,7 @@ frts::VanillaEventPlugin::VanillaEventPlugin()
 {
 }
 
-frts::ModulePtr frts::VanillaEventPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaEventPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

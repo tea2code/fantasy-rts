@@ -14,12 +14,12 @@ namespace frts
         /**
          * @param componentType The component type.
          */
-        JobMarkerImpl(IdPtr componentType);
+        JobMarkerImpl(const IdPtr& componentType);
         ~JobMarkerImpl();
 
         IdPtr getComponentType() const override;
         JobPtr getJob() const override;
-        void setJob(JobPtr job) override;
+        void setJob(const JobPtr& job) override;
 
     private:
         IdPtr componentType;
@@ -31,7 +31,7 @@ namespace frts
      * @param componentType The component type.
      * @return The component.
      */
-    inline ComponentPtr makeJobMarker(IdPtr componentType)
+    inline ComponentPtr makeJobMarker(const IdPtr& componentType)
     {
         assert(componentType != nullptr);
 

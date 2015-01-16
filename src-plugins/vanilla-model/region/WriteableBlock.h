@@ -28,13 +28,13 @@ namespace frts
          * @brief Insert entity into block.
          * @param entity The entity.
          */
-        virtual void insert(EntityPtr entity) = 0;
+        virtual void insert(const EntityPtr& entity) = 0;
 
         /**
          * @brief Remove entity from block.
          * @param entity The entity.
          */
-        virtual void remove(EntityPtr entity) = 0;
+        virtual void remove(const EntityPtr& entity) = 0;
     };
 }
 

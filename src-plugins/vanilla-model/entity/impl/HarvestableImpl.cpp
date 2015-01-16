@@ -1,7 +1,7 @@
 #include "HarvestableImpl.h"
 
 
-frts::HarvestableImpl::HarvestableImpl(IdPtr componentType)
+frts::HarvestableImpl::HarvestableImpl(const IdPtr& componentType)
     : componentType{componentType}
 {
 
@@ -12,7 +12,7 @@ frts::HarvestableImpl::~HarvestableImpl()
 
 }
 
-void frts::HarvestableImpl::addType(IdPtr type)
+void frts::HarvestableImpl::addType(const IdPtr& type)
 {
     assert(type != nullptr);
 
@@ -34,14 +34,14 @@ frts::IdUnorderedSet frts::HarvestableImpl::getTypes() const
     return types;
 }
 
-bool frts::HarvestableImpl::hasType(IdPtr type) const
+bool frts::HarvestableImpl::hasType(const IdPtr& type) const
 {
     assert(type != nullptr);
 
     return (types.find(type) != types.end());
 }
 
-void frts::HarvestableImpl::removeType(IdPtr type)
+void frts::HarvestableImpl::removeType(const IdPtr& type)
 {
     assert(type != nullptr);
 

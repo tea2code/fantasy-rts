@@ -16,11 +16,11 @@ namespace frts
          * @param commandType The command type.
          * @param stepSize The step size.
          */
-        SwitchSidebarInfoIndexCommand(IdPtr commandType, int stepSize);
+        SwitchSidebarInfoIndexCommand(const IdPtr& commandType, int stepSize);
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -32,7 +32,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command.
      */
-    inline CommandPtr makeSwitchSidebarInfoIndexCommand(IdPtr commandType, int stepSize)
+    inline CommandPtr makeSwitchSidebarInfoIndexCommand(const IdPtr& commandType, int stepSize)
     {
         assert(commandType != nullptr);
         assert(stepSize != 0);

@@ -11,7 +11,7 @@ frts::VanillaDemoPlugin::VanillaDemoPlugin()
 {
 }
 
-frts::ModulePtr frts::VanillaDemoPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaDemoPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

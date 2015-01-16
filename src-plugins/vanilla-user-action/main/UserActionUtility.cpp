@@ -4,7 +4,7 @@
 #include <frts/math.h>
 
 
-void frts::areJobsValid(PointPtr pos, SharedManagerPtr shared)
+void frts::areJobsValid(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -25,7 +25,7 @@ void frts::areJobsValid(PointPtr pos, SharedManagerPtr shared)
     }
 }
 
-void frts::createDrops(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
+void frts::createDrops(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -45,7 +45,7 @@ void frts::createDrops(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
     }
 }
 
-bool frts::findPathToJob(EntityPtr entity, PointPtr jobPos, bool toNeighbor, SharedManagerPtr shared)
+bool frts::findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool toNeighbor, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(jobPos != nullptr);
@@ -99,7 +99,7 @@ bool frts::findPathToJob(EntityPtr entity, PointPtr jobPos, bool toNeighbor, Sha
     return pathFound;
 }
 
-bool frts::moveEntity(EntityPtr entity, Frame::time& nextMoveTime, SharedManagerPtr shared)
+bool frts::moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared)
 {
     bool result = false;
 

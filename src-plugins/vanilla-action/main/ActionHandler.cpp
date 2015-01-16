@@ -25,7 +25,7 @@ void frts::ActionHandler::endAction()
     }
 }
 
-void frts::ActionHandler::newAction(ActionPtr action, SharedManagerPtr shared)
+void frts::ActionHandler::newAction(const ActionPtr& action, const SharedManagerPtr& shared)
 {
     assert(action != nullptr);
     assert(shared != nullptr);
@@ -42,7 +42,7 @@ void frts::ActionHandler::newAction(ActionPtr action, SharedManagerPtr shared)
     }
 }
 
-bool frts::ActionHandler::stopAction(SharedManagerPtr)
+bool frts::ActionHandler::stopAction(const SharedManagerPtr&)
 {
     if (currentAction != nullptr)
     {
@@ -53,7 +53,7 @@ bool frts::ActionHandler::stopAction(SharedManagerPtr)
     return (currentAction != nullptr);
 }
 
-void frts::ActionHandler::tick(SharedManagerPtr shared)
+void frts::ActionHandler::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

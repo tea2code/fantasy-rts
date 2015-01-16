@@ -20,7 +20,7 @@ void raiseEvent(const std::string& eventId, frts::PointVector selection, frts::S
 }
 }
 
-void frts::endSelection(SharedManagerPtr shared)
+void frts::endSelection(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -40,7 +40,7 @@ void frts::endSelection(SharedManagerPtr shared)
     raiseEvent(Sdl2Ids::selectionFinishedEvent(), selection, shared);
 }
 
-void frts::newSelection(SharedManagerPtr shared)
+void frts::newSelection(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -58,7 +58,7 @@ void frts::newSelection(SharedManagerPtr shared)
     updateSelection(cursorPos, shared);
 }
 
-void frts::stopSelection(SharedManagerPtr shared)
+void frts::stopSelection(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -77,7 +77,7 @@ void frts::stopSelection(SharedManagerPtr shared)
     sd->resetSelection();
 }
 
-void frts::updateSelection(PointPtr cursorPos, SharedManagerPtr shared)
+void frts::updateSelection(const PointPtr& cursorPos, const SharedManagerPtr& shared)
 {
     assert(cursorPos != nullptr);
     assert(shared != nullptr);

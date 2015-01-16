@@ -17,7 +17,8 @@ namespace frts
          * @param costs The costs map for debugging.
          * @param timings The timings map for debugging.
          */
-        PathImpl(Path::PathPart path, bool exists, Path::CostMap costs = Path::CostMap(), Path::BenchmarkMap timings = Path::BenchmarkMap());
+        PathImpl(const Path::PathPart& path, bool exists, const Path::CostMap& costs = Path::CostMap(),
+                 const Path::BenchmarkMap& timings = Path::BenchmarkMap());
 
         PathPart getCompletePath() const;
         CostMap getCosts() const;
@@ -42,7 +43,8 @@ namespace frts
      * @param timings The timings map for debugging.
      * @return The new Path.
      */
-    inline PathPtr makePath(Path::PathPart path, bool exists, Path::CostMap costs = Path::CostMap(), Path::BenchmarkMap timings = Path::BenchmarkMap())
+    inline PathPtr makePath(const Path::PathPart& path, bool exists, const Path::CostMap& costs = Path::CostMap(),
+                            const Path::BenchmarkMap& timings = Path::BenchmarkMap())
     {
         return std::make_shared<PathImpl>(path, exists, costs, timings);
     }

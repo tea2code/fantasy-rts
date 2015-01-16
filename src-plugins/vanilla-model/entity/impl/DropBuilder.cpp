@@ -8,7 +8,7 @@ frts::DropBuilder::DropBuilder()
 {
 }
 
-frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::DropBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,7 +16,7 @@ frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared)
     return makeDrop(id);
 }
 
-frts::ComponentPtr frts::DropBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::DropBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

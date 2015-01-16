@@ -50,7 +50,7 @@ namespace frts
          * @param id The map parser ID.
          * @return The map parser.
          */
-        virtual MapParserPtr getMapParser(IdPtr id) const = 0;
+        virtual MapParserPtr getMapParser(const IdPtr& id) const = 0;
 
         /**
          * @brief Get the path finder. The result is undefined before init() is called.
@@ -63,7 +63,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The block.
          */
-        virtual WriteableBlockPtr makeBlock(SharedManagerPtr shared) = 0;
+        virtual WriteableBlockPtr makeBlock(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Make a component using the specified builder.
@@ -72,7 +72,7 @@ namespace frts
          * @param builderId The builder ID.
          * @return The component.
          */
-        virtual ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) = 0;
+        virtual ComponentPtr makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Make an empty entity.
@@ -87,7 +87,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The entity.
          */
-        virtual EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) = 0;
+        virtual EntityPtr makeEntity(const IdPtr& id, const SharedManagerPtr& shared) = 0;
 
        /**
         * @brief Create a new point.
@@ -107,55 +107,55 @@ namespace frts
          *                  builder with different initialization several times.
          * @param builder The builder to register.
          */
-        virtual void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) = 0;
+        virtual void registerComponentBuilder(const IdPtr& builderId, const ComponentBuilderPtr& builder) = 0;
 
         /**
          * @brief Register a map parser.
          * @param id The map parser id.
          * @param mapParser The map parser to register.
          */
-        virtual void registerMapParser(IdPtr id, MapParserPtr mapParser) = 0;
+        virtual void registerMapParser(const IdPtr& id, const MapParserPtr& mapParser) = 0;
 
         /**
          * @brief Set default distance algorithm. Can be used for example for
          *        resource managers and path finder.
          * @param distanceAlgorithm The distance algorithm.
          */
-        virtual void setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm) = 0;
+        virtual void setDistanceAlgorithm(const DistanceAlgorithmPtr& distanceAlgorithm) = 0;
 
         /**
          * @brief Set the path finder.
          * @param pathFinder The path finder.
          */
-        virtual void setPathFinder(PathFinderPtr pathFinder) = 0;
+        virtual void setPathFinder(const PathFinderPtr& pathFinder) = 0;
 
         /**
          * @brief Set region. This method has only an effect if it is used
          *        before init().
          * @param region The region.
          */
-        virtual void setRegion(RegionPtr region) = 0;
+        virtual void setRegion(const RegionPtr& region) = 0;
 
         /**
          * @brief Set region generator. Only used for the build in region. This
          *        method has only an effect if it is used before init().
          * @param regionGenerator The region generator.
          */
-        virtual void setRegionGenerator(RegionGeneratorPtr regionGenerator) = 0;
+        virtual void setRegionGenerator(const RegionGeneratorPtr& regionGenerator) = 0;
 
         /**
          * @brief Set resource entity manager. This method has only an effect
          *        if it is used before init().
          * @param resourceEntityManager The resource manager.
          */
-        virtual void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) = 0;
+        virtual void setResourceEntityManager(const LockableResourceManagerPtr& resourceEntityManager) = 0;
 
         /**
          * @brief Set resource manager. This method has only an effect if it is
          *        used before init().
          * @param resourceManager The resource manager.
          */
-        virtual void setResourceManager(LockableResourceManagerPtr resourceManager) = 0;
+        virtual void setResourceManager(const LockableResourceManagerPtr& resourceManager) = 0;
     };
 }
 

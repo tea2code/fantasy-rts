@@ -20,10 +20,10 @@ namespace frts
             : name{name}, version{version}, typeName{typeName}, typeVersion{typeVersion}
         {}
         
-        virtual void checkRequiredData(SharedManagerPtr) override
+        virtual void checkRequiredData(const SharedManagerPtr&) override
         {}
 
-        virtual bool createData(SharedManagerPtr) override
+        virtual bool createData(const SharedManagerPtr&) override
         {
             return false;
         }
@@ -53,7 +53,7 @@ namespace frts
             return version;
         }
 
-        virtual bool init(SharedManagerPtr) override
+        virtual bool init(const SharedManagerPtr&) override
         {
             isInit = true;
             return false;
@@ -69,30 +69,28 @@ namespace frts
             return isPreInit;
         }
 
-        virtual void parseConfig(const std::string&, ConfigNodePtr, SharedManagerPtr) override
+        virtual void parseConfig(const std::string&, const ConfigNodePtr&, const SharedManagerPtr&) override
         {}
 
-        virtual bool preInit(SharedManagerPtr) override
+        virtual bool preInit(const SharedManagerPtr&) override
         {
             isPreInit = true;
             return false;
         }
 
-        virtual void validateData(SharedManagerPtr) override
+        virtual void validateData(const SharedManagerPtr&) override
         {}
 
-        virtual void validateModules(SharedManagerPtr) override
+        virtual void validateModules(const SharedManagerPtr&) override
         {}
 
     private:
+        bool isInit = false;
+        bool isPreInit = false;
         std::string name;
         int version;
         std::string typeName;
         int typeVersion;
-
-    protected:
-        bool isInit = false;
-        bool isPreInit = false;
     };
 }
 

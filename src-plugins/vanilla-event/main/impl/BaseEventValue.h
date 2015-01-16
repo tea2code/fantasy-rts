@@ -13,7 +13,7 @@ namespace frts
     class BaseEventValue : public I
     {
     public:
-        BaseEventValue(IdPtr type)
+        BaseEventValue(const IdPtr& type)
             : type{type}
         {}
 

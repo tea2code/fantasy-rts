@@ -1,12 +1,12 @@
 #include "HasResourceImpl.h"
 
 
-frts::HasResourceImpl::HasResourceImpl(IdPtr type)
+frts::HasResourceImpl::HasResourceImpl(const IdPtr& type)
     : resources{}, type{type}
 {
 }
 
-void frts::HasResourceImpl::addResource(IdPtr resourceType)
+void frts::HasResourceImpl::addResource(const IdPtr& resourceType)
 {
     assert(resourceType != nullptr);
 
@@ -23,7 +23,7 @@ frts::HasResource::ResourceSet frts::HasResourceImpl::getResources() const
     return resources;
 }
 
-bool frts::HasResourceImpl::hasResource(IdPtr resourceType) const
+bool frts::HasResourceImpl::hasResource(const IdPtr& resourceType) const
 {
     assert(resourceType != nullptr);
 
@@ -31,7 +31,7 @@ bool frts::HasResourceImpl::hasResource(IdPtr resourceType) const
     return it != resources.end();
 }
 
-void frts::HasResourceImpl::removeResource(IdPtr resourceType)
+void frts::HasResourceImpl::removeResource(const IdPtr& resourceType)
 {
     assert(resourceType != nullptr);
 

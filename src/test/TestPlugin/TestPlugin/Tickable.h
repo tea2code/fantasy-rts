@@ -9,21 +9,21 @@ class Tickable : public frts::Tickable
 public:
     Tickable();
 
-    void checkRequiredData(frts::SharedManagerPtr shared) override;
-    bool createData(frts::SharedManagerPtr shared) override;
+    void checkRequiredData(const frts::SharedManagerPtr& shared) override;
+    bool createData(const frts::SharedManagerPtr& shared) override;
     std::string getName() const override;
     std::vector<std::string> getSupportedConfig() override;
     std::string getTypeName() const override;
     int getTypeVersion() const override;
     int getVersion() const override;
-    bool init(frts::SharedManagerPtr shared) override;
+    bool init(const frts::SharedManagerPtr& shared) override;
     bool isInitialized() const override;
     bool isPreInitialized() const override;
-    void parseConfig(const std::string& key, frts::ConfigNodePtr node, frts::SharedManagerPtr shared) override;
-    bool preInit(frts::SharedManagerPtr shared) override;
-    void tick(frts::SharedManagerPtr shared);
-    void validateData(frts::SharedManagerPtr shared) override;
-    void validateModules(frts::SharedManagerPtr shared) override;
+    void parseConfig(const std::string& key, const frts::ConfigNodePtr& node, const frts::SharedManagerPtr& shared) override;
+    bool preInit(const frts::SharedManagerPtr& shared) override;
+    void tick(const frts::SharedManagerPtr& shared);
+    void validateData(const frts::SharedManagerPtr& shared) override;
+    void validateModules(const frts::SharedManagerPtr& shared) override;
 };
 
 #endif // TICKABLE_H

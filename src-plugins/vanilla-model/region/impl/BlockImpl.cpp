@@ -4,13 +4,13 @@
 #include <iterator>
 
 
-frts::BlockImpl::BlockImpl(IdPtr blockingType, IdPtr sortOrderType)
+frts::BlockImpl::BlockImpl(const IdPtr& blockingType, const IdPtr& sortOrderType)
     : blockingType{blockingType}
 {
     entities = std::unique_ptr<EntitySet>(new EntitySet(SortOrder::SortOrdered(sortOrderType)));
 }
 
-std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(IdPtr componentType) const
+std::vector<frts::EntityPtr> frts::BlockImpl::getByComponent(const IdPtr& componentType) const
 {
     assert(componentType != nullptr);
 
@@ -32,7 +32,7 @@ std::vector<frts::EntityPtr> frts::BlockImpl::getEntities() const
     return result;
 }
 
-bool frts::BlockImpl::has(EntityPtr entity) const
+bool frts::BlockImpl::has(const EntityPtr& entity) const
 {
     assert(entity != nullptr);
 
@@ -42,7 +42,7 @@ bool frts::BlockImpl::has(EntityPtr entity) const
     return (std::find(itPair.first, itPair.second, entity) != itPair.second);
 }
 
-void frts::BlockImpl::insert(EntityPtr entity)
+void frts::BlockImpl::insert(const EntityPtr& entity)
 {
     assert(entity != nullptr);
 
@@ -51,7 +51,7 @@ void frts::BlockImpl::insert(EntityPtr entity)
     entities->insert(entity);
 }
 
-bool frts::BlockImpl::isBlocking(BlockedByPtr blockedBy) const
+bool frts::BlockImpl::isBlocking(const BlockedByPtr& blockedBy) const
 {
     assert(blockedBy != nullptr);
 
@@ -60,7 +60,7 @@ bool frts::BlockImpl::isBlocking(BlockedByPtr blockedBy) const
     return std::any_of(entities->begin(), entities->end(), IsBlockingPred(blockingType, blockedBy));
 }
 
-void frts::BlockImpl::remove(EntityPtr entity)
+void frts::BlockImpl::remove(const EntityPtr& entity)
 {
     assert(entity != nullptr);
 

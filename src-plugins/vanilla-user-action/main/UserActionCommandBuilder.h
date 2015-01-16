@@ -26,7 +26,7 @@ namespace frts
          *        this function is always called before the first call to build().
          * @param node The settings node.
          */
-        virtual void setSettings(ConfigNodePtr node) = 0;
+        virtual void setSettings(const ConfigNodePtr& node) = 0;
     };
 }
 

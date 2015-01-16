@@ -13,7 +13,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        IdListEventValueImpl(IdPtr type);
+        IdListEventValueImpl(const IdPtr& type);
     };
 }
 

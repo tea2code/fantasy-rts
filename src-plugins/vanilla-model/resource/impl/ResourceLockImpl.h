@@ -10,7 +10,7 @@ namespace frts
     class ResourceLockImpl : public ResourceLock, public std::enable_shared_from_this<ResourceLockImpl>
     {
     public:
-        ResourceLockImpl(LockableResourceManagerPtr manager);
+        ResourceLockImpl(const LockableResourceManagerPtr& manager);
         ~ResourceLockImpl() override;
 
         EntityPtr getEntity() const override;
@@ -41,7 +41,7 @@ namespace frts
      * @param manager The resource manager of this lock.
      * @return The resource lock.
      */
-    inline ResourceLockPtr makeResourceLock(LockableResourceManagerPtr manager)
+    inline ResourceLockPtr makeResourceLock(const LockableResourceManagerPtr& manager)
     {
         assert(manager != nullptr);
 

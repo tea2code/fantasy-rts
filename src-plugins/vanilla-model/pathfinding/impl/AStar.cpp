@@ -14,14 +14,15 @@
 #include <utility>
 
 
-frts::AStar::AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
+frts::AStar::AStar(const DistanceAlgorithmPtr& distanceAlgorithm, const IdPtr& teleportType)
     : distanceAlgorithm{distanceAlgorithm}, teleportType{teleportType}
     #ifdef A_STAR_BENCHMARK
     ,findNeighborsTime{0}, loopTime{0}, teleportTime{0}, totalTime{0}, walkTime{0}
     #endif
 {}
 
-frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared)
+frts::PathPtr frts::AStar::findPath(const PointPtr& start, const PointPtr& goal,
+                                    const BlockedByPtr& blockedBy, const SharedManagerPtr& shared)
 {
     assert(start != nullptr);
     assert(goal != nullptr);
@@ -155,7 +156,9 @@ frts::PathPtr frts::AStar::findPath(PointPtr start, PointPtr goal, BlockedByPtr 
     return result;
 }
 
-std::vector<frts::PointPtr> frts::AStar::findNeighbors(PointPtr current, BlockedByPtr blockedBy, RegionManagerPtr regionManager, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::AStar::findNeighbors(const PointPtr& current, const BlockedByPtr& blockedBy,
+                                                       const RegionManagerPtr& regionManager,
+                                                       const SharedManagerPtr& shared)
 {
     assert(current != nullptr);
     assert(blockedBy != nullptr);

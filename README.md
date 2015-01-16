@@ -51,6 +51,7 @@ The order of this ideas doesn't reflect their priority in any way.
 - Fog of War / Unknown tiles should be blacked out.
 - Multilanguage support.
 - Better, realistic and more complex region generator.
+- Plugin which allows to use frame time left. 
 
 ## Documentation
 

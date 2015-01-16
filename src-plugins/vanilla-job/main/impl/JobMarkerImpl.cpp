@@ -1,7 +1,7 @@
 #include "JobMarkerImpl.h"
 
 
-frts::JobMarkerImpl::JobMarkerImpl(IdPtr componentType)
+frts::JobMarkerImpl::JobMarkerImpl(const IdPtr& componentType)
     : componentType{componentType}
 {
 
@@ -22,7 +22,7 @@ frts::JobPtr frts::JobMarkerImpl::getJob() const
     return job;
 }
 
-void frts::JobMarkerImpl::setJob(JobPtr job)
+void frts::JobMarkerImpl::setJob(const JobPtr& job)
 {
     assert(job != nullptr);
 

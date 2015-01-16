@@ -1,7 +1,7 @@
 #include "IsResourceImpl.h"
 
 
-frts::IsResourceImpl::IsResourceImpl(IdPtr componentType)
+frts::IsResourceImpl::IsResourceImpl(const IdPtr& componentType)
     : componentType{componentType}
 {
 }
@@ -16,7 +16,7 @@ frts::IdPtr frts::IsResourceImpl::getResourceType() const
     return resourceType;
 }
 
-void frts::IsResourceImpl::setResourceType(IdPtr resourceType)
+void frts::IsResourceImpl::setResourceType(const IdPtr& resourceType)
 {
     assert(resourceType != nullptr);
 

@@ -15,7 +15,7 @@ namespace frts
     public:
         VanillaSdl2Plugin();
 
-        ModulePtr getModule(frts::IdPtr id) override;
+        ModulePtr getModule(const IdPtr& id) override;
 
     private:
         Sdl2EventHandlerPtr sdl2EventHandler;

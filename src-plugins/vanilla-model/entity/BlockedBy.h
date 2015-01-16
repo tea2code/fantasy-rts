@@ -32,7 +32,7 @@ namespace frts
          * @brief Add block type.
          * @param block The block type.
          */
-        virtual void addBlock(IdPtr block) = 0;
+        virtual void addBlock(const IdPtr& block) = 0;
 
         /**
          * @brief Get all block types.
@@ -44,7 +44,7 @@ namespace frts
          * @brief Remove block type.
          * @param block The block type.
          */
-        virtual void removeBlock(IdPtr block) = 0;
+        virtual void removeBlock(const IdPtr& block) = 0;
     };
 }
 

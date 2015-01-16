@@ -18,7 +18,7 @@ frts::CommandFactoryImpl::CommandFactoryImpl()
 {
 }
 
-void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr shared)
+void frts::CommandFactoryImpl::addToUndo(const CommandPtr& command, const SharedManagerPtr& shared)
 {
     assert(command != nullptr);
     assert(shared != nullptr);
@@ -37,14 +37,14 @@ void frts::CommandFactoryImpl::addToUndo(CommandPtr command, SharedManagerPtr sh
     }
 }
 
-void frts::CommandFactoryImpl::checkRequiredData(SharedManagerPtr shared)
+void frts::CommandFactoryImpl::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     validateDataValue(getName(), CommandIds::commandConfig(), 1, shared);
 }
 
-bool frts::CommandFactoryImpl::createData(SharedManagerPtr shared)
+bool frts::CommandFactoryImpl::createData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -60,7 +60,7 @@ std::vector<std::string> frts::CommandFactoryImpl::getSupportedConfig()
     return {"command"};
 }
 
-bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
+bool frts::CommandFactoryImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -76,7 +76,7 @@ bool frts::CommandFactoryImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedManagerPtr shared)
+frts::CommandPtr frts::CommandFactoryImpl::makeCommand(const IdPtr& builderId, const SharedManagerPtr& shared)
 {
     assert(builderId != nullptr);
     assert(shared != nullptr);
@@ -93,7 +93,7 @@ frts::CommandPtr frts::CommandFactoryImpl::makeCommand(IdPtr builderId, SharedMa
     }
 }
 
-void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)
+void frts::CommandFactoryImpl::parseConfig(const std::string&, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -114,7 +114,7 @@ void frts::CommandFactoryImpl::parseConfig(const std::string&, ConfigNodePtr nod
     }
 }
 
-void frts::CommandFactoryImpl::registerCommandBuilder(IdPtr builderId, CommandBuilderPtr builder)
+void frts::CommandFactoryImpl::registerCommandBuilder(const IdPtr& builderId, const CommandBuilderPtr& builder)
 {
     assert(builderId != nullptr);
     assert(builder != nullptr);
@@ -122,7 +122,7 @@ void frts::CommandFactoryImpl::registerCommandBuilder(IdPtr builderId, CommandBu
     commandBuilders.insert(std::make_pair(builderId, builder));
 }
 
-void frts::CommandFactoryImpl::undoLastCommand(SharedManagerPtr shared)
+void frts::CommandFactoryImpl::undoLastCommand(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

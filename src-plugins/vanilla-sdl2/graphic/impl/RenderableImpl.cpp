@@ -1,7 +1,7 @@
 #include "RenderableImpl.h"
 
 
-frts::RenderableImpl::RenderableImpl(IdPtr type)
+frts::RenderableImpl::RenderableImpl(const IdPtr& type)
     : type{type}
 {}
 
@@ -35,7 +35,7 @@ bool frts::RenderableImpl::isSpriteIndexSet() const
     return spriteIndexSet;
 }
 
-void frts::RenderableImpl::setSprite(IdPtr id)
+void frts::RenderableImpl::setSprite(const IdPtr& id)
 {
     sprite = id;
 }

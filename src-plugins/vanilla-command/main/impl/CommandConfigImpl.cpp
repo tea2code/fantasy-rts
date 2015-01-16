@@ -17,7 +17,7 @@ unsigned int frts::CommandConfigImpl::getNumUndo() const
     return numUndo;
 }
 
-void frts::CommandConfigImpl::setNotUndoableCommands(IdUnorderedSet commands)
+void frts::CommandConfigImpl::setNotUndoableCommands(const IdUnorderedSet& commands)
 {
     this->notUndoableCommands = commands;
 }

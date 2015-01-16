@@ -13,15 +13,15 @@ namespace frts
     class LockableIsResourceManager : public LockableResourceManager, public std::enable_shared_from_this<LockableIsResourceManager>
     {
     public:
-        LockableIsResourceManager(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo);
+        LockableIsResourceManager(const IdPtr& componentType, const RegionPtr& region, const DistanceAlgorithmPtr& distAlgo);
 
-        void add(EntityPtr entity) override;
-        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) override;
-        EntityPtr getEntity(ResourceLockPtr lock) const override;
-        IdPtr getResourceType(ResourceLockPtr lock) const override;
-        bool isValid(ResourceLockPtr lock) const override;
-        void release(ResourceLockPtr lock) override;
-        void remove(EntityPtr entity) override;
+        void add(const EntityPtr& entity) override;
+        ResourceLockPtr findNearest(const IdPtr& entityGroup, const IdPtr& resourceType, const PointPtr& pos, const SharedManagerPtr& shared) override;
+        EntityPtr getEntity(const ResourceLockPtr& lock) const override;
+        IdPtr getResourceType(const ResourceLockPtr& lock) const override;
+        bool isValid(const ResourceLockPtr& lock) const override;
+        void release(const ResourceLockPtr& lock) override;
+        void remove(const EntityPtr& entity) override;
 
     private:
         IdPtr componentType;
@@ -35,7 +35,9 @@ namespace frts
      * @param distAlgo The distance algorithm used to calculate the nearest resource.
      * @return The resource manager.
      */
-    inline LockableResourceManagerPtr makeLockableIsResourceManager(IdPtr componentType, RegionPtr region, DistanceAlgorithmPtr distAlgo)
+    inline LockableResourceManagerPtr makeLockableIsResourceManager(const IdPtr& componentType,
+                                                                    const RegionPtr& region,
+                                                                    const DistanceAlgorithmPtr& distAlgo)
     {
         assert(componentType != nullptr);
         assert(region != nullptr);

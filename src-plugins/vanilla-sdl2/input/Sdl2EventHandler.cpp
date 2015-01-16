@@ -19,7 +19,7 @@ frts::Sdl2EventHandler::Sdl2EventHandler()
 {
 }
 
-void frts::Sdl2EventHandler::checkRequiredData(SharedManagerPtr shared)
+void frts::Sdl2EventHandler::checkRequiredData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -35,7 +35,7 @@ void frts::Sdl2EventHandler::closeCurrentContext()
     }
 }
 
-bool frts::Sdl2EventHandler::createData(SharedManagerPtr shared)
+bool frts::Sdl2EventHandler::createData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -51,7 +51,7 @@ std::vector<std::string> frts::Sdl2EventHandler::getSupportedConfig()
     return {"screen"};
 }
 
-bool frts::Sdl2EventHandler::init(SharedManagerPtr shared)
+bool frts::Sdl2EventHandler::init(const SharedManagerPtr& shared)
 {
     auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
     if (!commandFactory->isInitialized())
@@ -82,7 +82,7 @@ bool frts::Sdl2EventHandler::init(SharedManagerPtr shared)
     return BaseTickable::init(shared);
 }
 
-void frts::Sdl2EventHandler::parseConfig(const std::string&, ConfigNodePtr node, SharedManagerPtr shared)
+void frts::Sdl2EventHandler::parseConfig(const std::string&, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     if (node->has("selection"))
     {
@@ -93,7 +93,7 @@ void frts::Sdl2EventHandler::parseConfig(const std::string&, ConfigNodePtr node,
     }
 }
 
-void frts::Sdl2EventHandler::registerCommand(Sdl2KeyCommand keyCommand, IdPtr commandId)
+void frts::Sdl2EventHandler::registerCommand(const Sdl2KeyCommand& keyCommand, const IdPtr& commandId)
 {
     assert(commandId != nullptr);
 
@@ -102,7 +102,7 @@ void frts::Sdl2EventHandler::registerCommand(Sdl2KeyCommand keyCommand, IdPtr co
     keyCommands[keyCommand] = ccc;
 }
 
-void frts::Sdl2EventHandler::registerContextChange(Sdl2KeyCommand keyCommand, IdPtr context)
+void frts::Sdl2EventHandler::registerContextChange(const Sdl2KeyCommand& keyCommand, const IdPtr& context)
 {
     assert(context != nullptr);
 
@@ -111,7 +111,7 @@ void frts::Sdl2EventHandler::registerContextChange(Sdl2KeyCommand keyCommand, Id
     keyCommands[keyCommand] = ccc;
 }
 
-void frts::Sdl2EventHandler::setDefaultContext(IdPtr context)
+void frts::Sdl2EventHandler::setDefaultContext(const IdPtr& context)
 {
     defaultContext = context;
     while(!contextStack.empty())
@@ -121,7 +121,7 @@ void frts::Sdl2EventHandler::setDefaultContext(IdPtr context)
     contextStack.push(context);
 }
 
-void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
+void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -264,7 +264,7 @@ void frts::Sdl2EventHandler::tick(SharedManagerPtr shared)
     }
 }
 
-void frts::Sdl2EventHandler::validateModules(frts::SharedManagerPtr shared)
+void frts::Sdl2EventHandler::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

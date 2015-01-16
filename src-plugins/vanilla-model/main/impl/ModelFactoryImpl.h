@@ -29,30 +29,30 @@ namespace frts
             return "frts/ModelFactory";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
+        void checkRequiredData(const SharedManagerPtr& shared) override;
+        bool createData(const SharedManagerPtr& shared) override;
         DistanceAlgorithmPtr getDistanceAlgorithm() const override;
-        MapParserPtr getMapParser(IdPtr id) const override;
+        MapParserPtr getMapParser(const IdPtr& id) const override;
         PathFinderPtr getPathFinder() const override;
         std::vector<std::string> getSupportedConfig() override;
-        bool init(SharedManagerPtr shared) override;
-        WriteableBlockPtr makeBlock(SharedManagerPtr shared) override;
-        ComponentPtr makeComponent(IdPtr builderId, SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        WriteableBlockPtr makeBlock(const SharedManagerPtr& shared) override;
+        ComponentPtr makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared) override;
         EntityPtr makeEntity() override;
-        EntityPtr makeEntity(IdPtr id, SharedManagerPtr shared) override;
+        EntityPtr makeEntity(const IdPtr& id, const SharedManagerPtr& shared) override;
         PointPtr makePoint(Point::value x, Point::value y, Point::value z) override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        bool preInit(SharedManagerPtr shared) override;
-        void registerComponentBuilder(IdPtr builderId, ComponentBuilderPtr builder) override;
-        void registerMapParser(IdPtr id, MapParserPtr mapParser) override;
-        void setDistanceAlgorithm(DistanceAlgorithmPtr distanceAlgorithm) override;
-        void setPathFinder(PathFinderPtr pathFinder) override;
-        void setRegion(RegionPtr region) override;
-        void setRegionGenerator(RegionGeneratorPtr regionGenerator) override;
-        void setResourceEntityManager(LockableResourceManagerPtr resourceEntityManager) override;
-        void setResourceManager(LockableResourceManagerPtr resourceManager) override;
-        void validateData(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        bool preInit(const SharedManagerPtr& shared) override;
+        void registerComponentBuilder(const IdPtr& builderId, const ComponentBuilderPtr& builder) override;
+        void registerMapParser(const IdPtr& id, const MapParserPtr& mapParser) override;
+        void setDistanceAlgorithm(const DistanceAlgorithmPtr& distanceAlgorithm) override;
+        void setPathFinder(const PathFinderPtr& pathFinder) override;
+        void setRegion(const RegionPtr& region) override;
+        void setRegionGenerator(const RegionGeneratorPtr& regionGenerator) override;
+        void setResourceEntityManager(const LockableResourceManagerPtr& resourceEntityManager) override;
+        void setResourceManager(const LockableResourceManagerPtr& resourceManager) override;
+        void validateData(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
     private:
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr>;
@@ -78,7 +78,7 @@ namespace frts
         bool firstInit = true;
 
     private:
-        ComponentPtr makeComponent(IdPtr builderId, ConfigNodePtr node, SharedManagerPtr shared);
+        ComponentPtr makeComponent(const IdPtr& builderId, const ConfigNodePtr& node, const SharedManagerPtr& shared);
     };
 
     /**

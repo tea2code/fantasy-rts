@@ -34,7 +34,7 @@ namespace frts
          * @brief Set the job of this marker.
          * @param job The job.
          */
-        virtual void setJob(JobPtr job) = 0;
+        virtual void setJob(const JobPtr& job) = 0;
     };
 }
 

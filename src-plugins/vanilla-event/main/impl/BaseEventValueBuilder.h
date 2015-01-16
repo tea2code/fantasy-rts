@@ -15,11 +15,11 @@ namespace frts
     class BaseEventValueBuilder : public EventValueBuilder
     {
     public:
-        BaseEventValueBuilder(IdPtr type)
+        BaseEventValueBuilder(const IdPtr& type)
             : type{type}
         {}
 
-        EventValuePtr build(SharedManagerPtr) override
+        EventValuePtr build(const SharedManagerPtr&) override
         {
             return std::make_shared<EventValue>(type);
         }

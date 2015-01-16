@@ -27,14 +27,14 @@ namespace frts
         /**
          * @param blockingType The id of the blocking component type.
          */
-        BlockImpl(IdPtr blockingType, IdPtr sortOrderType);
+        BlockImpl(const IdPtr& blockingType, const IdPtr& sortOrderType);
 
-        EntityVector getByComponent(IdPtr componentType) const override;
+        EntityVector getByComponent(const IdPtr& componentType) const override;
         EntityVector getEntities() const override;
-        bool has(EntityPtr entity) const override;
-        void insert(EntityPtr entity) override;
-        bool isBlocking(BlockedByPtr blockedBy) const override;
-        void remove(EntityPtr entity) override;
+        bool has(const EntityPtr& entity) const override;
+        void insert(const EntityPtr& entity) override;
+        bool isBlocking(const BlockedByPtr& blockedBy) const override;
+        void remove(const EntityPtr& entity) override;
 
     private:
         /**
@@ -42,13 +42,13 @@ namespace frts
          */
         struct HasComponentPred
         {
-            HasComponentPred(IdPtr componentType)
+            HasComponentPred(const IdPtr& componentType)
                 : componentType{componentType}
             {
                 assert(componentType != nullptr);
             }
 
-            bool operator()(EntityPtr entity)
+            bool operator()(const EntityPtr& entity)
             {
                 return entity->hasComponent(componentType);
             }
@@ -61,19 +61,19 @@ namespace frts
          */
         struct IsBlockingPred
         {
-            IsBlockingPred(IdPtr blockingType, BlockedByPtr blockedBy)
+            IsBlockingPred(const IdPtr& blockingType, const BlockedByPtr& blockedBy)
                 : blockedBy{blockedBy}, blockingType{blockingType}
             {
                 assert(blockedBy != nullptr);
                 assert(blockingType != nullptr);
             }
 
-            bool operator()(EntityPtr entity)
+            bool operator()(const EntityPtr& entity)
             {
                 assert(entity != nullptr);
 
                 bool result = false;
-                BlockingPtr blocking = getComponent<Blocking>(blockingType, entity);
+                auto blocking = getComponent<Blocking>(blockingType, entity);
                 if (blocking != nullptr)
                 {
                     result = blocking->blocks(blockedBy);
@@ -106,7 +106,7 @@ namespace frts
      * @param sortOrderType The id of the sortorder component type.
      * @return The block pointer.
      */
-    inline BlockImplPtr makeBlock(IdPtr blockingType, IdPtr sortOrderType)
+    inline BlockImplPtr makeBlock(const IdPtr& blockingType, const IdPtr& sortOrderType)
     {
         assert(blockingType != nullptr);
         assert(sortOrderType != nullptr);

@@ -7,7 +7,7 @@
 #include <algorithm>
 
 
-frts::HarvestJob::HarvestJob(IdPtr id, IdPtr type, EntityPtr toHarvest, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
+frts::HarvestJob::HarvestJob(const IdPtr& id, const IdPtr& type, const EntityPtr& toHarvest, const IdUnorderedSet& jobRequirements, const EntityPtr& jobMarker)
     : BaseJob(id, type, jobRequirements, jobMarker), toHarvest{toHarvest}
 {
 
@@ -18,7 +18,7 @@ frts::HarvestJob::~HarvestJob()
 
 }
 
-bool frts::HarvestJob::checkSpecialRequirements(EntityPtr entity, SharedManagerPtr shared) const
+bool frts::HarvestJob::checkSpecialRequirements(const EntityPtr& entity, const SharedManagerPtr& shared) const
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -48,7 +48,7 @@ bool frts::HarvestJob::checkSpecialRequirements(EntityPtr entity, SharedManagerP
     return true;
 }
 
-frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
+frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(this->jobState != JobState::Finished);
@@ -143,7 +143,7 @@ frts::Job::State frts::HarvestJob::execute(SharedManagerPtr shared)
     return result;
 }
 
-bool frts::HarvestJob::isValid(SharedManagerPtr shared) const
+bool frts::HarvestJob::isValid(const SharedManagerPtr& shared) const
 {
     assert(shared != nullptr);
 
@@ -152,7 +152,7 @@ bool frts::HarvestJob::isValid(SharedManagerPtr shared) const
     return (rm->getPos(toHarvest, shared) != nullptr);
 }
 
-frts::Job::State frts::HarvestJob::stop(SharedManagerPtr shared)
+frts::Job::State frts::HarvestJob::stop(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

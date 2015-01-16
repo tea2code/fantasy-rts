@@ -14,12 +14,12 @@ namespace frts
          * @param commandType The command type.
          * @param settings The settings node.
          */
-        StopJobsCommand(IdPtr commandType, ConfigNodePtr settings);
+        StopJobsCommand(const IdPtr& commandType, const ConfigNodePtr& settings);
         ~StopJobsCommand();
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         const std::string name = "frts::StopJobsCommand";
@@ -36,7 +36,7 @@ namespace frts
      * @param settings The settings node.
      * @return The command.
      */
-    inline CommandPtr makeStopJobsCommand(IdPtr commandType, ConfigNodePtr settings)
+    inline CommandPtr makeStopJobsCommand(const IdPtr& commandType, const ConfigNodePtr& settings)
     {
         assert(commandType != nullptr);
         assert(settings != nullptr);

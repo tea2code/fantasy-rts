@@ -6,7 +6,7 @@ frts::BaseBlocking::BaseBlocking()
 {
 }
 
-void frts::BaseBlocking::addBlock(IdPtr block)
+void frts::BaseBlocking::addBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 
@@ -18,7 +18,7 @@ const frts::BlockedBy::BlockSet frts::BaseBlocking::getBlocks() const
     return blocks;
 }
 
-void frts::BaseBlocking::removeBlock(IdPtr block)
+void frts::BaseBlocking::removeBlock(const IdPtr& block)
 {
     assert(block != nullptr);
 

@@ -20,7 +20,7 @@ namespace frts
     {
         Sdl2KeyCommand(SDL_Keycode key,
                        bool alt = false, bool ctrl = false, bool shift = false,
-                       IdPtr context = nullptr)
+                       const IdPtr& context = nullptr)
             : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
         {}
 
@@ -32,7 +32,7 @@ namespace frts
 
         IdPtr context;
 
-        bool operator==(const Sdl2KeyCommand &other) const
+        bool operator==(const Sdl2KeyCommand& other) const
         {
             return (key == other.key) &&
                    (alt == other.alt) &&
@@ -87,13 +87,13 @@ namespace frts
             return "frts/SDL2EventHandler";
         }
 
-        void checkRequiredData(SharedManagerPtr shared) override;
-        bool createData(SharedManagerPtr shared) override;
+        void checkRequiredData(const SharedManagerPtr& shared) override;
+        bool createData(const SharedManagerPtr& shared) override;
         std::vector<std::string> getSupportedConfig() override;
-        bool init(SharedManagerPtr shared) override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        void tick(SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        void tick(const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
         /**
          * @brief Closes the current context.
@@ -105,20 +105,20 @@ namespace frts
          * @param keyCommand The key command.
          * @param commandId The command id.
          */
-        void registerCommand(Sdl2KeyCommand keyCommand, IdPtr commandId);
+        void registerCommand(const Sdl2KeyCommand& keyCommand, const IdPtr& commandId);
 
         /**
          * @brief Register a context change with an key.
          * @param keyCommand The key command.
          * @param context The context:
          */
-        void registerContextChange(Sdl2KeyCommand keyCommand, IdPtr context);
+        void registerContextChange(const Sdl2KeyCommand& keyCommand, const IdPtr& context);
 
         /**
          * @brief Set the default context.
          * @param context The default context.
          */
-        void setDefaultContext(IdPtr context);
+        void setDefaultContext(const IdPtr& context);
 
     private:
         /**

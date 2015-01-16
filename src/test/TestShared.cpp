@@ -41,41 +41,41 @@ namespace TestShared
     {
     public:
         TestTickable() {}
-        void checkRequiredData(frts::SharedManagerPtr) override {}
-        bool createData(frts::SharedManagerPtr) override { return false; }
+        void checkRequiredData(const frts::SharedManagerPtr&) override {}
+        bool createData(const frts::SharedManagerPtr&) override { return false; }
         std::string getName() const override { return "TestTickable"; }
         std::vector<std::string> getSupportedConfig() override { return {}; }
         std::string getTypeName() const override { return getName(); }
         int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
-        bool init(frts::SharedManagerPtr) override { return false; }
+        bool init(const frts::SharedManagerPtr&) override { return false; }
         bool isInitialized() const override { return false; }
         bool isPreInitialized() const override { return false; }
-        void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
-        bool preInit(frts::SharedManagerPtr) override { return false; }
-        void tick(frts::SharedManagerPtr) override {}
-        void validateData(frts::SharedManagerPtr) override {}
-        void validateModules(frts::SharedManagerPtr) override {}
+        void parseConfig(const std::string&, const frts::ConfigNodePtr&, const frts::SharedManagerPtr&) override {}
+        bool preInit(const frts::SharedManagerPtr&) override { return false; }
+        void tick(const frts::SharedManagerPtr&) override {}
+        void validateData(const frts::SharedManagerPtr&) override {}
+        void validateModules(const frts::SharedManagerPtr&) override {}
     };
 
     class TestUtility : public frts::Utility
     {
     public:
         TestUtility() {}
-        void checkRequiredData(frts::SharedManagerPtr) override {}
-        bool createData(frts::SharedManagerPtr) override { return false; }
+        void checkRequiredData(const frts::SharedManagerPtr&) override {}
+        bool createData(const frts::SharedManagerPtr&) override { return false; }
         std::string getName() const override { return "TestUtility"; }
         std::vector<std::string> getSupportedConfig() override { return {}; }
         std::string getTypeName() const override { return getName(); }
         int getTypeVersion() const override { return getVersion(); }
         int getVersion() const override { return 1; }
-        bool init(frts::SharedManagerPtr) override { return false; }
+        bool init(const frts::SharedManagerPtr&) override { return false; }
         bool isInitialized() const override { return false; }
         bool isPreInitialized() const override { return false; }
-        void parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr) override {}
-        bool preInit(frts::SharedManagerPtr) override { return false; }
-        void validateData(frts::SharedManagerPtr) override {}
-        void validateModules(frts::SharedManagerPtr) override {}
+        void parseConfig(const std::string&, const frts::ConfigNodePtr&, const frts::SharedManagerPtr&) override {}
+        bool preInit(const frts::SharedManagerPtr&) override { return false; }
+        void validateData(const frts::SharedManagerPtr&) override {}
+        void validateModules(const frts::SharedManagerPtr&) override {}
     };
 }
 

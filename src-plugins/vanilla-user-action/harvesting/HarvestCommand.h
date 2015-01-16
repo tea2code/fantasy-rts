@@ -15,12 +15,12 @@ namespace frts
          * @param userActionType The user action type.
          * @param settings The settings node.
          */
-        HarvestCommand(IdPtr commandType, IdPtr userActionType, ConfigNodePtr settings);
+        HarvestCommand(const IdPtr& commandType, const IdPtr& userActionType, const ConfigNodePtr& settings);
         ~HarvestCommand();
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         const std::string name = "frts::HarvestCommand";
@@ -39,7 +39,7 @@ namespace frts
      * @param settings The settings node.
      * @return The command.
      */
-    inline CommandPtr makeHarvestCommand(IdPtr commandType, IdPtr userActionType, ConfigNodePtr settings)
+    inline CommandPtr makeHarvestCommand(const IdPtr& commandType, const IdPtr& userActionType, const ConfigNodePtr& settings)
     {
         assert(commandType != nullptr);
         assert(userActionType != nullptr);

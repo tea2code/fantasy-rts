@@ -58,7 +58,7 @@ frts::Drawer::RendererPtr frts::Drawer::getRenderer() const
     return renderer;
 }
 
-void frts::Drawer::init(SharedManagerPtr shared)
+void frts::Drawer::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -171,9 +171,9 @@ void frts::Drawer::init(SharedManagerPtr shared)
     initialized = true;
 }
 
-void frts::Drawer::renderEntities(const EntityVector& entities, IdPtr renderableId,
+void frts::Drawer::renderEntities(const EntityVector& entities, const IdPtr& renderableId,
                                   const SDL_Rect& rectToRender, IdUnorderedSet& stacked,
-                                  SharedManagerPtr shared)
+                                  const SharedManagerPtr& shared)
 {
     assert(initialized);
     assert(renderableId != nullptr);
@@ -202,7 +202,7 @@ void frts::Drawer::renderEntities(const EntityVector& entities, IdPtr renderable
     }
 }
 
-void frts::Drawer::renderNow(SharedManagerPtr shared)
+void frts::Drawer::renderNow(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(initialized);
@@ -219,7 +219,8 @@ void frts::Drawer::setTileBackground(std::uint8_t r, std::uint8_t g, std::uint8_
     tileBackgroundB = b;
 }
 
-void frts::Drawer::setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode)
+void frts::Drawer::setImageConfig(const SharedManagerPtr& shared, const std::string& rootNamespace,
+                                  const ConfigNodePtr& imagesNode)
 {
     assert(shared != nullptr);
     assert(imagesNode != nullptr);
@@ -254,7 +255,8 @@ void frts::Drawer::setOffsetY(Point::value offsetY)
     this->offsetY = offsetY;
 }
 
-void frts::Drawer::setSpriteConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode)
+void frts::Drawer::setSpriteConfig(const SharedManagerPtr& shared, const std::string& rootNamespace,
+                                   const ConfigNodePtr& spritesNode)
 {
     assert(shared != nullptr);
     assert(spritesNode != nullptr);
@@ -267,8 +269,9 @@ void frts::Drawer::setWindowTitle(const std::string& windowTitle)
     SDL_SetWindowTitle(window.get(), windowTitle.c_str());
 }
 
-void frts::Drawer::updateMap(SharedManagerPtr shared, Point::value zLevel,
-                                RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
+void frts::Drawer::updateMap(const SharedManagerPtr& shared, Point::value zLevel,
+                             const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
+                             const GraphicDataPtr& graphicData)
 {
     assert(shared != nullptr);
 
@@ -287,9 +290,12 @@ void frts::Drawer::updateMap(SharedManagerPtr shared, Point::value zLevel,
     }
 }
 
-void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel,
-                                  RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
+void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, Point::value zLevel,
+                                  const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
+                                  const GraphicDataPtr& graphicData)
 {
+    // Pos is not a reference because we may override it.
+
     assert(shared != nullptr);
     assert(pos != nullptr);
     assert(initialized);
@@ -389,8 +395,9 @@ void frts::Drawer::updatePosition(SharedManagerPtr shared, PointPtr pos, Point::
     }
 }
 
-void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel,
-                                   RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData)
+void frts::Drawer::updatePositions(const SharedManagerPtr& shared, const PointUnorderedSet& positions,
+                                   Point::value zLevel, const RegionManagerPtr& regionManager,
+                                   const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData)
 {
     assert(shared != nullptr);
 
@@ -402,7 +409,7 @@ void frts::Drawer::updatePositions(SharedManagerPtr shared, const PointUnordered
     }
 }
 
-void frts::Drawer::validateData(SharedManagerPtr shared)
+void frts::Drawer::validateData(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

@@ -1,7 +1,7 @@
 #include "EntityEventValueImpl.h"
 
 
-frts::EntityEventValueImpl::EntityEventValueImpl(IdPtr type)
+frts::EntityEventValueImpl::EntityEventValueImpl(const IdPtr& type)
     : BaseEventValue(type)
 {
 

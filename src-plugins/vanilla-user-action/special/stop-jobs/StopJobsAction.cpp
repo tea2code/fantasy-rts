@@ -4,7 +4,7 @@
 #include <frts/vanillasdl2input>
 
 
-frts::StopJobsAction::StopJobsAction(IdUnorderedSet jobs, IdUnorderedSet types)
+frts::StopJobsAction::StopJobsAction(const IdUnorderedSet& jobs, const IdUnorderedSet& types)
     : jobs{jobs}, types{types}
 {
 
@@ -15,7 +15,7 @@ frts::StopJobsAction::~StopJobsAction()
 
 }
 
-frts::Action::State frts::StopJobsAction::execute(SharedManagerPtr shared)
+frts::Action::State frts::StopJobsAction::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(this->actionState != ActionState::Finished);
@@ -69,7 +69,7 @@ frts::Action::State frts::StopJobsAction::execute(SharedManagerPtr shared)
     return result;
 }
 
-void frts::StopJobsAction::notify(EventPtr event, SharedManagerPtr shared)
+void frts::StopJobsAction::notify(const EventPtr& event, const SharedManagerPtr& shared)
 {
     assert(event != nullptr);
     assert(shared != nullptr);
@@ -85,7 +85,7 @@ void frts::StopJobsAction::notify(EventPtr event, SharedManagerPtr shared)
     em->unsubscribe(shared_from_this());
 }
 
-frts::Action::State frts::StopJobsAction::stop(SharedManagerPtr shared)
+frts::Action::State frts::StopJobsAction::stop(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

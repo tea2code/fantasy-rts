@@ -4,7 +4,7 @@
 #include <frts/random.h>
 
 
-frts::DemoRegionGenerator::DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
+frts::DemoRegionGenerator::DemoRegionGenerator(const IdPtr& blockingType, const IdPtr& sortOrderType,
                                                Point::value mapSizeX, Point::value mapSizeY,
                                                Point::value surfaceZLevel)
     : blockingType{blockingType}, mapSizeX{mapSizeX}, mapSizeY{mapSizeY},
@@ -17,10 +17,10 @@ std::string frts::DemoRegionGenerator::getSupportedConfig() const
     return "";
 }
 
-void frts::DemoRegionGenerator::init(SharedManagerPtr)
+void frts::DemoRegionGenerator::init(const SharedManagerPtr&)
 {}
 
-frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     std::string idStr = "entity.grass";
 
@@ -51,8 +51,8 @@ frts::WriteableBlockPtr frts::DemoRegionGenerator::newBlock(PointPtr pos, Shared
     return block;
 }
 
-void frts::DemoRegionGenerator::parseConfig(ConfigNodePtr, SharedManagerPtr)
+void frts::DemoRegionGenerator::parseConfig(const ConfigNodePtr&, const SharedManagerPtr&)
 {}
 
-void frts::DemoRegionGenerator::validateData(SharedManagerPtr)
+void frts::DemoRegionGenerator::validateData(const SharedManagerPtr&)
 {}

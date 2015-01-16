@@ -9,10 +9,10 @@ namespace frts
     class StopActionOrQuitCommandBuilder : public CommandBuilder
     {
     public:
-        StopActionOrQuitCommandBuilder(IdPtr commandType);
+        StopActionOrQuitCommandBuilder(const IdPtr& commandType);
         ~StopActionOrQuitCommandBuilder();
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -23,7 +23,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeStopActionOrQuitCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeStopActionOrQuitCommandBuilder(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
 

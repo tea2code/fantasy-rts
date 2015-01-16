@@ -19,16 +19,16 @@ namespace frts
     class BaseLockableResourceManager
     {
     public:
-        BaseLockableResourceManager(DistanceAlgorithmPtr distAlgo, RegionPtr region);
+        BaseLockableResourceManager(const DistanceAlgorithmPtr& distAlgo, const RegionPtr& region);
 
-        void add(IdPtr resourceType, EntityPtr entity);
-        ResourceLockPtr findNearest(IdPtr entityGroup, IdPtr resourceType, PointPtr pos,
-                                    LockableResourceManagerPtr parent, SharedManagerPtr shared);
-        EntityPtr getEntity(ResourceLockPtr lock) const;
-        IdPtr getResourceType(ResourceLockPtr lock) const;
-        bool isValid(ResourceLockPtr lock) const;
-        void release(ResourceLockPtr lock);
-        void remove(IdPtr resourceType, EntityPtr entity);
+        void add(const IdPtr& resourceType, const EntityPtr& entity);
+        ResourceLockPtr findNearest(const IdPtr& entityGroup, const IdPtr& resourceType, const PointPtr& pos,
+                                   const  LockableResourceManagerPtr& parent, const SharedManagerPtr& shared);
+        EntityPtr getEntity(const ResourceLockPtr& lock) const;
+        IdPtr getResourceType(const ResourceLockPtr& lock) const;
+        bool isValid(const ResourceLockPtr& lock) const;
+        void release(const ResourceLockPtr& lock);
+        void remove(const IdPtr& resourceType, const EntityPtr& entity);
 
     private:
         struct LockInfo

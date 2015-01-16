@@ -1,7 +1,7 @@
 #include "CurriculumImpl.h"
 
 
-frts::CurriculumImpl::CurriculumImpl(IdPtr type)
+frts::CurriculumImpl::CurriculumImpl(const IdPtr& type)
     : type{type}
 {
 
@@ -12,7 +12,7 @@ frts::CurriculumImpl::~CurriculumImpl()
 
 }
 
-void frts::CurriculumImpl::addAbility(IdPtr ability)
+void frts::CurriculumImpl::addAbility(const IdPtr& ability)
 {
     assert(ability != nullptr);
 
@@ -29,14 +29,14 @@ frts::IdPtr frts::CurriculumImpl::getComponentType() const
     return type;
 }
 
-bool frts::CurriculumImpl::hasAbility(IdPtr ability) const
+bool frts::CurriculumImpl::hasAbility(const IdPtr& ability) const
 {
     assert(ability != nullptr);
 
     return (abilities.find(ability) != abilities.end());
 }
 
-void frts::CurriculumImpl::removeAbility(IdPtr ability)
+void frts::CurriculumImpl::removeAbility(const IdPtr& ability)
 {
     assert(ability != nullptr);
 

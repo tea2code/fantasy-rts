@@ -12,10 +12,10 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        CloseContextCommandBuilder(IdPtr commandType);
+        CloseContextCommandBuilder(const IdPtr& commandType);
         ~CloseContextCommandBuilder();
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -26,7 +26,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeCloseContextCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeCloseContextCommandBuilder(const IdPtr& commandType)
     {
         return std::make_shared<CloseContextCommandBuilder>(commandType);
     }

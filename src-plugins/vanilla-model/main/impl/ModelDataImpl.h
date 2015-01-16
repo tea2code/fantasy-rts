@@ -22,7 +22,7 @@ namespace frts
         void setMapSizeY(Point::value size) override;
         void setPrecalculateDown(unsigned int zLevels) override;
         void setPrecalculateUp(unsigned int zLevels) override;
-        void setPrecalculatedRange(ZLevelRange range) override;
+        void setPrecalculatedRange(const ZLevelRange& range) override;
         void setSurfaceZLevel(Point::value zLevel) override;
 
     private:

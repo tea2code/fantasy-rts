@@ -27,9 +27,9 @@ namespace frts
         }
 
         std::vector<std::string> getSupportedConfig() override;
-        bool init(SharedManagerPtr shared) override;
-        void parseConfig(const std::string& key, ConfigNodePtr node, SharedManagerPtr shared) override;
-        void validateModules(SharedManagerPtr shared) override;
+        bool init(const SharedManagerPtr& shared) override;
+        void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        void validateModules(const SharedManagerPtr& shared) override;
 
     private:
         /**

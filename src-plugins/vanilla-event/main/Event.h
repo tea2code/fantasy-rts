@@ -37,21 +37,21 @@ namespace frts
          * @param valueId The value id.
          * @return The value.
          */
-        virtual EventValuePtr getValue(IdPtr valueId) const = 0;
+        virtual EventValuePtr getValue(const IdPtr& valueId) const = 0;
 
         /**
          * @brief Check if a value with given id exists.
          * @param valueId The value id.
          * @return True if the value exists else false.
          */
-        virtual bool hasValue(IdPtr valueId) const = 0;
+        virtual bool hasValue(const IdPtr& valueId) const = 0;
 
         /**
          * @brief Set the value.
          * @param valueId The value id.
          * @param value The value.
          */
-        virtual void setValue(IdPtr valueId, EventValuePtr value) = 0;
+        virtual void setValue(const IdPtr& valueId, const EventValuePtr& value) = 0;
     };
 
     /**

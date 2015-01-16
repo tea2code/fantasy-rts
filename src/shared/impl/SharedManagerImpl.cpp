@@ -8,9 +8,7 @@
 #include <memory>
 
 
-const std::string frts::SharedManagerImpl::logModule = "SharedManager";
-
-frts::SharedManagerImpl::SharedManagerImpl(LogPtr log)
+frts::SharedManagerImpl::SharedManagerImpl(const LogPtr& log)
     : log{log}, quitApplication{false}
 {
 }
@@ -19,7 +17,7 @@ frts::SharedManagerImpl::~SharedManagerImpl()
 {
 }
 
-frts::DataValuePtr frts::SharedManagerImpl::getDataValue(IdPtr id) const
+frts::DataValuePtr frts::SharedManagerImpl::getDataValue(const IdPtr& id) const
 {
     assert(id != nullptr);
 
@@ -54,7 +52,7 @@ frts::LogPtr frts::SharedManagerImpl::getLog() const
     return log;
 }
 
-frts::UtilityPtr frts::SharedManagerImpl::getUtility(IdPtr id) const
+frts::UtilityPtr frts::SharedManagerImpl::getUtility(const IdPtr& id) const
 {
     assert(id != nullptr);
 
@@ -79,7 +77,7 @@ frts::IdPtr frts::SharedManagerImpl::makeId(const std::string& str) const
     return frts::makeId(str);
 }
 
-frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(IdPtr id) const
+frts::IdNotFoundError frts::SharedManagerImpl::makeIdNotFoundError(const IdPtr& id) const
 {
     assert(id != nullptr);
 
@@ -97,7 +95,7 @@ frts::TickableItr frts::SharedManagerImpl::renderModulesEnd() const
     return renderModules.end();
 }
 
-void frts::SharedManagerImpl::setFrame(FramePtr frame)
+void frts::SharedManagerImpl::setFrame(const FramePtr& frame)
 {
     if (frame == nullptr)
     {
@@ -122,7 +120,7 @@ void frts::SharedManagerImpl::setUpdateModules(const std::vector<frts::TickableP
     updateModules = modules;
 }
 
-void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
+void frts::SharedManagerImpl::setUtility(const IdPtr& id, const UtilityPtr& utility)
 {
     assert(id != nullptr);
     assert(utility != nullptr);
@@ -130,7 +128,7 @@ void frts::SharedManagerImpl::setUtility(IdPtr id, UtilityPtr utility)
     utilityModules[id] = utility;
 }
 
-void frts::SharedManagerImpl::setDataValue(IdPtr id, DataValuePtr value)
+void frts::SharedManagerImpl::setDataValue(const IdPtr& id, const DataValuePtr& value)
 {
     assert(id != nullptr);
     assert(value != nullptr);

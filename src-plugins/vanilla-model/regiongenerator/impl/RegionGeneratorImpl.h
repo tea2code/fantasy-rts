@@ -22,13 +22,13 @@ namespace frts
          * @param blockingType The component type id of the blocking component.
          * @param sortOrderType The component type id of the sort order component.
          */
-        RegionGeneratorImpl(IdPtr blockingType, IdPtr sortOrderType);
+        RegionGeneratorImpl(const IdPtr& blockingType, const IdPtr& sortOrderType);
 
         std::string getSupportedConfig() const override;
-        void init(SharedManagerPtr shared) override;
-        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
-        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
+        void init(const SharedManagerPtr& shared) override;
+        WriteableBlockPtr newBlock(const PointPtr& pos, const SharedManagerPtr& shared) override;
+        void parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        void validateData(const SharedManagerPtr& shared) override;
 
     private:
         /**
@@ -36,7 +36,8 @@ namespace frts
          */
         struct Generator
         {
-            Generator(double featureSize, OpenSimplexNoise noise, std::vector<std::pair<double, double>> ranges, IdVector entities)
+            Generator(double featureSize, const OpenSimplexNoise& noise,
+                      const std::vector<std::pair<double, double>>& ranges, const IdVector& entities)
                 : featureSize{featureSize}, noise{noise}, ranges{ranges}, entities{entities}
             {}
 
@@ -68,8 +69,9 @@ namespace frts
          * @param shared The shared manager.
          * @return True if was initialized by generators.
          */
-        bool initializeWithGenerators(WriteableBlockPtr block, PointPtr pos, const IdVector& generatorIds,
-                                      ModelFactoryPtr modelFactory, SharedManagerPtr shared) const;
+        bool initializeWithGenerators(const WriteableBlockPtr& block, const PointPtr& pos,
+                                      const IdVector& generatorIds, const ModelFactoryPtr& modelFactory,
+                                      const SharedManagerPtr& shared) const;
     };
 
     /**
@@ -80,7 +82,7 @@ namespace frts
      * @param mapSizeY The map size in y direction.
      * @return The region generator.
      */
-    inline RegionGeneratorPtr makeRegionGenerator(IdPtr blockingType, IdPtr sortOrderType)
+    inline RegionGeneratorPtr makeRegionGenerator(const IdPtr& blockingType, const IdPtr& sortOrderType)
     {
         assert(blockingType != nullptr);
         assert(sortOrderType != nullptr);

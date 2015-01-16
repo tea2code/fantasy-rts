@@ -29,7 +29,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The event value.
          */
-        virtual EventValuePtr build(SharedManagerPtr shared) = 0;
+        virtual EventValuePtr build(const SharedManagerPtr& shared) = 0;
     };
 }
 

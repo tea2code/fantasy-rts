@@ -3,13 +3,13 @@
 #include "SwitchSidebarInfoIndexCommand.h"
 
 
-frts::SwitchSidebarInfoIndexCommandBuilder::SwitchSidebarInfoIndexCommandBuilder(IdPtr commandType, int stepSize)
+frts::SwitchSidebarInfoIndexCommandBuilder::SwitchSidebarInfoIndexCommandBuilder(const IdPtr& commandType, int stepSize)
     : commandType{commandType}, stepSize{stepSize}
 {
 
 }
 
-frts::CommandPtr frts::SwitchSidebarInfoIndexCommandBuilder::build(SharedManagerPtr)
+frts::CommandPtr frts::SwitchSidebarInfoIndexCommandBuilder::build(const SharedManagerPtr&)
 {
     return makeSwitchSidebarInfoIndexCommand(commandType, stepSize);
 }

@@ -14,14 +14,14 @@ frts::JobMarkerBuilder::~JobMarkerBuilder()
 
 }
 
-frts::ComponentPtr frts::JobMarkerBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::JobMarkerBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return makeJobMarker(shared->makeId(JobIds::jobMarker()));
 }
 
-frts::ComponentPtr frts::JobMarkerBuilder::build(SharedManagerPtr shared, ConfigNodePtr)
+frts::ComponentPtr frts::JobMarkerBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr&)
 {
     assert(shared != nullptr);
 

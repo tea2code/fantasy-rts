@@ -10,7 +10,7 @@ frts::ModelReseter::ModelReseter()
 {    
 }
 
-void frts::ModelReseter::tick(SharedManagerPtr shared)
+void frts::ModelReseter::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -18,7 +18,7 @@ void frts::ModelReseter::tick(SharedManagerPtr shared)
     regionManager->resetChangedPos();
 }
 
-void frts::ModelReseter::validateModules(SharedManagerPtr shared)
+void frts::ModelReseter::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

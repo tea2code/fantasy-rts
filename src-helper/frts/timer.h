@@ -34,7 +34,7 @@ namespace frts
          * @param shared The shared manager.
          * @param minDuration Minimum duration to log. Default ignores durations of zero milliseconds.
          */
-        PerformanceLog(std::string label, SharedManagerPtr shared, unsigned int minDuration = 1)
+        PerformanceLog(const std::string& label, const SharedManagerPtr& shared, unsigned int minDuration = 1)
             : label{label}, minDuration{minDuration}, shared{shared}, startTime{highResTime()}
         {}
 

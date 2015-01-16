@@ -29,7 +29,7 @@ namespace frts
          * @brief Execute the main loop.
          * @param shared The shared manager.
          */
-        void start(SharedManagerImplPtr shared) const;
+        void start(const SharedManagerImplPtr& shared) const;
 
     private:
         /**
@@ -46,19 +46,19 @@ namespace frts
         /**
          * @brief The module name for log.
          */
-        static const std::string logModule;
+        const std::string logModule = "frts::MainLoop";
 
         /**
          * @brief Execute the render modules of the shared manager.
          * @param shared The shared manager.
          */
-        void render(SharedManagerPtr shared) const;
+        void render(const SharedManagerPtr& shared) const;
 
         /**
          * @brief Execute the update modules of the shared manager.
          * @param shared The shared manager.
          */
-        void update(SharedManagerPtr shared) const;
+        void update(const SharedManagerPtr& shared) const;
     };
 }
 

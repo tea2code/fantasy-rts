@@ -1,7 +1,7 @@
 #include "PointListEventValueBuilder.h"
 
 
-frts::PointListEventValueBuilder::PointListEventValueBuilder(IdPtr type)
+frts::PointListEventValueBuilder::PointListEventValueBuilder(const IdPtr& type)
     : BaseEventValueBuilder(type)
 {
 

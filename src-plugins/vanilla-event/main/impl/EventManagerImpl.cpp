@@ -25,7 +25,7 @@ frts::EventManagerImpl::EventManagerImpl()
 frts::EventManagerImpl::~EventManagerImpl()
 {}
 
-bool frts::EventManagerImpl::init(SharedManagerPtr shared)
+bool frts::EventManagerImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -73,14 +73,14 @@ bool frts::EventManagerImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-frts::EventPtr frts::EventManagerImpl::makeEvent(IdPtr type, SharedManagerPtr)
+frts::EventPtr frts::EventManagerImpl::makeEvent(const IdPtr& type, const SharedManagerPtr&)
 {
     assert(type != nullptr);
 
     return frts::makeEvent(type);
 }
 
-frts::EventValuePtr frts::EventManagerImpl::makeEventValue(IdPtr type, SharedManagerPtr shared)
+frts::EventValuePtr frts::EventManagerImpl::makeEventValue(const IdPtr& type, const SharedManagerPtr& shared)
 {
     assert(type != nullptr);
     assert(shared != nullptr);
@@ -97,7 +97,7 @@ frts::EventValuePtr frts::EventManagerImpl::makeEventValue(IdPtr type, SharedMan
     }
 }
 
-void frts::EventManagerImpl::raise(EventPtr event, SharedManagerPtr shared)
+void frts::EventManagerImpl::raise(const EventPtr& event, const SharedManagerPtr& shared)
 {
     assert(event != nullptr);
     assert(shared != nullptr);
@@ -110,7 +110,7 @@ void frts::EventManagerImpl::raise(EventPtr event, SharedManagerPtr shared)
     }
 }
 
-void frts::EventManagerImpl::registerEventValueBuilder(IdPtr type, EventValueBuilderPtr builder)
+void frts::EventManagerImpl::registerEventValueBuilder(const IdPtr& type, const EventValueBuilderPtr& builder)
 {
     assert(type != nullptr);
     assert(builder != nullptr);
@@ -118,12 +118,12 @@ void frts::EventManagerImpl::registerEventValueBuilder(IdPtr type, EventValueBui
     eventValueBuilders.insert(std::make_pair(type, builder));
 }
 
-void frts::EventManagerImpl::subscribe(EventObserverPtr observer, IdPtr type)
+void frts::EventManagerImpl::subscribe(const EventObserverPtr& observer, const IdPtr& type)
 {
     eventObservers[type].push_back(observer);
 }
 
-void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer)
+void frts::EventManagerImpl::unsubscribe(const EventObserverPtr& observer)
 {
     for (auto& eventObserver : eventObservers)
     {
@@ -131,7 +131,7 @@ void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer)
     }
 }
 
-void frts::EventManagerImpl::unsubscribe(EventObserverPtr observer, IdPtr type)
+void frts::EventManagerImpl::unsubscribe(const EventObserverPtr& observer, const IdPtr& type)
 {
     auto eoIt = eventObservers.find(type);
     if (eoIt != eventObservers.end())

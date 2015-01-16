@@ -37,7 +37,7 @@ namespace frts
      * @return The converted component or null.
      */
     template<typename ComponentClass>
-    inline std::shared_ptr<ComponentClass> castComponent(IdPtr type, ComponentPtr component)
+    inline std::shared_ptr<ComponentClass> castComponent(const IdPtr& type, const ComponentPtr& component)
     {
         assert(type != nullptr);
 

@@ -4,12 +4,12 @@ Utility::Utility()
 {
 }
 
-void Utility::checkRequiredData(frts::SharedManagerPtr)
+void Utility::checkRequiredData(const frts::SharedManagerPtr&)
 {
 
 }
 
-bool Utility::createData(frts::SharedManagerPtr)
+bool Utility::createData(const frts::SharedManagerPtr&)
 {
     return false;
 }
@@ -39,7 +39,7 @@ int Utility::getVersion() const
     return 1;
 }
 
-bool Utility::init(frts::SharedManagerPtr)
+bool Utility::init(const frts::SharedManagerPtr&)
 {
     return false;
 }
@@ -54,23 +54,23 @@ bool Utility::isPreInitialized() const
     return false;
 }
 
-void Utility::parseConfig(const std::string&, frts::ConfigNodePtr, frts::SharedManagerPtr)
+void Utility::parseConfig(const std::string&, const frts::ConfigNodePtr&, const frts::SharedManagerPtr&)
 {
 
 }
 
-bool Utility::preInit(frts::SharedManagerPtr)
+bool Utility::preInit(const frts::SharedManagerPtr&)
 {
     return false;
 }
 
-void Utility::validateData(frts::SharedManagerPtr)
+void Utility::validateData(const frts::SharedManagerPtr&)
 {
     // I miss something.
     throw frts::DataViolation("I miss something.");
 }
 
-void Utility::validateModules(frts::SharedManagerPtr)
+void Utility::validateModules(const frts::SharedManagerPtr&)
 {
     // I miss something.
     throw frts::ModuleViolation("I miss something.");

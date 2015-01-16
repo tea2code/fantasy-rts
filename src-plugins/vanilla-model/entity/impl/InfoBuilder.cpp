@@ -7,14 +7,14 @@
 frts::InfoBuilder::InfoBuilder()
 {}
 
-frts::ComponentPtr frts::InfoBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::InfoBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return makeInfo(shared->makeId(ComponentIds::info()));
 }
 
-frts::ComponentPtr frts::InfoBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::InfoBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

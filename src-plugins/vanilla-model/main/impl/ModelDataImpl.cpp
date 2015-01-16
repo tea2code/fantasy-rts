@@ -59,7 +59,7 @@ void frts::ModelDataImpl::setPrecalculateUp(unsigned int zLevels)
     precalculateUp = zLevels;
 }
 
-void frts::ModelDataImpl::setPrecalculatedRange(ZLevelRange range)
+void frts::ModelDataImpl::setPrecalculatedRange(const ZLevelRange& range)
 {
     precalculatedRange = range;
 }

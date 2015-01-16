@@ -1,7 +1,7 @@
 #include "EntityEventValueBuilder.h"
 
 
-frts::EntityEventValueBuilder::EntityEventValueBuilder(IdPtr type)
+frts::EntityEventValueBuilder::EntityEventValueBuilder(const IdPtr& type)
     : BaseEventValueBuilder(type)
 {
 

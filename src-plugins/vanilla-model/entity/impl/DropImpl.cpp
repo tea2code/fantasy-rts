@@ -3,12 +3,12 @@
 #include <algorithm>
 
 
-frts::DropImpl::DropImpl(IdPtr type)
+frts::DropImpl::DropImpl(const IdPtr& type)
     : type{type}
 {
 }
 
-void frts::DropImpl::addDrop(IdPtr entityId)
+void frts::DropImpl::addDrop(const IdPtr& entityId)
 {
     assert(entityId != nullptr);
 
@@ -25,7 +25,7 @@ std::vector<frts::IdPtr> frts::DropImpl::getDrops() const
     return drops;
 }
 
-bool frts::DropImpl::hasDrop(IdPtr entityId) const
+bool frts::DropImpl::hasDrop(const IdPtr& entityId) const
 {
     assert(entityId != nullptr);
 
@@ -33,7 +33,7 @@ bool frts::DropImpl::hasDrop(IdPtr entityId) const
     return it != drops.end();
 }
 
-void frts::DropImpl::removeDrop(IdPtr entityId)
+void frts::DropImpl::removeDrop(const IdPtr& entityId)
 {
     assert(entityId != nullptr);
 

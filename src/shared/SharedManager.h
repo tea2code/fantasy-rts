@@ -32,7 +32,7 @@ namespace frts
          * @param id The id of the value.
          * @return The data value.
          */
-        virtual DataValuePtr getDataValue(IdPtr id) const = 0;
+        virtual DataValuePtr getDataValue(const IdPtr& id) const = 0;
 
         /**
          * @brief Get current frame data.
@@ -52,7 +52,7 @@ namespace frts
          * @param id The id of the module.
          * @return The module.
          */
-        virtual UtilityPtr getUtility(IdPtr id) const = 0;
+        virtual UtilityPtr getUtility(const IdPtr& id) const = 0;
 
         /**
          * @brief Indicates that the application should end.
@@ -84,7 +84,7 @@ namespace frts
          * @param id The id of the value.
          * @param value The data value.
          */
-        virtual void setDataValue(IdPtr id, DataValuePtr value) = 0;
+        virtual void setDataValue(const IdPtr& id, const DataValuePtr& value) = 0;
 
         /**
          * @brief Set or reset flag to indicate that the application should quit.
@@ -112,7 +112,7 @@ namespace frts
      * @return The data value.
      */
     template <typename DataValueClass>
-    std::shared_ptr<DataValueClass> getDataValue(SharedManagerPtr shared, const std::string& id)
+    std::shared_ptr<DataValueClass> getDataValue(const SharedManagerPtr& shared, const std::string& id)
     {
         assert(shared != nullptr);
 
@@ -126,7 +126,7 @@ namespace frts
      * @return The utility.
      */
     template <typename UtilityClass>
-    std::shared_ptr<UtilityClass> getUtility(SharedManagerPtr shared, const std::string& id)
+    std::shared_ptr<UtilityClass> getUtility(const SharedManagerPtr& shared, const std::string& id)
     {
         assert(shared != nullptr);
 

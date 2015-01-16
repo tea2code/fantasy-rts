@@ -20,7 +20,7 @@ namespace frts
          */
         struct KeyCommand
         {
-            KeyCommand(Key key, bool alt = false, bool ctrl = false, bool shift = false, IdPtr context = nullptr)
+            KeyCommand(Key key, bool alt = false, bool ctrl = false, bool shift = false, const IdPtr& context = nullptr)
                 : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
             {}
 
@@ -46,14 +46,14 @@ namespace frts
          * @param keyCommand The key command.
          * @param commandId The command id.
          */
-        virtual void registerCommand(KeyCommand keyCommand, IdPtr commandId) = 0;
+        virtual void registerCommand(const KeyCommand& keyCommand, const IdPtr& commandId) = 0;
 
         /**
          * @brief Register a context change with an key.
          * @param keyCommand The key command.
          * @param context The context:
          */
-        virtual void registerContextChange(KeyCommand keyCommand, IdPtr context) = 0;
+        virtual void registerContextChange(const KeyCommand& keyCommand, const IdPtr& context) = 0;
     };
 }
 

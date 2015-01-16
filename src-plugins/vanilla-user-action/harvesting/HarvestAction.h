@@ -19,13 +19,13 @@ namespace frts
          * @param jobRequirements List of requirements for the entity which might execute the job.
          * @param jobMarker The job marker id.
          */
-        HarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
-                      IdUnorderedSet jobRequirements, IdPtr jobMarker);
+        HarvestAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& harvestTypes,
+                      const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker);
         ~HarvestAction();
 
-        State execute(SharedManagerPtr shared) override;
-        void notify(EventPtr event, SharedManagerPtr shared) override;
-        State stop(SharedManagerPtr shared) override;
+        State execute(const SharedManagerPtr& shared) override;
+        void notify(const EventPtr& event, const SharedManagerPtr& shared) override;
+        State stop(const SharedManagerPtr& shared) override;
 
     private:
         /**
@@ -66,8 +66,8 @@ namespace frts
      * @param jobMarker The job marker id.
      * @return The action.
      */
-    inline ActionPtr makeHarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
-                                       IdUnorderedSet jobRequirements, IdPtr jobMarker)
+    inline ActionPtr makeHarvestAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& harvestTypes,
+                                       const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker)
     {
         assert(jobId != nullptr);
         assert(jobType != nullptr);

@@ -1,7 +1,7 @@
 #include "ResourceLockImpl.h"
 
 
-frts::ResourceLockImpl::ResourceLockImpl(LockableResourceManagerPtr manager)
+frts::ResourceLockImpl::ResourceLockImpl(const LockableResourceManagerPtr& manager)
     : isReleased{false}, manager{manager}
 {
 }

@@ -8,7 +8,7 @@ frts::ManhattanDistance::ManhattanDistance(double scale)
 {
 }
 
-frts::Point::length frts::ManhattanDistance::distance(PointPtr point1, PointPtr point2)
+frts::Point::length frts::ManhattanDistance::distance(const PointPtr& point1, const PointPtr& point2)
 {
     assert(point1 != nullptr);
     assert(point2 != nullptr);

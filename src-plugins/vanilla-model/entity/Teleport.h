@@ -35,7 +35,7 @@ namespace frts
          * @brief Set the target of this component.
          * @param entity The target entity.
          */
-        virtual void setTarget(EntityPtr target) = 0;
+        virtual void setTarget(const EntityPtr& target) = 0;
     };
 }
 

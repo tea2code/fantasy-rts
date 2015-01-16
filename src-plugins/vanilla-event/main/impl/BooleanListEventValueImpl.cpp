@@ -1,7 +1,7 @@
 #include "BooleanListEventValueImpl.h"
 
 
-frts::BooleanListEventValueImpl::BooleanListEventValueImpl(IdPtr type)
+frts::BooleanListEventValueImpl::BooleanListEventValueImpl(const IdPtr& type)
     : BaseEventValue(type)
 {
 

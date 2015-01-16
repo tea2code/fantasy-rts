@@ -12,10 +12,10 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        SelectCommandBuilder(IdPtr commandType);
+        SelectCommandBuilder(const IdPtr& commandType);
         ~SelectCommandBuilder();
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -26,7 +26,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeSelectCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeSelectCommandBuilder(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
 

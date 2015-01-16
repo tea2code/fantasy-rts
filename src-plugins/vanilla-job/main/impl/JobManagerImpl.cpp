@@ -9,7 +9,7 @@
 #include <algorithm>
 
 
-frts::JobManagerImpl::JobManagerImpl(JobHandlerPtr jobHandler)
+frts::JobManagerImpl::JobManagerImpl(const JobHandlerPtr& jobHandler)
     : BaseUtility(JobIds::jobManager(), 3, JobIds::jobManager(), 3),
       jobHandler{jobHandler}
 {
@@ -21,7 +21,7 @@ frts::JobManagerImpl::~JobManagerImpl()
 
 }
 
-void frts::JobManagerImpl::addJob(JobPtr job, SharedManagerPtr)
+void frts::JobManagerImpl::addJob(const JobPtr& job, const SharedManagerPtr&)
 {
     assert(job != nullptr);
 
@@ -32,7 +32,7 @@ void frts::JobManagerImpl::addJob(JobPtr job, SharedManagerPtr)
     }
 }
 
-bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr shared)
+bool frts::JobManagerImpl::employEntity(const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -71,7 +71,7 @@ bool frts::JobManagerImpl::employEntity(EntityPtr entity, SharedManagerPtr share
     return result;
 }
 
-bool frts::JobManagerImpl::init(SharedManagerPtr shared)
+bool frts::JobManagerImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -84,7 +84,7 @@ bool frts::JobManagerImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-void frts::JobManagerImpl::stopJob(JobPtr job, SharedManagerPtr shared)
+void frts::JobManagerImpl::stopJob(const JobPtr& job, const SharedManagerPtr& shared)
 {
     assert(job != nullptr);
     assert(shared != nullptr);
@@ -103,7 +103,7 @@ void frts::JobManagerImpl::stopJob(JobPtr job, SharedManagerPtr shared)
     }
 }
 
-void frts::JobManagerImpl::validateModules(SharedManagerPtr shared)
+void frts::JobManagerImpl::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

@@ -97,7 +97,7 @@ namespace frts
          * @brief Set the precalculated range of z-levels.
          * @param range The range.
          */
-        virtual void setPrecalculatedRange(ZLevelRange range) = 0;
+        virtual void setPrecalculatedRange(const ZLevelRange& range) = 0;
 
         /**
          * @brief Set the base z-level for the surface.

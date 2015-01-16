@@ -7,7 +7,7 @@
 #include <utility>
 
 
-frts::EventImpl::EventImpl(IdPtr type)
+frts::EventImpl::EventImpl(const IdPtr& type)
     : type{type}
 {
 
@@ -18,7 +18,7 @@ frts::IdPtr frts::EventImpl::getType() const
     return type;
 }
 
-frts::EventValuePtr frts::EventImpl::getValue(IdPtr valueId) const
+frts::EventValuePtr frts::EventImpl::getValue(const IdPtr& valueId) const
 {
     assert(valueId != nullptr);
 
@@ -35,14 +35,14 @@ frts::EventValuePtr frts::EventImpl::getValue(IdPtr valueId) const
     }
 }
 
-bool frts::EventImpl::hasValue(IdPtr valueId) const
+bool frts::EventImpl::hasValue(const IdPtr& valueId) const
 {
     assert(valueId != nullptr);
 
     return eventValues.find(valueId) != eventValues.end();
 }
 
-void frts::EventImpl::setValue(IdPtr valueId, EventValuePtr value)
+void frts::EventImpl::setValue(const IdPtr& valueId, const EventValuePtr& value)
 {
     assert(valueId != nullptr);
     assert(value != nullptr);

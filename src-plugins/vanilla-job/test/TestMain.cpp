@@ -30,12 +30,12 @@ namespace test
               requirements{requirements}, specialRequirements{specialRequirements}
         {}
 
-        bool checkSpecialRequirements(frts::EntityPtr, frts::SharedManagerPtr) const override
+        bool checkSpecialRequirements(const frts::EntityPtr&, const frts::SharedManagerPtr&) const override
         {
             return specialRequirements;
         }
 
-        State execute(frts::SharedManagerPtr) override
+        State execute(const frts::SharedManagerPtr&) override
         {
             numExecutions += 1;
             if (numExecutions >= doNumExecutions)
@@ -75,15 +75,15 @@ namespace test
             return nullptr;
         }
 
-        bool isValid(frts::SharedManagerPtr) const override
+        bool isValid(const frts::SharedManagerPtr&) const override
         {
             return true;
         }
 
-        void setExecutingEntity(frts::EntityPtr) override
+        void setExecutingEntity(const frts::EntityPtr&) override
         {}
 
-        State stop(frts::SharedManagerPtr) override
+        State stop(const frts::SharedManagerPtr&) override
         {
             numStops += 1;
             if (numStops >= doNumStops)

@@ -8,7 +8,7 @@
 
 
 frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
-                             RegionGeneratorPtr regionGenerator)
+                             const RegionGeneratorPtr& regionGenerator)
     : mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, regionGenerator{regionGenerator}
 {
 #ifdef FAST_POS_BLOCK
@@ -29,7 +29,8 @@ frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
 #endif
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy,
+                                                                bool sameZLevel, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -58,7 +59,9 @@ std::vector<frts::PointPtr> frts::RegionImpl::findFreeNeighbors(PointPtr pos, Bl
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
+frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels,
+                                                   const BlockedByPtr& blockedBy,
+                                                   const SharedManagerPtr& shared)
 {
     assert(blockedBy != nullptr);
     assert(shared != nullptr);
@@ -88,7 +91,7 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
     return result;
 }
 
-frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
+frts::BlockPtr frts::RegionImpl::getBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -96,7 +99,7 @@ frts::BlockPtr frts::RegionImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
     return getWriteableBlock(pos, shared);
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr)
+std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr&)
 {
     assert(pos != nullptr);
 
@@ -144,7 +147,7 @@ std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(PointPtr pos, bool s
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity, SharedManagerPtr)
+frts::PointPtr frts::RegionImpl::getPos(const EntityPtr& entity, const SharedManagerPtr&)
 {
     assert(entity != nullptr);
 
@@ -159,7 +162,7 @@ frts::PointPtr frts::RegionImpl::getPos(EntityPtr entity, SharedManagerPtr)
     }
 }
 
-frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -210,7 +213,7 @@ frts::WriteableBlockPtr frts::RegionImpl::getWriteableBlock(PointPtr pos, Shared
     return result;
 }
 
-frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
+frts::PointPtr frts::RegionImpl::removeEntity(const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -227,7 +230,7 @@ frts::PointPtr frts::RegionImpl::removeEntity(EntityPtr entity, SharedManagerPtr
     return pos;
 }
 
-frts::PointPtr frts::RegionImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
+frts::PointPtr frts::RegionImpl::setPos(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(pos != nullptr);

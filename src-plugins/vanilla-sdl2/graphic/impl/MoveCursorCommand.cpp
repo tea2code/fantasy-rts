@@ -11,12 +11,12 @@
 #include <algorithm>
 
 
-frts::MoveCursorCommand::MoveCursorCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
+frts::MoveCursorCommand::MoveCursorCommand(const IdPtr& commandType, Point::value x, Point::value y, Point::value z)
     : commandType{commandType}, x{x}, y{y}, z{z}
 {
 }
 
-void frts::MoveCursorCommand::execute(SharedManagerPtr shared)
+void frts::MoveCursorCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -96,7 +96,7 @@ frts::IdPtr frts::MoveCursorCommand::getCommandType() const
     return commandType;
 }
 
-void frts::MoveCursorCommand::undo(SharedManagerPtr shared)
+void frts::MoveCursorCommand::undo(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

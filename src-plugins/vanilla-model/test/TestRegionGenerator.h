@@ -12,7 +12,7 @@ namespace test
     class SimpleTestRegionGenerator : public frts::RegionGenerator
     {
     public:
-        SimpleTestRegionGenerator(frts::IdPtr blockingType, frts::IdPtr sortOrderType)
+        SimpleTestRegionGenerator(const frts::IdPtr& blockingType, const frts::IdPtr& sortOrderType)
             : blockingType{blockingType}, sortOrderType{sortOrderType}
         {}
 
@@ -21,18 +21,18 @@ namespace test
             return {};
         }
 
-        void init(frts::SharedManagerPtr) override
+        void init(const frts::SharedManagerPtr&) override
         { }
 
-        frts::WriteableBlockPtr newBlock(frts::PointPtr, frts::SharedManagerPtr) override
+        frts::WriteableBlockPtr newBlock(const frts::PointPtr&, const frts::SharedManagerPtr&) override
         {
             return frts::makeBlock(blockingType, sortOrderType);
         }
 
-        void parseConfig(frts::ConfigNodePtr, frts::SharedManagerPtr) override
+        void parseConfig(const frts::ConfigNodePtr&, const frts::SharedManagerPtr&) override
         {}
 
-        void validateData(frts::SharedManagerPtr) override
+        void validateData(const frts::SharedManagerPtr&) override
         {}
 
     private:
@@ -40,7 +40,7 @@ namespace test
         frts::IdPtr sortOrderType;
     };
 
-    inline frts::RegionGeneratorPtr makeSimpleTestRegionGenerator(frts::IdPtr blockingType, frts::IdPtr sortOrderType)
+    inline frts::RegionGeneratorPtr makeSimpleTestRegionGenerator(const frts::IdPtr& blockingType, const frts::IdPtr& sortOrderType)
     {
         return std::make_shared<SimpleTestRegionGenerator>(blockingType, sortOrderType);
     }

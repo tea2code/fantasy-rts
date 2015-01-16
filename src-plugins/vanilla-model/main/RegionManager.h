@@ -36,7 +36,7 @@ namespace frts
          * @brief Add changed positions.
          * @param pos The position.
          */
-        virtual void addChangedPos(PointPtr pos) = 0;
+        virtual void addChangedPos(const PointPtr& pos) = 0;
 
         /**
          * @brief Find free neightbors of given position.
@@ -47,7 +47,8 @@ namespace frts
          * @param shared The shared manager.
          * @return List of free neightbors.
          */
-        virtual PointVector findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared) = 0;
+        virtual PointVector findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy,
+                                              bool sameZLevel, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Find random position.
@@ -56,7 +57,9 @@ namespace frts
          * @param shared The shared manager.
          * @return A single position or null.
          */
-        virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared) = 0;
+        virtual PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels,
+                                           const BlockedByPtr& blockedBy,
+                                           const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Find nearest resource.
@@ -66,7 +69,8 @@ namespace frts
          * @param shared The shared manager.
          * @return Lock to nearest resource or null.
          */
-        virtual ResourceLockPtr findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual ResourceLockPtr findNearestResource(const IdPtr& entityGroup, const IdPtr& resourceType,
+                                                    const PointPtr& pos, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Find nearest entity which contains a resource.
@@ -76,7 +80,8 @@ namespace frts
          * @param shared The shared manager.
          * @return Lock to nearest resource or null.
          */
-        virtual ResourceLockPtr findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual ResourceLockPtr findNearestResourceEntity(const IdPtr& entityGroup, const IdPtr& resourceType,
+                                                          const PointPtr& pos, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get block at position.
@@ -84,7 +89,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The block.
          */
-        virtual BlockPtr getBlock(PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual BlockPtr getBlock(const PointPtr& pos, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get list of all changed positions.
@@ -99,7 +104,7 @@ namespace frts
          * @param shared The shared manager.
          * @return List of neightbors.
          */
-        virtual PointVector getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared) = 0;
+        virtual PointVector getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get position of entity.
@@ -107,7 +112,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The position or null if entity is not in region.
          */
-        virtual PointPtr getPos(EntityPtr entity, SharedManagerPtr shared) = 0;
+        virtual PointPtr getPos(const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Remove entity from region. Will update changed positions.
@@ -115,7 +120,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The last position of the entity or null if entity was not in region.
          */
-        virtual PointPtr removeEntity(EntityPtr entity, SharedManagerPtr shared) = 0;
+        virtual PointPtr removeEntity(const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Reset changed positions.
@@ -130,7 +135,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The previous position of the entity or null if entity was not in region.
          */
-        virtual PointPtr setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual PointPtr setPos(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief If resource components of a entity change it is necessary to
@@ -139,7 +144,7 @@ namespace frts
          * @param entity The entity.
          * @param shared The shared manager.
          */
-        virtual void updateResources(EntityPtr entity, SharedManagerPtr shared) = 0;
+        virtual void updateResources(const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
     };
 }
 

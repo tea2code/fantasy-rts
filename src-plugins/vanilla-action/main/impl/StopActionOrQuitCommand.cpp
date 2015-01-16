@@ -6,7 +6,7 @@
 #include <frts/vanillacommand>
 
 
-frts::StopActionOrQuitCommand::StopActionOrQuitCommand(IdPtr commandType)
+frts::StopActionOrQuitCommand::StopActionOrQuitCommand(const IdPtr& commandType)
     : commandType{commandType}
 {
 
@@ -17,7 +17,7 @@ frts::StopActionOrQuitCommand::~StopActionOrQuitCommand()
 
 }
 
-void frts::StopActionOrQuitCommand::execute(SharedManagerPtr shared)
+void frts::StopActionOrQuitCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -38,7 +38,7 @@ frts::IdPtr frts::StopActionOrQuitCommand::getCommandType() const
     return commandType;
 }
 
-void frts::StopActionOrQuitCommand::undo(SharedManagerPtr)
+void frts::StopActionOrQuitCommand::undo(const SharedManagerPtr&)
 {
     // No support for undo.
 }

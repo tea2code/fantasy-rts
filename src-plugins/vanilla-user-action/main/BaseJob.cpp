@@ -1,7 +1,7 @@
 #include "BaseJob.h"
 
 
-frts::BaseJob::BaseJob(IdPtr id, IdPtr type, IdUnorderedSet jobRequirements, EntityPtr jobMarker)
+frts::BaseJob::BaseJob(const IdPtr& id, const IdPtr& type, const IdUnorderedSet& jobRequirements, const EntityPtr& jobMarker)
     : dueTime{fromMilliseconds(0)}, id{id}, jobRequirements{jobRequirements},
       type{type}, jobMarker{jobMarker}
 {
@@ -13,7 +13,7 @@ frts::BaseJob::~BaseJob()
 
 }
 
-void frts::BaseJob::clearJobMarker(SharedManagerPtr shared)
+void frts::BaseJob::clearJobMarker(const SharedManagerPtr& shared)
 {
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     rm->removeEntity(jobMarker, shared);
@@ -50,7 +50,7 @@ void frts::BaseJob::setDueTime(Frame::time dueTime)
     this->dueTime = dueTime;
 }
 
-void frts::BaseJob::setExecutingEntity(EntityPtr entity)
+void frts::BaseJob::setExecutingEntity(const EntityPtr& entity)
 {
     this->executingEntity = entity;
 }

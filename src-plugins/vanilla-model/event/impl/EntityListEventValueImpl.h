@@ -14,7 +14,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        EntityListEventValueImpl(IdPtr type);
+        EntityListEventValueImpl(const IdPtr& type);
     };
 }
 

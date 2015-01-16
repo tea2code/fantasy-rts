@@ -31,7 +31,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The component.
          */
-        virtual ComponentPtr build(SharedManagerPtr shared) = 0;
+        virtual ComponentPtr build(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Create component and initialize with configured data.
@@ -39,7 +39,7 @@ namespace frts
          * @param node The configuration node.
          * @return The component.
          */
-        virtual ComponentPtr build(SharedManagerPtr shared, ConfigNodePtr node) = 0;
+        virtual ComponentPtr build(const SharedManagerPtr& shared, const ConfigNodePtr& node) = 0;
     };
 }
 

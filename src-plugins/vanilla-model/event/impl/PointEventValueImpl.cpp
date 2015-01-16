@@ -1,7 +1,7 @@
 #include "PointEventValueImpl.h"
 
 
-frts::PointEventValueImpl::PointEventValueImpl(IdPtr type)
+frts::PointEventValueImpl::PointEventValueImpl(const IdPtr& type)
     : BaseEventValue(type)
 {
 

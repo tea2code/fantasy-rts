@@ -30,7 +30,7 @@ namespace frts
          * @brief Add resource.
          * @param resourceType The resource type.
          */
-        virtual void addResource(IdPtr resourceType) = 0;
+        virtual void addResource(const IdPtr& resourceType) = 0;
 
         /**
          * @brief Get all resources.
@@ -43,13 +43,13 @@ namespace frts
          * @param resourceType The resource type.
          * @return
          */
-        virtual bool hasResource(IdPtr resourceType) const = 0;
+        virtual bool hasResource(const IdPtr& resourceType) const = 0;
 
         /**
          * @brief Remove the resource.
          * @param resourceType The resource type.
          */
-        virtual void removeResource(IdPtr resourceType) = 0;
+        virtual void removeResource(const IdPtr& resourceType) = 0;
     };
 }
 

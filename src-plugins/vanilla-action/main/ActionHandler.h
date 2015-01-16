@@ -35,21 +35,21 @@ namespace frts
             return "frts/ActionHandler";
         }
 
-        void tick(SharedManagerPtr shared) override;
+        void tick(const SharedManagerPtr& shared) override;
 
         /**
          * @brief Set a new action as the currently running. This will stop/cancel the previously.
          * @param action The action.
          * @param shared The shared manager.
          */
-        void newAction(ActionPtr action, SharedManagerPtr shared);
+        void newAction(const ActionPtr& action, const SharedManagerPtr& shared);
 
         /**
          * @brief Stop/Cancel the currently running action.
          * @param shared The shared manager.
          * @return True if there was an action to stop else false.
          */
-        bool stopAction(SharedManagerPtr shared);
+        bool stopAction(const SharedManagerPtr& shared);
 
     private:
         /**

@@ -33,21 +33,21 @@ namespace frts
          * @param componentType The type of component.
          * @return Entities ordered by their sort order component (if existing).
          */
-        virtual EntityVector getByComponent(IdPtr componentType) const = 0;
+        virtual EntityVector getByComponent(const IdPtr& componentType) const = 0;
 
         /**
          * @brief Check if block contains entity.
          * @param entity The entity.
          * @return True if block contains this entity else false.
          */
-        virtual bool has(EntityPtr entity) const = 0;
+        virtual bool has(const EntityPtr& entity) const = 0;
 
         /**
          * @brief Check if block is blocking.
          * @param blockedBy The blocked by definition.
          * @return True if block is blocking.
          */
-        virtual bool isBlocking(BlockedByPtr blockedBy) const = 0;
+        virtual bool isBlocking(const BlockedByPtr& blockedBy) const = 0;
     };
 }
 

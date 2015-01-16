@@ -21,11 +21,11 @@ namespace frts
          * @param y Move this many steps in y direction. North is positive.
          * @param z Move this many steps in z direction. Up is positive.
          */
-        MoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z);
+        MoveScreenCommand(const IdPtr& commandType, Point::value x, Point::value y, Point::value z);
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -47,7 +47,7 @@ namespace frts
      * @param z Move this many steps in z direction. Up is positive.
      * @return The command.
      */
-    inline CommandPtr makeMoveScreenCommand(IdPtr commandType, Point::value x, Point::value y, Point::value z)
+    inline CommandPtr makeMoveScreenCommand(const IdPtr& commandType, Point::value x, Point::value y, Point::value z)
     {
         assert(commandType != nullptr);
 

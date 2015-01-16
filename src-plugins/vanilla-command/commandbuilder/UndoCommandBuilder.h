@@ -17,9 +17,9 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        UndoCommandBuilder(IdPtr commandType);
+        UndoCommandBuilder(const IdPtr& commandType);
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -30,7 +30,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeUndoCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeUndoCommandBuilder(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
         return std::make_shared<UndoCommandBuilder>(commandType);

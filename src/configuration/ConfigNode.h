@@ -200,7 +200,7 @@ namespace frts
      * @return The integer.
      */
     template<typename IntegerType>
-    inline IntegerType getCastInteger(ConfigNodePtr node, const std::string& key)
+    inline IntegerType getCastInteger(const ConfigNodePtr& node, const std::string& key)
     {
         return static_cast<IntegerType>(node->getInteger(key));
     }
@@ -213,7 +213,7 @@ namespace frts
      * @return The integer.
      */
     template<typename IntegerType>
-    inline IntegerType getCastInteger(ConfigNodePtr node, const std::string& key, IntegerType defaultValue)
+    inline IntegerType getCastInteger(const ConfigNodePtr& node, const std::string& key, IntegerType defaultValue)
     {
         return static_cast<IntegerType>(node->getInteger(key, static_cast<long>(defaultValue)));
     }

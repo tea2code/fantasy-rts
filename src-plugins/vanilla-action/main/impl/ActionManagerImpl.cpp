@@ -7,14 +7,14 @@
 #include <frts/vanillacommand>
 
 
-frts::ActionManagerImpl::ActionManagerImpl(ActionHandlerPtr actionHandler)
+frts::ActionManagerImpl::ActionManagerImpl(const ActionHandlerPtr& actionHandler)
     : BaseUtility(ActionIds::actionManager(), 1, ActionIds::actionManager(), 1),
       actionHandler{actionHandler}
 {
 
 }
 
-bool frts::ActionManagerImpl::init(SharedManagerPtr shared)
+bool frts::ActionManagerImpl::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -31,7 +31,7 @@ bool frts::ActionManagerImpl::init(SharedManagerPtr shared)
     return BaseUtility::init(shared);
 }
 
-void frts::ActionManagerImpl::newAction(ActionPtr action, SharedManagerPtr shared)
+void frts::ActionManagerImpl::newAction(const ActionPtr& action, const SharedManagerPtr& shared)
 {
     assert(action != nullptr);
     assert(shared != nullptr);
@@ -39,14 +39,14 @@ void frts::ActionManagerImpl::newAction(ActionPtr action, SharedManagerPtr share
     actionHandler->newAction(action, shared);
 }
 
-bool frts::ActionManagerImpl::stopAction(SharedManagerPtr shared)
+bool frts::ActionManagerImpl::stopAction(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return actionHandler->stopAction(shared);
 }
 
-void frts::ActionManagerImpl::validateModules(SharedManagerPtr shared)
+void frts::ActionManagerImpl::validateModules(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

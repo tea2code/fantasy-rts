@@ -17,11 +17,11 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        UndoCommand(IdPtr commandType);
+        UndoCommand(const IdPtr& commandType);
 
-        void execute(SharedManagerPtr shared) override;
+        void execute(const SharedManagerPtr& shared) override;
         IdPtr getCommandType() const override;
-        void undo(SharedManagerPtr shared) override;
+        void undo(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -32,7 +32,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command.
      */
-    inline CommandPtr makeUndoCommand(IdPtr commandType)
+    inline CommandPtr makeUndoCommand(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
         return std::make_shared<UndoCommand>(commandType);

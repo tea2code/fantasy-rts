@@ -38,7 +38,7 @@ namespace frts
          * @param shared The shared manager.
          * @return The selected sprite.
          */
-        Sprite getSprite(RenderablePtr renderable, EntityPtr entity, SharedManagerPtr shared);
+        Sprite getSprite(const RenderablePtr& renderable, const EntityPtr& entity, const SharedManagerPtr& shared);
 
         /**
          * @brief Set configuration for sprites. Can be called multiple times to override
@@ -48,14 +48,14 @@ namespace frts
          * @param rootNamespace The root namespace of sprites.
          * @param spritesNode The config node.
          */
-        void setConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode);
+        void setConfig(const SharedManagerPtr& shared, const std::string& rootNamespace, const ConfigNodePtr& spritesNode);
 
         /**
          * @brief Validate configuration. Should be called during data validation phase.
          * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
          * @param shared The shared manager.
          */
-        void validateData(SharedManagerPtr shared);
+        void validateData(const SharedManagerPtr& shared);
 
     private:
         /**

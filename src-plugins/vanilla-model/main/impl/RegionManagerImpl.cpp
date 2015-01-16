@@ -8,24 +8,24 @@
 #include <thread>
 
 
-frts::RegionManagerImpl::RegionManagerImpl(RegionPtr region,
-                                           LockableResourceManagerPtr resourceManager,
-                                           LockableResourceManagerPtr resourceEntityManager,
-                                           IdPtr hasResourceType, IdPtr isResourceType)
+frts::RegionManagerImpl::RegionManagerImpl(const RegionPtr& region,
+                                           const LockableResourceManagerPtr& resourceManager,
+                                           const LockableResourceManagerPtr& resourceEntityManager,
+                                           const IdPtr& hasResourceType, const IdPtr& isResourceType)
     : BaseDataValue(ModelIds::regionManager(), 2, ModelIds::regionManager(), 2),
       hasResourceType{hasResourceType}, isResourceType{isResourceType}, region{region},
       resourceManager{resourceManager}, resourceEntityManager{resourceEntityManager}
 {
 }
 
-void frts::RegionManagerImpl::addChangedPos(PointPtr pos)
+void frts::RegionManagerImpl::addChangedPos(const PointPtr& pos)
 {
     std::lock_guard<RecursiveLock> lock(locker);
 
     addChangedPosLockFree(pos);
 }
 
-void frts::RegionManagerImpl::addChangedPosLockFree(PointPtr pos)
+void frts::RegionManagerImpl::addChangedPosLockFree(const PointPtr& pos)
 {
     if (pos != nullptr)
     {
@@ -33,7 +33,8 @@ void frts::RegionManagerImpl::addChangedPosLockFree(PointPtr pos)
     }
 }
 
-std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr pos, BlockedByPtr blockedBy, bool sameZLevel, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy,
+                                                                       bool sameZLevel, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -43,7 +44,8 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(PointPtr 
     return region->findFreeNeighbors(pos, blockedBy, sameZLevel, shared);
 }
 
-frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels, BlockedByPtr blockedBy, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels,
+                                                          const BlockedByPtr& blockedBy, const SharedManagerPtr& shared)
 {
     assert(blockedBy != nullptr);
     assert(shared != nullptr);
@@ -53,7 +55,8 @@ frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Poin
     return region->findFreeRandomPos(zLevels, blockedBy, shared);
 }
 
-frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResource(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared)
+frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResource(const IdPtr& entityGroup, const IdPtr& resourceType,
+                                                                   const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(entityGroup != nullptr);
     assert(resourceType != nullptr);
@@ -65,7 +68,8 @@ frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResource(IdPtr entityG
     return resourceManager->findNearest(entityGroup, resourceType, pos, shared);
 }
 
-frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResourceEntity(IdPtr entityGroup, IdPtr resourceType, PointPtr pos, SharedManagerPtr shared)
+frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResourceEntity(const IdPtr& entityGroup, const IdPtr& resourceType,
+                                                                         const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(entityGroup != nullptr);
     assert(resourceType != nullptr);
@@ -77,7 +81,7 @@ frts::ResourceLockPtr frts::RegionManagerImpl::findNearestResourceEntity(IdPtr e
     return resourceEntityManager->findNearest(entityGroup, resourceType, pos, shared);
 }
 
-frts::BlockPtr frts::RegionManagerImpl::getBlock(PointPtr pos, SharedManagerPtr shared)
+frts::BlockPtr frts::RegionManagerImpl::getBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -125,7 +129,7 @@ frts::PointUnorderedSet frts::RegionManagerImpl::getChangedPos()
     return changedPos;
 }
 
-std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos, bool sameZLevel, SharedManagerPtr shared)
+std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -135,7 +139,7 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::getNeightbors(PointPtr pos,
     return region->getNeightbors(pos, sameZLevel, shared);
 }
 
-frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::getPos(const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -145,7 +149,7 @@ frts::PointPtr frts::RegionManagerImpl::getPos(EntityPtr entity, SharedManagerPt
     return region->getPos(entity, shared);
 }
 
-frts::PointPtr frts::RegionManagerImpl::removeEntity(EntityPtr entity, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::removeEntity(const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -166,7 +170,7 @@ void frts::RegionManagerImpl::resetChangedPos()
     changedPos.clear();
 }
 
-frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, SharedManagerPtr shared)
+frts::PointPtr frts::RegionManagerImpl::setPos(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(pos != nullptr);
@@ -181,7 +185,7 @@ frts::PointPtr frts::RegionManagerImpl::setPos(EntityPtr entity, PointPtr pos, S
     return oldPos;
 }
 
-void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr shared)
+void frts::RegionManagerImpl::updateResources(const EntityPtr& entity, const SharedManagerPtr& shared)
 {
     assert(entity != nullptr);
     assert(shared != nullptr);
@@ -191,7 +195,7 @@ void frts::RegionManagerImpl::updateResources(EntityPtr entity, SharedManagerPtr
     updateResourcesLockFree(entity, shared);
 }
 
-void frts::RegionManagerImpl::updateResourcesLockFree(EntityPtr entity, SharedManagerPtr)
+void frts::RegionManagerImpl::updateResourcesLockFree(const EntityPtr& entity, const SharedManagerPtr&)
 {
     bool hasResourceSet = false;
     bool isResourceSet = false;

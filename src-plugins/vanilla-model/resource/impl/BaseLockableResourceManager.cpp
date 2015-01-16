@@ -3,12 +3,12 @@
 #include "ResourceLockImpl.h"
 
 
-frts::BaseLockableResourceManager::BaseLockableResourceManager(DistanceAlgorithmPtr distAlgo, RegionPtr region)
+frts::BaseLockableResourceManager::BaseLockableResourceManager(const DistanceAlgorithmPtr& distAlgo, const RegionPtr& region)
     : distAlgo{distAlgo}, region{region}
 {    
 }
 
-void frts::BaseLockableResourceManager::add(IdPtr resourceType, EntityPtr entity)
+void frts::BaseLockableResourceManager::add(const IdPtr& resourceType, const EntityPtr& entity)
 {
     assert(resourceType != nullptr);
     assert(entity != nullptr);
@@ -17,9 +17,11 @@ void frts::BaseLockableResourceManager::add(IdPtr resourceType, EntityPtr entity
     resources[resourceType].insert(entity);
 }
 
-frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entityGroup, IdPtr resourceType,
-                                                                     PointPtr pos, LockableResourceManagerPtr parent,
-                                                                     SharedManagerPtr shared)
+frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(const IdPtr& entityGroup,
+                                                                     const IdPtr& resourceType,
+                                                                     const PointPtr& pos,
+                                                                     const LockableResourceManagerPtr& parent,
+                                                                     const SharedManagerPtr& shared)
 {
     assert(entityGroup != nullptr);
     assert(resourceType != nullptr);
@@ -62,7 +64,7 @@ frts::ResourceLockPtr frts::BaseLockableResourceManager::findNearest(IdPtr entit
     return result;
 }
 
-frts::EntityPtr frts::BaseLockableResourceManager::getEntity(ResourceLockPtr lock) const
+frts::EntityPtr frts::BaseLockableResourceManager::getEntity(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
@@ -75,7 +77,7 @@ frts::EntityPtr frts::BaseLockableResourceManager::getEntity(ResourceLockPtr loc
     return result;
 }
 
-frts::IdPtr frts::BaseLockableResourceManager::getResourceType(ResourceLockPtr lock) const
+frts::IdPtr frts::BaseLockableResourceManager::getResourceType(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
@@ -88,14 +90,14 @@ frts::IdPtr frts::BaseLockableResourceManager::getResourceType(ResourceLockPtr l
     return result;
 }
 
-bool frts::BaseLockableResourceManager::isValid(ResourceLockPtr lock) const
+bool frts::BaseLockableResourceManager::isValid(const ResourceLockPtr& lock) const
 {
     assert(lock != nullptr);
 
     return lockInfo.find(lock) != lockInfo.end();
 }
 
-void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
+void frts::BaseLockableResourceManager::release(const ResourceLockPtr& lock)
 {
     assert(lock != nullptr);
 
@@ -110,7 +112,7 @@ void frts::BaseLockableResourceManager::release(ResourceLockPtr lock)
     lockInfo.erase(lock);
 }
 
-void frts::BaseLockableResourceManager::remove(IdPtr resourceType, EntityPtr entity)
+void frts::BaseLockableResourceManager::remove(const IdPtr& resourceType, const EntityPtr& entity)
 {
     assert(resourceType != nullptr);
     assert(entity != nullptr);

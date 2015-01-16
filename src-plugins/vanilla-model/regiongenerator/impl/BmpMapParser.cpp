@@ -14,13 +14,13 @@
 #include <cmath>
 
 
-frts::BmpMapParser::BmpMapParser(IdPtr blockingType, IdPtr sortOrderType, IdPtr teleportType)
+frts::BmpMapParser::BmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType)
     : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}
 {
 }
 
-frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, PointPtr otherPos,
-                                                    const EntityVector& targets, SharedManagerPtr shared)
+frts::EntityPtr frts::BmpMapParser::connectIfNotYet(const WriteableBlockPtr& block, const PointPtr& otherPos,
+                                                    const EntityVector& targets, const SharedManagerPtr& shared)
 {
     assert(block != nullptr);
     assert(otherPos != nullptr);
@@ -56,7 +56,7 @@ frts::EntityPtr frts::BmpMapParser::connectIfNotYet(WriteableBlockPtr block, Poi
     return otherTarget;
 }
 
-frts::WriteableBlockPtr frts::BmpMapParser::getBlock(PointPtr pos, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::BmpMapParser::getBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -105,7 +105,7 @@ std::string frts::BmpMapParser::getSupportedConfig() const
     return "bmp_map";
 }
 
-void frts::BmpMapParser::init(SharedManagerPtr shared)
+void frts::BmpMapParser::init(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -116,7 +116,7 @@ void frts::BmpMapParser::init(SharedManagerPtr shared)
     }
 }
 
-frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManagerPtr shared)
+frts::WriteableBlockPtr frts::BmpMapParser::newBlock(const PointPtr& pos, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(shared != nullptr);
@@ -168,7 +168,7 @@ frts::WriteableBlockPtr frts::BmpMapParser::newBlock(PointPtr pos, SharedManager
     return block;
 }
 
-void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared)
+void frts::BmpMapParser::parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(node != nullptr);
     assert(shared != nullptr);
@@ -263,7 +263,7 @@ void frts::BmpMapParser::parseConfig(ConfigNodePtr node, SharedManagerPtr shared
     }
 }
 
-void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, SharedManagerPtr shared)
+void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -330,8 +330,8 @@ void frts::BmpMapParser::parseMap(const std::string& path, Point::value zLevel, 
     fclose(file);
 }
 
-void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr block, const TeleportColors& teleportColorsBlock,
-                                            const TeleportColors& teleportColorsOther, Point::value zLevelChange, SharedManagerPtr shared)
+void frts::BmpMapParser::tryConnectTeleport(const PointPtr& pos, const WriteableBlockPtr& block, const TeleportColors& teleportColorsBlock,
+                                            const TeleportColors& teleportColorsOther, Point::value zLevelChange, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
     assert(block != nullptr);
@@ -386,7 +386,7 @@ void frts::BmpMapParser::tryConnectTeleport(PointPtr pos, WriteableBlockPtr bloc
     }
 }
 
-void frts::BmpMapParser::validateData(SharedManagerPtr)
+void frts::BmpMapParser::validateData(const SharedManagerPtr&)
 {
     if (height == 0)
     {

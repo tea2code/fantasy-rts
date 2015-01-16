@@ -32,7 +32,7 @@ namespace frts
          * @param job The job.
          * @param shared The shared manager.
          */
-        virtual void addJob(JobPtr job, SharedManagerPtr shared) = 0;
+        virtual void addJob(const JobPtr& job, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief If possible employ given entity.
@@ -40,14 +40,14 @@ namespace frts
          * @param shared The shared manager.
          * @return True if entity was employed else false.
          */
-        virtual bool employEntity(EntityPtr entity, SharedManagerPtr shared) = 0;
+        virtual bool employEntity(const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Stop job.
          * @param job The job.
          * @param shared The shared manager.
          */
-        virtual void stopJob(JobPtr job, SharedManagerPtr shared) = 0;
+        virtual void stopJob(const JobPtr& job, const SharedManagerPtr& shared) = 0;
     };
 }
 

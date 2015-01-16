@@ -127,7 +127,7 @@ namespace frts
      * @param rhs Second point.
      * @return Resulting point.
      */
-    inline PointPtr operator+(PointPtr lhs, PointPtr rhs)
+    inline PointPtr operator+(const PointPtr& lhs, const PointPtr& rhs)
     {
         assert(lhs != nullptr);
         assert(rhs != nullptr);
@@ -141,7 +141,7 @@ namespace frts
      * @param rhs Second point.
      * @return Resulting point.
      */
-    inline PointPtr operator-(PointPtr lhs, PointPtr rhs)
+    inline PointPtr operator-(const PointPtr& lhs, const PointPtr& rhs)
     {
         assert(lhs != nullptr);
         assert(rhs != nullptr);
@@ -155,7 +155,7 @@ namespace frts
      * @param rhs Second point.
      * @return Resulting point.
      */
-    inline PointPtr operator*(PointPtr lhs, PointPtr rhs)
+    inline PointPtr operator*(const PointPtr& lhs, const PointPtr& rhs)
     {
         assert(lhs != nullptr);
         assert(rhs != nullptr);
@@ -169,7 +169,7 @@ namespace frts
      * @param rhs Second point.
      * @return Resulting point.
      */
-    inline PointPtr operator*(PointPtr point, Point::value scalar)
+    inline PointPtr operator*(const PointPtr& point, Point::value scalar)
     {
         assert(point != nullptr);
 
@@ -182,7 +182,7 @@ namespace frts
      * @param rhs Second point.
      * @return Resulting point.
      */
-    inline PointPtr operator*(Point::value scalar, PointPtr point)
+    inline PointPtr operator*(Point::value scalar, const PointPtr& point)
     {
         assert(point != nullptr);
 
@@ -195,7 +195,7 @@ namespace frts
      * @param rhs Second point.
      * @return True if points are equal.
      */
-    inline bool operator==(PointPtr lhs, PointPtr rhs)
+    inline bool operator==(const PointPtr& lhs, const PointPtr& rhs)
     {
         bool lhsNull = (lhs == nullptr);
         bool rhsNull = (rhs == nullptr);
@@ -208,7 +208,7 @@ namespace frts
      * @param rhs Second point.
      * @return True if points are not equal.
      */
-    inline bool operator!=(PointPtr lhs, PointPtr rhs)
+    inline bool operator!=(const PointPtr& lhs, const PointPtr& rhs)
     {
         return !(lhs == rhs);
     }
@@ -219,7 +219,7 @@ namespace frts
      * @param rhs Second point.
      * @return True if lhs is less than rhs.
      */
-    inline bool operator<(PointPtr lhs, PointPtr rhs)
+    inline bool operator<(const PointPtr& lhs, const PointPtr& rhs)
     {
         assert(lhs != nullptr);
         assert(rhs != nullptr);
@@ -238,7 +238,7 @@ namespace std
     template <>
     struct hash<frts::PointPtr>
     {
-        size_t operator()(frts::PointPtr point) const
+        size_t operator()(const frts::PointPtr& point) const
         {
             if (point == nullptr)
             {

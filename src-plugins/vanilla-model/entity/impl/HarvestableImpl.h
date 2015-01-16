@@ -14,15 +14,15 @@ namespace frts
         /**
          * @param componentType The component type.
          */
-        HarvestableImpl(IdPtr componentType);
+        HarvestableImpl(const IdPtr& componentType);
         ~HarvestableImpl();
 
-        void addType(IdPtr type) override;
+        void addType(const IdPtr& type) override;
         IdPtr getComponentType() const override;
         double getSpeed() const override;
         IdUnorderedSet getTypes() const override;
-        bool hasType(IdPtr type) const override;
-        void removeType(IdPtr type) override;
+        bool hasType(const IdPtr& type) const override;
+        void removeType(const IdPtr& type) override;
         void setSpeed(double speed) override;
 
     private:
@@ -36,7 +36,7 @@ namespace frts
      * @param componentType The component type.
      * @return The Harvestable.
      */
-    inline HarvestablePtr makeHarvestable(IdPtr componentType)
+    inline HarvestablePtr makeHarvestable(const IdPtr& componentType)
     {
         assert(componentType != nullptr);
 

@@ -39,7 +39,7 @@ namespace frts
          * @brief Set the list of commands which should not be undone.
          * @param commands The command ids.
          */
-        virtual void setNotUndoableCommands(IdUnorderedSet commands) = 0;
+        virtual void setNotUndoableCommands(const IdUnorderedSet& commands) = 0;
 
         /**
          * @brief Set the number of commands which can be undone.

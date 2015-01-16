@@ -28,7 +28,7 @@ namespace frts
          * @brief Execute the command.
          * @param shared The shared manager.
          */
-        virtual void execute(SharedManagerPtr shared) = 0;
+        virtual void execute(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get type of command.
@@ -40,7 +40,7 @@ namespace frts
          * @brief Undo the execution of this command.
          * @param shared The shared manager.
          */
-        virtual void undo(SharedManagerPtr shared) = 0;
+        virtual void undo(const SharedManagerPtr& shared) = 0;
     };
 }
 

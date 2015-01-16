@@ -17,9 +17,9 @@ namespace frts
         /**
          * @param commandType The command type.
          */
-        QuitCommandBuilder(IdPtr commandType);
+        QuitCommandBuilder(const IdPtr& commandType);
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -30,7 +30,7 @@ namespace frts
      * @param commandType The command type.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeQuitCommandBuilder(IdPtr commandType)
+    inline CommandBuilderPtr makeQuitCommandBuilder(const IdPtr& commandType)
     {
         assert(commandType != nullptr);
         return std::make_shared<QuitCommandBuilder>(commandType);

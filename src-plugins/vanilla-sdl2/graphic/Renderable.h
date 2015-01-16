@@ -57,7 +57,7 @@ namespace frts
          * @brief Set the ID of the sprite to use.
          * @param id The ID.
          */
-        virtual void setSprite(IdPtr id) = 0;
+        virtual void setSprite(const IdPtr& id) = 0;
 
         /**
          * @brief Set the index of the sprite.

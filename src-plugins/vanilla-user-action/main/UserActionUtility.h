@@ -12,7 +12,7 @@ namespace frts
      * @param pos The position.
      * @param shared The shared manager.
      */
-    void areJobsValid(PointPtr pos, SharedManagerPtr shared);
+    void areJobsValid(const PointPtr& pos, const SharedManagerPtr& shared);
 
     /**
      * @brief Create drops for given entity. Won't remove or destroy this entity.
@@ -20,7 +20,7 @@ namespace frts
      * @param pos The position where the drops should appear.
      * @param shared The shared manager.
      */
-    void createDrops(EntityPtr entity, PointPtr pos, SharedManagerPtr shared);
+    void createDrops(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared);
 
     /**
      * @brief Finds a path for the given entity to the job. Will set movable.
@@ -30,7 +30,7 @@ namespace frts
      * @param shared The shared manager.
      * @return True if path found else false.
      */
-    bool findPathToJob(EntityPtr entity, PointPtr jobPos, bool toNeighbor, SharedManagerPtr shared);
+    bool findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool toNeighbor, const SharedManagerPtr& shared);
 
     /**
      * @brief Moves the entity to the next position if it has currently a path.
@@ -40,7 +40,7 @@ namespace frts
      * @return True if entity was moved else false. False indicates there is no movable component or
      *         entity is already at the target.
      */
-    bool moveEntity(EntityPtr entity, Frame::time& nextMoveTime, SharedManagerPtr shared);
+    bool moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared);
 }
 
 #endif // FRTS_USERACTIONUTILITY_H

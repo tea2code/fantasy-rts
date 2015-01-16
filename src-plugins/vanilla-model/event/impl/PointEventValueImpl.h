@@ -14,7 +14,7 @@ namespace frts
         /**
          * @param type The event value type.
          */
-        PointEventValueImpl(IdPtr type);
+        PointEventValueImpl(const IdPtr& type);
     };
 }
 

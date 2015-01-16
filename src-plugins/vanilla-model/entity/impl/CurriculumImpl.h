@@ -14,14 +14,14 @@ namespace frts
         /**
          * @param type The component type.
          */
-        CurriculumImpl(IdPtr type);
+        CurriculumImpl(const IdPtr& type);
         ~CurriculumImpl();
 
-        void addAbility(IdPtr ability) override;
+        void addAbility(const IdPtr& ability) override;
         IdUnorderedSet getAbilities() const override;
         IdPtr getComponentType() const override;
-        bool hasAbility(IdPtr ability) const override;
-        void removeAbility(IdPtr ability) override;
+        bool hasAbility(const IdPtr& ability) const override;
+        void removeAbility(const IdPtr& ability) override;
 
     private:
         IdUnorderedSet abilities;
@@ -33,7 +33,7 @@ namespace frts
      * @param type The component type.
      * @return The Curriculum.
      */
-    inline CurriculumPtr makeCurriculum(IdPtr type)
+    inline CurriculumPtr makeCurriculum(const IdPtr& type)
     {
         assert(type != nullptr);
 

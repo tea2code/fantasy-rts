@@ -11,7 +11,7 @@ namespace frts
     class SortOrderImpl : public SortOrder
     {
     public:
-        SortOrderImpl(IdPtr type);
+        SortOrderImpl(const IdPtr& type);
 
         IdPtr getComponentType() const override;
         int getSortOrder() const override;
@@ -27,7 +27,7 @@ namespace frts
      * @param type The component type.
      * @return The SortOrder.
      */
-    inline SortOrderPtr makeSortOrder(IdPtr type, int sortOrder = SortOrder::Position::DEFAULT)
+    inline SortOrderPtr makeSortOrder(const IdPtr& type, int sortOrder = SortOrder::Position::DEFAULT)
     {
         assert(type != nullptr);
 

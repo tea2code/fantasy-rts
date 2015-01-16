@@ -9,7 +9,7 @@ namespace frts
     class RenderableImpl : public Renderable
     {
     public:
-        RenderableImpl(IdPtr type);
+        RenderableImpl(const IdPtr& type);
 
         bool doStacking() const override;
         IdPtr getComponentType() const override;
@@ -17,7 +17,7 @@ namespace frts
         unsigned int getTransparency() const override;
         unsigned int getSpriteIndex() const override;
         bool isSpriteIndexSet() const override;
-        void setSprite(IdPtr id) override;
+        void setSprite(const IdPtr& id) override;
         void setSpriteIndex(unsigned int index) override;
         void setStacking(bool stacking) override;
         void setTransparency(unsigned int transparency) override;
@@ -35,7 +35,7 @@ namespace frts
      * @brief Create new Renderable.
      * @return The component.
      */
-    inline RenderablePtr makeRenderable(IdPtr type)
+    inline RenderablePtr makeRenderable(const IdPtr& type)
     {
         assert(type != nullptr);
 

@@ -81,7 +81,7 @@ namespace frts
          * @brief Initialize drawer. Any configuration must be set before.
          * @param shared The shared manager.
          */
-        void init(SharedManagerPtr shared);
+        void init(const SharedManagerPtr& shared);
 
         /**
          * @brief Render given entities.
@@ -91,15 +91,15 @@ namespace frts
          * @param stacked Reference to a list of already stacked sprite ids.
          * @param shared The shared manager.
          */
-        void renderEntities(const EntityVector& entities, IdPtr renderableId,
+        void renderEntities(const EntityVector& entities, const IdPtr& renderableId,
                             const SDL_Rect& rectToRender, IdUnorderedSet &stacked,
-                            SharedManagerPtr shared);
+                            const SharedManagerPtr& shared);
 
         /**
          * @brief After updating positions call this function to start the rendering.
          * @param shared The shared manager.
          */
-        void renderNow(SharedManagerPtr shared);
+        void renderNow(const SharedManagerPtr& shared);
 
         /**
          * @brief Set background color for filling of map tiles.
@@ -117,7 +117,7 @@ namespace frts
          * @param rootNamespace The root namespace of images.
          * @param imagesNode The config node.
          */
-        void setImageConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr imagesNode);
+        void setImageConfig(const SharedManagerPtr& shared, const std::string& rootNamespace, const ConfigNodePtr& imagesNode);
 
         /**
          * @brief Set tile offset in x-direction. No boundary check.
@@ -139,7 +139,7 @@ namespace frts
          * @param rootNamespace The root namespace of sprites.
          * @param spritesNode The config node.
          */
-        void setSpriteConfig(SharedManagerPtr shared, const std::string& rootNamespace, ConfigNodePtr spritesNode);
+        void setSpriteConfig(const SharedManagerPtr& shared, const std::string& rootNamespace, const ConfigNodePtr& spritesNode);
 
         /**
          * @brief Set the window title.
@@ -155,8 +155,9 @@ namespace frts
          * @param modelFactory The model factory.
          * @param graphicData The graphic data.
          */
-        void updateMap(SharedManagerPtr shared, Point::value zLevel,
-                          RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
+        void updateMap(const SharedManagerPtr& shared, Point::value zLevel,
+                       const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
+                       const GraphicDataPtr& graphicData);
 
         /**
          * @brief Update given position.
@@ -167,8 +168,9 @@ namespace frts
          * @param modelFactory The model factory.
          * @param graphicData The graphic data.
          */
-        void updatePosition(SharedManagerPtr shared, PointPtr pos, Point::value zLevel,
-                            RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
+        void updatePosition(const SharedManagerPtr& shared, PointPtr pos, Point::value zLevel,
+                            const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
+                            const GraphicDataPtr& graphicData);
 
         /**
          * @brief Update all given positions.
@@ -179,8 +181,9 @@ namespace frts
          * @param modelFactory The model factory.
          * @param graphicData The graphic data.
          */
-        void updatePositions(SharedManagerPtr shared, const PointUnorderedSet& positions, Point::value zLevel,
-                             RegionManagerPtr regionManager, ModelFactoryPtr modelFactory, GraphicDataPtr graphicData);
+        void updatePositions(const SharedManagerPtr& shared, const PointUnorderedSet& positions,
+                             Point::value zLevel, const RegionManagerPtr& regionManager,
+                             const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData);
 
         /**
          * @brief Validate configuration. Should be called during data validation phase.
@@ -188,7 +191,7 @@ namespace frts
          * @throw InvalidImageConfigError if image node represents a invalid config.
          * @param shared The shared manager.
          */
-        void validateData(SharedManagerPtr shared);
+        void validateData(const SharedManagerPtr& shared);
 
     private:
         /**

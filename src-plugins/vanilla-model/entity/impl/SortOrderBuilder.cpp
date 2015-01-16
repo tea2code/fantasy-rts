@@ -8,7 +8,7 @@ frts::SortOrderBuilder::SortOrderBuilder()
 {
 }
 
-frts::ComponentPtr frts::SortOrderBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::SortOrderBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,7 +16,7 @@ frts::ComponentPtr frts::SortOrderBuilder::build(SharedManagerPtr shared)
     return makeSortOrder(id);
 }
 
-frts::ComponentPtr frts::SortOrderBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::SortOrderBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

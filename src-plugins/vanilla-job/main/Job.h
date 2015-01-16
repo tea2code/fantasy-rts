@@ -47,7 +47,7 @@ namespace frts
          * @param shared The shared manager.
          * @return True if special requirements are met else false.
          */
-        virtual bool checkSpecialRequirements(EntityPtr entity, SharedManagerPtr shared) const = 0;
+        virtual bool checkSpecialRequirements(const EntityPtr& entity, const SharedManagerPtr& shared) const = 0;
 
         /**
          * @brief Execute this job. Will be called when the next due time is hit and the last
@@ -55,7 +55,7 @@ namespace frts
          * @param shared The shared manager.
          * @return Current state of this execution.
          */
-        virtual State execute(SharedManagerPtr shared) = 0;
+        virtual State execute(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief This method must return the next due time.
@@ -92,13 +92,13 @@ namespace frts
          * @param shared The shared manager.
          * @return True if is valid else false.
          */
-        virtual bool isValid(SharedManagerPtr shared) const = 0;
+        virtual bool isValid(const SharedManagerPtr& shared) const = 0;
 
         /**
          * @brief Set the entity which should execute this job. Don't reset before calling stop().
          * @param entity The entity. Null is a valid value if the job is canceled.
          */
-        virtual void setExecutingEntity(EntityPtr entity) = 0;
+        virtual void setExecutingEntity(const EntityPtr& entity) = 0;
 
         /**
          * @brief Stop this action. Will be called when the next due time is hit and the last
@@ -106,7 +106,7 @@ namespace frts
          * @param shared The shared manager.
          * @return Current state of the stopping process.
          */
-        virtual State stop(SharedManagerPtr shared) = 0;
+        virtual State stop(const SharedManagerPtr& shared) = 0;
     };
 }
 

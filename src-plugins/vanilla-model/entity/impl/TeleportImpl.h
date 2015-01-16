@@ -11,11 +11,11 @@ namespace frts
     class TeleportImpl : public Teleport
     {
     public:
-        TeleportImpl(IdPtr type);
+        TeleportImpl(const IdPtr& type);
 
         IdPtr getComponentType() const override;
         EntityPtr getTarget() const override;
-        void setTarget(EntityPtr target) override;
+        void setTarget(const EntityPtr& target) override;
 
     private:
         EntityPtr target;
@@ -27,7 +27,7 @@ namespace frts
      * @param type The component type.
      * @return The SortOrder.
      */
-    inline TeleportPtr makeTeleport(IdPtr type)
+    inline TeleportPtr makeTeleport(const IdPtr& type)
     {
         assert(type != nullptr);
 

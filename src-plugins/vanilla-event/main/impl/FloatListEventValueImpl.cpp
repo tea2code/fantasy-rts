@@ -1,7 +1,7 @@
 #include "FloatListEventValueImpl.h"
 
 
-frts::FloatListEventValueImpl::FloatListEventValueImpl(IdPtr type)
+frts::FloatListEventValueImpl::FloatListEventValueImpl(const IdPtr& type)
     : BaseEventValue(type)
 {
 

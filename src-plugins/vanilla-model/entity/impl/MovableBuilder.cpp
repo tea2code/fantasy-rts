@@ -10,7 +10,7 @@ frts::MovableBuilder::MovableBuilder()
 {
 }
 
-frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::MovableBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -18,7 +18,7 @@ frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared)
     return makeMovable(id);
 }
 
-frts::ComponentPtr frts::MovableBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::MovableBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

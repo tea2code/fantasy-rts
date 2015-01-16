@@ -29,7 +29,7 @@ namespace frts
          * @param event The event.
          * @param shared The shared manager.
          */
-        virtual void notify(EventPtr event, SharedManagerPtr shared) = 0;
+        virtual void notify(const EventPtr& event, const SharedManagerPtr& shared) = 0;
     };
 }
 

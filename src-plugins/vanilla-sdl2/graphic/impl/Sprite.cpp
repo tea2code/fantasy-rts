@@ -3,7 +3,7 @@
 #include <boost/format.hpp>
 
 
-frts::Sprite::Sprite(IdPtr image, int height, int width, std::vector<SpritePoint> spritePoints)
+frts::Sprite::Sprite(const IdPtr& image, int height, int width, const std::vector<SpritePoint>& spritePoints)
     : height{height}, image{image}, spritePoints{spritePoints}, width{width}
 {
 }

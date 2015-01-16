@@ -8,7 +8,7 @@ frts::HasResourceBuilder::HasResourceBuilder()
 {
 }
 
-frts::ComponentPtr frts::HasResourceBuilder::build(SharedManagerPtr shared)
+frts::ComponentPtr frts::HasResourceBuilder::build(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,7 +16,7 @@ frts::ComponentPtr frts::HasResourceBuilder::build(SharedManagerPtr shared)
     return makeHasResource(id);
 }
 
-frts::ComponentPtr frts::HasResourceBuilder::build(SharedManagerPtr shared, ConfigNodePtr node)
+frts::ComponentPtr frts::HasResourceBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
     assert(shared != nullptr);
     assert(node != nullptr);

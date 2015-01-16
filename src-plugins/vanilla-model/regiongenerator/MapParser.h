@@ -47,7 +47,7 @@ namespace frts
          * @brief Initialize the map parser.
          * @param shared The shared manager.
          */
-        virtual void init(SharedManagerPtr shared) = 0;
+        virtual void init(const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Get the block for given position if available.
@@ -55,21 +55,21 @@ namespace frts
          * @param shared The shared manager.
          * @return The generated block or null.
          */
-        virtual WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) = 0;
+        virtual WriteableBlockPtr newBlock(const PointPtr& pos, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Parse the map parser config.
          * @param node The configuration node.
          * @param shared The shared manager.
          */
-        virtual void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) = 0;
+        virtual void parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Validate the parsed config.
          * @throws DataViolation if a data value is invalid.
          * @param shared The shared manager.
          */
-        virtual void validateData(SharedManagerPtr shared) = 0;
+        virtual void validateData(const SharedManagerPtr& shared) = 0;
     };
 }
 

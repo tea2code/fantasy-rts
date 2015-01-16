@@ -18,9 +18,9 @@ namespace frts
          * @param y Move this many steps in y direction. North is positive.
          * @param z Move this many steps in z direction. Up is positive.
          */
-        MoveCursorCommandBuilder(IdPtr commandType, Point::value x, Point::value y, Point::value z);
+        MoveCursorCommandBuilder(const IdPtr& commandType, Point::value x, Point::value y, Point::value z);
 
-        CommandPtr build(SharedManagerPtr shared) override;
+        CommandPtr build(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr commandType;
@@ -38,7 +38,7 @@ namespace frts
      * @param z Move this many steps in z direction. Up is positive.
      * @return The command builder.
      */
-    inline CommandBuilderPtr makeMoveCursorCommandBuilder(IdPtr commandType, Point::value x, Point::value y, Point::value z)
+    inline CommandBuilderPtr makeMoveCursorCommandBuilder(const IdPtr& commandType, Point::value x, Point::value y, Point::value z)
     {
         assert(commandType != nullptr);
 

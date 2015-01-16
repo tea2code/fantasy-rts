@@ -1,7 +1,7 @@
 #include "IntegerListEventValueImpl.h"
 
 
-frts::IntegerListEventValueImpl::IntegerListEventValueImpl(IdPtr type)
+frts::IntegerListEventValueImpl::IntegerListEventValueImpl(const IdPtr& type)
     : BaseEventValue(type)
 {
 

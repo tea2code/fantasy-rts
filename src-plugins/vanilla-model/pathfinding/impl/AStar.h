@@ -29,9 +29,9 @@ namespace frts
     class AStar : public PathFinder
     {
     public:
-        AStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType);
+        AStar(const DistanceAlgorithmPtr& distanceAlgorithm, const IdPtr& teleportType);
 
-        PathPtr findPath(PointPtr start, PointPtr goal, BlockedByPtr blockedBy, SharedManagerPtr shared) override;
+        PathPtr findPath(const PointPtr& start, const PointPtr& goal, const BlockedByPtr& blockedBy, const SharedManagerPtr& shared) override;
 
     private:
         Path::CostMap costSoFar;
@@ -47,8 +47,8 @@ namespace frts
         #endif
 
     private:
-        PointVector findNeighbors(PointPtr current, BlockedByPtr blockedBy,
-                                            RegionManagerPtr regionManager, SharedManagerPtr shared);
+        PointVector findNeighbors(const PointPtr& current, const BlockedByPtr& blockedBy,
+                                  const RegionManagerPtr& regionManager, const SharedManagerPtr& shared);
     };
 
     /**
@@ -57,7 +57,7 @@ namespace frts
      * @param teleportType Type of teleport component.
      * @return The path finder.
      */
-    inline PathFinderPtr makeAStar(DistanceAlgorithmPtr distanceAlgorithm, IdPtr teleportType)
+    inline PathFinderPtr makeAStar(const DistanceAlgorithmPtr& distanceAlgorithm, const IdPtr& teleportType)
     {
         assert(distanceAlgorithm != nullptr);
         assert(teleportType != nullptr);

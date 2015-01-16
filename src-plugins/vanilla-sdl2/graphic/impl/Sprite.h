@@ -34,7 +34,7 @@ namespace frts
          * @param width The width.
          * @param spritePoints List of sprite points.
          */
-        Sprite(IdPtr image, int height, int width, std::vector<SpritePoint> spritePoints);
+        Sprite(const IdPtr& image, int height, int width, const std::vector<SpritePoint>& spritePoints);
 
         /**
          * @brief The height.

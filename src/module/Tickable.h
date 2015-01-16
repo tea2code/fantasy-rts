@@ -21,7 +21,7 @@ namespace frts
          *        during "Startup", "Run Game" and "Shutdown" phases.
          * @param shared The shared manager.
          */
-        virtual void tick(SharedManagerPtr shared) = 0;
+        virtual void tick(const SharedManagerPtr& shared) = 0;
     };
 }
 

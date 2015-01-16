@@ -153,13 +153,13 @@ namespace frts
          * @brief Set the cursor entity.
          * @param cursor The cursor.
          */
-        virtual void setCursor(EntityPtr cursor) = 0;
+        virtual void setCursor(const EntityPtr& cursor) = 0;
 
         /**
          * @brief Set map rectangle in the window.
          * @param mapArea The map rectangle.
          */
-        virtual void setMapArea(ScreenArea mapArea) = 0;
+        virtual void setMapArea(const ScreenArea& mapArea) = 0;
 
         /**
          * @brief Set the number of fps measures for average calculation.
@@ -219,7 +219,7 @@ namespace frts
          * @brief Set sidebar rectangle in the window.
          * @param mapArea The sidebar rectangle.
          */
-        virtual void setSidebarArea(ScreenArea sidebarArea) = 0;
+        virtual void setSidebarArea(const ScreenArea& sidebarArea) = 0;
 
         /**
          * @brief Set entity index for info area of sidebar.

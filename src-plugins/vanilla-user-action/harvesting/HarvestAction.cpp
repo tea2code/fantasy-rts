@@ -7,8 +7,8 @@
 #include <algorithm>
 
 
-frts::HarvestAction::HarvestAction(IdPtr jobId, IdPtr jobType, IdUnorderedSet harvestTypes,
-                                   IdUnorderedSet jobRequirements, IdPtr jobMarker)
+frts::HarvestAction::HarvestAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& harvestTypes,
+                                   const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker)
     : jobId{jobId}, jobType{jobType}, harvestTypes{harvestTypes}, jobRequirements{jobRequirements},
       jobMarker{jobMarker}
 {
@@ -20,7 +20,7 @@ frts::HarvestAction::~HarvestAction()
 
 }
 
-frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
+frts::Action::State frts::HarvestAction::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(this->actionState != ActionState::Finished);
@@ -86,7 +86,7 @@ frts::Action::State frts::HarvestAction::execute(SharedManagerPtr shared)
     return result;
 }
 
-void frts::HarvestAction::notify(EventPtr event, SharedManagerPtr shared)
+void frts::HarvestAction::notify(const EventPtr& event, const SharedManagerPtr& shared)
 {
     assert(event != nullptr);
     assert(shared != nullptr);
@@ -102,7 +102,7 @@ void frts::HarvestAction::notify(EventPtr event, SharedManagerPtr shared)
     em->unsubscribe(shared_from_this());
 }
 
-frts::Action::State frts::HarvestAction::stop(SharedManagerPtr shared)
+frts::Action::State frts::HarvestAction::stop(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 

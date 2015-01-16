@@ -73,7 +73,7 @@ namespace frts
          * @brief Set the path. This will reset this component.
          * @param path The path.
          */
-        virtual void setPath(PathPtr path) = 0;
+        virtual void setPath(const PathPtr& path) = 0;
 
         /**
          * @brief Set the movement speed.

@@ -70,7 +70,7 @@ namespace
      * @param key The key.
      * @param values The values.
      */
-    void logLoadConfigList(frts::LogPtr log, const std::string& logModule,
+    void logLoadConfigList(const frts::LogPtr& log, const std::string& logModule,
                            const std::string& key, const std::vector<std::string>& values)
     {
         assert(log != nullptr);

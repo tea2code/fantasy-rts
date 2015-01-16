@@ -1,12 +1,12 @@
 #include "QuitCommand.h"
 
 
-frts::QuitCommand::QuitCommand(IdPtr commandType)
+frts::QuitCommand::QuitCommand(const IdPtr& commandType)
     : commandType{commandType}
 {
 }
 
-void frts::QuitCommand::execute(SharedManagerPtr shared)
+void frts::QuitCommand::execute(const SharedManagerPtr& shared)
 {
     shared->setQuitApplication(true);
 }
@@ -16,7 +16,7 @@ frts::IdPtr frts::QuitCommand::getCommandType() const
     return commandType;
 }
 
-void frts::QuitCommand::undo(SharedManagerPtr shared)
+void frts::QuitCommand::undo(const SharedManagerPtr& shared)
 {
     shared->setQuitApplication(false);
 }

@@ -19,15 +19,15 @@ namespace frts
          * @param mapSizeY The map size in y direction.
          * @param surfaceZLevel The z-level of the surface.
          */
-        DemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
+        DemoRegionGenerator(const IdPtr& blockingType, const IdPtr& sortOrderType,
                             Point::value mapSizeX, Point::value mapSizeY,
                             Point::value surfaceZLevel);
 
         std::string getSupportedConfig() const override;
-        void init(SharedManagerPtr shared) override;
-        WriteableBlockPtr newBlock(PointPtr pos, SharedManagerPtr shared) override;
-        void parseConfig(ConfigNodePtr node, SharedManagerPtr shared) override;
-        void validateData(SharedManagerPtr shared) override;
+        void init(const SharedManagerPtr& shared) override;
+        WriteableBlockPtr newBlock(const PointPtr& pos, const SharedManagerPtr& shared) override;
+        void parseConfig(const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
+        void validateData(const SharedManagerPtr& shared) override;
 
     private:
         IdPtr blockingType;
@@ -46,7 +46,7 @@ namespace frts
      * @param surfaceZLevel The z-level of the surface.
      * @return The region generator.
      */
-    inline RegionGeneratorPtr makeDemoRegionGenerator(IdPtr blockingType, IdPtr sortOrderType,
+    inline RegionGeneratorPtr makeDemoRegionGenerator(const IdPtr& blockingType, const IdPtr& sortOrderType,
                                                       Point::value mapSizeX, Point::value mapSizeY,
                                                       Point::value surfaceZLevel)
     {

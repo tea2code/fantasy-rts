@@ -7,7 +7,7 @@
 #include <boost/format.hpp>
 
 
-frts::HarvestCommand::HarvestCommand(IdPtr commandType, IdPtr userActionType, ConfigNodePtr settings)
+frts::HarvestCommand::HarvestCommand(const IdPtr& commandType, const IdPtr& userActionType, const ConfigNodePtr& settings)
     : commandType{commandType}, userActionType{userActionType}, settings{settings}
 {
 
@@ -18,7 +18,7 @@ frts::HarvestCommand::~HarvestCommand()
 
 }
 
-void frts::HarvestCommand::execute(SharedManagerPtr shared)
+void frts::HarvestCommand::execute(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -54,7 +54,7 @@ frts::IdPtr frts::HarvestCommand::getCommandType() const
     return commandType;
 }
 
-void frts::HarvestCommand::undo(SharedManagerPtr shared)
+void frts::HarvestCommand::undo(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
     assert(this->action != nullptr);

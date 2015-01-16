@@ -7,14 +7,12 @@
 #include <boost/format.hpp>
 
 
-const std::string frts::MainLoop::logModule = "frts::MainLoop";
-
 frts::MainLoop::MainLoop(Frame::time deltaTime, Frame::time maxFrameTime)
     : deltaTime{deltaTime}, maxFrameTime{maxFrameTime}
 {
 }
 
-void frts::MainLoop::render(SharedManagerPtr shared) const
+void frts::MainLoop::render(const SharedManagerPtr& shared) const
 {
     assert(shared != nullptr);
 
@@ -24,7 +22,7 @@ void frts::MainLoop::render(SharedManagerPtr shared) const
     }
 }
 
-void frts::MainLoop::start(SharedManagerImplPtr shared) const
+void frts::MainLoop::start(const SharedManagerImplPtr& shared) const
 {
     assert(shared != nullptr);
 
@@ -84,7 +82,7 @@ void frts::MainLoop::start(SharedManagerImplPtr shared) const
     }
 }
 
-void frts::MainLoop::update(SharedManagerPtr shared) const
+void frts::MainLoop::update(const SharedManagerPtr& shared) const
 {
     assert(shared != nullptr);
 

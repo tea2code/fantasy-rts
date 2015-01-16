@@ -13,7 +13,7 @@ namespace frts
         SelectionDataImpl();
         ~SelectionDataImpl();
 
-        PointVector getSelection(SharedManagerPtr shared) const override;
+        PointVector getSelection(const SharedManagerPtr& shared) const override;
         PointPtr getSelectionEnd() const override;
         IdPtr getSelectionEntityId() const override;
         EntityVector getSelectionEntities() const override;
@@ -21,10 +21,10 @@ namespace frts
         bool isSelecting() const override;
         void resetSelection() override;
         void setIsSelecting(bool isSelecting) override;
-        void setSelectionEnd(PointPtr pos) override;
-        void setSelectionEntityId(IdPtr entityId) override;
-        void setSelectionEntities(EntityVector entities) override;
-        void setSelectionStart(PointPtr pos) override;
+        void setSelectionEnd(const PointPtr& pos) override;
+        void setSelectionEntityId(const IdPtr& entityId) override;
+        void setSelectionEntities(const EntityVector& entities) override;
+        void setSelectionStart(const PointPtr& pos) override;
 
     private:
         PointPtr start;

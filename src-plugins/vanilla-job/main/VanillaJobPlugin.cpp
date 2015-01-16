@@ -18,7 +18,7 @@ frts::JobHandlerPtr frts::VanillaJobPlugin::getJobHandler()
     return jobHandler;
 }
 
-frts::ModulePtr frts::VanillaJobPlugin::getModule(frts::IdPtr id)
+frts::ModulePtr frts::VanillaJobPlugin::getModule(const IdPtr& id)
 {
     assert(id != nullptr);
 

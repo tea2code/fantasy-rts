@@ -1,6 +1,6 @@
 #include "SortOrderImpl.h"
 
-frts::SortOrderImpl::SortOrderImpl(IdPtr type)
+frts::SortOrderImpl::SortOrderImpl(const IdPtr& type)
     : sortOrder{0}, type{type}
 {
 

@@ -32,14 +32,14 @@ namespace frts
          *        with the same type.
          * @param component The component.
          */
-        virtual void addComponent(ComponentPtr component) = 0;
+        virtual void addComponent(const ComponentPtr& component) = 0;
 
         /**
          * @brief Get component with current values.
          * @param type The component type.
          * @return The component or null if not found.
          */
-        virtual ComponentPtr getComponent(IdPtr type) const = 0;
+        virtual ComponentPtr getComponent(const IdPtr& type) const = 0;
 
         /**
          * @brief Get all components.
@@ -52,13 +52,13 @@ namespace frts
          * @param type The component type.
          * @return True if entity has component else false.
          */
-        virtual bool hasComponent(IdPtr type) const = 0;
+        virtual bool hasComponent(const IdPtr& type) const = 0;
 
         /**
          * @brief Remove component from entity.
          * @param type The component type.
          */
-        virtual void removeComponent(IdPtr type) = 0;
+        virtual void removeComponent(const IdPtr& type) = 0;
     };
 
     /**
@@ -68,7 +68,7 @@ namespace frts
      * @return The converted component or null.
      */
     template<typename ComponentClass>
-    inline std::shared_ptr<ComponentClass> getComponent(IdPtr type, EntityPtr entity)
+    inline std::shared_ptr<ComponentClass> getComponent(const IdPtr& type, const EntityPtr& entity)
     {
         assert(type != nullptr);
         assert(entity != nullptr);
