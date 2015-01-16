@@ -97,14 +97,18 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
 {
     assert(shared != nullptr);
 
-    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     if (shared->getFrame()->getNumber() == 0)
     {
         // Add dwarves.
+
+#ifdef A_STAR_BENCHMARK
+        const unsigned int numEntities = 1;
+#else
         const unsigned int numEntities = 10;
+#endif
         const auto entityId = shared->makeId("entity.dwarf");
 
         auto blockedById = shared->makeId(ComponentIds::blockedBy());
@@ -129,6 +133,8 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     }
 
 #ifdef A_STAR_BENCHMARK
+    const int numIterations = 1000;
+
     // Pregenerate map.
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
     for (Point::value x = 0; x < md->getMapSizeX(); ++x)
@@ -144,13 +150,13 @@ void frts::VanillaDemoTickable::tick(frts::SharedManagerPtr shared)
     }
 
     auto pathFinder = mf->getPathFinder();
-    auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), player);
+    auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), lazy.at(0));
 
     auto leftTop = mf->makePoint(5, 5, 0);
     auto rightTop = mf->makePoint(95, 5, 0);
     auto leftBottom = mf->makePoint(5, 95, 0);
     auto rightBottom = mf->makePoint(95, 95, 0);
-    for (int i = 0; i < 300; ++i)
+    for (int i = 0; i < numIterations; ++i)
     {
         pathFinder->findPath(leftTop, rightBottom, blockedBy, shared);
         pathFinder->findPath(rightBottom, rightTop, blockedBy, shared);
