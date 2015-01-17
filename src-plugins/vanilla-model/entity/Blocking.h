@@ -32,7 +32,8 @@ namespace frts
 
         /**
          * @brief Check if it blocks.
-         * @param blockedBy The blocked describtion.
+         * @param blockedBy The blocked describtion. Null is a valid value and interpreted
+         *                  as "blocked by nothing".
          * @return True if it blocks else false.
          */
         virtual bool blocks(const BlockedByPtr& blockedBy) = 0;

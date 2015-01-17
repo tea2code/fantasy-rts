@@ -99,9 +99,9 @@ bool frts::findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool t
     return pathFound;
 }
 
-bool frts::moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared)
+frts::MoveEntityResult frts::moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared)
 {
-    bool result = false;
+    MoveEntityResult result = MoveEntityResult::NotMovable;
 
     auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), entity);
     if (movable != nullptr)
@@ -109,14 +109,29 @@ bool frts::moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const 
         auto nextPos = movable->getNextPathPos();
         if (nextPos != nullptr)
         {
-            // Move to next position in path.
             auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-            rm->setPos(entity, nextPos, shared);
 
-            // Set next due time.
-            nextMoveTime = fromMilliseconds(round<unsigned int>(1000.0 / movable->getSpeed()));
+            // Check if path is blocked.
+            auto block = rm->getBlock(nextPos, shared);
+            auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), entity);
+            if (block->isBlocking(blockedBy))
+            {
+                result = MoveEntityResult::Blocked;
+            }
+            else
+            {
+                // Move to next position in path.
+                rm->setPos(entity, nextPos, shared);
 
-            result = true;
+                // Set next due time.
+                nextMoveTime = fromMilliseconds(round<unsigned int>(1000.0 / movable->getSpeed()));
+
+                result = MoveEntityResult::Moved;
+            }
+        }
+        else
+        {
+            result = MoveEntityResult::AtTarget;
         }
     }
 

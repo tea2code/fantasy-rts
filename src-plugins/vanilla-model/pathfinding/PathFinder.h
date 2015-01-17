@@ -33,7 +33,8 @@ namespace frts
          * @brief Tries to find a path between start and goal.
          * @param start The start position.
          * @param goal The goal.
-         * @param blockedBy Indicates which entities block the path.
+         * @param blockedBy Indicates which entities block the path. Null is a valid value and interpreted
+         *                  as "blocked by nothing".
          * @param shared The shared manager.
          * @return The path result.
          */

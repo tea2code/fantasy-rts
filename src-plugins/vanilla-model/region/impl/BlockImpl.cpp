@@ -53,7 +53,10 @@ void frts::BlockImpl::insert(const EntityPtr& entity)
 
 bool frts::BlockImpl::isBlocking(const BlockedByPtr& blockedBy) const
 {
-    assert(blockedBy != nullptr);
+    if (blockedBy == nullptr)
+    {
+        return false;
+    }
 
     std::lock_guard<RecursiveLock> lock(locker);
 

@@ -47,7 +47,6 @@ std::vector<frts::PointPtr> frts::RegionManagerImpl::findFreeNeighbors(const Poi
 frts::PointPtr frts::RegionManagerImpl::findFreeRandomPos(const std::vector<Point::value>& zLevels,
                                                           const BlockedByPtr& blockedBy, const SharedManagerPtr& shared)
 {
-    assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
     std::lock_guard<RecursiveLock> lock(locker);

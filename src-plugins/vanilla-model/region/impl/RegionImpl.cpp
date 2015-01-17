@@ -63,7 +63,6 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
                                                    const BlockedByPtr& blockedBy,
                                                    const SharedManagerPtr& shared)
 {
-    assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
     // Let's try at least 100 times. Still might not find a free position.

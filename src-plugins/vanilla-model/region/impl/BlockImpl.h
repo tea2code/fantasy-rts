@@ -64,7 +64,6 @@ namespace frts
             IsBlockingPred(const IdPtr& blockingType, const BlockedByPtr& blockedBy)
                 : blockedBy{blockedBy}, blockingType{blockingType}
             {
-                assert(blockedBy != nullptr);
                 assert(blockingType != nullptr);
             }
 

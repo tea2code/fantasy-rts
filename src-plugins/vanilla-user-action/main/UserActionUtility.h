@@ -33,14 +33,31 @@ namespace frts
     bool findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool toNeighbor, const SharedManagerPtr& shared);
 
     /**
+     * @brief Represents the result of moveEntity().
+     */
+    enum class MoveEntityResult
+    {
+        // Entity has no movable component.
+        NotMovable,
+
+        // The entity has moved.
+        Moved,
+
+        // The entity is at the target.
+        AtTarget,
+
+        // The path is blocked. Enity hasn't moved.
+        Blocked
+    };
+
+    /**
      * @brief Moves the entity to the next position if it has currently a path.
      * @param entity The entity.
      * @param nextMoveTime Will contain the time until the next move afterwards.
      * @param shared The shared manager.
-     * @return True if entity was moved else false. False indicates there is no movable component or
-     *         entity is already at the target.
+     * @return The result.
      */
-    bool moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared);
+    MoveEntityResult moveEntity(const EntityPtr& entity, Frame::time& nextMoveTime, const SharedManagerPtr& shared);
 }
 
 #endif // FRTS_USERACTIONUTILITY_H

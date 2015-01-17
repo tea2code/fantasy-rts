@@ -18,7 +18,10 @@ void frts::BlockingImpl::addBlock(const IdPtr& block)
 
 bool frts::BlockingImpl::blocks(const BlockedByPtr& blockedBy)
 {
-    assert(blockedBy != nullptr);
+    if (blockedBy == nullptr)
+    {
+        return false;
+    }
 
     auto blockedByBlocks = blockedBy->getBlocks();
     auto blockingBlocks = blocking.getBlocks();

@@ -26,7 +26,6 @@ frts::PathPtr frts::AStar::findPath(const PointPtr& start, const PointPtr& goal,
 {
     assert(start != nullptr);
     assert(goal != nullptr);
-    assert(blockedBy != nullptr);
     assert(shared != nullptr);
 
     // For this exact implementation see http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-2-4
@@ -161,7 +160,6 @@ std::vector<frts::PointPtr> frts::AStar::findNeighbors(const PointPtr& current, 
                                                        const SharedManagerPtr& shared)
 {
     assert(current != nullptr);
-    assert(blockedBy != nullptr);
     assert(regionManager != nullptr);
     assert(shared != nullptr);
 

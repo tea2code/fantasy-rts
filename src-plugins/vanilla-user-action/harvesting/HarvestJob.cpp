@@ -89,13 +89,13 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
         }
 
         Frame::time moveTime;
-        bool moved = moveEntity(getExecutingEntity(), moveTime, shared);
-        if (moved)
+        auto moveResult = moveEntity(getExecutingEntity(), moveTime, shared);
+        if (moveResult == MoveEntityResult::Moved)
         {
             // Set next due time.
             setDueTime(shared->getFrame()->getRunTime() + moveTime);
         }
-        else
+        else if (moveResult == MoveEntityResult::AtTarget)
         {
             jobState = JobState::Harvest;
 
@@ -103,6 +103,11 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
             auto harvestable = getComponent<Harvestable>(shared->makeId(ComponentIds::harvestable()), toHarvest);
             auto harvestTime = fromMilliseconds(round<unsigned int>(1000.0 / harvestable->getSpeed()));
             setDueTime(shared->getFrame()->getRunTime() + harvestTime);
+        }
+        else
+        {
+            // Try again.
+            jobState = JobState::FirstExecution;
         }
     }
     else if (jobState == JobState::Harvest)

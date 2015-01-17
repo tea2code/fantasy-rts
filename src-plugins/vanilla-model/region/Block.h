@@ -44,7 +44,8 @@ namespace frts
 
         /**
          * @brief Check if block is blocking.
-         * @param blockedBy The blocked by definition.
+         * @param blockedBy The blocked by definition. Null is a valid value and interpreted
+         *                  as "blocked by nothing".
          * @return True if block is blocking.
          */
         virtual bool isBlocking(const BlockedByPtr& blockedBy) const = 0;
