@@ -126,7 +126,7 @@ frts::PathPtr frts::AStar::findPath(const PointPtr& start, const PointPtr& goal,
     auto msg = boost::format(R"(findNeighborsTime = %1%ms, loopTime = %2%ms, teleportTime = %3%ms, totalTime = %4%ms, walkTime = %5%ms, found = %6%, length = %7%)")
             % findNeighborsTime.count() % loopTime.count() % teleportTime.count()
             % totalTime.count() % walkTime.count() % found % path.size();
-    shared->getLog()->debug("frts::A*-Benchmark", msg.str());
+    shared->getLog()->info("frts::A*-Benchmark", msg.str());
     #else
     #ifndef UNIT_TEST
     auto totalTime = (highResTime() - startTotal);

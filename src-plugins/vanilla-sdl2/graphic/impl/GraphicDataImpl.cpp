@@ -129,11 +129,15 @@ void frts::GraphicDataImpl::setScreenOffsetStepY(frts::GraphicData::pixel offset
 
 void frts::GraphicDataImpl::setScreenOffsetX(Point::value offset)
 {
+    assert(offset >= 0);
+
     this->screenOffsetX = offset;
 }
 
 void frts::GraphicDataImpl::setScreenOffsetY(Point::value offset)
 {
+    assert(offset >= 0);
+
     this->screenOffsetY = offset;
 }
 

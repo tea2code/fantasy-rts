@@ -69,24 +69,24 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
 
-    screenHeight = screenToRegion(gd->getScreenHeight(), tileHeight);
+    screenHeight = pixelToTilesY(gd->getScreenHeight(), shared);
     screenHeight = std::min(screenHeight, md->getMapSizeY());
-    gd->setScreenHeight(regionToScreen(screenHeight, tileHeight));
+    gd->setScreenHeight(tilesToPixelY(screenHeight, shared));
 
-    screenWidth = screenToRegion(gd->getScreenWidth(), tileWidth);
+    screenWidth = pixelToTilesX(gd->getScreenWidth(), shared);
     screenWidth = std::min(screenWidth, md->getMapSizeX());
-    gd->setScreenWidth(regionToScreen(screenWidth, tileWidth));
+    gd->setScreenWidth(tilesToPixelX(screenWidth, shared));
 
-    sidebarWidth = screenToRegion(gd->getSidebarWidth(), tileWidth);
-    gd->setSidebarWidth(regionToScreen(sidebarWidth, tileWidth));
+    sidebarWidth = pixelToTilesX(gd->getSidebarWidth(), shared);
+    gd->setSidebarWidth(tilesToPixelX(sidebarWidth, shared));
 
     mapWidth = screenWidth - sidebarWidth;
 
     // Set screen areas.
-    GraphicData::ScreenArea mapArea(0, 0, regionToScreen(mapWidth, tileWidth), gd->getScreenHeight());
+    GraphicData::ScreenArea mapArea(0, 0, tilesToPixelX(mapWidth, shared), gd->getScreenHeight());
     gd->setMapArea(mapArea);
 
-    GraphicData::ScreenArea sidebarArea(regionToScreen(mapWidth, tileWidth), 0, gd->getSidebarWidth(), gd->getScreenHeight());
+    GraphicData::ScreenArea sidebarArea(tilesToPixelX(mapWidth, shared), 0, gd->getSidebarWidth(), gd->getScreenHeight());
     gd->setSidebarArea(sidebarArea);
 
     // Initialize SDL2.
@@ -117,8 +117,8 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
     // Create window.
     window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        static_cast<int>(regionToScreen(screenWidth, tileWidth)),
-                        static_cast<int>(regionToScreen(screenHeight, tileHeight)),
+                        static_cast<int>(tilesToPixelX(screenWidth, shared)),
+                        static_cast<int>(tilesToPixelY(screenHeight, shared)),
                         SDL_WINDOW_SHOWN),
         Sdl2Deleter()
     );
@@ -316,8 +316,8 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
 
     // The rectangle on the screen which should be rendered.
     auto mapArea = graphicData->getMapArea();
-    auto renderX = mapArea.x + regionToScreen(pos->getX() - offsetX, tileWidth);
-    auto renderY = mapArea.y + regionToScreen(pos->getY() - offsetY, tileHeight);
+    auto renderX = mapArea.x + tilesToPixelX(pos->getX() - offsetX, shared);
+    auto renderY = mapArea.y + tilesToPixelY(pos->getY() - offsetY, shared);
     SDL_Rect rectToRender = {
         static_cast<int>(renderX),
         static_cast<int>(renderY),

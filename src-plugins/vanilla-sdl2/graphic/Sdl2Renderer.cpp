@@ -93,8 +93,8 @@ bool frts::Sdl2Renderer::init(const SharedManagerPtr& shared)
     // Add commands.
     // Move screen.
     {
-        const Point::value offsetStepX = screenToRegion(gd->getScreenOffsetStepX(), gd->getTileWidth());
-        const Point::value offsetStepY = screenToRegion(gd->getScreenOffsetStepY(), gd->getTileHeight());
+        const Point::value offsetStepX = pixelToTilesX(gd->getScreenOffsetStepX(), shared);
+        const Point::value offsetStepY = pixelToTilesY(gd->getScreenOffsetStepY(), shared);
         const Point::value offsetStepZ = 1;
 
         // West

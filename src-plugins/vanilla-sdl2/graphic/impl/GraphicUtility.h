@@ -2,7 +2,7 @@
 #define FRTS_GRAPHICUTILITY_H
 
 #include <graphic/GraphicData.h>
-
+#include <frts/shared>
 #include <frts/vanillamodel>
 
 
@@ -16,20 +16,35 @@ namespace frts
     void raiseMoveCursorEvent(const PointPtr& cursorPos, const SharedManagerPtr& shared);
 
     /**
-     * @brief Converts screen coordinates in pixel to region coordinates in tiles.
-     * @param screen The screen coordinate (x or y).
-     * @param tile The tile width or height.
-     * @return The region coordinate (x or y).
+     * @brief Calculates how many tiles are equivalent to the the given number of pixel in x direction.
+     * @param pixel The number of pixel.
+     * @param shared The shared manager.
+     * @return The number of tiles.
      */
-    Point::value screenToRegion(GraphicData::pixel screen, GraphicData::pixel tile);
+    Point::value pixelToTilesX(GraphicData::pixel pixel, const SharedManagerPtr& shared);
+
+   /** @brief Calculates how many tiles are equivalent to the the given number of pixel in y direction.
+    * @param pixel The number of pixel.
+    * @param shared The shared manager.
+    * @return The number of tiles.
+    */
+   Point::value pixelToTilesY(GraphicData::pixel pixel, const SharedManagerPtr& shared);
 
     /**
-     * @brief Converts region coordinates in tiles to screen coordinates in pixel.
-     * @param region The region coordinate (x or y).
-     * @param tile The tile width or height.
-     * @return The screen coordinate (x or y).
+     * @brief Calculates how many pixel are equivalent to the the given number of tiles in x direction.
+     * @param tiles The number of tiles.
+     * @param shared The shared manager.
+     * @return The number of pixel.
      */
-    GraphicData::pixel regionToScreen(Point::value region, GraphicData::pixel tile);
+    GraphicData::pixel tilesToPixelX(Point::value tiles, const SharedManagerPtr& shared);
+
+    /**
+     * @brief Calculates how many pixel are equivalent to the the given number of tiles in y direction.
+     * @param tiles The number of tiles.
+     * @param shared The shared manager.
+     * @return The number of pixel.
+     */
+    GraphicData::pixel tilesToPixelY(Point::value tiles, const SharedManagerPtr& shared);
 }
 
 #endif // FRTS_GRAPHICUTILITY_H

@@ -40,7 +40,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     }
 
     // X -> East
-    Point::value maxX = md->getMapSizeX() - screenToRegion(mapArea.width, gd->getTileWidth());
+    Point::value maxX = md->getMapSizeX() - pixelToTilesX(mapArea.width, shared);
     if (x < 0 && gd->getScreenOffsetX() < maxX)
     {
         auto offset = std::min(gd->getScreenOffsetX() - x, maxX);
@@ -57,7 +57,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     }
 
     // Y -> South
-    Point::value maxY = md->getMapSizeY() - screenToRegion(mapArea.height, gd->getTileHeight());
+    Point::value maxY = md->getMapSizeY() - pixelToTilesY(mapArea.height, shared);
     if (y < 0 && gd->getScreenOffsetY() < maxY)
     {
         auto offset = std::min(gd->getScreenOffsetY() - y, maxY);
@@ -135,7 +135,7 @@ void frts::MoveScreenCommand::undo(const SharedManagerPtr& shared)
         }
 
         // X -> East
-        Point::value maxX = md->getMapSizeX() - screenToRegion(mapArea.width, gd->getTileWidth());
+        Point::value maxX = md->getMapSizeX() - pixelToTilesX(mapArea.width, shared);
         if (undoX < 0 && gd->getScreenOffsetX() < maxX)
         {
             auto offset = std::min(gd->getScreenOffsetX() - undoX, maxX);
@@ -153,7 +153,7 @@ void frts::MoveScreenCommand::undo(const SharedManagerPtr& shared)
         }
 
         // Y -> South
-        Point::value maxY = md->getMapSizeY() - screenToRegion(mapArea.height, gd->getTileHeight());
+        Point::value maxY = md->getMapSizeY() - pixelToTilesY(mapArea.height, shared);
         if (undoY < 0 && gd->getScreenOffsetY() < maxY)
         {
             auto offset = std::min(gd->getScreenOffsetY() - undoY, maxY);

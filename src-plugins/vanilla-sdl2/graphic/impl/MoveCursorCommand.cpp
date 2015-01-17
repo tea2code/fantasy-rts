@@ -40,7 +40,7 @@ void frts::MoveCursorCommand::execute(const SharedManagerPtr& shared)
     }
 
     // X -> East
-    Point::value maxX = gd->getScreenOffsetX() + screenToRegion(mapArea.width, gd->getTileWidth());
+    Point::value maxX = gd->getScreenOffsetX() + pixelToTilesX(mapArea.width, shared);
     if (x < 0 && cursorPos->getX() < maxX)
     {
         auto newX = std::min(cursorPos->getX() - x, maxX - 1);
@@ -57,7 +57,7 @@ void frts::MoveCursorCommand::execute(const SharedManagerPtr& shared)
     }
 
     // Y -> South
-    Point::value maxY = gd->getScreenOffsetY() + screenToRegion(mapArea.height, gd->getTileHeight());
+    Point::value maxY = gd->getScreenOffsetY() + pixelToTilesY(mapArea.height, shared);
     if (y < 0 && cursorPos->getY() < maxY)
     {
         auto newY = std::min(cursorPos->getY() - y, maxY - 1);
@@ -123,7 +123,7 @@ void frts::MoveCursorCommand::undo(const SharedManagerPtr& shared)
         }
 
         // X -> East
-        Point::value maxX = gd->getScreenOffsetX() + screenToRegion(mapArea.width, gd->getTileWidth());
+        Point::value maxX = gd->getScreenOffsetX() + pixelToTilesX(mapArea.width, shared);
         if (undoX < 0 && cursorPos->getX() < maxX)
         {
             auto newX = std::min(cursorPos->getX() - undoX, maxX - 1);
@@ -141,7 +141,7 @@ void frts::MoveCursorCommand::undo(const SharedManagerPtr& shared)
         }
 
         // Y -> South
-        Point::value maxY = gd->getScreenOffsetY() + screenToRegion(mapArea.height, gd->getTileHeight());
+        Point::value maxY = gd->getScreenOffsetY() + pixelToTilesY(mapArea.height, shared);
         if (undoY < 0 && cursorPos->getY() < maxY)
         {
             auto newY = std::min(cursorPos->getY() - undoY, maxY - 1);
