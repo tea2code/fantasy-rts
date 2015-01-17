@@ -270,11 +270,7 @@ void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
     if (gd->isRenderEverything())
     {
         drawer->updateMap(shared, gd->getZLevel(), rm, mf, gd);
-
-        // We "should" call update sidebar but we currently know it's only necessary for the
-        // info are and not for the event area. So let's just do that.
-        //sidebarDrawer->updateSidebar(shared);
-        sidebarDrawer->updateInfo(shared, true);
+        sidebarDrawer->updateSidebar(shared);
 
         gd->setRenderEverything(false);
         renderNow = true;
