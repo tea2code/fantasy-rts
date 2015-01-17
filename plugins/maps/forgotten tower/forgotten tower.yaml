@@ -115,8 +115,15 @@ bmp_map:
                 - entity.grass
                 - entity.tree
         
-            # Walls
+            # Wall
             - r: 127
+              g: 127
+              b: 127
+              entities:  
+                - entity.wall
+        
+            # Wall on dirt
+            - r: 150
               g: 127
               b: 127
               entities:  
