@@ -144,10 +144,9 @@ void frts::SidebarDrawer::init(const DrawerPtr& drawer, const SharedManagerPtr& 
     initialized = true;
 }
 
-void frts::SidebarDrawer::notify(const EventPtr& event, const SharedManagerPtr& shared)
+void frts::SidebarDrawer::notify(const EventPtr& event, const SharedManagerPtr&)
 {
     assert(event != nullptr);
-    assert(shared != nullptr);
 
     events.push_front(event);
     eventsChanged = true;

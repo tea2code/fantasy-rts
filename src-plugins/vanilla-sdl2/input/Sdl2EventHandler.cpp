@@ -246,8 +246,8 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
             return;
         }
 
-        Point::value x = pixelToTilesX(mapPixelX, shared) + gd->getScreenOffsetX();
-        Point::value y = pixelToTilesY(mapPixelY, shared) + gd->getScreenOffsetY();
+        Point::value x = screenToRegionX(mapPixelX, shared);
+        Point::value y = screenToRegionY(mapPixelY, shared);
         auto newPos = mf->makePoint(x, y, gd->getZLevel());
         auto oldPos = rm->setPos(gd->getCursor(), newPos, shared);
 

@@ -34,6 +34,38 @@ frts::Point::value frts::pixelToTilesY(GraphicData::pixel pixel, const SharedMan
     return static_cast<Point::value>(pixel / gd->getTileHeight());
 }
 
+frts::GraphicData::pixel frts::regionToScreenX(Point::value pos, const SharedManagerPtr& shared)
+{
+    assert(shared != nullptr);
+
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    return tilesToPixelX(pos - gd->getScreenOffsetX(), shared);
+}
+
+frts::GraphicData::pixel frts::regionToScreenY(Point::value pos, const SharedManagerPtr& shared)
+{
+    assert(shared != nullptr);
+
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    return tilesToPixelY(pos - gd->getScreenOffsetY(), shared);
+}
+
+frts::Point::value frts::screenToRegionX(GraphicData::pixel pixel, const SharedManagerPtr& shared)
+{
+    assert(shared != nullptr);
+
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    return pixelToTilesX(pixel, shared) + gd->getScreenOffsetX();
+}
+
+frts::Point::value frts::screenToRegionY(GraphicData::pixel pixel, const SharedManagerPtr& shared)
+{
+    assert(shared != nullptr);
+
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    return pixelToTilesY(pixel, shared) + gd->getScreenOffsetY();
+}
+
 frts::GraphicData::pixel frts::tilesToPixelX(Point::value tiles, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);

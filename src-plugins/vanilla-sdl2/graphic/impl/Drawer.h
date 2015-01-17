@@ -120,18 +120,6 @@ namespace frts
         void setImageConfig(const SharedManagerPtr& shared, const std::string& rootNamespace, const ConfigNodePtr& imagesNode);
 
         /**
-         * @brief Set tile offset in x-direction. No boundary check.
-         * @param offsetX The offset.
-         */
-        void setOffsetX(Point::value offsetX);
-
-        /**
-         * @brief Set tile offset in y-direction. No boundary check.
-         * @param offsetY The offset.
-         */
-        void setOffsetY(Point::value offsetY);
-
-        /**
          * @brief Set configuration for sprites. Can be called multiple times to override
          *        existing config or add sprites.
          * @throw InvalidSpriteConfigError if sprite node represents a invalid config.
@@ -206,31 +194,6 @@ namespace frts
 
     private:
         bool initialized = false;
-
-        /**
-         * @brief Offset in number of tiles in x-direction.
-         */
-        Point::value offsetX = 0;
-
-        /**
-         * @brief Offset in number of tiles in y-direction.
-         */
-        Point::value offsetY = 0;
-
-        /**
-         * @brief Screen height in number tiles.
-         */
-        Point::value screenHeight = 0;
-
-        /**
-         * @brief Screen width in number tiles.
-         */
-        Point::value screenWidth = 0;
-
-        /**
-         * @brief Map width in number tiles.
-         */
-        Point::value mapWidth = 0;
 
         /**
          * @brief Sidebar width in number tiles.

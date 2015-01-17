@@ -69,18 +69,18 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
     tileHeight = gd->getTileHeight();
     tileWidth = gd->getTileWidth();
 
-    screenHeight = pixelToTilesY(gd->getScreenHeight(), shared);
+    Point::value screenHeight = pixelToTilesY(gd->getScreenHeight(), shared);
     screenHeight = std::min(screenHeight, md->getMapSizeY());
     gd->setScreenHeight(tilesToPixelY(screenHeight, shared));
 
-    screenWidth = pixelToTilesX(gd->getScreenWidth(), shared);
+    Point::value screenWidth = pixelToTilesX(gd->getScreenWidth(), shared);
     screenWidth = std::min(screenWidth, md->getMapSizeX());
     gd->setScreenWidth(tilesToPixelX(screenWidth, shared));
 
     sidebarWidth = pixelToTilesX(gd->getSidebarWidth(), shared);
     gd->setSidebarWidth(tilesToPixelX(sidebarWidth, shared));
 
-    mapWidth = screenWidth - sidebarWidth;
+    Point::value mapWidth = screenWidth - sidebarWidth;
 
     // Set screen areas.
     GraphicData::ScreenArea mapArea(0, 0, tilesToPixelX(mapWidth, shared), gd->getScreenHeight());
@@ -117,8 +117,8 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
     // Create window.
     window = std::unique_ptr<SDL_Window, Sdl2Deleter>(
        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        static_cast<int>(tilesToPixelX(screenWidth, shared)),
-                        static_cast<int>(tilesToPixelY(screenHeight, shared)),
+                        static_cast<int>(gd->getScreenWidth()),
+                        static_cast<int>(gd->getScreenHeight()),
                         SDL_WINDOW_SHOWN),
         Sdl2Deleter()
     );
@@ -245,16 +245,6 @@ void frts::Drawer::setImageConfig(const SharedManagerPtr& shared, const std::str
     }
 }
 
-void frts::Drawer::setOffsetX(Point::value offsetX)
-{
-    this->offsetX = offsetX;
-}
-
-void frts::Drawer::setOffsetY(Point::value offsetY)
-{
-    this->offsetY = offsetY;
-}
-
 void frts::Drawer::setSpriteConfig(const SharedManagerPtr& shared, const std::string& rootNamespace,
                                    const ConfigNodePtr& spritesNode)
 {
@@ -277,8 +267,12 @@ void frts::Drawer::updateMap(const SharedManagerPtr& shared, Point::value zLevel
 
     PerformanceLog pl(getName() + " UpdateMap", shared);
 
-    Point::value width = offsetX + mapWidth;
-    Point::value height = offsetY + screenHeight;
+    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+
+    Point::value offsetX = screenToRegionX(0, shared);
+    Point::value width = screenToRegionX(gd->getScreenWidth(), shared) - sidebarWidth;
+    Point::value offsetY = screenToRegionY(0, shared);
+    Point::value height = screenToRegionY(gd->getScreenHeight(), shared);
 
     for (Point::value x = offsetX; x < width; ++x)
     {
@@ -316,8 +310,8 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
 
     // The rectangle on the screen which should be rendered.
     auto mapArea = graphicData->getMapArea();
-    auto renderX = mapArea.x + tilesToPixelX(pos->getX() - offsetX, shared);
-    auto renderY = mapArea.y + tilesToPixelY(pos->getY() - offsetY, shared);
+    auto renderX = mapArea.x + regionToScreenX(pos->getX(), shared);
+    auto renderY = mapArea.y + regionToScreenY(pos->getY(), shared);
     SDL_Rect rectToRender = {
         static_cast<int>(renderX),
         static_cast<int>(renderY),

@@ -265,8 +265,6 @@ void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
 
     // Drawers
     bool renderNow = false;
-    drawer->setOffsetX(gd->getScreenOffsetX());
-    drawer->setOffsetY(gd->getScreenOffsetY());
     if (gd->isRenderEverything())
     {
         drawer->updateMap(shared, gd->getZLevel(), rm, mf, gd);
