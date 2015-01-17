@@ -34,7 +34,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     // X -> West
     if (x > 0 && gd->getScreenOffsetX() > 0)
     {
-        auto offset = std::max(gd->getScreenOffsetX() - x, 0);
+        auto offset = std::max(gd->getScreenOffsetX() - static_cast<Point::value>(x / gd->getZoom()), 0);
         gd->setScreenOffsetX(offset);
         lastX = true;
     }
@@ -43,7 +43,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     Point::value maxX = md->getMapSizeX() - pixelToTilesX(mapArea.width, shared);
     if (x < 0 && gd->getScreenOffsetX() < maxX)
     {
-        auto offset = std::min(gd->getScreenOffsetX() - x, maxX);
+        auto offset = std::min(gd->getScreenOffsetX() - static_cast<Point::value>(x / gd->getZoom()), maxX);
         gd->setScreenOffsetX(offset);
         lastX = true;
     }
@@ -51,7 +51,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     // Y -> North
     if (y > 0 && gd->getScreenOffsetY() > 0)
     {
-        auto offset = std::max(gd->getScreenOffsetY() - y, 0);
+        auto offset = std::max(gd->getScreenOffsetY() - static_cast<Point::value>(y / gd->getZoom()), 0);
         gd->setScreenOffsetY(offset);
         lastY = true;
     }
@@ -60,7 +60,7 @@ void frts::MoveScreenCommand::execute(const SharedManagerPtr& shared)
     Point::value maxY = md->getMapSizeY() - pixelToTilesY(mapArea.height, shared);
     if (y < 0 && gd->getScreenOffsetY() < maxY)
     {
-        auto offset = std::min(gd->getScreenOffsetY() - y, maxY);
+        auto offset = std::min(gd->getScreenOffsetY() - static_cast<Point::value>(y / gd->getZoom()), maxY);
         gd->setScreenOffsetY(offset);
         lastY = true;
     }
@@ -121,8 +121,8 @@ void frts::MoveScreenCommand::undo(const SharedManagerPtr& shared)
                               cursorPos->getY() - gd->getScreenOffsetY(),
                               cursorPos->getZ());
 
-    Point::value undoX = -x;
-    Point::value undoY = -y;
+    Point::value undoX = static_cast<Point::value>(-x / gd->getZoom());
+    Point::value undoY = static_cast<Point::value>(-y / gd->getZoom());
     Point::value undoZ = -z;
 
     if (lastX)

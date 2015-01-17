@@ -11,6 +11,7 @@
 #include <frts/vanillacommand>
 #include <frts/vanillamodel>
 #include <frts/vanillaevent>
+#include <frts/math.h>
 #include <frts/timer.h>
 
 
@@ -216,6 +217,47 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
             {
                 mouseMoved = true;
                 mouseMoveEvent = event;
+            }
+            break;
+
+            case SDL_MOUSEWHEEL:
+            {
+                auto y = event.wheel.y;
+                if (y == 0)
+                {
+                    break;
+                }
+
+                auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+
+                // Search current zoom level manually.
+                auto currentZoom = gd->getZoom();
+                auto zoomLevels = gd->getZoomLevels();
+                int currentIndex = 0;
+                for (size_t i = 0; i < zoomLevels.size(); ++i)
+                {
+                    if (floatEqual(currentZoom, zoomLevels.at(i)))
+                    {
+                        currentIndex = static_cast<int>(i);
+                        break;
+                    }
+                }
+
+                // Away from the user.
+                if (y > 0)
+                {
+                    currentIndex = std::min(currentIndex + 1, static_cast<int>(zoomLevels.size() - 1));
+                }
+                // Towards the user.
+                else
+                {
+                    currentIndex = std::max(currentIndex - 1, 0);
+                }
+
+                gd->setRenderEverything();
+                gd->setScreenOffsetX(0);
+                gd->setScreenOffsetY(0);
+                gd->setZoom(zoomLevels.at(static_cast<size_t>(currentIndex)));
             }
             break;
 

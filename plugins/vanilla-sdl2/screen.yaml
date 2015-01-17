@@ -17,11 +17,22 @@ screen:
     screen_move_x: 320
     screen_move_y: 320
     
+    # Sidebar width (in pixel). Should be multiple of tile.width.
+    sidebar_width: 160
+    
     # The window title. Use %1% as a placeholder for FPS.
     title: "Fantasy-RTS (FPS: %1%)"
     
-    # Sidebar width (in pixel). Should be multiple of tile.width.
-    sidebar_width: 160
+    # Zoom at the beginning.
+    start_zoom: 1.0
+    
+    # Possible zoom levels.
+    zoom_levels:
+        - 0.75
+        - 1.0
+        - 2.0
+        - 4.0
+        - 8.0
 
 tile:
 

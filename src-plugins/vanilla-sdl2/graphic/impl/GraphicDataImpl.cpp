@@ -87,6 +87,16 @@ frts::Point::value frts::GraphicDataImpl::getZLevel() const
     return zLevel;
 }
 
+double frts::GraphicDataImpl::getZoom() const
+{
+    return zoom;
+}
+
+std::vector<double> frts::GraphicDataImpl::getZoomLevels() const
+{
+    return zoomLevels;
+}
+
 bool frts::GraphicDataImpl::isRenderEverything() const
 {
     return renderEverything;
@@ -179,4 +189,14 @@ void frts::GraphicDataImpl::setTileWidth(frts::GraphicData::pixel tileWidth)
 void frts::GraphicDataImpl::setZLevel(Point::value zLevel)
 {
     this->zLevel = zLevel;
+}
+
+void frts::GraphicDataImpl::setZoom(double zoom)
+{
+    this->zoom = zoom;
+}
+
+void frts::GraphicDataImpl::setZoomLevels(std::vector<double> zoomLevels)
+{
+    this->zoomLevels = zoomLevels;
 }

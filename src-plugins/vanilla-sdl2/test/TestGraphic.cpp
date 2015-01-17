@@ -74,6 +74,8 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setScreenOffsetStepY(11);
     gd->setSidebarWidth(12);
     gd->setSidebarInfoIndex(13);
+    gd->setZoom(14.0);
+    gd->setZoomLevels(std::set<double> {1.0, 2.0});
 
     frts::GraphicData::ScreenArea sidebarArea;
     sidebarArea.x = 1;
@@ -108,6 +110,8 @@ TEST_CASE("Graphic Data.", "[graphic]")
     REQUIRE(gd->getScreenOffsetStepY() == 11);
     REQUIRE(gd->getSidebarWidth() == 12);
     REQUIRE(gd->getSidebarInfoIndex() == 13);
+    REQUIRE(gd->getZoom() == Approx(14.0));
+    REQUIRE(gd->getZoomLevels().size() == 2);
 
     REQUIRE(gd->getSidebarArea().x == 1);
     REQUIRE(gd->getSidebarArea().y == 2);

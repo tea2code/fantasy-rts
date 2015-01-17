@@ -93,7 +93,7 @@ namespace frts
          */
         void renderEntities(const EntityVector& entities, const IdPtr& renderableId,
                             const SDL_Rect& rectToRender, IdUnorderedSet &stacked,
-                            const SharedManagerPtr& shared);
+                            const SharedManagerPtr& shared, double zoom);
 
         /**
          * @brief After updating positions call this function to start the rendering.
@@ -145,7 +145,7 @@ namespace frts
          */
         void updateMap(const SharedManagerPtr& shared, Point::value zLevel,
                        const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
-                       const GraphicDataPtr& graphicData);
+                       const GraphicDataPtr& graphicData, const ModelDataPtr& modelData);
 
         /**
          * @brief Update given position.
@@ -158,7 +158,7 @@ namespace frts
          */
         void updatePosition(const SharedManagerPtr& shared, PointPtr pos, Point::value zLevel,
                             const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
-                            const GraphicDataPtr& graphicData);
+                            const GraphicDataPtr& graphicData, const ModelDataPtr& modelData);
 
         /**
          * @brief Update all given positions.
@@ -171,7 +171,8 @@ namespace frts
          */
         void updatePositions(const SharedManagerPtr& shared, const PointUnorderedSet& positions,
                              Point::value zLevel, const RegionManagerPtr& regionManager,
-                             const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData);
+                             const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData,
+                             const ModelDataPtr& modelData);
 
         /**
          * @brief Validate configuration. Should be called during data validation phase.
@@ -199,9 +200,6 @@ namespace frts
          * @brief Sidebar width in number tiles.
          */
         Point::value sidebarWidth = 0;
-
-        GraphicData::pixel tileHeight = 0;
-        GraphicData::pixel tileWidth = 0;
 
         RendererPtr renderer;
         TextureMap textures;

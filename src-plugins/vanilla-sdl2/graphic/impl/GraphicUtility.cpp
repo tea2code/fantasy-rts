@@ -23,7 +23,7 @@ frts::Point::value frts::pixelToTilesX(GraphicData::pixel pixel, const SharedMan
     assert(shared != nullptr);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    return static_cast<Point::value>(pixel / gd->getTileWidth());
+    return static_cast<Point::value>(pixel / (gd->getTileWidth() * gd->getZoom()));
 }
 
 frts::Point::value frts::pixelToTilesY(GraphicData::pixel pixel, const SharedManagerPtr& shared)
@@ -31,7 +31,7 @@ frts::Point::value frts::pixelToTilesY(GraphicData::pixel pixel, const SharedMan
     assert(shared != nullptr);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    return static_cast<Point::value>(pixel / gd->getTileHeight());
+    return static_cast<Point::value>(pixel / (gd->getTileHeight() * gd->getZoom()));
 }
 
 frts::GraphicData::pixel frts::regionToScreenX(Point::value pos, const SharedManagerPtr& shared)
@@ -71,7 +71,8 @@ frts::GraphicData::pixel frts::tilesToPixelX(Point::value tiles, const SharedMan
     assert(shared != nullptr);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    return static_cast<GraphicData::pixel>(tiles) * gd->getTileWidth();
+    return static_cast<GraphicData::pixel>(tiles) *
+           static_cast<GraphicData::pixel>(gd->getTileWidth() * gd->getZoom());
 }
 
 frts::GraphicData::pixel frts::tilesToPixelY(Point::value tiles, const SharedManagerPtr& shared)
@@ -79,5 +80,6 @@ frts::GraphicData::pixel frts::tilesToPixelY(Point::value tiles, const SharedMan
     assert(shared != nullptr);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    return static_cast<GraphicData::pixel>(tiles) * gd->getTileHeight();
+    return static_cast<GraphicData::pixel>(tiles) *
+           static_cast<GraphicData::pixel>(gd->getTileHeight() * gd->getZoom());
 }

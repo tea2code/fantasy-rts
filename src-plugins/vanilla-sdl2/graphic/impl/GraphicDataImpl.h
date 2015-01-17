@@ -31,6 +31,8 @@ namespace frts
         pixel getTileHeight() const override;
         pixel getTileWidth() const override;
         Point::value getZLevel() const override;
+        double getZoom() const override;
+        std::vector<double> getZoomLevels() const override;
         bool isRenderEverything() const override;
         void setCursor(const EntityPtr& cursor) override;
         void setMapArea(const ScreenArea& mapArea) override;
@@ -49,6 +51,8 @@ namespace frts
         void setTileHeight(pixel tileHeight) override;
         void setTileWidth(pixel tileWidth) override;
         void setZLevel(Point::value zLevel) override;
+        void setZoom(double zoom) override;
+        void setZoomLevels(std::vector<double> zoomLevels) override;
 
     private:
         EntityPtr cursor;
@@ -69,6 +73,8 @@ namespace frts
         pixel tileHeight = 0;
         pixel tileWidth = 0;
         Point::value zLevel = 0;
+        double zoom = 1.0;
+        std::vector<double> zoomLevels;
     };
 
     /**

@@ -361,8 +361,8 @@ bool frts::SidebarDrawer::updateInfo(const SharedManagerPtr& shared, bool forceU
         {
             return false;
         }
+        infoNextUpdate += infoUpdateTime;
     }
-    infoNextUpdate += infoUpdateTime;
     infoLastEntityIndex = gd->getSidebarInfoIndex();
 
     PerformanceLog pl(getName() + " UpdateInfo", shared, 2);
@@ -418,7 +418,7 @@ bool frts::SidebarDrawer::updateInfo(const SharedManagerPtr& shared, bool forceU
         gd->setSidebarInfoIndex(gd->getSidebarInfoIndex() % static_cast<int>(entities.size()));
     }
     auto entityToShow = entities.at(static_cast<unsigned int>(gd->getSidebarInfoIndex()));
-    if (entityToShow == infoLastEntity)
+    if (!forceUpdate && entityToShow == infoLastEntity)
     {
         return false;
     }
@@ -448,7 +448,7 @@ bool frts::SidebarDrawer::updateInfo(const SharedManagerPtr& shared, bool forceU
 
     // Draw entity.
     IdUnorderedSet stacked;
-    drawer->renderEntities(infoEntity, renderableId, rectToRender, stacked, shared);
+    drawer->renderEntities(infoEntity, renderableId, rectToRender, stacked, shared, 1.0);
 
     // Entity info.
     auto msg = boost::format(infoText) % pos->getX() % pos->getY() % pos->getZ();

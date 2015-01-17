@@ -4,8 +4,9 @@
 #include <frts/shared>
 #include <frts/vanillamodel>
 
-#include <string>
 #include <memory>
+#include <vector>
+#include <string>
 
 
 namespace frts
@@ -145,6 +146,16 @@ namespace frts
         virtual Point::value getZLevel() const = 0;
 
         /**
+         * @return The current zoom multiplier.
+         */
+        virtual double getZoom() const = 0;
+
+        /**
+         * @return Ordered list of possible zoom levels.
+         */
+        virtual std::vector<double> getZoomLevels() const = 0;
+
+        /**
          * @return Indicates if the renderer should rerender everything.
          */
         virtual bool isRenderEverything() const = 0;
@@ -250,6 +261,18 @@ namespace frts
          * @param zLevel The z-level.
          */
         virtual void setZLevel(Point::value zLevel) = 0;
+
+        /**
+         * @brief Set current zoom level.
+         * @param zoom The zoom level.
+         */
+        virtual void setZoom(double zoom) = 0;
+
+        /**
+         * @brief Set possible zoom levels.
+         * @param zoomLevels The zoom levels.
+         */
+        virtual void setZoomLevels(std::vector<double> zoomLevels) = 0;
     };
 }
 

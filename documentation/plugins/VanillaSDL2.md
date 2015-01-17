@@ -337,10 +337,15 @@ The screen config defines the cursor entity, selection entity, the size of the v
         screen_move_x: <integer greater 0>
         screen_move_y: <integer greater 0>
         
-        title: <string>
-        
         sidebar_width: <integer greater 0>
-    
+        
+        title: <string>
+
+        start_zoom: <float>
+
+        zoom_levels:
+            - <float>
+            
     tile:
     
         height: <integer greater 0>

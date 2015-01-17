@@ -13,6 +13,8 @@
 
 #include <boost/format.hpp>
 
+#include <algorithm>
+
 
 frts::Sdl2Renderer::Sdl2Renderer()
     : BaseTickable(Sdl2Ids::sdl2Renderer(), 1, Sdl2Ids::sdl2Renderer(), 1),
@@ -209,6 +211,14 @@ void frts::Sdl2Renderer::parseConfig(const std::string& key, const ConfigNodePtr
         gd->setScreenOffsetStepX(getCastInteger<GraphicData::pixel>(node, "screen_move_x", gd->getScreenOffsetStepX()));
         gd->setScreenOffsetStepY(getCastInteger<GraphicData::pixel>(node, "screen_move_y", gd->getScreenOffsetStepY()));
         gd->setSidebarWidth(getCastInteger<GraphicData::pixel>(node, "sidebar_width", gd->getSidebarWidth()));
+        gd->setZoom(node->getFloat("start_zoom", gd->getZoom()));
+
+        if (node->has("zoom_levels"))
+        {
+            auto zoomLevels = node->getFloats("zoom_levels");
+            std::sort(zoomLevels.begin(), zoomLevels.end());
+            gd->setZoomLevels(zoomLevels);
+        }
     }
     else if (key == "tile")
     {
@@ -258,28 +268,31 @@ void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
-    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
-    auto md = getDataValue<MainData>(shared, MainIds::mainData());
-    auto rm = getDataValue<RegionManager>(shared, ModelIds::regionManager());
-    auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
+    auto graphicData = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto mainData = getDataValue<MainData>(shared, MainIds::mainData());
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+    auto regionManager = getDataValue<RegionManager>(shared, ModelIds::regionManager());
+    auto modelFactory = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
 
     // Drawers
     bool renderNow = false;
-    if (gd->isRenderEverything())
+    if (graphicData->isRenderEverything())
     {
-        drawer->updateMap(shared, gd->getZLevel(), rm, mf, gd);
+        drawer->updateMap(shared, graphicData->getZLevel(), regionManager, modelFactory,
+                          graphicData, modelData);
         sidebarDrawer->updateSidebar(shared);
 
-        gd->setRenderEverything(false);
+        graphicData->setRenderEverything(false);
         renderNow = true;
     }
     else
     {
         // Map
-        auto changedPos = rm->getChangedPos();
+        auto changedPos = regionManager->getChangedPos();
         if (!changedPos.empty())
         {
-            drawer->updatePositions(shared, changedPos, gd->getZLevel(), rm, mf, gd);
+            drawer->updatePositions(shared, changedPos, graphicData->getZLevel(), regionManager,
+                                    modelFactory, graphicData, modelData);
             renderNow = true;
         }
 
@@ -295,9 +308,9 @@ void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
     }
 
     // FpsManager
-    fpsManager.limitFps(md->getDeltaTime());
+    fpsManager.limitFps(mainData->getDeltaTime());
     auto fps = fpsManager.calcFps();
-    auto windowsTitle = boost::format(gd->getScreenTitle()) % fps;
+    auto windowsTitle = boost::format(graphicData->getScreenTitle()) % fps;
     drawer->setWindowTitle(windowsTitle.str());
 
     // Log every second the current fps.

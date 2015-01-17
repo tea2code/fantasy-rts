@@ -66,19 +66,16 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
     auto md = getDataValue<ModelData>(shared, ModelIds::modelData());
 
-    tileHeight = gd->getTileHeight();
-    tileWidth = gd->getTileWidth();
+    sidebarWidth = pixelToTilesX(gd->getSidebarWidth(), shared);
+    gd->setSidebarWidth(tilesToPixelX(sidebarWidth, shared));
 
     Point::value screenHeight = pixelToTilesY(gd->getScreenHeight(), shared);
     screenHeight = std::min(screenHeight, md->getMapSizeY());
     gd->setScreenHeight(tilesToPixelY(screenHeight, shared));
 
     Point::value screenWidth = pixelToTilesX(gd->getScreenWidth(), shared);
-    screenWidth = std::min(screenWidth, md->getMapSizeX());
+    screenWidth = std::min(screenWidth, md->getMapSizeX() + sidebarWidth);
     gd->setScreenWidth(tilesToPixelX(screenWidth, shared));
-
-    sidebarWidth = pixelToTilesX(gd->getSidebarWidth(), shared);
-    gd->setSidebarWidth(tilesToPixelX(sidebarWidth, shared));
 
     Point::value mapWidth = screenWidth - sidebarWidth;
 
@@ -173,7 +170,7 @@ void frts::Drawer::init(const SharedManagerPtr& shared)
 
 void frts::Drawer::renderEntities(const EntityVector& entities, const IdPtr& renderableId,
                                   const SDL_Rect& rectToRender, IdUnorderedSet& stacked,
-                                  const SharedManagerPtr& shared)
+                                  const SharedManagerPtr& shared, double zoom)
 {
     assert(initialized);
     assert(renderableId != nullptr);
@@ -192,11 +189,23 @@ void frts::Drawer::renderEntities(const EntityVector& entities, const IdPtr& ren
         auto sprite = spriteManager.getSprite(renderable, entity, shared);
         auto texture = textures.at(sprite.getImage());
 
+        auto width = sprite.getWidth();
+        if (width * zoom > rectToRender.w)
+        {
+            width = static_cast<int>(rectToRender.w / zoom);
+        }
+
+        auto height = sprite.getHeight();
+        if (height * zoom > rectToRender.h)
+        {
+            height = static_cast<int>(rectToRender.h / zoom);
+        }
+
         SDL_Rect clip = {
             sprite.getX(),
             sprite.getY(),
-            sprite.getWidth(),
-            sprite.getHeight()
+            width,
+            height
         };
         SDL_RenderCopy(renderer.get(), texture.get(), &clip, &rectToRender);
     }
@@ -261,32 +270,33 @@ void frts::Drawer::setWindowTitle(const std::string& windowTitle)
 
 void frts::Drawer::updateMap(const SharedManagerPtr& shared, Point::value zLevel,
                              const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
-                             const GraphicDataPtr& graphicData)
+                             const GraphicDataPtr& graphicData, const ModelDataPtr& modelData)
 {
     assert(shared != nullptr);
 
     PerformanceLog pl(getName() + " UpdateMap", shared);
 
     auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+    auto mapArea = gd->getMapArea();
 
     Point::value offsetX = screenToRegionX(0, shared);
-    Point::value width = screenToRegionX(gd->getScreenWidth(), shared) - sidebarWidth;
+    Point::value width = screenToRegionX(mapArea.width, shared) + 1;
     Point::value offsetY = screenToRegionY(0, shared);
-    Point::value height = screenToRegionY(gd->getScreenHeight(), shared);
+    Point::value height = screenToRegionY(mapArea.height, shared) + 1;
 
     for (Point::value x = offsetX; x < width; ++x)
     {
         for (Point::value y = offsetY; y < height; ++y)
         {
             auto pos = modelFactory->makePoint(x, y, zLevel);
-            updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
+            updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData, modelData);
         }
     }
 }
 
 void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, Point::value zLevel,
                                   const RegionManagerPtr& regionManager, const ModelFactoryPtr& modelFactory,
-                                  const GraphicDataPtr& graphicData)
+                                  const GraphicDataPtr& graphicData, const ModelDataPtr& modelData)
 {
     // Pos is not a reference because we may override it.
 
@@ -312,17 +322,28 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
     auto mapArea = graphicData->getMapArea();
     auto renderX = mapArea.x + regionToScreenX(pos->getX(), shared);
     auto renderY = mapArea.y + regionToScreenY(pos->getY(), shared);
+    auto renderWidth = std::min(static_cast<GraphicData::pixel>(graphicData->getZoom() * graphicData->getTileWidth()),
+                                mapArea.x + mapArea.width - renderX);
+    auto renderHeight = std::min(static_cast<GraphicData::pixel>(graphicData->getZoom() * graphicData->getTileHeight()),
+                                 mapArea.y + mapArea.height - renderY);
     SDL_Rect rectToRender = {
         static_cast<int>(renderX),
         static_cast<int>(renderY),
-        static_cast<int>(tileWidth),
-        static_cast<int>(tileHeight)
+        static_cast<int>(renderWidth),
+        static_cast<int>(renderHeight)
     };
     SDL_SetRenderDrawColor(renderer.get(), tileBackgroundR, tileBackgroundG, tileBackgroundB, 0);
 
     // Check if the position is in the map rectangle.
     if (!mapArea.isPixelInRect(renderX, renderY))
     {
+        return;
+    }
+
+    // Because of zoom it might be outside the region, so let's just render the background.
+    if (pos->getX() >= modelData->getMapSizeX() || pos->getY() >= modelData->getMapSizeY())
+    {
+        SDL_RenderFillRect(renderer.get(), &rectToRender);
         return;
     }
 
@@ -344,6 +365,9 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
         {
             SDL_RenderFillRect(renderer.get(), &rectToRender);
             filledBackground = true;
+
+            // Even if the position on the current z-level doesn't need rendering we can look through
+            // so it's still necessary to do that.
             renderPos = true;
         }
 
@@ -374,7 +398,7 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
         // Render beginning from the lowest one.
         for (auto it = allEntitiesBelow.rbegin(); it != allEntitiesBelow.rend(); ++it)
         {
-            renderEntities(*it, renderableId, rectToRender, stacked, shared);
+            renderEntities(*it, renderableId, rectToRender, stacked, shared, graphicData->getZoom());
         }
     }
 
@@ -385,13 +409,14 @@ void frts::Drawer::updatePosition(const SharedManagerPtr& shared, PointPtr pos, 
             SDL_RenderFillRect(renderer.get(), &rectToRender);
         }
 
-        renderEntities(entities, renderableId, rectToRender, stacked, shared);
+        renderEntities(entities, renderableId, rectToRender, stacked, shared, graphicData->getZoom());
     }
 }
 
 void frts::Drawer::updatePositions(const SharedManagerPtr& shared, const PointUnorderedSet& positions,
                                    Point::value zLevel, const RegionManagerPtr& regionManager,
-                                   const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData)
+                                   const ModelFactoryPtr& modelFactory, const GraphicDataPtr& graphicData,
+                                   const ModelDataPtr& modelData)
 {
     assert(shared != nullptr);
 
@@ -399,7 +424,7 @@ void frts::Drawer::updatePositions(const SharedManagerPtr& shared, const PointUn
 
     for (PointPtr pos : positions)
     {
-        updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData);
+        updatePosition(shared, pos, zLevel, regionManager, modelFactory, graphicData, modelData);
     }
 }
 
