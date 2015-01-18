@@ -42,6 +42,7 @@
 #include <boost/format.hpp>
 
 #include <memory>
+#include <stack>
 
 
 frts::ModelFactoryImpl::ModelFactoryImpl()
@@ -367,13 +368,48 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
         auto entity = makeEntity();
 
         // Add components from config.
-        for (auto& componentNodes : entityConfig.at(id))
+        // First put actual components of entity on stack.
+        std::stack<std::vector<ConfigNodePtr>> entityConfigs;
+        entityConfigs.push(entityConfig.at(id));
+
+        // Now collect all prototypes. At the top of the stack will be the highest prototype in the
+        // hierarchie in the end.
+        IdPtr prototype = nullptr;
+        auto it = prototypes.find(id);
+        if (it != prototypes.end())
         {
-            for (auto componentNode : *componentNodes)
+            prototype = it->second;
+        }
+        while (prototype != nullptr)
+        {
+            entityConfigs.push(entityConfig.at(prototype));
+            it = prototypes.find(prototype);
+            if (it != prototypes.end())
             {
-                auto componentId = shared->makeId(componentNode->getString("component"));
-                auto component = makeComponent(componentId, componentNode, shared);
-                entity->addComponent(component);
+                prototype = it->second;
+            }
+            else
+            {
+                prototype = nullptr;
+            }
+        }
+
+        // Now create components from config in configured order. Later configs might override
+        // previous set components.
+        while(!entityConfigs.empty())
+        {
+            auto entitiyComponents = entityConfigs.top();
+            entityConfigs.pop();
+
+            for (auto& componentNodes : entitiyComponents)
+            {
+                // Create each component.
+                for (auto componentNode : *componentNodes)
+                {
+                    auto componentId = shared->makeId(componentNode->getString("component"));
+                    auto component = makeComponent(componentId, componentNode, shared);
+                    entity->addComponent(component);
+                }
             }
         }
 
@@ -415,15 +451,18 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, const ConfigNod
             namePrefix += ".";
         }
 
-        if (node->has("entities"))
+        auto entitiesNode = node->getNode("entities");
+        for (auto entityNode : *entitiesNode)
         {
-            auto entitiesNode = node->getNode("entities");
-            for (auto entityNode : *entitiesNode)
+            auto id = shared->makeId(namePrefix + entityNode->getString("name"));
+
+            if (entityNode->has("prototype"))
             {
-                auto id = shared->makeId(namePrefix + entityNode->getString("name"));
-                auto componentsNode = entityNode->getNode("components");
-                entityConfig[id].push_back(componentsNode);
+                prototypes[id] = shared->makeId(entityNode->getString("prototype"));
             }
+
+            auto componentsNode = entityNode->getNode("components");
+            entityConfig[id].push_back(componentsNode);
         }
 
         auto msg = boost::format(R"(Read %1% entity configurations.)") % entityConfig.size();

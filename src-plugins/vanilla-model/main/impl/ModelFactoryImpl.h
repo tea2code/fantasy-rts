@@ -58,6 +58,7 @@ namespace frts
         using ComponentBuilderMap = std::unordered_map<IdPtr, ComponentBuilderPtr>;
         using EntityConfigMap = std::unordered_map<IdPtr, std::vector<ConfigNodePtr>>;
         using MapParserMap = std::unordered_map<IdPtr, MapParserPtr>;
+        using PrototypeMap = std::unordered_map<IdPtr, IdPtr>;
 
     private:
         const std::string entitiesConfigKey = "entities";
@@ -70,6 +71,7 @@ namespace frts
         EntityConfigMap entityConfig;
         MapParserMap mapParsers;
         PathFinderPtr pathFinder;
+        PrototypeMap prototypes;
         RegionPtr region;
         RegionGeneratorPtr regionGenerator;
         LockableResourceManagerPtr resourceEntityManager;

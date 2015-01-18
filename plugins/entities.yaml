@@ -3,6 +3,11 @@ entities:
 
     entities:
         # Dev
+        - name: prototype.dev.highlight
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1050
+        
         - name: dot
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -18,34 +23,35 @@ entities:
               sort_order: 1025
               
         - name: highlight.green
+          prototype: entity.prototype.dev.highlight
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.highlight.green
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1050
               
         - name: highlight.orange
+          prototype: entity.prototype.dev.highlight
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.highlight.orange
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1050
               
         - name: highlight.red
+          prototype: entity.prototype.dev.highlight
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.highlight.red
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1050
               
         - name: highlight.yellow
+          prototype: entity.prototype.dev.highlight
           components:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.highlight.yellow
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1050
 
         # Meta 
+        - name: prototype.meta.overlay
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 1000
+        
         - name: cursor
           components:
             - component: frts.vanillasdl2.entity.component.renderable
@@ -54,20 +60,18 @@ entities:
               sort_order: 1100    
               
         - name: jobmarker
+          prototype: entity.prototype.meta.overlay
           components:
             - component: frts.vanillajob.component.jobmarker
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.jobmarker
-              stacking: false
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1000    
+              stacking: false 
               
         - name: selection
+          prototype: entity.prototype.meta.overlay
           components:
             - component: frts.vanillasdl2.entity.component.renderable
-              sprite: style.sprite.selection
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 1000    
+              sprite: style.sprite.selection 
             
         # Units
         - name: dwarf
@@ -94,7 +98,7 @@ entities:
               sort_order: 240
     
         # Vegetation
-        - name: shrub.berry
+        - name: prototype.vegetation
           components:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
@@ -105,6 +109,12 @@ entities:
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.vegetation
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 100
+        
+        - name: shrub.berry
+          prototype: entity.prototype.vegetation
+          components:
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.berry
@@ -123,20 +133,10 @@ entities:
                   value: "A low plant with delicious berries."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.shrub.berry
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 100
               
         - name: tree
+          prototype: entity.prototype.vegetation
           components:
-            - component: frts.vanillamodel.entity.component.blockedby
-              blocks:
-                - blocking.air
-                - blocking.vegetation
-                - blocking.wall
-                - blocking.water
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.vegetation
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.wood.log
@@ -155,11 +155,15 @@ entities:
                   value: "Majestic plant which gives plenty of living space and hard wood for craftsman."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.tree
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 100
 
         # Resource
+        - name: prototype.resource
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 140
+        
         - name: berry
+          prototype: entity.prototype.resource
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -171,10 +175,9 @@ entities:
               resource_type: resource.food
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.berry
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
               
         - name: coal
+          prototype: entity.prototype.resource
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -186,10 +189,9 @@ entities:
               resource_type: resource.coal
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.coal
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
 
         - name: diamond
+          prototype: entity.prototype.resource
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -201,10 +203,9 @@ entities:
               resource_type: resource.diamond
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.diamond
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
 
         - name: ore.iron
+          prototype: entity.prototype.resource
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -216,10 +217,9 @@ entities:
               resource_type: resource.iron
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.ore.iron
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
               
         - name: wood.log
+          prototype: entity.prototype.resource
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -231,11 +231,15 @@ entities:
               resource_type: resource.wood
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.wood
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 140
 
         # Background
+        - name: prototype.background
+          components:
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 0
+        
         - name: air
+          prototype: entity.prototype.background
           components:
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
@@ -247,10 +251,9 @@ entities:
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.air
               transparency: 2
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 0
 
         - name: dirt
+          prototype: entity.prototype.background
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -258,10 +261,9 @@ entities:
                   value: "Dirt"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.dirt
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 0
         
         - name: grass
+          prototype: entity.prototype.background
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -269,8 +271,6 @@ entities:
                   value: "Grass"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.grass
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 0
 
         - name: ramp
           components:
@@ -280,6 +280,7 @@ entities:
               sort_order: 10
 
         - name: rock.floor
+          prototype: entity.prototype.background
           components:
             - component: frts.vanillamodel.entity.component.info
               infos:
@@ -287,15 +288,19 @@ entities:
                   value: "Rock"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock.floor
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 0
 
         # Massive blocks (walls...)
-        - name: earth
+        - name: prototype.block
           components:
             - component: frts.vanillamodel.entity.component.blocking
               blocks: 
                 - blocking.wall
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 180
+              
+        - name: earth
+          prototype: entity.prototype.block
+          components:
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.dirt
@@ -309,14 +314,10 @@ entities:
                   value: "Earth"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.earth
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
 
         - name: rock
+          prototype: entity.prototype.block
           components:
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.rock.floor
@@ -330,14 +331,10 @@ entities:
                   value: "Rock"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
               
         - name: rock.coal
+          prototype: entity.prototype.block
           components:
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.rock.floor
@@ -354,14 +351,10 @@ entities:
                   value: "Feeds the furnaces and dyes faces black."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock.coal
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
 
         - name: rock.diamond
+          prototype: entity.prototype.block
           components:
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.rock.floor
@@ -378,14 +371,10 @@ entities:
                   value: "Sparkling clear gem. My precious."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock.diamond
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
 
         - name: rock.iron
+          prototype: entity.prototype.block
           components:
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
             - component: frts.vanillamodel.entity.component.drop
               drops:
                 - entity.rock.floor
@@ -402,10 +391,9 @@ entities:
                   value: "Iron ore can be used to create iron tools and weapons."
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.rock.iron
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
         
         - name: wall
+          prototype: entity.prototype.block
           components:
             - component: frts.vanillamodel.entity.component.blockedby
               blocks:
@@ -413,14 +401,9 @@ entities:
                 - blocking.vegetation
                 - blocking.wall
                 - blocking.water
-            - component: frts.vanillamodel.entity.component.blocking
-              blocks: 
-                - blocking.wall
             - component: frts.vanillamodel.entity.component.info
               infos:
                 - name: "Name"
                   value: "Stonewall"
             - component: frts.vanillasdl2.entity.component.renderable
               sprite: style.sprite.wall
-            - component: frts.vanillamodel.entity.component.sortorder
-              sort_order: 180
