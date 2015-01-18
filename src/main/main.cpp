@@ -281,6 +281,7 @@ int main(int argc, char* argv[])
     {
         // Something bad happened.
 #if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
+        // See https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
         const size_t maxSize = 10;
         void *stackTrace[maxSize];
         size_t size = backtrace(stackTrace, maxSize);
