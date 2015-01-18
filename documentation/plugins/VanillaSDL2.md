@@ -327,7 +327,7 @@ Will identify itself by the name and type `frts::SDL2Renderer`. It can also be f
 
 #### Screen Config
 
-The screen config defines the cursor entity, selection entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the number of frame rate measures used to calculate the average frame rate, the window title (use *%1%* as an placeholder for the frame rate) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
+The screen config defines the cursor entity, selection entity, the size of the visible screen (and thus defines the windows size), the screen movement size, the number of frame rate measures used to calculate the average frame rate, the window title (use `%1%` as an placeholder for the frame rate and `%2%` as a placeholder for the zoom) and the size of a single tile. The screen size and screen movement size should be multiples of the tile size or else they will be cropped accordingly.
 
     screen:
     

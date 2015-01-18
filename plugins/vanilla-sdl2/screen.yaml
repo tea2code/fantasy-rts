@@ -20,8 +20,8 @@ screen:
     # Sidebar width (in pixel). Should be multiple of tile.width.
     sidebar_width: 160
     
-    # The window title. Use %1% as a placeholder for FPS.
-    title: "Fantasy-RTS (FPS: %1%)"
+    # The window title. Use %1% as a placeholder for FPS. Use %2% as a placeholder for zoom.
+    title: "Fantasy-RTS (FPS: %1%, Zoom: %2%)"
     
     # Zoom at the beginning.
     start_zoom: 1.0

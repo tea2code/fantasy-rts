@@ -310,7 +310,7 @@ void frts::Sdl2Renderer::tick(const SharedManagerPtr& shared)
     // FpsManager
     fpsManager.limitFps(mainData->getDeltaTime());
     auto fps = fpsManager.calcFps();
-    auto windowsTitle = boost::format(graphicData->getScreenTitle()) % fps;
+    auto windowsTitle = boost::format(graphicData->getScreenTitle()) % fps % graphicData->getZoom();
     drawer->setWindowTitle(windowsTitle.str());
 
     // Log every second the current fps.
