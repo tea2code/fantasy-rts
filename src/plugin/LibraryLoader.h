@@ -2,11 +2,12 @@
 #define FRTS_LIBRARYLOADER_H
 
 #include <boost/format.hpp>
+#include <boost/predef.h>
 
 #include <stdexcept>
 #include <string>
 
-#if defined(WIN32) || defined(_WIN32)
+#if BOOST_OS_WINDOWS
     #define WIN32_LEAN_AND_MEAN
     #define VC_EXTRALEAN
     #include <windows.h>
@@ -27,7 +28,7 @@ namespace frts
     public:
         LibraryLoader();
 
-#if defined(WIN32) || defined(_WIN32)
+#if BOOST_OS_WINDOWS
         using HandleType = HMODULE;
 #else
         using HandleType = void *;
@@ -58,7 +59,7 @@ namespace frts
     };
 }
 
-#if defined(WIN32) || defined(_WIN32)
+#if BOOST_OS_WINDOWS
 
 template<typename Function>
 Function* frts::LibraryLoader::getFunctionPointer(HandleType library, const std::string& name) const

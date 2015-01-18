@@ -16,6 +16,8 @@
 #include <frts/random.h>
 
 #include <boost/format.hpp>
+#include <boost/predef.h>
+#include <boost/version.hpp>
 
 #include <algorithm>
 #include <cstdlib>
@@ -25,8 +27,8 @@
 #include <string>
 #include <vector>
 
-#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
-#include <execinfo.h>
+#if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
+#include <execwarning.h>
 #endif
 
 
@@ -127,9 +129,18 @@ int main(int argc, char* argv[])
     assert(log != nullptr);
 
     // Start application.
-    log->info(logModule, "Start application.");
+    log->warning(logModule, "Start application.");
     frts::Application app(log);
     app.setMaxNumberExtraExecutions(deadLock);
+
+    // Log environment.
+    log->warning(logModule, "Environment:");
+    log->warning(logModule, "\tPlatform: " + std::string(BOOST_PLATFORM));
+    log->warning(logModule, "\tCompiler: " + std::string(BOOST_COMPILER));
+    log->warning(logModule, "\tStandard Library: " + std::string(BOOST_STDLIB));
+    log->warning(logModule, "\tBoost: " + std::to_string(BOOST_VERSION / 100000) + "." +
+                                          std::to_string((BOOST_VERSION / 100) % 1000) + "." +
+                                          std::to_string(BOOST_VERSION % 100));
 
     // Log basic configuration.
     log->warning(logModule, "Basic configuration:");
@@ -143,7 +154,7 @@ int main(int argc, char* argv[])
     try
     {
         // Phase 1: Read load configuration.
-        log->info(logModule, "Phase 1: Read load configuration.");
+        log->warning(logModule, "Phase 1: Read load configuration.");
         auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
         log->warning(logModule, "Load configuration:");
         logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
@@ -155,16 +166,16 @@ int main(int argc, char* argv[])
         logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
 
         // Phase 2: Load plugins.
-        log->info(logModule, "Phase 2: Load plugins.");
+        log->warning(logModule, "Phase 2: Load plugins.");
         app.loadPlugins(pluginsRoot, loadConfig.plugins);
 
         // Create shared manager.
-        log->info(logModule, "Create shared manager.");
+        log->warning(logModule, "Create shared manager.");
         frts::SharedManagerImplPtr shared = frts::makeSharedManager(log);
         assert(shared != nullptr);
 
         // Phase 3: Get modules.
-        log->info(logModule, "Phase 3: Get modules.");
+        log->warning(logModule, "Phase 3: Get modules.");
         // Keep lists of modules for following phases.
         auto startupModules = app.findTickables(loadConfig.startupModules);
         auto shutdownModules = app.findTickables(loadConfig.shutdownModules);
@@ -206,15 +217,15 @@ int main(int argc, char* argv[])
         }
 
         // Phase 4: Check required modules.
-        log->info(logModule, "Phase 4: Check required modules.");
+        log->warning(logModule, "Phase 4: Check required modules.");
         app.validateRequiredModules(modules, shared);
 
         // Phase 5: Preinitialize modules.
-        log->info(logModule, "Phase 5: Preinitialize modules.");
+        log->warning(logModule, "Phase 5: Preinitialize modules.");
         app.preInit(modules, shared);
 
         // Phase 6: Create data.
-        log->info(logModule, "Phase 6: Create data.");
+        log->warning(logModule, "Phase 6: Create data.");
         auto mainData = frts::makeMainData(pluginsRoot, deltaTime);
         shared->setDataValue(shared->makeId(frts::MainIds::mainData()), mainData);
         app.createData(modules, shared);
@@ -230,27 +241,27 @@ int main(int argc, char* argv[])
         }
 
         // Phase 7: Check required data values.
-        log->info(logModule, "Phase 7: Check required data values.");
+        log->warning(logModule, "Phase 7: Check required data values.");
         app.checkRequiredDataValues(modules, shared);
 
         // Phase 8: Register main config keys.
-        log->info(logModule, "Phase 8: Register main config keys.");
+        log->warning(logModule, "Phase 8: Register main config keys.");
         auto supportedKeys = app.registerConfigKeys(modules);
 
         // Phase 9: Read config.
-        log->info(logModule, "Phase 9: Read config.");
+        log->warning(logModule, "Phase 9: Read config.");
         app.readConfig(supportedKeys, shared, pluginsRoot, loadConfig.configurations);
 
         // Phase 10: Validate data.
-        log->info(logModule, "Phase 10: Validate data.");
+        log->warning(logModule, "Phase 10: Validate data.");
         app.validateData(modules, shared);
 
         // Phase 11: Initialize modules.
-        log->info(logModule, "Phase 11: Initialize modules.");
+        log->warning(logModule, "Phase 11: Initialize modules.");
         app.init(modules, shared);
 
         // Phase 12: Startup.
-        log->info(logModule, "Phase 12: Startup");
+        log->warning(logModule, "Phase 12: Startup");
         app.executeModules(startupModules, shared);
 
         // Clean up no longer needed lists of modules.
@@ -261,26 +272,26 @@ int main(int argc, char* argv[])
         modules.clear();
 
         // Phase 13: Run game.
-        log->info(logModule, "Phase 13: Run game.");
+        log->warning(logModule, "Phase 13: Run game.");
         frts::MainLoop mainLoop(deltaTime, maxFrameTime);
         mainLoop.start(shared);
 
         // Phase 14: Shutdown.
-        log->info(logModule, "Phase 14: Shutdown");
+        log->warning(logModule, "Phase 14: Shutdown");
         app.executeModules(shutdownModules, shared);
 
         // Clean up no longer needed lists of modules.
         shutdownModules.clear();
 
         // Phase 15: All done. Good night.
-        log->info(logModule, "Phase 15: Application finished.");
-        log->info(logModule, "-------------------------------------------------------------------");
+        log->warning(logModule, "Phase 15: Application finished.");
+        log->warning(logModule, "-------------------------------------------------------------------");
         return 0;
     }
     catch(const std::exception& ex)
     {
         // Something bad happened.
-#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
+#if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
         // See https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
         const size_t maxSize = 10;
         void *stackTrace[maxSize];

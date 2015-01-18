@@ -1,5 +1,7 @@
 #include "EasyloggingLog.h"
 
+#include <boost/predef.h>
+
 // Define before includes to prevent default log file.
 #define ELPP_NO_DEFAULT_LOG_FILE
 
@@ -7,8 +9,8 @@
 #define ELPP_ENABLE_ERRORS
 
 // Enable stack trace on GCC and Linux.
-#if !defined(WIN32) && !defined(_WIN32) && defined(__GNUC__)
-#define ELPP_STACKTRACE_ON_CRASH
+#if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
+    #define ELPP_STACKTRACE_ON_CRASH
 #endif
 
 #include <easylogging++.h>

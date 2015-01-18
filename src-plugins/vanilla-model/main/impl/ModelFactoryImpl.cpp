@@ -427,7 +427,7 @@ void frts::ModelFactoryImpl::parseConfig(const std::string& key, const ConfigNod
         }
 
         auto msg = boost::format(R"(Read %1% entity configurations.)") % entityConfig.size();
-        shared->getLog()->debug(getName(), msg.str());
+        shared->getLog()->info(getName(), msg.str());
     }
     else if (key == modelDataKey)
     {

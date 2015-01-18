@@ -1,13 +1,16 @@
 #ifndef FRTS_PLUGINAPI_H
 #define FRTS_PLUGINAPI_H
 
-#if defined(__GNUC__)
+#include <boost/predef.h>
+
+
+#if BOOST_COMP_GNUC
 
     // Prevent problems with visibility in GCC.
     // See http://gcc.gnu.org/wiki/Visibility
     #define PLUGIN_API __attribute__ ((visibility ("default")))
 
-#elif defined(_MSC_VER)
+#elif BOOST_COMP_MSVC
 
     // Building the library.
     #define PLUGIN_API __declspec(dllexport)

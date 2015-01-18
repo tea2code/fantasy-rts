@@ -1,10 +1,12 @@
 #include "LibraryLoader.h"
 
+#include <boost/predef.h>
+
 frts::LibraryLoader::LibraryLoader()
 {
 }
 
-#if defined(WIN32) || defined(_WIN32)
+#if BOOST_OS_WINDOWS
 
 frts::LibraryLoader::HandleType frts::LibraryLoader::load(const std::string& path,
                                                           const std::string& name) const
