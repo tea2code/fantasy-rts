@@ -25,6 +25,14 @@ Currently following parts are thread safe:
 
 By thread safety is acquired using a mutex. Normally a `std::recursive_mutex` is used. But it can be replaced by a lightweight spin lock implementation by adding `DEFINES+=SPIN_LOCK` to the additional arguments of qmake. Spin lock is [implemented using a simple atomic boolean](http://stackoverflow.com/a/8115400/1931663).
 
+## Events
+
+Using the *VanillaEvent* plugin this plugin will throw following events. IDs can also be found in the static class `ModelEventIds`.
+
+### New Entity Event
+
+This event is thrown, when a new entity from configuration is created. It is not thrown if an empty entity is created. It has the id `frts.vanillamodel.event.newentity`. It has an entity value with id `frts.vanillamodel.event.newentity.entity` containing the new entity with all its components and an entity value with id `frts.vanillamodel.event.newentity.id` containing the id of the new entity.
+
 ## Interfaces
 
 ### Block
@@ -47,7 +55,7 @@ Entities represent all interactable objects in the world. They consist of compon
 
 ### Event
 
-Some model related event values for **VanillaEvent** are added to the event manager. The ids can be also found in the static class `ModelEventIds`.
+Some model related event values for *VanillaEvent* are added to the event manager. The ids can be also found in the static class `ModelEventIds`.
 
 - **EntityEventValue:** An event value for entities. Has type `frts.vanillamodel.event.value.entity`.
 - **EntityListEventValue:** An event value for entity lists. Has type `frts.vanillamodel.event.value.entity.list`.

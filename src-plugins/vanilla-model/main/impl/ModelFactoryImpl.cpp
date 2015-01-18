@@ -363,7 +363,10 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
 
     try
     {
+        // Create entity.
         auto entity = makeEntity();
+
+        // Add components from config.
         for (auto& componentNodes : entityConfig.at(id))
         {
             for (auto componentNode : *componentNodes)
@@ -373,6 +376,18 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
                 entity->addComponent(component);
             }
         }
+
+        // Raise event.
+        auto em = getUtility<EventManager>(shared, EventIds::eventManager());
+        auto event = em->makeEvent(shared->makeId(ModelEventIds::newEntityEvent()), shared);
+        auto eventValue1 = makeEventValue<EntityEventValue>(em, ModelEventIds::entityEventValue(), shared);
+        eventValue1->setValue(entity);
+        event->setValue(shared->makeId(ModelEventIds::newEntityEventEntity()), eventValue1);
+        auto eventValue2 = makeEventValue<IdEventValue>(em, EventIds::idEventValue(), shared);
+        eventValue2->setValue(id);
+        event->setValue(shared->makeId(ModelEventIds::newEntityEventId()), eventValue2);
+        em->raise(event, shared);
+
         return entity;
     }
     catch(const std::out_of_range&)
