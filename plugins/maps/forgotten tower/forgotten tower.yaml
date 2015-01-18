@@ -52,6 +52,14 @@ bmp_map:
               entities:
                 - entity.air
         
+            # Berry Shrubs
+            - r: 255
+              g: 0
+              b: 255
+              entities:
+                - entity.grass
+                - entity.shrub.berry
+        
             # Dirt
             - r: 127
               g: 0

@@ -2,6 +2,8 @@
 
 A fantasy real-time strategy game in the style of Dwarf Fortress. For now without a name. The main target is to create a game which provides the excellent fortress mode with a stable performance and full mod support. The prototype was developed using Python and Pygame (see directory "python-prototype"). It is now developed in C++. Beside the mod support as a core factor it will later support mobile platforms like Android and iOS.
 
+See the [tutorial](documentation/tutorial/Overview.md) if you want to know how to play.
+
 ## Roadmap
 
 Current Version: **26**
