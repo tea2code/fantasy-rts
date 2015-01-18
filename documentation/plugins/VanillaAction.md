@@ -8,6 +8,10 @@ For example started by a key command the user may select multiple trees for cutt
 
 Default path of plugin is `vanilla-action/vanilla-action`.
 
+## Dependencies
+
+- VanillaCommand
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillaaction` (e.g. `#include <frts/vanillaaction>`).

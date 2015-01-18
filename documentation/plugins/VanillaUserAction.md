@@ -6,6 +6,15 @@ This plugin implements real in-game actions and jobs using *VanillaAction*, *Van
 
 Default path of plugin is `vanilla-user-action/vanilla-user-action`.
 
+## Dependencies
+
+- VanillaAction
+- VanillaCommand
+- VanillaEvent
+- VanillaJob
+- VanillaModel
+- VanillaSDL2
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillauseraction` (e.g. `#include <frts/vanillauseraction>`).

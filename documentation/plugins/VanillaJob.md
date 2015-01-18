@@ -6,6 +6,11 @@ This plugin manages new jobs and executes them if an adequate entity is provided
 
 Default path of plugin is `vanilla-job/vanilla-job`.
 
+## Dependencies
+
+- VanillaEvent
+- VanillaModel
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillajob` (e.g. `#include <frts/vanillajob>`).

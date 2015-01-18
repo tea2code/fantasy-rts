@@ -6,6 +6,10 @@ This plugin implements a variant of the [Observer-Pattern](https://en.wikipedia.
 
 Default path of plugin is `vanilla-event/vanilla-event`.
 
+## Dependencies
+
+No special dependency.
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillaevent` (e.g. `#include <frts/vanillaevent>`).

@@ -6,6 +6,10 @@ Simple plugin for testing and trying things out.
 
 Default path of plugin is `vanilla-demo/vanilla-demo`.
 
+## Dependencies
+
+Everything and nothing.
+
 ## Modules
 
 ### Vanilla Demo

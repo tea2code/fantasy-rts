@@ -6,6 +6,10 @@ This plugin implements a variant of the [Command-Pattern](http://gameprogramming
 
 Default path of plugin is `vanilla-command/vanilla-command`.
 
+## Dependencies
+
+No special dependency.
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillacommand` (e.g. `#include <frts/vanillacommand>`).

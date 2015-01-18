@@ -21,6 +21,12 @@ The .pro file assumes that all dependencies are put into a directory *dependency
 - [SDL2_image](https://www.libsdl.org/projects/SDL_image/)
 - [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/)
 
+Dependencies to other plugins are:
+
+- VanillaCommand
+- VanillaEvent
+- VanillaModel
+
 ## Development
 
 Access to all necessary interfaces can be acquired by adding the source directory to the include paths and include `frts/vanillasdl2` (e.g. `#include <frts/vanillasdl2>`). If you only need input support use `frts/vanillasdl2input` (e.g. `#include <frts/vanillasdl2input>`).
