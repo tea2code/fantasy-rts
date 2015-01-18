@@ -165,13 +165,15 @@ See [Components.md](Components.md) for more information.
 
 ### Entities
 
-Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes. It's possible to define a entity in several files. The final entity will contain all components.
+Entities configuration consists of a list of entities. Every entity has an ID and a list of components. The ID consists of a global `namespace` and a `name` part. The namespace is prefixed to the name and together they form the ID. A component has a attribute `component` with the full ID and a variable list of component specific attributes. It's possible to define a entity in several files. The final entity will contain all components. 
+If a prototype ID is set a lookup for an entity with this ID will be made. The components of the prototype entity will be first added and then the specific components of the new entity. There is no limit how many prototypes are in one hierarchie. They will all be resolved.
 
     entities:
         namespace: <string>
         
         entities:
             - name: <string>
+              prototype: <string representing an id, optional>
               components:
                 - component: <string representing an id>
                   ...
