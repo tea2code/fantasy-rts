@@ -3,6 +3,7 @@
 
 #include <input/InputHandler.h>
 #include <input/Key.h>
+#include <input/MouseButton.h>
 #include <input/SelectionData.h>
 #include <main/Sdl2Ids.h>
 

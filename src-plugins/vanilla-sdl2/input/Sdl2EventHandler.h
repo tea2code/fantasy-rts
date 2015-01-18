@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 
+#include <cstdint>
 #include <stack>
 #include <unordered_map>
 #include <memory>
@@ -16,15 +17,16 @@ namespace frts
     /**
      * @brief Simple struct for a key command consisting of a key and optional modifiers.
      */
-    struct Sdl2KeyCommand
+    template <typename ButtonType>
+    struct Sdl2ButtonCommand
     {
-        Sdl2KeyCommand(SDL_Keycode key,
+        Sdl2ButtonCommand(ButtonType button,
                        bool alt = false, bool ctrl = false, bool shift = false,
                        const IdPtr& context = nullptr)
-            : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
+            : button{button}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
         {}
 
-        SDL_Keycode key;
+        ButtonType button;
 
         bool alt;
         bool ctrl;
@@ -32,9 +34,9 @@ namespace frts
 
         IdPtr context;
 
-        bool operator==(const Sdl2KeyCommand& other) const
+        bool operator==(const Sdl2ButtonCommand<ButtonType>& other) const
         {
-            return (key == other.key) &&
+            return (button == other.button) &&
                    (alt == other.alt) &&
                    (ctrl == other.ctrl) &&
                    (shift == other.shift) &&
@@ -48,17 +50,17 @@ namespace std
     /**
      * @brief Hash for key commands.
      */
-    template <>
-    struct hash<frts::Sdl2KeyCommand>
+    template <typename ButtonType>
+    struct hash<frts::Sdl2ButtonCommand<ButtonType>>
     {
-        size_t operator()(const frts::Sdl2KeyCommand& keyCommand) const
+        size_t operator()(const frts::Sdl2ButtonCommand<ButtonType>& buttonCommand) const
         {
             size_t result = 17;
-            result = 31 * result + std::hash<int>()(keyCommand.key);
-            result = 31 * result + std::hash<bool>()(keyCommand.alt);
-            result = 31 * result + std::hash<bool>()(keyCommand.ctrl);
-            result = 31 * result + std::hash<bool>()(keyCommand.shift);
-            result = 31 * result + std::hash<frts::IdPtr>()(keyCommand.context);
+            result = 31 * result + std::hash<ButtonType>()(buttonCommand.button);
+            result = 31 * result + std::hash<bool>()(buttonCommand.alt);
+            result = 31 * result + std::hash<bool>()(buttonCommand.ctrl);
+            result = 31 * result + std::hash<bool>()(buttonCommand.shift);
+            result = 31 * result + std::hash<frts::IdPtr>()(buttonCommand.context);
             return result;
         }
     };
@@ -105,14 +107,28 @@ namespace frts
          * @param keyCommand The key command.
          * @param commandId The command id.
          */
-        void registerCommand(const Sdl2KeyCommand& keyCommand, const IdPtr& commandId);
+        void registerCommand(const Sdl2ButtonCommand<SDL_Keycode>& keyCommand, const IdPtr& commandId);
+
+        /**
+         * @brief Register a custom command with an mouse button.
+         * @param mouseButtonCommand The mouse button command.
+         * @param commandId The command id.
+         */
+        void registerCommand(const Sdl2ButtonCommand<std::uint8_t>& mouseButtonCommand, const IdPtr& commandId);
 
         /**
          * @brief Register a context change with an key.
          * @param keyCommand The key command.
          * @param context The context:
          */
-        void registerContextChange(const Sdl2KeyCommand& keyCommand, const IdPtr& context);
+        void registerContextChange(const Sdl2ButtonCommand<SDL_Keycode>& keyCommand, const IdPtr& context);
+
+        /**
+         * @brief Register a context change with an mouse button.
+         * @param mouseButtonCommand The mouse button command.
+         * @param context The context:
+         */
+        void registerContextChange(const Sdl2ButtonCommand<std::uint8_t>& mouseButtonCommand, const IdPtr& context);
 
         /**
          * @brief Set the default context.
@@ -133,7 +149,8 @@ namespace frts
     private:
         std::stack<IdPtr> contextStack;
         IdPtr defaultContext;
-        std::unordered_map<Sdl2KeyCommand, CommandContextChange> keyCommands;
+        std::unordered_map<Sdl2ButtonCommand<SDL_Keycode>, CommandContextChange> keyCommands;
+        std::unordered_map<Sdl2ButtonCommand<std::uint8_t>, CommandContextChange> mouseButtonsCommands;
     };
 
     /**

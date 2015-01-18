@@ -75,7 +75,7 @@ TEST_CASE("Graphic Data.", "[graphic]")
     gd->setSidebarWidth(12);
     gd->setSidebarInfoIndex(13);
     gd->setZoom(14.0);
-    gd->setZoomLevels(std::set<double> {1.0, 2.0});
+    gd->setZoomLevels(std::vector<double> {1.0, 2.0});
 
     frts::GraphicData::ScreenArea sidebarArea;
     sidebarArea.x = 1;

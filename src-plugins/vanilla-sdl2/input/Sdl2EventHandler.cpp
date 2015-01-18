@@ -16,7 +16,7 @@
 
 
 frts::Sdl2EventHandler::Sdl2EventHandler()
-    : BaseTickable(Sdl2Ids::sdl2EventHandler(), 1, Sdl2Ids::sdl2EventHandler(), 1)
+    : BaseTickable(Sdl2Ids::sdl2EventHandler(), 2, Sdl2Ids::sdl2EventHandler(), 2)
 {
 }
 
@@ -94,7 +94,7 @@ void frts::Sdl2EventHandler::parseConfig(const std::string&, const ConfigNodePtr
     }
 }
 
-void frts::Sdl2EventHandler::registerCommand(const Sdl2KeyCommand& keyCommand, const IdPtr& commandId)
+void frts::Sdl2EventHandler::registerCommand(const Sdl2ButtonCommand<SDL_Keycode>& keyCommand, const IdPtr& commandId)
 {
     assert(commandId != nullptr);
 
@@ -103,13 +103,31 @@ void frts::Sdl2EventHandler::registerCommand(const Sdl2KeyCommand& keyCommand, c
     keyCommands[keyCommand] = ccc;
 }
 
-void frts::Sdl2EventHandler::registerContextChange(const Sdl2KeyCommand& keyCommand, const IdPtr& context)
+void frts::Sdl2EventHandler::registerCommand(const Sdl2ButtonCommand<std::uint8_t>& mouseButtonCommand, const IdPtr& commandId)
+{
+    assert(commandId != nullptr);
+
+    CommandContextChange ccc;
+    ccc.command = commandId;
+    mouseButtonsCommands[mouseButtonCommand] = ccc;
+}
+
+void frts::Sdl2EventHandler::registerContextChange(const Sdl2ButtonCommand<SDL_Keycode>& keyCommand, const IdPtr& context)
 {
     assert(context != nullptr);
 
     CommandContextChange ccc;
     ccc.contextChange = context;
     keyCommands[keyCommand] = ccc;
+}
+
+void frts::Sdl2EventHandler::registerContextChange(const Sdl2ButtonCommand<std::uint8_t>& mouseButtonCommand, const IdPtr& context)
+{
+    assert(context != nullptr);
+
+    CommandContextChange ccc;
+    ccc.contextChange = context;
+    mouseButtonsCommands[mouseButtonCommand] = ccc;
 }
 
 void frts::Sdl2EventHandler::setDefaultContext(const IdPtr& context)
@@ -144,7 +162,7 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
             {
                 // Check if a known key is pressed and execute the corresponding command.
                 // First with current context.
-                Sdl2KeyCommand keyCommand = {
+                Sdl2ButtonCommand<SDL_Keycode> keyCommand = {
                     event.key.keysym.sym,
                     event.key.keysym.mod & KMOD_ALT,
                     event.key.keysym.mod & KMOD_CTRL,
@@ -181,31 +199,69 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
 
             case SDL_MOUSEBUTTONDOWN:
             {
-                auto sd = getDataValue<SelectionData>(shared, Sdl2Ids::selectionData());
-                auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
+                // Check if a known mouse button is pressed and execute the corresponding command.
+                // First with current context.
+                auto keyMod = SDL_GetModState();
+                Sdl2ButtonCommand<std::uint8_t> mouseButtonCommand = {
+                    event.button.button,
+                    keyMod & KMOD_ALT,
+                    keyMod & KMOD_CTRL,
+                    keyMod & KMOD_SHIFT,
+                    contextStack.top()
+                };
+                auto it = mouseButtonsCommands.find(mouseButtonCommand);
 
-                if (sd->isSelecting())
+                // If nothing is found try again without current context.
+                if (it == mouseButtonsCommands.end())
                 {
-                    continue;
+                    mouseButtonCommand.context = nullptr;
+                    it = mouseButtonsCommands.find(mouseButtonCommand);
                 }
 
-                // Create selections only in map area.
-                auto mapArea = gd->getMapArea();
-                auto mapPixelX = static_cast<GraphicData::pixel>(event.button.x) - mapArea.x;
-                auto mapPixelY = static_cast<GraphicData::pixel>(event.button.y) - mapArea.y;
-                if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))
+                // Anything found?
+                if (it != mouseButtonsCommands.end())
                 {
-                    return;
+                    CommandContextChange ccc = it->second;
+                    if (ccc.command != nullptr)
+                    {
+                        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+                        auto command = commandFactory->makeCommand(ccc.command, shared);
+                        command->execute(shared);
+                        commandFactory->addToUndo(command, shared);
+                    }
+                    else
+                    {
+                        contextStack.push(ccc.contextChange);
+                    }
                 }
+                // If nothing was found simple start a selection.
+                else
+                {
+                    auto sd = getDataValue<SelectionData>(shared, Sdl2Ids::selectionData());
+                    auto gd = getDataValue<GraphicData>(shared, Sdl2Ids::graphicData());
 
-                newSelection(shared);
+                    if (sd->isSelecting())
+                    {
+                        continue;
+                    }
+
+                    // Create selections only in map area.
+                    auto mapArea = gd->getMapArea();
+                    auto mapPixelX = static_cast<GraphicData::pixel>(event.button.x) - mapArea.x;
+                    auto mapPixelY = static_cast<GraphicData::pixel>(event.button.y) - mapArea.y;
+                    if (!mapArea.isPixelInRect(mapPixelX, mapPixelY))
+                    {
+                        return;
+                    }
+
+                    newSelection(shared);
+                }
             }
             break;
 
             case SDL_MOUSEBUTTONUP:
             {
                 auto sd = getDataValue<SelectionData>(shared, Sdl2Ids::selectionData());
-
                 if (sd->isSelecting())
                 {
                     endSelection(shared);

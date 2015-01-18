@@ -2,6 +2,7 @@
 #define FTS_INPUTHANDLER_H
 
 #include "Key.h"
+#include "MouseButton.h"
 
 #include <frts/module>
 #include <frts/vanillacommand>
@@ -16,15 +17,16 @@ namespace frts
     {
     public:
         /**
-         * @brief Simple struct for a key command consisting of a key and optional modifiers.
+         * @brief Simple struct for a button command consisting of a key and optional modifiers.
          */
-        struct KeyCommand
+        template <typename ButtonType>
+        struct ButtonCommand
         {
-            KeyCommand(Key key, bool alt = false, bool ctrl = false, bool shift = false, const IdPtr& context = nullptr)
-                : key{key}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
+            ButtonCommand(ButtonType button, bool alt = false, bool ctrl = false, bool shift = false, const IdPtr& context = nullptr)
+                : button{button}, alt{alt}, ctrl{ctrl}, shift{shift}, context{context}
             {}
 
-            Key key;
+            ButtonType button;
 
             bool alt;
             bool ctrl;
@@ -46,14 +48,28 @@ namespace frts
          * @param keyCommand The key command.
          * @param commandId The command id.
          */
-        virtual void registerCommand(const KeyCommand& keyCommand, const IdPtr& commandId) = 0;
+        virtual void registerCommand(const ButtonCommand<Key>& keyCommand, const IdPtr& commandId) = 0;
+
+        /**
+         * @brief Register a custom command with an mouse button.
+         * @param mouseButtonCommand The mouse button command.
+         * @param commandId The command id.
+         */
+        virtual void registerCommand(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& commandId) = 0;
 
         /**
          * @brief Register a context change with an key.
          * @param keyCommand The key command.
          * @param context The context:
          */
-        virtual void registerContextChange(const KeyCommand& keyCommand, const IdPtr& context) = 0;
+        virtual void registerContextChange(const ButtonCommand<Key>& keyCommand, const IdPtr& context) = 0;
+
+        /**
+         * @brief Register a context change with an mouse button.
+         * @param mouseButtonCommand The mouse button command.
+         * @param context The context:
+         */
+        virtual void registerContextChange(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& context) = 0;
     };
 }
 

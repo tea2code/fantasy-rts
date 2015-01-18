@@ -3,6 +3,9 @@
 
 namespace frts
 {
+    /**
+     * @brief Key representation.
+     */
     enum class Key
     {
         // Numbers:

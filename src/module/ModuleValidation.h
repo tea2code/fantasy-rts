@@ -64,7 +64,7 @@ namespace frts
                auto module = (*it);
                if (module->getTypeName() == typeName)
                {
-                   if (module->getTypeVersion() != 1)
+                   if (module->getTypeVersion() != typeVersion)
                    {
                        auto msg = boost::format(R"(Tickable "%1%" has the wrong version %3%. Version %2% is required. Required by "%4%".)")
                                % typeName % typeVersion % module->getTypeVersion() % validator;

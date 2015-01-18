@@ -73,6 +73,8 @@ Will identify itself by the name and type `frts::InputHandler`. It can also be f
 
 Beside support for modifiers like ctrl or alt the input handler provides also a construct called "context". A key command without a context will always work. By providing a context the key will only work if the current context is the same. Switching the context is done by using `set_context` instead of `command`. Visually a context implements something like a menu and its submenus. 
 
+Mouse buttons and modifies can also be combined.
+
     keys:
     
         default_context: <string representing an id>
@@ -90,7 +92,17 @@ Beside support for modifiers like ctrl or alt the input handler provides also a 
 
 ### Keys
 
-Following keys are currently supported. If multiple names for one key exist they are space separated. Used in configuration files they are case insensitive. An equivalent enum exists and will be included using `frts/vanillasdl2input`.
+Following keys are currently supported. If multiple names for one key exist they are space separated. Used in configuration files they are case insensitive. Equivalent enums exist for keyboard keys and mouse buttons and will be included using `frts/vanillasdl2input`. 
+
+#### Mouse Buttons:
+
+If no configuration for a mouse button is provided pressing it will result in a selection. The mouse buttons `X1` and `X2` are most likely the browser back and forward buttons.
+
+        Mouse_Left
+        Mouse_Middle
+        Mouse_Right
+        Mouse_X1
+        Mouse_X2
 
 #### Numbers:
         Number0 0

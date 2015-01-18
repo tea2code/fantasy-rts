@@ -35,8 +35,10 @@ namespace frts
         void validateModules(const SharedManagerPtr& shared) override;
 
         void closeCurrentContext() override;
-        void registerCommand(const KeyCommand& keyCommand, const IdPtr& commandId) override;
-        void registerContextChange(const KeyCommand& keyCommand, const IdPtr& context) override;
+        void registerCommand(const ButtonCommand<Key>& keyCommand, const IdPtr& commandId) override;
+        void registerCommand(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& commandId) override;
+        void registerContextChange(const ButtonCommand<Key>& keyCommand, const IdPtr& context) override;
+        void registerContextChange(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& context) override;
 
     private:
         std::vector<ConfigNodePtr> configNodes;
