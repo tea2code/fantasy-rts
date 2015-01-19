@@ -6,7 +6,7 @@
 
 ## Camera Movement
 
-To move the camera press the `w`, `a`, `s` or `d` key for movement on the current z-level. Press `q` or `e` for switching the z-level.
+To move the camera on the current z-level press the `w`, `a`, `s` or `d` keys. Press `q` or `e` for switching the z-level.
 
 ![camera movement](img/move.png)
 
