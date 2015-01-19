@@ -30,7 +30,6 @@ namespace frts
         }
 
         std::vector<std::string> getSupportedConfig() override;
-        bool init(const SharedManagerPtr& shared) override;
         void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
         void validateModules(const SharedManagerPtr& shared) override;
 
@@ -41,7 +40,6 @@ namespace frts
         void registerContextChange(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& context) override;
 
     private:
-        std::vector<ConfigNodePtr> configNodes;
         Sdl2EventHandlerPtr sdl2EventHandler;
     };
 
