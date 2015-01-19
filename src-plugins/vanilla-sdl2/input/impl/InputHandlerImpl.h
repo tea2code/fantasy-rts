@@ -33,7 +33,7 @@ namespace frts
         void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
         void validateModules(const SharedManagerPtr& shared) override;
 
-        void closeCurrentContext() override;
+        void closeContext(bool resetToDefault = false) override;
         void registerCommand(const ButtonCommand<Key>& keyCommand, const IdPtr& commandId) override;
         void registerCommand(const ButtonCommand<MouseButton>& mouseButtonCommand, const IdPtr& commandId) override;
         void registerContextChange(const ButtonCommand<Key>& keyCommand, const IdPtr& context) override;

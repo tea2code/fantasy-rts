@@ -17,6 +17,11 @@ namespace frts
             return "frts.vanillasdl2.command.closecontext";
         }
 
+        static std::string closeAllContextCommand()
+        {
+            return "frts.vanillasdl2.command.closecontext.all";
+        }
+
         static std::string graphicData()
         {
             return "frts::GraphicData";

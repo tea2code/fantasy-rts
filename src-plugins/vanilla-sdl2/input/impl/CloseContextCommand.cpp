@@ -4,8 +4,8 @@
 #include <main/Sdl2Ids.h>
 
 
-frts::CloseContextCommand::CloseContextCommand(const IdPtr& commandType)
-    : commandType{commandType}
+frts::CloseContextCommand::CloseContextCommand(const IdPtr& commandType, bool resetToDefault)
+    : commandType{commandType}, resetToDefault{resetToDefault}
 {
 
 }
@@ -20,7 +20,7 @@ void frts::CloseContextCommand::execute(const SharedManagerPtr& shared)
     assert(shared != nullptr);
 
     auto ih = getUtility<InputHandler>(shared, Sdl2Ids::inputHandler());
-    ih->closeCurrentContext();
+    ih->closeContext(resetToDefault);
 }
 
 frts::IdPtr frts::CloseContextCommand::getCommandType() const

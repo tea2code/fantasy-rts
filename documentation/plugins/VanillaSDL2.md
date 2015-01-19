@@ -248,7 +248,7 @@ This plugin implements a couple of commands (using the *VanillaCommand* plugin) 
 
 ### CloseContextCommand
 
-This command allows to the current input context (See **Input/Event Handling**). Use command id `frts.vanillasdl2.command.closecontext`.
+This command allows to the current input context (See **Input/Event Handling**). Use command id `frts.vanillasdl2.command.closecontext`. There is also a variant which will close all contexts with id `frts.vanillasdl2.command.closecontext.all`.
 
 ### MoveCursorCommand
 

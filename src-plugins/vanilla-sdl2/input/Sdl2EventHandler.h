@@ -99,8 +99,9 @@ namespace frts
 
         /**
          * @brief Closes the current context.
+         * @param resetToDefault If true all contexts are closed else only the current.
          */
-        void closeCurrentContext();
+        void closeContext(bool resetToDefault = false);
 
         /**
          * @brief Register a custom command with an key.

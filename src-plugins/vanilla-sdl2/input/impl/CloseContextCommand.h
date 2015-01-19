@@ -11,8 +11,9 @@ namespace frts
     public:
         /**
          * @param commandType The command type.
+         * @param resetToDefault If true all contexts are closed else only the current.
          */
-        CloseContextCommand(const IdPtr& commandType);
+        CloseContextCommand(const IdPtr& commandType, bool resetToDefault);
         ~CloseContextCommand();
 
         void execute(const SharedManagerPtr& shared);
@@ -21,18 +22,20 @@ namespace frts
 
     private:
         IdPtr commandType;
+        bool resetToDefault;
     };
 
     /**
      * @brief Create new CloseContextCommand.
      * @param commandType The command type.
+     * @param resetToDefault If true all contexts are closed else only the current.
      * @return The command.
      */
-    inline CommandPtr makeCloseContextCommand(const IdPtr& commandType)
+    inline CommandPtr makeCloseContextCommand(const IdPtr& commandType, bool resetToDefault)
     {
         assert(commandType != nullptr);
 
-        return std::make_shared<CloseContextCommand>(commandType);
+        return std::make_shared<CloseContextCommand>(commandType, resetToDefault);
     }
 }
 

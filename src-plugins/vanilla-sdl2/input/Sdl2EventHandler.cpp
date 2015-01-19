@@ -28,11 +28,13 @@ void frts::Sdl2EventHandler::checkRequiredData(const SharedManagerPtr& shared)
     validateDataValue(getName(), Sdl2Ids::selectionData(), 1, shared);
 }
 
-void frts::Sdl2EventHandler::closeCurrentContext()
+void frts::Sdl2EventHandler::closeContext(bool resetToDefault)
 {
-    if (contextStack.top() != defaultContext)
+    bool reset = true;
+    while (reset && (contextStack.top() != defaultContext))
     {
         contextStack.pop();
+        reset = resetToDefault;
     }
 }
 
@@ -85,9 +87,11 @@ bool frts::Sdl2EventHandler::init(const SharedManagerPtr& shared)
     IdPtr commandId = shared->makeId(Sdl2Ids::selectCommand());
     commandFactory->registerCommandBuilder(commandId, makeSelectCommandBuilder(commandId));
 
-    // Add close context command.
+    // Add close context commands.
     commandId = shared->makeId(Sdl2Ids::closeContextCommand());
-    commandFactory->registerCommandBuilder(commandId, makeCloseContextCommandBuilder(commandId));
+    commandFactory->registerCommandBuilder(commandId, makeCloseContextCommandBuilder(commandId, false));
+    commandId = shared->makeId(Sdl2Ids::closeAllContextCommand());
+    commandFactory->registerCommandBuilder(commandId, makeCloseContextCommandBuilder(commandId, true));
 
     // Check if input handler has initialized the default context.
     if (defaultContext == nullptr)

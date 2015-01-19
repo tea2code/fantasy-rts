@@ -19,9 +19,9 @@ frts::InputHandlerImpl::InputHandlerImpl(const Sdl2EventHandlerPtr& sdl2EventHan
 {
 }
 
-void frts::InputHandlerImpl::closeCurrentContext()
+void frts::InputHandlerImpl::closeContext(bool resetToDefault)
 {
-    sdl2EventHandler->closeCurrentContext();
+    sdl2EventHandler->closeContext(resetToDefault);
 }
 
 std::vector<std::string> frts::InputHandlerImpl::getSupportedConfig()
