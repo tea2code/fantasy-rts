@@ -45,25 +45,24 @@ keys:
         - key: i
           command: frts.vanillasdl2.command.switchsidebarinfoindex.next
           
-        # UserAction: Building
-        
-        # UserAction: Gathering
-
-        # UserAction: Harvesting
-        - key: h
+        # User Action: Forestry
+        - key: f
           context: context.default
-          set_context: context.harvesting
+          set_context: context.forestry
         - key: c
-          context: context.harvesting
+          context: context.forestry
           command: frts.vanillauseraction.command.chop
         - key: h
-          context: context.harvesting
+          context: context.forestry
           command: frts.vanillauseraction.command.crop
-        - key: m
-          context: context.harvesting
-          command: frts.vanillauseraction.command.dig
           
-        # UserAction: Production
+        # User Action: Mining
+        - key: m
+          context: context.default
+          set_context: context.mining
+        - key: m
+          context: context.mining
+          command: frts.vanillauseraction.command.dig
           
         # UserAction: Special
         - key: x

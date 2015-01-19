@@ -34,27 +34,31 @@ To start an job press the associated keys and then select a position or an area 
 
 To cancel jobs press the key `x` and select the highlightings of the jobs you want to cancel.
 
-### Harvesting
+### Forestry
 
-In harvesting mode which is activated by first pressing `h` jobs can be executed which are related to destroying environment objects and thus making resources available. If you want to leave the harvesting mode press `backspace`. 
+In forestry mode which is activated by first pressing `f` jobs can be executed which are related to forest and plant work. If you want to leave the forestry mode press `backspace`. 
 
 #### Harvesting food
 
-To harvest food press `h` while in harvesting mode. Afterwards to can harvest different plants like berry shrubs.
+To harvest food press `h` while in forestry mode. Afterwards to can harvest different plants like berry shrubs.
 
 ![Collecting food](img/harvesting-berries.png)
 
-#### Mining
+#### Wood chopping
 
-Mining enables to dig on the current z-level. By mining earth and rock is destroyed and resources like iron ore became available. Mining is started using the key `m` while in harvesting mode.
+Wood chopping is activated by pressing the key `c` while in forestry mode. Trees will drop wood logs after chopping them.
+
+![Wood chopping](img/chopping.png)
+
+### Mining
+
+In mining mode which is activated by first pressing `m` jobs can be executed which are related to mining and digging. If you want to leave the mining mode press `backspace`. 
+
+#### Digging
+
+Digging enables to dig on the current z-level. By digging earth and rock is destroyed and resources like iron ore became available. Digging is started using the key `m` while in harvesting mode.
 
 ![Mining](img/mining.png)
-
-#### Wood Chopping
-
-Wood chopping is activated by pressing the key `c` while in harvesting mode. Trees will drop wood logs after chopping them.
-
-![Mining](img/chopping.png)
 
 ## Save / Load
 
