@@ -44,9 +44,13 @@ namespace frts
         bool has(const std::string& key) override;
 
         bool isBool(const std::string& key) override;
+        bool isBools(const std::string& key) override;
         bool isFloat(const std::string& key) override;
+        bool isFloats(const std::string& key) override;
         bool isInteger(const std::string& key) override;
+        bool isIntegers(const std::string& key) override;
         bool isString(const std::string& key) override;
+        bool isStrings(const std::string& key) override;
 
     private:
         YAML::Node node;

@@ -167,12 +167,28 @@ namespace frts
         virtual bool isBool(const std::string& key) = 0;
 
         /**
+         * @brief Checks if a value is a boolean list.
+         * @throws MissingValueError if value is not found.
+         * @param key Key of the value.
+         * @return True if type is correct else false.
+         */
+        virtual bool isBools(const std::string& key) = 0;
+
+        /**
          * @brief Checks if a value is a floating point number.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return True if type is correct else false.
          */
         virtual bool isFloat(const std::string& key) = 0;
+
+        /**
+         * @brief Checks if a value is a floating point number list.
+         * @throws MissingValueError if value is not found.
+         * @param key Key of the value.
+         * @return True if type is correct else false.
+         */
+        virtual bool isFloats(const std::string& key) = 0;
 
         /**
          * @brief Checks if a value is an integer number.
@@ -183,12 +199,28 @@ namespace frts
         virtual bool isInteger(const std::string& key) = 0;
 
         /**
+         * @brief Checks if a value is an integer number list.
+         * @throws MissingValueError if value is not found.
+         * @param key Key of the value.
+         * @return True if type is correct else false.
+         */
+        virtual bool isIntegers(const std::string& key) = 0;
+
+        /**
          * @brief Checks if a value is a string.
          * @throws MissingValueError if value is not found.
          * @param key Key of the value.
          * @return True if type is correct else false.
          */
         virtual bool isString(const std::string& key) = 0;
+
+        /**
+         * @brief Checks if a value is a string list.
+         * @throws MissingValueError if value is not found.
+         * @param key Key of the value.
+         * @return True if type is correct else false.
+         */
+        virtual bool isStrings(const std::string& key) = 0;
     };
 
     /**

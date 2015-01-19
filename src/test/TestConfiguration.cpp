@@ -241,11 +241,27 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_FALSE(node->isBool("stringValueAbc"));
         REQUIRE_THROWS_AS(node->isBool("notExistingKey"), frts::MissingValueError);
 
+        REQUIRE_FALSE(node->isBools("nodesKey"));
+        REQUIRE_FALSE(node->isBools("nodesNoKey"));
+        REQUIRE(node->isBools("nodesListBool"));
+        REQUIRE_FALSE(node->isBools("nodesListFloat"));
+        REQUIRE_FALSE(node->isBools("nodesListInt"));
+        REQUIRE_FALSE(node->isBools("nodesListString"));
+        REQUIRE_THROWS_AS(node->isBool("notExistingKey"), frts::MissingValueError);
+
         REQUIRE(node->isFloat("floatValue00"));
         REQUIRE(node->isFloat("intValue0"));
         REQUIRE_FALSE(node->isFloat("boolValueTrue"));
         REQUIRE_FALSE(node->isFloat("stringValueAbc"));
         REQUIRE_THROWS_AS(node->isFloat("notExistingKey"), frts::MissingValueError);
+
+        REQUIRE_FALSE(node->isFloats("nodesKey"));
+        REQUIRE(node->isFloats("nodesNoKey"));
+        REQUIRE_FALSE(node->isFloats("nodesListBool"));
+        REQUIRE(node->isFloats("nodesListFloat"));
+        REQUIRE(node->isFloats("nodesListInt"));
+        REQUIRE_FALSE(node->isFloats("nodesListString"));
+        REQUIRE_THROWS_AS(node->isFloats("notExistingKey"), frts::MissingValueError);
 
         REQUIRE(node->isInteger("intValue0"));
         REQUIRE_FALSE(node->isInteger("floatValue00"));
@@ -253,10 +269,26 @@ TEST_CASE("Parse YAML configuration node.", "[configuration]")
         REQUIRE_FALSE(node->isInteger("stringValueAbc"));
         REQUIRE_THROWS_AS(node->isInteger("notExistingKey"), frts::MissingValueError);
 
+        REQUIRE_FALSE(node->isIntegers("nodesKey"));
+        REQUIRE(node->isIntegers("nodesNoKey"));
+        REQUIRE_FALSE(node->isIntegers("nodesListBool"));
+        REQUIRE_FALSE(node->isIntegers("nodesListFloat"));
+        REQUIRE(node->isIntegers("nodesListInt"));
+        REQUIRE_FALSE(node->isIntegers("nodesListString"));
+        REQUIRE_THROWS_AS(node->isIntegers("notExistingKey"), frts::MissingValueError);
+
         REQUIRE(node->isString("boolValueTrue"));
         REQUIRE(node->isString("floatValue00"));
         REQUIRE(node->isString("intValue0"));
         REQUIRE(node->isString("stringValueAbc"));
         REQUIRE_THROWS_AS(node->isString("notExistingKey"), frts::MissingValueError);
+
+        REQUIRE_FALSE(node->isStrings("nodesKey"));
+        REQUIRE(node->isStrings("nodesNoKey"));
+        REQUIRE(node->isStrings("nodesListBool"));
+        REQUIRE(node->isStrings("nodesListFloat"));
+        REQUIRE(node->isStrings("nodesListInt"));
+        REQUIRE(node->isStrings("nodesListString"));
+        REQUIRE_THROWS_AS(node->isStrings("notExistingKey"), frts::MissingValueError);
     }
 }

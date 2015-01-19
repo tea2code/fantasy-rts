@@ -209,9 +209,19 @@ bool frts::YamlConfigNode::isBool(const std::string& key)
     return is<bool>(key);
 }
 
+bool frts::YamlConfigNode::isBools(const std::string& key)
+{
+    return is<std::vector<bool>>(key);
+}
+
 bool frts::YamlConfigNode::isFloat(const std::string& key)
 {
     return is<float>(key);
+}
+
+bool frts::YamlConfigNode::isFloats(const std::string& key)
+{
+    return is<std::vector<float>>(key);
 }
 
 bool frts::YamlConfigNode::isInteger(const std::string& key)
@@ -219,9 +229,19 @@ bool frts::YamlConfigNode::isInteger(const std::string& key)
     return is<long>(key);
 }
 
+bool frts::YamlConfigNode::isIntegers(const std::string& key)
+{
+    return is<std::vector<long>>(key);
+}
+
 bool frts::YamlConfigNode::isString(const std::string& key)
 {
     return is<std::string>(key);
+}
+
+bool frts::YamlConfigNode::isStrings(const std::string& key)
+{
+    return is<std::vector<std::string>>(key);
 }
 
 frts::ConversionError frts::YamlConfigNode::makeConversionError(const std::string& key, const std::string& type)
