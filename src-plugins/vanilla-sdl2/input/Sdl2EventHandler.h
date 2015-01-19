@@ -151,6 +151,9 @@ namespace frts
         IdPtr defaultContext;
         std::unordered_map<Sdl2ButtonCommand<SDL_Keycode>, CommandContextChange> keyCommands;
         std::unordered_map<Sdl2ButtonCommand<std::uint8_t>, CommandContextChange> mouseButtonsCommands;
+
+    private:
+        void executeCommandContextChange(const CommandContextChange& ccc, const SharedManagerPtr& shared);
     };
 
     /**

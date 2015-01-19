@@ -47,6 +47,21 @@ bool frts::Sdl2EventHandler::createData(const SharedManagerPtr& shared)
     return false;
 }
 
+void frts::Sdl2EventHandler::executeCommandContextChange(const CommandContextChange& ccc, const SharedManagerPtr& shared)
+{
+    if (ccc.command != nullptr)
+    {
+        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
+        auto command = commandFactory->makeCommand(ccc.command, shared);
+        command->execute(shared);
+        commandFactory->addToUndo(command, shared);
+    }
+    if (ccc.contextChange != nullptr)
+    {
+        contextStack.push(ccc.contextChange);
+    }
+}
+
 std::vector<std::string> frts::Sdl2EventHandler::getSupportedConfig()
 {
     return {"screen"};
@@ -181,18 +196,7 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
                 // Anything found?
                 if (it != keyCommands.end())
                 {
-                    CommandContextChange ccc = it->second;
-                    if (ccc.command != nullptr)
-                    {
-                        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-                        auto command = commandFactory->makeCommand(ccc.command, shared);
-                        command->execute(shared);
-                        commandFactory->addToUndo(command, shared);
-                    }
-                    else
-                    {
-                        contextStack.push(ccc.contextChange);
-                    }
+                    executeCommandContextChange(it->second, shared);
                 }
             }
             break;
@@ -221,18 +225,7 @@ void frts::Sdl2EventHandler::tick(const SharedManagerPtr& shared)
                 // Anything found?
                 if (it != mouseButtonsCommands.end())
                 {
-                    CommandContextChange ccc = it->second;
-                    if (ccc.command != nullptr)
-                    {
-                        auto commandFactory = getUtility<CommandFactory>(shared, CommandIds::commandFactory());
-                        auto command = commandFactory->makeCommand(ccc.command, shared);
-                        command->execute(shared);
-                        commandFactory->addToUndo(command, shared);
-                    }
-                    else
-                    {
-                        contextStack.push(ccc.contextChange);
-                    }
+                    executeCommandContextChange(it->second, shared);
                 }
                 // If nothing was found simple start a selection.
                 else
