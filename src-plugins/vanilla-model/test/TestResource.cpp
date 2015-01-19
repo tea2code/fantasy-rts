@@ -43,11 +43,9 @@ TEST_CASE("LockableResourceManager.", "[resource]")
     frts::IdPtr resourceId2 = frts::makeId("food");
     frts::IdPtr resourceId3 = frts::makeId("iron");
 
-    frts::Point::value sizeX = 10;
-    frts::Point::value sizeY = 10;
     auto regionGenerator = test::makeSimpleTestRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
                                                                frts::makeId(frts::ComponentIds::sortOrder()));
-    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
+    frts::RegionPtr region = frts::makeRegion(regionGenerator);
 
     region->setPos(entity1, pos1, shared);
     region->setPos(entity2, pos2, shared);

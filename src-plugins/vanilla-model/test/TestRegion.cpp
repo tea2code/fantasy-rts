@@ -11,6 +11,8 @@
 #include <region/impl/BlockImpl.h>
 #include <region/impl/PointImpl.h>
 #include <region/impl/RegionImpl.h>
+#include <main/impl/ModelDataImpl.h>
+#include <main/ModelIds.h>
 
 #include <log/NoLog.h>
 #include <shared/impl/IdImpl.h>
@@ -185,6 +187,11 @@ TEST_CASE("Region.", "[region]")
     frts::LogPtr log = std::make_shared<frts::NoLog>();
     frts::SharedManagerPtr shared = frts::makeSharedManager(log);
 
+    auto modelData = frts::makeModelData();
+    modelData->setMapSizeX(2);
+    modelData->setMapSizeY(2);
+    shared->setDataValue(shared->makeId(frts::ModelIds::modelData()), modelData);
+
     frts::IdPtr block1 = frts::makeId("block1");
     frts::IdPtr block2 = frts::makeId("block2");
 
@@ -210,11 +217,9 @@ TEST_CASE("Region.", "[region]")
     frts::PointPtr point2 = frts::makePoint(0, 0, 0);
     frts::PointPtr point3 = frts::makePoint(0, 0, 1);
 
-    frts::Point::value sizeX = 2;
-    frts::Point::value sizeY = 2;
     auto regionGenerator = test::makeSimpleTestRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
                                                                frts::makeId(frts::ComponentIds::sortOrder()));
-    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
+    frts::RegionPtr region = frts::makeRegion(regionGenerator);
 
     region->setPos(entity1, point1, shared);
     region->setPos(entity2, point3, shared);

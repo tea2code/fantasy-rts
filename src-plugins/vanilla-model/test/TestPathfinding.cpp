@@ -9,6 +9,7 @@
 #include <region/impl/BlockImpl.h>
 #include <region/impl/RegionImpl.h>
 #include <main/ModelIds.h>
+#include <main/impl/ModelDataImpl.h>
 #include <main/impl/RegionManagerImpl.h>
 #include <resource/impl/LockableHasResourceManager.h>
 #include <resource/impl/LockableIsResourceManager.h>
@@ -108,6 +109,11 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto modelData = frts::makeModelData();
+    modelData->setMapSizeX(MAP_SIZE);
+    modelData->setMapSizeY(MAP_SIZE);
+    shared->setDataValue(shared->makeId(frts::ModelIds::modelData()), modelData);
+
     auto blockingType = shared->makeId("component.blocking");
     auto blockedByType = shared->makeId("component.blockedBy");
     auto sortOrderType = shared->makeId("component.sortorder");
@@ -154,7 +160,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         };
 
         auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
-        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto region = frts::makeRegion(rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
@@ -217,7 +223,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         };
 
         auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
-        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto region = frts::makeRegion(rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
@@ -328,7 +334,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         };
 
         auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);     
-        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto region = frts::makeRegion(rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
@@ -388,7 +394,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         };
 
         auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
-        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto region = frts::makeRegion(rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);
@@ -445,7 +451,7 @@ TEST_CASE("Pathfinder.", "[pathfinding]")
         };
 
         auto rg = std::make_shared<test::TestRegionGenerator>(blockingType, sortOrderType, maps, teleportType);
-        auto region = frts::makeRegion(MAP_SIZE, MAP_SIZE, rg);
+        auto region = frts::makeRegion(rg);
         auto resourceManager = frts::makeLockableIsResourceManager(isResourceType, region, distAlgo);
         auto resourceEntityManager = frts::makeLockableHasResourceManager(hasResourceType, region, distAlgo);
         auto rm = frts::makeRegionManager(region, resourceManager, resourceEntityManager, hasResourceType, isResourceType);

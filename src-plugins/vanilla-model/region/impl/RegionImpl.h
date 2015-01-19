@@ -21,12 +21,9 @@ namespace frts
     {
     public:
         /**
-         * @param mapSizeX Size of map in x direction.
-         * @param mapSizeY Size of map in y direction.
          * @param regionGenerator The region generator.
          */
-        RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
-                   const RegionGeneratorPtr& regionGenerator);
+        RegionImpl(const RegionGeneratorPtr& regionGenerator);
 
         PointVector findFreeNeighbors(const PointPtr& pos, const BlockedByPtr& blockedBy, bool sameZLevel, const SharedManagerPtr& shared) override;
         PointPtr findFreeRandomPos(const std::vector<Point::value>& zLevels, const BlockedByPtr& blockedBy, const SharedManagerPtr& shared) override;
@@ -43,8 +40,6 @@ namespace frts
 
     private:
         EntityPosMap entityPos;
-        Point::value mapSizeX;
-        Point::value mapSizeY;
         RegionGeneratorPtr regionGenerator;
 
         /**
@@ -69,17 +64,14 @@ namespace frts
 
     /**
      * @brief Create new region object.
-     * @param mapSizeX Size of map in x direction.
-     * @param mapSizeY Size of map in y direction.
      * @param regionGenerator The region generator.
      * @return The region pointer.
      */
-    inline RegionPtr makeRegion(Point::value mapSizeX, Point::value mapSizeY,
-                                const RegionGeneratorPtr& regionGenerator)
+    inline RegionPtr makeRegion(const RegionGeneratorPtr& regionGenerator)
     {
         assert(regionGenerator != nullptr);
 
-        return std::make_shared<RegionImpl>(mapSizeX, mapSizeY, regionGenerator);
+        return std::make_shared<RegionImpl>(regionGenerator);
     }
 }
 

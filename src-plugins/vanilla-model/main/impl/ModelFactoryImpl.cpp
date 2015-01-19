@@ -229,8 +229,7 @@ bool frts::ModelFactoryImpl::init(const SharedManagerPtr& shared)
     if (region == nullptr)
     {
         shared->getLog()->info(getName(), "ModelFactory->init(): Default region.");
-        region = makeRegion(modelData->getMapSizeX(), modelData->getMapSizeY(),
-                            regionGenerator);
+        region = makeRegion(regionGenerator);
     }
     else
     {
@@ -499,14 +498,10 @@ bool frts::ModelFactoryImpl::preInit(const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
-    auto blockingId = shared->makeId(ComponentIds::blocking());
-    auto sortOrderId = shared->makeId(ComponentIds::sortOrder());
-    auto teleportId = shared->makeId(ComponentIds::teleport());
-
     // Map parser:
     // BMP.
     auto bmpMapParserId = shared->makeId(RegionGeneratorIds::bmpMapParser());
-    registerMapParser(bmpMapParserId, makeBmpMapParser(blockingId, sortOrderId, teleportId));
+    registerMapParser(bmpMapParserId, makeBmpMapParser());
 
     // Text.
     // TODO Implement text map parser.
@@ -516,7 +511,7 @@ bool frts::ModelFactoryImpl::preInit(const SharedManagerPtr& shared)
     // Region generator:
     if (regionGenerator == nullptr)
     {
-        regionGenerator = makeRegionGenerator(blockingId, sortOrderId);
+        regionGenerator = makeRegionGenerator();
     }
 
     return BaseUtility::preInit(shared);

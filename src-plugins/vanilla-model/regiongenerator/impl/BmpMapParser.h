@@ -14,12 +14,7 @@ namespace frts
     class BmpMapParser : public MapParser
     {
     public:
-        /**
-         * @param blockingType The component type id of the blocking component.
-         * @param sortOrderType The component type id of the sort order component.
-         * @param teleportType The component type id of the teleport component.
-         */
-        BmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType);
+        BmpMapParser();
 
         std::string getSupportedConfig() const override;
         void init(const SharedManagerPtr& shared) override;
@@ -57,10 +52,6 @@ namespace frts
         };
 
     private:
-        IdPtr blockingType;
-        IdPtr sortOrderType;
-        IdPtr teleportType;
-
         unsigned int height = 0;
         unsigned int width = 0;
 
@@ -122,18 +113,11 @@ namespace frts
 
     /**
      * @brief Create new BmpMapParser.
-     * @param blockingType The component type id of the blocking component.
-     * @param sortOrderType The component type id of the sort order component.
-     * @param teleportType The component type id of the teleport component.
      * @return The map parser.
      */
-    inline MapParserPtr makeBmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType)
+    inline MapParserPtr makeBmpMapParser()
     {
-        assert(blockingType != nullptr);
-        assert(sortOrderType != nullptr);
-        assert(teleportType != nullptr);
-
-        return std::make_shared<BmpMapParser>(blockingType, sortOrderType, teleportType);
+        return std::make_shared<BmpMapParser>();
     }
 }
 

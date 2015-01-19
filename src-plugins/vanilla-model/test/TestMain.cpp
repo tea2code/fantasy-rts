@@ -148,7 +148,7 @@ TEST_CASE("RegionManager.", "[main]")
     frts::Point::value sizeY = 10;
     auto regionGenerator = test::makeSimpleTestRegionGenerator(frts::makeId(frts::ComponentIds::blocking()),
                                                                frts::makeId(frts::ComponentIds::sortOrder()));
-    frts::RegionPtr region = frts::makeRegion(sizeX, sizeY, regionGenerator);
+    frts::RegionPtr region = frts::makeRegion(regionGenerator);
 
     frts::DistanceAlgorithmPtr distAlgo = frts::makeEuclideanDistance();
     frts::IdPtr hasResourceType = frts::makeId(frts::ComponentIds::hasResource());

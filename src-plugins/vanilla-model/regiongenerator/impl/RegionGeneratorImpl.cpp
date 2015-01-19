@@ -20,8 +20,7 @@ namespace {
     }
 }
 
-frts::RegionGeneratorImpl::RegionGeneratorImpl(const IdPtr& blockingType, const IdPtr& sortOrderType)
-    : blockingType{blockingType}, sortOrderType{sortOrderType}
+frts::RegionGeneratorImpl::RegionGeneratorImpl()
 {}
 
 std::string frts::RegionGeneratorImpl::getSupportedConfig() const

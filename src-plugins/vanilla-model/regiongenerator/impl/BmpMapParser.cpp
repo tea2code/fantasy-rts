@@ -14,8 +14,7 @@
 #include <cmath>
 
 
-frts::BmpMapParser::BmpMapParser(const IdPtr& blockingType, const IdPtr& sortOrderType, const IdPtr& teleportType)
-    : blockingType{blockingType}, sortOrderType{sortOrderType}, teleportType{teleportType}
+frts::BmpMapParser::BmpMapParser()
 {
 }
 
@@ -29,6 +28,7 @@ frts::EntityPtr frts::BmpMapParser::connectIfNotYet(const WriteableBlockPtr& blo
     auto otherBlock = getBlock(otherPos, shared);
 
     // Are we already connected?
+    auto teleportType = shared->makeId(ComponentIds::teleport());
     for (auto& entity : otherBlock->getByComponent(teleportType))
     {
         if (std::find(targets.begin(), targets.end(), entity) != targets.end())
@@ -138,6 +138,7 @@ frts::WriteableBlockPtr frts::BmpMapParser::newBlock(const PointPtr& pos, const 
             {
                 // Do we already have teleport components in this block?
                 EntityVector targets;
+                auto teleportType = shared->makeId(ComponentIds::teleport());
                 for (auto& entity : block->getByComponent(teleportType))
                 {
                     auto teleport = getComponent<Teleport>(teleportType, entity);
@@ -348,6 +349,7 @@ void frts::BmpMapParser::tryConnectTeleport(const PointPtr& pos, const Writeable
 
         // Do we already have teleport components in this block?
         EntityVector targets;
+        auto teleportType = shared->makeId(ComponentIds::teleport());
         for (auto& entity : block->getByComponent(teleportType))
         {
             auto teleport = getComponent<Teleport>(teleportType, entity);

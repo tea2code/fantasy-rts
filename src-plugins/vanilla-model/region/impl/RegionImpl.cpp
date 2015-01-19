@@ -1,15 +1,15 @@
 #include "RegionImpl.h"
 
+#include <main/ModelData.h>
+#include <main/ModelIds.h>
 #include <region/impl/PointImpl.h>
-
 #include <frts/random.h>
 
 #include <algorithm>
 
 
-frts::RegionImpl::RegionImpl(Point::value mapSizeX, Point::value mapSizeY,
-                             const RegionGeneratorPtr& regionGenerator)
-    : mapSizeX{mapSizeX}, mapSizeY{mapSizeY}, regionGenerator{regionGenerator}
+frts::RegionImpl::RegionImpl(const RegionGeneratorPtr& regionGenerator)
+    : regionGenerator{regionGenerator}
 {
 #ifdef FAST_POS_BLOCK
     for (int z = 0; z <= std::abs(fastLookupHigh - fastLookupLow); ++z)
@@ -66,6 +66,9 @@ frts::PointPtr frts::RegionImpl::findFreeRandomPos(const std::vector<Point::valu
     assert(shared != nullptr);
 
     // Let's try at least 100 times. Still might not find a free position.
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+    auto mapSizeX = modelData->getMapSizeX();
+    auto mapSizeY = modelData->getMapSizeY();
     const int numTries = std::min(mapSizeX * mapSizeY * static_cast<Point::value>(zLevels.size()), 100);
 
     PointPtr result = nullptr;
@@ -98,13 +101,18 @@ frts::BlockPtr frts::RegionImpl::getBlock(const PointPtr& pos, const SharedManag
     return getWriteableBlock(pos, shared);
 }
 
-std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr&)
+std::vector<frts::PointPtr> frts::RegionImpl::getNeightbors(const PointPtr& pos, bool sameZLevel, const SharedManagerPtr& shared)
 {
     assert(pos != nullptr);
+    assert(shared != nullptr);
 
-    int x = pos->getX();
-    int y = pos->getY();
-    int z = pos->getZ();
+    auto x = pos->getX();
+    auto y = pos->getY();
+    auto z = pos->getZ();
+
+    auto modelData = getDataValue<ModelData>(shared, ModelIds::modelData());
+    auto mapSizeX = modelData->getMapSizeX();
+    auto mapSizeY = modelData->getMapSizeY();
 
     PointVector result;
 

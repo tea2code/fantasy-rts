@@ -18,11 +18,7 @@ namespace frts
     class RegionGeneratorImpl : public RegionGenerator
     {
     public:
-        /**
-         * @param blockingType The component type id of the blocking component.
-         * @param sortOrderType The component type id of the sort order component.
-         */
-        RegionGeneratorImpl(const IdPtr& blockingType, const IdPtr& sortOrderType);
+        RegionGeneratorImpl();
 
         std::string getSupportedConfig() const override;
         void init(const SharedManagerPtr& shared) override;
@@ -48,9 +44,6 @@ namespace frts
         };
 
     private:
-        IdPtr blockingType;
-        IdPtr sortOrderType;
-
         IdPtr defaultAboveSurfaceEntity;
         IdPtr defaultSurfaceEntity;
         IdPtr defaultBelowSurfaceEntity;
@@ -76,18 +69,11 @@ namespace frts
 
     /**
      * @brief Create new region generator.
-     * @param blockingType The component type id of the blocking component.
-     * @param sortOrderType The component type id of the sort order component.
-     * @param mapSizeX The map size in x direction.
-     * @param mapSizeY The map size in y direction.
      * @return The region generator.
      */
-    inline RegionGeneratorPtr makeRegionGenerator(const IdPtr& blockingType, const IdPtr& sortOrderType)
+    inline RegionGeneratorPtr makeRegionGenerator()
     {
-        assert(blockingType != nullptr);
-        assert(sortOrderType != nullptr);
-
-        return std::make_shared<RegionGeneratorImpl>(blockingType, sortOrderType);
+        return std::make_shared<RegionGeneratorImpl>();
     }
 }
 
