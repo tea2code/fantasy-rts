@@ -23,7 +23,7 @@ Access to all necessary interfaces can be acquired by adding the source director
 
 ### User Action Factory
 
-This factory will register all commands, actions and jobs of this plugin.
+This factory will register all commands, actions and jobs of this plugin. It also provides different helper methods which are useful for creating actions and jobs.
 
 Load using `frts/UserActionFactory` in the `utilities` section of the load file. 
 

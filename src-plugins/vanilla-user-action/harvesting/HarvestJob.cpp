@@ -1,6 +1,7 @@
 #include "HarvestJob.h"
 
-#include <main/UserActionUtility.h>
+#include <main/UserActionFactory.h>
+#include <main/UserActionIds.h>
 #include <frts/vanillamodel>
 #include <frts/math.h>
 
@@ -55,6 +56,7 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
 
     State result = State::Running;
 
+    auto uaf = getUtility<UserActionFactory>(shared, UserActionIds::userActionFactory());
     if (jobState == JobState::FirstExecution)
     {
         jobState = JobState::Goto;
@@ -71,7 +73,7 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
         else
         {
             // Find a path to one of the neighbors of the job position.
-            bool pathFound = findPathToJob(getExecutingEntity(), pos, true, shared);
+            bool pathFound = uaf->findPathToJob(getExecutingEntity(), pos, true, shared);
             if (!pathFound)
             {
                 result = State::Cancel;
@@ -88,14 +90,13 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
             result = State::Stop;
         }
 
-        Frame::time moveTime;
-        auto moveResult = moveEntity(getExecutingEntity(), moveTime, shared);
-        if (moveResult == MoveEntityResult::Moved)
+        auto moveResult = uaf->moveEntity(getExecutingEntity(), shared);
+        if (moveResult.state == UserActionFactory::MoveEntityResult::Moved)
         {
             // Set next due time.
-            setDueTime(shared->getFrame()->getRunTime() + moveTime);
+            setDueTime(shared->getFrame()->getRunTime() + moveResult.nextMoveTime);
         }
-        else if (moveResult == MoveEntityResult::AtTarget)
+        else if (moveResult == UserActionFactory::MoveEntityResult::AtTarget)
         {
             jobState = JobState::Harvest;
 
@@ -127,7 +128,7 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
         else
         {
             // Drops.
-            createDrops(toHarvest, pos, shared);
+            uaf->createDrops(toHarvest, pos, shared);
         }
 
         // Remove marker and set to null.
@@ -136,7 +137,7 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
         // Check if other jobs at this position are still valid.
         if (pos != nullptr)
         {
-            areJobsValid(pos, shared);
+            uaf->confirmJobsValidOrStop(pos, shared);
         }
     }
     // Job was previously stopped but the job manager doesn't know yet.

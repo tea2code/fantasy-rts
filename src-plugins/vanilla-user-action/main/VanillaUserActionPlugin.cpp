@@ -1,6 +1,6 @@
 #include "VanillaUserActionPlugin.h"
 
-#include "UserActionFactory.h"
+#include "impl/UserActionFactoryImpl.h"
 
 #include <frts/shared>
 
@@ -14,7 +14,7 @@ frts::ModulePtr frts::VanillaUserActionPlugin::getModule(const IdPtr& id)
     assert(id != nullptr);
 
     frts::ModulePtr result = nullptr;
-    if (id->toString() == UserActionFactory::identifier())
+    if (id->toString() == UserActionFactoryImpl::identifier())
     {
         result = makeUserActionFactory();
     }

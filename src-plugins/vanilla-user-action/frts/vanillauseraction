@@ -1,6 +1,7 @@
 #ifndef FRTS_VANILLAUSERACTION_INCLUDE_H
 #define FRTS_VANILLAUSERACTION_INCLUDE_H
 
+#include <main/UserActionFactory.h>
 #include <main/UserActionIds.h>
 
 #endif // FRTS_VANILLAUSERACTION_INCLUDE_H

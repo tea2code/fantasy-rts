@@ -1,63 +1,100 @@
-#ifndef FRTS_USERACTIONFACTORY_H
-#define FRTS_USERACTIONFACTORY_H
+#ifndef FRTS_USERACTIONFACTORY
+#define FRTS_USERACTIONFACTORY
 
-#include <frts/BaseUtility.h>
+#include <frts/module>
+#include <frts/vanillamodel>
 
-#include <unordered_map>
+#include <memory>
 
 
 namespace frts
 {
+    class UserActionFactory;
+
     /**
-     * @brief This factory will register all commands, actions and jobs of this plugin.
+     * @brief Pointer to UserActionFactory.
      */
-    class UserActionFactory : public BaseUtility<Utility>
+    using UserActionFactoryPtr = std::shared_ptr<UserActionFactory>;
+
+    /**
+     * @brief The user action factory creates all user actions and makes a couple of useful helper
+     *        methods available for use.
+     */
+    class UserActionFactory : public Utility
     {
     public:
-        UserActionFactory();
-        ~UserActionFactory();
-
         /**
-         * @brief The identifier.
-         * @return The id string.
+         * @brief Represents the resulting state of an execution of moveEntity().
          */
-        static std::string identifier()
+        enum class MoveEntityState
         {
-            return "frts/UserActionFactory";
-        }
+            // Entity has no movable component.
+            NotMovable,
 
-        std::vector<std::string> getSupportedConfig() override;
-        bool init(const SharedManagerPtr& shared) override;
-        void parseConfig(const std::string& key, const ConfigNodePtr& node, const SharedManagerPtr& shared) override;
-        void validateModules(const SharedManagerPtr& shared) override;
+            // The entity has moved.
+            Moved,
 
-    private:
-        /**
-         * @brief Simple struct to store configuration of an command.
-         */
-        struct CommandConfig
-        {
-            IdPtr type;
-            ConfigNodePtr settings;
+            // The entity is at the target.
+            AtTarget,
+
+            // The path is blocked. Enity hasn't moved.
+            Blocked
         };
 
         /**
-         * @brief Command config map.
+         * @brief Represents the result of moveEntity().
          */
-        using CommandConfigMap = std::unordered_map<IdPtr, CommandConfig>;
+        struct MoveEntityResult
+        {
+            /**
+             * @brief The move time if state was "Moved".
+             */
+            Frame::time nextMoveTime;
 
-    private:
-        CommandConfigMap commandConfigs;
+            /**
+             * @brief The result state.
+             */
+            MoveEntityState state;
+        };
+
+    public:
+        /**
+         * @brief Create drops for given entity. Won't remove or destroy this entity.
+         * @param entity The entity.
+         * @param pos The position where the drops should appear.
+         * @param shared The shared manager.
+         */
+        virtual void createDrops(const EntityPtr& entity, const PointPtr& pos,
+                                 const SharedManagerPtr& shared) = 0;
+
+        /**
+         * @brief Check if all the jobs (found by their markers) at a certain position are valid else
+         *        stop them.
+         * @param pos The position.
+         * @param shared The shared manager.
+         */
+        virtual void confirmJobsValidOrStop(const PointPtr& pos, const SharedManagerPtr& shared) = 0;
+
+        /**
+         * @brief Finds a path for the given entity to the job. Will set movable.
+         * @param entity The entity which should execute the job.
+         * @param jobPos The position of the job.
+         * @param toNeighbor If true the path will go to a free neighbor of the job position else to the job position.
+         * @param shared The shared manager.
+         * @return True if path found else false.
+         */
+        virtual bool findPathToJob(const EntityPtr& entity, const PointPtr& jobPos, bool toNeighbor,
+                                   const SharedManagerPtr& shared) = 0;
+
+        /**
+         * @brief Moves the entity to the next position if it has currently a path.
+         * @param entity The entity.
+         * @param shared The shared manager.
+         * @return The result.
+         */
+        virtual MoveEntityResult moveEntity(const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
     };
-
-    /**
-     * @brief Create a new user action factory.
-     * @return The module.
-     */
-    inline UtilityPtr makeUserActionFactory()
-    {
-        return std::make_shared<UserActionFactory>();
-    }
 }
 
-#endif // FRTS_USERACTIONFACTORY_H
+#endif // FRTS_USERACTIONFACTORY
+
