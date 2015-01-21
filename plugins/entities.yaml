@@ -97,6 +97,21 @@ entities:
             - component: frts.vanillamodel.entity.component.sortorder
               sort_order: 240
     
+        # Building
+        - name: prototype.building
+          components:
+            - component: frts.vanillamodel.entity.component.blocking
+              blocks: 
+                - blocking.building
+            - component: frts.vanillamodel.entity.component.sortorder
+              sort_order: 120
+        
+        - name: stairs
+          prototype: entity.prototype.building
+          components:
+            - component: frts.vanillasdl2.entity.component.renderable
+              sprite: style.sprite.stairs
+        
         # Vegetation
         - name: prototype.vegetation
           components:

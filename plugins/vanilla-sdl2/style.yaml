@@ -123,6 +123,11 @@ style:
                   - x: 48
                     y: 112
             
+            # Building
+            - name: stairs
+              x: 0
+              y: 320
+            
             # Vegetation
             - name: shrub.berry
               multiple:

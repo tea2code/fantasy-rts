@@ -58,6 +58,7 @@ UNIT_TEST {
     include(test/test.pri)
 }
 include(building/building.pri)
+include(carve/carve.pri)
 include(frts/frts.pri)
 include(gathering/gathering.pri)
 include(harvesting/harvesting.pri)

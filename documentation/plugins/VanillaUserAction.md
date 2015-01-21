@@ -48,6 +48,23 @@ Every user action configuration has an command id and an type id. The command id
 
 > Not yet implemented.
 
+### Carving
+
+User actions of this type allow to create buildings and other objects from harvestable objects. Basically converting them. This user action supports placing teleports for example for carving stairs from rock. Won't create drops. Has type id `frts.vanillauseraction.useraction.carve`.
+
+The teleport node is optional in the settings. If it is available teleport entities will be placed at the position described by the offset in the settings.
+
+    carve: <string representing an id>
+    harvest_types: 
+        - <string representing an id>
+    jobmarker: <string representing an id>
+    requirements: 
+        - <string representing an id>
+    teleport:
+        - x: <integer>
+          y: <integer>
+          z: <integer>
+
 ### Gathering
 
 > Not yet implemented.
