@@ -7,7 +7,15 @@ useraction:
         - command: carve.stairs
           type: frts.vanillauseraction.useraction.carve
           settings:
-            carve: entity.stairs
+            carve_types: 
+                - x: 0
+                  y: 0
+                  z: 0
+                  entity: entity.stairs
+                - x: 0
+                  y: 0
+                  z: 1
+                  entity: entity.stairs.floor
             harvest_types: 
                 - harvestable.dig
             jobmarker: entity.jobmarker
@@ -16,19 +24,7 @@ useraction:
             teleport:
                 - x: 0
                   y: 0
-                  z: 1    
-                - x: 1
-                  y: 0
-                  z: 1    
-                - x: -1
-                  y: 0
-                  z: 1    
-                - x: 0
-                  y: 1
-                  z: 1    
-                - x: 0
-                  y: -1
-                  z: 1    
+                  z: 1     
 
         - command: chop
           type: frts.vanillauseraction.useraction.harvest
