@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "MainLoop.h"
+#include "MainUtility.h"
 #include <log/EasyloggingLog.h>
 #include <module/Module.h>
 #include <module/ModulePtr.h>
@@ -19,7 +20,6 @@
 #include <boost/predef.h>
 #include <boost/version.hpp>
 
-#include <algorithm>
 #include <cstdlib>
 #include <iterator>
 #include <memory>
@@ -27,68 +27,11 @@
 #include <string>
 #include <vector>
 
-#if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
-#include <execwarning.h>
-#endif
-
-
-namespace
-{
-    /**
-     * @brief Check if command line options exist.
-     * @see http://stackoverflow.com/a/868894/1931663
-     * @param begin Begin of options.
-     * @param end End of options.
-     * @param option The option key.
-     * @return True if key exists else false.
-     */
-    bool cmdOptionExists(char** begin, char** end, const std::string& option)
-    {
-        return std::find(begin, end, option) != end;
-    }
-
-    /**
-     * @brief Get command line options.
-     * @see http://stackoverflow.com/a/868894/1931663
-     * @param begin Begin of options.
-     * @param end End of options.
-     * @param option The option key.
-     * @return The option value.
-     */
-    char* getCmdOption(char** begin, char** end, const std::string& option)
-    {
-        char** itr = std::find(begin, end, option);
-        if (itr != end && ++itr != end)
-        {
-            return *itr;
-        }
-        return nullptr;
-    }
-
-    /**
-     * @brief Write load config to log.
-     * @param log The log.
-     * @param logModule The log module.
-     * @param key The key.
-     * @param values The values.
-     */
-    void logLoadConfigList(const frts::LogPtr& log, const std::string& logModule,
-                           const std::string& key, const std::vector<std::string>& values)
-    {
-        assert(log != nullptr);
-
-        log->warning(logModule, "\t" + key);
-        for(const auto& value : values)
-        {
-            log->warning(logModule, "\t\t-" + value);
-        }
-    }
-}
 
 int main(int argc, char* argv[])
 {
     // Parse arguments.
-    if (cmdOptionExists(argv, argv+argc, "help"))
+    if (frts::cmdOptionExists(argv, argv+argc, "help"))
     {
         std::cout << "Command line options:" << std::endl;
         std::cout << "help - Produce this help message." << std::endl;
@@ -104,23 +47,23 @@ int main(int argc, char* argv[])
 
     // Most basic configuration.
     const unsigned int deadLock = static_cast<unsigned int>(
-                cmdOptionExists(argv, argv+argc, "deadLock") ?
-                std::atoi(getCmdOption(argv, argv+argc, "deadLock")) : 1000
+                frts::cmdOptionExists(argv, argv+argc, "deadLock") ?
+                std::atoi(frts::getCmdOption(argv, argv+argc, "deadLock")) : 1000
     );
-    const frts::Frame::time deltaTime = frts::fromMilliseconds(
-                cmdOptionExists(argv, argv+argc, "deltaTime") ?
-                static_cast<unsigned int>(std::atoi(getCmdOption(argv, argv+argc, "deltaTime"))) : 10
-    );
-    const std::string loadFile = cmdOptionExists(argv, argv+argc, "loadFile") ?
-                getCmdOption(argv, argv+argc, "loadFile") : "load.yaml";
-    const std::string logConfigFile = cmdOptionExists(argv, argv+argc, "logConfigFile") ?
-                getCmdOption(argv, argv+argc, "logConfigFile") : "log/easylogging.conf";
-    const frts::Frame::time maxFrameTime = frts::fromMilliseconds(
-                cmdOptionExists(argv, argv+argc, "maxFrameTime") ?
-                static_cast<unsigned int>(std::atoi(getCmdOption(argv, argv+argc, "maxFrameTime"))) : 100
-    );
-    const std::string pluginsRoot = cmdOptionExists(argv, argv+argc, "pluginsRoot") ?
-                getCmdOption(argv, argv+argc, "pluginsRoot") : "plugins/";
+    const frts::Frame::time deltaTime = frts::fromMilliseconds(static_cast<unsigned int>(
+                frts::cmdOptionExists(argv, argv+argc, "deltaTime") ?
+                std::atoi(frts::getCmdOption(argv, argv+argc, "deltaTime")) : 10
+    ));
+    const std::string loadFile = frts::cmdOptionExists(argv, argv+argc, "loadFile") ?
+                frts::getCmdOption(argv, argv+argc, "loadFile") : "load.yaml";
+    const std::string logConfigFile = frts::cmdOptionExists(argv, argv+argc, "logConfigFile") ?
+                frts::getCmdOption(argv, argv+argc, "logConfigFile") : "log/easylogging.conf";
+    const frts::Frame::time maxFrameTime = frts::fromMilliseconds(static_cast<unsigned int>(
+                frts::cmdOptionExists(argv, argv+argc, "maxFrameTime") ?
+                std::atoi(frts::getCmdOption(argv, argv+argc, "maxFrameTime")) : 100
+    ));
+    const std::string pluginsRoot = frts::cmdOptionExists(argv, argv+argc, "pluginsRoot") ?
+                frts::getCmdOption(argv, argv+argc, "pluginsRoot") : "plugins/";
 
     const std::string logModule = "frts::Kernel";
 
@@ -128,42 +71,42 @@ int main(int argc, char* argv[])
     frts::LogPtr log = frts::makeEasyloggingLog(logConfigFile);
     assert(log != nullptr);
 
-    // Start application.
-    log->warning(logModule, "Start application.");
-    frts::Application app(log);
-    app.setMaxNumberExtraExecutions(deadLock);
-
-    // Log environment.
-    log->warning(logModule, "Environment:");
-    log->warning(logModule, "\tPlatform: " + std::string(BOOST_PLATFORM));
-    log->warning(logModule, "\tCompiler: " + std::string(BOOST_COMPILER));
-    log->warning(logModule, "\tStandard Library: " + std::string(BOOST_STDLIB));
-    log->warning(logModule, "\tBoost: " + std::to_string(BOOST_VERSION / 100000) + "." +
-                                          std::to_string((BOOST_VERSION / 100) % 1000) + "." +
-                                          std::to_string(BOOST_VERSION % 100));
-
-    // Log basic configuration.
-    log->warning(logModule, "Basic configuration:");
-    log->warning(logModule, "\tdeadLock = " + std::to_string(deadLock));
-    log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
-    log->warning(logModule, "\tloadFile = " + loadFile);
-    log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
-    log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
-    log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
-
     try
     {
+        // Start application.
+        log->warning(logModule, "Start application.");
+        frts::Application app(log);
+        app.setMaxNumberExtraExecutions(deadLock);
+
+        // Log environment.
+        log->warning(logModule, "Environment:");
+        log->warning(logModule, "\tPlatform: " + std::string(BOOST_PLATFORM));
+        log->warning(logModule, "\tCompiler: " + std::string(BOOST_COMPILER));
+        log->warning(logModule, "\tStandard Library: " + std::string(BOOST_STDLIB));
+        log->warning(logModule, "\tBoost: " + std::to_string(BOOST_VERSION / 100000) + "." +
+                                              std::to_string((BOOST_VERSION / 100) % 1000) + "." +
+                                              std::to_string(BOOST_VERSION % 100));
+
+        // Log basic configuration.
+        log->warning(logModule, "Basic configuration:");
+        log->warning(logModule, "\tdeadLock = " + std::to_string(deadLock));
+        log->warning(logModule, "\tdeltaTime = " + std::to_string(deltaTime.count()));
+        log->warning(logModule, "\tloadFile = " + loadFile);
+        log->warning(logModule, "\tlogConfigFile = " + logConfigFile);
+        log->warning(logModule, "\tmaxFrameTime = " + std::to_string(maxFrameTime.count()));
+        log->warning(logModule, "\tpluginsRoot = " + pluginsRoot);
+
         // Phase 1: Read load configuration.
         log->warning(logModule, "Phase 1: Read load configuration.");
         auto loadConfig = app.readLoadFile(pluginsRoot + loadFile);
         log->warning(logModule, "Load configuration:");
-        logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
-        logLoadConfigList(log, logModule, "Startup Modules", loadConfig.startupModules);
-        logLoadConfigList(log, logModule, "Shutdown Modules", loadConfig.shutdownModules);
-        logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
-        logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
-        logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
-        logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
+        frts::logLoadConfigList(log, logModule, "Plugins", loadConfig.plugins);
+        frts::logLoadConfigList(log, logModule, "Startup Modules", loadConfig.startupModules);
+        frts::logLoadConfigList(log, logModule, "Shutdown Modules", loadConfig.shutdownModules);
+        frts::logLoadConfigList(log, logModule, "Render Modules", loadConfig.renderModules);
+        frts::logLoadConfigList(log, logModule, "Update Modules", loadConfig.updateModules);
+        frts::logLoadConfigList(log, logModule, "Utilities", loadConfig.utilities);
+        frts::logLoadConfigList(log, logModule, "Configurations", loadConfig.configurations);
 
         // Phase 2: Load plugins.
         log->warning(logModule, "Phase 2: Load plugins.");
@@ -291,18 +234,7 @@ int main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         // Something bad happened.
-#if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
-        // See https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
-        const size_t maxSize = 10;
-        void *stackTrace[maxSize];
-        size_t size = backtrace(stackTrace, maxSize);
-        auto symbols = backtrace_symbols(stackTrace, size);
-        auto msg = boost::format(R"(Exception: %1%\nStack Trace: %2%)")
-                % ex.what() % symbols;
-        log->error(logModule, msg.str());
-#else
-        log->error(logModule, ex.what());
-#endif
+        frts::logException(log, logModule, ex);
         return 1;
     }
 }
