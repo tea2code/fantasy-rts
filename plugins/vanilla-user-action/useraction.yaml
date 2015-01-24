@@ -4,23 +4,23 @@ useraction:
     
     useractions:
     
-        - command: carve.stairs
-          type: frts.vanillauseraction.useraction.carve
-          settings:
-            carve_types: 
-                - x: 0
-                  y: 0
-                  z: 0
-                  entity: entity.stairs
-            harvest_types: 
-                - harvestable.dig
-            jobmarker: entity.jobmarker
-            requirements: 
-                - unit.player
-            teleport:
-                - x: 0
-                  y: 0
-                  z: 1     
+        # - command: carve.stairs
+          # type: frts.vanillauseraction.useraction.carve
+          # settings:
+            # carve_types: 
+                # - x: 0
+                  # y: 0
+                  # z: 0
+                  # entity: entity.stairs
+            # harvest_types: 
+                # - harvestable.dig
+            # jobmarker: entity.jobmarker
+            # requirements: 
+                # - unit.player
+            # teleport:
+                # - x: 0
+                  # y: 0
+                  # z: 1     
 
         - command: chop
           type: frts.vanillauseraction.useraction.harvest

@@ -1,5 +1,8 @@
 #include "RegionManagerImpl.h"
 
+#include <entity/ComponentIds.h>
+#include <entity/EntityGroup.h>
+#include <entity/EntityGroupSatellite.h>
 #include <main/ModelData.h>
 #include <main/ModelIds.h>
 #include <main/ModelFactory.h>
@@ -155,12 +158,51 @@ frts::PointPtr frts::RegionManagerImpl::removeEntity(const EntityPtr& entity, co
 
     std::lock_guard<RecursiveLock> lock(locker);
 
+    // Check if entity is a entity group master.
+    auto entityGroupId = shared->makeId(ComponentIds::entityGroup());
+    if (entity->hasComponent(entityGroupId))
+    {
+        auto component = getComponent<EntityGroup>(entityGroupId, entity);
+        for (auto satellite : component->getSatellites())
+        {
+            removeEntityLockFree(satellite, shared);
+        }
+    }
+
+    // Check if entity is a entity group slave.
+    auto entityGroupSatelliteId = shared->makeId(ComponentIds::entityGroupSatellite());
+    if (entity->hasComponent(entityGroupSatelliteId))
+    {
+        auto master = getComponent<EntityGroupSatellite>(entityGroupSatelliteId, entity)->getMaster();
+        assert(master != nullptr);
+        auto component = getComponent<EntityGroup>(entityGroupId, master);
+        removeEntityLockFree(master, shared);
+        for (auto satellite : component->getSatellites())
+        {
+            if (satellite == entity)
+            {
+                continue;
+            }
+            removeEntityLockFree(satellite, shared);
+        }
+    }
+
+    // Remove entity.
+    return removeEntityLockFree(entity, shared);
+}
+
+frts::PointPtr frts::RegionManagerImpl::removeEntityLockFree(const EntityPtr& entity, const SharedManagerPtr& shared)
+{
+    assert(entity != nullptr);
+    assert(shared != nullptr);
+
     auto pos = region->removeEntity(entity, shared);
     resourceEntityManager->remove(entity);
     resourceManager->remove(entity);
     addChangedPosLockFree(pos);
     return pos;
 }
+
 
 void frts::RegionManagerImpl::resetChangedPos()
 {
@@ -176,6 +218,46 @@ frts::PointPtr frts::RegionManagerImpl::setPos(const EntityPtr& entity, const Po
     assert(shared != nullptr);
 
     std::lock_guard<RecursiveLock> lock(locker);
+
+    // Check if entity is a entity group master.
+    auto entityGroupId = shared->makeId(ComponentIds::entityGroup());
+    if (entity->hasComponent(entityGroupId))
+    {
+        auto component = getComponent<EntityGroup>(entityGroupId, entity);
+        for (auto satellite : component->getSatellites())
+        {
+            setPosLockFree(satellite, pos + component->getSatellitePos(satellite), shared);
+        }
+    }
+
+    // Check if entity is a entity group slave.
+    auto entityGroupSatelliteId = shared->makeId(ComponentIds::entityGroupSatellite());
+    if (entity->hasComponent(entityGroupSatelliteId))
+    {
+        auto master = getComponent<EntityGroupSatellite>(entityGroupSatelliteId, entity)->getMaster();
+        assert(master != nullptr);
+        auto component = getComponent<EntityGroup>(entityGroupId, master);
+        auto masterPos = pos - component->getSatellitePos(entity);
+        setPosLockFree(master, masterPos, shared);
+        for (auto satellite : component->getSatellites())
+        {
+            if (satellite == entity)
+            {
+                continue;
+            }
+            setPosLockFree(satellite, masterPos + component->getSatellitePos(satellite), shared);
+        }
+    }
+
+    // Set entity to new position.
+    return setPosLockFree(entity, pos, shared);
+}
+
+frts::PointPtr frts::RegionManagerImpl::setPosLockFree(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared)
+{
+    assert(entity != nullptr);
+    assert(pos != nullptr);
+    assert(shared != nullptr);
 
     auto oldPos = region->setPos(entity, pos, shared);
     updateResourcesLockFree(entity, shared);

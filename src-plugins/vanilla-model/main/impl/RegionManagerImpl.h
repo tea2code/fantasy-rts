@@ -51,6 +51,23 @@ namespace frts
         void addChangedPosLockFree(const PointPtr& pos);
 
         /**
+         * @brief Lock free implementation of removeEntity().
+         * @param entity The entity.
+         * @param shared The shared manager.
+         * @return The last position of the entity or null if entity was not in region.
+         */
+        PointPtr removeEntityLockFree(const EntityPtr& entity, const SharedManagerPtr& shared);
+
+        /**
+         * @brief Lock free implementation of setPos().
+         * @param entity The entity.
+         * @param pos The position.
+         * @param shared The shared manager.
+         * @return The previous position of the entity or null if entity was not in region.
+         */
+        PointPtr setPosLockFree(const EntityPtr& entity, const PointPtr& pos, const SharedManagerPtr& shared);
+
+        /**
          * @brief Lock free implementation of updateResource().
          * @param entity The entity.
          * @param shared The shared manager.

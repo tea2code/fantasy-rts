@@ -40,7 +40,7 @@ Entities can drop other entities if they are destroyed, killed, harvested... The
 
 ## EntityGroup
 
-Entities can be grouped to a kind of "super entity" which spans multiple sub entities. The entity with this component is the master of the group and manages all the other entities. 
+Entities can be grouped to a kind of "super entity" which spans multiple sub entities. The entity with this component is the master of the group and manages all the other entities. Currently it is recommended to only use this with static, non-moving entities.
 
 The configuration consists of the satellite entity id and the position relative to the master entity.
 

@@ -35,7 +35,8 @@ frts::ComponentPtr frts::EntityGroupBuilder::build(const EntityPtr& entity, cons
 
     auto mf = getUtility<ModelFactory>(shared, ModelIds::modelFactory());
     auto satelliteId = shared->makeId(ComponentIds::entityGroupSatellite());
-    for (auto satelliteNode : *node)
+    auto satelliteNodes = node->getNode("satellites");
+    for (auto satelliteNode : *satelliteNodes)
     {
         auto entityId = shared->makeId(satelliteNode->getString("entity"));
         auto satellite = mf->makeEntity(entityId, shared);
