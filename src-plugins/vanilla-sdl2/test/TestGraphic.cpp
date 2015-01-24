@@ -16,6 +16,7 @@
 #include <frts/configuration>
 #include <log/NoLog.h>
 #include <shared/impl/SharedManagerImpl.h>
+#include <entity/impl/EntityImpl.h>
 
 #include <vector>
 #include <unordered_map>
@@ -50,9 +51,13 @@ namespace TestGraphic
         bool has(const std::string&) { return false; }
 
         bool isBool(const std::string&) { return false; }
+        bool isBools(const std::string&) { return false; }
         bool isFloat(const std::string&) { return false; }
+        bool isFloats(const std::string&) { return false; }
         bool isInteger(const std::string&) { return false; }
+        bool isIntegers(const std::string&) { return false; }
         bool isString(const std::string&) { return false; }
+        bool isStrings(const std::string&) { return false; }
     };
 }
 
@@ -175,12 +180,13 @@ TEST_CASE("Renderable Builder.", "[graphic]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeRenderableBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
-    component = builder->build(shared, std::make_shared<TestGraphic::RenderableConfig>());
+    component = builder->build(entity, shared, std::make_shared<TestGraphic::RenderableConfig>());
     REQUIRE(component != nullptr);
     auto renderable = std::static_pointer_cast<frts::Renderable>(component);
     REQUIRE(renderable->getSprite() == shared->makeId("id.sprite"));

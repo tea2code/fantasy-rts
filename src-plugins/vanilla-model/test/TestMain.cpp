@@ -63,23 +63,27 @@ TEST_CASE("ModelFactory.", "[main]")
         modelFactory->init(shared);
         modelFactory->init(shared);
 
+        auto entity = frts::makeEntity();
+
         frts::IdPtr id = shared->makeId(frts::ComponentIds::blockedBy());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
 
         id = shared->makeId(frts::ComponentIds::blocking());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
 
         id = shared->makeId(frts::ComponentIds::drop());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
 
         id = shared->makeId(frts::ComponentIds::hasResource());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
 
         id = shared->makeId(frts::ComponentIds::isResource());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
 
         id = shared->makeId(frts::ComponentIds::sortOrder());
-        REQUIRE(modelFactory->makeComponent(id, shared)->getComponentType() == id);
+        REQUIRE(modelFactory->makeComponent(id, entity, shared)->getComponentType() == id);
+
+        // TODO Test all components.
     }
 
     SECTION("Get path finder.")

@@ -42,11 +42,11 @@ frts::EntityPtr frts::BmpMapParser::connectIfNotYet(const WriteableBlockPtr& blo
     auto target = mf->makeEntity();
     auto otherTarget = mf->makeEntity();
 
-    auto teleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+    auto teleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, target, shared));
     teleport->setTarget(otherTarget);
     target->addComponent(teleport);
 
-    auto otherTeleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, shared));
+    auto otherTeleport = std::static_pointer_cast<Teleport>(mf->makeComponent(teleportType, otherTarget, shared));
     otherTeleport->setTarget(target);
     otherTarget->addComponent(otherTeleport);
 

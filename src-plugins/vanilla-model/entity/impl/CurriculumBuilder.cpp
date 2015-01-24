@@ -14,7 +14,7 @@ frts::CurriculumBuilder::~CurriculumBuilder()
 
 }
 
-frts::ComponentPtr frts::CurriculumBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::CurriculumBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -22,12 +22,13 @@ frts::ComponentPtr frts::CurriculumBuilder::build(const SharedManagerPtr& shared
     return makeCurriculum(id);
 }
 
-frts::ComponentPtr frts::CurriculumBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::CurriculumBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
-    auto component = std::static_pointer_cast<Curriculum>(build(shared));
+    auto component = std::static_pointer_cast<Curriculum>(build(entity, shared));
     for (auto& ability : node->getStrings("abilities"))
     {
         auto id = shared->makeId(ability);

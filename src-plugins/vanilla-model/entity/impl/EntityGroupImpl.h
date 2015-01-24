@@ -19,12 +19,12 @@ namespace frts
          * @param satellites The satellites.
          * @param positions The relative positions of all satellites.
          */
-        EntityGroupImpl(IdPtr componentType, EntityVector satellites, EntityPosMap positions);
+        EntityGroupImpl(const IdPtr& componentType, const EntityVector& satellites, const EntityPosMap& positions);
         ~EntityGroupImpl();
 
         IdPtr getComponentType() const override;
         EntityVector getSatellites() const override;
-        PointPtr getSatellitePos(EntityPtr satellite) const override;
+        PointPtr getSatellitePos(const EntityPtr& satellite) const override;
 
     private:
         IdPtr componentType;
@@ -40,8 +40,8 @@ namespace frts
      * @param positions The relative positions of all satellites.
      * @return The component.
      */
-    inline ComponentPtr makeEntityGroup(IdPtr componentType, EntityVector satellites = {},
-                                        EntityGroupImpl::EntityPosMap positions = EntityGroupImpl::EntityPosMap())
+    inline ComponentPtr makeEntityGroup(const IdPtr& componentType, const EntityVector& satellites = {},
+                                        const EntityGroupImpl::EntityPosMap& positions = EntityGroupImpl::EntityPosMap())
     {
         assert(componentType != nullptr);
 

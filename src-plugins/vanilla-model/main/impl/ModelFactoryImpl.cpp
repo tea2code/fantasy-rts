@@ -320,15 +320,16 @@ frts::WriteableBlockPtr frts::ModelFactoryImpl::makeBlock(const SharedManagerPtr
     return frts::makeBlock(shared->makeId(ComponentIds::blocking()), shared->makeId(ComponentIds::sortOrder()));
 }
 
-frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared)
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const EntityPtr &entity, const SharedManagerPtr& shared)
 {
     assert(builderId != nullptr);
+    assert(entity != nullptr);
     assert(shared != nullptr);
 
     auto it = componentBuilders.find(builderId);
     if(it != componentBuilders.end())
     {
-        return it->second->build(shared);
+        return it->second->build(entity, shared);
     }
     else
     {
@@ -337,16 +338,17 @@ frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId,
     }
 }
 
-frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const ConfigNodePtr& node, const SharedManagerPtr& shared)
+frts::ComponentPtr frts::ModelFactoryImpl::makeComponent(const IdPtr& builderId, const EntityPtr& entity, const ConfigNodePtr& node, const SharedManagerPtr& shared)
 {
     assert(builderId != nullptr);
+    assert(entity != nullptr);
     assert(node != nullptr);
     assert(shared != nullptr);
 
     auto it = componentBuilders.find(builderId);
     if(it != componentBuilders.end())
     {
-        return it->second->build(shared, node);
+        return it->second->build(entity, shared, node);
     }
     else
     {
@@ -412,7 +414,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
                 for (auto componentNode : *componentNodes)
                 {
                     auto componentId = shared->makeId(componentNode->getString("component"));
-                    auto component = makeComponent(componentId, componentNode, shared);
+                    auto component = makeComponent(componentId, entity, componentNode, shared);
                     entity->addComponent(component);
                 }
             }

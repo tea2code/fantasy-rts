@@ -15,7 +15,7 @@ namespace frts
          * @param componentType The component type.
          * @param master The entity group master.
          */
-        EntityGroupSatelliteImpl(IdPtr componentType, EntityPtr master);
+        EntityGroupSatelliteImpl(const IdPtr& componentType, const EntityPtr& master);
         ~EntityGroupSatelliteImpl();
 
         IdPtr getComponentType() const override;
@@ -33,7 +33,7 @@ namespace frts
      * @param master The entity group master.
      * @return The component.
      */
-    inline ComponentPtr makeEntityGroupSatellite(IdPtr componentType, EntityPtr master)
+    inline ComponentPtr makeEntityGroupSatellite(const IdPtr& componentType, const EntityPtr& master)
     {
         assert(componentType != nullptr);
         assert(master != nullptr);

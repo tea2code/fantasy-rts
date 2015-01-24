@@ -1,7 +1,7 @@
 #include "EntityGroupImpl.h"
 
 
-frts::EntityGroupImpl::EntityGroupImpl(IdPtr componentType, EntityVector satellites, EntityPosMap positions)
+frts::EntityGroupImpl::EntityGroupImpl(const IdPtr& componentType, const EntityVector& satellites, const EntityPosMap& positions)
     : componentType{componentType}, satellites{satellites}, positions{positions}
 {
     for (auto entity : satellites)
@@ -25,7 +25,7 @@ frts::EntityVector frts::EntityGroupImpl::getSatellites() const
     return satellites;
 }
 
-frts::PointPtr frts::EntityGroupImpl::getSatellitePos(EntityPtr satellite) const
+frts::PointPtr frts::EntityGroupImpl::getSatellitePos(const EntityPtr& satellite) const
 {
     assert(satellite != nullptr);
 

@@ -7,19 +7,20 @@
 frts::InfoBuilder::InfoBuilder()
 {}
 
-frts::ComponentPtr frts::InfoBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::InfoBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return makeInfo(shared->makeId(ComponentIds::info()));
 }
 
-frts::ComponentPtr frts::InfoBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::InfoBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
-    auto component = std::static_pointer_cast<Info>(build(shared));
+    auto component = std::static_pointer_cast<Info>(build(entity, shared));
     std::vector<Info::InfoItem> information;
     auto infosNode = node->getNode("infos");
     for (auto infoNode : *infosNode)

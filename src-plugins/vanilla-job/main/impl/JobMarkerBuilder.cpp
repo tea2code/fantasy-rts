@@ -14,16 +14,18 @@ frts::JobMarkerBuilder::~JobMarkerBuilder()
 
 }
 
-frts::ComponentPtr frts::JobMarkerBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::JobMarkerBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return makeJobMarker(shared->makeId(JobIds::jobMarker()));
 }
 
-frts::ComponentPtr frts::JobMarkerBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr&)
+frts::ComponentPtr frts::JobMarkerBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr&)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
 
-    return build(shared);
+    // No config.
+    return build(entity, shared);
 }

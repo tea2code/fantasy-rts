@@ -70,9 +70,12 @@ namespace frts
          * @throws UnknownComponentBuilderError if there is not builder registered for the
          *         given ID.
          * @param builderId The builder ID.
+         * @param entity The entity for which this component is. Some component builders might need
+         *               this information.
+         * @shared The shared manager.
          * @return The component.
          */
-        virtual ComponentPtr makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared) = 0;
+        virtual ComponentPtr makeComponent(const IdPtr& builderId, const EntityPtr& entity, const SharedManagerPtr& shared) = 0;
 
         /**
          * @brief Make an empty entity.

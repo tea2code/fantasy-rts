@@ -182,13 +182,14 @@ TEST_CASE("BlockedBy Builder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeBlockedByBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::StringListConfig>("blocks", std::vector<std::string> {"block1", "block2"});
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::BlockedBy>(component);
     REQUIRE(castComponent->getBlocks().size() == 2);
@@ -199,13 +200,14 @@ TEST_CASE("Blocking Builder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeBlockingBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::StringListConfig>("blocks", std::vector<std::string> {"block1", "block2"});
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
 
     auto blockedBy = frts::makeBlockedBy(frts::makeId(frts::ComponentIds::blockedBy()));
@@ -220,8 +222,9 @@ TEST_CASE("Curriculum.", "[entity]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeCurriculumBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto ability1 = shared->makeId("ability.1");
@@ -280,13 +283,14 @@ TEST_CASE("Drop Builder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeDropBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::StringListConfig>("drops", std::vector<std::string> {"drop1", "drop2"});
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::Drop>(component);
     REQUIRE(castComponent->getDrops().size() == 2);
@@ -346,8 +350,9 @@ TEST_CASE("EntityGroupBuilder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeEntityGroupBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
 
     REQUIRE(component != nullptr);
 }
@@ -375,12 +380,12 @@ TEST_CASE("Harvestable.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeHarvestableBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
-    auto entity = frts::makeEntity();
     frts::IdPtr type1 = frts::makeId("harvestable.type1");
     frts::IdPtr type2 = frts::makeId("harvestable.type2");
 
@@ -456,13 +461,14 @@ TEST_CASE("HasResource Builder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeHasResourceBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::StringListConfig>("resources", std::vector<std::string> {"resource1", "resource2"});
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::HasResource>(component);
     REQUIRE(castComponent->getResources().size() == 2);
@@ -476,13 +482,14 @@ TEST_CASE("IsResource Builder.", "[entity]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeIsResourceBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::IsResourceConfig>();
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::IsResource>(component);
     REQUIRE(castComponent->getResourceType() == frts::makeId("id.resource"));
@@ -493,8 +500,9 @@ TEST_CASE("Info.", "[entity]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeInfoBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto k1 = shared->makeId("k1");
@@ -521,8 +529,9 @@ TEST_CASE("Movable.", "[entity]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeMovableBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     // Without path.
@@ -595,13 +604,14 @@ TEST_CASE("Sort Order Builder.", "[entity]")
     auto log = std::make_shared<frts::NoLog>();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeSortOrderBuilder();
 
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto configNode = std::make_shared<TestEntity::SortOrderConfig>();
-    component = builder->build(shared, configNode);
+    component = builder->build(entity, shared, configNode);
     REQUIRE(component != nullptr);
     auto castComponent = std::static_pointer_cast<frts::SortOrder>(component);
     REQUIRE(castComponent->getSortOrder() == 123);
@@ -612,12 +622,12 @@ TEST_CASE("Teleport.", "[entity]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeTeleportBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     auto teleport = std::static_pointer_cast<frts::Teleport>(component);
-    auto entity = frts::makeEntity();
     teleport->setTarget(entity);
     REQUIRE(teleport->getTarget() == entity);
 }

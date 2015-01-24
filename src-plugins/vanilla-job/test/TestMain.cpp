@@ -402,8 +402,9 @@ TEST_CASE("JobMarker", "[main]")
     auto log = frts::makeNoLog();
     auto shared = frts::makeSharedManager(log);
 
+    auto entity = frts::makeEntity();
     auto builder = frts::makeJobMarkerBuilder();
-    auto component = builder->build(shared);
+    auto component = builder->build(entity, shared);
     REQUIRE(component != nullptr);
 
     std::queue<frts::Frame::time> dueTimes;

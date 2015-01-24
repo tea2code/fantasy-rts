@@ -17,15 +17,16 @@ frts::EntityGroupBuilder::~EntityGroupBuilder()
 
 }
 
-frts::ComponentPtr frts::EntityGroupBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::EntityGroupBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
     return makeEntityGroup(shared->makeId(ComponentIds::entityGroup()));
 }
 
-frts::ComponentPtr frts::EntityGroupBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::EntityGroupBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
@@ -37,14 +38,15 @@ frts::ComponentPtr frts::EntityGroupBuilder::build(const SharedManagerPtr& share
     for (auto satelliteNode : *node)
     {
         auto entityId = shared->makeId(satelliteNode->getString("entity"));
-        auto entity = mf->makeEntity(entityId, shared);
-        auto component = makeEntityGroupSatellite(satelliteId, ...);
-        entities.push_back(entity);
+        auto satellite = mf->makeEntity(entityId, shared);
+        auto component = makeEntityGroupSatellite(satelliteId, entity);
+        satellite->addComponent(component);
+        entities.push_back(satellite);
 
         auto pos = mf->makePoint(satelliteNode->getInteger("x"),
                                  satelliteNode->getInteger("y"),
                                  satelliteNode->getInteger("z"));
-        positions.insert(std::make_pair(entity, pos));
+        positions.insert(std::make_pair(satellite, pos));
     }
 
     return makeEntityGroup(shared->makeId(ComponentIds::entityGroup()), entities, positions);

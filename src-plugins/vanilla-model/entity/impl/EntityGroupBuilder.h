@@ -24,8 +24,8 @@ namespace frts
         EntityGroupBuilder();
         ~EntityGroupBuilder();
 
-        ComponentPtr build(const SharedManagerPtr& shared) override;
-        ComponentPtr build(const SharedManagerPtr& shared, const ConfigNodePtr& node) override;
+        ComponentPtr build(const EntityPtr& entity, const SharedManagerPtr& shared) override;
+        ComponentPtr build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node) override;
     };
 
     /**

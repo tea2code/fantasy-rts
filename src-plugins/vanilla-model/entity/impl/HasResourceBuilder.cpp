@@ -8,7 +8,7 @@ frts::HasResourceBuilder::HasResourceBuilder()
 {
 }
 
-frts::ComponentPtr frts::HasResourceBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::HasResourceBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,12 +16,13 @@ frts::ComponentPtr frts::HasResourceBuilder::build(const SharedManagerPtr& share
     return makeHasResource(id);
 }
 
-frts::ComponentPtr frts::HasResourceBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::HasResourceBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
-    auto component = std::static_pointer_cast<HasResource>(build(shared));
+    auto component = std::static_pointer_cast<HasResource>(build(entity, shared));
     for (auto& resource : node->getStrings("resources"))
     {
         auto id = shared->makeId(resource);

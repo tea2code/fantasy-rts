@@ -37,7 +37,7 @@ namespace frts
         std::vector<std::string> getSupportedConfig() override;
         bool init(const SharedManagerPtr& shared) override;
         WriteableBlockPtr makeBlock(const SharedManagerPtr& shared) override;
-        ComponentPtr makeComponent(const IdPtr& builderId, const SharedManagerPtr& shared) override;
+        ComponentPtr makeComponent(const IdPtr& builderId, const EntityPtr& entity, const SharedManagerPtr& shared) override;
         EntityPtr makeEntity() override;
         EntityPtr makeEntity(const IdPtr& id, const SharedManagerPtr& shared) override;
         PointPtr makePoint(Point::value x, Point::value y, Point::value z) override;
@@ -80,7 +80,7 @@ namespace frts
         bool firstInit = true;
 
     private:
-        ComponentPtr makeComponent(const IdPtr& builderId, const ConfigNodePtr& node, const SharedManagerPtr& shared);
+        ComponentPtr makeComponent(const IdPtr& builderId, const EntityPtr& entity, const ConfigNodePtr& node, const SharedManagerPtr& shared);
     };
 
     /**

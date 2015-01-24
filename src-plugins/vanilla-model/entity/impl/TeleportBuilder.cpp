@@ -8,7 +8,7 @@ frts::TeleportBuilder::TeleportBuilder()
 {
 }
 
-frts::ComponentPtr frts::TeleportBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::TeleportBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,10 +16,11 @@ frts::ComponentPtr frts::TeleportBuilder::build(const SharedManagerPtr& shared)
     return makeTeleport(id);
 }
 
-frts::ComponentPtr frts::TeleportBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr&)
+frts::ComponentPtr frts::TeleportBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr&)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
 
     // No config.
-    return build(shared);
+    return build(entity, shared);
 }

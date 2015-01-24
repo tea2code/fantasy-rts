@@ -8,7 +8,7 @@ frts::DropBuilder::DropBuilder()
 {
 }
 
-frts::ComponentPtr frts::DropBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::DropBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,12 +16,13 @@ frts::ComponentPtr frts::DropBuilder::build(const SharedManagerPtr& shared)
     return makeDrop(id);
 }
 
-frts::ComponentPtr frts::DropBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::DropBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
-    auto component = std::static_pointer_cast<Drop>(build(shared));
+    auto component = std::static_pointer_cast<Drop>(build(entity, shared));
     for (auto& drop : node->getStrings("drops"))
     {
         auto id = shared->makeId(drop);

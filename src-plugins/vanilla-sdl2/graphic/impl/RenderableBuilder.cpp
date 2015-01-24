@@ -8,7 +8,7 @@ frts::RenderableBuilder::RenderableBuilder()
 {
 }
 
-frts::ComponentPtr frts::RenderableBuilder::build(const SharedManagerPtr& shared)
+frts::ComponentPtr frts::RenderableBuilder::build(const EntityPtr&, const SharedManagerPtr& shared)
 {
     assert(shared != nullptr);
 
@@ -16,12 +16,13 @@ frts::ComponentPtr frts::RenderableBuilder::build(const SharedManagerPtr& shared
     return makeRenderable(id);
 }
 
-frts::ComponentPtr frts::RenderableBuilder::build(const SharedManagerPtr& shared, const ConfigNodePtr& node)
+frts::ComponentPtr frts::RenderableBuilder::build(const EntityPtr& entity, const SharedManagerPtr& shared, const ConfigNodePtr& node)
 {
+    assert(entity != nullptr);
     assert(shared != nullptr);
     assert(node != nullptr);
 
-    auto component = std::static_pointer_cast<Renderable>(build(shared));
+    auto component = std::static_pointer_cast<Renderable>(build(entity, shared));
     auto id = shared->makeId(node->getString("sprite"));
     component->setSprite(id);
     component->setStacking(node->getBool("stacking", true));

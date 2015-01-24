@@ -1,7 +1,7 @@
 #include "EntityGroupSatelliteImpl.h"
 
 
-frts::EntityGroupSatelliteImpl::EntityGroupSatelliteImpl(IdPtr componentType, EntityPtr master)
+frts::EntityGroupSatelliteImpl::EntityGroupSatelliteImpl(const IdPtr& componentType, const EntityPtr& master)
     : componentType{componentType}, master{master}
 {
 

@@ -37,7 +37,7 @@ namespace frts
          * @param satellite The satellite entity.
          * @return The position.
          */
-        virtual PointPtr getSatellitePos(EntityPtr satellite) const = 0;
+        virtual PointPtr getSatellitePos(const EntityPtr& satellite) const = 0;
     };
 }
 

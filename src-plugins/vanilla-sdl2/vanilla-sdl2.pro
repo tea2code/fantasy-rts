@@ -57,10 +57,12 @@ UNIT_TEST {
     HEADERS += \
         $$PWD/../../src/log/NoLog.h \
         $$PWD/../../src/shared/impl/IdImpl.h \
-        $$PWD/../../src/shared/impl/SharedManagerImpl.h
+        $$PWD/../../src/shared/impl/SharedManagerImpl.h \
+        $$PWD/../vanilla-model/entity/impl/EntityImpl.h
     SOURCES += \
         $$PWD/../../src/shared/impl/IdImpl.cpp \
-        $$PWD/../../src/shared/impl/SharedManagerImpl.cpp
+        $$PWD/../../src/shared/impl/SharedManagerImpl.cpp \
+        $$PWD/../vanilla-model/entity/impl/EntityImpl.cpp
 
     include(test/test.pri)
 }
