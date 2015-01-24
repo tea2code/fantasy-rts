@@ -12,10 +12,6 @@ useraction:
                   y: 0
                   z: 0
                   entity: entity.stairs
-                - x: 0
-                  y: 0
-                  z: 1
-                  entity: entity.stairs.floor
             harvest_types: 
                 - harvestable.dig
             jobmarker: entity.jobmarker

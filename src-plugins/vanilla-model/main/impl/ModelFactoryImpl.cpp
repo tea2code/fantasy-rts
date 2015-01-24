@@ -8,6 +8,7 @@
 #include <entity/impl/CurriculumBuilder.h>
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/EntityGroupBuilder.h>
 #include <entity/impl/HarvestableBuilder.h>
 #include <entity/impl/HasResourceBuilder.h>
 #include <entity/impl/InfoBuilder.h>
@@ -146,6 +147,11 @@ bool frts::ModelFactoryImpl::init(const SharedManagerPtr& shared)
     auto dropId = shared->makeId(ComponentIds::drop());
     componentBuilder = makeDropBuilder();
     registerComponentBuilder(dropId, componentBuilder);
+
+    // EntityGroup.
+    auto entityGroupId = shared->makeId(ComponentIds::entityGroup());
+    componentBuilder = makeEntityGroupBuilder();
+    registerComponentBuilder(entityGroupId, componentBuilder);
 
     // Harvestable.
     auto harvestableId = shared->makeId(ComponentIds::harvestable());
@@ -371,7 +377,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
         std::stack<std::vector<ConfigNodePtr>> entityConfigs;
         entityConfigs.push(entityConfig.at(id));
 
-        // Now collect all prototypes. At the top of the stack will be the highest prototype in the
+        // Collect all prototypes. At the top of the stack will be the highest prototype in the
         // hierarchie in the end.
         IdPtr prototype = nullptr;
         auto it = prototypes.find(id);
@@ -393,7 +399,7 @@ frts::EntityPtr frts::ModelFactoryImpl::makeEntity(const IdPtr& id, const Shared
             }
         }
 
-        // Now create components from config in configured order. Later configs might override
+        // Create components from config in configured order. Later configs might override
         // previous set components.
         while(!entityConfigs.empty())
         {

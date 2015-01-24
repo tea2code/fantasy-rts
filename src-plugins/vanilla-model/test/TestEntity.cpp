@@ -10,6 +10,9 @@
 #include <entity/impl/DropImpl.h>
 #include <entity/impl/DropBuilder.h>
 #include <entity/impl/EntityImpl.h>
+#include <entity/impl/EntityGroupBuilder.h>
+#include <entity/impl/EntityGroupImpl.h>
+#include <entity/impl/EntityGroupSatelliteImpl.h>
 #include <entity/impl/HarvestableImpl.h>
 #include <entity/impl/HarvestableBuilder.h>
 #include <entity/impl/HasResourceImpl.h>
@@ -71,9 +74,13 @@ namespace TestEntity
         bool has(const std::string&) { return false; }
 
         bool isBool(const std::string&) { return false; }
+        bool isBools(const std::string&) { return false; }
         bool isFloat(const std::string&) { return false; }
+        bool isFloats(const std::string&) { return false; }
         bool isInteger(const std::string&) { return false; }
+        bool isIntegers(const std::string&) { return false; }
         bool isString(const std::string&) { return false; }
+        bool isStrings(const std::string&) { return false; }
 
     private:
         std::string key;
@@ -107,9 +114,13 @@ namespace TestEntity
         bool has(const std::string&) { return false; }
 
         bool isBool(const std::string&) { return false; }
+        bool isBools(const std::string&) { return false; }
         bool isFloat(const std::string&) { return false; }
+        bool isFloats(const std::string&) { return false; }
         bool isInteger(const std::string&) { return false; }
+        bool isIntegers(const std::string&) { return false; }
         bool isString(const std::string&) { return false; }
+        bool isStrings(const std::string&) { return false; }
     };
 
     class SortOrderConfig : public frts::ConfigNode
@@ -139,9 +150,13 @@ namespace TestEntity
         bool has(const std::string&) { return false; }
 
         bool isBool(const std::string&) { return false; }
+        bool isBools(const std::string&) { return false; }
         bool isFloat(const std::string&) { return false; }
+        bool isFloats(const std::string&) { return false; }
         bool isInteger(const std::string&) { return false; }
+        bool isIntegers(const std::string&) { return false; }
         bool isString(const std::string&) { return false; }
+        bool isStrings(const std::string&) { return false; }
     };
 }
 
@@ -303,6 +318,56 @@ TEST_CASE("Entity.", "[entity]")
     entity->addComponent(hasResource);
 
     REQUIRE(entity->getComponents().size() == 2);
+}
+
+TEST_CASE("EntityGroup.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto entity = frts::makeEntity();
+    auto pos = frts::makePoint(0, 0, 0);
+    auto componentType = shared->makeId("component.123");
+
+    frts::EntityVector entities = {entity};
+    frts::EntityGroupImpl::EntityPosMap positions = {{entity, pos}};
+
+    auto component = std::static_pointer_cast<frts::EntityGroup>(frts::makeEntityGroup(componentType, entities, positions));
+
+    REQUIRE(component != nullptr);
+    REQUIRE(component->getSatellites().size() == 1);
+    REQUIRE(component->getSatellites().at(0) == entity);
+    REQUIRE(component->getSatellitePos(entity) == pos);
+    REQUIRE(component->getComponentType() == componentType);
+}
+
+TEST_CASE("EntityGroupBuilder.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto builder = frts::makeEntityGroupBuilder();
+    auto component = builder->build(shared);
+
+    REQUIRE(component != nullptr);
+}
+
+TEST_CASE("EntityGroupSatellite.", "[entity]")
+{
+    auto log = std::make_shared<frts::NoLog>();
+    auto shared = frts::makeSharedManager(log);
+
+    auto master = frts::makeEntity();
+    auto satellite = frts::makeEntity();
+    auto componentType = shared->makeId("component.123");
+
+    auto component = std::static_pointer_cast<frts::EntityGroupSatellite>(frts::makeEntityGroupSatellite(componentType, master));
+
+    REQUIRE(component != nullptr);
+    REQUIRE(component->getMaster() == master);
+
+    master.reset();
+    REQUIRE(component->getMaster() == nullptr);
 }
 
 TEST_CASE("Harvestable.", "[entity]")

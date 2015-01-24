@@ -45,6 +45,7 @@ namespace frts
         IdPtr type;
 
         /**
+         * @todo Replace with weak pointer?
          * @warning Must be set to null after removale from region to prevent possible memory leak.
          */
         EntityPtr jobMarker;

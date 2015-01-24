@@ -6,8 +6,10 @@
 #include <entity/Component.h>
 #include <entity/ComponentIds.h>
 #include <entity/Curriculum.h>
-#include <entity/Entity.h>
 #include <entity/Drop.h>
+#include <entity/Entity.h>
+#include <entity/EntityGroup.h>
+#include <entity/EntityGroupSatellite.h>
 #include <entity/Harvestable.h>
 #include <entity/HasResource.h>
 #include <entity/IsResource.h>

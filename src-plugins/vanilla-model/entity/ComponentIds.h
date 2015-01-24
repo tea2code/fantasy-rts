@@ -31,6 +31,16 @@ namespace frts
             return "frts.vanillamodel.entity.component.drop";
         }
 
+        static std::string entityGroup()
+        {
+            return "frts.vanillamodel.entity.component.entitygroup";
+        }
+
+        static std::string entityGroupSatellite()
+        {
+            return "frts.vanillamodel.entity.component.entitygroupsatellite";
+        }
+
         static std::string harvestable()
         {
             return "frts.vanillamodel.entity.component.harvestable";

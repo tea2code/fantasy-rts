@@ -4,6 +4,7 @@
 #include <log/Log.h>
 
 #include <string>
+#include <vector>
 
 
 namespace frts

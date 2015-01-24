@@ -38,6 +38,24 @@ Entities can drop other entities if they are destroyed, killed, harvested... The
     drops:
         - <string representing an entity id>
 
+## EntityGroup
+
+Entities can be grouped to a kind of "super entity" which spans multiple sub entities. The entity with this component is the master of the group and manages all the other entities. 
+
+The configuration consists of the satellite entity id and the position relative to the master entity.
+
+### Configuration
+
+    satellites:
+        - entity: <string representing an entity id>
+          x: <integer>
+          y: <integer>
+          z: <integer>
+
+## EntityGroupSatellite
+
+The component of entity group satellites (see **EntityGroup**). Will be created implicitly by **EntityGroup** and cannot be created in any method of model factory. Has a weak reference to its master.
+
 ## Harvestable
 
 Entities with this component can be harvested by the associated types. The speed is in number of blocks per second. 

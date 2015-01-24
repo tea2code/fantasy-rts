@@ -22,7 +22,10 @@ SOURCES += \
     $$PWD/impl/CurriculumBuilder.cpp \
     $$PWD/impl/CurriculumImpl.cpp \
     $$PWD/impl/HarvestableBuilder.cpp \
-    $$PWD/impl/HarvestableImpl.cpp
+    $$PWD/impl/HarvestableImpl.cpp \
+    $$PWD/impl/EntityGroupImpl.cpp \
+    $$PWD/impl/EntityGroupBuilder.cpp \
+    $$PWD/impl/EntityGroupSatelliteImpl.cpp
     
 
 HEADERS += \
@@ -64,4 +67,9 @@ HEADERS += \
     $$PWD/impl/CurriculumImpl.h \
     $$PWD/Harvestable.h \
     $$PWD/impl/HarvestableBuilder.h \
-    $$PWD/impl/HarvestableImpl.h
+    $$PWD/impl/HarvestableImpl.h \
+    $$PWD/EntityGroup.h \
+    $$PWD/impl/EntityGroupImpl.h \
+    $$PWD/impl/EntityGroupBuilder.h \
+    $$PWD/EntityGroupSatellite.h \
+    $$PWD/impl/EntityGroupSatelliteImpl.h
