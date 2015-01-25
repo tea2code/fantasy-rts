@@ -4,6 +4,7 @@
 #include <boost/predef.h>
 
 #include <algorithm>
+#include <typeinfo>
 
 #if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
 #include <execwarning.h>
@@ -68,11 +69,11 @@ int frts::logException(const frts::LogPtr& log, const std::string& logModule, co
         void *stackTrace[maxSize];
         size_t size = backtrace(stackTrace, maxSize);
         auto symbols = backtrace_symbols(stackTrace, size);
-        auto msg = boost::format(R"(Exception: %1%\nStack Trace: %2%)")
-                % ex.what() % symbols;
+        auto msg = boost::format(R"(Exception "%1%": %2%\nStack Trace: %3%)")
+                 % typeid(ex).name() % ex.what() % symbols;
         log->error(logModule, msg.str());
 #else
-        auto msg = boost::format(R"(Exception: %1%)") % ex.what();
+        auto msg = boost::format(R"(Exception "%1%": %2%)") % typeid(ex).name() % ex.what();
         log->error(logModule, msg.str());
 #endif
         return 1;
