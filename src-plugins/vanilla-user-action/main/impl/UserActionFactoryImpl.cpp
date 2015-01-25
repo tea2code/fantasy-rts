@@ -8,6 +8,7 @@
 #include <frts/vanillacommand>
 #include <frts/vanillajob>
 #include <frts/vanillamodel>
+#include <frts/math.h>
 
 #include <boost/format.hpp>
 
@@ -153,6 +154,7 @@ bool frts::UserActionFactoryImpl::init(const SharedManagerPtr& shared)
         }
         else
         {
+            // TODO Exception
             auto msg = boost::format(R"(Unknown user action command of type "%1%".)")
                     % config.type->toString();
             shared->getLog()->warning(getName(), msg.str());
@@ -173,7 +175,7 @@ frts::UserActionFactory::MoveEntityResult frts::UserActionFactoryImpl::moveEntit
     assert(shared != nullptr);
 
     MoveEntityResult result;
-    result.state = MoveEntityResult::NotMovable;
+    result.state = MoveEntityState::NotMovable;
 
     auto movable = getComponent<Movable>(shared->makeId(ComponentIds::movable()), entity);
     if (movable != nullptr)
@@ -188,7 +190,7 @@ frts::UserActionFactory::MoveEntityResult frts::UserActionFactoryImpl::moveEntit
             auto blockedBy = getComponent<BlockedBy>(shared->makeId(ComponentIds::blockedBy()), entity);
             if (block->isBlocking(blockedBy))
             {
-                result.state = MoveEntityResult::Blocked;
+                result.state = MoveEntityState::Blocked;
             }
             else
             {
@@ -196,12 +198,12 @@ frts::UserActionFactory::MoveEntityResult frts::UserActionFactoryImpl::moveEntit
                 rm->setPos(entity, nextPos, shared);
 
                 result.nextMoveTime = fromMilliseconds(round<unsigned int>(1000.0 / movable->getSpeed()));
-                result.state = MoveEntityResult::Moved;
+                result.state = MoveEntityState::Moved;
             }
         }
         else
         {
-            result.state = MoveEntityResult::AtTarget;
+            result.state = MoveEntityState::AtTarget;
         }
     }
 

@@ -71,13 +71,16 @@ int main(int argc, char* argv[])
     frts::LogPtr log = frts::makeEasyloggingLog(logConfigFile);
     assert(log != nullptr);
 
+    // Start application. Creation of application must happen outside of try-catch because else
+    // catching module exceptions is not possible because destroying app results in unloading all
+    // plugins.
+    log->warning(logModule, "Start application.");
+    frts::Application app(log);
+    app.setMaxNumberExtraExecutions(deadLock);
+
+    int result = 0;
     try
     {
-        // Start application.
-        log->warning(logModule, "Start application.");
-        frts::Application app(log);
-        app.setMaxNumberExtraExecutions(deadLock);
-
         // Log environment.
         log->warning(logModule, "Environment:");
         log->warning(logModule, "\tPlatform: " + std::string(BOOST_PLATFORM));
@@ -228,15 +231,14 @@ int main(int argc, char* argv[])
 
         // Phase 15: All done. Good night.
         log->warning(logModule, "Phase 15: Application finished.");
-        log->warning(logModule, "-------------------------------------------------------------------");
-        return 0;
     }
     catch(const std::exception& ex)
     {
         // Something bad happened.
-        frts::logException(log, logModule, ex);
-        return 1;
+        result = frts::logException(log, logModule, ex);
     }
+    log->warning(logModule, "-------------------------------------------------------------------");
+    return result;
 }
 
 #else

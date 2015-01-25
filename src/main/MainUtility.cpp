@@ -1,5 +1,6 @@
 #include "MainUtility.h"
 
+#include <boost/format.hpp>
 #include <boost/predef.h>
 
 #include <algorithm>
@@ -59,7 +60,7 @@ void frts::logLoadConfigList(const frts::LogPtr& log, const std::string& logModu
     }
 }
 
-void frts::logException(const frts::LogPtr& log, const std::string& logModule, const std::exception &ex)
+int frts::logException(const frts::LogPtr& log, const std::string& logModule, const std::exception &ex)
 {
 #if BOOST_COMP_GNUC && !BOOST_OS_WINDOWS
         // See https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
@@ -71,6 +72,8 @@ void frts::logException(const frts::LogPtr& log, const std::string& logModule, c
                 % ex.what() % symbols;
         log->error(logModule, msg.str());
 #else
-        log->error(logModule, ex.what());
+        auto msg = boost::format(R"(Exception: %1%)") % ex.what();
+        log->error(logModule, msg.str());
 #endif
+        return 1;
 }

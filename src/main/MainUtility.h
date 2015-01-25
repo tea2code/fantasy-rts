@@ -43,8 +43,9 @@ namespace frts
      * @brief Log the given exception and additional information if possible.
      * @param log The log.
      * @param logModule The log module.
+     * @return The application result.
      */
-    void logException(const frts::LogPtr& log, const std::string& logModule, const std::exception& ex);
+    int logException(const frts::LogPtr& log, const std::string& logModule, const std::exception& ex);
 }
 
 #endif // FRTS_MAINUTILITY_H

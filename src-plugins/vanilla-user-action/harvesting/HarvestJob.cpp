@@ -91,12 +91,12 @@ frts::Job::State frts::HarvestJob::execute(const SharedManagerPtr& shared)
         }
 
         auto moveResult = uaf->moveEntity(getExecutingEntity(), shared);
-        if (moveResult.state == UserActionFactory::MoveEntityResult::Moved)
+        if (moveResult.state == UserActionFactory::MoveEntityState::Moved)
         {
             // Set next due time.
             setDueTime(shared->getFrame()->getRunTime() + moveResult.nextMoveTime);
         }
-        else if (moveResult == UserActionFactory::MoveEntityResult::AtTarget)
+        else if (moveResult.state == UserActionFactory::MoveEntityState::AtTarget)
         {
             jobState = JobState::Harvest;
 

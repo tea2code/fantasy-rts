@@ -114,7 +114,7 @@ To identify if a certain module is available there are four useful methods which
 - **getTypeName:** The type of an module describes it public interface. There may be several implementation of an module type. In most cases it is recommended to check for the type name. 
 - **getTypeVersion:** The type version of an module. This number should change if the interface is changed.
 
-Following is an minimal example for checking if a utility is available.
+Following is an minimal example for checking if a utility is available and has the right version.
 
     try
     {
