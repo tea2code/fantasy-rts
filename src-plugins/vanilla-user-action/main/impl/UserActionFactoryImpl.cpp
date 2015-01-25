@@ -1,5 +1,6 @@
 #include "UserActionFactoryImpl.h"
 
+#include <carve/CarveCommandBuilder.h>
 #include <main/UserActionIds.h>
 #include <harvesting/HarvestCommandBuilder.h>
 #include <special/stop-jobs/StopJobsCommandBuilder.h>
@@ -144,7 +145,11 @@ bool frts::UserActionFactoryImpl::init(const SharedManagerPtr& shared)
         auto config = it.second;
         UserActionCommandBuilderPtr commandBuilder;
 
-        if (config.type->toString() == UserActionIds::harvest())
+        if (config.type->toString() == UserActionIds::carve())
+        {
+            commandBuilder = makeCarveCommandBuilder(commandId, config.type);
+        }
+        else if (config.type->toString() == UserActionIds::harvest())
         {
             commandBuilder = makeHarvestCommandBuilder(commandId, config.type);
         }
@@ -154,11 +159,9 @@ bool frts::UserActionFactoryImpl::init(const SharedManagerPtr& shared)
         }
         else
         {
-            // TODO Exception
             auto msg = boost::format(R"(Unknown user action command of type "%1%".)")
                     % config.type->toString();
-            shared->getLog()->warning(getName(), msg.str());
-            continue;
+            throw UnknownUserActionError(msg.str());
         }
 
         commandBuilder->setSettings(config.settings);

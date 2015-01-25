@@ -63,11 +63,11 @@ keys:
         - key: m
           context: context.mining
           command: frts.vanillauseraction.command.dig
-        # - key: s
-          # context: context.mining
-          # command: frts.vanillauseraction.command.carve.stairs
+        - key: c
+          context: context.mining
+          command: frts.vanillauseraction.command.carve.stairs
           
-        # UserAction: Special
+        # User Action: Special
         - key: x
           command: frts.vanillauseraction.command.stop
       

@@ -4,11 +4,21 @@
 #include <main/UserActionFactory.h>
 #include <frts/BaseUtility.h>
 
+#include <stdexcept>
 #include <unordered_map>
 
 
 namespace frts
 {
+    /**
+     * @brief Thrown if an unknown user action is configured.
+     */
+    class UnknownUserActionError : public std::runtime_error
+    {
+    public:
+        explicit UnknownUserActionError(const std::string& msg) : std::runtime_error(msg) {}
+    };
+
     /**
      * @brief This factory will register all commands, actions and jobs of this plugin.
      */
