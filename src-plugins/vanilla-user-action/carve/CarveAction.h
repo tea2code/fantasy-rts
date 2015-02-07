@@ -1,5 +1,5 @@
-#ifndef FRTS_HARVESTACTION_H
-#define FRTS_HARVESTACTION_H
+#ifndef FRTS_CARVEACTION_H
+#define FRTS_CARVEACTION_H
 
 #include <frts/vanillaaction>
 #include <frts/vanillaevent>
@@ -9,19 +9,23 @@
 
 namespace frts
 {
-    class HarvestAction : public Action, public EventObserver, public std::enable_shared_from_this<EventObserver>
+    class CarveAction : public Action, public EventObserver, public std::enable_shared_from_this<EventObserver>
     {
     public:
         /**
          * @param jobId The job id.
          * @param jobType The job type.
+         * @param carveEntities List of entities to carve.
+         * @param doDrop If true create drop from harvested entity.
+         * @param fromAbove Indicates if this action can be executed from the z-level above.
          * @param harvestTypes List of harvestable types.
          * @param jobRequirements List of requirements for the entity which might execute the job.
          * @param jobMarker The job marker id.
          */
-        HarvestAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& harvestTypes,
-                      const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker);
-        ~HarvestAction();
+        CarveAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& carveEntities,
+                    bool doDrop, bool fromAbove, const IdUnorderedSet& harvestTypes,
+                    const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker);
+        ~CarveAction();
 
         State execute(const SharedManagerPtr& shared) override;
         void notify(const EventPtr& event, const SharedManagerPtr& shared) override;
@@ -41,12 +45,15 @@ namespace frts
         };
 
     private:
-        const std::string name = "frts::HarvestAction";
+        const std::string name = "frts::CarveAction";
 
         ActionState actionState = ActionState::FirstExecution;
 
         IdPtr jobId;
         IdPtr jobType;
+        IdUnorderedSet carveEntities;
+        bool doDrop;
+        bool fromAbove;
         IdUnorderedSet harvestTypes;
         IdUnorderedSet jobRequirements;
         IdPtr jobMarker;
@@ -58,24 +65,30 @@ namespace frts
     };
 
     /**
-     * @brief Create new HarvestAction.
+     * @brief Create new CarveAction.
      * @param jobId The job id.
      * @param jobType The job type.
+     * @param carveEntities List of entities to carve.
+     * @param doDrop If true create drop from harvested entity.
+     * @param fromAbove Indicates if this action can be executed from the z-level above.
      * @param harvestTypes List of harvestable types.
      * @param jobRequirements List of requirements for the entity which might execute the job.
      * @param jobMarker The job marker id.
      * @return The action.
      */
-    inline ActionPtr makeHarvestAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& harvestTypes,
-                                       const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker)
+    inline ActionPtr makeCarveAction(const IdPtr& jobId, const IdPtr& jobType, const IdUnorderedSet& carveEntities,
+                                     bool doDrop, bool fromAbove, const IdUnorderedSet& harvestTypes,
+                                     const IdUnorderedSet& jobRequirements, const IdPtr& jobMarker)
     {
         assert(jobId != nullptr);
         assert(jobType != nullptr);
+        assert(!carveEntities.empty());
         assert(!harvestTypes.empty());
         assert(jobMarker != nullptr);
 
-        return std::make_shared<HarvestAction>(jobId, jobType, harvestTypes, jobRequirements, jobMarker);
+        return std::make_shared<CarveAction>(jobId, jobType, carveEntities, doDrop, harvestTypes,
+                                               jobRequirements, jobMarker);
     }
 }
 
-#endif // FRTS_HARVESTACTION_H
+#endif // FRTS_CARVEACTION_H

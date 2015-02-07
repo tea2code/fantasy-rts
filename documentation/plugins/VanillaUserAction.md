@@ -54,9 +54,10 @@ User actions of this type allow to create buildings and other objects from harve
 
 The teleport node is optional in the settings. If it is available a teleport will be created between the job position and the relative position described by this node.
 
-    carve_types: 
+    carve_entities: 
          - <string representing an id>
     drop: <boolean, optional, default false>
+    from_above: <boolean, optional, default false>
     harvest_types: 
         - <string representing an id>
     jobmarker: <string representing an id>

@@ -7,9 +7,10 @@ useraction:
         - command: carve.stairs
           type: frts.vanillauseraction.useraction.carve
           settings:
-            carve_types: 
+            carve_entities: 
                 - entity.stairs
             drop: false
+            from_above: true
             harvest_types: 
                 - harvestable.dig
             jobmarker: entity.jobmarker

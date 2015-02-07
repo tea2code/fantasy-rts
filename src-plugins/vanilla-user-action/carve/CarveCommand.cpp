@@ -1,6 +1,6 @@
 #include "CarveCommand.h"
 
-//#include "CarveAction.h"
+#include "CarveAction.h"
 
 #include <frts/configuration>
 
@@ -24,31 +24,48 @@ void frts::CarveCommand::execute(const SharedManagerPtr& shared)
 
     shared->getLog()->debug(name, "execute");
 
-//    // Parse settings.
-//    IdUnorderedSet harvestTypes;
-//    for (auto& harvestType : settings->getStrings("harvest_types"))
-//    {
-//        harvestTypes.insert(shared->makeId(harvestType));
-//    }
-//    if (harvestTypes.empty())
-//    {
-//        auto msg = boost::format(R"(%1%: No harvest types defined for command "%2%".")")
-//                % name % commandType->toString();
-//        throw DataViolation(msg.str());
-//    }
+    // Parse settings.
+    IdUnorderedSet carveEntities;
+    for (auto& carveEntity : settings->getStrings("carve_entities"))
+    {
+        carveEntities.insert(shared->makeId(carveEntity));
+    }
+    if (carveEntities.empty())
+    {
+        auto msg = boost::format(R"(%1%: No carve entities defined for command "%2%".")")
+                % name % commandType->toString();
+        throw DataViolation(msg.str());
+    }
 
-//    IdPtr jobMarker = shared->makeId(settings->getString("jobmarker"));
+    bool doDrop = settings->getBool("drop", false);
 
-//    IdUnorderedSet jobRequirements;
-//    for (auto& jobRequirement : settings->getStrings("requirements"))
-//    {
-//        jobRequirements.insert(shared->makeId(jobRequirement));
-//    }
+    bool fromAbove = settings->getBool("from_above", false);
+
+    IdUnorderedSet harvestTypes;
+    for (auto& harvestType : settings->getStrings("harvest_types"))
+    {
+        harvestTypes.insert(shared->makeId(harvestType));
+    }
+    if (harvestTypes.empty())
+    {
+        auto msg = boost::format(R"(%1%: No harvest types defined for command "%2%".")")
+                % name % commandType->toString();
+        throw DataViolation(msg.str());
+    }
+
+    IdPtr jobMarker = shared->makeId(settings->getString("jobmarker"));
+
+    IdUnorderedSet jobRequirements;
+    for (auto& jobRequirement : settings->getStrings("requirements"))
+    {
+        jobRequirements.insert(shared->makeId(jobRequirement));
+    }
 
     // Create and start action.
-//    action = makeHarvestAction(commandType, userActionType, harvestTypes, jobRequirements, jobMarker);
-//    auto am = getUtility<ActionManager>(shared, ActionIds::actionManager());
-//    am->newAction(action, shared);
+    action = makeCarveAction(commandType, userActionType, carveEntities, doDrop, fromAbove,
+                             harvestTypes, jobRequirements, jobMarker);
+    auto am = getUtility<ActionManager>(shared, ActionIds::actionManager());
+    am->newAction(action, shared);
 }
 
 frts::IdPtr frts::CarveCommand::getCommandType() const
